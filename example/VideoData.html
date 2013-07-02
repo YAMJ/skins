@@ -1,0 +1,118 @@
+<html>
+	<head>
+		<title>YAMJ v3</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script src="https://rawgithub.com/pure/pure/master/libs/pure.js"></script>
+		<!-- Use these for local testing
+		<script src="pure/libs/jquery.js"></script>
+		<script src="pure/libs/pure.js"></script>
+		-->
+  </head>
+	<body>
+		<script type="text/javascript">
+			function getVideoData(id)
+            {
+				var e = document.getElementById("tableType");
+				var tableType = e.options[e.selectedIndex].value;
+				var jsonUrl;
+				switch(tableType)
+				{
+					case 'VIDEODATA': 
+						jsonUrl = "http://localhost:8888/yamj3/api/video/"+id+".json";
+						break;
+					case 'SERIES': 
+						jsonUrl = "http://localhost:8888/yamj3/api/video/series/"+id+".json";
+						break;
+					case 'SEASON': 
+						jsonUrl = "http://localhost:8888/yamj3/api/video/season/"+id+".json";
+						break;
+				}
+				
+				var jsondata = null;
+
+				console.log("Call for URL with video ID:"+id);
+				console.log("URL: " + jsonUrl);
+				
+				$.ajax({
+					url: jsonUrl,
+					async: false,
+					dataType: 'jsonp',
+					'success': function (data)
+					{
+						jsondata = data;
+						updateHtml(data);
+					}
+				});
+				return jsondata;
+            }
+
+			function updateHtml(yamjdata)
+			{
+				console.log(yamjdata);
+				yDir = {
+						'span.id':'result.id',
+						'span.title':'result.title',
+						'span.plot':'result.plot'
+					}
+				$p('.template').render(yamjdata, yDir);
+				
+				var str = JSON.stringify(yamjdata, undefined, 4);
+				output(str);
+			}
+
+			// Add the source output to the end of the page
+			function output(inp) {
+				document.body.appendChild(document.createElement('pre')).innerHTML = inp;
+			}
+			
+ 		</script>
+
+		<h2>YAMJv3 Video Data Test</h2>
+
+		<form>
+			<table border="0">
+				<tr>
+					<td align="right"><b>Data Type: </b></td>
+					<td>
+						<select id="tableType">
+							<option value="VIDEODATA" selected="selected">Video Data</option>
+							<option value="SERIES">Series</option>
+							<option value="SEASON">Season</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td align="right"><b>Video Data ID: </b></td>
+					<td>
+						<input type="text" id="formVideoId"/>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td align="left">
+						<input type="button" value="Run Query" onclick="getVideoData(this.form.formVideoId.value)"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+
+		<div class="template">
+			<table>
+				<tr>
+					<td align="right"><b>ID: </b></td>
+					<td><span class="id"></span></td>
+				</tr>
+				<tr>
+					<td align="right"><b>Title: </b></td>
+					<td><span class="title"></span></td>
+				</tr>
+				<tr>
+					<td align="right"><b>Plot: </b></td>
+					<td><span class="plot"></span></td>
+				</tr>
+			</table>
+		</div>
+		
+		<h4>Source data:</h4>
+	</body>
+</html>

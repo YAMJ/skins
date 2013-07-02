@@ -1,0 +1,185 @@
+<html>
+	<head>
+		<title>YAMJ v3</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script src="https://rawgithub.com/pure/pure/master/libs/pure.js"></script>
+		<!-- Use these for local testing
+		<script src="pure/libs/jquery.js"></script>
+		<script src="pure/libs/pure.js"></script>
+		-->
+  </head>
+	<body>
+		<script type="text/javascript">
+			function getIndexData(tableType, includes, excludes, start, max, sortby, sortdir)
+            {
+				var tableTypeValue = tableType.options[tableType.selectedIndex].value;
+				var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json";
+				switch(tableTypeValue)
+				{
+					case 'ALL':
+						jsonUrl += "?type=all";
+						break;
+					case 'MOVIE':
+						jsonUrl += "?type=movie";
+						break;
+					case 'TV':
+						jsonUrl += "?type=tv";
+						break;
+				}
+				
+				if (includes != "") {
+					jsonUrl += "&include=" + includes;
+				}
+				
+				if (excludes != "") {
+					jsonUrl += "&exclude=" + excludes;
+				}
+				
+				if (start != "") {
+					jsonUrl += "&start=" + start;
+				}
+				
+				if (max != "") {
+					jsonUrl += "&max=" + max;
+				}
+				
+				if (sortby != "") {
+					jsonUrl += "&sortby=" + sortby 
+							+ "&sortdir=" + sortdir.options[sortdir.selectedIndex].value;
+				}
+				
+				console.log("URL: " + jsonUrl);
+				var jsondata = null;
+
+				$.ajax({
+					url: jsonUrl,
+					async: false,
+					dataType: 'jsonp',
+					'success': function (data)
+					{
+						jsondata = data;
+						updateHtml(data);
+					}
+				});
+				return jsondata;
+            }
+
+			function updateHtml(yamjdata)
+			{
+				console.log(yamjdata);
+				yDir = {
+					'span.results':'count'
+				}
+				
+				resultsDir = {
+					'tr' : {
+						'result<-results' : {
+							'span.id' : 'result.id',
+							'span.videoType' : 'result.videoType',
+							'span.title' : 'result.title',
+							'span.year' : 'result.year'
+						}
+					}
+				}
+
+				$p('.template').render(yamjdata, yDir);
+				$p('.resultsTable').render(yamjdata, resultsDir);
+				
+				//var str = JSON.stringify(yamjdata, undefined, 4);
+				//output(str);
+			}
+
+			// Add the source output to the end of the page
+			function output(inp) {
+				document.body.appendChild(document.createElement('pre')).innerHTML = inp;
+			}
+			
+ 		</script>
+
+		<h2>YAMJv3 Index Test</h2>
+
+		<form>
+			<table border="0">
+				<tr>
+					<td align="right"><b>Type: </b></td>
+					<td>
+						<select id="tableType">
+							<option value="ALL" selected="selected">All</option>
+							<option value="MOVIE">Movies</option>
+							<option value="TV">TV</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td align="right"><b>Includes: </b></td>
+					<td>
+						<input name="formIncludes" type="text" id="formIncludes"/>
+					</td>
+					<td align="right"><b>Excludes: </b></td>
+					<td>
+						<input type="text" id="formExcludes"/>
+					</td>
+				</tr>
+				<tr>
+					<td align="right"><b>Start: </b></td>
+					<td>
+						<input type="text" id="formStart"/>
+					</td>
+					<td align="right"><b>Max: </b></td>
+					<td>
+						<input type="text" id="formMax"/>
+					</td>
+				</tr>
+				<tr>
+					<td align="right"><b>Sort by: </b></td>
+					<td>
+						<input type="text" id="formSortBy"/>
+					</td>
+					<td align="right"><b>Sort Direction: </b></td>
+					<td>
+						<select id="formSortDir">
+							<option value="ASC" selected="selected">Ascending</option>
+							<option value="DESC">Descending</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td align="left">
+						<input type="button" value="Run Query" onclick="getIndexData(
+							document.getElementById('tableType'),
+							document.getElementById('formIncludes').value,
+							document.getElementById('formExcludes').value,
+							document.getElementById('formStart').value,
+							document.getElementById('formMax').value,
+							document.getElementById('formSortBy').value,
+							document.getElementById('formSortDir')
+							)"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+
+		<div class="template">
+			<table>
+				<tr>
+					<td align="right"><b>Results: </b></td>
+					<td><span class="results"></span></td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="resultsTable">
+			<table border="1">
+				<tr>
+					<td><span class="id"></span></td>
+					<td><span class="videoType"></span></td>
+					<td><span class="title"></span></td>
+					<td><span class="year"></span></td>
+				</tr>
+			</table>
+		</div>
+		
+		<h4>Source Data:</h4>
+	</body>
+</html>

@@ -1,0 +1,100 @@
+<html>
+	<head>
+		<title>YAMJ v3</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script src="https://rawgithub.com/pure/pure/master/libs/pure.js"></script>
+		
+  </head>
+	<body>
+		<script type="text/javascript">
+			function getCounts()
+            {
+				var e = document.getElementById("tableType");
+				var tableType = e.options[e.selectedIndex].value;
+				var jsonUrl = "http://localhost:8888/yamj3/api/index/count.json?type=" + tableType.toLowerCase();
+				var jsondata = null;
+
+				console.log("URL: " + jsonUrl);
+				
+				$.ajax({
+					url: jsonUrl,
+					async: false,
+					dataType: 'jsonp',
+					'success': function (data)
+					{
+						jsondata = data;
+						updateHtml(data);
+					}
+				});
+				return jsondata;
+            }
+
+			function updateHtml(yamjdata)
+			{
+				console.log(yamjdata);
+				resultsDir = {
+					'tr' : 
+					{
+						'list<-context' : {
+							'span.type'				: 'list.type',
+							'span.count'			: 'list.count',
+							'span.createTimestamp'	: 'list.createTimestamp',
+							'span.updateTimestamp'	: 'list.updateTimestamp',
+							'span.lastId'			: 'list.lastId'
+						}
+					}
+				}
+				$p('.resultsTable').render(yamjdata, resultsDir);
+				
+				var str = JSON.stringify(yamjdata, undefined, 4);
+				output(str);
+			}
+
+			// Add the source output to the end of the page
+			function output(inp) {
+				document.body.appendChild(document.createElement('pre')).innerHTML = inp;
+			}
+			
+ 		</script>
+
+		<h2>YAMJv3 Database Counts</h2>
+
+		<form>
+			<table border="0">
+				<tr>
+					<td align="right"><b>Count Type: </b></td>
+					<td>
+						<select id="tableType">
+							<option value="ALL" selected="selected">All</option>
+							<option value="MOVIE">Movies</option>
+							<option value="SERIES">Series</option>
+							<option value="SEASON">Season</option>
+							<option value="EPISODE">Episodes</option>
+							<option value="PERSON">Person</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td align="left">
+						<input type="button" value="Run Query" onclick="getCounts()"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+
+		<div class="resultsTable">
+			<table border="1">
+				<tr>
+					<td><span class="type"></span></td>
+					<td><span class="count"></span></td>
+					<td><span class="createTimestamp"></span></td>
+					<td><span class="updateTimestamp"></span></td>
+					<td><span class="lastId"></span></td>
+				</tr>
+			</table>
+		</div>
+		
+		<h4>Source Data:</h4>
+	</body>
+</html>

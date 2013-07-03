@@ -68,7 +68,10 @@
 			{
 				console.log(yamjdata);
 				yDir = {
-					'span.results':'count'
+					'span.results'				: 'count',
+					'span.totalResults'			: 'totalCount',
+					'span.queryTime'			: 'queryTime',
+					'span.queryDuration'		: 'queryDuration'
 				}
 				
 				resultsDir = {
@@ -164,8 +167,20 @@
 		<div class="template">
 			<table>
 				<tr>
-					<td align="right"><b>Results: </b></td>
+					<td align="right"><b>Returned Results: </b></td>
 					<td><span class="results"></span></td>
+				</tr>
+				<tr>
+					<td align="right"><b>Total Results: </b></td>
+					<td><span class="totalResults"></span></td>
+				</tr>
+				<tr>
+					<td align="right"><b>Query Time: </b></td>
+					<td><span class="queryTime"></span></td>
+				</tr>
+				<tr>
+					<td align="right"><b>Query Duration: </b></td>
+					<td><span class="queryDuration"></span></td>
 				</tr>
 			</table>
 		</div>

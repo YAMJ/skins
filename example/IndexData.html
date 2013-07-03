@@ -74,10 +74,11 @@
 				resultsDir = {
 					'tr' : {
 						'result<-results' : {
-							'span.id' : 'result.id',
-							'span.videoType' : 'result.videoType',
-							'span.title' : 'result.title',
-							'span.year' : 'result.year'
+							'span.id'			: 'result.id',
+							'span.videoType'	: 'result.videoType',
+							'span.title'		: 'result.title',
+							'span.year'			: 'result.year',
+							'span.identifier'	: 'result.identifier'
 						}
 					}
 				}
@@ -85,8 +86,8 @@
 				$p('.template').render(yamjdata, yDir);
 				$p('.resultsTable').render(yamjdata, resultsDir);
 				
-				//var str = JSON.stringify(yamjdata, undefined, 4);
-				//output(str);
+				var str = JSON.stringify(yamjdata, undefined, 4);
+				output(str);
 			}
 
 			// Add the source output to the end of the page
@@ -176,6 +177,7 @@
 					<td><span class="videoType"></span></td>
 					<td><span class="title"></span></td>
 					<td><span class="year"></span></td>
+					<td><span class="identifier"></span></td>
 				</tr>
 			</table>
 		</div>

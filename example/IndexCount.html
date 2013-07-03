@@ -29,30 +29,48 @@
 				return jsondata;
             }
 
-			function updateHtml(yamjdata)
-			{
-				console.log(yamjdata);
-				resultsDir = {
-					'tr' : 
-					{
-						'list<-context' : {
-							'span.type'				: 'list.type',
-							'span.count'			: 'list.count',
-							'span.createTimestamp'	: 'list.createTimestamp',
-							'span.updateTimestamp'	: 'list.updateTimestamp',
-							'span.lastId'			: 'list.lastId'
-						}
-					}
-				}
-				$p('.resultsTable').render(yamjdata, resultsDir);
-				
-				var str = JSON.stringify(yamjdata, undefined, 4);
-				output(str);
-			}
-
 			// Add the source output to the end of the page
 			function output(inp) {
 				document.body.appendChild(document.createElement('pre')).innerHTML = inp;
+			}
+			
+			function updateHtml(yamjdata) {
+				console.log(yamjdata);
+				var WI = {
+					"template":"table.indices",
+					"header": {
+						"column":[ "Type","Count","CreateTimestamp", "UpdateTimestamp", "LastId" ]
+					},
+					"directivehead": {
+						"th": {
+							"c<-column": {
+								".":"c"
+							}
+						},
+						'td':{
+							"c<-column":{
+								"@class":"c"
+							}
+						}
+					},
+					"directivebody": {
+						"tbody tr": {
+							"list<-context":{
+								"td.Type"				: "list.type",
+								"td.Count"				: "list.count",
+								"td.CreateTimestamp"	: "list.createTimestamp",
+								"td.UpdateTimestamp"	: "list.updateTimestamp",
+								"td.LastId"				: "list.lastId"
+							}
+						}
+					}
+				};
+				
+				var TEMPLATE = $p( WI.template ).render( WI.header, WI.directivehead ).compile( WI.directivebody );
+
+				$p('table.indices').render( yamjdata, TEMPLATE );
+				var str = JSON.stringify(yamjdata, undefined, 4);
+				output(str);
 			}
 			
  		</script>
@@ -83,18 +101,21 @@
 			</table>
 		</form>
 
-		<div class="resultsTable">
-			<table border="1">
-				<tr>
-					<td><span class="type"></span></td>
-					<td><span class="count"></span></td>
-					<td><span class="createTimestamp"></span></td>
-					<td><span class="updateTimestamp"></span></td>
-					<td><span class="lastId"></span></td>
-				</tr>
+		<div class="template">
+			<table border="1" class="indices">
+				<thead>
+					<tr>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td></td>
+					</tr>
+				</tbody>
 			</table>
 		</div>
-		
+
 		<h4>Source Data:</h4>
 	</body>
 </html>

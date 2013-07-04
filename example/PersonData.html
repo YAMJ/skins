@@ -1,0 +1,95 @@
+<html>
+	<head>
+		<title>YAMJ v3</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script src="https://rawgithub.com/pure/pure/master/libs/pure.js"></script>
+  </head>
+	<body>
+		<script type="text/javascript">
+			function getPersonData(id)
+            {
+				jsonUrl = "http://localhost:8888/yamj3/api/person/"+id+".json";
+				
+				var jsondata = null;
+
+				console.log("Call for URL with person ID:"+id);
+				console.log("URL: " + jsonUrl);
+				
+				$.ajax({
+					url: jsonUrl,
+					async: false,
+					dataType: 'jsonp',
+					'success': function (data)
+					{
+						jsondata = data;
+						updateHtml(data);
+					}
+				});
+				return jsondata;
+            }
+
+			function updateHtml(yamjdata)
+			{
+				console.log(yamjdata);
+				yDir = {
+						'span.id':'result.id',
+						'span.name':'result.name',
+						'span.birthPlace':'result.birthPlace',
+						'span.biography':'result.biography'
+					}
+				$p('.template').render(yamjdata, yDir);
+				
+				var str = JSON.stringify(yamjdata, undefined, 4);
+				output(str);
+			}
+
+			// Add the source output to the end of the page
+			function output(inp) {
+				document.body.appendChild(document.createElement('pre')).innerHTML = inp;
+			}
+			
+ 		</script>
+
+		<h2>YAMJv3 Person Data Test</h2>
+
+		<form>
+			<table border="0">
+				<tr>
+					<td align="right"><b>Person Data ID: </b></td>
+					<td>
+						<input type="text" id="formPersonId"/>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td align="left">
+						<input type="button" value="Run Query" onclick="getPersonData(this.form.formPersonId.value)"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+
+		<div class="template">
+			<table>
+				<tr>
+					<td align="right"><b>ID: </b></td>
+					<td><span class="id"></span></td>
+				</tr>
+				<tr>
+					<td align="right"><b>Name: </b></td>
+					<td><span class="name"></span></td>
+				</tr>
+				<tr>
+					<td align="right"><b>BirthPlace: </b></td>
+					<td><span class="birthPlace"></span></td>
+				</tr>
+				<tr>
+					<td align="right"><b>Biography: </b></td>
+					<td><span class="biography"></span></td>
+				</tr>
+			</table>
+		</div>
+		
+		<h4>Source data:</h4>
+	</body>
+</html>

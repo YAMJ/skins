@@ -67,27 +67,47 @@
 			function updateHtml(yamjdata)
 			{
 				console.log(yamjdata);
-				yDir = {
+				
+				var WI = {
+					"template":"table.results",
+					"header": {
+						"column":[ "ID", "VideoType", "Title", "Year" ]
+					},
+					"directivehead": {
+						"th": {
+							"c<-column": {
+								".":"c"
+							}
+						},
+						'td':{
+							"c<-column":{
+								"@class":"c"
+							}
+						}
+					},
+					"directivebody": {
+						"tbody tr": {
+							"result<-results":{
+								"td.ID"			: "result.id",
+								"td.VideoType"	: "result.videoType",
+								"td.Title"		: "result.title",
+								"td.Year"		: "result.year"
+							}
+						}
+					}
+				};
+
+				var TEMPLATE = $p( WI.template ).render( WI.header, WI.directivehead ).compile( WI.directivebody );
+
+				var HEADER_DIR = {
 					'span.results'				: 'count',
 					'span.totalResults'			: 'totalCount',
 					'span.queryTime'			: 'queryTime',
 					'span.queryDuration'		: 'queryDuration'
 				}
-				
-				resultsDir = {
-					'tr' : {
-						'result<-results' : {
-							'span.id'			: 'result.id',
-							'span.videoType'	: 'result.videoType',
-							'span.title'		: 'result.title',
-							'span.year'			: 'result.year',
-							'span.identifier'	: 'result.identifier'
-						}
-					}
-				}
 
-				$p('.template').render(yamjdata, yDir);
-				$p('.resultsTable').render(yamjdata, resultsDir);
+				$p('.header').render(yamjdata, HEADER_DIR);
+				$p('table.results').render( yamjdata, TEMPLATE );
 				
 				var str = JSON.stringify(yamjdata, undefined, 4);
 				output(str);
@@ -164,7 +184,7 @@
 			</table>
 		</form>
 
-		<div class="template">
+		<div class="header">
 			<table>
 				<tr>
 					<td align="right"><b>Returned Results: </b></td>
@@ -185,15 +205,18 @@
 			</table>
 		</div>
 
-		<div class="resultsTable">
-			<table border="1">
-				<tr>
-					<td><span class="id"></span></td>
-					<td><span class="videoType"></span></td>
-					<td><span class="title"></span></td>
-					<td><span class="year"></span></td>
-					<td><span class="identifier"></span></td>
-				</tr>
+		<div class="template">
+			<table border="1" class="results">
+				<thead>
+					<tr>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td></td>
+					</tr>
+				</tbody>
 			</table>
 		</div>
 		

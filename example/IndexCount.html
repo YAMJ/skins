@@ -37,9 +37,9 @@
 			function updateHtml(yamjdata) {
 				console.log(yamjdata);
 				var WI = {
-					"template":"table.indices",
+					"template":"table.results",
 					"header": {
-						"column":[ "Type","Count","CreateTimestamp", "UpdateTimestamp", "LastId" ]
+						"column":[ "Type", "Count", "CreateTimestamp", "UpdateTimestamp", "LastId" ]
 					},
 					"directivehead": {
 						"th": {
@@ -68,7 +68,7 @@
 				
 				var TEMPLATE = $p( WI.template ).render( WI.header, WI.directivehead ).compile( WI.directivebody );
 
-				$p('table.indices').render( yamjdata, TEMPLATE );
+				$p('table.results').render( yamjdata, TEMPLATE );
 				var str = JSON.stringify(yamjdata, undefined, 4);
 				output(str);
 			}
@@ -102,7 +102,7 @@
 		</form>
 
 		<div class="template">
-			<table border="1" class="indices">
+			<table border="1" class="results">
 				<thead>
 					<tr>
 						<th></th>

@@ -1,0 +1,113 @@
+<html>
+	<head>
+		<title>YAMJ v3</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script src="https://rawgithub.com/pure/pure/master/libs/pure.js"></script>
+		
+  </head>
+	<body>
+		<script type="text/javascript">
+			function getConfigData(configProperty)
+            {
+				var jsondata = null;
+				var jsonUrl = "http://localhost:8888/yamj3/system/config.json";
+				if (configProperty != "") {
+					jsonUrl += "?property='" + configProperty+"'";
+				}
+				console.log("URL: " + jsonUrl);
+				
+				$.ajax({
+					url: jsonUrl,
+					async: false,
+					dataType: 'jsonp',
+					'success': function (data)
+					{
+						jsondata = data;
+						updateHtml(data);
+					}
+				});
+				return jsondata;
+            }
+
+			// Add the source output to the end of the page
+			function output(inp) {
+				document.body.appendChild(document.createElement('pre')).innerHTML = inp;
+			}
+			
+			function updateHtml(yamjdata) {
+				console.log(yamjdata);
+				var WI = {
+					"template":"table.results",
+					"header": {
+						"column":[ "Key", "Value", "CreateTimestamp", "UpdateTimestamp" ]
+					},
+					"directivehead": {
+						"th": {
+							"c<-column": {
+								".":"c"
+							}
+						},
+						'td':{
+							"c<-column":{
+								"@class":"c"
+							}
+						}
+					},
+					"directivebody": {
+						"tbody tr": {
+							"list<-context":{
+								"td.Key"				: "list.key",
+								"td.Value"				: "list.value",
+								"td.CreateTimestamp"	: "list.createTimestamp",
+								"td.UpdateTimestamp"	: "list.updateTimestamp"
+							}
+						}
+					}
+				};
+				
+				var TEMPLATE = $p( WI.template ).render( WI.header, WI.directivehead ).compile( WI.directivebody );
+
+				$p('table.results').render( yamjdata, TEMPLATE );
+				var str = JSON.stringify(yamjdata, undefined, 4);
+				output(str);
+			}
+			
+ 		</script>
+
+		<h2>YAMJv3 Configuration</h2>
+
+		<form>
+			<table border="0">
+				<tr>
+					<td align="right"><b>Property (Optional): </b></td>
+					<td>
+						<input type="text" id="formConfig"/>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td align="left">
+						<input type="button" value="Run Query" onclick="getConfigData(this.form.formConfig.value)"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+
+		<div class="table">
+			<table border="1" class="results">
+				<thead>
+					<tr>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h4>Source Data:</h4>
+	</body>
+</html>

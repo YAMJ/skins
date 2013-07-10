@@ -10,7 +10,7 @@
   </head>
 	<body>
 		<script type="text/javascript">
-			function getIndexData(tableType, includes, excludes, start, max, sortby, sortdir)
+			function getIndexData(tableType, includes, excludes, start, max, sortby, sortdir, artwork)
             {
 				var tableTypeValue = tableType.options[tableType.selectedIndex].value;
 				var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json";
@@ -48,6 +48,10 @@
 							+ "&sortdir=" + sortdir.options[sortdir.selectedIndex].value;
 				}
 				
+				if (artwork != "") {
+					jsonUrl += "&artwork=" + artwork;
+				}
+				
 				console.log("URL: " + jsonUrl);
 				var jsondata = null;
 
@@ -71,7 +75,7 @@
 				var WI = {
 					"template":"table.results",
 					"header": {
-						"column":[ "ID", "VideoType", "Title", "Year" ]
+						"column":[ "ID", "VideoType", "Title", "Year", "Artwork", "Genres" ]
 					},
 					"directivehead": {
 						"th": {
@@ -91,7 +95,9 @@
 								"td.ID"			: "result.id",
 								"td.VideoType"	: "result.videoType",
 								"td.Title"		: "result.title",
-								"td.Year"		: "result.videoYear"
+								"td.Year"		: "result.videoYear",
+								"td.Artwork" 	: "result.artworkCount",
+								"td.Genres"		: "result.genreCount"
 							}
 						}
 					}
@@ -168,6 +174,12 @@
 					</td>
 				</tr>
 				<tr>
+					<td align="right"><b>Artwork Required: </b></td>
+					<td>
+						<input type="text" id="formArtwork"/>
+					</td>
+				</tr>
+				<tr>
 					<td></td>
 					<td align="left">
 						<input type="button" value="Run Query" onclick="getIndexData(
@@ -177,7 +189,8 @@
 							document.getElementById('formStart').value,
 							document.getElementById('formMax').value,
 							document.getElementById('formSortBy').value,
-							document.getElementById('formSortDir')
+							document.getElementById('formSortDir'),
+							document.getElementById('formArtwork').value
 							)"/>
 					</td>
 				</tr>

@@ -3,6 +3,7 @@
 		<title>YAMJ v3</title>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script src="https://rawgithub.com/pure/pure/master/libs/pure.js"></script>
+        <link rel="stylesheet" type="text/css" href="yamj-style.css">
   </head>
 	<body onLoad="getSystemInfo()">
 		<script type="text/javascript">
@@ -55,44 +56,41 @@
 
  		</script>
 
-		<h2>YAMJv3 System Info Test</h2>
-
+		<h1>YAMJv3 System Info Test</h1>
 		<div class="template">
-			<table>
+			<h2><span class="projectName"></span></h2>
+			<table id="headertable">
 				<tr>
-					<th colspan="2"><h3><span class="projectName"></span></h3></th>
-				</tr>
-				<tr>
-					<td align="right"><b>Version: </b></td>
+					<td class="right"><b>Version: </b></td>
 					<td><span class="projectVersion"></span></td>
 				</tr>
 				<tr>
-					<td align="right"><b>Revision: </b></td>
+					<td class="right"><b>Revision: </b></td>
 					<td><span class="buildRevision"></span></td>
 				</tr>
 				<tr>
-					<td align="right"><b>Java: </b></td>
+					<td class="right"><b>Java: </b></td>
 					<td><span class="javaVersion"></span></td>
 				</tr>
 				<tr>
-					<td align="right"><b>Build Date: </b></td>
+					<td class="right"><b>Build Date: </b></td>
 					<td><span class="buildDate"></span></td>
 				</tr>
 				<tr>
-					<td align="right"><b>Start-up Time: </b></td>
+					<td class="right"><b>Start-up Time: </b></td>
 					<td><span class="startUpTime"></span></td>
 				</tr>
 				<tr>
-					<td align="right"><b>Uptime: </b></td>
+					<td class="right"><b>Uptime: </b></td>
 					<td><span class="uptime"></span></td>
 				</tr>
 			</table>
 		</div>
 		<div class="table">
 			<h4>Counts:</h4>
-			<table border="0">
+			<table id="tablelist">
 				<tr>
-					<td align="right"><b><span class="countName"></span>: </b></td>
+					<td class="right"><b><span class="countName"></span>: </b></td>
 					<td><span class="countValue"></span></td>
 				</tr>
 			</table>

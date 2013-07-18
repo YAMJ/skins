@@ -75,7 +75,7 @@
 				var WI = {
 					"template":"table.results",
 					"header": {
-						"column":[ "ID", "VideoType", "Title", "Year", "Artwork", "Genres" ]
+						"column":[ "ID", "VideoType", "Title", "Year", "Artwork", "Genres", "Poster", "Fanart"]
 					},
 					"directivehead": {
 						"th": {
@@ -97,7 +97,33 @@
 								"td.Title"		: "result.title",
 								"td.Year"		: "result.videoYear",
 								"td.Artwork" 	: "result.artworkCount",
-								"td.Genres"		: "result.genreCount"
+								"td.Genres"		: "result.genreCount",
+								"td.Poster"		: function(arg) {
+									// Check to see if there are posters
+									if(arg.item.artwork.POSTER) {
+										// Get the first poster from the list
+										var poster = arg.item.artwork.POSTER[0];
+										if(poster.generatedId == 0) {
+											return "No Poster<br>was generated";
+										}
+										return "<img src=\"http://localhost:8888/Artwork/"+poster.filename+"\" height=\"100\">"; 
+									} else {
+										return "No Poster<br>Found";
+									}
+								},
+								"td.Fanart"		: function(arg) {
+									// Check to see if there are fanart
+									if(arg.item.artwork.FANART) {
+										// Get the first poster from the list
+										var fanart = arg.item.artwork.FANART[0];
+										if(fanart.generatedId == 0) {
+											return "No Fanart<br>was generated";
+										}
+										return "<img src=\"http://localhost:8888/Artwork/"+fanart.filename+"\" height=\"100\">"; 
+									} else {
+										return "No Fanart<br>Found";
+									}
+								}
 							}
 						}
 					}

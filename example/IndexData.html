@@ -68,7 +68,7 @@
 			function updateHtml(yamjdata)
 			{
 				console.log(yamjdata);
-				
+
 				var WI = {
 					"template":"table.results",
 					"header": {
@@ -103,7 +103,7 @@
 										if(poster.generatedId == 0) {
 											return "No Poster<br>was generated";
 										}
-										return "<img src=\"http://localhost:8888/Artwork/"+poster.filename+"\" height=\"100\">"; 
+										return "<img src=\""+arg.context.baseArtworkUrl+poster.filename+"\" height=\"100\">"; 
 									} else {
 										return "No Poster<br>Found";
 									}

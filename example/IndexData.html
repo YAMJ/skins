@@ -1,152 +1,178 @@
-<html>
+<!doctype html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
         <title>YAMJ v3</title>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
         <script src="https://rawgithub.com/pure/pure/master/libs/pure.js"></script>
+        <script src="js/js.js"></script>
+        <script src="js/jPages.js"></script>
+
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
+        <link rel="stylesheet" href="css/jPages.css">
+        <link rel="stylesheet" href="css/animate.css">
+
     </head>
     <body>
         <script type="text/javascript">
-            function getIndexData(tableType, includes, excludes, start, max, sortby, sortdir, artwork)
+
+        function getIndexData(tableType, includes, excludes, start, max, sortby, sortdir, artwork, itemsPerPage)
+        {
+            var tableTypeValue = tableType.options[tableType.selectedIndex].value;
+            var perPageValue = parseInt(itemsPerPage.options[itemsPerPage.selectedIndex].value);
+            var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json";
+            switch (tableTypeValue)
             {
-                var tableTypeValue = tableType.options[tableType.selectedIndex].value;
-                var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json";
-                switch (tableTypeValue)
-                {
-                    case 'ALL':
-                        jsonUrl += "?type=all";
-                        break;
-                    case 'MOVIE':
-                        jsonUrl += "?type=movie";
-                        break;
-                    case 'TV':
-                        jsonUrl += "?type=tv";
-                        break;
-                }
-
-                if (includes !== "") {
-                    jsonUrl += "&include=" + includes;
-                }
-
-                if (excludes !== "") {
-                    jsonUrl += "&exclude=" + excludes;
-                }
-
-                if (start !== "") {
-                    jsonUrl += "&start=" + start;
-                }
-
-                if (max !== "") {
-                    jsonUrl += "&max=" + max;
-                }
-
-                if (sortby !== "") {
-                    jsonUrl += "&sortby=" + sortby
-                            + "&sortdir=" + sortdir.options[sortdir.selectedIndex].value;
-                }
-
-                if (artwork !== "") {
-                    jsonUrl += "&artwork=" + artwork;
-                }
-
-                console.log("URL: " + jsonUrl);
-                var jsondata = null;
-
-                $.ajax({
-                    url: jsonUrl,
-                    async: false,
-                    dataType: 'jsonp',
-                    'success': function(data)
-                    {
-                        jsondata = data;
-                        updateHtml(data);
-                    }
-                });
-                return jsondata;
+                case 'ALL':
+                    jsonUrl += "?type=all";
+                    break;
+                case 'MOVIE':
+                    jsonUrl += "?type=movie";
+                    break;
+                case 'SERIES':
+                    jsonUrl += "?type=series";
+                    break;
+                case 'SEASON':
+                    jsonUrl += "?type=season";
+                    break;
             }
 
-            function updateHtml(yamjdata)
-            {
-                var WI = {
-                    "template": "table.results",
-                    "header": {
-                        "column": ["ID", "VideoType", "Title", "Year", "Artwork", "Genres", "Poster", "Fanart"]
-                    },
-                    "directivehead": {
-                        "th": {
-                            "c<-column": {
-                                ".": "c"
-                            }
-                        },
-                        'td': {
-                            "c<-column": {
-                                "@class": "c"
-                            }
+            if (includes !== "") {
+                jsonUrl += "&include=" + includes;
+            }
+
+            if (excludes !== "") {
+                jsonUrl += "&exclude=" + excludes;
+            }
+
+            if (start !== "") {
+                jsonUrl += "&start=" + start;
+            }
+
+            if (max !== "") {
+                jsonUrl += "&max=" + max;
+            }
+
+            if (sortby !== "") {
+                jsonUrl += "&sortby=" + sortby
+                        + "&sortdir=" + sortdir.options[sortdir.selectedIndex].value;
+            }
+
+            if (artwork !== "") {
+                jsonUrl += "&artwork=" + artwork;
+            }
+
+            console.log("URL: " + jsonUrl);
+            var jsondata = null;
+
+            $.ajax({
+                url: jsonUrl,
+                async: false,
+                dataType: 'jsonp',
+                'success': function(data)
+                {
+                    jsondata = data;
+                    updateHtml(data);
+                    pageData(perPageValue);
+                }
+            });
+            return jsondata;
+        }
+
+        function updateHtml(yamjdata)
+        {
+            var WI = {
+                "template": "table.results",
+                "header": {
+                    "column": ["ID", "VideoType", "Title", "Year", "Artwork", "Genres", "Poster", "Fanart"]
+                },
+                "directivehead": {
+                    "th": {
+                        "c<-column": {
+                            ".": "c"
                         }
                     },
-                    "directivebody": {
-                        "tbody tr": {
-                            "result<-results": {
-                                "td.ID": "result.id",
-                                "td.VideoType": "result.videoType",
-                                "td.Title": "result.title",
-                                "td.Year": "result.videoYear",
-                                "td.Artwork": "result.artworkCount",
-                                "td.Genres": "result.genreCount",
-                                "td.Poster": function(arg) {
-                                    // Check to see if there are posters
-                                    if (arg.item.artwork.POSTER) {
-                                        // Get the first poster from the list
-                                        var poster = arg.item.artwork.POSTER[0];
-                                        if (poster.generatedId === 0) {
-                                            return "No Poster<br>was generated";
-                                        }
-                                        return "<img src=\"" + arg.context.baseArtworkUrl + poster.filename + "\" height=\"100\">";
-                                    } else {
-                                        return "No Poster<br>Found";
+                    'td': {
+                        "c<-column": {
+                            "@class": "c"
+                        }
+                    }
+                },
+                "directivebody": {
+                    "tbody tr": {
+                        "result<-results": {
+                            "td.ID": "result.id",
+                            "td.VideoType": "result.videoType",
+                            "td.Title": "result.title",
+                            "td.Year": "result.videoYear",
+                            "td.Artwork": "result.artworkCount",
+                            "td.Genres": "result.genreCount",
+                            "td.Poster": function(arg) {
+                                // Check to see if there are posters
+                                if (arg.item.artwork.POSTER) {
+                                    // Get the first poster from the list
+                                    var poster = arg.item.artwork.POSTER[0];
+                                    if (poster.generatedId === 0) {
+                                        return "No Poster<br>was generated";
                                     }
-                                },
-                                "td.Fanart": function(arg) {
-                                    // Check to see if there are fanart
-                                    if (arg.item.artwork.FANART) {
-                                        // Get the first poster from the list
-                                        var fanart = arg.item.artwork.FANART[0];
-                                        if (fanart.generatedId === 0) {
-                                            return "No Fanart<br>was generated";
-                                        }
-                                        return "<img src=\"" + arg.context.baseArtworkUrl + fanart.filename + "\" height=\"100\">";
-                                    } else {
-                                        return "No Fanart<br>Found";
+                                    return "<img src=\"" + arg.context.baseArtworkUrl + poster.filename + "\" height=\"100\">";
+                                } else {
+                                    return "No Poster<br>Found";
+                                }
+                            },
+                            "td.Fanart": function(arg) {
+                                // Check to see if there are fanart
+                                if (arg.item.artwork.FANART) {
+                                    // Get the first poster from the list
+                                    var fanart = arg.item.artwork.FANART[0];
+                                    if (fanart.generatedId === 0) {
+                                        return "No Fanart<br>was generated";
                                     }
+                                    return "<img src=\"" + arg.context.baseArtworkUrl + fanart.filename + "\" height=\"100\">";
+                                } else {
+                                    return "No Fanart<br>Found";
                                 }
                             }
                         }
                     }
-                };
+                }
+            };
 
-                var TEMPLATE = $p(WI.template).render(WI.header, WI.directivehead).compile(WI.directivebody);
+            var TEMPLATE = $p(WI.template).render(WI.header, WI.directivehead).compile(WI.directivebody);
 
-                var HEADER_DIR = {
-                    'span.results': 'count',
-                    'span.totalResults': 'totalCount',
-                    'span.queryTime': 'queryTime',
-                    'span.queryDuration': 'queryDuration'
-                };
+            var HEADER_DIR = {
+                'span.results': 'count',
+                'span.totalResults': 'totalCount',
+                'span.queryTime': 'queryTime',
+                'span.queryDuration': 'queryDuration'
+            };
 
-                $p('.header').render(yamjdata, HEADER_DIR);
-                $p('table.results').render(yamjdata, TEMPLATE);
+            $p('.header').render(yamjdata, HEADER_DIR);
+            $p('table.results').render(yamjdata, TEMPLATE);
 
-                var str = JSON.stringify(yamjdata, undefined, 4);
-                output(str);
-            }
+//                var str = JSON.stringify(yamjdata, undefined, 4);
+//                output(str);
+        }
 
-            // Add the source output to the end of the page
-            function output(inp)
-            {
-                // Clear the "pre" element if it exists
-                $('pre').empty();
-                document.body.appendChild(document.createElement('pre')).innerHTML = inp;
-            }
+        // Add the source output to the end of the page
+        function output(inp)
+        {
+            // Clear the "pre" element if it exists
+            $('pre').empty();
+            document.body.appendChild(document.createElement('pre')).innerHTML = inp;
+        }
+
+        function pageData(perPage)
+        {
+            $("div.holder").jPages({
+                containerID: "videos",
+                animation: "bounceInRight",
+                perPage: perPage,
+                delay: 20
+            });
+        }
 
         </script>
 
@@ -160,7 +186,8 @@
                         <select id="tableType">
                             <option value="ALL" selected="selected">All</option>
                             <option value="MOVIE">Movies</option>
-                            <option value="TV">TV</option>
+                            <option value="SERIES">Series</option>
+                            <option value="SEASON">Season</option>
                         </select>
                     </td>
                     <td></td>
@@ -204,22 +231,30 @@
                     <td>
                         <input type="text" id="formArtwork"/>
                     </td>
-                    <td></td>
-                    <td></td>
+                    <td align="right"><b>Items per Page: </b></td>
+                    <td>
+                        <select id="itemsPerPage">
+                            <option value="5" selected="selected">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td align="left">
                         <input type="button" value="Run Query" onclick="getIndexData(
-                        document.getElementById('tableType'),
-                        document.getElementById('formIncludes').value,
-                        document.getElementById('formExcludes').value,
-                        document.getElementById('formStart').value,
-                        document.getElementById('formMax').value,
-                        document.getElementById('formSortBy').value,
-                        document.getElementById('formSortDir'),
-                        document.getElementById('formArtwork').value
-                        );"/>
+                    document.getElementById('tableType'),
+                    document.getElementById('formIncludes').value,
+                    document.getElementById('formExcludes').value,
+                    document.getElementById('formStart').value,
+                    document.getElementById('formMax').value,
+                    document.getElementById('formSortBy').value,
+                    document.getElementById('formSortDir'),
+                    document.getElementById('formArtwork').value,
+                    document.getElementById('itemsPerPage')
+                    );"/>
                     </td>
                     <td></td>
                     <td></td>
@@ -248,6 +283,10 @@
             </table>
         </div>
 
+        <!--Navigation Holder-->
+        <div class="holder"></div>
+
+        <!--Data Items Container-->
         <div class="template">
             <table id="tablelist" class="results">
                 <thead>
@@ -255,7 +294,7 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="videos">
                     <tr>
                         <td></td>
                     </tr>
@@ -263,6 +302,6 @@
             </table>
         </div>
 
-        <h4>Source Data:</h4>
+        <!--<h4>Source Data:</h4>-->
     </body>
 </html>

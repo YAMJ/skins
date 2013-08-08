@@ -1,99 +1,101 @@
 <html>
-	<head>
-		<title>YAMJ v3</title>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-		<script src="https://rawgithub.com/pure/pure/master/libs/pure.js"></script>
+    <head>
+        <title>YAMJ v3</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script src="https://rawgithub.com/pure/pure/master/libs/pure.js"></script>
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
-  </head>
-	<body onLoad="getSystemInfo()">
-		<script type="text/javascript">
-			function getSystemInfo()
-			{
-				var jsonUrl = "http://localhost:8888/yamj3/system/info.json?addcounts=true";
+    </head>
+    <body onLoad="getSystemInfo();">
+        <script type="text/javascript">
+    function getSystemInfo()
+    {
+        var jsonUrl = "http://localhost:8888/yamj3/system/info.json?addcounts=true";
 
-				$.ajax({
-					url: jsonUrl,
-					async: false,
-					dataType: 'jsonp',
-					'success': function (data)
-					{
-						console.log(data);
-						yamjDir = {
-							'span.projectName' : 'projectName',
-							'span.projectVersion' : 'projectVersion',
-							'span.buildRevision' : 'buildRevision',
-							'span.javaVersion' : 'javaVersion',
-							'span.buildDate' : 'buildDate',
-							'span.startUpTime' : 'startUpTime',
-							'span.uptime' : 'uptime'
-						}
-						
-						countDir = {
-							'tr' : 
-							{
-								'count<-counts' : {
-									'span.countName' : function(arg) {
-										return toTitleCase(arg.pos);
-									},
-									'span.countValue' : function(arg) {
-										return arg.item;
-									}
-								}
-							}
-						}
-						
-						$p('.template').render(data, yamjDir);
-						$p('.table').render(data, countDir);
-					}
-				});
+        $.ajax({
+            url: jsonUrl,
+            async: false,
+            dataType: 'jsonp',
+            'success': function(data)
+            {
+                console.log(data);
+                yamjDir = {
+                    'span.projectName': 'projectName',
+                    'span.projectVersion': 'projectVersion',
+                    'span.buildRevision': 'buildRevision',
+                    'span.javaVersion': 'javaVersion',
+                    'span.buildDate': 'buildDate',
+                    'span.startUpTime': 'startUpTime',
+                    'span.uptime': 'uptime'
+                };
 
-			}
+                countDir = {
+                    'tr':
+                            {
+                                'count<-counts': {
+                                    'span.countName': function(arg) {
+                                        return toTitleCase(arg.pos);
+                                    },
+                                    'span.countValue': function(arg) {
+                                        return arg.item;
+                                    }
+                                }
+                            }
+                };
 
-			function toTitleCase(str)
-			{
-				return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-			}
+                $p('.template').render(data, yamjDir);
+                $p('.table').render(data, countDir);
+            }
+        });
 
- 		</script>
+    }
 
-		<h1>YAMJv3 System Info Test</h1>
-		<div class="template">
-			<h2><span class="projectName"></span></h2>
-			<table id="headertable">
-				<tr>
-					<td class="right"><b>Version: </b></td>
-					<td><span class="projectVersion"></span></td>
-				</tr>
-				<tr>
-					<td class="right"><b>Revision: </b></td>
-					<td><span class="buildRevision"></span></td>
-				</tr>
-				<tr>
-					<td class="right"><b>Java: </b></td>
-					<td><span class="javaVersion"></span></td>
-				</tr>
-				<tr>
-					<td class="right"><b>Build Date: </b></td>
-					<td><span class="buildDate"></span></td>
-				</tr>
-				<tr>
-					<td class="right"><b>Start-up Time: </b></td>
-					<td><span class="startUpTime"></span></td>
-				</tr>
-				<tr>
-					<td class="right"><b>Uptime: </b></td>
-					<td><span class="uptime"></span></td>
-				</tr>
-			</table>
-		</div>
-		<div class="table">
-			<h4>Counts:</h4>
-			<table id="tablelist">
-				<tr>
-					<td class="right"><b><span class="countName"></span>: </b></td>
-					<td><span class="countValue"></span></td>
-				</tr>
-			</table>
-		</div>
-	</body>
+    function toTitleCase(str)
+    {
+        return str.replace(/\w\S*/g, function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
+    }
+
+        </script>
+
+        <h1>YAMJv3 System Info Test</h1>
+        <div class="template">
+            <h2><span class="projectName"></span></h2>
+            <table id="headertable">
+                <tr>
+                    <td class="right"><b>Version: </b></td>
+                    <td><span class="projectVersion"></span></td>
+                </tr>
+                <tr>
+                    <td class="right"><b>Revision: </b></td>
+                    <td><span class="buildRevision"></span></td>
+                </tr>
+                <tr>
+                    <td class="right"><b>Java: </b></td>
+                    <td><span class="javaVersion"></span></td>
+                </tr>
+                <tr>
+                    <td class="right"><b>Build Date: </b></td>
+                    <td><span class="buildDate"></span></td>
+                </tr>
+                <tr>
+                    <td class="right"><b>Start-up Time: </b></td>
+                    <td><span class="startUpTime"></span></td>
+                </tr>
+                <tr>
+                    <td class="right"><b>Uptime: </b></td>
+                    <td><span class="uptime"></span></td>
+                </tr>
+            </table>
+        </div>
+        <div class="table">
+            <h4>Counts:</h4>
+            <table id="tablelist">
+                <tr>
+                    <td class="right"><b><span class="countName"></span>: </b></td>
+                    <td><span class="countValue"></span></td>
+                </tr>
+            </table>
+        </div>
+    </body>
 </html>

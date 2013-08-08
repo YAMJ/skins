@@ -1,121 +1,121 @@
 <html>
-	<head>
-		<title>YAMJ v3</title>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-		<script src="https://rawgithub.com/pure/pure/master/libs/pure.js"></script>
+    <head>
+        <title>YAMJ v3</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script src="https://rawgithub.com/pure/pure/master/libs/pure.js"></script>
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
-  </head>
-	<body>
-		<script type="text/javascript">
-			function getCounts()
-            {
-				var e = document.getElementById("tableType");
-				var tableType = e.options[e.selectedIndex].value;
-				var jsonUrl = "http://localhost:8888/yamj3/api/index/count.json?type=" + tableType.toLowerCase();
-				var jsondata = null;
+    </head>
+    <body>
+        <script type="text/javascript">
+            function getCounts()
+            {
+                var e = document.getElementById("tableType");
+                var tableType = e.options[e.selectedIndex].value;
+                var jsonUrl = "http://localhost:8888/yamj3/api/index/count.json?type=" + tableType.toLowerCase();
+                var jsondata = null;
 
-				console.log("URL: " + jsonUrl);
-				
-				$.ajax({
-					url: jsonUrl,
-					async: false,
-					dataType: 'jsonp',
-					'success': function (data)
-					{
-						jsondata = data;
-						updateHtml(data);
-					}
-				});
-				return jsondata;
-            }
+                console.log("URL: " + jsonUrl);
 
-			// Add the source output to the end of the page
-			function output(inp) {
-				document.body.appendChild(document.createElement('pre')).innerHTML = inp;
-			}
-			
-			function updateHtml(yamjdata) {
-				console.log(yamjdata);
-				var WI = {
-					"template":"table.results",
-					"header": {
-						"column":[ "Type", "Count", "CreateTimestamp", "UpdateTimestamp", "LastId" ]
-					},
-					"directivehead": {
-						"th": {
-							"c<-column": {
-								".":"c"
-							}
-						},
-						'td':{
-							"c<-column":{
-								"@class":"c"
-							}
-						}
-					},
-					"directivebody": {
-						"tbody tr": {
-							"list<-context":{
-								"td.Type"				: "list.type",
-								"td.Count"				: "list.count",
-								"td.CreateTimestamp"	: "list.createTimestampString",
-								"td.UpdateTimestamp"	: "list.updateTimestampString",
-								"td.LastId"				: "list.lastId"
-							}
-						}
-					}
-				};
-				
-				var TEMPLATE = $p( WI.template ).render( WI.header, WI.directivehead ).compile( WI.directivebody );
+                $.ajax({
+                    url: jsonUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(data)
+                    {
+                        jsondata = data;
+                        updateHtml(data);
+                    }
+                });
+                return jsondata;
+            }
 
-				$p('table.results').render( yamjdata, TEMPLATE );
-				var str = JSON.stringify(yamjdata, undefined, 4);
-				output(str);
-			}
-			
- 		</script>
+            // Add the source output to the end of the page
+            function output(inp) {
+                document.body.appendChild(document.createElement('pre')).innerHTML = inp;
+            }
 
-		<h2>YAMJv3 Database Counts</h2>
+            function updateHtml(yamjdata) {
+                console.log(yamjdata);
+                var WI = {
+                    "template": "table.results",
+                    "header": {
+                        "column": ["Type", "Count", "CreateTimestamp", "UpdateTimestamp", "LastId"]
+                    },
+                    "directivehead": {
+                        "th": {
+                            "c<-column": {
+                                ".": "c"
+                            }
+                        },
+                        'td': {
+                            "c<-column": {
+                                "@class": "c"
+                            }
+                        }
+                    },
+                    "directivebody": {
+                        "tbody tr": {
+                            "list<-context": {
+                                "td.Type": "list.type",
+                                "td.Count": "list.count",
+                                "td.CreateTimestamp": "list.createTimestampString",
+                                "td.UpdateTimestamp": "list.updateTimestampString",
+                                "td.LastId": "list.lastId"
+                            }
+                        }
+                    }
+                };
 
-		<form>
-			<table border="0">
-				<tr>
-					<td align="right"><b>Count Type: </b></td>
-					<td>
-						<select id="tableType">
-							<option value="ALL" selected="selected">All</option>
-							<option value="MOVIE">Movies</option>
-							<option value="SERIES">Series</option>
-							<option value="SEASON">Season</option>
-							<option value="EPISODE">Episodes</option>
-							<option value="PERSON">Person</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td align="left">
-						<input type="button" value="Run Query" onclick="getCounts()"/>
-					</td>
-				</tr>
-			</table>
-		</form>
+                var TEMPLATE = $p(WI.template).render(WI.header, WI.directivehead).compile(WI.directivebody);
 
-		<div class="template">
-			<table id="tablelist" class="results">
-				<thead>
-					<tr>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+                $p('table.results').render(yamjdata, TEMPLATE);
+                var str = JSON.stringify(yamjdata, undefined, 4);
+                output(str);
+            }
 
-		<h4>Source Data:</h4>
-	</body>
+        </script>
+
+        <h2>YAMJv3 Database Counts</h2>
+
+        <form>
+            <table border="0">
+                <tr>
+                    <td align="right"><b>Count Type: </b></td>
+                    <td>
+                        <select id="tableType">
+                            <option value="ALL" selected="selected">All</option>
+                            <option value="MOVIE">Movies</option>
+                            <option value="SERIES">Series</option>
+                            <option value="SEASON">Season</option>
+                            <option value="EPISODE">Episodes</option>
+                            <option value="PERSON">Person</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="left">
+                        <input type="button" value="Run Query" onclick="getCounts()"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="template">
+            <table id="tablelist" class="results">
+                <thead>
+                    <tr>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4>Source Data:</h4>
+    </body>
 </html>

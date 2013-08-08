@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+    <head>
+        <title>YAMJ v3</title>
+        <script src="js/jquery.js"></script>
+        <script src="js/pure.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
+    </head>
+    <body onload="getData();">
+        <script type="text/javascript">
+        var id = localStorage.getItem("id");
+        var type = localStorage.getItem("type");
+        var jsondata;
+        var YAMJ_DIR = {
+            'span.id': 'result.id',
+            'span.title': 'result.title',
+            'span.plot': 'result.plot',
+            'div.posters': {
+                'poster<-result.artwork.POSTER': {
+                    'img@src': function(arg)
+                    {
+                        // Check to see if there are posters
+                        if (arg.context.result.artwork.POSTER) {
+                            // Get the first poster from the list
+                            var poster = arg.context.result.artwork.POSTER[0];
+                            if (poster.generatedId === 0) {
+                                return "pictures/dummy.jpg";
+                            }
+                            return arg.context.baseArtworkUrl + poster.filename;
+                        } else {
+                            return "pictures/dummy.jpg";
+                        }
+                    }
+
+                }
+            }
+        };
+
+        function getData()
+        {
+            var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json";
+            console.log("URL: " + jsonUrl);
+
+            $.ajax({
+                url: jsonUrl,
+                async: false,
+                dataType: 'jsonp',
+                'success': function(data)
+                {
+                    jsondata = data;
+                    updateHtml(data);
+                }
+            });
+            return jsondata;
+        }
+
+        function updateHtml(yamjdata)
+        {
+//            console.log(yamjdata);
+            $p('.template').render(yamjdata, YAMJ_DIR);
+
+            var str = JSON.stringify(yamjdata, undefined, 4);
+            output(str);
+        }
+
+        // Add the source output to the end of the page
+        function output(inp)
+        {
+            document.body.appendChild(document.createElement('pre')).innerHTML = inp;
+        }
+
+        </script>
+        <h1>Detail Page</h1>
+
+        <div class="template">
+            <table id="headertable">
+                <tr>
+                    <td align="right"><b>ID: </b></td>
+                    <td><span class="id"></span></td>
+                </tr>
+                <tr>
+                    <td align="right"><b>Title: </b></td>
+                    <td><span class="title"></span></td>
+                </tr>
+                <tr>
+                    <td align="right"><b>Plot: </b></td>
+                    <td><span class="plot"></span></td>
+                </tr>
+            </table>
+            <div class="posters">
+                <img src="" width="200">
+            </div>
+        </div>
+
+        <h4>Source data:</h4>
+
+    </body>
+</html>

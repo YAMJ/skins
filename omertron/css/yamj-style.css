@@ -35,6 +35,10 @@
     font-size:12px; margin:6px 0;overflow:auto;
 }
 
+#container .poster {
+    width: 180px;
+}
+
 html, #tablelist,#headertable,#logo,#message
 {
     /* Applies to all pages */

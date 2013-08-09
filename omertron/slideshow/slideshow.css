@@ -1,0 +1,61 @@
+body {
+    background-color: #d6d6d6;
+}
+
+div#slideshowCtr {
+    width: 200px;
+    height: 310px;
+    margin: auto;
+    overflow: hidden;
+}
+
+div#slideshowFanart {
+    width: 500px;
+    height: 310px;
+    margin: auto;
+    overflow: hidden;
+}
+
+div.glow {
+    box-shadow: 0px 2px 3px #fff;
+}
+
+div#imgRoll {
+    height: inherit;
+    position: relative;
+    left: 0px;
+}
+
+div#imgRoll img {
+    float: left;
+    position: relative;
+}
+
+a#next, a#prev {
+    width: 20px;
+    display: none;
+    background-color: rgba(0,0,0,0.7);
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 15px;
+    font-family: Helvetica, sans-serif;
+    padding: 4px 10px 4px 10px;
+    position: relative;
+    top: -250px;
+}
+
+a#next:hover, a#prev:hover {
+    background-color: #000;
+    cursor: pointer;
+}
+
+a#next {
+    border-radius: 6px 0px 0px 6px;
+    float: right;
+}
+
+a#prev {
+    border-radius: 0px 6px 6px 0px;
+    float: left;
+}

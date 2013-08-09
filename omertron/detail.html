@@ -4,95 +4,156 @@
         <title>YAMJ v3</title>
         <script src="js/jquery.js"></script>
         <script src="js/pure.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
-    </head>
-    <body onload="getData();">
+        <link rel="stylesheet" type="text/css" href="css/yamj-style.css"/>
+        <!--Slider stuff-->
+        <link href="slideshow/slideshow.css" rel="stylesheet" type="text/css" />
+        <script src="slideshow/slideshow.js" type="text/javascript"></script>
         <script type="text/javascript">
-        var id = localStorage.getItem("id");
-        var type = localStorage.getItem("type");
-        var jsondata;
-        var YAMJ_DIR = {
-            'span.id': 'result.id',
-            'span.title': 'result.title',
-            'span.plot': 'result.plot',
-            'div.posters': {
-                'poster<-result.artwork.POSTER': {
-                    'img@src': function(arg)
-                    {
-                        // Check to see if there are posters
-                        if (arg.context.result.artwork.POSTER) {
-                            // Get the first poster from the list
-                            var poster = arg.context.result.artwork.POSTER[0];
-                            if (poster.generatedId === 0) {
+            var id = localStorage.getItem("id");
+            var type = localStorage.getItem("type");
+            var jsondata;
+            var YAMJ_DIR = {
+                'span.id': 'result.id',
+                'span.title': 'result.title',
+                'span.year': 'result.videoYear',
+                'span.plot': 'result.plot',
+                'span.genres': function(arg)
+                {
+                    var genres = arg.context.result.genres;
+                    var output = "";
+                    var first = true;
+                    for (i = 0; i < genres.length; i++) {
+                        if (first) {
+                            first = false;
+                        } else {
+                            output += ", ";
+                        }
+                        output += genres[i].name;
+                    }
+                    return output;
+                },
+                'img.poster': {
+                    'poster<-result.artwork.POSTER': {
+                        '@src': function(arg)
+                        {
+                            // Check to see if there are posters
+                            if (arg.item) {
+                                // Get the first poster from the list
+                                if (arg.item.generatedId === 0) {
+                                    return "pictures/dummy.jpg";
+                                }
+                                return arg.context.baseArtworkUrl + arg.item.filename;
+                            } else {
                                 return "pictures/dummy.jpg";
                             }
-                            return arg.context.baseArtworkUrl + poster.filename;
-                        } else {
+                        }
+
+                    }
+                },
+                'img.fanart@src': function(arg)
+                {
+                    var fanart = arg.context.result.artwork.FANART;
+                    // Check to see if there are posters
+                    if (fanart) {
+                        // Get the first poster from the list
+                        if (fanart[0].generatedId === 0) {
                             return "pictures/dummy.jpg";
                         }
+                        return arg.context.baseArtworkUrl + fanart[0].filename;
+                    } else {
+                        return "pictures/dummy.jpg";
                     }
-
                 }
+            };
+
+            function getData()
+            {
+                var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json";
+                console.log("URL: " + jsonUrl);
+
+                $.ajax({
+                    url: jsonUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(data)
+                    {
+                        jsondata = data;
+                        updateHtml(data);
+                        //outputJson(data);
+                        slideshow();
+                    }
+                });
+                return jsondata;
             }
-        };
 
-        function getData()
-        {
-            var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json";
-            console.log("URL: " + jsonUrl);
+            function updateHtml(yamjdata)
+            {
+                $p('.template').render(yamjdata, YAMJ_DIR);
+            }
 
-            $.ajax({
-                url: jsonUrl,
-                async: false,
-                dataType: 'jsonp',
-                'success': function(data)
-                {
-                    jsondata = data;
-                    updateHtml(data);
-                }
-            });
-            return jsondata;
-        }
-
-        function updateHtml(yamjdata)
-        {
-//            console.log(yamjdata);
-            $p('.template').render(yamjdata, YAMJ_DIR);
-
-            var str = JSON.stringify(yamjdata, undefined, 4);
-            output(str);
-        }
-
-        // Add the source output to the end of the page
-        function output(inp)
-        {
-            document.body.appendChild(document.createElement('pre')).innerHTML = inp;
-        }
+            // Add the source output to the end of the page
+            function outputJson(yamjdata)
+            {
+                var sourceData = document.getElementById("sourceData");
+                sourceData.setAttribute("class", "code");
+                sourceData.innerHTML = '<h4>Source data:</h4>';
+                sourceData.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(yamjdata, undefined, 4);
+            }
 
         </script>
-        <h1>Detail Page</h1>
+    </head>
+    <body onload="getData();">
 
-        <div class="template">
-            <table id="headertable">
-                <tr>
-                    <td align="right"><b>ID: </b></td>
-                    <td><span class="id"></span></td>
-                </tr>
-                <tr>
-                    <td align="right"><b>Title: </b></td>
-                    <td><span class="title"></span></td>
-                </tr>
-                <tr>
-                    <td align="right"><b>Plot: </b></td>
-                    <td><span class="plot"></span></td>
-                </tr>
-            </table>
-            <div class="posters">
-                <img src="" width="200">
-            </div>
+        <div id="logo">
+            <br>
+            <h1>Detail Page</h1>
+            <br>
         </div>
 
-        <h4>Source data:</h4>
-
+        <div class="template">
+            <table>
+                <col width="200px">
+                <col width="50px">
+                <col width="250px">
+                <col width="600px">
+                <tbody>
+                    <tr>
+                        <td rowspan="10">
+                            <div id="slideshowCtr" class="glow">
+                                <div id="imgRoll">
+                                    <img class="poster" src=""/>
+                                </div>
+                            </div>
+                            <a id="next">-></a>
+                            <a id="prev"><-</a>
+                        </td>
+                        <td align="right"><b>ID: </b></td>
+                        <td><span class="id"></span></td>
+                        <td rowspan="10">
+                            <img class="fanart" src="" height="310px"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right"><b>Title: </b></td>
+                        <td><span class="title"></span></td>
+                    </tr>
+                    <tr>
+                        <td align="right"><b>Year: </b></td>
+                        <td><span class="year"></span></td>
+                    </tr>
+                    <tr>
+                        <td align="right"><b>Plot: </b></td>
+                        <td><span class="plot"></span></td>
+                    </tr>
+                    <tr>
+                        <td align="right"><b>Genres: </b></td>
+                        <td>
+                            <span class="genres"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="sourceData"></div>
     </body>
 </html>

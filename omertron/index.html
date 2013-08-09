@@ -27,8 +27,8 @@
         var LIST_DIR = {
             "div.block": {
                 "result<-results": {
-                    "span.Title": "result.title",
-                    "img.Poster@src": function(arg) {
+                    "span.title": "result.title",
+                    "img.poster@src": function(arg) {
                         // Check to see if there are posters
                         if (arg.item.artwork.POSTER) {
                             // Get the first poster from the list
@@ -41,7 +41,7 @@
                             return "pictures/dummy.jpg";
                         }
                     },
-                    "img.Poster@onclick": function(arg) {
+                    "img.poster@onclick": function(arg) {
                         return "setId('" + arg.item.videoType + "', " + arg.item.id + ")";
                     }
                 }
@@ -53,6 +53,7 @@
             localStorage.setItem("type", type);
             localStorage.setItem("id", id);
             console.log("Storing value: " + type + "-" + id);
+            window.location.href="detail.html";
         }
 
         // This function calls the API to get the JSON data.
@@ -109,8 +110,8 @@
         <div id="container">
             <div id="yRow" class="row">
                 <div id="yBlock" class="block">
-                    <img class="Poster" src="" width="180"><br>
-                    <span class="Title"></span>
+                    <img class="poster" src="" width="180"><br>
+                    <span class="title"></span>
                 </div>
                 <br/>
             </div>

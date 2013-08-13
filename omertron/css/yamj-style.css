@@ -121,6 +121,32 @@ body {
     text-align: center;
 }
 /* detail page */
+.header
+{
+    height: auto;
+    width: auto;
+	font-size:1.8em;
+	font-weight: bold;
+    text-align: center;
+    }
+#home_left {
+	width: 120px;
+	position: absolute;
+	top: 0px;
+	left: 10px;
+	}
+#home_right {
+	position: absolute;
+	top: 0px;
+	right: 10px;
+	}	
+.header_title {
+     padding-top:10px;
+	 padding-left:150px;
+	}
+.header_year {
+    padding-top:10px;
+	}	
 .id  {
     float: left;
 	}

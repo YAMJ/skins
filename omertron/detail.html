@@ -8,6 +8,7 @@
         <!--Slider stuff-->
         <link href="slideshow/slideshow.css" rel="stylesheet" type="text/css" />
         <script src="slideshow/slideshow.js" type="text/javascript"></script>
+        <script src="slideshow/slideshowFanart.js" type="text/javascript"></script>
         <script type="text/javascript">
             var id = localStorage.getItem("id");
             var type = localStorage.getItem("type");
@@ -50,18 +51,22 @@
 
                     }
                 },
-                'img.fanart@src': function(arg)
-                {
-                    var fanart = arg.context.result.artwork.FANART;
-                    // Check to see if there are posters
-                    if (fanart) {
-                        // Get the first poster from the list
-                        if (fanart[0].generatedId === 0) {
-                            return "pictures/dummy.jpg";
+               'img.fanart': {
+                    'fanart<-result.artwork.FANART': {
+                        '@src': function(arg)
+                        {
+                            // Check to see if there are fanart
+                            if (arg.item) {
+                                // Get the first fanart from the list
+                                if (arg.item.generatedId === 0) {
+                                    return "pictures/dummy.jpg";
+                                }
+                                return arg.context.baseArtworkUrl + arg.item.filename;
+                            } else {
+                                return "pictures/dummy.jpg";
+                            }
                         }
-                        return arg.context.baseArtworkUrl + fanart[0].filename;
-                    } else {
-                        return "pictures/dummy.jpg";
+
                     }
                 }
             };
@@ -80,7 +85,10 @@
                         jsondata = data;
                         updateHtml(data);
                         //outputJson(data);
+						// slideshow for poster
                         slideshow();
+						// add slideshow for fanart
+						slideshowFanart();
                     }
                 });
                 return jsondata;
@@ -111,11 +119,9 @@
         </div>
 
         <div class="template">
+		<!-- main table for detail page -->
             <table>
-                <col width="200px">
-                <col width="50px">
-                <col width="250px">
-                <col width="600px">
+                <col width="400px">
                 <tbody>
                     <tr>
                         <td rowspan="10">
@@ -124,33 +130,42 @@
                                     <img class="poster" src=""/>
                                 </div>
                             </div>
-                            <a id="next">-></a>
-                            <a id="prev"><-</a>
-                        </td>
-                        <td align="right"><b>ID: </b></td>
-                        <td><span class="id"></span></td>
-                        <td rowspan="10">
-                            <img class="fanart" src="" height="310px"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right"><b>Title: </b></td>
-                        <td><span class="title"></span></td>
-                    </tr>
-                    <tr>
-                        <td align="right"><b>Year: </b></td>
-                        <td><span class="year"></span></td>
-                    </tr>
-                    <tr>
-                        <td align="right"><b>Plot: </b></td>
-                        <td><span class="plot"></span></td>
-                    </tr>
-                    <tr>
-                        <td align="right"><b>Genres: </b></td>
-                        <td>
-                            <span class="genres"></span>
+                            <a id="next">=></a>
+                            <a id="prev"><=</a>
+                        </td>                 
+						<td rowspan="10">
+                            <div id="slideshowFanart" class="glow">
+                                <div id="imgRollFanart">
+                                    <img class="fanart" src=""/>
+                                </div>
+                            </div>
+                            <a id="nextFanart">=></a>
+                            <a id="prevFanart"><=</a>
                         </td>
                     </tr>
+			<!-- split table for image and text --> 
+					<table>
+						<tr>
+			<!-- add class for each object in the detail section of yamj-style.css -->
+							<td class="id"><b>ID: </b></td><td><span class="id"></span></td>
+					   
+							<td class="title"><b>Title: </b><span class="title"></span></td>
+				
+							<td class="year"><b>Year: </b><span class="year"></span></td>
+						</tr>
+						</table>
+						<table>
+						<tr>
+							<td align="left"><b>Plot: </b></td>
+							<td><span class="plot"></span></td>
+						</tr>
+						<tr>
+							<td align="right"><b>Genres: </b></td>
+							<td>
+								<span class="genres"></span>
+							</td>
+						</tr>
+					</table>
                 </tbody>
             </table>
         </div>

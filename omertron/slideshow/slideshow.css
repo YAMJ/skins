@@ -1,16 +1,9 @@
 body {
     background-color: #d6d6d6;
 }
-
+/* poster section */
 div#slideshowCtr {
-    width: 200px;
-    height: 310px;
-    margin: auto;
-    overflow: hidden;
-}
-
-div#slideshowFanart {
-    width: 500px;
+    width: 209px;
     height: 310px;
     margin: auto;
     overflow: hidden;
@@ -31,20 +24,34 @@ div#imgRoll img {
     position: relative;
 }
 
-a#next, a#prev {
+a#next {
     width: 20px;
     display: none;
-    background-color: rgba(0,0,0,0.7);
+    background-color: #000;
     color: #fff;
     text-transform: uppercase;
     text-align: center;
     font-size: 15px;
     font-family: Helvetica, sans-serif;
     padding: 4px 10px 4px 10px;
-    position: relative;
-    top: -250px;
+    position: absolute;
+    top: 200px;
+	left: 274px;
 }
-
+a#prev {
+    width: 20px;
+    display: none;
+    background-color: #000;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 15px;
+    font-family: Helvetica, sans-serif;
+    padding: 4px 10px 4px 10px;
+    position: absolute;
+    top: 200px;
+	left: 110px;
+}
 a#next:hover, a#prev:hover {
     background-color: #000;
     cursor: pointer;
@@ -56,6 +63,67 @@ a#next {
 }
 
 a#prev {
+    border-radius: 0px 6px 6px 0px;
+    float: left;
+}
+/* fanart section */
+
+div#slideshowFanart {
+    width: 551px;
+    height: 310px;
+    margin: auto;
+    overflow: hidden;
+}
+div#imgRollFanart {
+    height: inherit;
+    position: relative;
+    left: 0px;
+}
+
+div#imgRollFanart img {
+    float: left;
+    position: relative;
+}
+
+a#nextFanart {
+    width: 20px;
+    display: none;
+    background-color: #000;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 15px;
+    font-family: Helvetica, sans-serif;
+    padding: 4px 10px 4px 10px;
+    position: absolute;
+	top: 200px;
+	left: 924px;
+}
+a#prevFanart {
+    width: 20px;
+    display: none;
+    background-color: #000;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 15px;
+    font-family: Helvetica, sans-serif;
+    padding: 4px 10px 4px 10px;
+    position: absolute;
+    top: 200px;
+	left: 413px;
+}
+a#nextFanart:hover, a#prevFanart:hover {
+	background-color: #000;
+    cursor: pointer;
+}
+
+a#nextFanart {
+    border-radius: 6px 0px 0px 6px;
+    float: right;
+}
+
+a#prevFanart {
     border-radius: 0px 6px 6px 0px;
     float: left;
 }

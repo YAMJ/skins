@@ -120,3 +120,18 @@ body {
     column-span: all;
     text-align: center;
 }
+/* detail page */
+.id  {
+    float: left;
+	}
+.title {
+	width: 810px;
+	font-weight: bold;
+	text-align: center;
+	font-size:1.1em;
+	}
+.year {
+	font-weight: bold;
+	text-align: right;
+	font-size:1.1em;
+	}	

@@ -1,12 +1,15 @@
 body {
     background-color: #d6d6d6;
 }
-/* poster section */
+
 div#slideshowCtr {
     width: 209px;
     height: 310px;
     margin: auto;
     overflow: hidden;
+	position: absolute;
+	left: 20px;
+	top: 60px;
 }
 
 div.glow {
@@ -22,6 +25,7 @@ div#imgRoll {
 div#imgRoll img {
     float: left;
     position: relative;
+
 }
 
 a#next {
@@ -36,7 +40,7 @@ a#next {
     padding: 4px 10px 4px 10px;
     position: absolute;
     top: 200px;
-	left: 274px;
+	left: 188px;
 }
 a#prev {
     width: 20px;
@@ -50,7 +54,7 @@ a#prev {
     padding: 4px 10px 4px 10px;
     position: absolute;
     top: 200px;
-	left: 110px;
+	left: 20px;
 }
 a#next:hover, a#prev:hover {
     background-color: #000;
@@ -69,15 +73,19 @@ a#prev {
 /* fanart section */
 
 div#slideshowFanart {
-    width: 551px;
-    height: 310px;
+    width: 980px;
+    height: 524px;
     margin: auto;
     overflow: hidden;
+	opacity: 0.35;
+	position: absolute;
+	top: 85px;
 }
 div#imgRollFanart {
     height: inherit;
     position: relative;
     left: 0px;
+
 }
 
 div#imgRollFanart img {

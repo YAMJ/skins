@@ -19,11 +19,17 @@ function slideshowFanart() {
     // set maximum scroll distance
     var maxScrollFanart = imgRollFanartWidthFanart - parseInt(ctrWidthFanart) + 'px';
 
-    // on slideshow hover show controls
+    // on slideshow hover show fanart
     $('div#slideshowFanart').hover(function() {
-        $('a#nextFanart, a#prevFanart').fadeIn('fast');
+		$('.plot').css('visibility', 'hidden');
+		$('.genres').css('visibility', 'hidden');
+		$('div#slideshowCtr ').css('visibility', 'hidden');
+		$('div#slideshowFanart').css('opacity', '1');
     }, function() {
-        $('a#nextFanart, a#prevFanart').fadeOut('fast');
+		$('.plot').css('visibility', 'visible');
+		$('.genres').css('visibility', 'visible');
+		$('div#slideshowCtr ').css('visibility', 'visible');
+		$('div#slideshowFanart').css('opacity', '0.35');
     });
 
     // move to nextFanart right image
@@ -58,8 +64,8 @@ function slideshowFanart() {
         $('a#nextFanart').click();
     }
 
-    // simulate click every 5 seconds
-    var slideDurationFanart = window.setInterval(slideFanart, 5000);
+    // simulate click every 10 seconds
+    var slideDurationFanart = window.setInterval(slideFanart, 10000);
 
     // on click deactivate auto-scrolling
     $('a#prevFanart, a#nextFanart').click(

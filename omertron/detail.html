@@ -13,21 +13,24 @@
             var id = localStorage.getItem("id");
             var type = localStorage.getItem("type");
             var jsondata;
-            // add header for detail pqge with name (year)
-            var DETAIL_HEADER = {
-		'span.header_title': 'result.title',
-		'span.header_year': 'result.videoYear'
-		};
+//			var jsonPersondata;
+			var DETAIL_HEADER = {
+				'span.header_title': 'result.title',
+				'span.header_year': 'result.videoYear',
+				'span.header_id': 'result.id'
+						};
+					
             var YAMJ_DIR = {
-                'span.id': 'result.id',
-                // commented to move in the header of the detail page 
-                // 'span.title': 'result.title',
-                // 'span.year': 'result.videoYear',
-                'span.plot': 'result.plot',
+
+			//  'span.title': 'result.title',
+            //  'span.year': 'result.videoYear',
+                'span.plot': function(arg) {
+				return "<b>Plot: </b>" +arg.context.result.plot;
+				},
                 'span.genres': function(arg)
                 {
                     var genres = arg.context.result.genres;
-                    var output = "";
+                    var output = "<b>Genres: </b>";
                     var first = true;
                     for (i = 0; i < genres.length; i++) {
                         if (first) {
@@ -39,24 +42,7 @@
                     }
                     return output;
                 },
-                'img.poster': {
-                    'poster<-result.artwork.POSTER': {
-                        '@src': function(arg)
-                        {
-                            // Check to see if there are posters
-                            if (arg.item) {
-                                // Get the first poster from the list
-                                if (arg.item.generatedId === 0) {
-                                    return "pictures/dummy.jpg";
-                                }
-                                return arg.context.baseArtworkUrl + arg.item.filename;
-                            } else {
-                                return "pictures/dummy.jpg";
-                            }
-                        }
-
-                    }
-                },
+              
                'img.fanart': {
                     'fanart<-result.artwork.FANART': {
                         '@src': function(arg)
@@ -74,12 +60,37 @@
                         }
 
                     }
+                },
+		 'img.poster': {
+                    'poster<-result.artwork.POSTER': {
+                        '@src': function(arg)
+                        {
+                            // Check to see if there are posters
+                            if (arg.item) {
+                                // Get the first poster from the list
+                                if (arg.item.generatedId === 0) {
+                                    return "pictures/dummy.jpg";
+                                }
+                                return arg.context.baseArtworkUrl + arg.item.filename;
+                            } else {
+                                return "pictures/dummy.jpg";
+                            }
+                        }
+
+                    }
                 }
             };
-
+//			var YAMJ_PERSON = {
+//						 'span.people': function(arg)
+//							{
+//								var persons = arg.context.result;
+//								var output = "<b>People: </b>"+people;
+//								return output;
+//							},
+//						};
             function getData()
             {
-                var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json?dataitems=genre,artwork,plot";
+                   var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json?dataitems=genre,artwork,plot";
                 console.log("URL: " + jsonUrl);
 
                 $.ajax({
@@ -89,23 +100,43 @@
                     'success': function(data)
                     {
                         jsondata = data;
-                        updateHtml(data);
-                        //outputJson(data);
-		// slideshow for poster
-                        slideshow();
-		// add slideshow for fanart
+			updateHtml(data);
+                        //getPersondata();
+			//outputJson(data);
+			// add slideshow for fanart
 			slideshowFanart();
+			// slideshow for poster
+                        slideshow();
                     }
                 });
                 return jsondata;
             }
-
+//         function getPersonData()
+//            {
+//                   var jsonPersonUrl = "http://localhost:8888/yamj3/api/person/movie" + "/" + id + ".json?";
+//                console.log("URL: " + jsonPersonUrl);
+//                $.ajax({
+//                    url: jsonPersonUrl,
+//                    async: false,
+//                    dataType: 'jsonp',
+//                    'success': function(dataPerson)
+//                    {
+//					  jsonPersondata = dataPerson;
+//						updatePersonHtml(dataPerson);
+//						outputJson(dataPerson);
+//                    }
+//                });
+//                return jsonPersondata;
+//            }
             function updateHtml(yamjdata)
             {
-            	$p('.header').render(yamjdata, DETAIL_HEADER);
+		$p('.header').render(yamjdata, DETAIL_HEADER);
                 $p('.template').render(yamjdata, YAMJ_DIR);
             }
-
+//			function updatePersonHtml(yamjdataPerson)
+//            {
+//				$p('.people').render(yamjdataPerson, YAMJ_PERSON);
+//            }
             // Add the source output to the end of the page
             function outputJson(yamjdata)
             {
@@ -114,47 +145,43 @@
                 sourceData.innerHTML = '<h4>Source data:</h4>';
                 sourceData.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(yamjdata, undefined, 4);
             }
-
+//			function outputPersonJson(yamjdataPerson)
+//            {
+//                var sourceData = document.getElementById("sourceData");
+//                sourceData.setAttribute("class", "code");
+//                sourceData.innerHTML = '<h4>Source data:</h4>';
+//                sourceData.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(yamjdataPerson, undefined, 4);
+//            }
         </script>
     </head>
     <body onload="getData();">
-    	<!-- add header for movie name  -->
-	<div class="header">
-		<table>
-			<tr>
-			<!-- Yamj logo is activ and return to home screen -->
-				<td id="home_left">
-					<a href="./index.html" target="_blank">
-						<img src="./pictures/yamj-logo_repeat.png" width="150px">
-					</a>
-				</td>
-				<td id="home_right">
-					<a href="./index.html" target="_blank">
-						<img src="./pictures/yamj-logo_repeat.png" width="150px">
-					</a>
-				</td>
-			<!-- store name and year in the middle of the 2 yamj logo --> 
-				<td width="850px"><span class="header_title"></span> (<span class="header_year"></span>)</td>
-			</tr>
-		</table>
-	</div>
 
+		<div class="header">
+			<table>
+				<tr>
+			<!-- add header for movie name  -->
+					<td id="home_left">
+						<a href="./index.html" target="_blank">
+							<img src="./pictures/yamj-logo_repeat.png" width="150px">
+						</a>
+					</td>
+					<td id="home_right">
+						<a href="./index.html" target="_blank">
+							<img src="./pictures/yamj-logo_repeat.png" width="150px">
+						</a>
+					</td>
+					<td width="850px">
+						<span class="header_title"></span> (<span class="header_year"></span>) -id: <span class="header_id"></span>
+					</td>
+				</tr>
+			</table>
+		</div>
 
         <div class="template">
 		<!-- main table for detail page -->
             <table>
-                <col width="400px">
-                <tbody>
-                    <tr>
-                        <td rowspan="10">
-                            <div id="slideshowCtr" class="glow">
-                                <div id="imgRoll">
-                                    <img class="poster" src=""/>
-                                </div>
-                            </div>
-                            <a id="next">=></a>
-                            <a id="prev"><=</a>
-                        </td>                 
+                  <tbody>
+                    <tr>     
 			<td rowspan="10">
                             <div id="slideshowFanart" class="glow">
                                 <div id="imgRollFanart">
@@ -164,31 +191,28 @@
                             <a id="nextFanart">=></a>
                             <a id="prevFanart"><=</a>
                         </td>
+			<td rowspan="10">
+                            <div id="slideshowCtr" class="glow">
+                                <div id="imgRoll">
+                                    <img class="poster" src=""/>
+                                </div>
+                            </div>
+                            <a id="next">=></a>
+                            <a id="prev"><=</a>
+                        </td>        
                     </tr>
 			<!-- split table for image and text --> 
-		<table>
-			<tr>
-			<!-- add class for each object in the detail section of yamj-style.css -->
-				<td class="id"><b>ID: </b></td><td><span class="id"></span></td>
-					   
-			<!-- ************ commented while added in the header section  
-							<td class="title"><b>Title: </b><span class="title"></span></td>
-				
-							<td class="year"><b>Year: </b><span class="year"></span></td>
-						</tr>
-			*********************************************************************  --> 
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<td align="left"><b>Plot: </b></td>
-				<td><span class="plot"></span></td>
-			</tr>
-			<tr>
-				<td align="right"><b>Genres: </b></td>
-				<td><span class="genres"></span></td>
-			</tr>
-		</table>
+			<table>
+				<tr>
+					<td><span class="plot"></span></td>
+				</tr>
+				<tr>
+					<td><span class="genres"></span></td>
+				</tr>
+<!--						<tr>
+							<td><span class="people"></span></td>
+						</tr> -->
+			</table>
                 </tbody>
             </table>
         </div>

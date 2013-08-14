@@ -79,7 +79,7 @@
 
             function getData()
             {
-                var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json";
+                var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json?dataitems=genre,artwork,plot";
                 console.log("URL: " + jsonUrl);
 
                 $.ajax({

@@ -23,11 +23,15 @@ function slideshowFanart() {
     $('div#slideshowFanart').hover(function() {
 		$('.plot').css('visibility', 'hidden');
 		$('.genres').css('visibility', 'hidden');
+		$('.actor').css('visibility', 'hidden');
+		$('.crew').css('visibility', 'hidden');
 		$('div#slideshowCtr ').css('visibility', 'hidden');
 		$('div#slideshowFanart').css('opacity', '1');
     }, function() {
 		$('.plot').css('visibility', 'visible');
 		$('.genres').css('visibility', 'visible');
+		$('.actor').css('visibility', 'visible');
+		$('.crew').css('visibility', 'visible');
 		$('div#slideshowCtr ').css('visibility', 'visible');
 		$('div#slideshowFanart').css('opacity', '0.35');
     });

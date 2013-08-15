@@ -172,26 +172,36 @@ body {
 	text-align: justify;
 	font-size:1.0em;
 	position: absolute;
-	top: 125px;
+	top: 95px;
 	left: 240px;
 	}
 .genres {
-	width: 730px;
+	width: 950px;
 	color:#fff;
 	font-weight: normal;
 	text-align: justify;
 	font-size:1.0em;
 	position: absolute;
-	top: 95px;
-	left: 240px;
+	top: 385px;
+	left: 20px;
+	}
+.crew {
+	width: 950px;
+	color:#fff;
+	font-weight: normal;
+	text-align: justify;
+	font-size:1.0em;
+	position: absolute;
+	top: 415px;
+	left: 20px;
 	}	
-.people {
-	width: 730px;
+.actor {
+	width: 950px;
 	color:#fff;
 	font-weight: normal;
 	text-align: justify;
 	font-size:1.0em;
 	position: absolute;
-	top: 45px;
-	left: 240px;
+	top: 455px;
+	left: 20px;
 	}	

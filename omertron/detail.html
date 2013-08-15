@@ -80,19 +80,49 @@
                     }
                 }
             };
-//			var YAMJ_PERSON = {
-//						 'span.people': function(arg)
-//							{
-//								var persons = arg.context.result;
-//								var output = "<b>People: </b>"+people;
-//								return output;
-//							},
-//						};
+		var YAMJ_ACTOR = {
+			'span.actorinfo': function(arg)   {
+				var actors = arg.context.results;
+				var outputActor = "<b>Actor(Role): </b>";
+				var first = true;
+				for (i = 0; i < actors.length; i++) {
+					if (first) {
+						first = false;
+					} else {
+						outputActor += ", ";
+						}
+						outputActor += actors[i].name;
+						outputActor += "("+actors[i].role+")";
+					}
+					outputActor += ",... ";
+					return outputActor;
+					}
+				};
+		var YAMJ_CREW = {
+			'span.crewinfo': function(arg)   {
+				var crew = arg.context.results;
+				var outputCrew = "<b>Crew(Job): </b>";
+				var first = true;
+				for (i = 0; i < crew.length; i++) {
+					if (first) {
+						first = false;
+					} else {
+						outputCrew += ", ";
+					}
+					outputCrew += crew[i].name;
+					outputCrew += "("+crew[i].job+")";
+					}
+					return outputCrew;
+					}
+				};
             function getData()
-            {
-                   var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json?dataitems=genre,artwork,plot";
+            {	   
+		var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json?dataitems=genre,artwork,plot";
                 console.log("URL: " + jsonUrl);
-
+		var jsonActorUrl = "http://localhost:8888/yamj3/api/person/movie" + ".json?id=" + id + "&job=ACTOR&start=-1&max=6";
+                console.log("URL: " + jsonActorUrl);
+		var jsonCrewUrl = "http://localhost:8888/yamj3/api/person/movie" + ".json?id=" + id + "&job=Director,Writer&start=-1&max=6";
+                console.log("URL: " + jsonCrewUrl);
                 $.ajax({
                     url: jsonUrl,
                     async: false,
@@ -100,8 +130,9 @@
                     'success': function(data)
                     {
                         jsondata = data;
-			updateHtml(data);
-                        //getPersondata();
+                        // add directly in the html page 
+			$p('.header').render(data, DETAIL_HEADER);
+			$p('.template').render(data, YAMJ_DIR); 
 			//outputJson(data);
 			// add slideshow for fanart
 			slideshowFanart();
@@ -109,34 +140,32 @@
                         slideshow();
                     }
                 });
-                return jsondata;
+                $.ajax({
+                    url: jsonActorUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataActor)
+                    {
+			jsondata = dataActor;
+		//	outputJson(dataActor);
+		// add directly in the html page 
+                	$p('.actor').render(dataActor, YAMJ_ACTOR);
+			}
+                });
+		 $.ajax({
+                    url: jsonCrewUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataCrew)
+                    {
+			jsondata = dataCrew;
+		//	outputJson(dataCrew);
+		// add directly in the html page 
+                	$p('.crew').render(dataCrew, YAMJ_CREW);
+			}
+                });
             }
-//         function getPersonData()
-//            {
-//                   var jsonPersonUrl = "http://localhost:8888/yamj3/api/person/movie" + "/" + id + ".json?";
-//                console.log("URL: " + jsonPersonUrl);
-//                $.ajax({
-//                    url: jsonPersonUrl,
-//                    async: false,
-//                    dataType: 'jsonp',
-//                    'success': function(dataPerson)
-//                    {
-//					  jsonPersondata = dataPerson;
-//						updatePersonHtml(dataPerson);
-//						outputJson(dataPerson);
-//                    }
-//                });
-//                return jsonPersondata;
-//            }
-            function updateHtml(yamjdata)
-            {
-		$p('.header').render(yamjdata, DETAIL_HEADER);
-                $p('.template').render(yamjdata, YAMJ_DIR);
-            }
-//			function updatePersonHtml(yamjdataPerson)
-//            {
-//				$p('.people').render(yamjdataPerson, YAMJ_PERSON);
-//            }
+
             // Add the source output to the end of the page
             function outputJson(yamjdata)
             {
@@ -145,13 +174,7 @@
                 sourceData.innerHTML = '<h4>Source data:</h4>';
                 sourceData.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(yamjdata, undefined, 4);
             }
-//			function outputPersonJson(yamjdataPerson)
-//            {
-//                var sourceData = document.getElementById("sourceData");
-//                sourceData.setAttribute("class", "code");
-//                sourceData.innerHTML = '<h4>Source data:</h4>';
-//                sourceData.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(yamjdataPerson, undefined, 4);
-//            }
+
         </script>
     </head>
     <body onload="getData();">
@@ -209,13 +232,21 @@
 				<tr>
 					<td><span class="genres"></span></td>
 				</tr>
-<!--						<tr>
-							<td><span class="people"></span></td>
-						</tr> -->
 			</table>
                 </tbody>
             </table>
         </div>
+        <!-- add crew info and actor info  --> 
+        <div class="crew">
+		<tr>
+			<td><span class="crewinfo"></span></td>
+		</tr> 
+	</div>
+	<div class="actor">
+		<tr>
+			<td><span class="actorinfo"></span></td>
+		</tr> 
+	</div>
         <div id="sourceData"></div>
     </body>
 </html>

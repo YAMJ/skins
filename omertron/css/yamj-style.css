@@ -147,9 +147,13 @@ body {
 	}
 .header_year {
     padding-top:10px;
+	font-size:0.8em;
+	position: relative;
 	}	
 .header_id {
     padding-top:10px;
+	font-size:0.8em;
+	position: relative;
 	}	
 .id  {
     float: left;
@@ -166,7 +170,7 @@ body {
 	font-size:1.1em;
 	}	
 .plot {
-	width: 730px;
+	width: 715px;
 	color:#fff;
 	font-weight: bold;
 	text-align: justify;
@@ -174,9 +178,25 @@ body {
 	position: absolute;
 	top: 95px;
 	left: 240px;
+	background-color:rgba(0, 0, 0, 0.25);
+	border: 2px solid gray;	
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 3px;
+	}
+.plot text {
+		font-size:1.05em;
+		background-color: black;
+		width: 45px;
+		text-align: center;
+		margin-left: -5px;
+		margin-right: 5px;
+		padding-right: 1px;
+		border: 1px solid gray;
+		color:#b0b0b0;
 	}
 .genres {
-	width: 950px;
+	width: 930px;
 	color:#fff;
 	font-weight: normal;
 	text-align: justify;
@@ -184,24 +204,74 @@ body {
 	position: absolute;
 	top: 385px;
 	left: 20px;
+	background-color:rgba(0, 0, 0, 0.25);
+	border: 2px solid gray;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 3px;
+	padding-bottom: 3px;
 	}
+.genres text {
+		font-size:1.05em;
+		background-color: black;
+		width: 45px;
+		text-align: center;
+		margin-left: -5px;
+		margin-right: 5px;
+		padding-right: 1px;
+		border: 1px solid gray;
+		color:#b0b0b0;
+	}	
 .crew {
-	width: 950px;
+	width: 930px;
 	color:#fff;
 	font-weight: normal;
 	text-align: justify;
 	font-size:1.0em;
 	position: absolute;
-	top: 415px;
+	top: 423px;
 	left: 20px;
+	background-color:rgba(0, 0, 0, 0.25);
+	border: 2px solid gray;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	}
+.crew text {
+		font-size:1.05em;
+		background-color: black;
+		width: 45px;
+		text-align: center;
+		margin-left: -5px;
+		margin-right: 5px;
+		padding-right: 1px;
+		border: 1px solid gray;
+		color:#b0b0b0;
 	}	
 .actor {
-	width: 950px;
+	width: 930px;
 	color:#fff;
 	font-weight: normal;
 	text-align: justify;
 	font-size:1.0em;
 	position: absolute;
-	top: 455px;
+	top: 464px;
 	left: 20px;
+	background-color:rgba(0, 0, 0, 0.25);
+	border: 2px solid gray;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 3px;
 	}	
+.actor text {
+		font-size:1.05em;
+		background-color: black;
+		width: 45px;
+		text-align: center;
+		margin-left: -5px;
+		margin-right: 5px;
+		padding-right: 1px;
+		border: 1px solid gray;
+		color:#b0b0b0;
+	}

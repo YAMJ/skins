@@ -33,7 +33,7 @@ function slideshowFanart() {
 		$('.actor').css('visibility', 'visible');
 		$('.crew').css('visibility', 'visible');
 		$('div#slideshowCtr ').css('visibility', 'visible');
-		$('div#slideshowFanart').css('opacity', '0.35');
+		$('div#slideshowFanart').css('opacity', '0.7');
     });
 
     // move to nextFanart right image

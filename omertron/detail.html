@@ -13,7 +13,7 @@
             var id = localStorage.getItem("id");
             var type = localStorage.getItem("type");
             var jsondata;
-//			var jsonPersondata;
+
 			var DETAIL_HEADER = {
 				'span.header_title': 'result.title',
 				'span.header_year': 'result.videoYear',
@@ -22,15 +22,13 @@
 					
             var YAMJ_DIR = {
 
-			//  'span.title': 'result.title',
-            //  'span.year': 'result.videoYear',
                 'span.plot': function(arg) {
-				return "<b>Plot: </b>" +arg.context.result.plot;
+				return "<text>PLOT</text>" +arg.context.result.plot;
 				},
                 'span.genres': function(arg)
                 {
                     var genres = arg.context.result.genres;
-                    var output = "<b>Genres: </b>";
+                    var output = "<text>GENRES</text>";
                     var first = true;
                     for (i = 0; i < genres.length; i++) {
                         if (first) {
@@ -83,7 +81,7 @@
 		var YAMJ_ACTOR = {
 			'span.actorinfo': function(arg)   {
 				var actors = arg.context.results;
-				var outputActor = "<b>Actor(Role): </b>";
+				var outputActor = "<text>ACTOR</text>";
 				var first = true;
 				for (i = 0; i < actors.length; i++) {
 					if (first) {
@@ -101,7 +99,7 @@
 		var YAMJ_CREW = {
 			'span.crewinfo': function(arg)   {
 				var crew = arg.context.results;
-				var outputCrew = "<b>Crew(Job): </b>";
+				var outputCrew = "<text>CREW</text>";
 				var first = true;
 				for (i = 0; i < crew.length; i++) {
 					if (first) {
@@ -194,7 +192,12 @@
 						</a>
 					</td>
 					<td width="850px">
-						<span class="header_title"></span> (<span class="header_year"></span>) -id: <span class="header_id"></span>
+					<span class="header_title"></span>
+						<text class="header_year" style="left:+10px"> (</text>
+						<span class="header_year"></span>
+						<text class="header_year" style="left:-10px">) </text>
+						<text class="header_id">id:</text>
+						<span class="header_id" style="left:-10px"></span>
 					</td>
 				</tr>
 			</table>

@@ -78,48 +78,68 @@
                     }
                 }
             };
-		var YAMJ_ACTOR = {
-			'span.actorinfo': function(arg)   {
-				var actors = arg.context.results;
-				var outputActor = "<text>ACTOR</text>";
-				var first = true;
-				for (i = 0; i < actors.length; i++) {
-					if (first) {
-						first = false;
-					} else {
-						outputActor += ", ";
-						}
-						outputActor += actors[i].name;
-						outputActor += "("+actors[i].role+")";
-					}
-					outputActor += ",... ";
-					return outputActor;
-					}
-				};
-		var YAMJ_CREW = {
-			'span.crewinfo': function(arg)   {
-				var crew = arg.context.results;
-				var outputCrew = "<text>CREW</text>";
-				var first = true;
-				for (i = 0; i < crew.length; i++) {
-					if (first) {
-						first = false;
-					} else {
-						outputCrew += ", ";
-					}
-					outputCrew += crew[i].name;
-					outputCrew += "("+crew[i].job+")";
-					}
-					return outputCrew;
-					}
-				};
+			var YAMJ_CREW = {
+						'span.crewinfo': function(arg)   {
+							var crew = arg.context.results;
+							var outputCrew = "<text>CREW</text>";
+							var first = true;
+							for (i = 0; i < crew.length; i++) {
+							if (first) {
+								first = false;
+								} else {
+								outputCrew += ", ";
+								}
+								outputCrew += crew[i].name;
+								outputCrew += "<span style=\"font-size:0.8em\"> ("+crew[i].job.toLowerCase()+")</span>";
+							}
+							return outputCrew;
+							}
+						};
+			var YAMJ_ACTOR = {
+						'span.actorinfo': function(arg)   {
+							var actors = arg.context.results;
+							var outputActor = "<text>ACTOR</text>";
+							var first = true;
+							for (i = 0; i < 10; i++) {
+							if (first) {
+								first = false;
+								outputActor += ", ";
+								} else {
+								outputActor += ", ";
+								}
+								outputActor += actors[i].name;
+								outputActor += "<span style=\"font-size:0.8em\"> ("+actors[i].role+")</span>";
+							}
+							if (actors.length > 10) {
+								outputActor += ", ... ";
+								} 
+							return outputActor;
+							},
+
+						'span.totalactorinfo': function(arg)   {
+							var totalactors = arg.context.results;
+							var outputTotalActor = "";
+							var first = true;
+							for (i = 0; i < totalactors.length; i++) {
+							if (first) {
+								first = false;
+								} else {
+								outputTotalActor += "<br />";
+								}
+								outputTotalActor += "<span>"+totalactors[i].name+"</span>";
+								outputTotalActor += "<span style=\"font-size:0.8em\"> ("+totalactors[i].role+")</span>";
+								}
+                  				return outputTotalActor;
+							},
+					
+						};
             function getData()
             {	   
-		var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json?dataitems=genre,artwork,plot";
+					var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json?dataitems=genre,artwork,plot";
                 console.log("URL: " + jsonUrl);
-		var jsonActorUrl = "http://localhost:8888/yamj3/api/person/movie" + ".json?id=" + id + "&job=ACTOR&start=-1&max=6";
+					var jsonActorUrl = "http://localhost:8888/yamj3/api/person/movie" + ".json?id=" + id + "&job=ACTOR";
                 console.log("URL: " + jsonActorUrl);
-		var jsonCrewUrl = "http://localhost:8888/yamj3/api/person/movie" + ".json?id=" + id + "&job=Director,Writer&start=-1&max=6";
+					var jsonCrewUrl = "http://localhost:8888/yamj3/api/person/movie" + ".json?id=" + id + "&job=Director,Writer&start=-1&max=6";
                 console.log("URL: " + jsonCrewUrl);
                 $.ajax({
                     url: jsonUrl,
@@ -128,15 +148,27 @@
                     'success': function(data)
                     {
                         jsondata = data;
-                        // add directly in the html page 
-			$p('.header').render(data, DETAIL_HEADER);
-			$p('.template').render(data, YAMJ_DIR); 
-			//outputJson(data);
-			// add slideshow for fanart
-			slideshowFanart();
-			// slideshow for poster
+		             // outputJson(data);                
+						$p('.header').render(data, DETAIL_HEADER);
+						$p('.template').render(data, YAMJ_DIR); 
+	
+						// add slideshow for fanart
+						slideshowFanart();
+						// slideshow for poster
                         slideshow();
-                    }
+						actorshow ();
+				}
+                });
+                $.ajax({
+                    url: jsonCrewUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataCrew)
+                    {
+						jsondata = dataCrew;
+					//	outputJson(dataCrew);
+                    $p('.crew').render(dataCrew, YAMJ_CREW);
+					}
                 });
                 $.ajax({
                     url: jsonActorUrl,
@@ -144,26 +176,14 @@
                     dataType: 'jsonp',
                     'success': function(dataActor)
                     {
-			jsondata = dataActor;
-		//	outputJson(dataActor);
-		// add directly in the html page 
-                	$p('.actor').render(dataActor, YAMJ_ACTOR);
-			}
+						jsondata = dataActor;
+					//	outputJson(dataActor);
+                    $p('.actor').render(dataActor, YAMJ_ACTOR);
+					}
                 });
-		 $.ajax({
-                    url: jsonCrewUrl,
-                    async: false,
-                    dataType: 'jsonp',
-                    'success': function(dataCrew)
-                    {
-			jsondata = dataCrew;
-		//	outputJson(dataCrew);
-		// add directly in the html page 
-                	$p('.crew').render(dataCrew, YAMJ_CREW);
-			}
-                });
+	            
             }
-
+  
             // Add the source output to the end of the page
             function outputJson(yamjdata)
             {
@@ -172,10 +192,50 @@
                 sourceData.innerHTML = '<h4>Source data:</h4>';
                 sourceData.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(yamjdata, undefined, 4);
             }
+	function actorshow() {	// on actor hover show total actor
 
+				$('.showactor').hover(function() {
+					$('.actor').css('visibility', 'visible');
+					$('.plot').css('visibility', 'hidden');
+					$('.genres').css('visibility', 'hidden');
+					$('.crew').css('visibility', 'hidden');
+					$('.actorinfo').css('display', 'none');
+					$('.totalactorinfo').css('display', 'block');
+					
+				}, function() {
+					$('.plot').css('visibility', 'visible');
+					$('.genres').css('visibility', 'visible');
+					$('.crew').css('visibility', 'visible');
+					$('.actorinfo').css('display', 'block');
+					
+					actortotalshow();
+				});
+			}
+				
+	function actortotalshow() {	// on actor hover show total actor	
+				$('.totalactorinfo').hover(function() {
+					$('.actor').css('visibility', 'visible');
+					$('.plot').css('visibility', 'hidden');
+					$('.genres').css('visibility', 'hidden');
+					$('.crew').css('visibility', 'hidden');
+					$('.actorinfo').css('display', 'none');
+					$('.totalactorinfo').css('display', 'block');
+					
+				}, function() {
+					$('.plot').css('visibility', 'visible');
+					$('.genres').css('visibility', 'visible');
+					$('.crew').css('visibility', 'visible');
+					$('.actorinfo').css('display', 'block');
+					$('.totalactorinfo').css('display', 'none');
+					
+				
+				});
+				
+
+			}
         </script>
     </head>
-    <body onload="getData();">
+     <body onload="getData();">
 
 		<div class="header">
 			<table>
@@ -186,29 +246,31 @@
 							<img src="./pictures/yamj-logo_repeat.png" width="150px">
 						</a>
 					</td>
+
 					<td id="home_right">
 						<a href="./index.html" target="_blank">
 							<img src="./pictures/yamj-logo_repeat.png" width="150px">
 						</a>
 					</td>
 					<td width="850px">
-					<span class="header_title"></span>
-						<text class="header_year" style="left:+10px"> (</text>
+						<span class="header_title"></span>
+						<span class="header_text" style="left:8px"> (</span>
 						<span class="header_year"></span>
-						<text class="header_year" style="left:-10px">) </text>
-						<text class="header_id">id:</text>
-						<span class="header_id" style="left:-10px"></span>
-					</td>
+						<span class="header_text" style="left:-8px">) id:</span>
+						<span class="header_id" style="left:-14px"></span>
+						</td>
 				</tr>
 			</table>
 		</div>
-
+		<div class="showactor">
+					<td><span >ALL ACTORS</span></td>
+		</div>
         <div class="template">
 		<!-- main table for detail page -->
             <table>
                   <tbody>
                     <tr>     
-			<td rowspan="10">
+						<td rowspan="10">
                             <div id="slideshowFanart" class="glow">
                                 <div id="imgRollFanart">
                                     <img class="fanart" src=""/>
@@ -217,39 +279,45 @@
                             <a id="nextFanart">=></a>
                             <a id="prevFanart"><=</a>
                         </td>
-			<td rowspan="10">
+						<td rowspan="10">
                             <div id="slideshowCtr" class="glow">
                                 <div id="imgRoll">
                                     <img class="poster" src=""/>
                                 </div>
                             </div>
-                            <a id="next">=></a>
-                            <a id="prev"><=</a>
+                            <a id="next"><img src="./pictures/next.png" /></a>
+                            <a id="prev"><img src="./pictures/previous.png" /></a>
                         </td>        
                     </tr>
 			<!-- split table for image and text --> 
-			<table>
-				<tr>
-					<td><span class="plot"></span></td>
-				</tr>
-				<tr>
-					<td><span class="genres"></span></td>
-				</tr>
-			</table>
+				
+			<!-- add class for each object in the detail section of yamj-style.css -->
+						<table>
+						<tr >
+							<td ><span class="plot"></span></td>
+						</tr>
+						<tr>
+							<td><span class="genres"></span></td>
+						</tr>
+					
+					</table>
                 </tbody>
             </table>
         </div>
-        <!-- add crew info and actor info  --> 
-        <div class="crew">
-		<tr>
-			<td><span class="crewinfo"></span></td>
-		</tr> 
-	</div>
-	<div class="actor">
-		<tr>
-			<td><span class="actorinfo"></span></td>
-		</tr> 
-	</div>
+			<div class="crew">
+				<tr>
+					<td><span class="crewinfo"></span></td>
+				</tr> 
+			</div>
+			<div class="actor">
+				<tr>
+					<td><span class="actorinfo"></span>
+				</td>
+				</tr> 
+				<tr>
+					<td><span class="totalactorinfo"></span></td>
+				</tr> 
+			</div>
         <div id="sourceData"></div>
     </body>
 </html>

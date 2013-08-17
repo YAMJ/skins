@@ -35,6 +35,7 @@ function slideshowFanart() {
 		$('div#slideshowCtr ').css('visibility', 'visible');
 		$('div#slideshowFanart').css('opacity', '0.7');
     });
+    });
 
     // move to nextFanart right image
     $('a#nextFanart').click(function() {

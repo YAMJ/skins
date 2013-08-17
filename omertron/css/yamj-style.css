@@ -129,6 +129,8 @@ body {
 	font-size:1.8em;
 	font-weight: bold;
     text-align: center;
+	margin: 0px;
+	padding: 0px;
     }
 #home_left {
 	width: 120px;
@@ -155,6 +157,10 @@ body {
 	font-size:0.8em;
 	position: relative;
 	}	
+.header_text{
+	font-size:0.8em;
+	position: relative;
+	}
 .id  {
     float: left;
 	}
@@ -178,100 +184,101 @@ body {
 	position: absolute;
 	top: 95px;
 	left: 240px;
-	background-color:rgba(0, 0, 0, 0.25);
+	background-color:rgba(0, 0, 0, 0.3);
 	border: 2px solid gray;	
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 3px;
+	border-right: 5px solid gray;
+	padding: 3px 10px 0px 10px;
 	}
-.plot text {
+/* label for each text */
+text {
+		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
 		background-color: black;
 		width: 45px;
 		text-align: center;
-		margin-left: -5px;
-		margin-right: 5px;
-		padding-right: 1px;
+		margin: auto 5px auto -5px;
+		padding: 0px 1px 0px 1px;
 		border: 1px solid gray;
+		border-right: 4px solid gray;
 		color:#b0b0b0;
 	}
 .genres {
 	width: 930px;
 	color:#fff;
-	font-weight: normal;
+	font-weight: bold;
 	text-align: justify;
 	font-size:1.0em;
 	position: absolute;
 	top: 385px;
 	left: 20px;
-	background-color:rgba(0, 0, 0, 0.25);
+	background-color:rgba(0, 0, 0, 0.3);
 	border: 2px solid gray;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 3px;
-	padding-bottom: 3px;
+	border-right: 5px solid gray;
+	padding: 3px 10px 3px 10px;
 	}
-.genres text {
-		font-size:1.05em;
-		background-color: black;
-		width: 45px;
-		text-align: center;
-		margin-left: -5px;
-		margin-right: 5px;
-		padding-right: 1px;
-		border: 1px solid gray;
-		color:#b0b0b0;
-	}	
+	
 .crew {
 	width: 930px;
 	color:#fff;
-	font-weight: normal;
+	font-weight: bold;
 	text-align: justify;
 	font-size:1.0em;
 	position: absolute;
 	top: 423px;
 	left: 20px;
-	background-color:rgba(0, 0, 0, 0.25);
+	background-color:rgba(0, 0, 0, 0.3);
 	border: 2px solid gray;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 3px;
-	padding-bottom: 3px;
+	border-right: 5px solid gray;
+	padding: 3px 10px 3px 10px;
 	}
-.crew text {
-		font-size:1.05em;
-		background-color: black;
-		width: 45px;
-		text-align: center;
-		margin-left: -5px;
-		margin-right: 5px;
-		padding-right: 1px;
-		border: 1px solid gray;
-		color:#b0b0b0;
-	}	
-.actor {
+	
+.actorinfo {
 	width: 930px;
+	height: auto;
+	overflow: hidden;
 	color:#fff;
-	font-weight: normal;
+	font-weight: bold;
 	text-align: justify;
 	font-size:1.0em;
 	position: absolute;
 	top: 464px;
 	left: 20px;
-	background-color:rgba(0, 0, 0, 0.25);
+	background-color:rgba(0, 0, 0, 0.3);
 	border: 2px solid gray;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 3px;
+	border-right: 5px solid gray;
+	padding: 3px 10px 0px 10px;
 	}	
-.actor text {
+	
+.totalactorinfo {
+	display: none;
+	width: auto;
+	overflow: hidden;
+	color:#fff;
+	font-weight: bold;
+	text-align: justify;
+	font-size:1.0em;
+	position: absolute;
+	top: 80px;
+	right: 10px;
+	background-color:rgba(0, 0, 0, 0.3);
+	border: 2px solid gray;
+	border-right: 5px solid gray;
+	padding: 3px 10px 0px 10px;
+	}
+
+.showactor {
+		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
+		font-weight: bold;
 		background-color: black;
-		width: 45px;
+		width: auto;
 		text-align: center;
-		margin-left: -5px;
-		margin-right: 5px;
-		padding-right: 1px;
+		margin: 0px 5px 0px -5px;
+		padding: 0px 1px 0px 1px;
 		border: 1px solid gray;
+		border-right: 4px solid gray;
 		color:#b0b0b0;
+		position: absolute;
+		top: 58px;
+		right: 20px;
 	}

@@ -82,10 +82,10 @@
 						'span.crewinfo': function(arg)   {
 							var crew = arg.context.results;
 							var outputCrew = "<text>CREW</text>";
-							var first = true;
+							var first_crew = true;
 							for (i = 0; i < crew.length; i++) {
-							if (first) {
-								first = false;
+							if (first_crew) {
+								first_crew = false;
 								} else {
 								outputCrew += ", ";
 								}
@@ -99,11 +99,10 @@
 						'span.actorinfo': function(arg)   {
 							var actors = arg.context.results;
 							var outputActor = "<text>ACTOR</text>";
-							var first = true;
+							var first_actor = true;
 							for (i = 0; i < 10; i++) {
-							if (first) {
-								first = false;
-								outputActor += ", ";
+							if (first_actor) {
+								first_actor = false;
 								} else {
 								outputActor += ", ";
 								}
@@ -119,15 +118,17 @@
 						'span.totalactorinfo': function(arg)   {
 							var totalactors = arg.context.results;
 							var outputTotalActor = "";
-							var first = true;
+							var first_total = true;
 							for (i = 0; i < totalactors.length; i++) {
-							if (first) {
-								first = false;
+							if (first_total) {
+								first_total = false;
 								} else {
 								outputTotalActor += "<br />";
 								}
 								outputTotalActor += "<span>"+totalactors[i].name+"</span>";
 								outputTotalActor += "<span style=\"font-size:0.8em\"> ("+totalactors[i].role+")</span>";
+								outputTotalActor += "<span style=\"font-size:0.8em\"> - "+totalactors[i].birthPlace+" - </span>";
+								outputTotalActor += "<span style=\"font-size:0.8em\"> "+totalactors[i].birthDay+"</span>";
 								}
                   				return outputTotalActor;
 							},
@@ -243,13 +244,13 @@
 			<!-- add header for movie name  -->
 					<td id="home_left">
 						<a href="./index.html" target="_blank">
-							<img src="./pictures/yamj-logo_repeat.png" width="150px">
+							<img src="./pictures/yamj-logo_repeat.png" width="150px" />
 						</a>
 					</td>
 
 					<td id="home_right">
 						<a href="./index.html" target="_blank">
-							<img src="./pictures/yamj-logo_repeat.png" width="150px">
+							<img src="./pictures/yamj-logo_repeat.png" width="150px" />
 						</a>
 					</td>
 					<td width="850px">

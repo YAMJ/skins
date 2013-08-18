@@ -66,7 +66,10 @@ function slideshowFanart() {
 
     // auto start slideshowFanart
     function slideFanart() {
-        $('a#nextFanart').click();
+       	if (imgTotalFanart == '1')
+	{} else {
+	$('a#nextFanart').click();
+	}
     }
 
     // simulate click every 10 seconds

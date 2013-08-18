@@ -55,7 +55,10 @@ function slideshow() {
 
     // auto start slideshow
     function slide() {
+       	if (imgTotal == '1')
+		{} else {
         $('a#next').click();
+		}
     }
 
     // simulate click every 3 seconds

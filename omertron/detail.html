@@ -13,26 +13,25 @@
             var id = localStorage.getItem("id");
             var type = localStorage.getItem("type");
             var jsondata;
-
+			var jsonPersondata;
 			var DETAIL_HEADER = {
-				'span.header_title': 'result.title',
-				'span.header_year': 'result.videoYear',
-				'span.header_id': 'result.id'
+							'span.header_title': 'result.title',
+							'span.header_year': 'result.videoYear',
+							'span.header_id': 'result.id'
 						};
 					
             var YAMJ_DIR = {
-
                 'span.plot': function(arg) {
 				return "<text>PLOT</text>" +arg.context.result.plot;
 				},
                 'span.genres': function(arg)
                 {
                     var genres = arg.context.result.genres;
-                    var output = "<text>GENRES</text>";
-                    var first = true;
+                    var output = "<text>GENRE</text>";
+                    var first_genres = true;
                     for (i = 0; i < genres.length; i++) {
-                        if (first) {
-                            first = false;
+                        if (first_genres) {
+                            first_genres = false;
                         } else {
                             output += ", ";
                         }
@@ -49,17 +48,17 @@
                             if (arg.item) {
                                 // Get the first fanart from the list
                                 if (arg.item.generatedId === 0) {
-                                    return "pictures/dummy.jpg";
+                                    return "pictures/dummy_fanart.jpg";
                                 }
                                 return arg.context.baseArtworkUrl + arg.item.filename;
                             } else {
-                                return "pictures/dummy.jpg";
+                                return "pictures/dummy_fanart.jpg";
                             }
                         }
 
                     }
                 },
-		 'img.poster': {
+		'img.poster': {
                     'poster<-result.artwork.POSTER': {
                         '@src': function(arg)
                         {
@@ -81,16 +80,16 @@
 			var YAMJ_CREW = {
 						'span.crewinfo': function(arg)   {
 							var crew = arg.context.results;
-							var outputCrew = "<text>CREW</text>";
-							var first_crew = true;
+							var outputCrew = "<text>CREW</text><br />";
+						//	var first_crew = true;
 							for (i = 0; i < crew.length; i++) {
-							if (first_crew) {
-								first_crew = false;
-								} else {
-								outputCrew += ", ";
-								}
+						//	if (first_crew) {
+						//		first_crew = false;
+						//		} else {
+						//		outputCrew += ", ";
+						//		}
 								outputCrew += crew[i].name;
-								outputCrew += "<span style=\"font-size:0.8em\"> ("+crew[i].job.toLowerCase()+")</span>";
+								outputCrew += "<span style=\"font-size:0.8em\"> ("+crew[i].job.toLowerCase()+")</span><br />";
 							}
 							return outputCrew;
 							}
@@ -98,20 +97,20 @@
 			var YAMJ_ACTOR = {
 						'span.actorinfo': function(arg)   {
 							var actors = arg.context.results;
-							var outputActor = "<text>ACTOR</text>";
-							var first_actor = true;
-							for (i = 0; i < 10; i++) {
-							if (first_actor) {
-								first_actor = false;
-								} else {
-								outputActor += ", ";
-								}
+							var outputActor = "<text align=\"middle\">ACTOR</text><br />";
+							//var first_actor = true;
+							for (i = 0; i < 6; i++) {
+							//if (first_actor) {
+							//	first_actor = false;
+							//	} else {
+							//	outputActor += ", ";
+							//	}
 								outputActor += actors[i].name;
-								outputActor += "<span style=\"font-size:0.8em\"> ("+actors[i].role+")</span>";
+								outputActor += "<span style=\"font-size:0.8em\"> ("+actors[i].role+")</span><br />";
 							}
-							if (actors.length > 10) {
-								outputActor += ", ... ";
-								} 
+							//if (actors.length > 6) {
+							//	outputActor += " ... ";
+							//	} 
 							return outputActor;
 							},
 
@@ -136,11 +135,11 @@
 						};
             function getData()
             {	   
-					var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json?dataitems=genre,artwork,plot";
+		var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json?dataitems=genre,artwork,plot";
                 console.log("URL: " + jsonUrl);
-					var jsonActorUrl = "http://localhost:8888/yamj3/api/person/movie" + ".json?id=" + id + "&job=ACTOR";
+		var jsonActorUrl = "http://localhost:8888/yamj3/api/person/movie" + ".json?id=" + id + "&job=ACTOR";
                 console.log("URL: " + jsonActorUrl);
-					var jsonCrewUrl = "http://localhost:8888/yamj3/api/person/movie" + ".json?id=" + id + "&job=Director,Writer&start=-1&max=6";
+		var jsonCrewUrl = "http://localhost:8888/yamj3/api/person/movie" + ".json?id=" + id + "&job=Director,Writer&start=-1&max=6";
                 console.log("URL: " + jsonCrewUrl);
                 $.ajax({
                     url: jsonUrl,
@@ -156,7 +155,8 @@
 						// add slideshow for fanart
 						slideshowFanart();
 						// slideshow for poster
-                        slideshow();
+                				slideshow();
+                				//  display all actor only
 						actorshow ();
 				}
                 });
@@ -166,9 +166,9 @@
                     dataType: 'jsonp',
                     'success': function(dataCrew)
                     {
-						jsondata = dataCrew;
+			jsondata = dataCrew;
 					//	outputJson(dataCrew);
-                    $p('.crew').render(dataCrew, YAMJ_CREW);
+                    	$p('.crew').render(dataCrew, YAMJ_CREW);
 					}
                 });
                 $.ajax({
@@ -177,9 +177,9 @@
                     dataType: 'jsonp',
                     'success': function(dataActor)
                     {
-						jsondata = dataActor;
+			jsondata = dataActor;
 					//	outputJson(dataActor);
-                    $p('.actor').render(dataActor, YAMJ_ACTOR);
+                	 $p('.actor').render(dataActor, YAMJ_ACTOR);
 					}
                 });
 	            
@@ -193,7 +193,7 @@
                 sourceData.innerHTML = '<h4>Source data:</h4>';
                 sourceData.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(yamjdata, undefined, 4);
             }
-	function actorshow() {	// on actor hover show total actor
+	function actorshow() {	// on actor hover show all actor
 
 				$('.showactor').hover(function() {
 					$('.actor').css('visibility', 'visible');
@@ -208,12 +208,12 @@
 					$('.genres').css('visibility', 'visible');
 					$('.crew').css('visibility', 'visible');
 					$('.actorinfo').css('display', 'block');
-					
-					actortotalshow();
+					$('.totalactorinfo').css('display', 'none');
+			//		actortotalshow();
 				});
 			}
-				
-	function actortotalshow() {	// on actor hover show total actor	
+	// not used to be implemented later 			
+	function actortotalshow() {	// on all actor hover to be implemented 
 				$('.totalactorinfo').hover(function() {
 					$('.actor').css('visibility', 'visible');
 					$('.plot').css('visibility', 'hidden');
@@ -228,37 +228,34 @@
 					$('.crew').css('visibility', 'visible');
 					$('.actorinfo').css('display', 'block');
 					$('.totalactorinfo').css('display', 'none');
-					
-				
-				});
-				
-
+					});
 			}
+			
+
         </script>
     </head>
-     <body onload="getData();">
-
+    <body onload="getData();">
+	<!-- navigation to index -->
+	<div id="logo">
+ 		<a id="home_right" href="./index_series.html">
+			<img src="./pictures/yamj-logo_tv.png" width="100px" />
+		</a>
+		<a id="home_left" href="./index_movie.html">
+			<img src="./pictures/yamj-logo_movie.png" width="100px" />
+		</a>
+				
+        </div>
+	<!--  header for movie name -->
 		<div class="header">
 			<table>
 				<tr>
-			<!-- add header for movie name  -->
-					<td id="home_left">
-						<a href="./index.html" target="_blank">
-							<img src="./pictures/yamj-logo_repeat.png" width="150px" />
-						</a>
-					</td>
-
-					<td id="home_right">
-						<a href="./index.html" target="_blank">
-							<img src="./pictures/yamj-logo_repeat.png" width="150px" />
-						</a>
-					</td>
+	
 					<td width="850px">
 						<span class="header_title"></span>
-						<span class="header_text" style="left:8px"> (</span>
+						<span class="header_text"> (</span>
 						<span class="header_year"></span>
-						<span class="header_text" style="left:-8px">) id:</span>
-						<span class="header_id" style="left:-14px"></span>
+						<span class="header_text">) id:</span>
+						<span class="header_id" ></span>
 						</td>
 				</tr>
 			</table>
@@ -271,7 +268,7 @@
             <table>
                   <tbody>
                     <tr>     
-						<td rowspan="10">
+			<td rowspan="10">
                             <div id="slideshowFanart" class="glow">
                                 <div id="imgRollFanart">
                                     <img class="fanart" src=""/>
@@ -280,7 +277,7 @@
                             <a id="nextFanart">=></a>
                             <a id="prevFanart"><=</a>
                         </td>
-						<td rowspan="10">
+			<td rowspan="10">
                             <div id="slideshowCtr" class="glow">
                                 <div id="imgRoll">
                                     <img class="poster" src=""/>

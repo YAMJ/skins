@@ -73,13 +73,13 @@ a#prev {
 /* fanart section */
 
 div#slideshowFanart {
-    width: 980px;
-    height: 524px;
+    width: 1280px;
+    height: 720px;
     margin: auto;
     overflow: hidden;
 	opacity: 0.7;
 	position: absolute;
-	top: 85px;
+	top: 92px;
 }
 div#imgRollFanart {
     height: inherit;

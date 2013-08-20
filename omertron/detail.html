@@ -58,7 +58,7 @@
 
                     }
                 },
-		'img.poster': {
+				  'img.poster': {
                     'poster<-result.artwork.POSTER': {
                         '@src': function(arg)
                         {
@@ -135,11 +135,11 @@
 						};
             function getData()
             {	   
-		var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json?dataitems=genre,artwork,plot";
+					var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json?dataitems=genre,artwork,plot";
                 console.log("URL: " + jsonUrl);
-		var jsonActorUrl = "http://localhost:8888/yamj3/api/person/movie" + ".json?id=" + id + "&job=ACTOR";
+					var jsonActorUrl = "http://localhost:8888/yamj3/api/person/" + type.toLowerCase() + ".json?id=" + id + "&job=ACTOR";
                 console.log("URL: " + jsonActorUrl);
-		var jsonCrewUrl = "http://localhost:8888/yamj3/api/person/movie" + ".json?id=" + id + "&job=Director,Writer&start=-1&max=6";
+					var jsonCrewUrl = "http://localhost:8888/yamj3/api/person/" + type.toLowerCase() + ".json?id=" + id + "&job=Director,Writer&start=-1&max=6";
                 console.log("URL: " + jsonCrewUrl);
                 $.ajax({
                     url: jsonUrl,
@@ -155,8 +155,8 @@
 						// add slideshow for fanart
 						slideshowFanart();
 						// slideshow for poster
-                				slideshow();
-                				//  display all actor only
+                        slideshow();
+						// display all actor only
 						actorshow ();
 				}
                 });
@@ -166,9 +166,9 @@
                     dataType: 'jsonp',
                     'success': function(dataCrew)
                     {
-			jsondata = dataCrew;
+						jsondata = dataCrew;
 					//	outputJson(dataCrew);
-                    	$p('.crew').render(dataCrew, YAMJ_CREW);
+                    $p('.crew').render(dataCrew, YAMJ_CREW);
 					}
                 });
                 $.ajax({
@@ -177,9 +177,9 @@
                     dataType: 'jsonp',
                     'success': function(dataActor)
                     {
-			jsondata = dataActor;
+						jsondata = dataActor;
 					//	outputJson(dataActor);
-                	 $p('.actor').render(dataActor, YAMJ_ACTOR);
+                    $p('.actor').render(dataActor, YAMJ_ACTOR);
 					}
                 });
 	            
@@ -231,19 +231,22 @@
 					});
 			}
 			
-
         </script>
     </head>
     <body onload="getData();">
 	<!-- navigation to index -->
-	<div id="logo">
- 		<a id="home_right" href="./index_series.html">
-			<img src="./pictures/yamj-logo_tv.png" width="100px" />
-		</a>
-		<a id="home_left" href="./index_movie.html">
-			<img src="./pictures/yamj-logo_movie.png" width="100px" />
-		</a>
-				
+		<div id="logo">
+ 					
+						<a id="home_right" href="./index_series.html">
+							<img src="./pictures/yamj-logo_tv.png" width="100px" />
+						</a>
+						<a id="home_left" href="./index_movie.html">
+							<img src="./pictures/yamj-logo_movie.png" width="100px" />
+						</a>
+	<!-- navigation to next/previous movie which doesn't take care of the selection before in index --> 
+	<!-- need to be revue -->
+						<input id="previous_movie" type="button" class="button" onclick="change_movie('previous')" value="" />
+						<input id="next_movie" type="button" class="button" onclick="change_movie('next')" value="" />		
         </div>
 	<!--  header for movie name -->
 		<div class="header">
@@ -268,7 +271,7 @@
             <table>
                   <tbody>
                     <tr>     
-			<td rowspan="10">
+						<td rowspan="10">
                             <div id="slideshowFanart" class="glow">
                                 <div id="imgRollFanart">
                                     <img class="fanart" src=""/>
@@ -277,7 +280,7 @@
                             <a id="nextFanart">=></a>
                             <a id="prevFanart"><=</a>
                         </td>
-			<td rowspan="10">
+						<td rowspan="10">
                             <div id="slideshowCtr" class="glow">
                                 <div id="imgRoll">
                                     <img class="poster" src=""/>

@@ -15,6 +15,7 @@
             var jsondata;
 			var jsonPersondata;
 			var DETAIL_HEADER = {
+							'span.header_type': 'result.videoType',
 							'span.header_title': 'result.title',
 							'span.header_year': 'result.videoYear',
 							'span.header_id': 'result.id'
@@ -148,7 +149,7 @@
                     'success': function(data)
                     {
                         jsondata = data;
-		             // outputJson(data);                
+		            //  outputJson(data);                
 						$p('.header').render(data, DETAIL_HEADER);
 						$p('.template').render(data, YAMJ_DIR); 
 	
@@ -242,7 +243,7 @@
 				console.log("Storing value: " + type + "-" + (parseInt(id, 10) - 1));
 				};	
             console.log("Storing value: " + type + "-" + id);
-            window.location.href="detail_" + type.toLowerCase() + ".html";
+            window.location.href="detail.html";
         }				
         </script>
     </head>
@@ -267,6 +268,7 @@
 				<tr>
 	
 					<td width="850px">
+						<span class="header_type"></span>
 						<span class="header_title"></span>
 						<span class="header_text"> (</span>
 						<span class="header_year"></span>

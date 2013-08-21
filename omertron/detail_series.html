@@ -46,15 +46,40 @@
                     }
                     return output;
                 },
-				
-			    'img.fanart@src':  function(arg){
-								return arg.context.baseArtworkUrl + arg.context.results[0].artwork.FANART[0].filename;  
-							},
-
-
-				'img.poster@src': function(arg) {                       
-                                return arg.context.baseArtworkUrl + arg.context.results[0].artwork.POSTER[0].filename;
-                         }
+				"img.poster": {
+					"poster<-results":{
+						"@src"		: function(arg) {
+							// Check to see if there are posters
+							if(arg.item.artwork.POSTER) {
+							// Get the first poster from the list
+								var poster = arg.item.artwork.POSTER[0];
+								if(poster.generatedId == 0) {
+									return "pictures/dummy.jpg";
+								}
+								return arg.context.baseArtworkUrl + poster.filename;			
+							} else {
+								return "pictures/dummy.jpg";
+							}
+						}
+					}
+				},					
+				"img.fanart": {
+					"fanart<-results":{
+						"@src"		: function(arg) {
+							// Check to see if there are posters
+							if(arg.item.artwork.FANART) {
+								// Get the first poster from the list
+								var fanart = arg.item.artwork.FANART[0];
+								if(fanart.generatedId == 0) {
+									return "pictures/dummy_fanart.jpg";
+								}
+								return arg.context.baseArtworkUrl + fanart.filename;			
+							} else {
+								return "pictures/dummy_fanart.jpg";
+							}
+						}
+					}
+				}
             };
 
 			var YAMJ_ACTOR = {
@@ -62,14 +87,14 @@
 							var actors = arg.context.result;
 							var outputActor = "<text align=\"middle\">ACTOR</text><br />";
 							//var first_actor = true;
-							for (i = 0; i < actors.length; i++) {
+							for (i = 0; i < 2; i++) {
 							//if (first_actor) {
 							//	first_actor = false;
 							//	} else {
 							//	outputActor += ", ";
 							//	}
 								outputActor += actors[i].name;
-														}
+								outputActor += "<span style=\"font-size:0.8em\"> ("+actors[i].role+")</span><br />";						}
 							//if (actors.length > 6) {
 							//	outputActor += " ... ";
 							//	} 
@@ -102,6 +127,8 @@
                 console.log("URL: " + jsonUrl);
 					var jsonActorUrl = "http://localhost:8888/yamj3/api/person/" + type.toLowerCase() + ".json?id=" + id + "&job=Director,Writer,Actor";
                 console.log("URL: " + jsonActorUrl);
+				
+				
 	//				var jsonCrewUrl = "http://localhost:8888/yamj3/api/person/" + type.toLowerCase() + ".json?id=" + id + "&job=Director,Writer&start=-1&max=6";
       //         console.log("URL: " + jsonCrewUrl);
                 $.ajax({

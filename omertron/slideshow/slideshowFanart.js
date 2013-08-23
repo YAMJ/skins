@@ -2,7 +2,7 @@
  * http://forrst.com/posts/Quick_Rotating_Slideshow_jQuery-z32
  */
 function slideshowFanart() {
-
+	
     // get the size of the slideshow container
     var ctrHeightFanart = $('#slideshowFanart').css('height');
     var ctrWidthFanart = $('#slideshowFanart').css('width');
@@ -23,18 +23,19 @@ function slideshowFanart() {
     $('div#slideshowFanart').hover(function() {
 		$('.plot').css('visibility', 'hidden');
 		$('.genres').css('visibility', 'hidden');
-		$('.actor').css('visibility', 'hidden');
-		$('.crew').css('visibility', 'hidden');
+		$('#tableactorrole').css('visibility', 'hidden');
+		$('#tableactorname').css('visibility', 'hidden');
+		$('.photo').css('visibility', 'hidden');
 		$('div#slideshowCtr ').css('visibility', 'hidden');
 		$('div#slideshowFanart').css('opacity', '1');
     }, function() {
 		$('.plot').css('visibility', 'visible');
 		$('.genres').css('visibility', 'visible');
-		$('.actor').css('visibility', 'visible');
-		$('.crew').css('visibility', 'visible');
+		$('#tableactorrole').css('visibility', 'visible');
+		$('#tableactorname').css('visibility', 'visible');
+		$('.photo').css('visibility', 'visible');
 		$('div#slideshowCtr ').css('visibility', 'visible');
 		$('div#slideshowFanart').css('opacity', '0.7');
-    });
     });
 
     // move to nextFanart right image
@@ -66,10 +67,10 @@ function slideshowFanart() {
 
     // auto start slideshowFanart
     function slideFanart() {
-       	if (imgTotalFanart == '1')
-	{} else {
-	$('a#nextFanart').click();
-	}
+        	if (imgTotalFanart == '1')
+		{} else {
+		$('a#nextFanart').click();
+		}
     }
 
     // simulate click every 10 seconds

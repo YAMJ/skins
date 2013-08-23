@@ -278,7 +278,6 @@ text {
 	padding: 3px 10px 0px 10px;
 	margin-right: 80px;
 	}
-
 .genres {
 	width: auto;
 	color:#fff;
@@ -295,45 +294,14 @@ text {
 	margin-right: 35px;
 	}
 	
-.crew {
-	width: auto;
-	color:#fff;
-	font-weight: bold;
-	text-align: left;
-	font-size:1.0em;
-	position: absolute;
-	top: 526px;
-	left: 20px;
-	background-color:rgba(0, 0, 0, 0.3);
-	border: 1px solid gray;
-	border-right: 5px solid gray;
-	padding: 3px 10px 3px 10px;
-	margin-right: 20px;
-	}
-	
-.actorinfo {
-	width: auto;
-	height: auto;
-	overflow: hidden;
-	color:#fff;
-	font-weight: bold;
-	text-align: left;
-	font-size:1.0em;
-	position: absolute;
-	top: 374px;
-	left: 20px;
-	background-color:rgba(0, 0, 0, 0.3);
-	border: 1px solid gray;
-	border-right: 5px solid gray;
-	padding: 3px 10px 3px 10px;
-	margin-right: 20px; 
-	}	
-	
-.totalactorinfo {
+.crew{
+}	
+
+.totalcrew {
 	display: none;
 	width: auto;
 	overflow: hidden;
-	color:#fff;
+	color:yellow;
 	font-weight: bold;
 	text-align: justify;
 	font-size:1.0em;
@@ -345,9 +313,9 @@ text {
 	border-right: 5px solid gray;
 	padding: 3px 10px 0px 10px;
 	}
-.totalactorinfo :hover {
+.totalcrew :hover {
 	}
-.showactor {
+.showcrew {
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
 		font-weight: bold;
@@ -364,6 +332,110 @@ text {
 		top: 60px;
 		right: 10px;
 	}
+.photo {
+	width: 100px;
+	height: 150px;
+	border: 2px solid #000;
+	border-right: 6px solid #000;
+	}
 
-		
+.photo0 img {
+	position: absolute;
+	top: 630px;
+	left: 48px;
+	/* set for all photoxx image place as empty , by default hidden
+	will be reset to visible by program if the iamge is valide */
+	visibility: hidden;
+	}
+.photo1 img {
+	position: absolute;
+	top: 630px;
+	left: 158px;
+	visibility: hidden;
+	}	
+.photo2 img {
+	position: absolute;
+	top: 630px;
+	left: 268px;
+	visibility: hidden;
+	}
+.photo3 img {
+	position: absolute;
+	top: 630px;
+	left: 378px;
+	visibility: hidden;
+	}
+.photo4 img {
+	position: absolute;
+	top: 630px;
+	left: 488px;
+	visibility: hidden;
+	}
+.photo5 img {
+	position: absolute;
+	top: 630px;
+	left: 598px;
+	visibility: hidden;
+	}	
+.photo6 img {
+	position: absolute;
+	top: 630px;
+	left: 708px;
+	visibility: hidden;
+	}
+.photo7 img {
+	position: absolute;
+	top: 630px;
+	left: 818px;
+	visibility: hidden;
+	}
+.photo8 img {
+	position: absolute;
+	top: 630px;
+	left: 928px;
+	visibility: hidden;
+	}
+.photo9 img {
+	position: absolute;
+	top: 630px;
+	left: 1038px;
+	visibility: hidden;
+	}	
+.photo10 img {
+	position: absolute;
+	top: 630px;
+	left: 1148px;
+	visibility: hidden;
+	}		
+	/* format table actor */
+#tableactorname
+{
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	position: absolute;
+	top: 588px;
+	left: 45px;
+	color:#fff;	
 	
+}
+#tableactorrole
+{
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+ 	position: absolute;
+	top: 781px;
+	left: 45px;
+	color:#fff;	
+}
+#tableactorname td, #tableactorrole td
+{
+    font-size:0.9em;
+	color:#fff;
+	font-weight: bold;
+	background-color:rgba(0, 0, 0, 0.5);
+	border: 1px solid gray;
+	border-right: 5px solid gray;
+	width: 100px;
+	overflow:scroll;
+	vertical-align:top;
+    text-align: center;	
+}
+/* fin table actor */

@@ -41,11 +41,11 @@
                         // Check to see if there is artwork
                         if (arg.context.result.artwork) {
                             // Get the first photo from the list
-                            var poster = arg.context.result.artwork[0];
-                            if (poster.generatedId === 0) {
+                            var photo = arg.context.result.artwork[0];
+                            if (photo.generatedId === 0) {
                                 return "No Photo was generated";
                             }
-                            return "<img src=\"" + arg.context.basePhotoUrl + poster.filename + "\">";
+                            return "<img src=\"" + arg.context.basePhotoUrl + photo.filename + "\">";
                         } else {
                             return "No Photo Found";
                         }

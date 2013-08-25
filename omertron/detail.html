@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>YAMJ v3</title>
+        <title>YAMJ v3 detail page</title>
         <script src="js/jquery.js"></script>
         <script src="js/pure.js"></script>
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css"/>
@@ -10,19 +10,21 @@
         <script src="slideshow/slideshow.js" type="text/javascript"></script>
         <script src="slideshow/slideshowFanart.js" type="text/javascript"></script>
         <script type="text/javascript">
+			// get the id and the type asked previously, data was stored from index/detail page 
             var id = localStorage.getItem("id");
             var type = localStorage.getItem("type");
             var jsondata;
-			var jsonPersondata;
+			// from jsonActorUrl
 			var DETAIL_HEADER = {
 							'span.header_type': 'result.videoType',
 							'span.header_title': 'result.title',
 							'span.header_year': 'result.videoYear',
 							'span.header_id': 'result.id'
 						};
-					
+			// from jsonActorUrl		
             var YAMJ_DIR = {
                 'span.plot': function(arg) {
+				// check if plot is available 
 					if (arg.context.result.plot) {
 							return "<text>PLOT</text>" +arg.context.result.plot;
 								} else {
@@ -34,6 +36,7 @@
                     var genres = arg.context.result.genres;
                     var output = "<text>GENRE</text>";
                     var first_genres = true;
+					// loop thru the list of genres
                     for (i = 0; i < genres.length; i++) {
                         if (first_genres) {
                             first_genres = false;
@@ -83,31 +86,35 @@
                 }
             };
 		
-
+			// from jsonCrewUrl
 			var	ACTOR_NAME = {
 							'td' : 
 							{	
+							// assume there is one 
 								"result<-results":{				
 									"span.actor-name"		: "result.name" 
 								}
 							}
 						};			
-						
+			// from jsonCrewUrl			
 			var	ACTOR_ROLE = {
 							'td' : 
 							{
 								"result<-results":{	
 									"span.actor-role"		: function(arg)   {
+									// check if role is available
 										if (arg.item.role) {
 													return arg.item.role;
 												} else {
+									// adjust to Writter, Director  
 													return arg.item.job.substr(0,1)+arg.item.job.substr(1).toLowerCase();
 												}	
 										}
 								}
 							}
-						};					
-
+						};	
+						
+			// from jsonCrewUrl 
 			var YAMJ_CREW = {
 						'span.totalcrew': function(arg)   {
 							var totalactors = arg.context.results;
@@ -122,41 +129,68 @@
 								}
 								outputTotalActor += "<span>"+totalactors[i].name+"</span>";
 								if (totalactors[i].role) {
-													outputTotalActor += "<span style=\"font-size:0.8em\"> ("+totalactors[i].role+")</span>";
+								// check if role is available otherwise display job
+													outputTotalActor += "<span class=\"crewrole\"\"> - "+totalactors[i].role+"</span>";
 												} else {
-													outputTotalActor += "<span style=\"font-size:0.8em\"> ("+totalactors[i].job.substr(0,1)+totalactors[i].job.substr(1).toLowerCase()+")</span>";}
+													outputTotalActor += "<span class=\"crewrole\"\"> - "+totalactors[i].job.substr(0,1)+totalactors[i].job.substr(1).toLowerCase()+"</span>";}
+								// test if bitrhplace is empty
 								if (totalactors[i].birthPlace) {
-													outputTotalActor += "<span style=\"font-size:0.8em\"> - "+totalactors[i].birthPlace+"</span>";}
+													outputTotalActor += "<span class=\"crewbirth\"\"> - "+totalactors[i].birthPlace+"</span>";}
+								// test if birthday is empty
 								if (totalactors[i].birthDay) {
-													outputTotalActor += "<span style=\"font-size:0.8em\"> - "+totalactors[i].birthDay+"</span>";}			
-									if (i < 11) {
-									get_photo (totalactors[i].id, i);
-									}
+													outputTotalActor += "<span class=\"crewbirth\"\"> - "+totalactors[i].birthDay+"</span>";}	
 								}
                   				return outputTotalActor;
 							}
 						};
-						
-				var YAMJ_PHOTO = {
-							'img.photo@src': function(arg) {  
-							 
-								if (arg.context.result.artwork[0])
-								{
-									return arg.context.basePhotoUrl + arg.context.result.artwork[0].filename;
-									} else {                              
+			// from jsonCrewUrl 	
+			var LIST_PHOTO = {
+
+             		'span.totalphoto': function(arg) {
+						var totalphoto = arg.context.results;
+						var outputphoto = "";
+									// limit to 11 the photo
+							for (i = 0; i < Math.min(totalphoto.length, 11); i++) {
+									// Check to see if there is artwork
+								if (totalphoto[i].artwork[0]) {
+									// Get the first photo from the list
+									var photoselect = totalphoto[i].artwork[0];
+									if (photoselect.generatedId == 0) {
 									
-									return "pictures/dummy_photo.jpg";
+										outputphoto +="<img class=\"photo"+i+"\" src=\"pictures/dummy_photo.jpg\">";
 									}
+										outputphoto +="<img class=\"photo"+i+"\" src=\"" + arg.context.basePhotoUrl + photoselect.filename + "\" height=\"150px\" width=\"100px\">";
+									} else {
+									outputphoto +="<img class=\"photo"+i+"\" src=\"pictures/dummy_photo.jpg\">";
+								}
 							}
-						};
+							return outputphoto;
+						}
+					};
+        
+				
             function getData()
-            {	   
+            {	  if (id > 0)
+			// test if id is valid, this is the case if previous movie is selected while on the first one 
+					{									
+						var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json?dataitems=genre,artwork,plot";
+					console.log("URL: " + jsonUrl);
+						var jsonCrewUrl = "http://localhost:8888/yamj3/api/person/" + type.toLowerCase() + ".json?id=" + id + "&job=Actor,Director,Writer&dataitems=artwork";
+					console.log("URL: " + jsonCrewUrl);
+					} else { 
+					// if not valid set to the last movie 
+							// wrong_id = "Wrong id reset to last, id asked :" +id;
+							// outputJson(wrong_data); 
+					// possible to reset to 1rst movie
+							//set_first_id ();
+							set_last_id ();
 					var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json?dataitems=genre,artwork,plot";
-                console.log("URL: " + jsonUrl);
-					var jsonActorUrl = "http://localhost:8888/yamj3/api/person/" + type.toLowerCase() + ".json?id=" + id + "&job=ACTOR,Director,Writer&start=-1&max=11";
-                console.log("URL: " + jsonActorUrl);
-					var jsonCrewUrl = "http://localhost:8888/yamj3/api/person/" + type.toLowerCase() + ".json?id=" + id + "&job=Actor,Director,Writer";
-                console.log("URL: " + jsonCrewUrl);
+					console.log("URL: " + jsonUrl);
+						var jsonCrewUrl = "http://localhost:8888/yamj3/api/person/" + type.toLowerCase() + ".json?id=" + id + "&job=Actor,Director,Writer";
+					console.log("URL: " + jsonCrewUrl);
+							}
+                
+			
                 $.ajax({
                     url: jsonUrl,
                     async: false,
@@ -164,20 +198,20 @@
                     'success': function(data)
                     {
                         jsondata = data;
-		            //  outputJson(data);                
+						// outputJson(data);                
 						$p('.header').render(data, DETAIL_HEADER);
 						$p('.template').render(data, YAMJ_DIR); 
-					
-	
 						// add slideshow for fanart
 						slideshowFanart();
 						// slideshow for poster
                         slideshow();
-						// display all actor only
+						// display all crew
 						crewshow ();
 				}
                 });
-                $.ajax({
+               
+
+	             $.ajax({
                     url: jsonCrewUrl,
                     async: false,
                     dataType: 'jsonp',
@@ -185,22 +219,13 @@
                     {
 						jsondata = dataCrew;
 					//	outputJson(dataCrew);
-                    $p('.crew').render(dataCrew, YAMJ_CREW);
+						
+						$p('.table_actor_name').render(dataCrew, ACTOR_NAME);
+						$p('.table_actor_role').render(dataCrew, ACTOR_ROLE);
+						$p('.table_photo').render(dataCrew, LIST_PHOTO);
+						$p('.crew').render(dataCrew, YAMJ_CREW);
 					}
                 });
-                $.ajax({
-                    url: jsonActorUrl,
-                    async: false,
-                    dataType: 'jsonp',
-                    'success': function(dataActor)
-                    {
-						jsondata = dataActor;
-					//	outputJson(dataActor);
-						$p('.table_actor_name').render(dataActor, ACTOR_NAME);
-						$p('.table_actor_role').render(dataActor, ACTOR_ROLE);
-					}
-                });
-	            
             }
   
             // Add the source output to the end of the page
@@ -211,7 +236,7 @@
                 sourceData.innerHTML = '<h4>Source data:</h4>';
                 sourceData.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(yamjdata, undefined, 4);
             }
-	function crewshow() {	// on actor hover show all actor
+	function crewshow() {	// on crew hover show all crew
 
 				$('.showcrew').hover(function() {
 					$('.plot').css('visibility', 'hidden');
@@ -226,102 +251,74 @@
 					$('.crew').css('visibility', 'hidden');
 					$('.actorinfo').css('display', 'block');
 					$('.totalcrew').css('display', 'none');
-			//		actortotalshow();
+
 				});
 			}
-	// not used to be implemented later 			
-	function actortotalshow() {	// on all actor hover to be implemented 
-				$('.totalcrew').hover(function() {
-					$('.plot').css('visibility', 'hidden');
-					$('.genres').css('visibility', 'hidden');
-					$('.crew').css('visibility', 'hidden');
-					$('.actorinfo').css('display', 'none');
-					$('.totalcrew').css('display', 'block');
-					
-				}, function() {
-					$('.plot').css('visibility', 'visible');
-					$('.genres').css('visibility', 'visible');
-					$('.crew').css('visibility', 'visible');
-					$('.actorinfo').css('display', 'block');
-					$('.totalcrew').css('display', 'none');
-					});
-			}
+	
+	// next/previous movie/series, need to be revue for a better implementation a real index list
 	function change_movie(x)
         {
             localStorage.setItem("type", type);
 			if (x == 'next')
 			{
+			// basic next id 
 				localStorage.setItem("id", parseInt(id, 10) + 1);
 				console.log("Storing value: " + type + "-" + (parseInt(id, 10) + 1));
 				} else {
-				localStorage.setItem("id", parseInt(id, 10) - 1);
-				console.log("Storing value: " + type + "-" + (parseInt(id, 10) - 1));
-				};	
-            console.log("Storing value: " + type + "-" + id);
+					if (parseInt(id, 10) > 0)
+					{
+					// basic previous id 
+						localStorage.setItem("id", parseInt(id, 10) - 1);
+						console.log("Storing value: " + type + "-" + (parseInt(id, 10) - 1));
+						} else {
+						// basic previous id if previous and id already the first
+						set_last_id();
+				
+						}
+				}	
+
             window.location.href="detail.html";
         }
-
-	function get_photo(actor_id, rank)
+	
+	function set_first_id()
 		{
-			var jsonPhotoUrl = "http://localhost:8888/yamj3/api/person/" + actor_id + ".json?dataitems=artwork";
-                console.log("URL: " + jsonPhotoUrl + rank);
+			id = 1;
+		}
+	
+	// set to the last movie, need to fetch the last id from API
+	function set_last_id()
+		{
+		// json to fetch the last movie/tv
+			var jsonLastUrl = "http://localhost:8888/yamj3/api/index/video.json?type="+ type.toLowerCase() +"&start=-1&max=1&sortby=title&sortdir=DESC";
+            console.log("URL: " + jsonLastUrl);
 				$.ajax({
-                    url: jsonPhotoUrl,
+                    url: jsonLastUrl,
                     async: false,
                     dataType: 'jsonp',
-                    'success': function(photodata)
-                    {
-                        jsonphotodata = photodata;
-		              // outputJson(photodata); 
-						if (rank == 0){
-					// by default all images are hidden for the case if there is nothing to display,  
-					// if this part is running, image is validate then reset this photo to visible
-							$('.photo0 img').css('visibility', 'visible');
-							$p('.photo0').render(photodata, YAMJ_PHOTO);
+                    'success': function(lastdata)
+                    {						
+                        jsonlastdata = lastdata;
+		            // outputJson(lastdata); 
+					
+					//need to set the id 
+					 TEST = {
+							'span.lastid': function(arg) { 
+								setid (arg.context.results[0].id);
+								return  arg.context.results[0].id;									
 							}
-						if (rank == 1){
-							$('.photo1 img').css('visibility', 'visible');
-							$p('.photo1').render(photodata, YAMJ_PHOTO);
-							}
-						if (rank == 2){
-							$('.photo2 img').css('visibility', 'visible');
-							$p('.photo2').render(photodata, YAMJ_PHOTO);
-							}
-						if (rank == 3){
-							$('.photo3 img').css('visibility', 'visible');
-							$p('.photo3').render(photodata, YAMJ_PHOTO);
-							}	
-						if (rank == 4){
-							$('.photo4 img').css('visibility', 'visible');
-							$p('.photo4').render(photodata, YAMJ_PHOTO);
-							}
-						if (rank == 5){
-							$('.photo5 img').css('visibility', 'visible');
-							$p('.photo5').render(photodata, YAMJ_PHOTO);
-							}	
-						if (rank == 6){
-							$('.photo6 img').css('visibility', 'visible');
-							$p('.photo6').render(photodata, YAMJ_PHOTO);
-							}	
-						if (rank == 7){
-							$('.photo7 img').css('visibility', 'visible');
-							$p('.photo7').render(photodata, YAMJ_PHOTO);
-							}
-						if (rank == 8){
-							$('.photo8 img').css('visibility', 'visible');
-							$p('.photo8').render(photodata, YAMJ_PHOTO);
-							}
-						if (rank == 9){
-							$('.photo9 img').css('visibility', 'visible');
-							$p('.photo9').render(photodata, YAMJ_PHOTO);
-							}	
-						if (rank == 10){
-							$('.photo10 img').css('visibility', 'visible');
-							$p('.photo10').render(photodata, YAMJ_PHOTO);
-							}	
+						};
+					 $p('.test').render(lastdata, TEST);	  
 					}
-                });
+					});
 		}
+		function setid(Newid)
+				{     
+				id = Newid;
+				localStorage.setItem("id", id);
+				console.log("Storing value: " + type + "-" + id);
+				window.location.href="detail.html";
+				}		
+				
         </script>
     </head>
     <body onload="getData();">
@@ -339,7 +336,7 @@
 						<input id="previous_movie" type="button" class="button" onclick="change_movie('previous')" value="" />
 						<input id="next_movie" type="button" class="button" onclick="change_movie('next')" value="" />		
         </div>
-	<!--  header for movie name -->
+	<!--  header for movie/series name -->
 		<div class="header">
 			<table>
 				<tr>
@@ -356,16 +353,19 @@
 			</table>
 		</div>
 		
-		
+	<!--  ALL CREW button -->	
 		<div class="showcrew">
 					<td><span >ALL CREW</span></td>
 		</div>
-
+		<div class="test">
+					<td><span class="lastid"></span></td>
+		</div> 
+	<!-- main table for detail page -->
         <div class="template"> 
-		<!-- main table for detail page -->
            <table>
                   <tbody>
-                    <tr>     
+                    <tr>    
+						<!-- fanart animation, automatic every 10s, if more than one fanart -->
 						<td rowspan="10">
                             <div id="slideshowFanart" class="glow">
                                 <div id="imgRollFanart">
@@ -375,18 +375,19 @@
                             <a id="nextFanart">=></a>
                             <a id="prevFanart"><=</a>
                         </td>
+						<!-- poster animation, automatic every 3s, if more than one fanart, could be stopped or adjust by button  -->
 						<td rowspan="10">
                             <div id="slideshowCtr" class="glow">
                                 <div id="imgRoll">
                                     <img class="poster" src=""/>
                                 </div>
                             </div>
+						<!-- next , previous button -->
                             <a id="next"><img src="./pictures/next.png" /></a>
                             <a id="prev"><img src="./pictures/previous.png" /></a>
                         </td>        
                     </tr> 
 			<!-- split table for image and text --> 
-				
 			<!-- add class for each object in the detail section of yamj-style.css -->
 					<table>
 						<tr >
@@ -399,24 +400,11 @@
 					</table>
                 </tbody>
             </table> 
-			<div>
-				<table>
-					<tr>
-						<td class="photo0"><img class="photo" src=""/></td>
-						<td class="photo1"><img class="photo" src=""/></td>
-						<td class="photo2"><img class="photo" src=""/></td>
-						<td class="photo3"><img class="photo" src=""/></td>
-						<td class="photo4"><img class="photo" src=""/></td>
-						<td class="photo5"><img class="photo" src=""/></td>
-						<td class="photo6"><img class="photo" src=""/></td>
-						<td class="photo7"><img class="photo" src=""/></td>
-						<td class="photo8"><img class="photo" src=""/></td>
-						<td class="photo9"><img class="photo" src=""/></td>
-						<td class="photo10"><img class="photo" src=""/></td>
-					</tr>
-				</table>
-			</div>
-        </div>
+	
+		</div>	
+        
+		<!-- actor name  -->
+		<!-- each table_actor_name, table_actor_role, have fixed layout to limit to 11 the actor display --> 
 		<div class="table_actor_name">
 			<table id="tableactorname">	
 				<tr>
@@ -426,22 +414,33 @@
 				</tr>
 			</table>
 		</div>
+		<!-- role or job  -->
 		<div class="table_actor_role">
 			<table id="tableactorrole">	
 				<tr>
 					<td class="center">
-						(<span class="actor-role"></span>)
+						<span class="actor-role"></span>
 					</td>
 				</tr>
 			</table>
 		</div>
-
-			<div class="crew">
+		<!-- photo   -->
+		<div class="table_photo">
+			<table id="tablephoto">	
 				<tr>
-					<td><span class="totalcrew"></span></td>
-				</tr> 
-			</div>
-
+					<td class="center">
+					 <span class="totalphoto"></span>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!-- all crew  with animation -->
+		<div class="crew">
+			<tr>
+				<td><span class="totalcrew"></span></td>
+			</tr> 
+		</div>
+		<!-- display source data from API if needed  -->
         <div id="sourceData"></div>
     </body>
 </html>

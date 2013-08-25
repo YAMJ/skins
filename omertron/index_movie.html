@@ -50,10 +50,15 @@
 
         function setId(type, id)
         {
+			if ( id > 0) {
             localStorage.setItem("type", type);
             localStorage.setItem("id", id);
             console.log("Storing value: " + type + "-" + id);
             window.location.href="detail.html";
+				} else {
+				  console.log("Wrong Storing value: " + type + "-" + id);
+					window.location.href="index_movie.html";			
+				}
         }
 
         // This function calls the API to get the JSON data.

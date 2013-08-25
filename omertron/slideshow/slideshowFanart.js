@@ -25,7 +25,7 @@ function slideshowFanart() {
 		$('.genres').css('visibility', 'hidden');
 		$('#tableactorrole').css('visibility', 'hidden');
 		$('#tableactorname').css('visibility', 'hidden');
-		$('.photo').css('visibility', 'hidden');
+		$('.table_photo').css('visibility', 'hidden');
 		$('div#slideshowCtr ').css('visibility', 'hidden');
 		$('div#slideshowFanart').css('opacity', '1');
     }, function() {
@@ -33,7 +33,7 @@ function slideshowFanart() {
 		$('.genres').css('visibility', 'visible');
 		$('#tableactorrole').css('visibility', 'visible');
 		$('#tableactorname').css('visibility', 'visible');
-		$('.photo').css('visibility', 'visible');
+		$('.table_photo').css('visibility', 'visible');
 		$('div#slideshowCtr ').css('visibility', 'visible');
 		$('div#slideshowFanart').css('opacity', '0.7');
     });

@@ -50,10 +50,12 @@
 
         function setId(type, id)
         {
+	
             localStorage.setItem("type", type);
             localStorage.setItem("id", id);
             console.log("Storing value: " + type + "-" + id);
             window.location.href="detail.html";
+
         }
 
         // This function calls the API to get the JSON data.

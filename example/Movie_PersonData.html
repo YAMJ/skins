@@ -1,0 +1,237 @@
+<html>
+	<head>
+		<title>YAMJ v3</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script src="https://rawgithub.com/pure/pure/master/libs/pure.js"></script>
+        <link rel="stylesheet" type="text/css" href="./css/yamj-style.css">
+  </head>
+	<body>
+		<script type="text/javascript">
+			function getPersonData(id,limit)
+            {
+				jsonUrl = "http://localhost:8888/yamj3/api/person/movie.json?id="+id+"&job=actor,director,writer&max="+limit+"&dataitems=artwork";
+				
+				var jsondata = null;
+
+				console.log("Call for URL with person ID:"+id);
+				console.log("URL: " + jsonUrl);
+				
+				$.ajax({
+					url: jsonUrl,
+					async: false,
+					dataType: 'jsonp',
+					'success': function (data)
+					{
+						jsondata = data;
+						updateHtml(data);
+					}
+				});
+				return jsondata;
+            }
+
+			function updateHtml(yamjdata)
+			{
+				console.log(yamjdata);
+				 var HEADER = {
+                'span.count': 'count',
+                'span.totalcount': 'totalCount'
+            };
+				var	ACTOR_NAME = {
+					'td' : 
+						{	
+					// assume there is one 
+						"result<-results":{				
+						"span.actor-name"		: "result.name" 
+							}
+						}
+					};
+			
+					
+				var	ACTOR_ROLE = {
+					'td' : 
+					{
+					"result<-results":{	
+							"span.actor-role"		: function(arg)   {
+							// check if role is available
+							if (arg.item.role) {
+								return arg.item.role;
+								} else {
+							// adjust to Writter, Director  
+								return arg.item.job.substr(0,1)+arg.item.job.substr(1).toLowerCase();
+										}	
+									}
+								}
+							}
+						};
+						
+				var LIST_PHOTO = {
+
+             		'span.totalphoto': function(arg) {
+						var totalphoto = arg.context.results;
+						var outputphoto = "";
+							for (i = 0; i < totalphoto.length; i++) {
+									// Check to see if there is artwork
+								if (totalphoto[i].artwork[0]) {
+									// Get the first photo from the list
+									var photoselect = totalphoto[i].artwork[0];
+									if (photoselect.generatedId == 0) {
+									
+										outputphoto +="<img class=\"photo"+i+"\" src=\"pictures/dummy_photo.jpg\">";
+									}
+										outputphoto +="<img class=\"photo"+i+"\" src=\"" + arg.context.basePhotoUrl + photoselect.filename + "\">";
+									} else {
+									outputphoto +="<img class=\"photo"+i+"\" src=\"pictures/dummy_photo.jpg\">";
+								}
+							}
+							return outputphoto;
+						}
+					};
+				
+					$p('.header_return').render(yamjdata, HEADER);	
+					$p('.table_actor_name').render(yamjdata, ACTOR_NAME);
+					$p('.table_actor_role').render(yamjdata, ACTOR_ROLE);	
+					$p('.table_photo').render(yamjdata, LIST_PHOTO);	
+				
+				var str = JSON.stringify(yamjdata, undefined, 4);
+				output(str);
+				
+			}
+
+			// Add the source output to the end of the page
+			function output(inp) {
+				document.body.appendChild(document.createElement('pre')).innerHTML = inp;
+			}
+			
+
+ 		</script>
+
+		<h2>YAMJv3 Movie Person Data Test</h2>
+
+		<form>
+			<table border="0">
+				<tr>
+					<td align="right"><b>Person Data ID: </b></td>
+					<td>
+						<input type="text" id="formPersonId"/>
+					</td>
+					<td align="right"><b>Number of Photo: </b></td>
+					<td>
+						<SELECT NAME="formPhotoLimit" SIZE=1 ">
+
+							<option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+							<option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+							<option value="9">9</option>
+                            <option value="10">10</option>
+							<option value="11" selected="selected">11</option>
+							<option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+							<option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+							<option value="19">19</option>
+                            <option value="20">20</option>
+							<option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+							<option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+							<option value="29">29</option>
+                            <option value="30">30</option>
+							<option value="31">31</option>
+                            <option value="32">32</option>
+                            <option value="33">33</option>
+                            <option value="34">34</option>
+							<option value="35">35</option>
+                            <option value="36">36</option>
+                            <option value="37">37</option>
+                            <option value="38">38</option>
+							<option value="39">39</option>
+                            <option value="40">40</option>
+							<option value="41">41</option>
+                            <option value="42">42</option>
+                            <option value="43">43</option>
+                            <option value="44">44</option>
+							<option value="45">45</option>
+                            <option value="46">46</option>
+                            <option value="47">47</option>
+                            <option value="48">48</option>
+							<option value="49">49</option>
+                            <option value="50">50</option>
+							<option value="51">51</option>
+                            <option value="52">52</option>
+                            <option value="53">53</option>
+                            <option value="54">54</option>
+							<option value="55">55</option>
+                            <option value="56">56</option>
+                            <option value="57">57</option>
+                            <option value="58">58</option>
+							<option value="59">59</option>
+                            <option value="60">60</option>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td align="left">
+						<input type="button" value="Run Query" onclick="getPersonData(this.form.formPersonId.value, this.form.formPhotoLimit.value)"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+	  <div class="header_return">
+            <table>
+                <tr>
+                    <td align="right"><b>Returned Results: </b></td>
+                    <td><span class="count"></span></td>
+                </tr>
+                <tr>
+                    <td align="right"><b>Total Results: </b></td>
+                    <td><span class="totalcount"></span></td>
+                </tr>
+            </table>
+        </div>
+	
+	<div class="Person">
+	<!-- actor name  -->
+		<div class="table_actor_name">
+			<table id="tableactorname">	
+				<tr>
+					<td class="center">
+						<span class="actor-name"></span>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="table_photo">
+			<table id="tablephoto">	
+				<tr>
+					<td class="center">
+					 <span class="totalphoto"></span>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!-- role or job  -->
+		<div class="table_actor_role">
+			<table id="tableactorrole">	
+				<tr>
+					<td class="center">
+						(<span class="actor-role"></span>)
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+		<h4>Source data:</h4>
+	</body>
+</html>

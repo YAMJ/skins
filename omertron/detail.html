@@ -150,7 +150,7 @@
 						var totalphoto = arg.context.results;
 						var outputphoto = "";
 									// limit to 11 the photo
-							for (i = 0; i < Math.min(totalphoto.length, 11); i++) {
+							for (i = 0; i < totalphoto.length; i++) {
 									// Check to see if there is artwork
 								if (totalphoto[i].artwork[0]) {
 									// Get the first photo from the list
@@ -405,6 +405,8 @@
         
 		<!-- actor name  -->
 		<!-- each table_actor_name, table_actor_role, have fixed layout to limit to 11 the actor display --> 
+		<div class="Person">
+	<!-- actor name  -->
 		<div class="table_actor_name">
 			<table id="tableactorname">	
 				<tr>
@@ -414,17 +416,6 @@
 				</tr>
 			</table>
 		</div>
-		<!-- role or job  -->
-		<div class="table_actor_role">
-			<table id="tableactorrole">	
-				<tr>
-					<td class="center">
-						<span class="actor-role"></span>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<!-- photo   -->
 		<div class="table_photo">
 			<table id="tablephoto">	
 				<tr>
@@ -434,7 +425,18 @@
 				</tr>
 			</table>
 		</div>
-		<!-- all crew  with animation -->
+		<!-- role or job  -->
+		<div class="table_actor_role">
+			<table id="tableactorrole">	
+				<tr>
+					<td class="center">
+						(<span class="actor-role"></span>)
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+			<!-- all crew   -->
 		<div class="crew">
 			<tr>
 				<td><span class="totalcrew"></span></td>

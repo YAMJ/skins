@@ -1,442 +1,137 @@
-#container {
-    width: auto;
-    margin-left: 5px;
-    border: 5px solid black;
-    padding: 5px;
-    background-color: gray;
-}
-
-#container .row {
-    border: 1px solid white;
-    margin: 5px;
-    padding: 5px;
-    background-color: gainsboro;
-}
-
-#container br {
-    clear: both;
-}
-
-#container .block {
-    text-align: center;
-    border: 1px solid white;
-    margin: 5px;
-    padding: 5px;
-    float: left;
-    width: 175px;
-    height: 300px;
-    overflow: hidden;
-    background-color: whitesmoke;
-}
-
-.code
-{
-    border: dashed 1px #BCBCCB; padding:8px 12px; background-color: #F3F3F9; white-space:pre; font-family:"Courier New", Georgia;
-    font-size:12px; margin:6px 0;overflow:auto;
-}
-
-#container .poster {
-    width: 160px;
-	height: 240px;	
-}
-
-#container .title {
-	overflow: hidden;
-	text-align: center;
-	font-size:0.9em;
-}
-html, #tablelist,#headertable,#logo,#message
-{
-    /* Applies to all pages */
-    font-family: Arial, Helvetica, sans-serif;
-    border-collapse:collapse;
-}
-
 body {
-    /* IE10 Consumer Preview */
-    background-image: -ms-linear-gradient(left, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
-
-    /* Mozilla Firefox */
-    background-image: -moz-linear-gradient(left, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
-
-    /* Opera */
-    background-image: -o-linear-gradient(left, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
-
-    /* Webkit (Safari/Chrome 10) */
-    background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #333333), color-stop(0.5, #CCCCCC), color-stop(0.5, #CCCCCC), color-stop(1, #333333));
-
-    /* Webkit (Chrome 11+) */
-    background-image: -webkit-linear-gradient(left, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
-
-    /* W3C Markup, IE10 Release Preview */
-    background-image: linear-gradient(to right, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
+    background-color: #d6d6d6;
 }
 
-#tablelist td, #tablelist th, #headertable td, #headertable th
-{
-    font-size:1em;
-    border:1px solid #98bf21;
-    padding:3px 7px 2px 7px;
-}
-
-#tablelist th, #headertable th
-{
-    font-size:1.1em;
-    text-align:center;
-    padding-top:5px;
-    padding-bottom:4px;
-    background-color:#A7C942;
-    color:#ffffff;
-}
-
-#tablelist tr:nth-child(odd) {
-    color:#000000;
-    background-color:#EAF2D3;
-}
-
-#tablelist td.right, #headertable td.right
-{
-    text-align: right;
-    font-weight: bold;
-}
-
-#tablelist td.center, #headertable td.center
-{
-    text-align: center;
-}
-
-#logo
-{
-    height: auto;
-    width: auto;
-    text-align: center;
-/*    background:  url(../pictures/yamj-logo_repeat.png) no-repeat right,
-        url(../pictures/yamj-logo_repeat.png) no-repeat left; */
-}
-
-#message
-{
-    text-align: match-parent;
-    font-weight: bold;
-    color: tomato;
-}
-
-#tablelist th.span, #tablelist td.span, #headertable th.span, #headertable td.span
-{
-    column-span: all;
-    text-align: center;
-}
-/* detail page */
-#home_left {
-	width: 100px;
-	height:35px;
+div#slideshowCtr {
+    width: 209px;
+    height: 310px;
+    margin: auto;
+    overflow: hidden;
 	position: absolute;
-	top: 5px;
-	left: 10px;
-	padding:0px 0px -5px 0px;
-	background-color:rgba(255, 255, 255, 0.3);
-	border: 2px solid #b0b0b0;	
-	border-right: 5px solid #b0b0b0;
-	border-radius: 6px 6px 0px 6px;
-	}
-#home_left:hover {
-	background-color:rgba(255, 255, 255, 0.6);
-	}
-#home_right {
-	width: 100px;
-	height:35px;
-	position: absolute;
-	top: 5px;
-	right: 10px;
-	padding:0px 0px -1px 0px;
-	background-color:rgba(255, 255, 255, 0.3);
-	border: 2px solid #b0b0b0;	
-	border-right: 5px solid #b0b0b0;
-	border-radius: 6px 6px 0px 6px;
-	}
-#home_right:hover {
-	background-color:rgba(255, 255, 255, 0.6);
-	}
-#previous_movie {
-	width: 35px;
-	height:30px;
-	position: absolute;
-	top: 5px;
-	left: 120px;
-	padding:0px 0px -5px 0px;
-	border: 2px solid #b0b0b0;	
-	border-right: 3px solid #b0b0b0;
-	border-radius: 6px 6px 0px 6px;
-	background:  url(../pictures/previous.png) no-repeat;
+	left: 20px;
+	top: 60px;
+}
 
-	}
-#previous_movie:hover {
-	background:  url(../pictures/previousSelect.png) no-repeat;
-	background-color:rgba(255, 255, 255, 0.3);
-	}
-#next_movie {
-	width: 35px;
-	height:30px;
-	position: absolute;
-	top: 5px;
-	right: 120px;
-	padding:0px 0px -1px 0px;
-	border: 2px solid #b0b0b0;	
-	border-right: 3px solid #b0b0b0;
-	border-radius: 6px 6px 0px 6px;
-	background:  url(../pictures/next.png) no-repeat;
-	}
-#next_movie:hover {
-	background:  url(../pictures/nextSelect.png) no-repeat;
-	background-color:rgba(255, 255, 255, 0.3);
-	}
-/* for test purpose */
-.test
-{
-	visibility: hidden;
-	height: auto;
-    width: auto;
-	font-size:1.8em;
-	font-weight: bold;
-    text-align: center;
-	position: absolute;
-	top: 40px; 
-	left: 150px;
-    }
-.header_return
-{
-    display: block;
-	height: auto;
-    width: auto;
-	font-size:1.8em;
-	font-weight: bold;
-    text-align: center;
-	margin: 0px 120px 10px 120px;
-	padding: 0px;
-	background-color:rgba(0, 0, 0, 0.2);
-	border: 2px solid #b0b0b0;	
-	border-right: 5px solid #b0b0b0;
-	border-radius: 6px 6px 0px 6px;
-    }	
-.header
-{
-    display: block;
-	height: auto;
-    width: auto;
-	font-size:1.8em;
-	font-weight: bold;
-    text-align: center;
-	margin: -6px 148px 0px 148px;
-	padding-left: 25px;
-	background-color:rgba(0, 0, 0, 0.2);
-	border: 2px solid #b0b0b0;	
-	border-right: 5px solid #b0b0b0;
-	border-radius: 6px 6px 0px 6px;
-    }	
-.header_type {
-    padding-top:1px;
-	font-size:0.8em;
-	margin:3px 0px 0px 0px;
-	padding: 0px 2px 0px 2px;
-	float: left;
-	font-style:italic
-	background-color:#000;
-	border: 2px solid #b0b0b0;	
-	border-right: 5px solid #b0b0b0;
-	border-radius: 6px 6px 0px 6px;
-	}
-.header_title {
-    padding:1px 1px 1px 5px;
-	}
-.header_year {
-    padding-top:1px;
-	font-size:0.8em;
-	margin:1px -10px 5px -10px;
-	}	
-.header_id , .lastid{
-    padding-top:1px;
-	font-size:0.8em;
-	margin:1px 0px 5px -6px;
-	}	
-.header_text{
-	font-size:0.8em;
-	margin:-5px 0px 5px 0px;
-	}
-.id  {
+div.glow {
+    box-shadow: 0px 2px 3px #fff;
+}
+
+div#imgRoll {
+    height: inherit;
+    position: relative;
+    left: 0px;
+}
+
+div#imgRoll img {
     float: left;
-	}
-.title {
-	width: 810px;
-	font-weight: bold;
-	text-align: center;
-	font-size:1.1em;
-	}
-.year {
-	font-weight: bold;
-	text-align: right;
-	font-size:1.1em;
-	}	
-	
-/* label for each text */
-text {
-		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-		font-size:1.03em;
-		color:#b0b0b0;
-		background-color: #000;
-		width: 45px;
-		text-align: center;
-		margin: auto 5px auto -5px;
-		padding: 0px 1px 0px 1px;
-		border: 1px solid red;
-		border-right: 4px solid red;
-		border-radius: 6px 6px 0px 6px;
-	}	
-.plot {
-	width: auto;
-	color:#fff;
-	font-weight: bold;
-	text-align: justify;
-	font-size:1.0em;
-	position: absolute;
-	top: 128px;
-	left: 240px;
-	background-color:rgba(0, 0, 0, 0.3);
-	border: 1px solid gray;	
-	border-right: 5px solid gray;
-	padding: 3px 10px 0px 10px;
-	margin-right: 80px;
-	}
-.genres, .test {
-	width: auto;
-	color:#fff;
-	font-weight: bold;
-	text-align: justify;
-	font-size:1.0em;
-	position: absolute;
-	top: 95px;
-	left: 240px;
-	background-color:rgba(0, 0, 0, 0.3);
-	border: 1px solid gray;
-	border-right: 5px solid gray;
-	padding: 3px 10px 3px 10px;
-	margin-right: 35px;
-	}
-	
-.crew{
-}	
+    position: relative;
 
-.totalcrew {
-	display: none;
-	width: auto;
-	overflow: hidden;
-	color:yellow;
-	font-weight: bold;
-	text-align: justify;
-	font-size:1.0em;
-	position: absolute;
-	top: 85px;
-	right: 15px;
-	background-color:rgba(0, 0, 0, 0.3);
-	border: 2px solid gray;
-	border-right: 5px solid gray;
-	padding: 3px 10px 0px 10px;
-	}
-.totalcrew :hover {
-	}
-.showcrew  {
-		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-		font-size:1.05em;
-		font-weight: bold;
-		color:#b0b0b0;
-		background-color: black;
-		width: auto;
-		text-align: center;
-		margin: 0px 5px 0px -5px;
-		padding: 0px 1px 0px 1px;
-		border: 1px solid red;
-		border-right: 4px solid red;
-		border-radius: 6px 6px 0px 6px;
-		position: absolute;
-		top: 60px;
-		right: 10px;
-	}
-	
-.Person {
-position: relative;
-	left: 45px;
-	/* set for all photoxx image place as empty , by default hidden
-	will be reset to visible by program if the iamge is valide */
-	width: 1200px;
-	table-layout: fixed;
-	overflow-x: scroll;
-	}
-
-.table_photo {
-
-	position: relative;
-	left: 43px;
-	/* set for all photoxx image place as empty , by default hidden
-	will be reset to visible by program if the iamge is valide */
-	width: 3500px;
-	height:160px;
-	table-layout: fixed;
-	overflow: hidden;
-	}
-.photo0 {
-	position: relative;
-	width: 100px;
-	height: 150px;
-	border-left: 1px solid gray;
-	border-right: 6px solid gray;
-	margin:0px 1px 0px 2px;
-	}
-.photo1, .photo2, .photo3,.photo4,.photo5,.photo6,.photo7,.photo8,.photo9,.photo10,
-.photo11,.photo12, .photo13,.photo14,.photo15,.photo16,.photo17,.photo18,.photo19,.photo20,
-.photo21, .photo22, .photo23,.photo24,.photo25,.photo26,.photo27,.photo28,.photo29,.photo30,
-.photo41, .photo42, .photo43,.photo44,.photo45,.photo46,.photo47,.photo48,.photo49,.photo50,
-.photo51, .photo52, .photo53,.photo54,.photo55,.photo56,.photo57,.photo58,.photo59,.photo60
-  {
-	position: relative;
-	width: 101px;
-	height: 150px;
-	border-left: 1px solid gray;
-	border-right: 6px solid gray;
-	margin:1px
-	}	
-		
-	/* format table actor */
-#tableactorname
-{
-    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-	position: relative;
-	left: 46px;
-	color:#fff;	
-	width: 300px;
-	table-layout: fixed;
-	overflow: scroll;
-	
 }
 
-#tableactorrole
-{
-    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
- 	position: relative;
-	width: 300px;
-	table-layout: fixed;
-	overflow: hidden;
-	left: 46px;
-	color:#fff;	
+a#next {
+    width: 20px;
+    display: none;
+    background-color: #000;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 15px;
+    font-family: Helvetica, sans-serif;
+    padding: 4px 20px 4px 10px;
+    position: absolute;
+    top: 200px;
+	left: 178px;
 }
-#tableactorname td, #tableactorrole td
-{
-    font-size:0.9em;
-	color:#fff;
-	font-weight: bold;
-	background-color:rgba(0, 0, 0, 0.5);
-	border: 1px solid gray;
-	border-right: 5px solid gray;
-	width: 100px;
-	vertical-align:top;
-    text-align: center;	
+a#prev {
+    width: 20px;
+    display: none;
+    background-color: #000;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 15px;
+    font-family: Helvetica, sans-serif;
+    padding: 4px 20px 4px 10px;
+    position: absolute;
+    top: 200px;
+	left: 20px;
 }
-/* fin table actor */
+a#next:hover, a#prev:hover {
+    background-color: #000;
+    cursor: pointer;
+}
+
+a#next {
+    border-radius: 6px 0px 0px 6px;
+    float: right;
+}
+
+a#prev {
+    border-radius: 0px 6px 6px 0px;
+    float: left;
+}
+/* fanart section */
+
+div#slideshowFanart {
+    width: 1280px;
+    height: 720px;
+    margin: auto;
+    overflow: hidden;
+	opacity: 0.7;
+	position: absolute;
+	top: 92px;
+}
+div#imgRollFanart {
+    height: inherit;
+    position: relative;
+    left: 0px;
+
+}
+
+div#imgRollFanart img {
+    float: left;
+    position: relative;
+}
+
+a#nextFanart {
+    width: 20px;
+    display: none;
+    background-color: #000;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 15px;
+    font-family: Helvetica, sans-serif;
+    padding: 4px 10px 4px 10px;
+    position: absolute;
+	top: 200px;
+	left: 924px;
+}
+a#prevFanart {
+    width: 20px;
+    display: none;
+    background-color: #000;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 15px;
+    font-family: Helvetica, sans-serif;
+    padding: 4px 10px 4px 10px;
+    position: absolute;
+    top: 200px;
+	left: 413px;
+}
+a#nextFanart:hover, a#prevFanart:hover {
+	background-color: #000;
+    cursor: pointer;
+}
+
+a#nextFanart {
+    border-radius: 6px 0px 0px 6px;
+    float: right;
+}
+
+a#prevFanart {
+    border-radius: 0px 6px 6px 0px;
+    float: left;
+}

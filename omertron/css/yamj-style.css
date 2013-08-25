@@ -349,140 +349,68 @@ text {
 		top: 60px;
 		right: 10px;
 	}
-.table_photo {
-	position: absolute;
-	top: 642px;
-	left: 43px;
-	/* set for all photoxx image place as empty , by default hidden
-	will be reset to visible by program if the iamge is valide */
+.Person {
+position: absolute;
+	left: 7px;
+	top: 560px;
 	width: 1280px;
-	height:140px;
-	overflow: hidden;
-	vertical-align:center;
-    text-align: center;	
+	table-layout: fixed;
+	overflow-x: scroll;
+	}
 
+.table_photo {
+	position: relative;
+	left: 0px;
+	width: 3500px;
+	height:160px;
+	table-layout: fixed;
+	overflow: hidden;
 	}
 .photo0 {
-	left: 48px;
+	position: relative;
 	width: 100px;
 	height: 150px;
 	border-left: 1px solid gray;
 	border-right: 6px solid gray;
 	margin:0px 1px 0px 2px;
 	}
-.photo1  {
-	left: 157px;
-	width: 100px;
+.photo1, .photo2, .photo3,.photo4,.photo5,.photo6,.photo7,.photo8,.photo9,.photo10,
+.photo11,.photo12, .photo13,.photo14,.photo15,.photo16,.photo17,.photo18,.photo19,.photo20,
+.photo21, .photo22, .photo23,.photo24,.photo25,.photo26,.photo27,.photo28,.photo29,.photo30,
+.photo41, .photo42, .photo43,.photo44,.photo45,.photo46,.photo47,.photo48,.photo49,.photo50,
+.photo51, .photo52, .photo53,.photo54,.photo55,.photo56,.photo57,.photo58,.photo59,.photo60
+  {
+	position: relative;
+	width: 101px;
 	height: 150px;
 	border-left: 1px solid gray;
 	border-right: 6px solid gray;
-	margin:0px 1px 0px 2px;
+	margin:1px
 	}	
-.photo2  {
-	left: 268px;
-	width: 100px;
-	height: 150px;
-	border-left: 1px solid gray;
-	border-right: 6px solid gray;
-	margin:0px 1px 0px 2px;
-	}
-.photo3  {
-	left: 377px;
-	width: 100px;
-	height: 150px;
-	border-left: 1px solid gray;
-	border-right: 6px solid gray;
-	margin:0px 1px 0px 1px;
-	}
-.photo4  {
-	left: 487px;
-	width: 100px;
-	height: 150px;
-	border-left: 1px solid gray;
-	border-right: 6px solid gray;
-	margin:0px 1px 0px 2px;
-	}
-.photo5  {
-	left: 597px;
-	width: 100px;
-	height: 150px;
-	border-left: 1px solid gray;
-	border-right: 6px solid gray;
-	margin:0px 1px 0px 2px;
-	}	
-.photo6  {
-	left: 707px;
-	width: 100px;
-	height: 150px;
-	border-left: 1px solid gray;
-	border-right: 6px solid gray;
-	margin:0px 1px 0px 2px;
-	}
-.photo7  {
-	left: 817px;
-	width: 100px;
-	height: 150px;
-	border-left: 1px solid gray;
-	border-right: 6px solid gray;
-	margin:0px 1px 0px 2px;
-	}
-.photo8  {
-	left: 927px;
-		width: 100px;
-	height: 150px;
-	border-left: 1px solid gray;
-	border-right: 6px solid gray;
-	margin:0px 1px 0px 2px;
-	}
-.photo9  {
-	left: 1037px;
-	width: 100px;
-	height: 150px;
-	border-left: 1px solid gray;
-	border-right: 6px solid gray;
-	margin:0px 1px 0px 2px;
-	}	
-.photo10  {
-	left: 1148px;
-	width: 100px;
-	height: 150px;
-	border-left: 1px solid gray;
-	border-right: 6px solid gray;
-	margin:0px 1px 0px 2px;
-	}	
+		
 	/* format table actor */
-	
-.table_actor_name {
-	position: absolute;
-	top: 588px;
-	left: 45px;
-	/* set for all photoxx image place as empty , by default hidden
-	will be reset to visible by program if the iamge is valide */
-	width: 1210px;
-	table-layout: fixed;
-	overflow:hidden;
-	}	
-.table_actor_role {
-	position: absolute;
-	top: 781px;
-	left: 45px;
-	/* set for all photoxx image place as empty , by default hidden
-	will be reset to visible by program if the iamge is valide */
-	width: 1210px;
-	table-layout: fixed;
-	overflow:hidden;
-	font-style:italic;
-	font-size:0.9em;
-	}
-#tableactorname, #tableactorrole
+#tableactorname
 {
     font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	position: relative;
+	left: 3px;
 	color:#fff;	
-	width: 100px;
+	width: 300px;
 	table-layout: fixed;
-	overflow:hidden;
+	overflow: scroll;
+	
 }
 
+#tableactorrole
+{
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+ 	position: relative;
+	width: 300px;
+	table-layout: fixed;
+	overflow: hidden;
+	left: 3px;
+	color:#fff;	
+}
 #tableactorname td, #tableactorrole td
 {
     font-size:0.9em;

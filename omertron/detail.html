@@ -145,23 +145,27 @@
 						};
 			// from jsonCrewUrl 	
 			var LIST_PHOTO = {
-
-             		'span.totalphoto': function(arg) {
+             		'span.totalphoto': function(arg) 
+					{
 						var totalphoto = arg.context.results;
 						var outputphoto = "";
 									// limit to 11 the photo
-							for (i = 0; i < totalphoto.length; i++) {
+							for (i = 0; i < totalphoto.length; i++) 
+							{
 									// Check to see if there is artwork
-								if (totalphoto[i].artwork[0]) {
+								if (totalphoto[i].artwork[0]) 
+								{
 									// Get the first photo from the list
-									var photoselect = totalphoto[i].artwork[0];
-									if (photoselect.generatedId == 0) {
 									
-										outputphoto +="<img class=\"photo"+i+"\" src=\"pictures/dummy_photo.jpg\">";
-									}
-										outputphoto +="<img class=\"photo"+i+"\" src=\"" + arg.context.basePhotoUrl + photoselect.filename + "\" height=\"150px\" width=\"100px\">";
+									var photoselect = totalphoto[i].artwork[0];
+									if (photoselect.generatedId == 0) 
+									{
+										outputphoto +="<img class=\"photo"+i+"\" src=\"pictures/dummy_photo.jpg\" ></img>";
 									} else {
-									outputphoto +="<img class=\"photo"+i+"\" src=\"pictures/dummy_photo.jpg\">";
+										outputphoto +="<img class=\"photo"+i+"\" src=\"" + arg.context.basePhotoUrl + photoselect.filename + "\" ></img>";
+										}
+								} else {
+									outputphoto +="<img class=\"photo"+i+"\" src=\"pictures/dummy_photo.jpg\" ></img>";
 								}
 							}
 							return outputphoto;
@@ -430,7 +434,7 @@
 			<table id="tableactorrole">	
 				<tr>
 					<td class="center">
-						(<span class="actor-role"></span>)
+						<span class="actor-role"></span>
 					</td>
 				</tr>
 			</table>

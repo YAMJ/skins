@@ -14,6 +14,7 @@
             var id = localStorage.getItem("id");
             var type = localStorage.getItem("type");
             var jsondata;
+			var bullesee = 0;
 			// from jsonActorUrl
 			var DETAIL_HEADER = {
 							'span.header_type': 'result.videoType',
@@ -88,14 +89,26 @@
 		
 			// from jsonCrewUrl
 			var	ACTOR_NAME = {
-							'td' : 
-							{	
-							// assume there is one 
-								"result<-results":{				
-									"span.actor-name"		: "result.name" 
+					'td' : 
+						{	
+					// assume there is one 
+						"result<-results":{				
+						"span.actor-name"		: function(arg)   {
+							// check if role is available
+								str_bio = "";
+								if (arg.item.biography) 
+								{
+								// replace all ' \n and " by they corresponding value 
+								str_bio = arg.item.biography.replace(/\"/g,"\\&quot;").replace(/\'/g,"\\&apos;").replace(/\n/g,"");
+								} else {
+								str_bio = "no biography available";
+								}
+								// click on name to display the biography  
+								return "<a href=\"#\" onmouseover=\"display('"+ str_bio +"')\" onmouseout=\"nodisplay()\" />"+arg.item.name;
 								}
 							}
-						};			
+						}
+					};		
 			// from jsonCrewUrl			
 			var	ACTOR_ROLE = {
 							'td' : 
@@ -114,35 +127,7 @@
 							}
 						};	
 						
-			// from jsonCrewUrl 
-			var YAMJ_CREW = {
-						'span.totalcrew': function(arg)   {
-							var totalactors = arg.context.results;
-							var outputTotalActor = "";
-							var first_total = true;
-							for (i = 0; i < totalactors.length; i++) {
-							
-							if (first_total) {
-								first_total = false;
-								} else {
-								outputTotalActor += "<br />";
-								}
-								outputTotalActor += "<span>"+totalactors[i].name+"</span>";
-								if (totalactors[i].role) {
-								// check if role is available otherwise display job
-													outputTotalActor += "<span class=\"crewrole\"\"> - "+totalactors[i].role+"</span>";
-												} else {
-													outputTotalActor += "<span class=\"crewrole\"\"> - "+totalactors[i].job.substr(0,1)+totalactors[i].job.substr(1).toLowerCase()+"</span>";}
-								// test if bitrhplace is empty
-								if (totalactors[i].birthPlace) {
-													outputTotalActor += "<span class=\"crewbirth\"\"> - "+totalactors[i].birthPlace+"</span>";}
-								// test if birthday is empty
-								if (totalactors[i].birthDay) {
-													outputTotalActor += "<span class=\"crewbirth\"\"> - "+totalactors[i].birthDay+"</span>";}	
-								}
-                  				return outputTotalActor;
-							}
-						};
+		
 			// from jsonCrewUrl 	
 			var LIST_PHOTO = {
              		'span.totalphoto': function(arg) 
@@ -210,7 +195,7 @@
 						// slideshow for poster
                         slideshow();
 						// display all crew
-						crewshow ();
+						showfanart ();
 				}
                 });
                
@@ -227,12 +212,14 @@
 						$p('.table_actor_name').render(dataCrew, ACTOR_NAME);
 						$p('.table_actor_role').render(dataCrew, ACTOR_ROLE);
 						$p('.table_photo').render(dataCrew, LIST_PHOTO);
-						$p('.crew').render(dataCrew, YAMJ_CREW);
+			
 					}
                 });
             }
   
-            // Add the source output to the end of the page
+  // ********************* NOW SET VARIOUS FUNCTION **********************************************
+  
+        // Add the source output to the end of the page
             function outputJson(yamjdata)
             {
                 var sourceData = document.getElementById("sourceData");
@@ -240,25 +227,28 @@
                 sourceData.innerHTML = '<h4>Source data:</h4>';
                 sourceData.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(yamjdata, undefined, 4);
             }
-	function crewshow() {	// on crew hover show all crew
-
-				$('.showcrew').hover(function() {
+			
+		// on show fanart hover button show all fanart
+		function showfanart() {	
+				$('.show_fanart').hover(function() {
 					$('.plot').css('visibility', 'hidden');
 					$('.genres').css('visibility', 'hidden');
-					$('.crew').css('visibility', 'visible');
-					$('.actorinfo').css('display', 'none');
-					$('.totalcrew').css('display', 'block');
-					
+					$('#tableactorrole').css('visibility', 'hidden');
+					$('#biographyshow').css('visibility', 'hidden');
+					$('#tableactorname').css('visibility', 'hidden');
+					$('.table_photo').css('visibility', 'hidden');
+					$('div#slideshowCtr ').css('visibility', 'hidden');
+					$('div#slideshowFanart').css('opacity', '1');
 				}, function() {
 					$('.plot').css('visibility', 'visible');
 					$('.genres').css('visibility', 'visible');
-					$('.crew').css('visibility', 'hidden');
-					$('.actorinfo').css('display', 'block');
-					$('.totalcrew').css('display', 'none');
-
+					$('#tableactorrole').css('visibility', 'visible');
+					$('#tableactorname').css('visibility', 'visible');
+					$('.table_photo').css('visibility', 'visible');
+					$('div#slideshowCtr ').css('visibility', 'visible');
+					$('div#slideshowFanart').css('opacity', '0.7');
 				});
 			}
-	
 	// next/previous movie/series, need to be revue for a better implementation a real index list
 	function change_movie(x)
         {
@@ -277,13 +267,11 @@
 						} else {
 						// basic previous id if previous and id already the first
 						set_last_id();
-				
 						}
 				}	
-
             window.location.href="detail.html";
         }
-	
+	// set the 1rst id 
 	function set_first_id()
 		{
 			id = 1;
@@ -315,18 +303,32 @@
 					}
 					});
 		}
+		
+	// set a new id 
 		function setid(Newid)
 				{     
 				id = Newid;
 				localStorage.setItem("id", id);
 				console.log("Storing value: " + type + "-" + id);
 				window.location.href="detail.html";
-				}		
-				
+				}	
+	// display biography 		
+		function display(string_to_display)
+				{						
+					document.getElementById('biographyshow').firstChild.nodeValue = string_to_display;	
+					document.getElementById('biographyshow').style.visibility="visible";
+				}
+	// hidden biography 
+		function nodisplay()
+					{			
+						document.getElementById('biographyshow').style.visibility="hidden";
+					}
+								
         </script>
     </head>
     <body onload="getData();">
 	<!-- navigation to index -->
+
 		<div id="logo">
  					
 						<a id="home_right" href="./index_series.html">
@@ -358,12 +360,13 @@
 		</div>
 		
 	<!--  ALL CREW button -->	
-		<div class="showcrew">
-					<td><span >ALL CREW</span></td>
+		<div class="show_fanart">
+					<td><span >SHOW FANART</span></td>
 		</div>
 		<div class="test">
 					<td><span class="lastid"></span></td>
 		</div> 
+
 	<!-- main table for detail page -->
         <div class="template"> 
            <table>
@@ -393,23 +396,27 @@
                     </tr> 
 			<!-- split table for image and text --> 
 			<!-- add class for each object in the detail section of yamj-style.css -->
-					<table>
-						<tr >
-							<td ><span class="plot"></span></td>
-						</tr>
+					<table class="moviedetail">
 						<tr>
 							<td><span class="genres"></span></td>
 						</tr>
+						<tr >
+							<td ><span class="plot"></span></td>
+						</tr>
+						
 					
 					</table>
                 </tbody>
-            </table> 
-	
-		</div>	
-        
-		<!-- actor name  -->
+            </table> 	
+		</div>
+
+		<!-- to display biography info -->
+        <div class="biography" id="biographyshow" >
+		<!-- left intentionnaly blank -->
+		</div>
+
 		<!-- each table_actor_name, table_actor_role, have fixed layout to limit to 11 the actor display --> 
-		<div class="Person">
+	<div class="Person">
 	<!-- actor name  -->
 		<div class="table_actor_name">
 			<table id="tableactorname">	
@@ -440,12 +447,7 @@
 			</table>
 		</div>
 	</div>
-			<!-- all crew   -->
-		<div class="crew">
-			<tr>
-				<td><span class="totalcrew"></span></td>
-			</tr> 
-		</div>
+
 		<!-- display source data from API if needed  -->
         <div id="sourceData"></div>
     </body>

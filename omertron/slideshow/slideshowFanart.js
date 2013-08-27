@@ -19,23 +19,24 @@ function slideshowFanart() {
     // set maximum scroll distance
     var maxScrollFanart = imgRollFanartWidthFanart - parseInt(ctrWidthFanart) + 'px';
 
-    // on slideshow hover show fanart
+    // on slideshow hover show fanart, commented to let the button show fanart only
+	
     $('div#slideshowFanart').hover(function() {
-		$('.plot').css('visibility', 'hidden');
-		$('.genres').css('visibility', 'hidden');
-		$('#tableactorrole').css('visibility', 'hidden');
-		$('#tableactorname').css('visibility', 'hidden');
-		$('.table_photo').css('visibility', 'hidden');
-		$('div#slideshowCtr ').css('visibility', 'hidden');
-		$('div#slideshowFanart').css('opacity', '1');
+	//	$('.plot').css('visibility', 'hidden');
+	//	$('.genres').css('visibility', 'hidden');
+	//	$('#tableactorrole').css('visibility', 'hidden');
+	//	$('#tableactorname').css('visibility', 'hidden');
+	//	$('.table_photo').css('visibility', 'hidden');
+	//	$('div#slideshowCtr ').css('visibility', 'hidden');
+	//	$('div#slideshowFanart').css('opacity', '1');
     }, function() {
-		$('.plot').css('visibility', 'visible');
-		$('.genres').css('visibility', 'visible');
-		$('#tableactorrole').css('visibility', 'visible');
-		$('#tableactorname').css('visibility', 'visible');
-		$('.table_photo').css('visibility', 'visible');
-		$('div#slideshowCtr ').css('visibility', 'visible');
-		$('div#slideshowFanart').css('opacity', '0.7');
+	//	$('.plot').css('visibility', 'visible');
+	//	$('.genres').css('visibility', 'visible');
+	//	$('#tableactorrole').css('visibility', 'visible');
+	//	$('#tableactorname').css('visibility', 'visible');
+	//	$('.table_photo').css('visibility', 'visible');
+	//	$('div#slideshowCtr ').css('visibility', 'visible');
+	//	$('div#slideshowFanart').css('opacity', '0.7');
     });
 
     // move to nextFanart right image

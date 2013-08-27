@@ -147,7 +147,7 @@ body {
 	height:35px;
 	position: absolute;
 	top: 5px;
-	right: 10px;
+	left: 1190px;
 	padding:0px 0px -1px 0px;
 	background-color:rgba(255, 255, 255, 0.3);
 	border: 2px solid #b0b0b0;	
@@ -179,7 +179,7 @@ body {
 	height:30px;
 	position: absolute;
 	top: 5px;
-	right: 120px;
+	left: 1152px;
 	padding:0px 0px -1px 0px;
 	border: 2px solid #b0b0b0;	
 	border-right: 3px solid #b0b0b0;
@@ -202,12 +202,13 @@ body {
 	position: absolute;
 	top: 40px; 
 	left: 150px;
-    }		
+    }
+		
 .header
 {
     display: block;
 	height: auto;
-    width: auto;
+    width: 962px;
 	font-size:1.8em;
 	font-weight: bold;
     text-align: center;
@@ -275,24 +276,30 @@ text {
 		border: 1px solid red;
 		border-right: 4px solid red;
 		border-radius: 6px 6px 0px 6px;
-	}	
-.plot {
-	width: auto;
-	color:#fff;
-	font-weight: bold;
-	text-align: justify;
-	font-size:1.0em;
-	position: absolute;
-	top: 128px;
-	left: 240px;
-	background-color:rgba(0, 0, 0, 0.3);
-	border: 1px solid gray;	
-	border-right: 5px solid gray;
-	padding: 3px 10px 0px 10px;
-	margin-right: 80px;
 	}
-.genres, .test {
-	width: auto;
+.biography
+{	
+	visibility: hidden;
+	position: absolute;
+	left: 7px;
+	top: 375px;
+    display: block;
+	height: auto;
+    width: auto;
+	font-size:1.0em;
+	font-weight: bold;
+	color:#fff;
+    text-align: justify;
+	vertical-align:top;
+	margin: 5px 65px 2px 5px;
+	padding: 0px 5px 0px 5px;
+	background-color:rgba(0, 0, 0, 0.3);
+	border: 2px solid #b0b0b0;	
+	border-right: 5px solid #b0b0b0;
+    }
+
+.moviedetail {
+	width: 1040px;
 	color:#fff;
 	font-weight: bold;
 	text-align: justify;
@@ -300,11 +307,24 @@ text {
 	position: absolute;
 	top: 95px;
 	left: 240px;
+	overflow: hidden;
+	}	
+.plot {
+	width: auto;
+	display: block;
+	background-color:rgba(0, 0, 0, 0.3);
+	border: 1px solid gray;	
+	border-right: 5px solid gray;
+	padding: 3px 10px 3px 10px;
+
+	}
+.genres, .test {
+	width: auto;
+	display: block;
 	background-color:rgba(0, 0, 0, 0.3);
 	border: 1px solid gray;
 	border-right: 5px solid gray;
 	padding: 3px 10px 3px 10px;
-	margin-right: 35px;
 	}
 .actor-role{
 	font-style:italic;
@@ -335,13 +355,14 @@ text {
 	}
 .totalcrew :hover {
 	}
-.showcrew  {
+.show_fanart  {
+		display: block;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
 		font-weight: bold;
 		color:#b0b0b0;
 		background-color: black;
-		width: auto;
+		width: 120px;
 		text-align: center;
 		margin: 0px 5px 0px -5px;
 		padding: 0px 1px 0px 1px;
@@ -350,7 +371,8 @@ text {
 		border-radius: 6px 6px 0px 6px;
 		position: absolute;
 		top: 60px;
-		right: 10px;
+		left: 1175px;
+		overflow: hidden;
 	}
 .Person {
 position: absolute;
@@ -358,7 +380,13 @@ position: absolute;
 	top: 560px;
 	width: 1280px;
 	table-layout: fixed;
+	
 	overflow-x: scroll;
+	scrollbar-face-color: #000000;
+	scrollbar-arrow-color: #000000;
+	scrollbar-track-color: #000000;
+	scrollbar-3dlight-color: red;
+	scrollbar-darkshadow-color: #000000; 
 	}
 
 .table_photo {
@@ -393,6 +421,21 @@ position: absolute;
 	}	
 		
 	/* format table actor */
+.actor-name a {
+    font-size:0.9em;
+	color:#fff;
+	font-weight: bold;
+	vertical-align:top;
+    text-align: center;	
+	}	
+.actor-name a:hover {
+	color:red;
+	}
+	
+#biographyshow 
+{
+}
+
 #tableactorname
 {
     font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -402,7 +445,6 @@ position: absolute;
 	width: 300px;
 	table-layout: fixed;
 	overflow: scroll;
-	
 }
 
 #tableactorrole
@@ -426,5 +468,11 @@ position: absolute;
 	width: 100px;
 	vertical-align:top;
     text-align: center;	
+}
+#tableactorname td:hover, #tableactorname td:active
+{
+	background-color:rgba(0, 0, 0, 0.4);
+	border: 1px solid black;
+	border-right: 5px solid black;
 }
 /* fin table actor */

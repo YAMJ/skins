@@ -41,7 +41,19 @@
 						{	
 					// assume there is one 
 						"result<-results":{				
-						"span.actor-name"		: "result.name" 
+						"span.actor-name"		: function(arg)   {
+							// check if role is available
+								str_bio = "";
+								if (arg.item.biography) 
+								{
+								// replace all ' and " by they corresponding value 
+								str_bio = arg.item.biography.replace(/\"/g,"\\&quot;").replace(/\'/g,"\\&apos;").replace(/\n/g,"");
+								} else {
+								str_bio = "no biography avalable";
+								}
+								
+								return "<a href=\"#\" onclick=\"display('"+ str_bio +"')\" />"+arg.item.name;
+								}
 							}
 						}
 					};
@@ -98,13 +110,19 @@
 					$p('.table_photo').render(yamjdata, LIST_PHOTO);	
 				
 				var str = JSON.stringify(yamjdata, undefined, 4);
-				output(str);
+				 output(str);
 				
 			}
 
 			// Add the source output to the end of the page
 			function output(inp) {
 				document.body.appendChild(document.createElement('pre')).innerHTML = inp;
+			}
+			
+			function display(string_to_display)
+			{
+				document.getElementById('biographyshow').firstChild.nodeValue = string_to_display;
+					
 			}
 			
 
@@ -231,12 +249,16 @@
 			<table id="tableactorrole">	
 				<tr>
 					<td class="center">
-						(<span class="actor-role"></span>)
+						<span class="actor-role"></span>
 					</td>
 				</tr>
 			</table>
 		</div>
 	</div>
+	<div class="biography" id="biographyshow" >
+					<h2><p > </p></h2>
+	</div>
+	<div>
 		<h4>Source data:</h4>
 	</body>
 </html>

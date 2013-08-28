@@ -135,3 +135,62 @@ a#prevFanart {
     border-radius: 0px 6px 6px 0px;
     float: left;
 }
+/* Banner section */
+
+div#slideshowBanner {
+    width: 325px;
+    height: 60px;
+    margin: auto;
+    overflow: hidden;
+	position: absolute;
+	top: 55px;
+	left: 825px;
+	z-index: 2;
+	visibility: hidden;
+}
+div#imgRollBanner {
+    height: inherit;
+    position: relative;
+    left: 0px;
+
+}
+
+div#imgRollBanner img {
+    float: left;
+    position: relative;
+}
+
+a#nextBanner {
+    width: 20px;
+    display: none;
+    background-color: #000;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 15px;
+    font-family: Helvetica, sans-serif;
+    padding: 4px 10px 4px 10px;
+    position: absolute;
+	top: 450px;
+	left: 370px;
+}
+a#prevBanner {
+    width: 20px;
+    display: none;
+    background-color: #000;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 15px;
+    font-family: Helvetica, sans-serif;
+    padding: 4px 10px 4px 10px;
+    position: absolute;
+    top: 450px;
+	left: 1050px;
+}
+a#nextBanner:hover, a#prevBanner:hover {
+	background-color: #000;
+    cursor: pointer;
+}
+
+

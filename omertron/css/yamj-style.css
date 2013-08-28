@@ -374,7 +374,7 @@ text {
 		left: 1175px;
 		overflow: hidden;
 	}
-.banner {
+/*.banner {
 	position: absolute;
 	left: 350px;
 	top: 690px;
@@ -382,7 +382,7 @@ text {
 	border-right: 4px solid red;
 	border-radius: 6px 6px 6px 6px;
 	}	
-	
+*/
 .Person {
 position: absolute;
 	left: 7px;

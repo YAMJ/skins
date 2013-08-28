@@ -9,6 +9,7 @@
         <link href="slideshow/slideshow.css" rel="stylesheet" type="text/css" />
         <script src="slideshow/slideshow.js" type="text/javascript"></script>
         <script src="slideshow/slideshowFanart.js" type="text/javascript"></script>
+		<script src="slideshow/slideshowBanner.js" type="text/javascript"></script>
         <script type="text/javascript">
 			// get the id and the type asked previously, data was stored from index/detail page 
             var id = localStorage.getItem("id");
@@ -108,7 +109,7 @@
                     'banner<-result.artwork.BANNER': {
                         '@src': function(arg)
                         {
-							if (type == 'SEASON')
+							if (type !== 'MOVIE')
 								{	
                             // Check to see if there are banner
                             if (arg.item) {
@@ -231,11 +232,17 @@
 						$p('.template').render(data, YAMJ_DIR);                
 						$p('.header').render(data, DETAIL_HEADER);
 						
+						// display banner if series and season
+						if (type !== 'MOVIE')
+						{
+						slideshowBanner();
+						} 
+						
 						// add slideshow for fanart
 						slideshowFanart();
 						// slideshow for poster
                         slideshow();
-						// display all crew
+						// display fanart
 						showfanart ();
 				}
                 });
@@ -274,23 +281,27 @@
 				$('.show_fanart').hover(function() {
 					$('.plot').css('visibility', 'hidden');
 					$('.genres').css('visibility', 'hidden');
-					$('#tableactorrole').css('visibility', 'hidden');
 					$('#biographyshow').css('visibility', 'hidden');
-					$('#tableactorname').css('visibility', 'hidden');
-					$('.table_photo').css('visibility', 'hidden');
-					$('.banner').css('visibility', 'hidden');
+					$('.Person').css('visibility', 'hidden');
+					$('div#slideshowBanner').css('visibility', 'hidden');
 					$('div#slideshowCtr ').css('visibility', 'hidden');
 					$('div#slideshowFanart').css('opacity', '1');
 				}, function() {
 					$('.plot').css('visibility', 'visible');
 					$('.genres').css('visibility', 'visible');			
-					if (type == 'SEASON') {
-					$('.banner').css('visibility', 'visible');
-					} else {
-					$('#tableactorrole').css('visibility', 'visible');
-					$('#tableactorname').css('visibility', 'visible');
-					$('.table_photo').css('visibility', 'visible');
-					}
+					if (type == 'SEASON')
+						{
+						$('div#slideshowBanner').css('visibility', 'visible');
+						} 
+					if (type == 'MOVIE')
+						{
+						$('.Person').css('visibility', 'visible');
+						}
+					if (type == 'SERIES')
+						{
+						$('div#slideshowBanner').css('visibility', 'visible');
+						$('.Person').css('visibility', 'visible');
+						}
 					$('div#slideshowCtr ').css('visibility', 'visible');
 					$('div#slideshowFanart').css('opacity', '0.7');
 				});
@@ -439,12 +450,23 @@
                                     <img class="poster" src=""/>
                                 </div>
                             </div>
-							<div><img class="banner" src=""/></div>
+							
 						<!-- next , previous button -->
                             <a id="next"><img src="./pictures/next.png" /></a>
                             <a id="prev"><img src="./pictures/previous.png" /></a>
                         </td>        
-                    </tr> 
+                    
+					<!-- Banner animation, automatic every 10s, if more than one Banner -->
+						<td rowspan="10">
+                            <div id="slideshowBanner" class="glow">
+                                <div id="imgRollBanner">
+                                    <img class="banner" src=""/>
+                                </div>
+                            </div>
+								<a id="nextBanner"><img src="./pictures/next.png" /></a>
+								<a id="prevBanner"><img src="./pictures/previous.png" /></a>
+                        </td>
+					</tr>
 			<!-- split table for image and text --> 
 			<!-- add class for each object in the detail section of yamj-style.css -->
 					<table class="moviedetail">

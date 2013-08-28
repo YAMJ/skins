@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+        <title>YAMJ v3</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script src="https://rawgithub.com/pure/pure/master/libs/pure.js"></script>
+        <script src="js/js.js"></script>
+        <script src="js/jPages.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
+        <link rel="stylesheet" href="css/jPages.css">
+        <link rel="stylesheet" href="css/animate.css">
+
+    </head>
+    <body>
+        <script type="text/javascript">
+
+        function getIndexData(series, season, start, max, itemsPerPage)
+        {
+            
+            var perPageValue = parseInt(itemsPerPage.options[itemsPerPage.selectedIndex].value);
+			var jsonUrl;
+			//	/yamj3/api/video/episodes?series={}&season={}
+			jsonUrl = "http://localhost:8888/yamj3/api/video/episodes.json?";
+			if (series !== "") {
+				jsonUrl += "&series=" + series;
+						}
+						
+            if (season !== "") {
+                jsonUrl += "&season=" + season;
+            }
+
+            if (start !== "") {
+                jsonUrl += "&start=" + start;
+            }
+
+            if (max !== "") {
+                jsonUrl += "&max=" + max;
+            }
+
+            console.log("URL: " + jsonUrl);
+            var jsondata = null;
+
+            $.ajax({
+                url: jsonUrl,
+                async: false,
+                dataType: 'jsonp',
+                'success': function(data)
+                {
+                    jsondata = data;
+                    updateHtml(data);
+                    pageData(perPageValue);
+                }
+            });
+            return jsondata;
+        }
+
+        function updateHtml(yamjdata)
+        {
+            var WI = {
+                "template": "table.results",
+                "header": {
+				// it's a wish 
+               //     "column": ["seriesId", "series", "season", "seasonId", "episode", "title", "videoimage", "image"]   
+					"column": ["seriesId", "season", "episode", "title", "image"]
+                },
+                "directivehead": {
+                    "th": {
+                        "c<-column": {
+                            ".": "c"
+                        }
+                    },
+                    'td': {
+                        "c<-column": {
+                            "@class": "c"
+                        }
+                    }
+                },
+                "directivebody": {
+                    "tbody tr": {
+                        "result<-results": {
+                            "td.seriesId": "result.seriesId",
+						//	"td.series": "result.series", 
+						// not implemented - asked with issue
+						// 	"td.seasonId: "result.seasonId",
+						// not implemented - asked with issue	
+                            "td.season": "result.season",
+                            "td.episode": "result.episode",
+                            "td.title": "result.title",
+						// just display for control
+						//	"td.videoimage": function(arg) {							
+						//			 return  arg.context.baseArtworkUrl+ arg.item.videoimage;
+						//		},
+							"td.image"		: function(arg) {
+									// Check to see if there are videoimage
+									if(arg.item.videoimage) {
+									 return "<img src=\"" +arg.context.baseArtworkUrl+ arg.item.videoimage+"\" height=\"80\"></img>"; 
+										} else {
+										return "<img src=\"pictures/dummy_videoimage.jpg\" height=\"80\"></img>";
+									}
+								}
+                    
+
+                        }
+                    }
+                }
+            };
+			var str = JSON.stringify(yamjdata, undefined, 4);
+            output(str);
+            var TEMPLATE = $p(WI.template).render(WI.header, WI.directivehead).compile(WI.directivebody);
+
+            var HEADER_DIR = {
+                'span.results': 'count',
+                'span.totalResults': 'totalCount'
+            };
+
+            $p('.header').render(yamjdata, HEADER_DIR);
+            $p('table.results').render(yamjdata, TEMPLATE);
+
+        
+        }
+
+        // Add the source output to the end of the page
+        function output(inp)
+        {
+            // Clear the "pre" element if it exists
+            $('pre').empty();
+            document.body.appendChild(document.createElement('pre')).innerHTML = inp;
+        }
+
+        function pageData(perPage)
+        {
+            $("div.holder").jPages({
+                containerID: "videos",
+                animation: "bounceInRight",
+                perPage: perPage,
+                delay: 20
+            });
+        }
+
+        </script>
+
+        <h2>YAMJv3 Episodes Data</h2>
+
+        <form>
+            <table border="0">
+  
+                <tr>
+                    <td align="right"><b>seriesid: </b></td>
+                    <td>
+                        <input type="text" id="formseriesId"/>
+                    </td>
+                    <td align="right"><b>seasonId: </b></td>
+                    <td>
+                        <input type="text" id="formseason"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right"><b>Start: </b></td>
+                    <td>
+                        <input type="text" id="formStart"/>
+                    </td>
+                    <td align="right"><b>Max: </b></td>
+                    <td>
+                        <input type="text" id="formMax"/>
+                    </td>
+                </tr>
+               
+                <tr>
+                  
+                    <td align="right"><b>Items per Page: </b></td>
+                    <td>
+                        <select id="itemsPerPage">
+                            <option value="5" selected="selected">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="left">
+                        <input type="button" value="Run Query" onclick="getIndexData(
+                    document.getElementById('formseriesId').value,
+                    document.getElementById('formseason').value,
+                    document.getElementById('formStart').value,
+                    document.getElementById('formMax').value,
+                    document.getElementById('itemsPerPage')
+                    );"/>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="header">
+            <table>
+                <tr>
+                    <td align="right"><b>Returned Results: </b></td>
+                    <td><span class="results"></span></td>
+                </tr>
+                <tr>
+                    <td align="right"><b>Total Results: </b></td>
+                    <td><span class="totalResults"></span></td>
+                </tr>
+ 
+            </table>
+        </div>
+
+        <!--Navigation Holder-->
+        <div class="holder"></div>
+
+        <!--Data Items Container-->
+        <div class="template">
+            <table id="tablelist" class="results">
+                <thead>
+                    <tr>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="videos">
+                    <tr>
+                        <td></td>
+						<img class="videoimage" src=""><br>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!--<h4>Source Data:</h4>-->
+    </body>
+</html>

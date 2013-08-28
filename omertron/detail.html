@@ -13,12 +13,22 @@
 			// get the id and the type asked previously, data was stored from index/detail page 
             var id = localStorage.getItem("id");
             var type = localStorage.getItem("type");
+			var season = localStorage.getItem("season");
             var jsondata;
 			var bullesee = 0;
 			// from jsonActorUrl
 			var DETAIL_HEADER = {
 							'span.header_type': 'result.videoType',
-							'span.header_title': 'result.title',
+					
+							'span.header_title': function (arg) {
+								if (type == 'SEASON')
+								{
+								return arg.context.result.title + ' Season: '+ season;
+								} else {
+								display_photo();
+								return arg.context.result.title;
+									}
+							},
 							'span.header_year': 'result.videoYear',
 							'span.header_id': 'result.id'
 						};
@@ -67,6 +77,7 @@
 
                     }
                 },
+				
 				  'img.poster': {
                     'poster<-result.artwork.POSTER': {
                         '@src': function(arg)
@@ -77,11 +88,40 @@
                                 if (arg.item.generatedId === 0) {
                                     return "pictures/dummy.jpg";
                                 }
+							// take the opportunity to reset the new season number, in case of next / previous move , only for season type
+								if (type == 'SEASON')
+								{															
+									season =  (arg.item.filename.substr((arg.item.filename.lastIndexOf('season') -4), 3));
+									} else {
+									season = "";
+									}
                                 return arg.context.baseArtworkUrl + arg.item.filename;
                             } else {
                                 return "pictures/dummy.jpg";
                             }
                         }
+
+                    }
+                }, 
+				
+				'img.banner': {
+                    'banner<-result.artwork.BANNER': {
+                        '@src': function(arg)
+                        {
+							if (type == 'SEASON')
+								{	
+                            // Check to see if there are banner
+                            if (arg.item) {
+                                // Get the first banner from the list
+                                if (arg.item.generatedId === 0) {
+                                    return "pictures/dummy_banner.jpg";
+                                }
+                                return arg.context.baseArtworkUrl + arg.item.filename;
+                            } else {
+                                return "pictures/dummy_banner.jpg";
+                            }
+                        }
+					}
 
                     }
                 }
@@ -119,7 +159,7 @@
 										if (arg.item.role) {
 													return arg.item.role;
 												} else {
-									// adjust to Writter, Director  
+									// adjust to Writer, Director  
 													return arg.item.job.substr(0,1)+arg.item.job.substr(1).toLowerCase();
 												}	
 										}
@@ -187,9 +227,10 @@
                     'success': function(data)
                     {
                         jsondata = data;
-						// outputJson(data);                
+						// outputJson(data); 
+						$p('.template').render(data, YAMJ_DIR);                
 						$p('.header').render(data, DETAIL_HEADER);
-						$p('.template').render(data, YAMJ_DIR); 
+						
 						// add slideshow for fanart
 						slideshowFanart();
 						// slideshow for poster
@@ -237,14 +278,19 @@
 					$('#biographyshow').css('visibility', 'hidden');
 					$('#tableactorname').css('visibility', 'hidden');
 					$('.table_photo').css('visibility', 'hidden');
+					$('.banner').css('visibility', 'hidden');
 					$('div#slideshowCtr ').css('visibility', 'hidden');
 					$('div#slideshowFanart').css('opacity', '1');
 				}, function() {
 					$('.plot').css('visibility', 'visible');
-					$('.genres').css('visibility', 'visible');
+					$('.genres').css('visibility', 'visible');			
+					if (type == 'SEASON') {
+					$('.banner').css('visibility', 'visible');
+					} else {
 					$('#tableactorrole').css('visibility', 'visible');
 					$('#tableactorname').css('visibility', 'visible');
 					$('.table_photo').css('visibility', 'visible');
+					}
 					$('div#slideshowCtr ').css('visibility', 'visible');
 					$('div#slideshowFanart').css('opacity', '0.7');
 				});
@@ -323,7 +369,11 @@
 					{			
 						document.getElementById('biographyshow').style.visibility="hidden";
 					}
-								
+	// display photo for Cast only if type = movie or series 
+		function display_photo()
+					{			
+						document.getElementById('Person').style.visibility="visible";
+					}							
         </script>
     </head>
     <body onload="getData();">
@@ -389,6 +439,7 @@
                                     <img class="poster" src=""/>
                                 </div>
                             </div>
+							<div><img class="banner" src=""/></div>
 						<!-- next , previous button -->
                             <a id="next"><img src="./pictures/next.png" /></a>
                             <a id="prev"><img src="./pictures/previous.png" /></a>
@@ -416,7 +467,7 @@
 		</div>
 
 		<!-- each table_actor_name, table_actor_role, have fixed layout to limit to 11 the actor display --> 
-	<div class="Person">
+	<div class="Person" id="Person">
 	<!-- actor name  -->
 		<div class="table_actor_name">
 			<table id="tableactorname">	

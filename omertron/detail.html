@@ -11,27 +11,43 @@
         <script src="slideshow/slideshowFanart.js" type="text/javascript"></script>
 		<script src="slideshow/slideshowBanner.js" type="text/javascript"></script>
         <script type="text/javascript">
+// ******************************* ALL GENERAL VARIABLE **********************************************
 			// get the id and the type asked previously, data was stored from index/detail page 
-            var id = localStorage.getItem("id");
+            var current_id = localStorage.getItem("id");
             var type = localStorage.getItem("type");
 			var season = localStorage.getItem("season");
+			var series_id = localStorage.getItem("SeriesId");
+			var season_title = "";
             var jsondata;
-			var bullesee = 0;
+			var jsonUrl = "";
+			var jsonPersonUrl = "";
+			var jsonSeasonUrl = "";
+			
+// ******************************************** COMMUN RESULTS MAPPING **********************************			
 			// from jsonActorUrl
 			var DETAIL_HEADER = {
 							'span.header_type': 'result.videoType',
 					
 							'span.header_title': function (arg) {
+								season_title = arg.context.result.title;
 								if (type == 'SEASON')
 								{
 								return arg.context.result.title + ' Season: '+ season;
 								} else {
-								display_photo();
+								display_Id("Person");
 								return arg.context.result.title;
 									}
 							},
 							'span.header_year': 'result.videoYear',
-							'span.header_id': 'result.id'
+							'span.header_id': function (arg) {
+									if (type == 'SERIES')   
+										{ 
+										store_SeriesId (arg.context.result.id);   // store the series id for next navigation 
+							
+										}
+								return arg.context.result.id;
+								}
+						
 						};
 			// from jsonActorUrl		
             var YAMJ_DIR = {
@@ -92,7 +108,7 @@
 							// take the opportunity to reset the new season number, in case of next / previous move , only for season type
 								if (type == 'SEASON')
 								{															
-									season =  (arg.item.filename.substr((arg.item.filename.lastIndexOf('season') -4), 3));
+									season =  (arg.item.filename.substr((arg.item.filename.lastIndexOf('season') -4), 3));   // workaround to get season number
 									} else {
 									season = "";
 									}
@@ -109,7 +125,7 @@
                     'banner<-result.artwork.BANNER': {
                         '@src': function(arg)
                         {
-							if (type !== 'MOVIE')
+							if (type !== 'MOVIE')  // there is banner only for season and series
 								{	
                             // Check to see if there are banner
                             if (arg.item) {
@@ -128,7 +144,7 @@
                 }
             };
 		
-			// from jsonCrewUrl
+			// from jsonPersonUrl
 			var	ACTOR_NAME = {
 					'td' : 
 						{	
@@ -150,7 +166,7 @@
 							}
 						}
 					};		
-			// from jsonCrewUrl			
+			// from jsonPersonUrl			
 			var	ACTOR_ROLE = {
 							'td' : 
 							{
@@ -158,27 +174,26 @@
 									"span.actor-role"		: function(arg)   {
 									// check if role is available
 										if (arg.item.role) {
-													return arg.item.role;
-												} else {
+												return arg.item.role;
+											} else {
 									// adjust to Writer, Director  
-													return arg.item.job.substr(0,1)+arg.item.job.substr(1).toLowerCase();
-												}	
+												return arg.item.job.substr(0,1)+arg.item.job.substr(1).toLowerCase();
+											}	
 										}
 								}
 							}
 						};	
 						
 		
-			// from jsonCrewUrl 	
+			// from jsonPersonUrl 	
 			var LIST_PHOTO = {
              		'span.totalphoto': function(arg) 
 					{
 						var totalphoto = arg.context.results;
 						var outputphoto = "";
-									// limit to 11 the photo
 							for (i = 0; i < totalphoto.length; i++) 
 							{
-									// Check to see if there is artwork
+									// Check to see if there is photo
 								if (totalphoto[i].artwork[0]) 
 								{
 									// Get the first photo from the list
@@ -196,17 +211,17 @@
 							}
 							return outputphoto;
 						}
-					};
-        
-				
+					};	
+// ***************************************************** GET DATA section ******************************************************					
             function getData()
-            {	  if (id > 0)
-			// test if id is valid, this is the case if previous movie is selected while on the first one 
+            {	  if (current_id > 0)
+			// test if current_id is valid, this is the case if previous movie is selected while on the first one 
 					{									
-						var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json?dataitems=genre,artwork,plot";
+						 jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot";
 					console.log("URL: " + jsonUrl);
-						var jsonCrewUrl = "http://localhost:8888/yamj3/api/person/" + type.toLowerCase() + ".json?id=" + id + "&job=Actor,Director,Writer&dataitems=artwork";
-					console.log("URL: " + jsonCrewUrl);
+						 jsonPersonUrl = "http://localhost:8888/yamj3/api/person/" + type.toLowerCase() + ".json?id=" + current_id + "&job=Actor,Director,Writer&dataitems=artwork";
+					console.log("URL: " + jsonPersonUrl);
+						
 					} else { 
 					// if not valid set to the last movie 
 							// wrong_id = "Wrong id reset to last, id asked :" +id;
@@ -214,13 +229,13 @@
 					// possible to reset to 1rst movie
 							//set_first_id ();
 							set_last_id ();
-					var jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + id + ".json?dataitems=genre,artwork,plot";
+						 jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot";
 					console.log("URL: " + jsonUrl);
-						var jsonCrewUrl = "http://localhost:8888/yamj3/api/person/" + type.toLowerCase() + ".json?id=" + id + "&job=Actor,Director,Writer";
-					console.log("URL: " + jsonCrewUrl);
+						 jsonPersonUrl = "http://localhost:8888/yamj3/api/person/" + type.toLowerCase() + ".json?id=" + current_id + "&job=Actor,Director,Writer";
+					console.log("URL: " + jsonPersonUrl);
+					
 							}
-                
-			
+        // main API call         
                 $.ajax({
                     url: jsonUrl,
                     async: false,
@@ -232,43 +247,53 @@
 						$p('.template').render(data, YAMJ_DIR);                
 						$p('.header').render(data, DETAIL_HEADER);
 						
-						// display banner if series and season
-						if (type !== 'MOVIE')
+					
+						if (type !== 'MOVIE')  // no banner for movies 
 						{
-						slideshowBanner();
+							slideshowBanner();
 						} 
-						
 						// add slideshow for fanart
 						slideshowFanart();
 						// slideshow for poster
                         slideshow();
 						// display fanart
-						showfanart ();
+						showfanart ();	
+						if (type == 'SERIES')
+						{
+							perform_season ();  // get and display season list 
+						} 
+						if (type == 'SEASON')
+						{
+						perform_episode ();  // get and display episode list 
+						} 
 				}
                 });
-               
+        
 
+		// cast API call 
+				if (type == 'MOVIE' || type == 'SERIES')
+				{
 	             $.ajax({
-                    url: jsonCrewUrl,
+                    url: jsonPersonUrl,
                     async: false,
                     dataType: 'jsonp',
-                    'success': function(dataCrew)
+                    'success': function(dataPerson)
                     {
-						jsondata = dataCrew;
-					//	outputJson(dataCrew);
+						jsondata = dataPerson;
+					//	outputJson(dataPerson);
 						
-						$p('.table_actor_name').render(dataCrew, ACTOR_NAME);
-						$p('.table_actor_role').render(dataCrew, ACTOR_ROLE);
-						$p('.table_photo').render(dataCrew, LIST_PHOTO);
-			
+						$p('.table_actor_name').render(dataPerson, ACTOR_NAME);
+						$p('.table_actor_role').render(dataPerson, ACTOR_ROLE);
+						$p('.table_photo').render(dataPerson, LIST_PHOTO);
 					}
                 });
+				}
             }
   
   // ********************* NOW SET VARIOUS FUNCTION **********************************************
   
         // Add the source output to the end of the page
-            function outputJson(yamjdata)
+        function outputJson(yamjdata)
             {
                 var sourceData = document.getElementById("sourceData");
                 sourceData.setAttribute("class", "code");
@@ -283,6 +308,8 @@
 					$('.genres').css('visibility', 'hidden');
 					$('#biographyshow').css('visibility', 'hidden');
 					$('.Person').css('visibility', 'hidden');
+					$('.seasontable').css('visibility', 'hidden');
+					$('div#episodetable').css('visibility', 'hidden');
 					$('div#slideshowBanner').css('visibility', 'hidden');
 					$('div#slideshowCtr ').css('visibility', 'hidden');
 					$('div#slideshowFanart').css('opacity', '1');
@@ -292,6 +319,7 @@
 					if (type == 'SEASON')
 						{
 						$('div#slideshowBanner').css('visibility', 'visible');
+						$('div#episodetable').css('visibility', 'visible');
 						} 
 					if (type == 'MOVIE')
 						{
@@ -299,8 +327,9 @@
 						}
 					if (type == 'SERIES')
 						{
+						$('.seasontable').css('visibility', 'visible');
 						$('div#slideshowBanner').css('visibility', 'visible');
-						$('.Person').css('visibility', 'visible');
+					//	$('.Person').css('visibility', 'visible');
 						}
 					$('div#slideshowCtr ').css('visibility', 'visible');
 					$('div#slideshowFanart').css('opacity', '0.7');
@@ -313,14 +342,14 @@
 			if (x == 'next')
 			{
 			// basic next id 
-				localStorage.setItem("id", parseInt(id, 10) + 1);
-				console.log("Storing value: " + type + "-" + (parseInt(id, 10) + 1));
+				localStorage.setItem("id", parseInt(current_id, 10) + 1);
+				console.log("Storing value: " + type + "-" + (parseInt(current_id, 10) + 1));
 				} else {
-					if (parseInt(id, 10) > 0)
+					if (parseInt(current_id, 10) > 0)
 					{
 					// basic previous id 
-						localStorage.setItem("id", parseInt(id, 10) - 1);
-						console.log("Storing value: " + type + "-" + (parseInt(id, 10) - 1));
+						localStorage.setItem("id", parseInt(current_id, 10) - 1);
+						console.log("Storing value: " + type + "-" + (parseInt(current_id, 10) - 1));
 						} else {
 						// basic previous id if previous and id already the first
 						set_last_id();
@@ -331,7 +360,7 @@
 	// set the 1rst id 
 	function set_first_id()
 		{
-			id = 1;
+			current_id = 1;
 		}
 	
 	// set to the last movie, need to fetch the last id from API
@@ -352,7 +381,7 @@
 					//need to set the id 
 					 TEST = {
 							'span.lastid': function(arg) { 
-								setid (arg.context.results[0].id);
+								set_onlyId (arg.context.results[0].id);
 								return  arg.context.results[0].id;									
 							}
 						};
@@ -361,30 +390,203 @@
 					});
 		}
 		
-	// set a new id 
-		function setid(Newid)
+		function perform_season()
+		{
+		jsonSeasonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=season&field=title&search="+season_title+"&artwork=poster";
+		console.log("URL: " + jsonSeasonUrl);
+					$.ajax({
+                   url: jsonSeasonUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSeason)
+                   {
+						jsondata = dataSeason;
+					//	outputJson(dataSeason);
+						updateSeason(dataSeason)
+						nodisplay_Id ("Person");
+						display_Id ("seasontable");
+					}
+                });
+		}
+		
+		function updateSeason(dataSeason)
+		{
+				var SEASON = {
+                    "td": {
+                        "season<-results": {
+                           // "span.SeasonType": "season.videoType",
+							"span.SeasonID": "season.id",
+							"span.SeasonNb" : function(arg) {
+                                // Check to see if there are posters
+									  if (arg.item.artwork.POSTER) {	
+												return (arg.item.artwork.POSTER[0].filename.substr((arg.item.artwork.POSTER[0].filename.lastIndexOf('season') -4), 3));
+											} else {
+											return "";
+											}
+									
+									},
+                            "span.SeasonTitle": "season.title",
+                            "span.SeasonYear": "season.videoYear",
+                            "span.SeasonPoster": function(arg) {
+                                // Check to see if there are posters
+                              if (arg.item.artwork.POSTER) {
+                                   // Get the first poster from the list
+                                    var poster = arg.item.artwork.POSTER[0];
+                                    if (poster.generatedId === 0) {
+                                        return "No Poster<br>was generated";
+                                   }
+						
+                                    return "<a href=\"#\" onclick=\" goto_SeasonId('" + arg.item.videoType + "', " + arg.item.id + ")\"><img src=\"" + arg.context.baseArtworkUrl + poster.filename + "\" height=\"100\"></a>";
+								} else {
+                                    return "No Poster<br>Found";
+								}
+							   }
+							}
+						}
+					};
+					
+					$p('.seasontable').render(dataSeason, SEASON);
+		}
+				
+				
+		function perform_episode()
+		{
+		jsonEpisodeUrl = "http://localhost:8888/yamj3/api/video/episodes.json?&series="+series_id+"&season="+current_id;
+		console.log("URL: " + jsonEpisodeUrl);
+					$.ajax({
+                   url: jsonEpisodeUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataEpisode)
+                   {
+						jsondata = dataEpisode;
+					//	outputJson(dataEpisode);
+						updateEpisode(dataEpisode);
+						nodisplay_Id ("next_movie");   		// while the series id is getting from the index , can't scroll to next/previous season 
+						nodisplay_Id ("previous_movie");  	// while the series id is getting from the index , can't scroll to next/previous season 
+						nodisplay_Id ("show_person");
+						display_Id ("episodetable");		// as episode table is only for season ,it's hidden by default 
+					}
+                });
+		}
+		
+		function updateEpisode(dataEpisode)
+        {
+            var WI = {
+                "episodetable": "table.episodes",
+                "episodeheader": {
+					"column": ["videoimage", "episode", "episode_title", ]
+                },
+                "episodedirectivehead": {
+                    "th": {
+                        "c<-column": {
+                            ".": "c"
+                        }
+                    },
+                    'td': {
+                        "c<-column": {
+                            "@class": "c"
+                        }
+                    }
+                },
+                "episodedirectivebody": {
+                    "tbody tr": {
+                        "episode<-results": {
+                           "td.videoimage"		: function(arg) {
+									// Check to see if there are videoimage
+									if(arg.item.videoimage) {
+									 return "<img src=\"" +arg.context.baseArtworkUrl+ arg.item.videoimage+"\" height=\"80\"></img>"; 
+										} else {
+										return "<img src=\"pictures/dummy_videoimage.jpg\" height=\"80\"></img>";
+									}
+								},
+                            "td.episode": "episode.episode",
+                            "td.episode_title": "episode.title"
+							
+                        }
+                    }
+                }
+            };
+			var COUNT = {
+               'span.episodecount': 'count'
+            };
+
+        //   $p('.test').render(dataEpisode, COUNT);
+		//	set_episodecount ();
+            var EPISODE = $p(WI.episodetable).render(WI.episodeheader, WI.episodedirectivehead).compile(WI.episodedirectivebody);
+            $p('table.episodes').render(dataEpisode, EPISODE);
+        }
+		
+	// set a new id in the last sequence
+		function set_onlyId(Newid)
 				{     
-				id = Newid;
-				localStorage.setItem("id", id);
-				console.log("Storing value: " + type + "-" + id);
+				current_id = Newid;
+				localStorage.setItem("id", current_id);
+				console.log("Storing value: " + type + "-" + current_id);
 				window.location.href="detail.html";
 				}	
+	// prepare to change to the season select by onclick	
+		function goto_SeasonId(type, SeasonId)
+			{
+				localStorage.setItem("type", type);
+				localStorage.setItem("id", SeasonId);
+				console.log("Storing value: " + type + "-" + SeasonId);
+				window.location.href="detail.html";
+			}
+			
+	// store the series Id for future use
+		function store_SeriesId (Series_Id)
+				{
+				localStorage.setItem("SeriesId", Series_Id);
+				console.log("Storing Series Id value: " + Series_Id);
+				}	
+				
 	// display biography 		
 		function display(string_to_display)
 				{						
 					document.getElementById('biographyshow').firstChild.nodeValue = string_to_display;	
-					document.getElementById('biographyshow').style.visibility="visible";
+					display_Id('biographyshow');
+		//			nodisplay_Id('seasontable');
 				}
 	// hidden biography 
 		function nodisplay()
+				{						
+					nodisplay_Id('biographyshow');
+	//				if (type == 'SERIES') 
+	//					{
+	//					display_Id('seasontable');
+	//					}
+				}
+	// hidden what is asked 
+		function nodisplay_Id(Id_to_nodisplay)
 					{			
-						document.getElementById('biographyshow').style.visibility="hidden";
+						document.getElementById(Id_to_nodisplay).style.visibility="hidden";
 					}
 	// display photo for Cast only if type = movie or series 
-		function display_photo()
+		function display_Id(Id_to_display)
 					{			
-						document.getElementById('Person').style.visibility="visible";
-					}							
+						document.getElementById(Id_to_display).style.visibility="visible";
+					}
+		function toggle_Id(Id_to_toggle)
+					{			
+						if (document.getElementById(Id_to_toggle).style.visibility == "hidden")
+						{ 
+							document.getElementById(Id_to_toggle).style.visibility = "visible";
+						} else {
+							document.getElementById(Id_to_toggle).style.visibility = "hidden";
+						}
+					}
+		function toggle()
+					{			
+						if (type == 'SERIES')
+						{
+							toggle_Id('seasontable');
+							}
+						if (type != 'SEASON')
+						{
+							toggle_Id('Person');
+							}
+					}
         </script>
     </head>
     <body onload="getData();">
@@ -423,6 +625,9 @@
 	<!--  ALL CREW button -->	
 		<div class="show_fanart">
 					<td><span >SHOW FANART</span></td>
+		</div>
+		<div class="show_person" id="show_person">
+					<td><a href="#" onclick="toggle()" >SHOW PERSON</a></td>
 		</div>
 		<div class="test">
 					<td><span class="lastid"></span></td>
@@ -520,7 +725,32 @@
 			</table>
 		</div>
 	</div>
-
+		<div class="seasontable" id="seasontable">
+			<table >
+				<tr>
+					<td class="season"><text class="season"> Id: </text><span class="SeasonID"></span><span class="SeasonPoster"></span><span class="SeasonYear"></span><br>
+						<text class="season">Season</text><span class="SeasonNb"></span><br>
+						<span class="SeasonTitle"></span>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<div class="episodetable" id="episodetable">
+            <table class="episodes">
+                <thead id="episodehead">
+					<tr>
+                        <th id="episodeth"></th>
+					</tr>
+                </thead>
+                <tbody id="episodebody">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+	
 		<!-- display source data from API if needed  -->
         <div id="sourceData"></div>
     </body>

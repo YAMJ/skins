@@ -18,7 +18,7 @@
     <body>
         <script type="text/javascript">
 
-        function getIndexData(tableType, includes, excludes, start, max, sortby, sortdir, artwork, itemsPerPage)
+        function getIndexData(tableType, includes, excludes, start, max, sortby, sortdir, field, search, artwork, itemsPerPage)
         {
             var tableTypeValue = tableType.options[tableType.selectedIndex].value;
             var perPageValue = parseInt(itemsPerPage.options[itemsPerPage.selectedIndex].value);
@@ -59,7 +59,13 @@
                 jsonUrl += "&sortby=" + sortby
                         + "&sortdir=" + sortdir.options[sortdir.selectedIndex].value;
             }
+			if (field !== "") {
+                jsonUrl += "&field=" + field;
+            }
 
+            if (search !== "") {
+                jsonUrl += "&search=" + search;
+            }
             if (artwork !== "") {
                 jsonUrl += "&artwork=" + artwork;
             }
@@ -86,7 +92,7 @@
             var WI = {
                 "template": "table.results",
                 "header": {
-                    "column": ["ID", "VideoType", "Title", "Year", "Artwork", "Genres", "Poster", "Fanart"]
+                    "column": ["ID", "VideoType", "Title", "Year", "Artwork", "Genres", "Poster", "Fanart", "Banner"]
                 },
                 "directivehead": {
                     "th": {
@@ -119,7 +125,7 @@
                                     }
                                     return "<img src=\"" + arg.context.baseArtworkUrl + poster.filename + "\" height=\"100\">";
                                 } else {
-                                    return "No Poster<br>Found";
+                                    return "No Poster";
                                 }
                             },
                             "td.Fanart": function(arg) {
@@ -132,7 +138,20 @@
                                     }
                                     return "<img src=\"" + arg.context.baseArtworkUrl + fanart.filename + "\" height=\"100\">";
                                 } else {
-                                    return "No Fanart<br>Found";
+                                    return "No Fanart";
+                                }
+                            },
+							"td.Banner": function(arg) {
+                                // Check to see if there are fanart
+                                if (arg.item.artwork.BANNER) {
+                                    // Get the first poster from the list
+                                    var banner = arg.item.artwork.BANNER[0];
+                                    if (banner.generatedId === 0) {
+                                        return "No Banner<br>was generated";
+                                    }
+                                    return "<img src=\"" + arg.context.baseArtworkUrl + banner.filename + "\" height=\"100\">";
+                                } else {
+                                    return "No Banner";
                                 }
                             }
                         }
@@ -152,8 +171,8 @@
             $p('.header').render(yamjdata, HEADER_DIR);
             $p('table.results').render(yamjdata, TEMPLATE);
 
-//                var str = JSON.stringify(yamjdata, undefined, 4);
-//                output(str);
+                var str = JSON.stringify(yamjdata, undefined, 4);
+                output(str);
         }
 
         // Add the source output to the end of the page
@@ -226,6 +245,16 @@
                         </select>
                     </td>
                 </tr>
+				 <tr>
+                    <td align="right"><b>Field: </b></td>
+                    <td>
+                        <input type="text" id="formField"/>
+                    </td>
+                    <td align="right"><b>Search: </b></td>
+                    <td>
+                        <input type="text" id="formSearch"/>
+                    </td>
+                </tr>
                 <tr>
                     <td align="right"><b>Artwork Required: </b></td>
                     <td>
@@ -252,6 +281,8 @@
                     document.getElementById('formMax').value,
                     document.getElementById('formSortBy').value,
                     document.getElementById('formSortDir'),
+					document.getElementById('formField').value,
+                    document.getElementById('formSearch').value,
                     document.getElementById('formArtwork').value,
                     document.getElementById('itemsPerPage')
                     );"/>

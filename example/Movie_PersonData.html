@@ -7,9 +7,10 @@
   </head>
 	<body>
 		<script type="text/javascript">
-			function getPersonData(id,limit)
+			function getPersonData(type,id,limit)
             {
-				jsonUrl = "http://localhost:8888/yamj3/api/person/movie.json?id="+id+"&job=actor,director,writer&max="+limit+"&dataitems=artwork";
+			
+				jsonUrl = "http://localhost:8888/yamj3/api/person/"+type+".json?id="+id+"&job=actor,director,writer&max="+limit+"&dataitems=artwork";
 				
 				var jsondata = null;
 
@@ -20,11 +21,17 @@
 					url: jsonUrl,
 					async: false,
 					dataType: 'jsonp',
+					'error': function ()
+					{
+						var str = "error in request: " + jsonUrl;
+						output(str);
+					},
 					'success': function (data)
 					{
 						jsondata = data;
 						updateHtml(data);
 					}
+					
 				});
 				return jsondata;
             }
@@ -133,6 +140,15 @@
 		<form>
 			<table border="0">
 				<tr>
+					<td>
+						<label for="tableType">Type: </label>
+					</td>
+					<td>
+						<select id="tableType">
+								<option value="movie" selected="selected">Movies</option>
+								<option value="series">TV</option>
+						</select>
+					</td>
 					<td align="right"><b>Person Data ID: </b></td>
 					<td>
 						<input type="text" id="formPersonId"/>
@@ -206,7 +222,7 @@
 				<tr>
 					<td></td>
 					<td align="left">
-						<input type="button" value="Run Query" onclick="getPersonData(this.form.formPersonId.value, this.form.formPhotoLimit.value)"/>
+						<input type="button" value="Run Query" onclick="getPersonData(this.form.tableType.value, this.form.formPersonId.value, this.form.formPhotoLimit.value)"/>
 					</td>
 				</tr>
 			</table>

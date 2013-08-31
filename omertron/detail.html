@@ -22,7 +22,9 @@
 			var jsonUrl = "";
 			var jsonPersonUrl = "";
 			var jsonSeasonUrl = "";
-			
+			var countset = "-1";
+			var person_color = 0;
+			var fanart_toggle = 0;
 // ******************************************** COMMUN RESULTS MAPPING **********************************			
 			// from jsonActorUrl
 			var DETAIL_HEADER = {
@@ -246,26 +248,30 @@
 						// outputJson(data); 
 						$p('.template').render(data, YAMJ_DIR);                
 						$p('.header').render(data, DETAIL_HEADER);
-						
-					
-						if (type !== 'MOVIE')  // no banner for movies 
-						{
-							slideshowBanner();
-						} 
 						// add slideshow for fanart
 						slideshowFanart();
 						// slideshow for poster
                         slideshow();
 						// display fanart
-						showfanart ();	
-						if (type == 'SERIES')
-						{
-							perform_season ();  // get and display season list 
-						} 
-						if (type == 'SEASON')
-						{
-						perform_episode ();  // get and display episode list 
-						} 
+						display_all ();	
+						
+						switch (type) 
+							{
+							case 'MOVIE':
+									toggle_personcolor ();
+									break;
+							case 'SERIES':
+									nodisplay_Id ("Person");
+									slideshowBanner ();
+									perform_season ();
+									break;
+							case 'SEASON':
+									slideshowBanner ();
+									perform_episode ();
+									break;
+							}		
+						
+					
 				}
                 });
         
@@ -281,10 +287,13 @@
                     {
 						jsondata = dataPerson;
 					//	outputJson(dataPerson);
-						
+					
+					updateItemCount (dataPerson, "Person"); 
 						$p('.table_actor_name').render(dataPerson, ACTOR_NAME);
 						$p('.table_actor_role').render(dataPerson, ACTOR_ROLE);
 						$p('.table_photo').render(dataPerson, LIST_PHOTO);
+					
+					
 					}
                 });
 				}
@@ -301,40 +310,8 @@
                 sourceData.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(yamjdata, undefined, 4);
             }
 			
-		// on show fanart hover button show all fanart
-		function showfanart() {	
-				$('.show_fanart').hover(function() {
-					$('.plot').css('visibility', 'hidden');
-					$('.genres').css('visibility', 'hidden');
-					$('#biographyshow').css('visibility', 'hidden');
-					$('.Person').css('visibility', 'hidden');
-					$('.seasontable').css('visibility', 'hidden');
-					$('div#episodetable').css('visibility', 'hidden');
-					$('div#slideshowBanner').css('visibility', 'hidden');
-					$('div#slideshowCtr ').css('visibility', 'hidden');
-					$('div#slideshowFanart').css('opacity', '1');
-				}, function() {
-					$('.plot').css('visibility', 'visible');
-					$('.genres').css('visibility', 'visible');			
-					if (type == 'SEASON')
-						{
-						$('div#slideshowBanner').css('visibility', 'visible');
-						$('div#episodetable').css('visibility', 'visible');
-						} 
-					if (type == 'MOVIE')
-						{
-						$('.Person').css('visibility', 'visible');
-						}
-					if (type == 'SERIES')
-						{
-						$('.seasontable').css('visibility', 'visible');
-						$('div#slideshowBanner').css('visibility', 'visible');
-					//	$('.Person').css('visibility', 'visible');
-						}
-					$('div#slideshowCtr ').css('visibility', 'visible');
-					$('div#slideshowFanart').css('opacity', '0.7');
-				});
-			}
+
+			
 	// next/previous movie/series, need to be revue for a better implementation a real index list
 	function change_movie(x)
         {
@@ -444,7 +421,7 @@
 							}
 						}
 					};
-					
+					updateItemCount (dataSeason, "Season");
 					$p('.seasontable').render(dataSeason, SEASON);
 		}
 				
@@ -464,7 +441,7 @@
 						updateEpisode(dataEpisode);
 						nodisplay_Id ("next_movie");   		// while the series id is getting from the index , can't scroll to next/previous season 
 						nodisplay_Id ("previous_movie");  	// while the series id is getting from the index , can't scroll to next/previous season 
-						nodisplay_Id ("show_person");
+						nodisplay_Id ("show_person");		// while there is no person in the season detail page don't show the button 
 						display_Id ("episodetable");		// as episode table is only for season ,it's hidden by default 
 					}
                 });
@@ -472,7 +449,7 @@
 		
 		function updateEpisode(dataEpisode)
         {
-            var WI = {
+            var EPI = {
                 "episodetable": "table.episodes",
                 "episodeheader": {
 					"column": ["videoimage", "episode", "episode_title", ]
@@ -507,14 +484,36 @@
                     }
                 }
             };
-			var COUNT = {
-               'span.episodecount': 'count'
+			
+			updateItemCount (dataEpisode, "Episode");
+	
+            var EPISODE = $p(EPI.episodetable).render(EPI.episodeheader, EPI.episodedirectivehead).compile(EPI.episodedirectivebody);
+            $p('table.episodes').render(dataEpisode, EPISODE);
+        }
+		
+	
+	// generic function to get count and call the real treatment 	
+		function updateItemCount(data, type_to_upadte)
+        {
+			var ITEM_COUNT = {
+               'span.itemcount': function(arg) {
+			   switch(type_to_upadte)
+				{
+					case 'Person':
+						set_personcount (arg.context.count);
+						break;
+					case 'Season':
+						set_seasoncount (arg.context.count);
+						break;
+					case 'Episode':
+						set_episodecount (arg.context.count);
+						break;
+				}
+			   return arg.context.count;
+			   }
             };
 
-        //   $p('.test').render(dataEpisode, COUNT);
-		//	set_episodecount ();
-            var EPISODE = $p(WI.episodetable).render(WI.episodeheader, WI.episodedirectivehead).compile(WI.episodedirectivebody);
-            $p('table.episodes').render(dataEpisode, EPISODE);
+           $p('.counttest').render(data, ITEM_COUNT);
         }
 		
 	// set a new id in the last sequence
@@ -576,16 +575,130 @@
 							document.getElementById(Id_to_toggle).style.visibility = "hidden";
 						}
 					}
-		function toggle()
+		function toggle_personcolor()
+					{			
+						if (person_color == 0)
+						{ 
+							person_color = 1;
+							$('.show_person a').css('color', 'red');
+						} else {
+							person_color = 0;
+							$('.show_person a').css('color', '#b0b0b0');
+						}
+					}			
+		function toggle_season_person()
 					{			
 						if (type == 'SERIES')
 						{
 							toggle_Id('seasontable');
 							}
 						if (type != 'SEASON')
-						{
+						{	
 							toggle_Id('Person');
+							toggle_personcolor();
 							}
+					}
+		function toggle_fanart()
+					{			
+						if (fanart_toggle == 0)
+						{ 
+							fanart_toggle = 1;
+							display_only_fanart ();
+							$('.show_fanart a').css('color', 'red');
+						} else {
+							fanart_toggle =  0;
+							display_all ();
+							$('.show_fanart a').css('color', '#b0b0b0');
+						}
+					}
+		function display_only_fanart ()
+			{
+				$('.plot').css('visibility', 'hidden');
+				$('.genres').css('visibility', 'hidden');
+				$('#biographyshow').css('visibility', 'hidden');
+				$('.Person').css('visibility', 'hidden');
+				$('.seasontable').css('visibility', 'hidden');
+				$('div#episodetable').css('visibility', 'hidden');
+				$('div#slideshowBanner').css('visibility', 'hidden');
+				$('div#slideshowCtr ').css('visibility', 'hidden');
+				$('div#slideshowFanart').css('opacity', '1');
+			}
+			
+		function display_all ()
+			{
+				$('.plot').css('visibility', 'visible');
+				$('.genres').css('visibility', 'visible');
+				$('div#slideshowCtr ').css('visibility', 'visible');
+				$('div#slideshowFanart').css('opacity', '0.7');
+				switch (type)
+					{
+					case 'SEASON':
+						$('div#slideshowBanner').css('visibility', 'visible');
+						$('div#episodetable').css('visibility', 'visible');
+						break;
+					case 'MOVIE':
+						$('.Person').css('visibility', 'visible');
+						break;
+					case 'SERIES':
+						$('.seasontable').css('visibility', 'visible');
+						$('div#slideshowBanner').css('visibility', 'visible');
+						break;
+					}
+			}
+	
+		// adjust episode scroll bar 
+		function set_episodecount(count_to_set)
+					{
+						
+						if (count_to_set < 1)
+						{
+						nodisplay_Id('episodeth');
+						nodisplay_Id('episodebody');
+						} else {
+						if (count_to_set < 5)
+							{
+							$('#episodebody').css('float', 'none');
+					
+							}
+						}
+					}
+		// adjust person scroll bar 
+		function set_personcount(count_to_set)
+					{
+						
+						if (count_to_set)
+						{					
+							if (count_to_set < 1)
+							{
+							nodisplay_Id('Person');
+							} else {
+							if (count_to_set < 12)
+								{
+								$('.Person').css('overflow-x', 'hidden');
+								}
+							}	
+						} else {
+						$('.Person').css('visibility', 'hidden');
+						}
+					}
+		// adjust season scroll bar 
+		function set_seasoncount(count_to_set)
+					{
+						
+						if (count_to_set)
+						{					
+							if (count_to_set < 1)
+							{
+							nodisplay_Id('seasontable');
+							} else {
+							if (count_to_set < 12)
+								{
+								$('.seasontable').css('overflow-x', 'hidden');
+								}
+							}	
+						} else {
+						$('.seasontable').css('visibility', 'hidden');
+						}
 					}
         </script>
     </head>
@@ -624,15 +737,17 @@
 		
 	<!--  ALL CREW button -->	
 		<div class="show_fanart">
-					<td><span >SHOW FANART</span></td>
+					<td><a href="#" onclick="toggle_fanart()" >ONLY FANART</a></td>
 		</div>
 		<div class="show_person" id="show_person">
-					<td><a href="#" onclick="toggle()" >SHOW PERSON</a></td>
+					<td><a href="#" onclick="toggle_season_person()" >SHOW PERSON</a></td>
 		</div>
 		<div class="test">
 					<td><span class="lastid"></span></td>
 		</div> 
-
+		<div class="counttest">
+					<td><span class="itemcount"></span></td>
+		</div> 
 	<!-- main table for detail page -->
         <div class="template"> 
            <table>

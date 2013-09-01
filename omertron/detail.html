@@ -25,6 +25,8 @@
 			var countset = "-1";
 			var person_color = 0;
 			var fanart_toggle = 0;
+			var padding_season = 35;
+			var padding_person = 35;
 // ******************************************** COMMUN RESULTS MAPPING **********************************			
 			// from jsonActorUrl
 			var DETAIL_HEADER = {
@@ -159,11 +161,12 @@
 								{
 								// replace all ' \n and " by they corresponding value 
 								str_bio = arg.item.biography.replace(/\"/g,"\\&quot;").replace(/\'/g,"\\&apos;").replace(/\n/g,"");
+								
 								} else {
 								str_bio = "no biography available";
 								}
 								// click on name to display the biography  
-								return "<a href=\"#\" onmouseover=\"display('"+ str_bio +"')\" onmouseout=\"nodisplay()\" />"+arg.item.name;
+								return "<a href=\"#\" onfocus=\"display_biography('"+ str_bio +"',"+str_bio.length+")\" onblur=\"nodisplay_Id('biography')\" />"+arg.item.name;
 								}
 							}
 						}
@@ -540,21 +543,28 @@
 				console.log("Storing Series Id value: " + Series_Id);
 				}	
 				
-	// display biography 		
+	// display biography on mouseover		
 		function display(string_to_display)
 				{						
-					document.getElementById('biographyshow').firstChild.nodeValue = string_to_display;	
-					display_Id('biographyshow');
+					document.getElementById('biography').firstChild.nodeValue = string_to_display;	
+					display_Id('biography');
 		//			nodisplay_Id('seasontable');
 				}
-	// hidden biography 
-		function nodisplay()
-				{						
-					nodisplay_Id('biographyshow');
-	//				if (type == 'SERIES') 
-	//					{
-	//					display_Id('seasontable');
-	//					}
+				
+	// display biography on click	
+		function display_biography(string_to_display, biography_length)
+				{					
+					document.getElementById('biography').firstChild.nodeValue = string_to_display;	
+					if (biography_length < 1400)
+						{
+							$('.biography').css('height', 'auto');
+							$('.biography').css('overflow-y', 'hidden');
+						} else {
+							$('.biography').css('height', '170px');
+							$('.biography').css('overflow-y', 'scroll');
+							}
+						
+					display_Id('biography');
 				}
 	// hidden what is asked 
 		function nodisplay_Id(Id_to_nodisplay)
@@ -568,22 +578,25 @@
 					}
 		function toggle_Id(Id_to_toggle)
 					{			
-						if (document.getElementById(Id_to_toggle).style.visibility == "hidden")
+						if (document.getElementById(Id_to_toggle).style.visibility == "visible")
 						{ 
-							document.getElementById(Id_to_toggle).style.visibility = "visible";
-						} else {
 							document.getElementById(Id_to_toggle).style.visibility = "hidden";
+						} else {
+							document.getElementById(Id_to_toggle).style.visibility = "visible";
 						}
 					}
+
 		function toggle_personcolor()
 					{			
 						if (person_color == 0)
 						{ 
 							person_color = 1;
 							$('.show_person a').css('color', 'red');
+							document.getElementById('person').firstChild.nodeValue = "PERSON ON";	
 						} else {
 							person_color = 0;
 							$('.show_person a').css('color', '#b0b0b0');
+							document.getElementById('person').firstChild.nodeValue = "SHOW PERSON";	
 						}
 					}			
 		function toggle_season_person()
@@ -605,17 +618,19 @@
 							fanart_toggle = 1;
 							display_only_fanart ();
 							$('.show_fanart a').css('color', 'red');
+							document.getElementById('fanart').firstChild.nodeValue = "FANART ON";	
 						} else {
 							fanart_toggle =  0;
 							display_all ();
 							$('.show_fanart a').css('color', '#b0b0b0');
+							document.getElementById('fanart').firstChild.nodeValue = "SHOW FANART";
 						}
 					}
 		function display_only_fanart ()
 			{
 				$('.plot').css('visibility', 'hidden');
 				$('.genres').css('visibility', 'hidden');
-				$('#biographyshow').css('visibility', 'hidden');
+				$('#biography').css('visibility', 'hidden');
 				$('.Person').css('visibility', 'hidden');
 				$('.seasontable').css('visibility', 'hidden');
 				$('div#episodetable').css('visibility', 'hidden');
@@ -640,8 +655,16 @@
 						$('.Person').css('visibility', 'visible');
 						break;
 					case 'SERIES':
-						$('.seasontable').css('visibility', 'visible');
+						
 						$('div#slideshowBanner').css('visibility', 'visible');
+						// display the previous setting 
+						if (person_color == 1)
+							{
+							$('.Person').css('visibility', 'visible');
+							} else {
+							$('.seasontable').css('visibility', 'visible');
+							}
+						
 						break;
 					}
 			}
@@ -674,7 +697,9 @@
 							} else {
 							if (count_to_set < 12)
 								{
+								padding_person += (11 - count_to_set)*55;
 								$('.Person').css('overflow-x', 'hidden');
+								$('.Person').css('padding-left', padding_person+'px');
 								}
 							}	
 						} else {
@@ -691,9 +716,11 @@
 							{
 							nodisplay_Id('seasontable');
 							} else {
-							if (count_to_set < 12)
+							if (count_to_set < 8)
 								{
+								padding_season += (7 - count_to_set)*100;
 								$('.seasontable').css('overflow-x', 'hidden');
+								$('.seasontable').css('padding-left', padding_season+'px');
 								}
 							}	
 						} else {
@@ -737,10 +764,10 @@
 		
 	<!--  ALL CREW button -->	
 		<div class="show_fanart">
-					<td><a href="#" onclick="toggle_fanart()" >ONLY FANART</a></td>
+					<td><a href="#" id="fanart" onclick="toggle_fanart()" >ONLY FANART</a></td>
 		</div>
 		<div class="show_person" id="show_person">
-					<td><a href="#" onclick="toggle_season_person()" >SHOW PERSON</a></td>
+					<td><a href="#" id="person" onclick="toggle_season_person()" >SHOW PERSON</a></td>
 		</div>
 		<div class="test">
 					<td><span class="lastid"></span></td>
@@ -804,7 +831,7 @@
 		</div>
 
 		<!-- to display biography info -->
-        <div class="biography" id="biographyshow" >
+        <div class="biography" id="biography" >
 		<!-- left intentionnaly blank -->
 		</div>
 
@@ -843,7 +870,10 @@
 		<div class="seasontable" id="seasontable">
 			<table >
 				<tr>
-					<td class="season"><text class="season"> Id: </text><span class="SeasonID"></span><span class="SeasonPoster"></span><span class="SeasonYear"></span><br>
+					<td class="season">
+						<text class="season"> Id: </text>
+						<span class="SeasonID"></span><span class="SeasonPoster"></span>
+						<span class="SeasonYear"></span><br>
 						<text class="season">Season</text><span class="SeasonNb"></span><br>
 						<span class="SeasonTitle"></span>
 					</td>

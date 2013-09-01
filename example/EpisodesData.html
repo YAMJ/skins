@@ -18,21 +18,25 @@
     <body>
         <script type="text/javascript">
 
-        function getIndexData(series, season, start, max, itemsPerPage)
+        function getIndexData(seriesid, seasonid, season, start, max, itemsPerPage)
         {
             
             var perPageValue = parseInt(itemsPerPage.options[itemsPerPage.selectedIndex].value);
 			var jsonUrl;
 			//	/yamj3/api/video/episodes?series={}&season={}
 			jsonUrl = "http://localhost:8888/yamj3/api/video/episodes.json?";
-			if (series !== "") {
-				jsonUrl += "&series=" + series;
+			if (seriesid !== "") {
+				jsonUrl += "&seriesid=" + seriesid;
 						}
 						
-            if (season !== "") {
-                jsonUrl += "&season=" + season;
+            if (seasonid !== "") {
+                jsonUrl += "&seasonid=" + seasonid;
             }
 
+			 if (season !== "") {
+                jsonUrl += "&season=" + season;
+            }
+			
             if (start !== "") {
                 jsonUrl += "&start=" + start;
             }
@@ -65,7 +69,7 @@
                 "header": {
 				// it's a wish 
                //     "column": ["seriesId", "series", "season", "seasonId", "episode", "title", "videoimage", "image"]   
-					"column": ["seriesId", "season", "episode", "title", "image"]
+					"column": ["seriesId", "seasonId", "season", "episode", "title", "image"]
                 },
                 "directivehead": {
                     "th": {
@@ -83,9 +87,8 @@
                     "tbody tr": {
                         "result<-results": {
                             "td.seriesId": "result.seriesId",
-						//	"td.series": "result.series", 
+							"td.seasonId": "result.seasonId", 
 						// not implemented - asked with issue
-						// 	"td.seasonId: "result.seasonId",
 						// not implemented - asked with issue	
                             "td.season": "result.season",
                             "td.episode": "result.episode",
@@ -155,6 +158,10 @@
                     </td>
                     <td align="right"><b>seasonId: </b></td>
                     <td>
+                        <input type="text" id="formseasonId"/>
+                    </td>
+					<td align="right"><b>season: </b></td>
+                    <td>
                         <input type="text" id="formseason"/>
                     </td>
                 </tr>
@@ -186,7 +193,8 @@
                     <td align="left">
                         <input type="button" value="Run Query" onclick="getIndexData(
                     document.getElementById('formseriesId').value,
-                    document.getElementById('formseason').value,
+                    document.getElementById('formseasonId').value,
+					document.getElementById('formseason').value,
                     document.getElementById('formStart').value,
                     document.getElementById('formMax').value,
                     document.getElementById('itemsPerPage')

@@ -431,7 +431,7 @@
 				
 		function perform_episode()
 		{
-		jsonEpisodeUrl = "http://localhost:8888/yamj3/api/video/episodes.json?&series="+series_id+"&season="+current_id;
+		jsonEpisodeUrl = "http://localhost:8888/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id;
 		console.log("URL: " + jsonEpisodeUrl);
 					$.ajax({
                    url: jsonEpisodeUrl,

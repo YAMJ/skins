@@ -31,12 +31,17 @@
 						
 					if (( arg.item.artwork.POSTER[0]) && (arg.item.videoType == 'SEASON'))
 						{
-						temp = arg.item.artwork.POSTER[0].filename;
-						season =  (temp.substr((temp.lastIndexOf('season') -4), 3)); 
+				//		temp = arg.item.artwork.POSTER[0].filename;
+				//		season =  (temp.substr((temp.lastIndexOf('season') -4), 3)); 
 					
-						return arg.item.title + ' season: ' + season;
+						return arg.item.title + '<br> season: ' + arg.item.season;
 						} else {
-						return arg.item.title;
+							if (arg.item.videoType == 'SERIES')
+								{ 
+									return arg.item.title +'<br> Series'; 
+							} else {
+									return arg.item.title;
+								}
 						}
 					},
 
@@ -57,9 +62,9 @@
                     "img.poster@onclick": function(arg) {
 						if (( arg.item.artwork.POSTER[0]) && (arg.item.videoType == 'SEASON'))
 						{
-						temp = arg.item.artwork.POSTER[0].filename;
-						season =  (temp.substr((temp.lastIndexOf('season') -4), 3));
-						 return "setId('" + arg.item.videoType + "', " + arg.item.id + ", " + season +")";
+					//	temp = arg.item.artwork.POSTER[0].filename;
+					//	season =  (temp.substr((temp.lastIndexOf('season') -4), 3));
+						 return "setId('" + arg.item.videoType + "', " + arg.item.id + ", " + arg.item.season +")";
 						} else { 
 						season = "";}
                         return "setId('" + arg.item.videoType + "', " + arg.item.id + ", \"\")";
@@ -82,7 +87,7 @@
         // It will then update the HTML with the data and set up the paging
         function getIndexData()
         {
-            var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=series&sortby=title&sortdir=ASC&artwork=poster";
+            var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=series,season&sortby=title&sortdir=ASC&artwork=poster";
 							
             console.log("URL: " + jsonUrl);
 

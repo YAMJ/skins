@@ -28,7 +28,7 @@
 			var padding_season = 35;
 			var padding_person = 35;
 // ******************************************** COMMUN RESULTS MAPPING **********************************			
-			// from jsonActorUrl
+			// from jsonUrl
 			var DETAIL_HEADER = {
 							'span.header_type': 'result.videoType',
 					
@@ -36,7 +36,8 @@
 								season_title = arg.context.result.title;
 								if (type == 'SEASON')
 								{
-								return arg.context.result.title + ' Season: '+ season;
+								store_SeriesId (arg.context.result.seriesId);
+								return arg.context.result.title + ' Season: '+ arg.context.result.season;
 								} else {
 								display_Id("Person");
 								return arg.context.result.title;
@@ -53,7 +54,7 @@
 								}
 						
 						};
-			// from jsonActorUrl		
+			// from jsonUrl		
             var YAMJ_DIR = {
                 'span.plot': function(arg) {
 				// check if plot is available 
@@ -112,7 +113,7 @@
 							// take the opportunity to reset the new season number, in case of next / previous move , only for season type
 								if (type == 'SEASON')
 								{															
-									season =  (arg.item.filename.substr((arg.item.filename.lastIndexOf('season') -4), 3));   // workaround to get season number
+									season =  arg.item.season;   //  get season number
 									} else {
 									season = "";
 									}
@@ -249,8 +250,9 @@
                     {
                         jsondata = data;
 						// outputJson(data); 
-						$p('.template').render(data, YAMJ_DIR);                
+						              
 						$p('.header').render(data, DETAIL_HEADER);
+						$p('.template').render(data, YAMJ_DIR);  
 						// add slideshow for fanart
 						slideshowFanart();
 						// slideshow for poster
@@ -279,7 +281,7 @@
                 });
         
 
-		// cast API call 
+		// Person API call 
 				if (type == 'MOVIE' || type == 'SERIES')
 				{
 	             $.ajax({
@@ -372,7 +374,7 @@
 		
 		function perform_season()
 		{
-		jsonSeasonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=season&field=title&search="+season_title+"&artwork=poster";
+		jsonSeasonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=season&sortby=season&sortdir=ASC&field=title&search="+season_title+"&artwork=poster";
 		console.log("URL: " + jsonSeasonUrl);
 					$.ajax({
                    url: jsonSeasonUrl,
@@ -396,15 +398,7 @@
                         "season<-results": {
                            // "span.SeasonType": "season.videoType",
 							"span.SeasonID": "season.id",
-							"span.SeasonNb" : function(arg) {
-                                // Check to see if there are posters
-									  if (arg.item.artwork.POSTER) {	
-												return (arg.item.artwork.POSTER[0].filename.substr((arg.item.artwork.POSTER[0].filename.lastIndexOf('season') -4), 3));
-											} else {
-											return "";
-											}
-									
-									},
+							"span.SeasonNb" : "season.season",
                             "span.SeasonTitle": "season.title",
                             "span.SeasonYear": "season.videoYear",
                             "span.SeasonPoster": function(arg) {
@@ -442,8 +436,8 @@
 						jsondata = dataEpisode;
 					//	outputJson(dataEpisode);
 						updateEpisode(dataEpisode);
-						nodisplay_Id ("next_movie");   		// while the series id is getting from the index , can't scroll to next/previous season 
-						nodisplay_Id ("previous_movie");  	// while the series id is getting from the index , can't scroll to next/previous season 
+					//	nodisplay_Id ("next_movie");   		// seriesId now available
+					//	nodisplay_Id ("previous_movie");  	// seriesId now available 
 						nodisplay_Id ("show_person");		// while there is no person in the season detail page don't show the button 
 						display_Id ("episodetable");		// as episode table is only for season ,it's hidden by default 
 					}
@@ -539,6 +533,7 @@
 	// store the series Id for future use
 		function store_SeriesId (Series_Id)
 				{
+				series_id = Series_Id;
 				localStorage.setItem("SeriesId", Series_Id);
 				console.log("Storing Series Id value: " + Series_Id);
 				}	

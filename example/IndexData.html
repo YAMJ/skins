@@ -92,7 +92,7 @@
             var WI = {
                 "template": "table.results",
                 "header": {
-                    "column": ["ID", "VideoType", "Title", "Year", "Artwork", "Genres", "Poster", "Fanart", "Banner"]
+                    "column": ["ID", "VideoType", "Title", "Season", "Year", "Artwork", "Genres", "Poster", "Fanart", "Banner"]
                 },
                 "directivehead": {
                     "th": {
@@ -112,6 +112,7 @@
                             "td.ID": "result.id",
                             "td.VideoType": "result.videoType",
                             "td.Title": "result.title",
+							"td.Season": "result.season",
                             "td.Year": "result.videoYear",
                             "td.Artwork": "result.artworkCount",
                             "td.Genres": "result.genreCount",

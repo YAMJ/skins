@@ -374,7 +374,7 @@
 		
 		function perform_season()
 		{
-		jsonSeasonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=season&sortby=season&sortdir=ASC&field=title&search="+season_title+"&artwork=poster";
+		jsonSeasonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=season&sortby=season&sortdir=ASC&field=series_id&search="+series_id+"&artwork=poster";
 		console.log("URL: " + jsonSeasonUrl);
 					$.ajax({
                    url: jsonSeasonUrl,

@@ -5,7 +5,25 @@
     padding: 5px;
     background-color: gray;
 }
+body {
+/* IE10 Consumer Preview */ 
+background-image: -ms-linear-gradient(left, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
 
+/* Mozilla Firefox */ 
+background-image: -moz-linear-gradient(left, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
+
+/* Opera */ 
+background-image: -o-linear-gradient(left, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
+
+/* Webkit (Safari/Chrome 10) */ 
+background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #333333), color-stop(0.5, #CCCCCC), color-stop(0.5, #CCCCCC), color-stop(1, #333333));
+
+/* Webkit (Chrome 11+) */ 
+background-image: -webkit-linear-gradient(left, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
+
+/* W3C Markup, IE10 Release Preview */ 
+background-image: linear-gradient(to right, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
+}
 #container .row {
     border: 1px solid white;
     margin: 5px;
@@ -29,40 +47,11 @@
     background-color: whitesmoke;
 }
 
-.code
-{
-    border: dashed 1px #BCBCCB; padding:8px 12px; background-color: #F3F3F9; white-space:pre; font-family:"Courier New", Georgia;
-    font-size:12px; margin:6px 0;overflow:auto;
-}
-
-#container .poster {
-    width: 135px;
-}
 html, #tablelist,#headertable,#logo,#message
 {
     /* Applies to all pages */
     font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse:collapse;
-}
-
-body {
-    /* IE10 Consumer Preview */
-    background-image: -ms-linear-gradient(left, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
-
-    /* Mozilla Firefox */
-    background-image: -moz-linear-gradient(left, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
-
-    /* Opera */
-    background-image: -o-linear-gradient(left, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
-
-    /* Webkit (Safari/Chrome 10) */
-    background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #333333), color-stop(0.5, #CCCCCC), color-stop(0.5, #CCCCCC), color-stop(1, #333333));
-
-    /* Webkit (Chrome 11+) */
-    background-image: -webkit-linear-gradient(left, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
-
-    /* W3C Markup, IE10 Release Preview */
-    background-image: linear-gradient(to right, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
 }
 
 #tablelist td, #tablelist th, #headertable td, #headertable th
@@ -103,10 +92,9 @@ body {
     height: auto;
     width: auto;
     text-align: center;
-    background:  url(../pictures/yamj-logo_repeat.png) no-repeat right,
-        url(../pictures/yamj-logo_repeat.png) no-repeat left;
-}
-
+	background:  url(../pictures/yamj-logo_repeat.png) no-repeat right,
+	url(../pictures/yamj-logo_repeat.png) no-repeat left;
+	}
 #message
 {
     text-align: match-parent;
@@ -119,3 +107,18 @@ body {
     column-span: all;
     text-align: center;
 }
+/* detail page */
+.id  {
+    float: left;
+	}
+.title {
+	width: 810px;
+	font-weight: bold;
+	text-align: center;
+	font-size:1.1em;
+	}
+.year {
+	font-weight: bold;
+	text-align: right;
+	font-size:1.1em;
+	}	

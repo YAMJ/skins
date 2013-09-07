@@ -71,9 +71,30 @@ body {
     /* W3C Markup, IE10 Release Preview */
     background-image: linear-gradient(to right, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
 }
-
+#tablenav td, #tablenav th
+{
+    font-size:0.9em;
+    border:1px solid #98bf21;
+	width: 40px;
+}
+#tablenav th
+{
+	display: none;
+    font-size:0.1em;
+    text-align:center;
+    background-color:#A7C942;
+    color:#ffffff;
+	visibility: hidden;
+}
+#tablenav tr {
+    color:#000000;
+    background-color:#EAF2D3;
+	position: absolute;
+	top	: 45px;
+	left: 90px;
+}
 #tablelist td, #tablelist th, #headertable td, #headertable th
-{	
+{
     font-size:1em;
     border:1px solid #98bf21;
     padding:3px 7px 2px 7px;
@@ -87,11 +108,8 @@ body {
     padding-bottom:4px;
     background-color:#A7C942;
     color:#ffffff;
-	visibility: hidden;
 }
-#seasonhead {
-	visibility: hidden;
-	}
+
 #tablelist tr:nth-child(odd) {
     color:#000000;
     background-color:#EAF2D3;
@@ -130,10 +148,6 @@ body {
     text-align: center;
 }
 /* detail page */
-#sourceData {
-	position: absolute;
-	top: 800px;
-	}
 #home_left {
 	width: 100px;
 	height:35px;
@@ -154,7 +168,7 @@ body {
 	height:35px;
 	position: absolute;
 	top: 5px;
-	left: 1190px;
+	right: 10px;
 	padding:0px 0px -1px 0px;
 	background-color:rgba(255, 255, 255, 0.3);
 	border: 2px solid #b0b0b0;	
@@ -186,7 +200,7 @@ body {
 	height:30px;
 	position: absolute;
 	top: 5px;
-	left: 1152px;
+	right: 120px;
 	padding:0px 0px -1px 0px;
 	border: 2px solid #b0b0b0;	
 	border-right: 3px solid #b0b0b0;
@@ -198,7 +212,7 @@ body {
 	background-color:rgba(255, 255, 255, 0.3);
 	}
 /* for test purpose */
-.test, .counttest
+.test
 {
 	visibility: hidden;
 	height: auto;
@@ -210,106 +224,41 @@ body {
 	top: 40px; 
 	left: 150px;
     }
-#episodetable {
-	visibility : hidden;
-	position: absolute;
-	top: 400px;
-	width: 900px;
-	float:left;
-	display: table-cell;
-	}
-#episodeth {
-	visibility : hidden;
-	border: 2px solid #b0b0b0;	
-	border-right: 5px solid #b0b0b0;
-	border-radius: 6px 6px 6px 6px;
-	background-color:rgba(0, 0, 0, 0.3);
-	width: 125px;
-	float:left;
-	color:#fff;
-	}
-#episodebody {
-
-	display: table-cell;
- 	font-size:0.9em;
-	font-weight: bold;
-    text-align: center;
-	color:#fff;
-	height: 370px;
-	table-layout: fixed;
-	overflow-y: scroll;
-	float:right;
-	}
-
-.episodetable {
-
-	}
-.episodes
+.biography
 {
-	float:right;
-    }
-.seasonNb, .seriesId, .episode
-{	
-	border: 2px solid #b0b0b0;	
-	border-right: 5px solid #b0b0b0;
-	border-radius: 6px 6px 6px 6px;
-	background-color:rgba(0, 0, 0, 0.3);
-
-    }
-.videoimage
-{	
-	border: 2px solid #b0b0b0;	
-	border-right: 5px solid #b0b0b0;
-	border-radius: 6px 6px 6px 6px;
-	background-color:rgba(0, 0, 0, 0.1);
-    }		
-.episode_title
-	{
-	padding: 2px 0px 0px 5px;
-	border: 2px solid #b0b0b0;	
-	border-right: 5px solid #b0b0b0;
-	border-radius: 6px 6px 6px 6px;
-	background-color:rgba(0, 0, 0, 0.3);
-	}	
-#seasontable {
-	visibility : hidden;
-	}
-.seasontable
-{
-	display: table-cell;
-    position: absolute;
-	top: 645px;
-	left: 10px;
+    display: block;
 	height: auto;
- 	font-size:0.9em;
+    width: auto;
+	font-size:1.0em;
 	font-weight: bold;
     text-align: center;
-	color:#fff;
-	width: 1280px;
-	table-layout: fixed;
-	overflow-x: scroll;
-    }
-.season
-{	
+	margin: 10px 120px 10px 120px;
+	padding: 0px;
+	background-color:rgba(0, 0, 0, 0.2);
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
-	border-radius: 6px 6px 6px 6px;
-	background-color:rgba(0, 0, 0, 0.3);
-	vertical-align: top;
+	border-radius: 6px 6px 0px 6px;
+    }
+.header_return
+{
+    display: block;
+	height: auto;
+    width: auto;
+	font-size:1.8em;
+	font-weight: bold;
+    text-align: center;
+	margin: 0px 120px 10px 120px;
+	padding: 0px;
+	background-color:rgba(0, 0, 0, 0.2);
+	border: 2px solid #b0b0b0;	
+	border-right: 5px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
     }	
-.SeasonID	{
-	padding: 2px 5px 0px 0px;
-	vertical-align: top;
-	}
-.SeasonYear	{
-	padding: 2px 0px 0px 5px;
-	vertical-align: top;
-	}	
 .header
 {
     display: block;
 	height: auto;
-    width: 962px;
+    width: auto;
 	font-size:1.8em;
 	font-weight: bold;
     text-align: center;
@@ -340,7 +289,7 @@ body {
 	font-size:0.8em;
 	margin:1px -10px 5px -10px;
 	}	
-.header_id , .lastid {
+.header_id , .lastid{
     padding-top:1px;
 	font-size:0.8em;
 	margin:1px 0px 5px -6px;
@@ -360,10 +309,19 @@ body {
 	}
 .year {
 	font-weight: bold;
-	text-align: right;
-	font-size:1.1em;
+	text-align: center;
+	font-size:0.9em;
 	}	
-	
+.actor-name	a{
+    font-size:0.9em;
+	color:#fff;
+	font-weight: bold;
+	vertical-align:top;
+    text-align: center;	
+	}	
+.actor-name	a:focus, .actor-name a:hover{
+	color:red;
+	}	
 /* label for each text */
 text {
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -377,34 +335,24 @@ text {
 		border: 1px solid red;
 		border-right: 4px solid red;
 		border-radius: 6px 6px 0px 6px;
-	}
-#biography 
-{
-	visibility: hidden;
-}	
-.biography
-{	
-	position: absolute;
-	left: 7px;
-	top: 375px;
-    display: inline;
-	height: 170px;
-    width: auto;
-	font-size:1.0em;
-	font-weight: bold;
+	}	
+.plot {
+	width: auto;
 	color:#fff;
-    text-align: justify;
-	vertical-align:top;
-	margin: 5px 35px 2px 5px;
-	padding: 0px 5px 0px 5px;
+	font-weight: bold;
+	text-align: justify;
+	font-size:1.0em;
+	position: absolute;
+	top: 128px;
+	left: 240px;
 	background-color:rgba(0, 0, 0, 0.3);
-	border: 2px solid #b0b0b0;	
-	border-right: 5px solid #b0b0b0;
-	overflow-y: scroll;
-    }
-
-.moviedetail {
-	width: 1040px;
+	border: 1px solid gray;	
+	border-right: 5px solid gray;
+	padding: 3px 10px 0px 10px;
+	margin-right: 80px;
+	}
+.genres, .test {
+	width: auto;
 	color:#fff;
 	font-weight: bold;
 	text-align: justify;
@@ -412,36 +360,16 @@ text {
 	position: absolute;
 	top: 95px;
 	left: 240px;
-	overflow: hidden;
-	}	
-.plot {
-	width: auto;
-	display: block;
-	background-color:rgba(0, 0, 0, 0.3);
-	border: 1px solid gray;	
-	border-right: 5px solid gray;
-	padding: 3px 10px 3px 10px;
-
-	}
-.genres, .test {
-	width: auto;
-	display: block;
 	background-color:rgba(0, 0, 0, 0.3);
 	border: 1px solid gray;
 	border-right: 5px solid gray;
 	padding: 3px 10px 3px 10px;
+	margin-right: 35px;
 	}
-.actor-role{
-	font-style:italic;
-	font-size:0.8em;
+	
+.crew{
 }	
-.crewrole{
-	font-style:italic;
-	font-size:0.8em;
-}	
-.crewbirth{
-	font-size:0.8em;
-}
+
 .totalcrew {
 	display: none;
 	width: auto;
@@ -460,14 +388,13 @@ text {
 	}
 .totalcrew :hover {
 	}
-.show_fanart  {
-		display: block;
+.showcrew  {
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
 		font-weight: bold;
 		color:#b0b0b0;
 		background-color: black;
-		width: 120px;
+		width: auto;
 		text-align: center;
 		margin: 0px 5px 0px -5px;
 		padding: 0px 1px 0px 1px;
@@ -475,57 +402,20 @@ text {
 		border-right: 4px solid red;
 		border-radius: 6px 6px 0px 6px;
 		position: absolute;
-		top: 47px;
-		left: 1175px;
-		overflow: hidden;
+		top: 60px;
+		right: 10px;
 	}
-.show_fanart a:visited {
-color:#b0b0b0;
-}	
 	
-.show_person  {
-		display: block;
-		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-		font-size:1.05em;
-		font-weight: bold;
-		color:#b0b0b0;
-		background-color: black;
-		width: 120px;
-		text-align: center;
-		margin: 0px 5px 0px -5px;
-		padding: 0px 1px 0px 1px;
-		border: 1px solid red;
-		border-right: 4px solid red;
-		border-radius: 6px 6px 0px 6px;
-		position: absolute;
-		top: 70px;
-		left: 1175px;
-		overflow: hidden;
-	}
-
-.show_person a:visited {
-color:#b0b0b0;
-}
-/*.banner {
-	position: absolute;
-	left: 350px;
-	top: 690px;
-	border: 1px solid red;
-	border-right: 4px solid red;
-	border-radius: 6px 6px 6px 6px;
-	}	
-*/
 .Person {
-position: absolute;
-	left: 7px;
-	top: 560px;
-	width: 1280px;
+position: relative;
+	left: 45px;
+	/* set for all photoxx image place as empty , by default hidden
+	will be reset to visible by program if the iamge is valide */
+	width: 1200px;
 	table-layout: fixed;
 	overflow-x: scroll;
-	visibility: hidden;
 	}
-#Person {
-}
+
 .table_photo {
 	position: relative;
 	left: 0px;
@@ -558,21 +448,6 @@ position: absolute;
 	}	
 		
 	/* format table actor */
-.actor-name a {
-    font-size:0.9em;
-	color:#fff;
-	font-weight: bold;
-	vertical-align:top;
-    text-align: center;	
-	}	
-.actor-name a:focus, .actor-name a:hover {
-	color:red;
-	}
-.actor-name a:blur {
-	color:#fff;
-	}	
-
-
 #tableactorname
 {
     font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -608,7 +483,7 @@ position: absolute;
 }
 #tableactorname td:hover, #tableactorname td:active
 {
-	background-color:rgba(0, 0, 0, 0.4);
+	background-color:rgba(0, 0, 0, 0.2);
 	border: 1px solid black;
 	border-right: 5px solid black;
 }

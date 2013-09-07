@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+    <head>
+	
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+        <title>YAMJ v3</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script src="https://rawgithub.com/pure/pure/master/libs/pure.js"></script>
+        <script src="js/js.js"></script>
+        <script src="js/jPages.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="css/nav-style.css">
+        <link rel="stylesheet" href="css/jPages.css">
+        <link rel="stylesheet" href="css/animate.css">
+		<title>YAMJv3 Navigation index</title>
+	
+    </head>
+    <body onload="NavData();">
+        <script type="text/javascript">
+		
+		 function NavData()
+        {
+			localStorage.setItem("update_required", false);
+			var	way = localStorage.getItem ("way");
+			var	type = localStorage.getItem ("type");
+		    var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type="+type+"&sortby=title&sortdir="+way+"&artwork=poster";
+
+            console.log("URL: " + jsonUrl);
+            var jsondata = null;
+
+            $.ajax({
+                url: jsonUrl,
+                async: false,
+                dataType: 'jsonp',
+                'success': function(data)
+                {
+                    jsondata = data;
+                    updateHtml(data);
+                    pageData(1);
+                }
+            });
+            return jsondata;
+        }
+
+        function updateHtml(yamjdata)
+        {
+            var INDEX_TMP = {
+                "template": "table.results",
+                "header": {
+                    "column": [ "Poster","Title" ]
+                },
+                "directivehead": {
+                    "th": {
+                        "c<-column": {
+                            ".": "c"
+                        }
+                    },
+                    'td': {
+                        "c<-column": {
+                            "@class": "c"
+                        }
+                    }
+                },
+                "directivebody": {
+                    "tbody tr": {
+                        "result<-results": {
+                                                      
+                            
+							
+                            "td.Poster": function(arg) {
+                                // Check to see if there are posters
+                                if (arg.item.artwork.POSTER) {
+                                    // Get the first poster from the list
+                                    var poster = arg.item.artwork.POSTER[0];
+                                    if (poster.generatedId === 0) {
+                                          return "<a href=\"#\" onclick=\" setId('" + arg.item.videoType + "', '" + arg.item.id + "')\"><img src=\"pictures/dummy.jpg\" height=\"100\"></a>";
+                                    }
+                                       return "<a href=\"#\" onclick=\" setId('" + arg.item.videoType + "', '" + arg.item.id + "')\"><img src=\"" + arg.context.baseArtworkUrl + poster.filename + "\" height=\"100\"></a>";
+                                } else {
+                                    return "<a href=\"#\" onclick=\" setId('" + arg.item.videoType + "', '" + arg.item.id + "')\"><img src=\"pictures/dummy.jpg\" height=\"100\"></a>";
+                                }
+                            },
+							"td.Title": function(arg) {
+							switch (arg.item.videoType.toLowerCase()) 
+							{
+							case 'movie':
+									return arg.item.title;
+									break;
+							case 'series':
+									return "series: "+arg.item.title;
+									break;
+							case 'season':
+									return arg.item.title+ " season:"+arg.item.season;
+									break;
+							}		
+							
+							}
+                        }
+                    }
+                }
+            };
+
+            var INDEX = $p(INDEX_TMP.template).render(INDEX_TMP.header, INDEX_TMP.directivehead).compile(INDEX_TMP.directivebody);
+			
+          
+            $p('table.results').render(yamjdata, INDEX);
+
+                var str = JSON.stringify(yamjdata, undefined, 4);
+         //       output(str);
+        }
+
+        // Add the source output to the end of the page
+        function output(inp)
+        {
+            // Clear the "pre" element if it exists
+            $('pre').empty();
+            document.body.appendChild(document.createElement('pre')).innerHTML = inp;
+        }
+
+        function pageData(perPage)
+        {
+            $("div.holder").jPages({
+                containerID: "videos",
+				keyBrowse: true,
+                animation: "bounceInLeft",
+                perPage: perPage,
+                delay: 20
+            });
+        }
+	function setId(type, id)
+        {
+		
+            localStorage.setItem("type", type);
+            localStorage.setItem("id", id);
+            console.log("Storing value: " + type + "-" + id);
+			localStorage.setItem("update_required", true);
+			window.close();
+
+        //    window.location.href="detail.html";
+
+        }
+        </script>
+   
+        <!--Navigation Holder-->
+        <div class="holder"></div>
+
+        <!--Data Items Container-->
+        <div class="template">
+            <table id="tablenav" class="results" ">
+                <thead style="visibility:hidden;">
+                    <tr>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="videos">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!--<h4>Source Data:</h4>-->
+    </body>
+</html>

@@ -21,9 +21,9 @@ function slideshow() {
 
     // on slideshow hover show controls
     $('div#slideshowCtr').hover(function() {
-        $('a#next, a#prev').fadeIn('fast');
+        $('a#next, a#prev').fadeIn('slow');
     }, function() {
-        $('a#next, a#prev').fadeOut('fast');
+        $('a#next, a#prev').fadeOut('slow');
     });
 
     // move to next right image
@@ -55,7 +55,7 @@ function slideshow() {
 
     // auto start slideshow
     function slide() {
-       	if (imgTotal == '1')
+		if (imgTotal == '1')
 		{} else {
         $('a#next').click();
 		}

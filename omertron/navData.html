@@ -22,10 +22,11 @@
 		
 		 function NavData()
         {
+			
 			localStorage.setItem("update_required", false);
-			var	way = localStorage.getItem ("way");
+			var	directionnav = localStorage.getItem ("direction");
 			var	type = localStorage.getItem ("type");
-		    var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type="+type+"&sortby=title&sortdir="+way+"&artwork=poster";
+		    var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type="+type+"&sortby=title&sortdir="+directionnav+"&artwork=poster";
 
             console.log("URL: " + jsonUrl);
             var jsondata = null;
@@ -38,78 +39,70 @@
                 {
                     jsondata = data;
                     updateHtml(data);
-                    pageData(1);
+			// adjust number per page with the popup width and poster + container width			
+                    pageData(6);
                 }
             });
             return jsondata;
         }
+		
+//****************************************************************************		
+		
+     function updateHtml(yamjdata)
+     {
+		    var LIST_DIR = {
+            "div.block": {
+                "result<-results": {
+					"span.title": function(arg) {
+								switch (arg.item.videoType.toLowerCase()) 
+								{
+								case 'movie':
+										return arg.item.title;
+										break;
+								case 'series':
+										return "series: "+arg.item.title;
+										break;
+								case 'season':
+										return arg.item.title+ " season:"+arg.item.season;
+										break;
+								}		
+							},
 
-        function updateHtml(yamjdata)
-        {
-            var INDEX_TMP = {
-                "template": "table.results",
-                "header": {
-                    "column": [ "Poster","Title" ]
-                },
-                "directivehead": {
-                    "th": {
-                        "c<-column": {
-                            ".": "c"
+                    "img.poster@src": function(arg) {
+                        // Check to see if there are posters
+                        if (arg.item.artwork.POSTER) {
+                            // Get the first poster from the list
+                            var poster = arg.item.artwork.POSTER[0];
+                            if (poster.generatedId === 0) {
+                                return "pictures/dummy.jpg";
+                            }
+							
+                            return arg.context.baseArtworkUrl + poster.filename;
+                        } else {
+                            return "pictures/dummy.jpg";
                         }
                     },
-                    'td': {
-                        "c<-column": {
-                            "@class": "c"
-                        }
-                    }
-                },
-                "directivebody": {
-                    "tbody tr": {
-                        "result<-results": {
-                                                      
-                            
-							
-                            "td.Poster": function(arg) {
-                                // Check to see if there are posters
-                                if (arg.item.artwork.POSTER) {
-                                    // Get the first poster from the list
-                                    var poster = arg.item.artwork.POSTER[0];
-                                    if (poster.generatedId === 0) {
-                                          return "<a href=\"#\" onclick=\" setId('" + arg.item.videoType + "', '" + arg.item.id + "')\"><img src=\"pictures/dummy.jpg\" height=\"100\"></a>";
-                                    }
-                                       return "<a href=\"#\" onclick=\" setId('" + arg.item.videoType + "', '" + arg.item.id + "')\"><img src=\"" + arg.context.baseArtworkUrl + poster.filename + "\" height=\"100\"></a>";
-                                } else {
-                                    return "<a href=\"#\" onclick=\" setId('" + arg.item.videoType + "', '" + arg.item.id + "')\"><img src=\"pictures/dummy.jpg\" height=\"100\"></a>";
-                                }
-                            },
-							"td.Title": function(arg) {
-							switch (arg.item.videoType.toLowerCase()) 
-							{
-							case 'movie':
-									return arg.item.title;
-									break;
-							case 'series':
-									return "series: "+arg.item.title;
-									break;
-							case 'season':
-									return arg.item.title+ " season:"+arg.item.season;
-									break;
-							}		
-							
-							}
-                        }
+                    "img.poster@onclick": function(arg) {
+						if (( arg.item.artwork.POSTER[0]) && (arg.item.videoType == 'SEASON'))
+						{
+						 return "setId('" + arg.item.videoType + "', " + arg.item.id + ", \"\")";
+						} else { 
+						season = "";}
+                        return "setId('" + arg.item.videoType + "', " + arg.item.id + ", \"\")";
                     }
                 }
-            };
+            }
+        };
 
-            var INDEX = $p(INDEX_TMP.template).render(INDEX_TMP.header, INDEX_TMP.directivehead).compile(INDEX_TMP.directivebody);
+
+            $p('div.row').render(yamjdata, LIST_DIR);
+			//      output(str);
 			
-          
-            $p('table.results').render(yamjdata, INDEX);
-
-                var str = JSON.stringify(yamjdata, undefined, 4);
-         //       output(str);
-        }
+	}
+		
+		
+//***************************************************************************************************************		
+		
 
         // Add the source output to the end of the page
         function output(inp)
@@ -122,46 +115,42 @@
         function pageData(perPage)
         {
             $("div.holder").jPages({
-                containerID: "videos",
+                containerID: "yRow",
 				keyBrowse: true,
                 animation: "bounceInLeft",
                 perPage: perPage,
-                delay: 20
+                delay: 20,
+		        midRange: 1,
+				previous: "<-",
+				next: "->"
+				
             });
         }
 	function setId(type, id)
         {
-		
+			window.blur();
             localStorage.setItem("type", type);
             localStorage.setItem("id", id);
             console.log("Storing value: " + type + "-" + id);
 			localStorage.setItem("update_required", true);
-			window.close();
-
-        //    window.location.href="detail.html";
-
+			window.open("detail.html", "YAMJ v3 detail page","");
         }
         </script>
    
         <!--Navigation Holder-->
         <div class="holder"></div>
 
-        <!--Data Items Container-->
-        <div class="template">
-            <table id="tablenav" class="results" ">
-                <thead style="visibility:hidden;">
-                    <tr>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="videos">
-                    <tr>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
+     
+		 <!--Data Items Container-->
+		<div id="container">
+            <div id="yRow" class="row">
+                <div id="yBlock" class="block">
+                    <img class="poster" src="" /><br>
+                    <span class="title"></span>
+                </div>
+            </div>
         </div>
-
+		
         <!--<h4>Source Data:</h4>-->
     </body>
 </html>

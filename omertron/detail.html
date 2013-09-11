@@ -28,13 +28,11 @@
 			var season_title = "";
             var jsondata;
 			var jsonUrl = "";
-			var jsonPersonUrl = "";
 			var jsonSeasonUrl = "";
 			var countset = "-1";
-			var person_color = 0;
 			var fanart_toggle = 0;
 			var padding_season = 35;
-			var padding_person = 35;
+		
 // ******************************************** COMMON RESULTS MAPPING **********************************			
 			// from jsonUrl
 			var DETAIL_HEADER = {
@@ -47,7 +45,7 @@
 								store_SeriesId (arg.context.result.seriesId);
 								return arg.context.result.title + ' Season: '+ arg.context.result.season;
 								} else {
-								display_Id("Person");
+						
 								return arg.context.result.title;
 									}
 							},
@@ -156,88 +154,17 @@
                     }
                 }
             };
-		
-			// from jsonPersonUrl
-			var	ACTOR_NAME = {
-					'td' : 
-						{	
-					// assume there is one 
-						"result<-results":{				
-						"span.actor-name"		: function(arg)   {
-							// check if role is available
-								str_bio = "";
-								if (arg.item.biography) 
-								{
-								// replace all ' \n and " by they corresponding value 
-								str_bio = arg.item.biography.replace(/\"/g,"\\&quot;").replace(/\'/g,"\\&apos;").replace(/\n/g,"");
-								
-								} else {
-								str_bio = "no biography available";
-								}
-								// click on name to display the biography  
-								return "<a href=\"#\" onfocus=\"display_biography('"+ str_bio +"',"+str_bio.length+")\" onblur=\"nodisplay_Id('biography')\" />"+arg.item.name;
-								}
-							}
-						}
-					};		
-			// from jsonPersonUrl			
-			var	ACTOR_ROLE = {
-							'td' : 
-							{
-								"result<-results":{	
-									"span.actor-role"		: function(arg)   {
-									// check if role is available
-										if (arg.item.role) {
-												return arg.item.role;
-											} else {
-									// adjust to Writer, Director  
-												return arg.item.job.substr(0,1)+arg.item.job.substr(1).toLowerCase();
-											}	
-										}
-								}
-							}
-						};	
-						
-		
-			// from jsonPersonUrl 	
-			var LIST_PHOTO = {
-             		'span.totalphoto': function(arg) 
-					{
-						var totalphoto = arg.context.results;
-						var outputphoto = "";
-							for (i = 0; i < totalphoto.length; i++) 
-							{
-									// Check to see if there is photo
-								if (totalphoto[i].artwork[0]) 
-								{
-									// Get the first photo from the list
-									
-									var photoselect = totalphoto[i].artwork[0];
-									if (photoselect.generatedId == 0) 
-									{
-										outputphoto +="<img class=\"photo"+i+"\" src=\"pictures/dummy_photo.jpg\" ></img>";
-									} else {
-										outputphoto +="<img class=\"photo"+i+"\" src=\"" + arg.context.basePhotoUrl + photoselect.filename + "\" ></img>";
-										}
-								} else {
-									outputphoto +="<img class=\"photo"+i+"\" src=\"pictures/dummy_photo.jpg\" ></img>";
-								}
-							}
-							return outputphoto;
-						}
-					};	
-					
+
 					
 
 // ***************************************************** GET DATA section ******************************************************					
             function getData()
             {	
+				
 			
 						 jsonUrl = "http://localhost:8888/yamj3/api/video/" + current_type.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot";
 					console.log("URL: " + jsonUrl);
-						 jsonPersonUrl = "http://localhost:8888/yamj3/api/person/" + current_type.toLowerCase() + ".json?id=" + current_id + "&job=Actor,Director,Writer&dataitems=artwork";
-					console.log("URL: " + jsonPersonUrl);
-						
+
 					
         // main API call         
                 $.ajax({
@@ -262,10 +189,9 @@
 						switch (current_type.toLowerCase()) 
 							{
 							case 'movie':
-									toggle_personcolor ();
+						//			nothing to do
 									break;
 							case 'series':
-									nodisplay_Id ("Person");
 									slideshowBanner ();
 									perform_season ();
 									break;
@@ -276,32 +202,11 @@
 							}		
 				// display this part last 		
 					$p('.template').render(data, YAMJ_DIR);  	
-					
+				
 				}
                 });
         
 
-		// Person API call 
-				if (current_type.toLowerCase() == 'movie' || current_type.toLowerCase() == 'series')
-				{
-	             $.ajax({
-                    url: jsonPersonUrl,
-                    async: false,
-                    dataType: 'jsonp',
-                    'success': function(dataPerson)
-                    {
-						jsondata = dataPerson;
-					//	outputJson(dataPerson);
-					
-					updateItemCount (dataPerson, "Person"); 
-						$p('.table_actor_name').render(dataPerson, ACTOR_NAME);
-						$p('.table_actor_role').render(dataPerson, ACTOR_ROLE);
-						$p('.table_photo').render(dataPerson, LIST_PHOTO);
-					
-					
-					}
-                });
-				}
             }
   
   // ********************* NOW SET VARIOUS FUNCTION **********************************************
@@ -315,38 +220,6 @@
                 sourceData.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(yamjdata, undefined, 4);
             }
 			
-	// set the 1rst id 
-	function set_first_id()
-		{
-			current_id = 1;
-		}
-	
-	// set to the last movie, need to fetch the last id from API
-	function set_last_id()
-		{
-		// json to fetch the last movie/tv
-			var jsonLastUrl = "http://localhost:8888/yamj3/api/index/video.json?type="+ current_type.toLowerCase() +"&start=-1&max=1&sortby=title&sortdir=DESC";
-            console.log("URL: " + jsonLastUrl);
-				$.ajax({
-                    url: jsonLastUrl,
-                    async: false,
-                    dataType: 'jsonp',
-                    'success': function(lastdata)
-                    {						
-                        jsonlastdata = lastdata;
-		            // outputJson(lastdata); 
-					
-					//need to set the id 
-					 TEST = {
-							'span.lastid': function(arg) { 
-								set_onlyId (arg.context.results[0].id);
-								return  arg.context.results[0].id;									
-							}
-						};
-					 $p('.test').render(lastdata, TEST);	  
-					}
-					});
-		}
 		
 		function perform_season()
 		{
@@ -361,7 +234,6 @@
 						jsondata = dataSeason;
 					//	outputJson(dataSeason);
 						updateSeason(dataSeason)
-						nodisplay_Id ("Person");
 						display_Id ("seasontable");
 					}
                 });
@@ -412,9 +284,6 @@
 						jsondata = dataEpisode;
 					//	outputJson(dataEpisode);
 						updateEpisode(dataEpisode);
-					//	nodisplay_Id ("next_movie");   		// seriesId now available
-					//	nodisplay_Id ("previous_movie");  	// seriesId now available 
-						nodisplay_Id ("show_person");		// while there is no person in the season detail page don't show the button 
 						display_Id ("episodetable");		// as episode table is only for season ,it's hidden by default 
 					}
                 });
@@ -472,9 +341,6 @@
                'span.itemcount': function(arg) {
 			   switch(type_to_upadte)
 				{
-					case 'Person':
-						set_personcount (arg.context.count);
-						break;
 					case 'Season':
 						set_seasoncount (arg.context.count);
 						break;
@@ -514,30 +380,7 @@
 				localStorage.setItem("SeriesId", Series_Id);
 				console.log("Storing Series Id value: " + Series_Id);
 				}	
-				
-	// display biography on mouseover		
-		function display(string_to_display)
-				{						
-					document.getElementById('biography').firstChild.nodeValue = string_to_display;	
-					display_Id('biography');
-		//			nodisplay_Id('seasontable');
-				}
-				
-	// display biography on click	
-		function display_biography(string_to_display, biography_length)
-				{					
-					document.getElementById('biography').firstChild.nodeValue = string_to_display;	
-					if (biography_length < 1400)
-						{
-							$('.biography').css('height', 'auto');
-							$('.biography').css('overflow-y', 'hidden');
-						} else {
-							$('.biography').css('height', '170px');
-							$('.biography').css('overflow-y', 'scroll');
-							}
-						
-					display_Id('biography');
-				}
+					
 	// hidden what is asked 
 		function nodisplay_Id(Id_to_nodisplay)
 					{			
@@ -558,31 +401,6 @@
 						}
 					}
 
-		function toggle_personcolor()
-					{			
-						if (person_color == 0)
-						{ 
-							person_color = 1;
-							$('.show_person a').css('color', 'red');
-							document.getElementById('person').firstChild.nodeValue = "PERSON ON";	
-						} else {
-							person_color = 0;
-							$('.show_person a').css('color', '#b0b0b0');
-							document.getElementById('person').firstChild.nodeValue = "SHOW PERSON";	
-						}
-					}			
-		function toggle_season_person()
-					{			
-						if (current_type.toLowerCase() == 'series')
-						{
-							toggle_Id('seasontable');
-							}
-						if (current_type.toLowerCase() != 'season')
-						{	
-							toggle_Id('Person');
-							toggle_personcolor();
-							}
-					}
 		function toggle_fanart()
 					{			
 						if (fanart_toggle == 0)
@@ -603,7 +421,6 @@
 				$('.plot').css('visibility', 'hidden');
 				$('.genres').css('visibility', 'hidden');
 				$('#biography').css('visibility', 'hidden');
-				$('.Person').css('visibility', 'hidden');
 				$('.seasontable').css('visibility', 'hidden');
 				$('div#episodetable').css('visibility', 'hidden');
 				$('div#slideshowBanner').css('visibility', 'hidden');
@@ -624,19 +441,11 @@
 						$('div#episodetable').css('visibility', 'visible');
 						break;
 					case 'movie':
-						$('.Person').css('visibility', 'visible');
+			//			nothing special 
 						break;
 					case 'series':
-						
 						$('div#slideshowBanner').css('visibility', 'visible');
-						// display the previous setting 
-						if (person_color == 1)
-							{
-							$('.Person').css('visibility', 'visible');
-							} else {
-							$('.seasontable').css('visibility', 'visible');
-							}
-						
+						$('.seasontable').css('visibility', 'visible');
 						break;
 					}
 			}
@@ -657,27 +466,7 @@
 							}
 						}
 					}
-		// adjust person scroll bar 
-		function set_personcount(count_to_set)
-					{
-						
-						if (count_to_set)
-						{					
-							if (count_to_set < 1)
-							{
-							nodisplay_Id('Person');
-							} else {
-							if (count_to_set < 12)
-								{
-								padding_person += (11 - count_to_set)*55;
-								$('.Person').css('overflow-x', 'hidden');
-								$('.Person').css('padding-left', padding_person+'px');
-								}
-							}	
-						} else {
-						$('.Person').css('visibility', 'hidden');
-						}
-					}
+
 		// adjust season scroll bar 
 		function set_seasoncount(count_to_set)
 					{
@@ -700,25 +489,31 @@
 						}
 					}
 					
-	function ouvre_popup(page, way, current_type) {
-	localStorage.setItem("way", way);
-	localStorage.setItem("type", current_type);
-	var Indexpopup = window.open(page, "YAMJv3 Navigation index","menubar=no, status=no, scrollbars=no, menubar=no, width=450px, height=180px");
+	function ouvre_popup_index(page, direction, current_type) 
+		{
 		
-			Indexpopup.window.focus();
-			window.onfocus = function()
-			{ if (localStorage.getItem ("update_required"))
-				{
-					window.location.reload();
-				} else { window.focus()
-				}
-			}
-	 
-   }					
+			localStorage.setItem("direction", direction);
+			localStorage.setItem("type", current_type);
 
+			Indexpopup = window.open(page, "YAMJv3 Navigation index","channelmode=no, menubar=no, status=no, scrollbars=no, menubar=no, location=no, left=2px, top=5px, width=120px, height=1000px");
+
+		}
+	function ouvre_popup_person() 
+		{
+			localStorage.setItem("id", localStorage.getItem("id"));
+			localStorage.setItem("type", current_type.toLowerCase());
+			
+			Personpopup = window.open("navPerson.html", "YAMJv3 Navigation Person","channelmode=no, menubar=no, status=no, scrollbars=no, menubar=no, location=no, left=150px, top=5px, width=130px, height=1000px");
+
+		}
+	function close_popup()
+	{
+		Personpopup.close();
+	}
+	
       </script>
     </head>
-    <body onload="getData();">
+    <body onload="getData();" onUnload="close_popup();">
 	<!-- navigation to index -->
 
 		<div id="logo">
@@ -729,10 +524,10 @@
 						<a id="home_left" href="./index_movie.html">
 							<img src="./pictures/yamj-logo_movie.png" width="100px" />
 						</a>
-	<!-- navigation to next/previous movie which doesn't take care of the selection before in index --> 
-	<!-- need to be revue -->
-						<input id="previous_movie" type="button" class="button" onclick="ouvre_popup('navData.html', 'DESC', current_type)" value="" />
-						<input id="next_movie" type="button" class="button" onclick="ouvre_popup('navData.html', 'ASC', current_type)" value="" />		
+	<!-- navigation to next/previous movie which open index toolbar  --> 
+						<a id="previous_movie" href="javascript:ouvre_popup_index('navData.html', 'DESC', current_type)"></a>
+						<a id="next_movie" href="javascript:ouvre_popup_index('navData.html', 'ASC', current_type)"></a>
+					
         </div>
 	<!--  header for movie/series name -->
 		<div class="header">
@@ -756,7 +551,7 @@
 					<td><a href="#" id="fanart" onclick="toggle_fanart()" >ONLY FANART</a></td>
 		</div>
 		<div class="show_person" id="show_person">
-					<td><a href="#" id="person" onclick="toggle_season_person()" >SHOW PERSON</a></td>
+					<td><a href="#" id="person" onclick="ouvre_popup_person()" >SHOW PERSON</a></td>
 		</div>
 		<div class="test">
 					<td><span class="lastid"></span></td>
@@ -819,43 +614,7 @@
             </table> 	
 		</div>
 
-		<!-- to display biography info -->
-        <div class="biography" id="biography" >
-		<!-- left intentionnaly blank -->
-		</div>
 
-		<!-- each table_actor_name, table_actor_role, have fixed layout to limit to 11 the actor display --> 
-	<div class="Person" id="Person">
-	<!-- actor name  -->
-		<div class="table_actor_name">
-			<table id="tableactorname">	
-				<tr>
-					<td class="center">
-						<span class="actor-name"></span>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div class="table_photo">
-			<table id="tablephoto">	
-				<tr>
-					<td class="center">
-					 <span class="totalphoto"></span>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<!-- role or job  -->
-		<div class="table_actor_role">
-			<table id="tableactorrole">	
-				<tr>
-					<td class="center">
-						<span class="actor-role"></span>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
 		<div class="seasontable" id="seasontable">
 			<table >
 				<tr>

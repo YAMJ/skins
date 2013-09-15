@@ -1,3 +1,4 @@
+/**************** container ************************/
 #container {
     width: auto;
     margin-left: 5px;
@@ -45,6 +46,7 @@
 	text-align: center;
 	font-size:0.9em;
 }
+/********************* general , body ********************************/
 html, #tablelist,#headertable,#logo,#message
 {
     /* Applies to all pages */
@@ -89,9 +91,7 @@ body {
     color:#ffffff;
 	visibility: hidden;
 }
-#seasonhead {
-	visibility: hidden;
-	}
+
 #tablelist tr:nth-child(odd) {
     color:#000000;
     background-color:#EAF2D3;
@@ -129,7 +129,7 @@ body {
     column-span: all;
     text-align: center;
 }
-/* detail page */
+/***************************** detail page ***************************************/
 #sourceData {
 	position: absolute;
 	top: 800px;
@@ -138,9 +138,9 @@ body {
 	width: 100px;
 	height:35px;
 	position: absolute;
-	top: 5px;
-	left: 10px;
-	padding:0px 0px -5px 0px;
+	top: 25px;
+	left: 15px;
+	padding:0px 0px 0px 0px;
 	background-color:rgba(255, 255, 255, 0.3);
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
@@ -153,9 +153,9 @@ body {
 	width: 100px;
 	height:35px;
 	position: absolute;
-	top: 5px;
-	left: 1190px;
-	padding:0px 0px -1px 0px;
+	top: 25px;
+	left: 1160px;
+	padding:0px 0px 0px 0px;
 	background-color:rgba(255, 255, 255, 0.3);
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
@@ -210,6 +210,9 @@ body {
 	top: 40px; 
 	left: 150px;
     }
+#seasonhead {
+	visibility: hidden;
+	}	
 #episodetable {
 	visibility : hidden;
 	position: absolute;
@@ -304,7 +307,39 @@ body {
 .SeasonYear	{
 	padding: 2px 0px 0px 5px;
 	vertical-align: top;
-	}	
+	}
+
+/*************************** Header **********************************/	
+#detail_home_left {
+	width: 100px;
+	height:35px;
+	position: absolute;
+	top: 5px;
+	left: 10px;
+	padding:0px 0px -5px 0px;
+	background-color:rgba(255, 255, 255, 0.3);
+	border: 2px solid #b0b0b0;	
+	border-right: 5px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	}
+#detail_home_left:hover {
+	background-color:rgba(255, 255, 255, 0.6);
+	}
+#detail_home_right {
+	width: 100px;
+	height:35px;
+	position: absolute;
+	top: 5px;
+	left: 1190px;
+	padding:0px 0px -1px 0px;
+	background-color:rgba(255, 255, 255, 0.3);
+	border: 2px solid #b0b0b0;	
+	border-right: 5px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	}
+#detail_home_right:hover {
+	background-color:rgba(255, 255, 255, 0.6);
+	}
 .header
 {
     display: block;
@@ -378,6 +413,8 @@ text {
 		border-right: 4px solid red;
 		border-radius: 6px 6px 0px 6px;
 	}
+/**************************************** biography ***************************/	
+	
 #biography 
 {
 	visibility: hidden;
@@ -482,7 +519,7 @@ text {
 .show_fanart a:visited {
 color:#b0b0b0;
 }	
-	
+/********************************* Person People ****************************/	
 .show_person  {
 		display: block;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -511,15 +548,7 @@ color:red;
 .show_person:visited {
 color:#b0b0b0;
 }
-/*.banner {
-	position: absolute;
-	left: 350px;
-	top: 690px;
-	border: 1px solid red;
-	border-right: 4px solid red;
-	border-radius: 6px 6px 6px 6px;
-	}	
-*/
+
 .Person {
 position: absolute;
 	left: 7px;
@@ -562,7 +591,7 @@ position: absolute;
 	margin:1px
 	}	
 		
-	/* format table actor */
+/**************** format table actor ***************************/
 .actor-name a {
     font-size:0.9em;
 	color:#fff;

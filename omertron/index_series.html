@@ -87,8 +87,12 @@
         // It will then update the HTML with the data and set up the paging
         function getIndexData()
         {
-            var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=series,season&sortby=title,season&sortdir=ASC&artwork=poster";
-							
+            var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=series,season&sortby=title&sortdir=ASC&artwork=poster";
+			
+			if (localStorage.getItem("search_index") != "") {
+					jsonUrl = jsonUrl + "&search=" + localStorage.getItem("search_index") + "&field=title&mode=start";
+					localStorage.setItem("search_index", "");	
+				}				
             console.log("URL: " + jsonUrl);
 
             $.ajax({
@@ -125,18 +129,81 @@
                 delay: 20
             });
         }
+		function SetIndexData (search)
+		{
+			 localStorage.setItem("search_index", search);
+				window.location.reload();
 		
+		}
         </script>
 
         <div id="logo">
-            <h1>YAMJv3 TV Index</h1>
-			<!-- navigation beetween movie end series -->		
+       <!--     <h1>YAMJv3 TV Index</h1>
+			 navigation beetween movie end series -->		
 						<a id="home_right" href="./index.html">
 							<img src="./pictures/yamj-logo_repeat.png" width="100px" />
 						</a>
 						<a id="home_left" href="./index_movie.html">
 							<img src="./pictures/yamj-logo_movie.png" width="100px" />
 						</a>
+						
+			<!-- search by letter -->				
+						
+			<form id="monForm">
+				<fieldset>
+					<table align="center">
+						<tr>
+							<td class="formSelect">							
+								<input  type="button" value="A" onclick="SetIndexData('a')"/>
+								<input  type="button" value="B" onclick="SetIndexData('b')"/>
+								<input  type="button" value="C" onclick="SetIndexData('c')"/>
+								<input  type="button" value="D" onclick="SetIndexData('d')"/>
+								<input  type="button" value="E" onclick="SetIndexData('e')"/>
+								<input  type="button" value="F" onclick="SetIndexData('f')"/>
+								<input  type="button" value="G" onclick="SetIndexData('g')"/>
+								<input  type="button" value="H" onclick="SetIndexData('h')"/>
+								<input  type="button" value="I" onclick="SetIndexData('i')"/>
+								<input  type="button" value="J" onclick="SetIndexData('j')"/>
+								<input  type="button" value="K" onclick="SetIndexData('k')"/>
+								<input  type="button" value="L" onclick="SetIndexData('l')"/>
+								<input  type="button" value="M" onclick="SetIndexData('m')"/>
+								<input  type="button" value="N" onclick="SetIndexData('n')"/>
+								<input  type="button" value="O" onclick="SetIndexData('o')"/>
+								<input  type="button" value="P" onclick="SetIndexData('p')"/>
+								<input  type="button" value="Q" onclick="SetIndexData('q')"/>
+								<input  type="button" value="R" onclick="SetIndexData('r')"/>
+								<input  type="button" value="S" onclick="SetIndexData('s')"/>
+								<input  type="button" value="D" onclick="SetIndexData('d')"/>
+								<input  type="button" value="T" onclick="SetIndexData('t')"/>
+								<input  type="button" value="U" onclick="SetIndexData('u')"/>
+								<input  type="button" value="V" onclick="SetIndexData('v')"/>
+								<input  type="button" value="W" onclick="SetIndexData('w')"/>
+								<input  type="button" value="X" onclick="SetIndexData('x')"/>
+								<input  type="button" value="Y" onclick="SetIndexData('y')"/>
+								<input  type="button" value="Z" onclick="SetIndexData('z')"/>
+							<td>
+						</tr>
+						<tr>
+							
+							<td>
+								<input  type="button" value="1" onclick="SetIndexData('1')"/>
+								<input  type="button" value="2" onclick="SetIndexData('2')"/>
+								<input  type="button" value="3" onclick="SetIndexData('3')"/>
+								<input  type="button" value="4" onclick="SetIndexData('4')"/>
+								<input  type="button" value="5" onclick="SetIndexData('5')"/>
+								<input  type="button" value="6" onclick="SetIndexData('6')"/>
+								<input  type="button" value="7" onclick="SetIndexData('7')"/>
+								<input  type="button" value="8" onclick="SetIndexData('8')"/>
+								<input  type="button" value="9" onclick="SetIndexData('9')"/>
+								<input  type="button" value="0" onclick="SetIndexData('0')"/>
+						
+								<input  type="button" value="ALL" onclick="SetIndexData('')"/>
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+			</form>			
+			
             <!--Navigation Holder-->
             <div class="holder"></div>
 					

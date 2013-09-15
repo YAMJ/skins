@@ -1,11 +1,11 @@
 <html>
     <head>
         <title>YAMJ v3 Person popup</title>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-        <script src="https://rawgithub.com/pure/pure/master/libs/pure.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/pure.js"></script>
         <link rel="stylesheet" type="text/css" href="css/Popup_Person-style.css">
     </head>
-    <body onload="PersonData()">
+    <body onload="PersonData();" >
         <script type="text/javascript">
             function PersonData()
             {
@@ -25,8 +25,10 @@
                     {
                         jsondata = data;
                         updateHtml(data);
+						
                     }
                 });
+				
                 return jsondata;
             }
 
@@ -64,6 +66,7 @@
 
                 var str = JSON.stringify(yamjdata, undefined, 4);
             //   output(str);
+				
             }
 
             // Add the source output to the end of the page
@@ -88,6 +91,8 @@
                 </tr>
             </table>
         </div>
+		
+	
 
   <!--      <h4>Source data:</h4> -->
     </body>

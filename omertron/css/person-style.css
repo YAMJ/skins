@@ -98,10 +98,10 @@ position: relative;
 .table_person_photo {
 	position: relative;
 	left: 0px;
-	width: 110px;
-	height:auto;
+	width: 140px;
+	height:1000px;
 	table-layout: fixed;
-	overflow: hidden;
+	overflow-y: scroll;
 	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size:0.7em;
 	text-align: center;

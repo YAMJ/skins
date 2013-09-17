@@ -87,12 +87,19 @@
         // It will then update the HTML with the data and set up the paging
         function getIndexData()
         {
+			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+			//language as been setted in index.html 
+			set_lang_value (localStorage.getItem("lang"));
             var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=series,season&sortby=title&sortdir=ASC&artwork=poster";
-			
-			if (localStorage.getItem("search_index") != "") {
-					jsonUrl = jsonUrl + "&search=" + localStorage.getItem("search_index") + "&field=title&mode=start";
+			var selected_index = series_label.toUpperCase();
+			var select = localStorage.getItem("search_index");
+			if (select != "") {
+					selected_index = selected_index + " (" +select.toUpperCase() + ")"
+					
+					jsonUrl = jsonUrl + "&search=" + select + "&field=title&mode=start";
 					localStorage.setItem("search_index", "");	
-				}				
+				}	
+			$('#printsearch').html(selected_index);
             console.log("URL: " + jsonUrl);
 
             $.ajax({
@@ -131,9 +138,31 @@
         }
 		function SetIndexData (search)
 		{
-			 localStorage.setItem("search_index", search);
-				window.location.reload();
+			localStorage.setItem("search_index", search);
+			window.location.reload();
 		
+		}
+		
+		// store all value according to language setting - from yamjv3_lang_{lang}.xml
+		function set_lang_value (lang)
+		{
+
+			if (window.XMLHttpRequest)
+			  {// code for IE7+, Firefox, Chrome, Opera, Safari
+			  xmlhttp=new XMLHttpRequest();
+			  }
+			else
+			  {// code for IE6, IE5
+			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			  }
+			xmlhttp.open("GET","yamjv3_lang_"+lang+".xml",false);
+			xmlhttp.send();
+			xmlDoc=xmlhttp.responseXML; 
+			x=xmlDoc.getElementsByTagName(lang);
+			i=0;
+
+			series_label=(x[i].getElementsByTagName("serieselected")[0].childNodes[0].nodeValue);
+			
 		}
         </script>
 
@@ -146,7 +175,7 @@
 						<a id="home_left" href="./index_movie.html">
 							<img src="./pictures/yamj-logo_movie.png" width="100px" />
 						</a>
-						
+			<div class="show_index"><span id="printsearch"></span></div>				
 			<!-- search by letter -->				
 						
 			<form id="monForm">
@@ -173,7 +202,6 @@
 								<input  type="button" value="Q" onclick="SetIndexData('q')"/>
 								<input  type="button" value="R" onclick="SetIndexData('r')"/>
 								<input  type="button" value="S" onclick="SetIndexData('s')"/>
-								<input  type="button" value="D" onclick="SetIndexData('d')"/>
 								<input  type="button" value="T" onclick="SetIndexData('t')"/>
 								<input  type="button" value="U" onclick="SetIndexData('u')"/>
 								<input  type="button" value="V" onclick="SetIndexData('v')"/>

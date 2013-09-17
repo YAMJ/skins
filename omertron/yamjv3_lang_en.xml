@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<en>
+	
+	<movieselected>movie selected</movieselected>
+	<serieselected>tv selected</serieselected>
+	<allselected>all selected</allselected>
+	<fanartshow>only fanart</fanartshow>
+	<personshow>show person</personshow>
+	<seasonlabel>season</seasonlabel>
+	<movielabel>movie</movielabel>
+	<serieslabel>series</serieslabel>
+	<episodelabel>episode</episodelabel>
+	<plotlabel>plot</plotlabel>
+	<genrelabel>genre</genrelabel>
+</en>

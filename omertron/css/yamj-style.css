@@ -129,7 +129,27 @@ body {
     column-span: all;
     text-align: center;
 }
-/***************************** detail page ***************************************/
+.show_index  {
+		display: block;
+		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+		font-size:1.05em;
+		font-weight: bold;
+		color:#b0b0b0;
+		background-color: black;
+		width: 180px;
+		text-align: center;
+		margin: 0px 5px 0px -5px;
+		padding: 0px 1px 0px 1px;
+		border: 1px solid red;
+		border-right: 4px solid red;
+		border-radius: 6px 6px 0px 6px;
+		position: absolute;
+		top: 50px;
+		left: 250px;
+		overflow: hidden;
+	}
+
+
 #sourceData {
 	position: absolute;
 	top: 800px;
@@ -164,6 +184,8 @@ body {
 #home_right:hover {
 	background-color:rgba(255, 255, 255, 0.6);
 	}
+	
+/***************************** detail page ***************************************/	
 #previous_movie {
 	width: 30px;
 	height:30px;

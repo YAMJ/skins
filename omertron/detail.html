@@ -29,14 +29,31 @@
 // ******************************************** COMMON RESULTS MAPPING **********************************			
 			// from jsonUrl
 			var DETAIL_HEADER = {
-							'span.header_type': 'result.videoType',
+							'span.header_type': function (arg) {
+							
+								switch(arg.context.result.videoType.toLowerCase())
+									{
+										case 'season':
+											return season_label.toUpperCase();
+											break;
+										case 'episode':
+											return episode_label.toUpperCase();
+											break;
+										case 'movie':
+											return movie_label.toUpperCase();
+											break;
+										case 'series':
+											return series_label.toUpperCase();
+											break;	
+									};
+								},
 					
 							'span.header_title': function (arg) {
 								season_title = arg.context.result.title;
 								if (type.toLowerCase() == 'season')
 								{
 								store_SeriesId (arg.context.result.seriesId);
-								return arg.context.result.title + ' Season: '+ arg.context.result.season;
+								return arg.context.result.title + ' '+season_label+': '+ arg.context.result.season;
 								} else {
 						
 								return arg.context.result.title;
@@ -58,7 +75,7 @@
                 'span.plot': function(arg) {
 				// check if plot is available 
 					if (arg.context.result.plot) {
-							return "<text>PLOT</text>" +arg.context.result.plot;
+							return "<text>"+plot_label.toUpperCase()+"</text>" +arg.context.result.plot;
 								} else {
 							return "<text>NO PLOT AVALAIBLE</text>";
 							}
@@ -66,7 +83,7 @@
                 'span.genres': function(arg)
                 {
                     var genres = arg.context.result.genres;
-                    var output = "<text>GENRE</text>";
+                    var output = "<text>"+genre_label.toUpperCase()+"</text>";
                     var first_genres = true;
 					// loop thru the list of genres
                     for (i = 0; i < genres.length; i++) {
@@ -157,7 +174,9 @@
 			
 						 jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot";
 					console.log("URL: " + jsonUrl);
-
+				// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+				//language as been setted in index.html 
+					set_lang_value (localStorage.getItem("lang"));
 					
         // main API call         
                 $.ajax({
@@ -202,6 +221,46 @@
             }
   
   // ********************* NOW SET VARIOUS FUNCTION **********************************************
+  
+		// store all value according to language setting - from yamjv3_lang_{lang}.xml
+		function set_lang_value (lang)
+		{
+
+			if (window.XMLHttpRequest)
+			  {// code for IE7+, Firefox, Chrome, Opera, Safari
+			  xmlhttp=new XMLHttpRequest();
+			  }
+			else
+			  {// code for IE6, IE5
+			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			  }
+			xmlhttp.open("GET","yamjv3_lang_"+lang+".xml",false);
+			xmlhttp.send();
+			xmlDoc=xmlhttp.responseXML; 
+			x=xmlDoc.getElementsByTagName(lang);
+			i=0;
+			
+			fanart_show=(x[i].getElementsByTagName("fanartshow")[0].childNodes[0].nodeValue);
+			document.getElementById("fanartshow").innerHTML=fanart_show.toUpperCase();
+			
+			person_show=(x[i].getElementsByTagName("personshow")[0].childNodes[0].nodeValue);
+			document.getElementById("personshow").innerHTML=person_show.toUpperCase();
+			
+			season_label=(x[i].getElementsByTagName("seasonlabel")[0].childNodes[0].nodeValue);
+			document.getElementById("seasonlabel").innerHTML=season_label;
+			
+			episode_label=(x[i].getElementsByTagName("episodelabel")[0].childNodes[0].nodeValue);
+			
+			movie_label=(x[i].getElementsByTagName("movielabel")[0].childNodes[0].nodeValue);
+			
+			series_label=(x[i].getElementsByTagName("serieslabel")[0].childNodes[0].nodeValue);
+			
+			plot_label=(x[i].getElementsByTagName("plotlabel")[0].childNodes[0].nodeValue);
+			
+			
+			genre_label=(x[i].getElementsByTagName("genrelabel")[0].childNodes[0].nodeValue);
+			
+		}
   
         // Add the source output to the end of the page
         function outputJson(yamjdata)
@@ -540,12 +599,12 @@
 			</table>
 		</div>
 		
-	<!--  ALL CREW button -->	
+	<!--  ALL  button -->	
 		<div class="show_fanart">
-					<td><a href="#" id="fanart" onclick="toggle_fanart()" >ONLY FANART</a></td>
+					<td><a href="#" id="fanart" onclick="toggle_fanart()" ><div id='fanartshow'></div></a></td>
 		</div>
 		<div class="show_person" id="show_person">
-					<td><a href="#" id="person" onclick="ouvre_popup_person()" >SHOW PERSON</a></td>
+					<td><a href="#" id="person" onclick="ouvre_popup_person()" ><div id='personshow'></div></a></td>
 		</div>
 		<div class="test">
 					<td><span class="lastid"></span></td>
@@ -616,7 +675,7 @@
 						<text class="season"> Id: </text>
 						<span class="SeasonID"></span><span class="SeasonPoster"></span>
 						<span class="SeasonYear"></span><br>
-						<text class="season">Season</text><span class="SeasonNb"></span><br>
+						<text class="season" id='seasonlabel'></text><span class="SeasonNb"></span><br>
 						<span class="SeasonTitle"></span>
 					</td>
 				</tr>

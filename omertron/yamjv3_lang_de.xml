@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<lang>
+	
+	<movieselected>film</movieselected>
+	<serieselected>serie</serieselected>
+	<seasonselected>jahreszeit</seasonselected>
+	<allselected>movie and series</allselected>
+	<fanartshow>nur fanart</fanartshow>
+	<personshow>zeigen person</personshow>
+	<seasonlabel>jahreszeit</seasonlabel>
+	<movielabel>film</movielabel>
+	<serieslabel>serie</serieslabel>
+	<episodelabel>folge</episodelabel>
+	<plotlabel>synopse</plotlabel>
+	<genrelabel>genre</genrelabel>
+</lang>

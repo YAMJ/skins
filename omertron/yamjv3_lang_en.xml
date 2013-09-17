@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<en>
+<lang>
 	
-	<movieselected>movie selected</movieselected>
-	<serieselected>tv selected</serieselected>
-	<allselected>all selected</allselected>
+	<movieselected>movie</movieselected>
+	<serieselected>series</serieselected>
+	<seasonselected>season</seasonselected>
+	<allselected>movie and series</allselected>
 	<fanartshow>only fanart</fanartshow>
 	<personshow>show person</personshow>
 	<seasonlabel>season</seasonlabel>
@@ -12,4 +13,4 @@
 	<episodelabel>episode</episodelabel>
 	<plotlabel>plot</plotlabel>
 	<genrelabel>genre</genrelabel>
-</en>
+</lang>

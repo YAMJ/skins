@@ -140,8 +140,8 @@ body {
 		text-align: center;
 		margin: 0px 5px 0px -5px;
 		padding: 0px 1px 0px 1px;
-		border: 1px solid red;
-		border-right: 4px solid red;
+		border: 1px solid #b0b0b0;;
+		border-right: 4px solid #b0b0b0;;
 		border-radius: 6px 6px 0px 6px;
 		position: absolute;
 		top: 50px;
@@ -154,11 +154,11 @@ body {
 	position: absolute;
 	top: 800px;
 	}
-#home_left {
-	width: 100px;
-	height:35px;
+#home_left_up {
+	width: 120px;
+	height:31px;
 	position: absolute;
-	top: 25px;
+	top: 11px;
 	left: 15px;
 	padding:0px 0px 0px 0px;
 	background-color:rgba(255, 255, 255, 0.3);
@@ -166,25 +166,73 @@ body {
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
 	}
-#home_left:hover {
+#home_left_up:hover {
 	background-color:rgba(255, 255, 255, 0.6);
 	}
-#home_right {
-	width: 100px;
-	height:35px;
+#home_left_down {
+	width: 120px;
+	height:31px;
 	position: absolute;
-	top: 25px;
-	left: 1160px;
+	top: 50px;
+	left: 15px;
 	padding:0px 0px 0px 0px;
 	background-color:rgba(255, 255, 255, 0.3);
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
 	}
-#home_right:hover {
+#home_left_down:hover {
+	background-color:rgba(255, 255, 255, 0.6);
+	}	
+#home_right_up{
+	width: 120px;
+	height:31px;
+	position: absolute;
+	top: 11px;
+	left: 1140px;
+	padding:0px 0px 0px 0px;
+	background-color:rgba(255, 255, 255, 0.3);
+	border: 2px solid #b0b0b0;	
+	border-right: 5px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	}
+#home_right_up:hover {
 	background-color:rgba(255, 255, 255, 0.6);
 	}
+#home_right_down {
+	width: 120px;
+	height:31px;
+	position: absolute;
+	top: 50px;
+	left: 1140px;
+	padding:0px 0px 0px 0px;
+	background-color:rgba(255, 255, 255, 0.3);
+	border: 2px solid #b0b0b0;	
+	border-right: 5px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	}
+#home_right_down:hover {
+	background-color:rgba(255, 255, 255, 0.6);
+	}
+
+#allselect, #movieselect, #serieselect, #seasonselect
+{
+    font-weight: bold;
+    color: white;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:1.0em;
+	position: absolute;	
+	text-align: left;
+	top: 12px;
+	left: 0px;
+	width: 130px;
 	
+
+}
+#allselect:hover, #movieselect:hover, #serieselect:hover, #seasonselect:hover
+{	
+	color: red;	
+}	
 /***************************** detail page ***************************************/	
 #previous_movie {
 	width: 30px;

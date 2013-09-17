@@ -237,7 +237,7 @@
 			xmlhttp.open("GET","yamjv3_lang_"+lang+".xml",false);
 			xmlhttp.send();
 			xmlDoc=xmlhttp.responseXML; 
-			x=xmlDoc.getElementsByTagName(lang);
+			x=xmlDoc.getElementsByTagName('lang');
 			i=0;
 			
 			fanart_show=(x[i].getElementsByTagName("fanartshow")[0].childNodes[0].nodeValue);
@@ -560,7 +560,12 @@
 	{
 		Personpopup.close();
 	}
-	
+	function ChangeIndex (indextype)
+		{		
+				localStorage.setItem("indextype", indextype);
+				window.location.href="index.html";
+		
+		}
       </script>
     </head>
     <body onload="getData();" onUnload="close_popup();">
@@ -568,10 +573,10 @@
 
 		<div id="logo">
  					
-						<a id="detail_home_right" href="./index_series.html">
+						<a id="detail_home_right" href="javascript:ChangeIndex('series')">
 							<img src="./pictures/yamj-logo_tv.png" width="100px" />
 						</a>
-						<a id="detail_home_left" href="./index_movie.html">
+						<a id="detail_home_left" href="javascript:ChangeIndex('movie')">
 							<img src="./pictures/yamj-logo_movie.png" width="100px" />
 						</a>
 	<!-- navigation to next/previous movie which open index toolbar  --> 

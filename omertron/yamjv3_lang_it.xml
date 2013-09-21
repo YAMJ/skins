@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<lang>
+	
+	<movieselected>del cinema</movieselected>
+	<serieselected>serie</serieselected>
+	<seasonselected>stagione</seasonselected>
+	<allselected>del cinema e serie</allselected>
+	<fanartshow>nur fanart</fanartshow>
+	<personshow>persona</personshow>
+	<seasonlabel>stagione</seasonlabel>
+	<movielabel>del cinema</movielabel>
+	<serieslabel>serie</serieslabel>
+	<episodelabel>episodio</episodelabel>
+	<plotlabel>sinossi</plotlabel>
+	<genrelabel>tipo</genrelabel>
+</lang>

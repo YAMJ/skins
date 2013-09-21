@@ -245,7 +245,6 @@ body {
 	border-right: 3px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
 	background:  url(../pictures/previous.png) no-repeat;
-
 	}
 #previous_movie:hover {
 	background:  url(../pictures/previousSelect.png) no-repeat;
@@ -586,6 +585,11 @@ text {
 		left: 1175px;
 		overflow: hidden;
 	}
+.show_fanart a
+{
+	text-decoration: none;
+}	
+
 .show_fanart a:visited {
 color:#b0b0b0;
 }	
@@ -611,6 +615,7 @@ color:#b0b0b0;
 	}
 .show_person a {
 color:#b0b0b0;
+text-decoration: none;
 }
 .show_person a:hover {
 color:red;

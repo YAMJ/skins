@@ -5,6 +5,7 @@
 	<serieselected>series</serieselected>
 	<seasonselected>season</seasonselected>
 	<allselected>movie and series</allselected>
+	<personselected>person</personselected>
 	<fanartshow>only fanart</fanartshow>
 	<personshow>show person</personshow>
 	<seasonlabel>season</seasonlabel>
@@ -13,4 +14,7 @@
 	<episodelabel>episode</episodelabel>
 	<plotlabel>plot</plotlabel>
 	<genrelabel>genre</genrelabel>
+	<personlabel>person</personlabel>
+	<startlabel>starts with</startlabel>
+	<anylabel>contains</anylabel>
 </lang>

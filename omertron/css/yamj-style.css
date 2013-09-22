@@ -29,7 +29,18 @@
     overflow: hidden;
     background-color: whitesmoke;
 }
-
+#container .person_block {
+    text-align: center;
+    border: 1px solid white;
+	font-size:0.8em;
+    margin: 5px;
+    padding: 5px;
+    float: left;
+    width: 100px;
+    height: 190px;
+    overflow: hidden;
+    background-color: whitesmoke;
+}
 .code
 {
     border: dashed 1px #BCBCCB; padding:8px 12px; background-color: #F3F3F9; white-space:pre; font-family:"Courier New", Georgia;
@@ -119,7 +130,7 @@ body {
 
 #message
 {
-    text-align: match-parent;
+    text-align: center;
     font-weight: bold;
     color: tomato;
 }
@@ -127,6 +138,8 @@ body {
 #tablelist th.span, #tablelist td.span, #headertable th.span, #headertable td.span
 {
     column-span: all;
+	-moz-column-span: all;
+	-webkit-column-span:all; /* Safari and Chrome */
     text-align: center;
 }
 .show_index  {
@@ -149,7 +162,48 @@ body {
 		overflow: hidden;
 	}
 
-
+.show_personindex  {
+		display: block;
+		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+		font-size:1.05em;
+		font-weight: bold;
+		color:#b0b0b0;
+		background-color: black;
+		width: 250px;
+		text-align: center;
+		margin: 0px 5px 0px -5px;
+		padding: 0px 1px 0px 1px;
+		border: 1px solid #b0b0b0;;
+		border-right: 4px solid #b0b0b0;;
+		border-radius: 6px 6px 0px 6px;
+		position: absolute;
+		top: 50px;
+		left: 165px;
+		overflow: hidden;
+	}
+.tablesearchmethod
+{
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	position: relative;
+	float: right;
+	right: 130px;
+	color:#fff;	
+	width: 400px;
+}	
+#startlabel, #anylabel  {
+		display: inline;
+		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+		font-size:1.05em;
+		font-weight: bold;
+		color:#b0b0b0;
+		background-color: black;
+		width: 150px;
+		text-align: center;
+		border: 1px solid #b0b0b0;;
+		border-right: 4px solid #b0b0b0;;
+		border-radius: 6px 6px 0px 6px;
+	}	
+	
 #sourceData {
 	position: absolute;
 	top: 800px;
@@ -214,8 +268,23 @@ body {
 #home_right_down:hover {
 	background-color:rgba(255, 255, 255, 0.6);
 	}
+#home_right_down_before {
+	width: 120px;
+	height:31px;
+	position: absolute;
+	top: 50px;
+	left: 1000px;
+	padding:0px 0px 0px 0px;
+	background-color:rgba(255, 255, 255, 0.3);
+	border: 2px solid #b0b0b0;	
+	border-right: 5px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	}
+#home_right_down_before:hover {
+	background-color:rgba(255, 255, 255, 0.6);
+	}	
 
-#allselect, #movieselect, #serieselect, #seasonselect
+#allselect, #movieselect, #serieselect, #seasonselect, #personselect
 {
     font-weight: bold;
     color: white;
@@ -430,8 +499,8 @@ body {
 	margin:3px 0px 0px 0px;
 	padding: 0px 2px 0px 2px;
 	float: left;
-	font-style:italic
-	background-color:#000;
+	font-style:italic;
+	background-color:grey;
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
@@ -643,6 +712,12 @@ position: absolute;
 	table-layout: fixed;
 	overflow: hidden;
 	}
+.person_photo {
+	position: relative;
+	width: 100px;
+	height:150px;
+	border: 1px solid gray;
+	}	
 .photo0 {
 	position: relative;
 	width: 100px;
@@ -677,7 +752,7 @@ position: absolute;
 .actor-name a:focus, .actor-name a:hover {
 	color:red;
 	}
-.actor-name a:blur {
+.actor-name a:not(:focus) {
 	color:#fff;
 	}	
 

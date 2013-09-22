@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>YAMJ v3 index</title>
+        <title>YAMJ v3 index person</title>
         <script src="js/jquery.js"></script>
         <!-- Used for the JSON parsing -->
         <script src="js/pure.js"></script>
@@ -24,91 +24,70 @@
 		// all the other pages will take this setting 	
 		localStorage.setItem("lang", lang);
 //***************************************************************************************
-        var perPageValue = 12;
+        var perPageValue = 30;
         var jsondata = null;
 		var index_type = "movie,series";
+		var index_method = "START";
 		if (localStorage.getItem("indextype"))
 			{index_type = localStorage.getItem("indextype");}
-		
+		// get the search method and reset to default for the next time 
+		if (localStorage.getItem("search_method"))
+			{index_method = localStorage.getItem("search_method");
+			localStorage.setItem("search_method", "START");}
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
         // img.Poster@src replaces the "src" attribute of the img.Poster
         var LIST_DIR = {
-            "div.block": {
+            "div.person_block": {
                 "result<-results": {
-                     "span.title": function(arg) {
-						
-					if (( arg.item.artwork.POSTER[0]) && (arg.item.videoType == 'SEASON'))
-						{					
-						return arg.item.title + '<br> '+season_label+': ' + arg.item.season;
-						} else {
-							if (arg.item.videoType == 'SERIES')
-								{ 
-									return arg.item.title +'<br> '+series_label; 
-							} else {
-									return arg.item.title;
-								}
-						}
-					},
-                    "img.poster@src": function(arg) {
+                    "span.person_name": "result.name",
+                    "img.person_photo@src": function(arg) {
                         // Check to see if there are posters
-                        if (arg.item.artwork.POSTER) {
+                        if (arg.item.artwork.PHOTO) {
                             // Get the first poster from the list
-                            var poster = arg.item.artwork.POSTER[0];
-                            if (poster.generatedId === 0) {
-                                return "pictures/dummy.jpg";
+                            var photo = arg.item.artwork.PHOTO[0];
+                            if (photo.generatedId === 0) {
+                                return "pictures/dummy_photo.jpg";
                             }
-                            return arg.context.baseArtworkUrl + poster.filename;
+                            return arg.context.basePhotoUrl + photo.filename;
                         } else {
-                            return "pictures/dummy.jpg";
+                            return "pictures/dummy_photo.jpg";
                         }
                     },
-                    "img.poster@onclick": function(arg) {
-                        return "setId('" + arg.item.videoType + "', " + arg.item.id + ")";
+                    "img.person_photo@onclick": function(arg) {
+                        return "open_person_popup('" + arg.item.id + "')";
                     }
                 }
             }
         };
-
-        function setId(type, id)
+		
+		
+	function open_person_popup(id)
         {
-	
-            localStorage.setItem("type", type);
-            localStorage.setItem("id", id);
-            console.log("Storing value: " + type + "-" + id);
-            window.location.href="detail.html";
-        }
-
+            localStorage.setItem("Person_id", id);
+            console.log("Storing value: Person_id"  + id);
+			Mypopup = window.open("Popup_Person.html", "YAMJ v3 Person popup","channelmode=no, menubar=no, status=no, scrollbars=no, menubar=no, location=no, left=310px, top=5px, width=1100px, height=340px");
+			Mypopup.focus();
+		}
+    
         // This function calls the API to get the JSON data.
         // It will then update the HTML with the data and set up the paging
         function getIndexData()
         {
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 			set_lang_value (localStorage.getItem("lang"));
-            var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type="+index_type+"&sortby=title&sortdir=ASC&artwork=poster";
-			switch (index_type)
-				{
-					case 'movie,series':
-						selected_index = all_select.toUpperCase();
-						break;
-					case 'movie':
-						selected_index = movie_select.toUpperCase();
-						break;
-					case 'series':
-						selected_index = series_select.toUpperCase();
-						break;
-					case 'season':
-						selected_index = season_select.toUpperCase();
-						break;
-				};
+            var jsonUrl = "http://localhost:8888/yamj3/api/index/person.json?sortby=name&sortdir=asc";
+			
 			
 			var select = localStorage.getItem("search_index");
 			if (select != "") {
-					selected_index = selected_index + " (" +select.toUpperCase() + ")"
+					selected_index = person_label +" (" +select+ ")"
 					
-					jsonUrl = jsonUrl + "&search=" + select + "&field=title&mode=start";
+					jsonUrl = jsonUrl + "&search=" + select + "&field=name&mode="+index_method;
 					localStorage.setItem("search_index", "");	
-				}	
+				} else {
+					selected_index = person_label;
+						}
 			$('#printsearch').html(selected_index);
             console.log("URL: " + jsonUrl);
 
@@ -154,17 +133,15 @@
 		
 		}
 		
-		function ChangeIndex (indextype)
+		function CallIndex (indextype)
 		{		
 				localStorage.setItem("indextype", indextype);
-				window.location.reload();
-		
+				console.log("callindex: " + indextype);
+				window.location.href="index.html";
 		}
-		function call_personindex()
-        {
-            console.log("call personindex: ");
-            window.location.href="index_person.html";
-        }
+		
+	
+	
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml
 		function set_lang_value (lang)
 		{
@@ -195,33 +172,34 @@
 			season_select=(x[i].getElementsByTagName("seasonselected")[0].childNodes[0].nodeValue);
 			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
 			
-			person_select=(x[i].getElementsByTagName("personselected")[0].childNodes[0].nodeValue);
-			document.getElementById("personselect").innerHTML=person_select.toUpperCase();
+			start_label=(x[i].getElementsByTagName("startlabel")[0].childNodes[0].nodeValue);
+			document.getElementById("startlabel").innerHTML=start_label.toUpperCase();
+			
+			any_label=(x[i].getElementsByTagName("anylabel")[0].childNodes[0].nodeValue);
+			document.getElementById("anylabel").innerHTML=any_label.toUpperCase();
 			
 			series_label=(x[i].getElementsByTagName("serieslabel")[0].childNodes[0].nodeValue);
 			season_label=(x[i].getElementsByTagName("seasonlabel")[0].childNodes[0].nodeValue);
+			person_label=(x[i].getElementsByTagName("personlabel")[0].childNodes[0].nodeValue);
 		}
         </script>
 
         <div id="logo">
 <!--            <h1>YAMJv3 Index</h1>
 			 navigation beetween movie end series -->		
-						<a id="home_right_up" href="javascript:ChangeIndex('series')">
+						<a id="home_right_up" href="javascript:CallIndex('series')">
 							<img src="./pictures/yamj-logo_repeat.png" width="90px"></img><div id="serieselect"></div>
 						</a>
-						<a id="home_right_down" href="javascript:ChangeIndex('season')">
+						<a id="home_right_down" href="javascript:CallIndex('season')">
 							<img src="./pictures/yamj-logo_repeat.png" width="90px"></img><div id="seasonselect"></div>
 						</a>
-						<a id="home_right_down_before" href="javascript:call_personindex()">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px"></img><div id="personselect"></div>
-						</a>
-						<a id="home_left_up" href="javascript:ChangeIndex('movie,series')">
+						<a id="home_left_up" href="javascript:CallIndex('movie,series')">
 							<img src="./pictures/yamj-logo_repeat.png" width="90px"></img><div id="allselect"></div>
 						</a>
-						<a id="home_left_down" href="javascript:ChangeIndex('movie')">
+						<a id="home_left_down" href="javascript:CallIndex('movie')">
 							<img src="./pictures/yamj-logo_repeat.png" width="90px"></img><div id="movieselect"></div>
 						</a>
-			<div class="show_index"><span id="printsearch"></span></div>				
+			<div class="show_personindex"><span id="printsearch"></span></div>				
 		<!-- search by letter -->				
 						
 			<form id="monForm">
@@ -259,7 +237,7 @@
 						</tr>
 						<tr>
 							
-							<td>
+							<td align="right">
 								<input  type="button" value="1" onclick="SetIndexData('1')"/>
 								<input  type="button" value="2" onclick="SetIndexData('2')"/>
 								<input  type="button" value="3" onclick="SetIndexData('3')"/>
@@ -272,8 +250,18 @@
 								<input  type="button" value="0" onclick="SetIndexData('0')"/>
 						
 								<input  type="button" value="ALL" onclick="SetIndexData('')"/>
+								<input  type="text" id="FormSearch" />
+								<input  type="submit" onclick="SetIndexData(this.form.FormSearch.value); "/>
 							</td>
 						</tr>
+						<table class="tablesearchmethod">
+						<tr>
+							<td>
+								<input type="radio" name="search_method" value="START" onclick="localStorage.setItem('search_method', 'START');" id="FormStart" checked="checked" /><label for="START"><div id='startlabel'></div></label></td>
+								<td><input type="radio" name="search_method" value="ANY" onclick="localStorage.setItem('search_method', 'ANY')" id="FormAny" /> <label for="ANY"><div id='anylabel'></div></label>
+							</td> 
+						</tr>
+						</table>
 					</table>
 				</fieldset>
 			</form>
@@ -284,9 +272,9 @@
         <!--Data Items Container-->
         <div id="container">
             <div id="yRow" class="row">
-                <div id="yBlock" class="block">
-                    <img class="poster" src=""><br>
-                    <span class="title"></span>
+                <div id="yBlock" class="person_block">
+                    <img class="person_photo" src=""><br>
+                    <span class="person_name"></span>
                 </div>
                 <br />
             </div>

@@ -40,7 +40,14 @@
               //      'span.id': 'result.id',
                     'span.name': 'result.name',
                     'span.birthPlace': 'result.birthPlace',
-					'span.birthDay': 'result.birthDay',
+					'span.birthDay': function(arg) {
+								if (arg.context.result.birthDay) 
+								{
+									return arg.context.result.birthDay;
+								} else {
+								return "no birthday available";
+								}
+							},
                     'span.biography': function(arg) {
 								if (arg.context.result.biography) 
 								{
@@ -84,7 +91,7 @@
                     <td rowspan="4"><span class="image"></span></td>
                     <td><span class="name"></span>: 
                     <span class="birthPlace"></span> - 
-                    <span class="BirthDay"></span></td>
+                    <span class="birthDay"></span></td>
                 </tr>
                 <tr>
                

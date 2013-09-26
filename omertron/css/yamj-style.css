@@ -119,11 +119,12 @@ body {
     text-align: center;
 }
 
-#logo
+#logo_index
 {
-    height: auto;
+    height: 90px;
     width: auto;
     text-align: center;
+	border:1px solid #fff;
 /*    background:  url(../pictures/yamj-logo_repeat.png) no-repeat right,
         url(../pictures/yamj-logo_repeat.png) no-repeat left; */
 }
@@ -149,7 +150,7 @@ body {
 		font-weight: bold;
 		color:#b0b0b0;
 		background-color: black;
-		width: 180px;
+		width: 175px;
 		text-align: center;
 		margin: 0px 5px 0px -5px;
 		padding: 0px 1px 0px 1px;
@@ -157,8 +158,8 @@ body {
 		border-right: 4px solid #b0b0b0;;
 		border-radius: 6px 6px 0px 6px;
 		position: absolute;
-		top: 50px;
-		left: 250px;
+		top: 45px;
+		left: 150px;
 		overflow: hidden;
 	}
 
@@ -169,7 +170,7 @@ body {
 		font-weight: bold;
 		color:#b0b0b0;
 		background-color: black;
-		width: 250px;
+		width: 255px;
 		text-align: center;
 		margin: 0px 5px 0px -5px;
 		padding: 0px 1px 0px 1px;
@@ -177,10 +178,32 @@ body {
 		border-right: 4px solid #b0b0b0;;
 		border-radius: 6px 6px 0px 6px;
 		position: absolute;
-		top: 50px;
-		left: 165px;
+		top: 45px;
+		left: 150px;
 		overflow: hidden;
 	}
+.count_return, .count_return_index  {
+		display: block;
+		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+		font-size:1.05em;
+		font-weight: bold;
+		color:#b0b0b0;
+		background-color: black;
+		width: 255px;
+		text-align: center;
+		margin: 0px 5px 0px -5px;
+		padding: 0px 1px 0px 1px;
+		border: 1px solid #b0b0b0;;
+		border-right: 4px solid #b0b0b0;;
+		border-radius: 6px 6px 0px 6px;
+		position: absolute;
+		top: 75px;
+		left: 150px;
+		overflow: hidden;
+	}
+.count_return_index  {
+		width: 175px;
+	}		
 .tablesearchmethod
 {
     font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -220,6 +243,9 @@ body {
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
 	}
+#home_left_up img, #home_left_down img, #home_right_up img, #home_right_down  img, #home_right_down_before img{	
+	border: none;
+	}
 #home_left_up:hover {
 	background-color:rgba(255, 255, 255, 0.6);
 	}
@@ -227,7 +253,7 @@ body {
 	width: 120px;
 	height:31px;
 	position: absolute;
-	top: 50px;
+	top: 60px;
 	left: 15px;
 	padding:0px 0px 0px 0px;
 	background-color:rgba(255, 255, 255, 0.3);
@@ -257,7 +283,7 @@ body {
 	width: 120px;
 	height:31px;
 	position: absolute;
-	top: 50px;
+	top: 60px;
 	left: 1140px;
 	padding:0px 0px 0px 0px;
 	background-color:rgba(255, 255, 255, 0.3);
@@ -269,16 +295,22 @@ body {
 	background-color:rgba(255, 255, 255, 0.6);
 	}
 #home_right_down_before {
-	width: 120px;
-	height:31px;
+	width: 100px;
+	height:21px;
 	position: absolute;
-	top: 50px;
-	left: 1000px;
+	top: 70px;
+	left: 1020px;
 	padding:0px 0px 0px 0px;
-	background-color:rgba(255, 255, 255, 0.3);
-	border: 2px solid #b0b0b0;	
-	border-right: 5px solid #b0b0b0;
+	color:#b0b0b0;
+	background-color: black;
+	border: 1px solid #b0b0b0;	
+	border-right: 4px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	display: inline;
+	font-size:0.9em;
+	font-weight: bold;	
+	text-align: center;	
 	}
 #home_right_down_before:hover {
 	background-color:rgba(255, 255, 255, 0.6);
@@ -295,13 +327,18 @@ body {
 	top: 12px;
 	left: 0px;
 	width: 130px;
-	
-
 }
-#allselect:hover, #movieselect:hover, #serieselect:hover, #seasonselect:hover
+#personselect {
+	top: 2px;
+	left: 5px;
+}
+#allselect:hover, #movieselect:hover, #serieselect:hover, #seasonselect:hover, #personselect:hover
 {	
 	color: red;	
-}	
+}
+.holder {
+	text-align: center;
+	}
 /***************************** detail page ***************************************/	
 #previous_movie {
 	width: 30px;
@@ -446,7 +483,9 @@ body {
 	padding: 2px 0px 0px 5px;
 	vertical-align: top;
 	}
-
+.SeasonPoster  img{
+	border: 1px solid #fff;
+	}
 /*************************** Header **********************************/	
 #detail_home_left {
 	width: 100px;
@@ -478,6 +517,11 @@ body {
 #detail_home_right:hover {
 	background-color:rgba(255, 255, 255, 0.6);
 	}
+#detail_home_left img, #detail_home_right img
+{ 
+		border:none;
+		}
+	
 .header
 {
     display: block;

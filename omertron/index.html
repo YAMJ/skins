@@ -15,24 +15,43 @@
         <link rel="stylesheet" href="css/jPages.css">
         <!-- Used for the fancy animations -->
         <link rel="stylesheet" href="css/animate.css">
+	
     </head>
     <body onload="getIndexData();">
         <script type="text/javascript">
+
+	
 //************************ LANGUAGE SETTING *********************************************
 		// SET THE LANGUAGE HERE fr, en, de
 		var lang = "fr"; 
 		// all the other pages will take this setting 	
-		localStorage.setItem("lang", lang);
+		window.localStorage.setItem("lang", lang);
+		console.log("Storing setitem value: " + lang );
+			
 //***************************************************************************************
-        var perPageValue = 12;
+        var select = "";
+		var perPageValue = 12;
         var jsondata = null;
+		var index_method = "START";
+		// get the search method and reset to default for the next time 
+		if (localStorage.getItem("search_method"))
+			{index_method = localStorage.getItem("search_method");
+			localStorage.setItem("search_method", "START");}
+		// set a default  if 1rst time and set to the type previously selected if available 	
 		var index_type = "movie,series";
-		if (localStorage.getItem("indextype"))
-			{index_type = localStorage.getItem("indextype");}
-		
+			if (window.localStorage.getItem("indextype"))
+				{index_type = window.localStorage.getItem("indextype");}
+				else {window.localStorage.setItem("indextype", index_type);}
+			
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
         // img.Poster@src replaces the "src" attribute of the img.Poster
+		var COUNT_HEADER = {
+                'span.ReturnCount': function(arg) {	
+					return arg.context.count+' '+results_text;
+					}
+            };	
+		
         var LIST_DIR = {
             "div.block": {
                 "result<-results": {
@@ -44,8 +63,10 @@
 						} else {
 							if (arg.item.videoType == 'SERIES')
 								{ 
+									
 									return arg.item.title +'<br> '+series_label; 
-							} else {
+									
+								} else {
 									return arg.item.title;
 								}
 						}
@@ -73,8 +94,8 @@
         function setId(type, id)
         {
 	
-            localStorage.setItem("type", type);
-            localStorage.setItem("id", id);
+            window.localStorage.setItem("type", type);
+            window.localStorage.setItem("id", id);
             console.log("Storing value: " + type + "-" + id);
             window.location.href="detail.html";
         }
@@ -84,8 +105,11 @@
         function getIndexData()
         {
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
-			set_lang_value (localStorage.getItem("lang"));
+			
+			set_lang_value (window.localStorage.getItem("lang"));
+
             var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type="+index_type+"&sortby=title&sortdir=ASC&artwork=poster";
+		
 			switch (index_type)
 				{
 					case 'movie,series':
@@ -101,17 +125,21 @@
 						selected_index = season_select.toUpperCase();
 						break;
 				};
+				
+				if (window.localStorage.getItem("indextype"))
+				{
 			
-			var select = localStorage.getItem("search_index");
-			if (select != "") {
-					selected_index = selected_index + " (" +select.toUpperCase() + ")"
-					
-					jsonUrl = jsonUrl + "&search=" + select + "&field=title&mode=start";
-					localStorage.setItem("search_index", "");	
-				}	
-			$('#printsearch').html(selected_index);
-            console.log("URL: " + jsonUrl);
-
+						selected_index = selected_index + " (" +window.localStorage.getItem("search_index").toUpperCase() + ")"
+						
+						jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("search_index") + "&field=title&mode="+index_method;
+						window.localStorage.setItem("search_index", "");	
+					}	
+				$('#printsearch').html(selected_index);
+				console.log("URL: " + jsonUrl);
+				
+				
+			
+		
             $.ajax({
                 url: jsonUrl,
                 async: false,
@@ -132,6 +160,7 @@
         // "row" is a CLASS attribute, not the id.
         function updateHtml(yamjdata)
         {
+			$p('.count_return_index').render(yamjdata, COUNT_HEADER);	
             $p('div.row').render(yamjdata, LIST_DIR);
         }
 
@@ -149,14 +178,14 @@
         }
 		function SetIndexData (search)
 		{		
-				localStorage.setItem("search_index", search);
+				window.localStorage.setItem("search_index", search);
 				window.location.reload();
 		
 		}
 		
 		function ChangeIndex (indextype)
 		{		
-				localStorage.setItem("indextype", indextype);
+				window.localStorage.setItem("indextype", indextype);
 				window.location.reload();
 		
 		}
@@ -198,35 +227,46 @@
 			person_select=(x[i].getElementsByTagName("personselected")[0].childNodes[0].nodeValue);
 			document.getElementById("personselect").innerHTML=person_select.toUpperCase();
 			
+			start_label=(x[i].getElementsByTagName("startlabel")[0].childNodes[0].nodeValue);
+			document.getElementById("startlabel").innerHTML=start_label.toUpperCase();
+			
+			any_label=(x[i].getElementsByTagName("anylabel")[0].childNodes[0].nodeValue);
+			document.getElementById("anylabel").innerHTML=any_label.toUpperCase();
+			
 			series_label=(x[i].getElementsByTagName("serieslabel")[0].childNodes[0].nodeValue);
 			season_label=(x[i].getElementsByTagName("seasonlabel")[0].childNodes[0].nodeValue);
+			results_text=(x[i].getElementsByTagName("resultstext")[0].childNodes[0].nodeValue);
+			selection_text=(x[i].getElementsByTagName("selection")[0].childNodes[0].nodeValue);
 		}
         </script>
 
-        <div id="logo">
+        <div id="logo_index">
 <!--            <h1>YAMJv3 Index</h1>
 			 navigation beetween movie end series -->		
 						<a id="home_right_up" href="javascript:ChangeIndex('series')">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px"></img><div id="serieselect"></div>
+							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="serieselect"></div>
 						</a>
 						<a id="home_right_down" href="javascript:ChangeIndex('season')">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px"></img><div id="seasonselect"></div>
+							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="seasonselect"></div>
 						</a>
 						<a id="home_right_down_before" href="javascript:call_personindex()">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px"></img><div id="personselect"></div>
+						<div id="personselect"></div>
 						</a>
 						<a id="home_left_up" href="javascript:ChangeIndex('movie,series')">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px"></img><div id="allselect"></div>
+							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="allselect"></div>
 						</a>
 						<a id="home_left_down" href="javascript:ChangeIndex('movie')">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px"></img><div id="movieselect"></div>
+							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="movieselect"></div>
 						</a>
-			<div class="show_index"><span id="printsearch"></span></div>				
+			<div class="show_index"><span id="printsearch"></span></div>
+			<div class="count_return_index">
+                   <span class="ReturnCount"></span> 
+			</div>
 		<!-- search by letter -->				
 						
-			<form id="monForm">
-				<fieldset>
-					<table align="center">
+			<form id="monForm" >
+				<fieldset style="border:none">
+					<table align="center"  >
 						<tr>
 							<td class="formSelect">							
 								<input  type="button" value="A" onclick="SetIndexData('a')"/>
@@ -259,7 +299,7 @@
 						</tr>
 						<tr>
 							
-							<td>
+							<td align="right" >
 								<input  type="button" value="1" onclick="SetIndexData('1')"/>
 								<input  type="button" value="2" onclick="SetIndexData('2')"/>
 								<input  type="button" value="3" onclick="SetIndexData('3')"/>
@@ -272,15 +312,27 @@
 								<input  type="button" value="0" onclick="SetIndexData('0')"/>
 						
 								<input  type="button" value="ALL" onclick="SetIndexData('')"/>
+								<input  type="text" id="FormSearch" />
+								<input  type="submit" onclick="SetIndexData(this.form.FormSearch.value)" />
 							</td>
+							
 						</tr>
+					<!-- selector to search START for the 1rst char , ANY for the all contents -->
+						<tr class="tablesearchmethod">
+							<td>
+								<input type="radio" name="search_method" value="START" onclick="localStorage.setItem('search_method', 'START');" id="FormStart" checked="checked" /><label for="START"><div id='startlabel'></div></label></td>
+								<td><input type="radio" name="search_method" value="ANY" onclick="localStorage.setItem('search_method', 'ANY')" id="FormAny" /> <label for="ANY"><div id='anylabel'></div></label>
+							</td> 
+						</tr>	
 					</table>
 				</fieldset>
 			</form>
+			
+		</div>
             <!--Navigation Holder-->
             <div class="holder"></div>
 					
-        </div>
+        
         <!--Data Items Container-->
         <div id="container">
             <div id="yRow" class="row">

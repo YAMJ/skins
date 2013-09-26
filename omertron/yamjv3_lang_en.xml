@@ -17,4 +17,6 @@
 	<personlabel>person</personlabel>
 	<startlabel>starts with</startlabel>
 	<anylabel>contains</anylabel>
+	<resultstext>result</resultstext>
+	<selection>selection</selection>
 </lang>

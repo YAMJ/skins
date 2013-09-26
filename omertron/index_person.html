@@ -26,17 +26,23 @@
 //***************************************************************************************
         var perPageValue = 30;
         var jsondata = null;
+		// set a default  if 1rst time and set to the type previously selected if available 
 		var index_type = "movie,series";
-		var index_method = "START";
 		if (localStorage.getItem("indextype"))
 			{index_type = localStorage.getItem("indextype");}
 		// get the search method and reset to default for the next time 
+		var index_method = "START";
 		if (localStorage.getItem("search_method"))
 			{index_method = localStorage.getItem("search_method");
 			localStorage.setItem("search_method", "START");}
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
         // img.Poster@src replaces the "src" attribute of the img.Poster
+		var COUNT_HEADER = {
+                'span.ReturnCount': function(arg) {	
+					return arg.context.count+' '+results_text+' /' +arg.context.totalCount;
+					}
+            };	
         var LIST_DIR = {
             "div.person_block": {
                 "result<-results": {
@@ -76,17 +82,16 @@
         {
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 			set_lang_value (localStorage.getItem("lang"));
-            var jsonUrl = "http://localhost:8888/yamj3/api/index/person.json?sortby=name&sortdir=asc";
+            var jsonUrl = "http://localhost:8888/yamj3/api/index/person.json?sortby=name&sortdir=asc&max=2500";
 			
 			
 			var select = localStorage.getItem("search_index");
 			if (select != "") {
-					selected_index = person_label +" (" +select+ ")"
-					
+					selected_index = person_label + " (" +select.toUpperCase() + ")";
 					jsonUrl = jsonUrl + "&search=" + select + "&field=name&mode="+index_method;
 					localStorage.setItem("search_index", "");	
 				} else {
-					selected_index = person_label;
+					selected_index = person_label+ " (" +selection_text+ ")";
 						}
 			$('#printsearch').html(selected_index);
             console.log("URL: " + jsonUrl);
@@ -110,19 +115,20 @@
         // div.row is the part of the template to apply it too.
         // "row" is a CLASS attribute, not the id.
         function updateHtml(yamjdata)
-        {
+        {	
+			$p('.count_return').render(yamjdata, COUNT_HEADER);	
             $p('div.row').render(yamjdata, LIST_DIR);
         }
 
         // Create the pagination for the index using jPages.
         // Will place the page list in the "div.holder" and page the "yRow" data.
         // Animation comes from animate.css
-        function pageData(perPage)
+        function pageData(perPageValue)
         {
             $("div.holder").jPages({
                 containerID: "yRow",
                 animation: "fadeInUpBig",
-                perPage: perPage,
+                perPage: perPageValue,
                 delay: 20
             });
         }
@@ -177,100 +183,120 @@
 			
 			any_label=(x[i].getElementsByTagName("anylabel")[0].childNodes[0].nodeValue);
 			document.getElementById("anylabel").innerHTML=any_label.toUpperCase();
-			
+
+			results_text=(x[i].getElementsByTagName("resultstext")[0].childNodes[0].nodeValue);
+			selection_text=(x[i].getElementsByTagName("selection")[0].childNodes[0].nodeValue);
 			series_label=(x[i].getElementsByTagName("serieslabel")[0].childNodes[0].nodeValue);
 			season_label=(x[i].getElementsByTagName("seasonlabel")[0].childNodes[0].nodeValue);
 			person_label=(x[i].getElementsByTagName("personlabel")[0].childNodes[0].nodeValue);
+	
 		}
         </script>
 
-        <div id="logo">
+        <div id="logo_index">
 <!--            <h1>YAMJv3 Index</h1>
 			 navigation beetween movie end series -->		
 						<a id="home_right_up" href="javascript:CallIndex('series')">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px"></img><div id="serieselect"></div>
+							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="serieselect"></div>
 						</a>
 						<a id="home_right_down" href="javascript:CallIndex('season')">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px"></img><div id="seasonselect"></div>
+							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="seasonselect"></div>
 						</a>
 						<a id="home_left_up" href="javascript:CallIndex('movie,series')">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px"></img><div id="allselect"></div>
+							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="allselect"></div>
 						</a>
 						<a id="home_left_down" href="javascript:CallIndex('movie')">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px"></img><div id="movieselect"></div>
+							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="movieselect"></div>
 						</a>
-			<div class="show_personindex"><span id="printsearch"></span></div>				
+			<div class="show_personindex">
+				<span id="printsearch"></span>
+		
+			</div>
+			<div class="count_return">
+                   <span class="ReturnCount"></span> 
+			</div>
 		<!-- search by letter -->				
 						
 			<form id="monForm">
-				<fieldset>
+				<fieldset style="border:none">
 					<table align="center">
 						<tr>
 							<td class="formSelect">							
-								<input  type="button" value="A" onclick="SetIndexData('a')"/>
-								<input  type="button" value="B" onclick="SetIndexData('b')"/>
-								<input  type="button" value="C" onclick="SetIndexData('c')"/>
-								<input  type="button" value="D" onclick="SetIndexData('d')"/>
-								<input  type="button" value="E" onclick="SetIndexData('e')"/>
-								<input  type="button" value="F" onclick="SetIndexData('f')"/>
-								<input  type="button" value="G" onclick="SetIndexData('g')"/>
-								<input  type="button" value="H" onclick="SetIndexData('h')"/>
-								<input  type="button" value="I" onclick="SetIndexData('i')"/>
-								<input  type="button" value="J" onclick="SetIndexData('j')"/>
-								<input  type="button" value="K" onclick="SetIndexData('k')"/>
-								<input  type="button" value="L" onclick="SetIndexData('l')"/>
-								<input  type="button" value="M" onclick="SetIndexData('m')"/>
-								<input  type="button" value="N" onclick="SetIndexData('n')"/>
-								<input  type="button" value="O" onclick="SetIndexData('o')"/>
-								<input  type="button" value="P" onclick="SetIndexData('p')"/>
-								<input  type="button" value="Q" onclick="SetIndexData('q')"/>
-								<input  type="button" value="R" onclick="SetIndexData('r')"/>
-								<input  type="button" value="S" onclick="SetIndexData('s')"/>
-								<input  type="button" value="T" onclick="SetIndexData('t')"/>
-								<input  type="button" value="U" onclick="SetIndexData('u')"/>
-								<input  type="button" value="V" onclick="SetIndexData('v')"/>
-								<input  type="button" value="W" onclick="SetIndexData('w')"/>
-								<input  type="button" value="X" onclick="SetIndexData('x')"/>
-								<input  type="button" value="Y" onclick="SetIndexData('y')"/>
-								<input  type="button" value="Z" onclick="SetIndexData('z')"/>
+								<input  type="button" value="A" onclick="SetIndexData('a')" />
+								<input  type="button" value="B" onclick="SetIndexData('b')" />
+								<input  type="button" value="C" onclick="SetIndexData('c')" />
+								<input  type="button" value="D" onclick="SetIndexData('d')" />
+								<input  type="button" value="E" onclick="SetIndexData('e')" />
+								<input  type="button" value="F" onclick="SetIndexData('f')" />
+								<input  type="button" value="G" onclick="SetIndexData('g')" />
+								<input  type="button" value="H" onclick="SetIndexData('h')" />
+								<input  type="button" value="I" onclick="SetIndexData('i')" />
+								<input  type="button" value="J" onclick="SetIndexData('j')" />
+								<input  type="button" value="K" onclick="SetIndexData('k')" />
+								<input  type="button" value="L" onclick="SetIndexData('l')" />
+								<input  type="button" value="M" onclick="SetIndexData('m')" />
+								<input  type="button" value="N" onclick="SetIndexData('n')" />
+								<input  type="button" value="O" onclick="SetIndexData('o')" />
+								<input  type="button" value="P" onclick="SetIndexData('p')" />
+								<input  type="button" value="Q" onclick="SetIndexData('q')" />
+								<input  type="button" value="R" onclick="SetIndexData('r')" />
+								<input  type="button" value="S" onclick="SetIndexData('s')" />
+								<input  type="button" value="T" onclick="SetIndexData('t')" />
+								<input  type="button" value="U" onclick="SetIndexData('u')" />
+								<input  type="button" value="V" onclick="SetIndexData('v')" />
+								<input  type="button" value="W" onclick="SetIndexData('w')" />
+								<input  type="button" value="X" onclick="SetIndexData('x')" />
+								<input  type="button" value="Y" onclick="SetIndexData('y')" />
+								<input  type="button" value="Z" onclick="SetIndexData('z')" />
 							<td>
 						</tr>
 						<tr>
 							
 							<td align="right">
-								<input  type="button" value="1" onclick="SetIndexData('1')"/>
-								<input  type="button" value="2" onclick="SetIndexData('2')"/>
-								<input  type="button" value="3" onclick="SetIndexData('3')"/>
-								<input  type="button" value="4" onclick="SetIndexData('4')"/>
-								<input  type="button" value="5" onclick="SetIndexData('5')"/>
-								<input  type="button" value="6" onclick="SetIndexData('6')"/>
-								<input  type="button" value="7" onclick="SetIndexData('7')"/>
-								<input  type="button" value="8" onclick="SetIndexData('8')"/>
-								<input  type="button" value="9" onclick="SetIndexData('9')"/>
-								<input  type="button" value="0" onclick="SetIndexData('0')"/>
+								<input  type="button" value="1" onclick="SetIndexData('1')" />
+								<input  type="button" value="2" onclick="SetIndexData('2')" />
+								<input  type="button" value="3" onclick="SetIndexData('3')" />
+								<input  type="button" value="4" onclick="SetIndexData('4')" />
+								<input  type="button" value="5" onclick="SetIndexData('5')" />
+								<input  type="button" value="6" onclick="SetIndexData('6')" />
+								<input  type="button" value="7" onclick="SetIndexData('7')" />
+								<input  type="button" value="8" onclick="SetIndexData('8')" />
+								<input  type="button" value="9" onclick="SetIndexData('9')" />
+								<input  type="button" value="0" onclick="SetIndexData('0')" />
 						
-								<input  type="button" value="ALL" onclick="SetIndexData('')"/>
+								<input  type="button" value="ALL" onclick="SetIndexData('')" />
 								<input  type="text" id="FormSearch" />
-								<input  type="submit" onclick="SetIndexData(this.form.FormSearch.value); "/>
+								<input  type="submit" onclick="SetIndexData(this.form.FormSearch.value)" />
 							</td>
 						</tr>
-						<table class="tablesearchmethod">
-						<tr>
+						
+					<!-- selector to search START for the 1rst char , ANY for the all contents -->		
+						<tr class="tablesearchmethod">
 							<td>
 								<input type="radio" name="search_method" value="START" onclick="localStorage.setItem('search_method', 'START');" id="FormStart" checked="checked" /><label for="START"><div id='startlabel'></div></label></td>
 								<td><input type="radio" name="search_method" value="ANY" onclick="localStorage.setItem('search_method', 'ANY')" id="FormAny" /> <label for="ANY"><div id='anylabel'></div></label>
 							</td> 
 						</tr>
-						</table>
+						
+						
 					</table>
 				</fieldset>
 			</form>
-            <!--Navigation Holder-->
-            <div class="holder"></div>
-					
         </div>
-        <!--Data Items Container-->
+		<!--Navigation Holder-->
+            <div class="holder"></div>
+        <!--Data Items Container
         <div id="container">
+            <div id="yRow" class="row">
+                <div id="yBlock" class="person_block">
+                    <img class="person_photo" src=""><br>
+                    <span class="person_name"></span>
+                </div>
+                <br />
+            </div>
+        </div>-->
+		
+		 <div id="container">
             <div id="yRow" class="row">
                 <div id="yBlock" class="person_block">
                     <img class="person_photo" src=""><br>

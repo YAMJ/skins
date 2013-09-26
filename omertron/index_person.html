@@ -84,17 +84,17 @@
 			set_lang_value (localStorage.getItem("lang"));
             var jsonUrl = "http://localhost:8888/yamj3/api/index/person.json?sortby=name&sortdir=asc&max=2500";
 			
-			
-			var select = localStorage.getItem("search_index");
-			if (select != "") {
-					selected_index = person_label + " (" +select.toUpperCase() + ")";
-					jsonUrl = jsonUrl + "&search=" + select + "&field=name&mode="+index_method;
-					localStorage.setItem("search_index", "");	
-				} else {
+						
+			if (window.localStorage.getItem("search_index"))
+				{
+					selected_index = person_label + " (" +window.localStorage.getItem("search_index").toUpperCase() + ")"
+					jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("search_index") + "&field=name&mode="+index_method;
+					window.localStorage.setItem("search_index", "");	
+				}	else {
 					selected_index = person_label+ " (" +selection_text+ ")";
 						}
-			$('#printsearch').html(selected_index);
-            console.log("URL: " + jsonUrl);
+				$('#printsearch').html(selected_index);
+				console.log("URL: " + jsonUrl);			
 
             $.ajax({
                 url: jsonUrl,

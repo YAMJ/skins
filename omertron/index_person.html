@@ -26,6 +26,10 @@
 //***************************************************************************************
         var perPageValue = 30;
         var jsondata = null;
+		var max_count = 2500;
+		var current_count = -1; 
+		if (localStorage.getItem("nextcurrent_count"))
+			{current_count = localStorage.getItem("nextcurrent_count");}	
 		// set a default  if 1rst time and set to the type previously selected if available 
 		var index_type = "movie,series";
 		if (localStorage.getItem("indextype"))
@@ -40,7 +44,21 @@
         // img.Poster@src replaces the "src" attribute of the img.Poster
 		var COUNT_HEADER = {
                 'span.ReturnCount': function(arg) {	
-					return arg.context.count+' '+results_text+' /' +arg.context.totalCount;
+					// as IE doesn't work with more than 2500 item, need to split the request with package of 2500 people
+					// to display the real range of people, there is several goodies and temp value 
+					// current_cout need to be stored to know what to display before to store and get the next range of people 
+					// current_pos is the variable where is stored the absolute position in the totalcount of selected people 
+					console.log("current_count value before store_count: "+ current_count);
+					temp_current = current_count; 
+					if (temp_current == -1) {temp_current = 1;}
+					store_count (arg.context.count, arg.context.totalCount);
+					if (temp_current == 1 && current_count == -1)
+						{display_count =  arg.context.count+' '+results_text+' /' +arg.context.totalCount;}
+						else {
+							display_count = results_text+' '+ temp_current +'-'+current_pos+'/' +arg.context.totalCount;
+							}
+					 console.log("current_count value after store_count: "+ current_count);
+					return display_count;
 					}
             };	
         var LIST_DIR = {
@@ -82,7 +100,7 @@
         {
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 			set_lang_value (localStorage.getItem("lang"));
-            var jsonUrl = "http://localhost:8888/yamj3/api/index/person.json?sortby=name&sortdir=asc&max=2500";
+            var jsonUrl = "http://localhost:8888/yamj3/api/index/person.json?sortby=name&sortdir=asc";
 			
 						
 			if (window.localStorage.getItem("search_index"))
@@ -94,6 +112,9 @@
 					selected_index = person_label+ " (" +selection_text+ ")";
 						}
 				$('#printsearch').html(selected_index);
+				localStorage.setItem("current_jsonUrl", jsonUrl);
+			// allow to split the request with several request less than 2500 values 
+				jsonUrl = jsonUrl + "&start=" + current_count+"&max=" + max_count; 
 				console.log("URL: " + jsonUrl);			
 
             $.ajax({
@@ -135,6 +156,9 @@
 		function SetIndexData (search)
 		{		
 				localStorage.setItem("search_index", search);
+			// as we change the search item reset the count to the beginning (-1)
+				if (search != '')
+					{localStorage.setItem("nextcurrent_count", (-1));}
 				window.location.reload();
 		
 		}
@@ -142,11 +166,49 @@
 		function CallIndex (indextype)
 		{		
 				localStorage.setItem("indextype", indextype);
+			// as we change page reset the count item for the search item to initial value 
+				localStorage.setItem("nextcurrent_count", (-1));
 				console.log("callindex: " + indextype);
 				window.location.href="index.html";
 		}
 		
-	
+		function store_count (returncount, totalcount)
+		{
+			// to allow the manipulation (addition) of each value , all the value need to be parsed as Integer , because there are string 
+			// totalcount is the total count of people with the selected search item 
+			// maxcount is maximum of item that is allowed by IE without problem - it is fixed to 2500
+			// current_pos is the position of the last item within the current request 
+			// returncount is the nomber of item return in the current request (less that maxcount)
+			// nextcurrent_count is the last position of the next request if totalcount isn't rised 
+			// current_count is the position of the last request which have been get from localStorage 
+			
+				totalcount = parseInt(totalcount, 10); 
+				max_count = parseInt(max_count, 10);
+				current_pos = 0;
+				if (totalcount > 2500) 
+				{
+				returncount = parseInt(returncount, 10); 
+				current_count = parseInt(current_count, 10); 
+				current_pos = returncount + current_count; 
+				
+				if (current_pos >= totalcount)
+					{
+				// reset the nextcurrent_count and current_count to initial value -1, because the current position is greater than total amont of possible item in the database	
+						nextcurrent_count= -1;
+						current_count = -1;} 
+						else {
+								nextcurrent_count = current_pos;
+								current_count = returncount;
+								localStorage.setItem("current_count", current_count);
+								}
+				localStorage.setItem("nextcurrent_count", (nextcurrent_count));
+				
+				} else {
+				// reset the nextcurrent_count to initial value -1, because totalcount is less than 2500 (maxcount)
+				localStorage.setItem("nextcurrent_count", (-1));
+				}
+				console.log("current_pos: " + current_pos + " total_count: " + totalcount+" returncount: " + returncount+ " nextcurrent_count:" + localStorage.getItem("nextcurrent_count")+" max_count:" + max_count );
+		}
 	
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml
 		function set_lang_value (lang)
@@ -264,7 +326,7 @@
 								<input  type="button" value="9" onclick="SetIndexData('9')" />
 								<input  type="button" value="0" onclick="SetIndexData('0')" />
 						
-								<input  type="button" value="ALL" onclick="SetIndexData('')" />
+								<input  type="button" value="ALL/NEXT" onclick="SetIndexData('')" />
 								<input  type="text" id="FormSearch" />
 								<input  type="submit" onclick="SetIndexData(this.form.FormSearch.value)" />
 							</td>

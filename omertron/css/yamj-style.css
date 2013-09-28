@@ -121,7 +121,7 @@ body {
 
 #logo_index
 {
-    height: 90px;
+    height: 100px;
     width: auto;
     text-align: center;
 	border:1px solid #fff;
@@ -209,11 +209,13 @@ body {
     font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 	position: relative;
 	float: right;
-	right: 130px;
+
 	color:#fff;	
-	width: 400px;
+	width: 420px;
+	padding-top: 5px;
+	
 }	
-#startlabel, #anylabel  {
+#startlabel, #anylabel {
 		display: inline;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
@@ -223,10 +225,13 @@ body {
 		width: 150px;
 		text-align: center;
 		border: 1px solid #b0b0b0;;
-		border-right: 4px solid #b0b0b0;;
+		border-right: 4px solid #b0b0b0;
 		border-radius: 6px 6px 0px 6px;
+		position: relative; 
+		left: 0px;
+		top: 2px;
 	}	
-	
+
 #sourceData {
 	position: absolute;
 	top: 800px;
@@ -243,7 +248,7 @@ body {
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
 	}
-#home_left_up img, #home_left_down img, #home_right_up img, #home_right_down  img, #home_right_down_before img{	
+#home_left_up img, #home_left_down img, #home_right_up img, #home_right_down  img{	
 	border: none;
 	}
 #home_left_up:hover {
@@ -295,28 +300,13 @@ body {
 	background-color:rgba(255, 255, 255, 0.6);
 	}
 #home_right_down_before {
-	width: 100px;
-	height:21px;
-	position: absolute;
-	top: 70px;
-	left: 1020px;
-	padding:0px 0px 0px 0px;
-	color:#b0b0b0;
-	background-color: black;
-	border: 1px solid #b0b0b0;	
-	border-right: 4px solid #b0b0b0;
-	border-radius: 6px 6px 0px 6px;
-	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-	display: inline;
-	font-size:0.9em;
-	font-weight: bold;	
-	text-align: center;	
-	}
+	text-decoration: none;
+	}	
 #home_right_down_before:hover {
 	background-color:rgba(255, 255, 255, 0.6);
 	}	
 
-#allselect, #movieselect, #serieselect, #seasonselect, #personselect
+#allselect, #movieselect, #serieselect, #seasonselect
 {
     font-weight: bold;
     color: white;
@@ -325,13 +315,26 @@ body {
 	position: absolute;	
 	text-align: left;
 	top: 12px;
-	left: 0px;
 	width: 130px;
 }
 #personselect {
-	top: 2px;
-	left: 5px;
+	font-weight: bold;
+	height:21px;
+    color: #b0b0b0;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:1.05em;
+	position: relative;	
+	text-align: center;
+	width: 130px;
+	top: 3px;
+	left: 10px;
+	background-color: black;
+	border: 1px solid #b0b0b0;	
+	border-right: 4px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+
 }
+
 #allselect:hover, #movieselect:hover, #serieselect:hover, #seasonselect:hover, #personselect:hover
 {	
 	color: red;	

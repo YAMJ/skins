@@ -1,6 +1,6 @@
 /**************** container ************************/
 #container {
-    width: auto;
+    width: 1250px;
     margin-left: 5px;
     border: 5px solid black;
     padding: 5px;
@@ -10,10 +10,17 @@
 #container .row {
     border: 1px solid white;
     margin: 5px;
-    padding: 5px;
+    padding: 5px 5px 5px 22px;
     background-color: gainsboro;
+	
 }
-
+#container .row_person {
+    border: 1px solid white;
+    margin: 5px;
+    padding: 5px 5px 5px 5px;
+    background-color: gainsboro;
+	
+}
 #container br {
     clear: both;
 }
@@ -341,6 +348,7 @@ body {
 }
 .holder {
 	text-align: center;
+
 	}
 /***************************** detail page ***************************************/	
 #previous_movie {

@@ -67,9 +67,9 @@
                     "span.person_name": "result.name",
                     "img.person_photo@src": function(arg) {
                         // Check to see if there are posters
-                        if (arg.item.artwork.PHOTO) {
+                        if (arg.item.artwork) {
                             // Get the first poster from the list
-                            var photo = arg.item.artwork.PHOTO[0];
+                            var photo = arg.item.artwork[0];
                             if (photo.generatedId === 0) {
                                 return "pictures/dummy_photo.jpg";
                             }
@@ -100,7 +100,7 @@
         {
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 			set_lang_value (localStorage.getItem("lang"));
-            var jsonUrl = "http://localhost:8888/yamj3/api/index/person.json?sortby=name&sortdir=asc";
+            var jsonUrl = "http://localhost:8888/yamj3/api/index/person.json?sortby=name&sortdir=asc&dataitems=artwork&artwork=photo";
 			
 						
 			if (window.localStorage.getItem("search_index"))
@@ -133,14 +133,19 @@
         }
 
         // Run the pure.js function to render the data into the HTML template
-        // div.row is the part of the template to apply it too.
-        // "row" is a CLASS attribute, not the id.
+        // div.row_person is the part of the template to apply it too.
+        // "row_person" is a CLASS attribute, not the id.
         function updateHtml(yamjdata)
         {	
 			$p('.count_return').render(yamjdata, COUNT_HEADER);	
-            $p('div.row').render(yamjdata, LIST_DIR);
+            $p('div.row_person').render(yamjdata, LIST_DIR);
+		var str = JSON.stringify(yamjdata, undefined, 4);
+        //       output(str);	
         }
-
+		// Add the source output to the end of the page
+        function output(inp) {
+                document.body.appendChild(document.createElement('pre')).innerHTML = inp;
+            }
         // Create the pagination for the index using jPages.
         // Will place the page list in the "div.holder" and page the "yRow" data.
         // Animation comes from animate.css
@@ -346,11 +351,11 @@
 			</form>
         </div>
 		<!--Navigation Holder-->
-            <div class="holder"></div>
+         <div class="holder"></div>
         <!--Data Items Container-->
  		
 		 <div id="container">
-            <div id="yRow" class="row">
+            <div id="yRow" class="row_person">
                 <div id="yBlock" class="person_block">
                     <img class="person_photo" src=""><br>
                     <span class="person_name"></span>

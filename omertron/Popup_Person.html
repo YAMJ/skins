@@ -12,7 +12,9 @@
             {
 				var	id = localStorage.getItem ("Person_id");
                 jsonUrl = "http://localhost:8888/yamj3/api/person/" + id + ".json?dataitems=artwork,biography";
-
+				// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+				//language as been setted in index.html 
+				set_lang_value (localStorage.getItem("lang"));
                 var jsondata = null;
 
                 console.log("Call for URL with person ID:" + id);
@@ -45,7 +47,7 @@
 								{
 									return arg.context.result.birthDay;
 								} else {
-								return "no birthday available";
+								return nobirthday_text;
 								}
 							},
                     'span.biography': function(arg) {
@@ -53,7 +55,7 @@
 								{
 									return arg.context.result.biography;
 								} else {
-								return "no biography available";
+								return nobiography_text;
 								}
 							},
                     'span.image': function(arg) {
@@ -81,7 +83,26 @@
             function output(inp) {
                 document.body.appendChild(document.createElement('pre')).innerHTML = inp;
             }
+		function set_lang_value (lang)
+		{
 
+			if (window.XMLHttpRequest)
+			  {// code for IE7+, Firefox, Chrome, Opera, Safari
+			  xmlhttp=new XMLHttpRequest();
+			  }
+			else
+			  {// code for IE6, IE5
+			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			  }
+			xmlhttp.open("GET","yamjv3_lang_"+lang+".xml",false);
+			xmlhttp.send();
+			xmlDoc=xmlhttp.responseXML; 
+			x=xmlDoc.getElementsByTagName('lang');
+			i=0;
+
+			nobiography_text=(x[i].getElementsByTagName("nobiography")[0].childNodes[0].nodeValue);
+			nobirthday_text=(x[i].getElementsByTagName("nobirthday")[0].childNodes[0].nodeValue);
+		}
         </script>
         <div class="template">
             <table id="headertable">

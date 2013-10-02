@@ -7,25 +7,21 @@
     background-color: gray;
 }
 
-#container .row {
+#container .row, #container .row_person, #container .row_genre {
     border: 1px solid white;
     margin: 5px;
     padding: 5px 5px 5px 22px;
     background-color: gainsboro;
 	
 }
-#container .row_person {
-    border: 1px solid white;
-    margin: 5px;
+#container .row_person, #container .row_genre {
     padding: 5px 5px 5px 5px;
-    background-color: gainsboro;
-	
 }
 #container br {
     clear: both;
 }
 
-#container .block {
+#container .block, #container .person_block, #container .genre_block  {
     text-align: center;
     border: 1px solid white;
     margin: 5px;
@@ -37,17 +33,19 @@
     background-color: whitesmoke;
 }
 #container .person_block {
-    text-align: center;
-    border: 1px solid white;
 	font-size:0.8em;
-    margin: 5px;
-    padding: 5px;
     float: left;
     width: 100px;
     height: 190px;
-    overflow: hidden;
-    background-color: whitesmoke;
 }
+
+#container .genre_block {
+	font-size:0.8em;
+    float: left;
+    width: 100px;
+    height: 130px;
+}
+
 .code
 {
     border: dashed 1px #BCBCCB; padding:8px 12px; background-color: #F3F3F9; white-space:pre; font-family:"Courier New", Georgia;
@@ -150,7 +148,7 @@ body {
 	-webkit-column-span:all; /* Safari and Chrome */
     text-align: center;
 }
-.show_index  {
+.show_index, .show_index_genre   {
 		display: block;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
@@ -169,7 +167,10 @@ body {
 		left: 150px;
 		overflow: hidden;
 	}
-
+.show_index_genre   {
+		width: 220px;
+		left: 200px;
+	}
 .show_personindex  {
 		display: block;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -189,7 +190,7 @@ body {
 		left: 150px;
 		overflow: hidden;
 	}
-.count_return, .count_return_index  {
+.count_return, .count_return_index,.count_return_genre {
 		display: block;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
@@ -210,7 +211,11 @@ body {
 	}
 .count_return_index  {
 		width: 175px;
-	}		
+	}	
+.count_return_genre {
+		width: 220px;
+		left: 200px;
+	}	
 .tablesearchmethod
 {
     font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -218,7 +223,7 @@ body {
 	float: right;
 
 	color:#fff;	
-	width: 420px;
+	width: 550px;
 	padding-top: 5px;
 	
 }	
@@ -306,10 +311,10 @@ body {
 #home_right_down:hover {
 	background-color:rgba(255, 255, 255, 0.6);
 	}
-#home_right_down_before {
+#home_right_person, #home_right_genre {
 	text-decoration: none;
 	}	
-#home_right_down_before:hover {
+#home_right_person:hover, #home_right_genre:hover {
 	background-color:rgba(255, 255, 255, 0.6);
 	}	
 
@@ -324,7 +329,7 @@ body {
 	top: 12px;
 	width: 130px;
 }
-#personselect {
+#personselect, #genreselect, #button_personselect, #button_genreselect  {
 	font-weight: bold;
 	height:21px;
     color: #b0b0b0;
@@ -341,8 +346,17 @@ body {
 	border-radius: 6px 6px 0px 6px;
 
 }
-
-#allselect:hover, #movieselect:hover, #serieselect:hover, #seasonselect:hover, #personselect:hover
+#button_personselect, #button_genreselect {
+	width: 130px;
+	position: absolute;	
+	top: 62px;
+	left: 110px;
+	
+}
+#button_genreselect {
+	left: 310px;
+}
+#allselect:hover, #movieselect:hover, #serieselect:hover, #seasonselect:hover, #personselect:hover, #genreselect:hover, #button_genreselect:hover, #button_personselect:hover
 {	
 	color: red;	
 }
@@ -771,6 +785,12 @@ position: absolute;
 	position: relative;
 	width: 100px;
 	height:150px;
+	border: 1px solid gray;
+	}	
+.genre_logo {
+	position: relative;
+	width: 100px;
+	height:100px;
 	border: 1px solid gray;
 	}	
 .photo0 {

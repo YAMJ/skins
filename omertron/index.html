@@ -194,6 +194,11 @@
             console.log("call personindex: ");
             window.location.href="index_person.html";
         }
+		function call_genreindex()
+        {
+            console.log("call navGenre: ");
+            window.location.href="navGenre.html";
+        }
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml
 		function set_lang_value (lang)
 		{
@@ -226,6 +231,9 @@
 			
 			person_select=(x[i].getElementsByTagName("personselected")[0].childNodes[0].nodeValue);
 			document.getElementById("personselect").innerHTML=person_select.toUpperCase();
+			
+			genre_select=(x[i].getElementsByTagName("genreselected")[0].childNodes[0].nodeValue);
+			document.getElementById("genreselect").innerHTML=genre_select.toUpperCase();
 			
 			start_label=(x[i].getElementsByTagName("startlabel")[0].childNodes[0].nodeValue);
 			document.getElementById("startlabel").innerHTML=start_label.toUpperCase();
@@ -324,8 +332,13 @@
 								<input type="radio" name="search_method" value="ANY" onclick="localStorage.setItem('search_method', 'ANY')" id="FormAny" /> <label for="ANY"><div id='anylabel'></div></label>
 							</td> 
 							<td>
-								<a id="home_right_down_before" href="javascript:call_personindex()">
+								<a id="home_right_person" href="javascript:call_personindex()">
 									<div id="personselect"></div>
+								</a>
+							</td>
+							<td>
+								<a id="home_right_genre" href="javascript:call_genreindex()">
+									<div id="genreselect"></div>
 								</a>
 							</td>
 						</tr>	

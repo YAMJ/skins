@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>YAMJ v3 Genre index</title>
+        <script src="js/jquery.js"></script>
+        <!-- Used for the JSON parsing -->
+        <script src="js/pure.js"></script>
+        <!-- Used for the paging of the index -->
+        <script src="js/js.js"></script>
+        <script src="js/jPages.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
+        <!-- Used for the paging of the index -->
+        <link rel="stylesheet" href="css/jPages.css">
+        <!-- Used for the fancy animations -->
+        <link rel="stylesheet" href="css/animate.css">
+	
+    </head>
+    <body onload="getIndexData();">
+        <script type="text/javascript">
+
+	
+//************************ LANGUAGE SETTING *********************************************
+		// SET THE LANGUAGE HERE fr, en, de
+		var lang = "fr"; 
+		// all the other pages will take this setting 	
+		window.localStorage.setItem("lang", lang);
+		console.log("Storing setitem value: " + lang );
+			
+//***************************************************************************************
+		var perPageValue = 12;
+        var jsondata = null;
+		var genre_id = "";
+		var genre_name = ""; 
+		// get the genre and name id and reset to default for the next time 
+		if (localStorage.getItem("Genre_id"))
+			{genre_id = localStorage.getItem("Genre_id");
+			}
+		if (localStorage.getItem("Genre_name"))
+			{genre_name = localStorage.getItem("Genre_name");
+			}
+		
+			
+        // This is the directive used by pure to transform the JSON data into HTML
+        // span.Title is a simple substitution of the title
+        // img.Poster@src replaces the "src" attribute of the img.Poster
+		var COUNT_HEADER = {
+                'span.ReturnCount': function(arg) {	
+					return arg.context.count+' '+results_text;
+					}
+            };	
+		
+        var LIST_DIR = {
+            "div.block": {
+                "result<-results": {
+                     "span.title": function(arg) {
+						
+					if (( arg.item.artwork.POSTER[0]) && (arg.item.videoType == 'SEASON'))
+						{					
+						return arg.item.title + '<br> '+season_label+': ' + arg.item.season;
+						} else {
+							if (arg.item.videoType == 'SERIES')
+								{ 
+									
+									return arg.item.title +'<br> '+series_label; 
+									
+								} else {
+									return arg.item.title;
+								}
+						}
+					},
+                    "img.poster@src": function(arg) {
+                        // Check to see if there are posters
+                        if (arg.item.artwork.POSTER) {
+                            // Get the first poster from the list
+                            var poster = arg.item.artwork.POSTER[0];
+                            if (poster.generatedId === 0) {
+                                return "pictures/dummy.jpg";
+                            }
+                            return arg.context.baseArtworkUrl + poster.filename;
+                        } else {
+                            return "pictures/dummy.jpg";
+                        }
+                    },
+                    "img.poster@onclick": function(arg) {
+                        return "setId('" + arg.item.videoType + "', " + arg.item.id + ")";
+                    }
+                }
+            }
+        };
+
+        function setId(type, id)
+        {
+	
+            window.localStorage.setItem("type", type);
+            window.localStorage.setItem("id", id);
+            console.log("Storing value: " + type + "-" + id);
+            window.location.href="detail.html";
+        }
+
+        // This function calls the API to get the JSON data.
+        // It will then update the HTML with the data and set up the paging
+        function getIndexData()
+        {
+			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+			
+			set_lang_value (window.localStorage.getItem("lang"));
+
+        //    var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type="+index_type+"&sortby=title&sortdir=ASC&artwork=poster";
+			var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=all&sortby=title&sortdir=ASC&artwork=poster&search="+genre_id+"&field=id";
+				
+			var	display_genre = genre_select.toUpperCase() + ":" + genre_name.toUpperCase();
+	
+				$('#printsearch').html(display_genre);
+				console.log("URL: " + jsonUrl);
+				
+            $.ajax({
+                url: jsonUrl,
+                async: false,
+                dataType: 'jsonp',
+                'success': function(data)
+                {
+                    jsondata = data;
+					
+                    updateHtml(data);
+                    pageData(perPageValue);
+                }
+            });
+            return jsondata;
+        }
+
+        // Run the pure.js function to render the data into the HTML template
+        // div.row is the part of the template to apply it too.
+        // "row" is a CLASS attribute, not the id.
+        function updateHtml(yamjdata)
+        {
+			$p('.count_return_genre').render(yamjdata, COUNT_HEADER);	
+            $p('div.row').render(yamjdata, LIST_DIR);
+        }
+
+        // Create the pagination for the index using jPages.
+        // Will place the page list in the "div.holder" and page the "yRow" data.
+        // Animation comes from animate.css
+        function pageData(perPage)
+        {
+            $("div.holder").jPages({
+                containerID: "yRow",
+                animation: "fadeInUpBig",
+                perPage: perPage,
+                delay: 20
+            });
+        }
+
+		function ChangeIndex (indextype)
+		{		
+				window.localStorage.setItem("indextype", indextype);
+				window.location.href="index.html";
+		
+		}
+		function call_personindex()
+        {
+            console.log("call personindex: ");
+            window.location.href="index_person.html";
+        }
+		function call_genreindex()
+        {
+            console.log("call genreindex: ");
+			window.location.href="navGenre.html";
+        }
+		// store all value according to language setting - from yamjv3_lang_{lang}.xml
+		function set_lang_value (lang)
+		{
+
+			if (window.XMLHttpRequest)
+			  {// code for IE7+, Firefox, Chrome, Opera, Safari
+			  xmlhttp=new XMLHttpRequest();
+			  }
+			else
+			  {// code for IE6, IE5
+			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			  }
+			xmlhttp.open("GET","yamjv3_lang_"+lang+".xml",false);
+			xmlhttp.send();
+			xmlDoc=xmlhttp.responseXML; 
+			x=xmlDoc.getElementsByTagName('lang');
+			i=0;
+
+			all_select=(x[i].getElementsByTagName("allselected")[0].childNodes[0].nodeValue);
+			document.getElementById("allselect").innerHTML=all_select.toUpperCase();
+			
+			movie_select=(x[i].getElementsByTagName("movieselected")[0].childNodes[0].nodeValue);
+			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
+			
+			series_select=(x[i].getElementsByTagName("serieselected")[0].childNodes[0].nodeValue);
+			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
+			
+			season_select=(x[i].getElementsByTagName("seasonselected")[0].childNodes[0].nodeValue);
+			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
+			
+			person_select=(x[i].getElementsByTagName("personselected")[0].childNodes[0].nodeValue);
+			document.getElementById("button_personselect").innerHTML=person_select.toUpperCase();
+			
+			genre_select=(x[i].getElementsByTagName("genreselected")[0].childNodes[0].nodeValue);
+			document.getElementById("button_genreselect").innerHTML=genre_select.toUpperCase();
+
+			
+			series_label=(x[i].getElementsByTagName("serieslabel")[0].childNodes[0].nodeValue);
+			season_label=(x[i].getElementsByTagName("seasonlabel")[0].childNodes[0].nodeValue);
+			results_text=(x[i].getElementsByTagName("resultstext")[0].childNodes[0].nodeValue);
+			selection_text=(x[i].getElementsByTagName("selection")[0].childNodes[0].nodeValue);
+		}
+        </script>
+
+        <div id="logo_index">
+		<!-- navigation to index movie and series -->		
+						<a id="home_right_up" href="javascript:ChangeIndex('series')">
+							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="serieselect"></div>
+						</a>
+						<a id="home_right_down" href="javascript:ChangeIndex('season')">
+							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="seasonselect"></div>
+						</a>
+						
+						<a id="home_left_up" href="javascript:ChangeIndex('movie,series')">
+							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="allselect"></div>
+						</a>
+						<a id="home_left_down" href="javascript:ChangeIndex('movie')">
+							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="movieselect"></div>
+						</a>
+			<div class="show_index_genre"><span id="printsearch"></span></div>
+			<div class="count_return_genre">
+                   <span class="ReturnCount"></span> 
+			</div>
+
+					<table align="center"  >
+						<tr class="tablesearchmethod">
+							<td>
+								<a id="home_right_person" href="javascript:call_personindex()">
+									<div id="button_personselect"></div>
+								</a>
+							</td>
+							<td>
+								<a id="home_right_genre" href="javascript:call_genreindex()">
+									<div id="button_genreselect"></div>
+								</a>
+							</td>
+						</tr>	
+					</table>
+
+			</div>
+            <!--Navigation Holder-->
+            <div class="holder"></div>
+					
+        
+        <!--Data Items Container-->
+        <div id="container">
+            <div id="yRow" class="row">
+                <div id="yBlock" class="block">
+                    <img class="poster" src=""><br>
+                    <span class="title"></span>
+                </div>
+                <br />
+            </div>
+        </div>
+
+    </body>
+</html>

@@ -176,7 +176,11 @@
 				console.log("callindex: " + indextype);
 				window.location.href="index.html";
 		}
-		
+		function call_genreindex()
+        {
+            console.log("call navGenre: ");
+            window.location.href="navGenre.html";
+        }
 		function store_count (returncount, totalcount)
 		{
 			// to allow the manipulation (addition) of each value , all the value need to be parsed as Integer , because there are string 
@@ -250,7 +254,10 @@
 			
 			any_label=(x[i].getElementsByTagName("anylabel")[0].childNodes[0].nodeValue);
 			document.getElementById("anylabel").innerHTML=any_label.toUpperCase();
-
+			
+			genre_select=(x[i].getElementsByTagName("genreselected")[0].childNodes[0].nodeValue);
+			document.getElementById("genreselect").innerHTML=genre_select.toUpperCase();
+			
 			results_text=(x[i].getElementsByTagName("resultstext")[0].childNodes[0].nodeValue);
 			selection_text=(x[i].getElementsByTagName("selection")[0].childNodes[0].nodeValue);
 			series_label=(x[i].getElementsByTagName("serieslabel")[0].childNodes[0].nodeValue);
@@ -277,7 +284,6 @@
 						</a>
 			<div class="show_personindex">
 				<span id="printsearch"></span>
-		
 			</div>
 			<div class="count_return">
                    <span class="ReturnCount"></span> 
@@ -342,7 +348,12 @@
 							<td>
 								<input type="radio" name="search_method" value="START" onclick="localStorage.setItem('search_method', 'START');" id="FormStart" checked="checked" /><label for="START"><div id='startlabel'></div></label></td>
 								<td><input type="radio" name="search_method" value="ANY" onclick="localStorage.setItem('search_method', 'ANY')" id="FormAny" /> <label for="ANY"><div id='anylabel'></div></label>
-							</td> 
+							</td>
+							<td>
+								<a id="home_right_genre" href="javascript:call_genreindex()">
+									<div id="genreselect"></div>
+								</a>
+							</td>
 						</tr>
 						
 						

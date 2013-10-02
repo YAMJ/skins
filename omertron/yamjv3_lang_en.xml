@@ -6,6 +6,7 @@
 	<seasonselected>season</seasonselected>
 	<allselected>movie and series</allselected>
 	<personselected>person</personselected>
+	<genreselected>genre</genreselected>
 	<fanartshow>only fanart</fanartshow>
 	<personshow>show person</personshow>
 	<seasonlabel>season</seasonlabel>

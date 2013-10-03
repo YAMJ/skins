@@ -350,11 +350,11 @@ body {
 	width: 130px;
 	position: absolute;	
 	top: 62px;
-	left: 110px;
+	left: 450px;
 	
 }
 #button_genreselect {
-	left: 310px;
+	left: 600px;
 }
 #allselect:hover, #movieselect:hover, #serieselect:hover, #seasonselect:hover, #personselect:hover, #genreselect:hover, #button_genreselect:hover, #button_personselect:hover
 {	
@@ -674,6 +674,13 @@ text {
 	border: 1px solid gray;
 	border-right: 5px solid gray;
 	padding: 3px 10px 3px 10px;
+	}
+.genres a {
+	text-decoration: none;
+	color: white;
+	}
+.genres a:hover {
+	color: red;
 	}
 .actor-role{
 	font-style:italic;

@@ -34,9 +34,7 @@
 		var genre_id = "";
 		var genre_name = ""; 
 		// get the genre and name id and reset to default for the next time 
-		if (localStorage.getItem("Genre_id"))
-			{genre_id = localStorage.getItem("Genre_id");
-			}
+		
 		if (localStorage.getItem("Genre_name"))
 			{genre_name = localStorage.getItem("Genre_name");
 			}
@@ -107,8 +105,9 @@
 			
 			set_lang_value (window.localStorage.getItem("lang"));
 
-        //    var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type="+index_type+"&sortby=title&sortdir=ASC&artwork=poster";
-			var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=all&sortby=title&sortdir=ASC&artwork=poster&search="+genre_id+"&field=id";
+			// select only movie because other type is buggy 
+			var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=movie&sortby=title&sortdir=ASC&artwork=poster&include=genre-"+genre_name
+		//	var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=all&sortby=title&sortdir=ASC&artwork=poster&search="+genre_name+"&field=name";
 				
 			var	display_genre = genre_select.toUpperCase() + ":" + genre_name.toUpperCase();
 	

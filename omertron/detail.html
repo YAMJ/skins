@@ -94,7 +94,7 @@
                         } else {
                             output += ", ";
                         }
-                        output += genres[i].name;
+                        output = output + "<a href=\"javascript:call_genreindex('" + genres[i].name + "')\" >" + genres[i].name + "</a>";
                     }
                     return output;
                 },
@@ -572,6 +572,14 @@
 				window.location.href="index.html";
 		
 		}
+	function call_genreindex(genrename)
+        {
+    //        localStorage.setItem("Genre_id", id);
+			localStorage.setItem("Genre_name", genrename);
+            console.log("Storing value: Genre name: " +genrename);
+			window.location.href="index_Genre.html";
+	//		Mypopup.focus();
+		}	
       </script>
     </head>
     <body onload="getData();" onUnload="close_popup();">

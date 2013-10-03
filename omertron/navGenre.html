@@ -69,10 +69,10 @@
 							return "pictures/genres/zap_"+arg.item.name.toLowerCase()+"_on1.png";
                            },
                      "span.name@onclick": function(arg) {
-                        return "open_genre_index('" + arg.item.id + "','" + arg.item.name+ "')";
+                        return "open_genre_index('" + arg.item.name+ "')";
 							},
 					 "img.genre_logo@onclick": function(arg) {
-                        return "open_genre_index('" + arg.item.id + "','" + arg.item.name+ "')";
+                        return "open_genre_index('" + arg.item.name+ "')";
 							}	
 						}
 					}
@@ -107,11 +107,10 @@
 				
             });
         }
-		function open_genre_index(id, genrename)
+		function open_genre_index(genrename)
         {
-            localStorage.setItem("Genre_id", id);
 			localStorage.setItem("Genre_name", genrename);
-            console.log("Storing value: Genre_id"  + id + " Genre name:" +genrename);
+            console.log("Storing value: Genre name: " +genrename);
 			window.location.href="index_Genre.html";
 			Mypopup.focus();
 		}

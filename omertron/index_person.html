@@ -39,6 +39,7 @@
 		if (localStorage.getItem("search_method"))
 			{index_method = localStorage.getItem("search_method");
 			localStorage.setItem("search_method", "START");}
+		
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
         // img.Poster@src replaces the "src" attribute of the img.Poster
@@ -106,7 +107,11 @@
 			if (window.localStorage.getItem("search_index"))
 				{
 					selected_index = person_label + " (" +window.localStorage.getItem("search_index").toUpperCase() + ")"
-					jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("search_index") + "&field=name&mode="+index_method;
+					// tweak to search by name, add blank before search value and search anywhere in the name
+					if (index_method == 'NAME')
+						{	index_method = "ANY";
+							jsonUrl = jsonUrl + "&search= " + window.localStorage.getItem("search_index") + "&field=name&mode=ANY";
+						} else { jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("search_index") + "&field=name&mode="+index_method;}
 					window.localStorage.setItem("search_index", "");	
 				}	else {
 					selected_index = person_label+ " (" +selection_text+ ")";
@@ -255,6 +260,9 @@
 			any_label=(x[i].getElementsByTagName("anylabel")[0].childNodes[0].nodeValue);
 			document.getElementById("anylabel").innerHTML=any_label.toUpperCase();
 			
+			name_label=(x[i].getElementsByTagName("namelabel")[0].childNodes[0].nodeValue);
+			document.getElementById("namelabel").innerHTML=name_label.toUpperCase();
+			
 			genre_select=(x[i].getElementsByTagName("genreselected")[0].childNodes[0].nodeValue);
 			document.getElementById("genreselect").innerHTML=genre_select.toUpperCase();
 			
@@ -348,6 +356,7 @@
 							<td>
 								<input type="radio" name="search_method" value="START" onclick="localStorage.setItem('search_method', 'START');" id="FormStart" checked="checked" /><label for="START"><div id='startlabel'></div></label></td>
 								<td><input type="radio" name="search_method" value="ANY" onclick="localStorage.setItem('search_method', 'ANY')" id="FormAny" /> <label for="ANY"><div id='anylabel'></div></label>
+								<td><input type="radio" name="search_method" value="NAME" onclick="localStorage.setItem('search_method', 'NAME')" id="FormName" /> <label for="NAME"><div id='namelabel'></div></label>
 							</td>
 							<td>
 								<a id="home_right_genre" href="javascript:call_genreindex()">

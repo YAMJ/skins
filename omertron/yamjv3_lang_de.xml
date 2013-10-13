@@ -18,6 +18,7 @@
 	<personlabel>person</personlabel>
 	<startlabel>beginnt mit</startlabel>
 	<anylabel>enthält</anylabel>
+	<namelabel>name</namelabel>	
 	<resultstext>ergebnis</resultstext>
 	<selection>auswahl</selection>
 	<nobiography>Biografie abwesend</nobiography>

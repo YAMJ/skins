@@ -126,7 +126,7 @@ body {
 
 #logo_index
 {
-    height: 100px;
+    height: 110px;
     width: auto;
     text-align: center;
 	border:1px solid #fff;
@@ -223,11 +223,11 @@ body {
 	float: right;
 
 	color:#fff;	
-	width: 550px;
+	width: 555px;
 	padding-top: 5px;
 	
 }	
-#startlabel, #anylabel {
+#startlabel, #anylabel, #namelabel {
 		display: inline;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
@@ -733,8 +733,12 @@ text {
 .show_fanart a
 {
 	text-decoration: none;
+	color:#b0b0b0;
 }	
-
+.show_fanart a:hover
+{
+	color:red;
+}
 .show_fanart a:visited {
 color:#b0b0b0;
 }	

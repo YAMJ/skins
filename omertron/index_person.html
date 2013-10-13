@@ -39,7 +39,8 @@
 		if (localStorage.getItem("search_method"))
 			{index_method = localStorage.getItem("search_method");
 			localStorage.setItem("search_method", "START");}
-		
+		// init search to blank 
+		var search_selection = "";
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
         // img.Poster@src replaces the "src" attribute of the img.Poster
@@ -106,12 +107,24 @@
 						
 			if (window.localStorage.getItem("search_index"))
 				{
-					selected_index = person_label + " (" +window.localStorage.getItem("search_index").toUpperCase() + ")"
-					// tweak to search by name, add blank before search value and search anywhere in the name
-					if (index_method == 'NAME')
-						{	index_method = "ANY";
-							jsonUrl = jsonUrl + "&search= " + window.localStorage.getItem("search_index") + "&field=name&mode=ANY";
-						} else { jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("search_index") + "&field=name&mode="+index_method;}
+					switch (index_method) 
+							{
+							case 'ANY':
+									search_selection = window.localStorage.getItem("search_index");
+									selected_index = person_label + " (..." +search_selection.toUpperCase() + "...)";
+									break;
+							case 'START':
+									search_selection = window.localStorage.getItem("search_index");
+									selected_index = person_label + " (" +search_selection.toUpperCase() + "...)";
+									break;
+							case 'NAME':
+							// tweak to search by name, add blank before search value and search anywhere in the name
+									search_selection = ' ' +window.localStorage.getItem("search_index");
+									selected_index = person_label + " (?" +search_selection.toUpperCase() + "...)"
+									index_method = "ANY";
+									break;
+							}	
+					jsonUrl = jsonUrl + "&search=" + search_selection + "&field=name&mode="+index_method;		
 					window.localStorage.setItem("search_index", "");	
 				}	else {
 					selected_index = person_label+ " (" +selection_text+ ")";

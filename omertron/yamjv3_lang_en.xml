@@ -18,7 +18,7 @@
 	<personlabel>person</personlabel>
 	<startlabel>starts with</startlabel>
 	<anylabel>contains</anylabel>
-	<namelabel>name</namelabel>	
+	<namelabel>lastname</namelabel>	
 	<resultstext>result</resultstext>
 	<selection>selection</selection>
 	<nobiography>no biography available</nobiography>

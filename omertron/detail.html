@@ -331,7 +331,7 @@
 				
 		function perform_episode()
 		{
-		jsonEpisodeUrl = "http://localhost:8888/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id;
+		jsonEpisodeUrl = "http://localhost:8888/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot";
 		console.log("URL: " + jsonEpisodeUrl);
 					$.ajax({
                    url: jsonEpisodeUrl,
@@ -352,7 +352,7 @@
             var EPI = {
                 "episodetable": "table.episodes",
                 "episodeheader": {
-					"column": ["videoimage", "episode", "episode_title", ]
+					"column": ["videoimage", "episode", "episode_title", "episode_plot" ]
                 },
                 "episodedirectivehead": {
                     "th": {
@@ -372,13 +372,14 @@
                            "td.videoimage"		: function(arg) {
 									// Check to see if there are videoimage
 									if(arg.item.videoimage) {
-									 return "<img src=\"" +arg.context.baseArtworkUrl+ arg.item.videoimage+"\" height=\"100\"></img>"; 
+									 return "<img src=\"" +arg.context.baseArtworkUrl+ arg.item.videoimage+"\" height=\"132\"></img>"; 
 										} else {
-										return "<img src=\"pictures/dummy_videoimage.jpg\" height=\"100\"></img>";
+										return "<img src=\"pictures/dummy_videoimage.jpg\" height=\"132\"></img>";
 									}
 								},
                             "td.episode": "episode.episode",
-                            "td.episode_title": "episode.title"
+                            "td.episode_title": "episode.title",
+							"td.episode_plot": "episode.plot"
 							
                         }
                     }

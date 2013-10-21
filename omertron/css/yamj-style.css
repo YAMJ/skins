@@ -416,9 +416,9 @@ body {
 #episodetable {
 	visibility : hidden;
 	position: absolute;
-	top: 400px;
-	width: 900px;
-	float:left;
+	top: 345px;
+	width: 1280px;
+	float:left; 
 	display: table-cell;
 	}
 #episodeth {
@@ -426,7 +426,7 @@ body {
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 6px 6px;
-	background-color:rgba(0, 0, 0, 0.3);
+	background-color:rgba(0, 0, 0, 0.4);
 	width: 125px;
 	float:left;
 	color:#fff;
@@ -438,7 +438,7 @@ body {
 	font-weight: bold;
     text-align: center;
 	color:#fff;
-	height: 370px;
+	height: 435px;
 	table-layout: fixed;
 	overflow-y: scroll;
 	float:right;
@@ -449,7 +449,7 @@ body {
 	}
 .episodes
 {
-	float:right;
+/*	float:right; */
     }
 .seasonNb, .seriesId, .episode
 {	
@@ -464,15 +464,15 @@ body {
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 6px 6px;
-	background-color:rgba(0, 0, 0, 0.1);
+	background-color:rgba(0, 0, 0, 0.3);
     }		
-.episode_title
+.episode_title, .episode_plot
 	{
 	padding: 2px 0px 0px 5px;
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 6px 6px;
-	background-color:rgba(0, 0, 0, 0.3);
+	background-color:rgba(0, 0, 0, 0.4);
 	}	
 #seasontable {
 	visibility : hidden;

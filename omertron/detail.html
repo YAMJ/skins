@@ -27,7 +27,8 @@
 			var fanart_toggle = 0;
 			var padding_season = 35;
 			var Personpopup = "";
-		
+			var current_episode_videoimage = "videoimage0";
+			var	current_episode_plot = "episodeplot0";
 // ******************************************** COMMON RESULTS MAPPING **********************************			
 			// from jsonUrl
 			var DETAIL_HEADER = {
@@ -341,58 +342,63 @@
                    {
 						jsondata = dataEpisode;
 					//	outputJson(dataEpisode);
-						updateEpisode(dataEpisode);
-						display_Id ("episodetable");		// as episode table is only for season ,it's hidden by default 
+						displayEpisode(dataEpisode);
+						display_Id ("listepisode_title");
+				
+
 					}
                 });
 		}
-		
-		function updateEpisode(dataEpisode)
+
+	function displayEpisode(dataEpisode)
         {
-            var EPI = {
-                "episodetable": "table.episodes",
-                "episodeheader": {
-					"column": ["videoimage", "episode", "episode_title", "episode_plot" ]
-                },
-                "episodedirectivehead": {
-                    "th": {
-                        "c<-column": {
-                            ".": "c"
-                        }
-                    },
-                    'td': {
-                        "c<-column": {
-                            "@class": "c"
-                        }
-                    }
-                },
-                "episodedirectivebody": {
-                    "tbody tr": {
-                        "episode<-results": {
-                           "td.videoimage"		: function(arg) {
-									// Check to see if there are videoimage
-									if(arg.item.videoimage) {
-									 return "<img src=\"" +arg.context.baseArtworkUrl+ arg.item.videoimage+"\" height=\"132\"></img>"; 
-										} else {
-										return "<img src=\"pictures/dummy_videoimage.jpg\" height=\"132\"></img>";
-									}
-								},
-                            "td.episode": "episode.episode",
-                            "td.episode_title": "episode.title",
-							"td.episode_plot": "episode.plot"
-							
-                        }
-                    }
-                }
-            };
+            
 			
-			updateItemCount (dataEpisode, "Episode");
-	
-            var EPISODE = $p(EPI.episodetable).render(EPI.episodeheader, EPI.episodedirectivehead).compile(EPI.episodedirectivebody);
-            $p('table.episodes').render(dataEpisode, EPISODE);
-        }
-		
-	
+			var LIST_videoimage = {
+					"span.listepisode_title": function(arg) 
+						{
+							var totalepisode_title = arg.context.results;
+							var outputepisode_title = "";
+							for (i = 0; i < totalepisode_title.length; i++) 
+							{
+								outputepisode_title +=	"<a href=\"#\" onclick=\"display_Episode_videoimage ('videoimage"+[i]+"','episodeplot"+[i]+"',"+totalepisode_title.length+")\" >"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</a><br>";
+							}
+					
+							return outputepisode_title;
+						},
+             		'span.totalvideoimage': function(arg) 
+						{
+						var totalvideoimage = arg.context.results;
+						var outputvideoimage = "";
+							for (i = 0; i < totalvideoimage.length; i++) 
+							{
+									
+								if (totalvideoimage[i].videoimage) 
+								{
+									outputvideoimage +="<img id=\"videoimage"+i+"\" class=\"videoimage"+i+"\" src=\"" + arg.context.baseArtworkUrl + totalvideoimage[i].videoimage + "\" ></img>";
+									
+								} else {
+									outputvideoimage +="<img class=\"videoimage"+i+"\" src=\"pictures/dummy_videoimage.jpg\" ></img>";
+								}
+							}
+							return outputvideoimage;
+						}, 
+					'span.listepisode_plot': function(arg) 
+						{
+						var totalplot = arg.context.results;
+						var outputplot = "";
+							for (i = 0; i < totalplot.length; i++) 
+							{
+									outputplot +="<td id=\"episodeplot"+i+"\" class=\"episodeplot"+i+"\">"+totalplot[i].episode+" - "+totalplot[i].title+": "+totalplot[i].plot+"</td>";
+							}
+					
+							return outputplot;
+						} 	
+						
+					};	
+			updateItemCount (dataEpisode, "Episode");          
+			$p('.table_videoimage').render(dataEpisode, LIST_videoimage);			
+        }	
 	// generic function to get count and call the real treatment 	
 		function updateItemCount(data, type_to_upadte)
         {
@@ -439,7 +445,16 @@
 				localStorage.setItem("SeriesId", Series_Id);
 				console.log("Storing Series Id value: " + Series_Id);
 				}	
-					
+				
+		function display_Episode_videoimage(videoId_to_display, plotId_to_display, max_videoimage_to_hidden)
+					{	
+						document.getElementById(current_episode_videoimage).style.visibility="hidden";
+						document.getElementById(current_episode_plot).style.visibility="hidden";
+						document.getElementById(videoId_to_display).style.visibility="visible";
+						document.getElementById(plotId_to_display).style.visibility="visible";
+						current_episode_videoimage = videoId_to_display;
+						current_episode_plot = plotId_to_display;
+					}				
 	// hidden what is asked 
 		function nodisplay_Id(Id_to_nodisplay)
 					{			
@@ -480,10 +495,16 @@
 				$('.plot').css('visibility', 'hidden');
 				$('.genres').css('visibility', 'hidden');
 				$('.seasontable').css('visibility', 'hidden');
-				$('div#episodetable').css('visibility', 'hidden');
+				
 				$('div#slideshowBanner').css('visibility', 'hidden');
-				$('div#slideshowCtr ').css('visibility', 'hidden');
+				$('div#slideshowCtr').css('visibility', 'hidden');
+				document.getElementById(current_episode_plot).style.visibility="hidden";
+				document.getElementById(current_episode_videoimage).style.visibility="hidden";
+
+				$('#listepisode_title').css('visibility', 'hidden');
+
 				$('div#slideshowFanart').css('opacity', '1');
+			
 			}
 			
 		function display_all ()
@@ -495,8 +516,12 @@
 				switch (type.toLowerCase())
 					{
 					case 'season':
+						
 						$('div#slideshowBanner').css('visibility', 'visible');
-						$('div#episodetable').css('visibility', 'visible');
+						
+						$('#listepisode_title').css('visibility', 'visible');
+						
+						
 						break;
 					case 'movie':
 			//			nothing special 
@@ -702,21 +727,34 @@
 			</table>
 		</div>
 		
-		<div class="episodetable" id="episodetable">
-            <table class="episodes">
-                <thead id="episodehead">
-					<tr>
-                        <th id="episodeth"></th>
-					</tr>
-                </thead>
-                <tbody id="episodebody">
-                    <tr>
 
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+		<div class="table_videoimage">
+			<table id="listepisode_title">	
+				<tr>
+					<td>
+					 <span class="listepisode_title"></span>
+					</td>
+				</tr>
+			</table>
+			<table id="tablevideoimage">	
+				<tr>
+					<td>
+					
+					 <span class="totalvideoimage"></span>
+					 
+					</td>
+				</tr>
+			</table>
+			<table id="listepisode_plot">	
+				<tr>
+					<td>
+					 <span class="listepisode_plot"></span>
+					</td>
+				</tr>
+			</table>
+		</div>	
+
+
 		<!-- display source data from API if needed  -->
         <div id="sourceData"></div>
     </body>

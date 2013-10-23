@@ -412,7 +412,90 @@ body {
     }
 #seasonhead {
 	visibility: hidden;
+	}
+/*************   episode ****************/	
+.table_videoimage {
+	display: block;
+	position: absolute;
+	top: 375px;
+	left: 13px;
+	visibility: hidden;
+	}
+
+
+#listepisode_title
+{
+	display: block;
+	width: 400px;
+	height: 435px;
+	border: 2px solid #b0b0b0;	
+	border-right: 3px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	background-color:rgba(0, 0, 0, 0.3);
+	overflow-y: scroll;
+	}
+.listepisode_title a:focus, .listepisode_title a:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	color:black;
+	font-size:1.0em;
+	font-weight: bold;
+	border: 2px solid #b0b0b0;	
+	border-right: 3px solid #b0b0b0;
+	border-radius: 6px 6px 6px 6px;
+	padding: 2px;
+	background-color:rgba(255,255, 255, 0.3);
+	text-decoration: none;
+	}
+.listepisode_title a:not(:focus) {
+	font-family: Arial, Helvetica, sans-serif;
+	color:white;
+	font-size:1.0em;
+	font-weight: bold;
+	text-decoration: none;
+
 	}	
+.videoimage0, .videoimage1, .videoimage2, .videoimage3,.videoimage4,.videoimage5,.videoimage6,.videoimage7,.videoimage8,.videoimage9,.videoimage10,
+.videoimage11,.videoimage12, .videoimage13,.videoimage14,.videoimage15,.videoimage16,.videoimage17,.videoimage18,.videoimage19,.videoimage20,
+.videoimage21, .videoimage22, .videoimage23,.videoimage24,.videoimage25,.videoimage26,.videoimage27,.videoimage28,.videoimage29,.videoimage30,
+.videoimage31, .videoimage32, .videoimage33,.videoimage34,.videoimage35,.videoimage36,.videoimage37,.videoimage38,.videoimage39,.videoimage40,
+.videoimage41, .videoimage42, .videoimage43,.videoimage44,.videoimage45,.videoimage46,.videoimage47,.videoimage48,.videoimage49,.videoimage50,
+.videoimage51, .videoimage52, .videoimage53,.videoimage54,.videoimage55,.videoimage56,.videoimage57,.videoimage58,.videoimage59,.videoimage60
+  {
+	position: absolute;
+	top: 0px;
+	left: 402px;
+	border: 2px solid #b0b0b0;	
+	border-right: 3px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	visibility: hidden;
+	}	
+
+	
+.episodeplot0, .episodeplot1, .episodeplot2, .episodeplot3,.episodeplot4,.episodeplot5,.episodeplot6,.episodeplot7,.episodeplot8,.episodeplot9,.episodeplot10,
+.episodeplot11,.episodeplot12, .episodeplot13,.episodeplot14,.episodeplot15,.episodeplot16,.episodeplot17,.episodeplot18,.episodeplot19,.episodeplot20,
+.episodeplot21, .episodeplot22, .episodeplot23,.episodeplot24,.episodeplot25,.episodeplot26,.episodeplot27,.episodeplot28,.episodeplot29,.episodeplot30,
+.episodeplot31, .episodeplot32, .episodeplot33,.episodeplot34,.episodeplot35,.episodeplot36,.episodeplot37,.episodeplot38,.episodeplot39,.episodeplot40,
+.episodeplot41, .episodeplot42, .episodeplot43,.episodeplot44,.episodeplot45,.episodeplot46,.episodeplot47,.episodeplot48,.episodeplot49,.episodeplot50,
+.episodeplot51, .episodeplot52, .episodeplot53,.episodeplot54,.episodeplot55,.episodeplot56,.episodeplot57,.episodeplot58,.episodeplot59,.episodeplot60
+  {
+	position: absolute;
+	top: 0px;
+	left: 810px;
+	width: 460px;
+	font-family: Arial, Helvetica, sans-serif;
+	color:white;
+	font-size:1.0em;
+	font-weight: bold;
+	border: 2px solid #b0b0b0;	
+	border-right: 3px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	padding: 2px;
+	background-color:rgba(0, 0, 0, 0.3);
+	visibility: hidden;
+	}		
+.episodeplot0, .videoimage0 {
+	visibility: visible;
+	}
 #episodetable {
 	visibility : hidden;
 	position: absolute;
@@ -443,7 +526,16 @@ body {
 	overflow-y: scroll;
 	float:right;
 	}
-
+.episode_videoimage {
+	display: table-cell;
+	position: absolute;
+	top: 345px;
+	padding-top: 2px;
+	left: 500px; 
+	height: 230px;
+	table-layout: fixed;
+	overflow-y: hidden;
+	}
 .episodetable {
 
 	}
@@ -473,7 +565,8 @@ body {
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 6px 6px;
 	background-color:rgba(0, 0, 0, 0.4);
-	}	
+	}
+/***************** season *****************/	
 #seasontable {
 	visibility : hidden;
 	}

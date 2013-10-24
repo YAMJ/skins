@@ -417,7 +417,7 @@ body {
 .table_videoimage {
 	display: block;
 	position: absolute;
-	top: 375px;
+	top: 580px;
 	left: 13px;
 	visibility: hidden;
 	}
@@ -427,12 +427,12 @@ body {
 {
 	display: block;
 	width: 400px;
-	height: 435px;
+	height: auto;
 	border: 2px solid #b0b0b0;	
 	border-right: 3px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
 	background-color:rgba(0, 0, 0, 0.3);
-	overflow-y: scroll;
+	overflow-y: none;
 	}
 .listepisode_title a:focus, .listepisode_title a:hover {
 	font-family: Arial, Helvetica, sans-serif;

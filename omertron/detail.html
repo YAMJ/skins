@@ -389,7 +389,12 @@
 						var outputplot = "";
 							for (i = 0; i < totalplot.length; i++) 
 							{
-									outputplot +="<td id=\"episodeplot"+i+"\" class=\"episodeplot"+i+"\">"+totalplot[i].episode+" - "+totalplot[i].title+": "+totalplot[i].plot+"</td>";
+								if (totalplot[i].plot.length > 600)
+									{
+										outputplot +="<td id=\"episodeplot"+i+"\" class=\"episodeplot"+i+"\" style=\"height:225px; overflow-y: scroll;\">"+totalplot[i].episode+" - "+totalplot[i].title+": "+totalplot[i].plot+"</td>";
+									} else {
+										outputplot +="<td id=\"episodeplot"+i+"\" class=\"episodeplot"+i+"\">"+totalplot[i].episode+" - "+totalplot[i].title+": "+totalplot[i].plot+"</td>";
+										}
 							}
 					
 							return outputplot;
@@ -400,11 +405,11 @@
 			$p('.table_videoimage').render(dataEpisode, LIST_videoimage);			
         }	
 	// generic function to get count and call the real treatment 	
-		function updateItemCount(data, type_to_upadte)
+		function updateItemCount(data, type_to_update)
         {
 			var ITEM_COUNT = {
                'span.itemcount': function(arg) {
-			   switch(type_to_upadte)
+			   switch(type_to_update)
 				{
 					case 'Season':
 						set_seasoncount (arg.context.count);
@@ -498,9 +503,8 @@
 				
 				$('div#slideshowBanner').css('visibility', 'hidden');
 				$('div#slideshowCtr').css('visibility', 'hidden');
-				document.getElementById(current_episode_plot).style.visibility="hidden";
-				document.getElementById(current_episode_videoimage).style.visibility="hidden";
-
+				$('.'+current_episode_plot).css('visibility', 'hidden');
+				$('.'+current_episode_videoimage).css('visibility', 'hidden');
 				$('#listepisode_title').css('visibility', 'hidden');
 
 				$('div#slideshowFanart').css('opacity', '1');
@@ -518,7 +522,8 @@
 					case 'season':
 						
 						$('div#slideshowBanner').css('visibility', 'visible');
-						
+						$('.'+current_episode_plot).css('visibility', 'visible');
+						$('.'+current_episode_videoimage).css('visibility', 'visible');
 						$('#listepisode_title').css('visibility', 'visible');
 						
 						
@@ -539,14 +544,15 @@
 						
 						if (count_to_set < 1)
 						{
-						nodisplay_Id('episodeth');
-						nodisplay_Id('episodebody');
+						nodisplay_Id('listepisode_title');
+						nodisplay_Id('tablevideoimage');
+						nodisplay_Id('listepisode_plot');
 						} else {
-						if (count_to_set < 5)
-							{
-							$('#episodebody').css('float', 'none');
-					
-							}
+							if (count_to_set > 10)
+								{
+									$('#listepisode_title').css('height', '227');
+									$('#listepisode_title').css('overflow-y', 'scroll');	
+								}
 						}
 					}
 

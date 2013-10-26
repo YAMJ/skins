@@ -29,6 +29,7 @@
 			var Personpopup = "";
 			var current_episode_videoimage = "videoimage0";
 			var	current_episode_plot = "episodeplot0";
+			var	current_episode_title = "episodetitle0";
 // ******************************************** COMMON RESULTS MAPPING **********************************			
 			// from jsonUrl
 			var DETAIL_HEADER = {
@@ -361,11 +362,28 @@
 							var outputepisode_title = "";
 							for (i = 0; i < totalepisode_title.length; i++) 
 							{
-								outputepisode_title +=	"<a href=\"#\" onclick=\"display_Episode_videoimage ('videoimage"+[i]+"','episodeplot"+[i]+"',"+totalepisode_title.length+")\" >"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</a><br>";
+								outputepisode_title +=	"<a href=\"#\" onclick=\"display_Episode_videoimage ('videoimage"+[i]+"','episodeplot"+[i]+"','episodetitle"+[i]+"',"+totalepisode_title.length+")\" >"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</a><br>";
 							}
 					
 							return outputepisode_title;
 						},
+					'span.onlyepisode_title': function(arg) 
+						{
+						var totalepisode_onlytitle = arg.context.results;
+						var outputepisode_onlytitle = "";
+							for (i = 0; i < totalepisode_onlytitle.length; i++) 
+							{
+								if (totalepisode_onlytitle[i].title)
+								{
+									outputepisode_onlytitle +="<td id=\"episodetitle"+i+"\" class=\"episodetitle"+i+"\">"+totalepisode_onlytitle[i].episode+". "+totalepisode_onlytitle[i].title+"</td>";
+										
+								} else {
+									outputepisode_onlytitle +="<td id=\"episodetitle"+i+"\" class=\"episodetitle"+i+"\" style=\"display: none; \"></td>";	
+									}
+							}
+					
+							return outputepisode_onlytitle;
+						}, 		
              		'span.totalvideoimage': function(arg) 
 						{
 						var totalvideoimage = arg.context.results;
@@ -389,12 +407,17 @@
 						var outputplot = "";
 							for (i = 0; i < totalplot.length; i++) 
 							{
-								if (totalplot[i].plot.length > 600)
+								if (totalplot[i].plot)
+								{
+								if (totalplot[i].plot.length > 850)
 									{
-										outputplot +="<td id=\"episodeplot"+i+"\" class=\"episodeplot"+i+"\" style=\"height:225px; overflow-y: scroll;\">"+totalplot[i].episode+" - "+totalplot[i].title+": "+totalplot[i].plot+"</td>";
+										outputplot +="<td id=\"episodeplot"+i+"\" class=\"episodeplot"+i+"\" style=\"height:350px; overflow-y: scroll;\">"+totalplot[i].plot+"</td>";
 									} else {
-										outputplot +="<td id=\"episodeplot"+i+"\" class=\"episodeplot"+i+"\">"+totalplot[i].episode+" - "+totalplot[i].title+": "+totalplot[i].plot+"</td>";
+										outputplot +="<td id=\"episodeplot"+i+"\" class=\"episodeplot"+i+"\">"+totalplot[i].plot+"</td>";
 										}
+								} else {
+									outputplot +="<td id=\"episodeplot"+i+"\" class=\"episodeplot"+i+"\" style=\"display: none; \"></td>";	
+									}
 							}
 					
 							return outputplot;
@@ -451,14 +474,17 @@
 				console.log("Storing Series Id value: " + Series_Id);
 				}	
 				
-		function display_Episode_videoimage(videoId_to_display, plotId_to_display, max_videoimage_to_hidden)
+		function display_Episode_videoimage(videoId_to_display, plotId_to_display, titleId_to_display, max_videoimage_to_hidden)
 					{	
 						document.getElementById(current_episode_videoimage).style.visibility="hidden";
 						document.getElementById(current_episode_plot).style.visibility="hidden";
+						document.getElementById(current_episode_title).style.visibility="hidden";
 						document.getElementById(videoId_to_display).style.visibility="visible";
 						document.getElementById(plotId_to_display).style.visibility="visible";
+						document.getElementById(titleId_to_display).style.visibility="visible";
 						current_episode_videoimage = videoId_to_display;
 						current_episode_plot = plotId_to_display;
+						current_episode_title = titleId_to_display;
 					}				
 	// hidden what is asked 
 		function nodisplay_Id(Id_to_nodisplay)
@@ -505,8 +531,9 @@
 				$('div#slideshowCtr').css('visibility', 'hidden');
 				$('.'+current_episode_plot).css('visibility', 'hidden');
 				$('.'+current_episode_videoimage).css('visibility', 'hidden');
+				$('.'+current_episode_title).css('visibility', 'hidden');
 				$('#listepisode_title').css('visibility', 'hidden');
-
+				$('.episode_detail').css('visibility', 'hidden');
 				$('div#slideshowFanart').css('opacity', '1');
 			
 			}
@@ -524,6 +551,8 @@
 						$('div#slideshowBanner').css('visibility', 'visible');
 						$('.'+current_episode_plot).css('visibility', 'visible');
 						$('.'+current_episode_videoimage).css('visibility', 'visible');
+						$('.'+current_episode_title).css('visibility', 'visible');
+						$('.episode_detail').css('visibility', 'visible');
 						$('#listepisode_title').css('visibility', 'visible');
 						
 						
@@ -548,9 +577,9 @@
 						nodisplay_Id('tablevideoimage');
 						nodisplay_Id('listepisode_plot');
 						} else {
-							if (count_to_set > 10)
+							if (count_to_set > 20)
 								{
-									$('#listepisode_title').css('height', '227');
+									$('#listepisode_title').css('height', '425');
 									$('#listepisode_title').css('overflow-y', 'scroll');	
 								}
 						}
@@ -733,33 +762,40 @@
 			</table>
 		</div>
 		
-
-		<div class="table_videoimage">
-			<table id="listepisode_title">	
-				<tr>
-					<td>
-					 <span class="listepisode_title"></span>
-					</td>
-				</tr>
-			</table>
-			<table id="tablevideoimage">	
-				<tr>
-					<td>
-					
-					 <span class="totalvideoimage"></span>
-					 
-					</td>
-				</tr>
-			</table>
-			<table id="listepisode_plot">	
-				<tr>
-					<td>
-					 <span class="listepisode_plot"></span>
-					</td>
-				</tr>
-			</table>
-		</div>	
-
+		<div class="episode_detail" style="position: absolute; left: 13px; top: 372px; height: 438px; width:1279px; background: url(pictures/tvbg-v3.png) no-repeat;">
+			<div class="table_videoimage">
+				<table id="listepisode_title">	
+					<tr>
+						<td>
+						 <span class="listepisode_title"></span>
+						</td>
+					</tr>
+				</table>
+				<table id="episode_title">	
+					<tr>
+						<td>
+						 <span class="onlyepisode_title"></span>
+						</td>
+					</tr>
+				</table>
+				<table id="tablevideoimage">	
+					<tr>
+						<td>
+						
+						 <span class="totalvideoimage"></span>
+						 
+						</td>
+					</tr>
+				</table>
+				<table id="listepisode_plot">	
+					<tr>
+						<td>
+						 <span class="listepisode_plot"></span>
+						</td>
+					</tr>
+				</table>
+			</div>	
+		</div>
 
 		<!-- display source data from API if needed  -->
         <div id="sourceData"></div>

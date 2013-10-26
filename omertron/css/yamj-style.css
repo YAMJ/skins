@@ -417,8 +417,8 @@ body {
 .table_videoimage {
 	display: block;
 	position: absolute;
-	top: 580px;
-	left: 13px;
+	top: 5px;
+	left: 5px;
 	visibility: hidden;
 	}
 
@@ -426,34 +426,60 @@ body {
 #listepisode_title
 {
 	display: block;
-	width: 400px;
-	height: auto;
-	border: 2px solid #b0b0b0;	
-	border-right: 3px solid #b0b0b0;
-	border-radius: 6px 6px 0px 6px;
-	background-color:rgba(0, 0, 0, 0.3);
+	width: 420px;
+	height: 413px;
+	margin-left: 845px;
+
 	overflow-y: none;
 	}
 .listepisode_title a:focus, .listepisode_title a:hover {
 	font-family: Arial, Helvetica, sans-serif;
-	color:black;
+	color:red;
 	font-size:1.0em;
 	font-weight: bold;
-	border: 2px solid #b0b0b0;	
-	border-right: 3px solid #b0b0b0;
-	border-radius: 6px 6px 6px 6px;
-	padding: 2px;
-	background-color:rgba(255,255, 255, 0.3);
+
+	padding: 4px;
+
 	text-decoration: none;
+
 	}
 .listepisode_title a:not(:focus) {
 	font-family: Arial, Helvetica, sans-serif;
 	color:white;
 	font-size:1.0em;
-	font-weight: bold;
 	text-decoration: none;
-
+	}
+#episode_title
+{
+	position: absolute; 
+	top: 0px; 
+	left: 0px;
+	display: block;
+	width: 720px;
+	height: 413px;
+	margin-left: 15px;
+	}
+.episodetitle0, .episodetitle1, .episodetitle2, .episodetitle3,.episodetitle4,.episodetitle5,.episodetitle6,.episodetitle7,.episodetitle8,.episodetitle9,.episodetitle10,
+.episodetitle11,.episodetitle12, .episodetitle13,.episodetitle14,.episodetitle15,.episodetitle16,.episodetitle17,.episodetitle18,.episodetitle19,.episodetitle20,
+.episodetitle21, .episodetitle22, .episodetitle23,.episodetitle24,.episodetitle25,.episodetitle26,.episodetitle27,.episodetitle28,.episodetitle29,.episodetitle30,
+.episodetitle31, .episodetitle32, .episodetitle33,.episodetitle34,.episodetitle35,.episodetitle36,.episodetitle37,.episodetitle38,.episodetitle39,.episodetitle40,
+.episodetitle41, .episodetitle42, .episodetitle43,.episodetitle44,.episodetitle45,.episodetitle46,.episodetitle47,.episodetitle48,.episodetitle49,.episodetitle50,
+.episodetitle51, .episodetitle52, .episodetitle53,.episodetitle54,.episodetitle55,.episodetitle56,.episodetitle57,.episodetitle58,.episodetitle59,.episodetitle60
+  {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 810px;
+	height: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+	color:white;
+	font-size:2.0em;
+	font-weight: bold;
+	text-align: justify;
+	padding: 2px;
+	visibility: hidden;
 	}	
+	
 .videoimage0, .videoimage1, .videoimage2, .videoimage3,.videoimage4,.videoimage5,.videoimage6,.videoimage7,.videoimage8,.videoimage9,.videoimage10,
 .videoimage11,.videoimage12, .videoimage13,.videoimage14,.videoimage15,.videoimage16,.videoimage17,.videoimage18,.videoimage19,.videoimage20,
 .videoimage21, .videoimage22, .videoimage23,.videoimage24,.videoimage25,.videoimage26,.videoimage27,.videoimage28,.videoimage29,.videoimage30,
@@ -462,12 +488,14 @@ body {
 .videoimage51, .videoimage52, .videoimage53,.videoimage54,.videoimage55,.videoimage56,.videoimage57,.videoimage58,.videoimage59,.videoimage60
   {
 	position: absolute;
-	top: 0px;
-	left: 402px;
-	border: 2px solid #b0b0b0;	
-	border-right: 3px solid #b0b0b0;
+	top: 90px;
+	left: 5px;
+
+	border: 1px solid black;	
+	border-right: 2px solid black;
 	border-radius: 6px 6px 0px 6px;
 	visibility: hidden;
+	box-shadow: 10px 10px 15px 10px black;
 	}	
 
 	
@@ -479,21 +507,18 @@ body {
 .episodeplot51, .episodeplot52, .episodeplot53,.episodeplot54,.episodeplot55,.episodeplot56,.episodeplot57,.episodeplot58,.episodeplot59,.episodeplot60
   {
 	position: absolute;
-	top: 0px;
-	left: 810px;
-	width: 460px;
+	top: 90px;
+	left: 430px;
+	width: 380px;
+	height: 400px;
 	font-family: Arial, Helvetica, sans-serif;
 	color:white;
 	font-size:1.0em;
-	font-weight: bold;
-	border: 2px solid #b0b0b0;	
-	border-right: 3px solid #b0b0b0;
-	border-radius: 6px 6px 0px 6px;
+	text-align: justify;
 	padding: 2px;
-	background-color:rgba(0, 0, 0, 0.3);
 	visibility: hidden;
 	}		
-.episodeplot0, .videoimage0 {
+.episodeplot0, .videoimage0, .episodetitle0 {
 	visibility: visible;
 	}
 #episodetable {

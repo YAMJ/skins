@@ -344,9 +344,9 @@
 						jsondata = dataEpisode;
 					//	outputJson(dataEpisode);
 						displayEpisode(dataEpisode);
-						display_Id ("listepisode_title");
-				
-
+					
+						$('.episode_detail').css('visibility', 'visible');
+						display_Id ("list_episode_title");
 					}
                 });
 		}
@@ -411,7 +411,7 @@
 								{
 								if (totalplot[i].plot.length > 850)
 									{
-										outputplot +="<td id=\"episodeplot"+i+"\" class=\"episodeplot"+i+"\" style=\"height:350px; overflow-y: scroll;\">"+totalplot[i].plot+"</td>";
+										outputplot +="<td id=\"episodeplot"+i+"\" class=\"episodeplot"+i+"\" style=\"height:340px; overflow-y: scroll;\">"+totalplot[i].plot+"</td>";
 									} else {
 										outputplot +="<td id=\"episodeplot"+i+"\" class=\"episodeplot"+i+"\">"+totalplot[i].plot+"</td>";
 										}
@@ -532,7 +532,7 @@
 				$('.'+current_episode_plot).css('visibility', 'hidden');
 				$('.'+current_episode_videoimage).css('visibility', 'hidden');
 				$('.'+current_episode_title).css('visibility', 'hidden');
-				$('#listepisode_title').css('visibility', 'hidden');
+				$('#list_episode_title').css('visibility', 'hidden');
 				$('.episode_detail').css('visibility', 'hidden');
 				$('div#slideshowFanart').css('opacity', '1');
 			
@@ -553,7 +553,7 @@
 						$('.'+current_episode_videoimage).css('visibility', 'visible');
 						$('.'+current_episode_title).css('visibility', 'visible');
 						$('.episode_detail').css('visibility', 'visible');
-						$('#listepisode_title').css('visibility', 'visible');
+						$('#list_episode_title').css('visibility', 'visible');
 						
 						
 						break;
@@ -573,14 +573,15 @@
 						
 						if (count_to_set < 1)
 						{
-						nodisplay_Id('listepisode_title');
+						nodisplay_Id('list_episode_title');
 						nodisplay_Id('tablevideoimage');
 						nodisplay_Id('listepisode_plot');
 						} else {
 							if (count_to_set > 20)
 								{
-									$('#listepisode_title').css('height', '425');
-									$('#listepisode_title').css('overflow-y', 'scroll');	
+									$('#list_episode_title').css('height', '425');
+									$('#list_episode_title').css('overflow-y', 'scroll');
+								
 								}
 						}
 					}
@@ -762,9 +763,9 @@
 			</table>
 		</div>
 		
-		<div class="episode_detail" style="position: absolute; left: 13px; top: 372px; height: 438px; width:1279px; background: url(pictures/tvbg-v3.png) no-repeat;">
+		<div class="episode_detail">
 			<div class="table_videoimage">
-				<table id="listepisode_title">	
+				<table id="list_episode_title">	
 					<tr>
 						<td>
 						 <span class="listepisode_title"></span>

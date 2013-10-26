@@ -422,26 +422,24 @@ body {
 	visibility: hidden;
 	}
 
-
-#listepisode_title
+#list_episode_title
 {
-	display: block;
+	position: relative;
 	width: 420px;
 	height: 413px;
 	margin-left: 845px;
-
+	display: block;
 	overflow-y: none;
+
 	}
+
 .listepisode_title a:focus, .listepisode_title a:hover {
 	font-family: Arial, Helvetica, sans-serif;
 	color:red;
 	font-size:1.0em;
 	font-weight: bold;
-
 	padding: 4px;
-
 	text-decoration: none;
-
 	}
 .listepisode_title a:not(:focus) {
 	font-family: Arial, Helvetica, sans-serif;
@@ -449,6 +447,7 @@ body {
 	font-size:1.0em;
 	text-decoration: none;
 	}
+	
 #episode_title
 {
 	position: absolute; 
@@ -490,15 +489,23 @@ body {
 	position: absolute;
 	top: 90px;
 	left: 5px;
-
 	border: 1px solid black;	
 	border-right: 2px solid black;
 	border-radius: 6px 6px 0px 6px;
 	visibility: hidden;
 	box-shadow: 10px 10px 15px 10px black;
-	}	
-
+	}
 	
+.episode_detail {
+	position: absolute;
+	left: 13px;
+	top: 372px;
+	height: 438px;
+	width: 1279px;
+	background: url(../pictures/tvbg-v3.png) no-repeat;
+	visibility: hidden;
+	}
+
 .episodeplot0, .episodeplot1, .episodeplot2, .episodeplot3,.episodeplot4,.episodeplot5,.episodeplot6,.episodeplot7,.episodeplot8,.episodeplot9,.episodeplot10,
 .episodeplot11,.episodeplot12, .episodeplot13,.episodeplot14,.episodeplot15,.episodeplot16,.episodeplot17,.episodeplot18,.episodeplot19,.episodeplot20,
 .episodeplot21, .episodeplot22, .episodeplot23,.episodeplot24,.episodeplot25,.episodeplot26,.episodeplot27,.episodeplot28,.episodeplot29,.episodeplot30,
@@ -583,7 +590,7 @@ body {
 	border-radius: 6px 6px 6px 6px;
 	background-color:rgba(0, 0, 0, 0.3);
     }		
-.episode_title, .episode_plot
+.episode_plot
 	{
 	padding: 2px 0px 0px 5px;
 	border: 2px solid #b0b0b0;	

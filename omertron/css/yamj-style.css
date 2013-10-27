@@ -90,6 +90,8 @@ body {
     background-image: linear-gradient(to right, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
 }
 
+/****************** scrollbar settings *************************************************/
+
 #tablelist td, #tablelist th, #headertable td, #headertable th
 {	
     font-size:1em;
@@ -286,7 +288,7 @@ body {
 	height:31px;
 	position: absolute;
 	top: 11px;
-	left: 1140px;
+	left: 1180px;
 	padding:0px 0px 0px 0px;
 	background-color:rgba(255, 255, 255, 0.3);
 	border: 2px solid #b0b0b0;	
@@ -301,7 +303,7 @@ body {
 	height:31px;
 	position: absolute;
 	top: 60px;
-	left: 1140px;
+	left: 1180px;
 	padding:0px 0px 0px 0px;
 	background-color:rgba(255, 255, 255, 0.3);
 	border: 2px solid #b0b0b0;	
@@ -426,11 +428,10 @@ body {
 {
 	position: relative;
 	width: 420px;
-	height: 413px;
+	max-height: 405px;
 	margin-left: 845px;
 	display: block;
-	overflow-y: none;
-
+	overflow-y: auto;
 	}
 
 .listepisode_title a:focus, .listepisode_title a:hover {
@@ -517,12 +518,13 @@ body {
 	top: 90px;
 	left: 430px;
 	width: 380px;
-	height: 400px;
+	max-height: 320px;
 	font-family: Arial, Helvetica, sans-serif;
 	color:white;
 	font-size:1.0em;
 	text-align: justify;
 	padding: 2px;
+	overflow-y: auto;
 	visibility: hidden;
 	}		
 .episodeplot0, .videoimage0, .episodetitle0 {
@@ -613,9 +615,9 @@ body {
 	font-weight: bold;
     text-align: center;
 	color:#fff;
-	width: 1280px;
+	max-width: 1280px;
 	table-layout: fixed;
-	overflow-x: scroll;
+	overflow-x: auto;
     }
 .season
 {	

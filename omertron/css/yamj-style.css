@@ -223,12 +223,23 @@ body {
     font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 	position: relative;
 	float: right;
-
 	color:#fff;	
-	width: 555px;
+	width: 655px;
 	padding-top: 5px;
 	
-}	
+}
+.tableselect
+{
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+
+	position: absolute;
+	left: 400px;
+	top: 10px;
+	float: right;
+	color:#fff;	
+	width: 655px;
+	padding-top: 5px;
+}		
 #startlabel, #anylabel, #namelabel {
 		display: inline;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -313,10 +324,10 @@ body {
 #home_right_down:hover {
 	background-color:rgba(255, 255, 255, 0.6);
 	}
-#home_right_person, #home_right_genre {
+#home_right_person, #home_right_genre, #home_left_genre {
 	text-decoration: none;
 	}	
-#home_right_person:hover, #home_right_genre:hover {
+#home_right_person:hover, #home_right_genre:hover, #home_left_genre:hover {
 	background-color:rgba(255, 255, 255, 0.6);
 	}	
 
@@ -331,7 +342,7 @@ body {
 	top: 12px;
 	width: 130px;
 }
-#personselect, #genreselect, #button_personselect, #button_genreselect  {
+#personselect, #genreselect, #button_personselect, #button_genreselect, #button_genreselect_series  {
 	font-weight: bold;
 	height:21px;
     color: #b0b0b0;
@@ -348,7 +359,7 @@ body {
 	border-radius: 6px 6px 0px 6px;
 
 }
-#button_personselect, #button_genreselect {
+#button_personselect, #button_genreselect, #button_genreselect_series {
 	width: 130px;
 	position: absolute;	
 	top: 62px;
@@ -358,7 +369,10 @@ body {
 #button_genreselect {
 	left: 600px;
 }
-#allselect:hover, #movieselect:hover, #serieselect:hover, #seasonselect:hover, #personselect:hover, #genreselect:hover, #button_genreselect:hover, #button_personselect:hover
+#button_genreselect_series {
+	left: 750px;
+	}
+#allselect:hover, #movieselect:hover, #serieselect:hover, #seasonselect:hover, #personselect:hover, #genreselect:hover, #button_genreselect:hover, #button_personselect:hover, #button_genreselect_series:hover
 {	
 	color: red;	
 }
@@ -400,16 +414,16 @@ body {
 	background-color:rgba(255, 255, 255, 0.3);
 	}
 /* for test purpose */
-.test, .counttest
+.test, .counttest, .skinlang
 {
-	visibility: hidden;
+	visibility: visible;
 	height: auto;
     width: auto;
 	font-size:1.8em;
 	font-weight: bold;
     text-align: center;
 	position: absolute;
-	top: 40px; 
+	top: 100px; 
 	left: 150px;
     }
 #seasonhead {

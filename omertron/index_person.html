@@ -18,11 +18,7 @@
     </head>
     <body onload="getIndexData();">
         <script type="text/javascript">
-//************************ LANGUAGE SETTING *********************************************
-		// SET THE LANGUAGE HERE fr, en, de
-		var lang = "fr"; 
-		// all the other pages will take this setting 	
-		localStorage.setItem("lang", lang);
+
 //***************************************************************************************
         var perPageValue = 30;
         var jsondata = null;
@@ -31,7 +27,7 @@
 		if (localStorage.getItem("nextcurrent_count"))
 			{current_count = localStorage.getItem("nextcurrent_count");}	
 		// set a default  if 1rst time and set to the type previously selected if available 
-		var index_type = "movie,series";
+		var index_type = "all";
 		if (localStorage.getItem("indextype"))
 			{index_type = localStorage.getItem("indextype");}
 		// get the search method and reset to default for the next time 
@@ -101,7 +97,7 @@
         function getIndexData()
         {
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
-			set_lang_value (localStorage.getItem("lang"));
+			set_skin_language();
             var jsonUrl = "http://localhost:8888/yamj3/api/index/person.json?sortby=name&sortdir=asc&dataitems=artwork&artwork=photo";
 			
 						
@@ -194,10 +190,11 @@
 				console.log("callindex: " + indextype);
 				window.location.href="index.html";
 		}
-		function call_genreindex()
+		function call_genreindex(indextype)
         {
-            console.log("call navGenre: ");
-            window.location.href="navGenre.html";
+			localStorage.setItem("indextype", indextype);
+            console.log("call genreindex with indextype: "+indextype);
+			window.location.href="navGenre.html";
         }
 		function store_count (returncount, totalcount)
 		{
@@ -236,7 +233,46 @@
 				}
 				console.log("current_pos: " + current_pos + " total_count: " + totalcount+" returncount: " + returncount+ " nextcurrent_count:" + localStorage.getItem("nextcurrent_count")+" max_count:" + max_count );
 		}
-	
+//************************ LANGUAGE SETTING *********************************************		
+		// include this function to set the skin language , fetched from the yamjv3 database configuration table 
+		// before using this function skin_language varaible should declared with supported value  fr, en, de, es, it 
+		// enter in the browser http://localhost:8888/yamj3/config/list.html
+		// click on enter new configuration ()
+		// enter skin_langauge as key
+		// enter a valid value language as value 
+		// click enter 
+		function set_skin_language()
+		{		
+		var jsonSkinLangUrl = "http://localhost:8888/yamj3/system/config.json?config=skin_language&mode=any";
+		console.log("jsonSkinLangUrl: " + jsonSkinLangUrl);
+				$.ajax({
+                   url: jsonSkinLangUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSkinlanguage)
+                   {
+						jsondata = dataSkinlanguage;
+					//	outputJson(dataSkinlanguage);
+						updateSkinlang(dataSkinlanguage);
+					}
+			});	
+			 return jsondata;
+		}
+		
+		function updateSkinlang(yamjdata) {
+				console.log(yamjdata);
+				var WI = {
+						"tr": {
+							"list<-results":{
+								"td.Value"				: function(arg) {
+								set_lang_value (arg.item.value);
+								return arg.item.value;
+								}	
+							}
+						}
+					};
+				$p('.results').render( yamjdata, WI );			
+			}			
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml
 		function set_lang_value (lang)
 		{
@@ -309,6 +345,10 @@
 			<div class="count_return">
                    <span class="ReturnCount"></span> 
 			</div>
+		<!-- just added to set the language value, shouldn't be displayed  -->
+			<div class="results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Value"></td></tr></table>
+			</div>
 		<!-- search by letter -->				
 						
 			<form id="monForm">
@@ -372,7 +412,7 @@
 								<td><input type="radio" name="search_method" value="NAME" onclick="localStorage.setItem('search_method', 'NAME')" id="FormName" /> <label for="NAME"><div id='namelabel'></div></label>
 							</td>
 							<td>
-								<a id="home_right_genre" href="javascript:call_genreindex()">
+								<a id="home_right_genre" href="javascript:call_genreindex(index_type)">
 									<div id="genreselect"></div>
 								</a>
 							</td>

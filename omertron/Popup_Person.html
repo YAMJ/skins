@@ -11,10 +11,9 @@
             function PersonData()
             {
 				var	id = localStorage.getItem ("Person_id");
+			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+				set_skin_language();				
                 jsonUrl = "http://localhost:8888/yamj3/api/person/" + id + ".json?dataitems=artwork,biography";
-				// fill all value according to language setting - from yamjv3_lang_{lang}.xml
-				//language as been setted in index.html 
-				set_lang_value (localStorage.getItem("lang"));
                 var jsondata = null;
 
                 console.log("Call for URL with person ID:" + id);
@@ -83,6 +82,46 @@
             function output(inp) {
                 document.body.appendChild(document.createElement('pre')).innerHTML = inp;
             }
+//************************ LANGUAGE SETTING *********************************************		
+		// include this function to set the skin language , fetched from the yamjv3 database configuration table 
+		// before using this function skin_language varaible should declared with supported value  fr, en, de, es, it 
+		// enter in the browser http://localhost:8888/yamj3/config/list.html
+		// click on enter new configuration ()
+		// enter skin_langauge as key
+		// enter a valid value language as value 
+		// click enter 
+		function set_skin_language()
+		{		
+		var jsonSkinLangUrl = "http://localhost:8888/yamj3/system/config.json?config=skin_language&mode=any";
+		console.log("jsonSkinLangUrl: " + jsonSkinLangUrl);
+				$.ajax({
+                   url: jsonSkinLangUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSkinlanguage)
+                   {
+						jsondata = dataSkinlanguage;
+					//	outputJson(dataSkinlanguage);
+						updateSkinlang(dataSkinlanguage);
+					}
+			});	
+			 return jsondata;
+		}
+		
+		function updateSkinlang(yamjdata) {
+				console.log(yamjdata);
+				var WI = {
+						"tr": {
+							"list<-results":{
+								"td.Value"				: function(arg) {
+								set_lang_value (arg.item.value);
+								return arg.item.value;
+								}	
+							}
+						}
+					};
+				$p('.results').render( yamjdata, WI );			
+			}					
 		function set_lang_value (lang)
 		{
 
@@ -104,6 +143,11 @@
 			nobirthday_text=(x[i].getElementsByTagName("nobirthday")[0].childNodes[0].nodeValue);
 		}
         </script>
+		<!-- just added to set the language value, shouldn't be displayed  -->
+			<div class="results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Value"></td></tr></table>
+			</div>
+			
         <div class="template">
             <table id="headertable">
                 <tr>

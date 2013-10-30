@@ -173,16 +173,16 @@
 
 					
 
-// ***************************************************** GET DATA section ******************************************************					
+// ***************************************************** GET DATA section ******************************************************	
+				
             function getData()
             {	
-				
+				// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+				set_skin_language();
 				// construct JSON request for detail movie/series/season 
 				jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot";
 				console.log("URL: " + jsonUrl);
-				// fill all value according to language setting - from yamjv3_lang_{lang}.xml
-				//language as been setted in index.html 
-					set_lang_value (localStorage.getItem("lang"));
+		
 					
         // main API call         
                 $.ajax({
@@ -225,9 +225,47 @@
         
 
             }
-  
-  // ********************* NOW SET VARIOUS FUNCTION **********************************************
-  
+
+  //************************ LANGUAGE SETTING *********************************************
+  		// include this function to set the skin language , fetched from the yamjv3 database configuration table 
+		// before using this function skin_language varaible should declared with supported value  fr, en, de, es, it 
+		// enter in the browser http://localhost:8888/yamj3/config/list.html
+		// click on enter new configuration ()
+		// enter skin_langauge as key
+		// enter a valid value language as value 
+		// click enter 
+		function set_skin_language()
+		{		
+		var jsonSkinLangUrl = "http://localhost:8888/yamj3/system/config.json?config=skin_language&mode=any";
+		console.log("jsonSkinLangUrl: " + jsonSkinLangUrl);
+				$.ajax({
+                   url: jsonSkinLangUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSkinlanguage)
+                   {
+						jsondata = dataSkinlanguage;
+					//	outputJson(dataSkinlanguage);
+						updateSkinlang(dataSkinlanguage);
+					}
+			});	
+			 return jsondata;
+		}
+		
+		function updateSkinlang(yamjdata) {
+				console.log(yamjdata);
+				var WI = {
+						"tr": {
+							"list<-results":{
+								"td.Value"				: function(arg) {
+								set_lang_value (arg.item.value);
+								return arg.item.value;
+								}	
+							}
+						}
+					};
+				$p('.results').render( yamjdata, WI );			
+			}			
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml
 		function set_lang_value (lang)
 		{
@@ -272,7 +310,8 @@
 			series_select=(x[i].getElementsByTagName("serieselected")[0].childNodes[0].nodeValue);
 			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
 		}
-  
+		
+  // ********************* NOW SET VARIOUS FUNCTION **********************************************  
         // Add the source output to the end of the page
         function outputJson(yamjdata)
             {
@@ -483,7 +522,8 @@
 						current_episode_videoimage = videoId_to_display;
 						current_episode_plot = plotId_to_display;
 						current_episode_title = titleId_to_display;
-					}				
+					}
+	
 	// hidden what is asked 
 		function nodisplay_Id(Id_to_nodisplay)
 					{			
@@ -600,10 +640,8 @@
 	// open a new vertical window for index list 				
 	function ouvre_popup_index(page, direction, current_type) 
 		{
-		
 			localStorage.setItem("direction", direction);
 			localStorage.setItem("type", current_type);
-
 			Indexpopup = window.open(page, "YAMJv3 Navigation index","channelmode=no, menubar=no, status=no, scrollbars=yes, resizable=yes, menubar=no, location=no, left=2px, top=5px, width=160px, height=1000px");
 		}
 	// open a new vertical window for person list 
@@ -685,6 +723,10 @@
 		<div class="counttest">
 					<td><span class="itemcount"></span></td>
 		</div> 
+	<!-- just added to set the language value, shouldn't be displayed  -->
+		<div class="results" style="visibility: hidden; display:none;">
+			<table><tr><td class="Value"></td></tr></table>
+		</div>
 	<!-- main table for detail page -->
         <div class="template"> 
            <table>

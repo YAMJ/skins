@@ -19,14 +19,6 @@
     </head>
     <body onload="getIndexData();">
         <script type="text/javascript">
-
-	
-//************************ LANGUAGE SETTING *********************************************
-		// SET THE LANGUAGE HERE fr, en, de
-		var lang = "fr"; 
-		// all the other pages will take this setting 	
-		window.localStorage.setItem("lang", lang);
-		console.log("Storing setitem value: " + lang );
 			
 //***************************************************************************************
 		var perPageValue = 12;
@@ -38,7 +30,10 @@
 		if (localStorage.getItem("Genre_name"))
 			{genre_name = localStorage.getItem("Genre_name");
 			}
-		
+		var index_type = "all";
+			if (window.localStorage.getItem("indextype"))
+				{index_type = window.localStorage.getItem("indextype");}
+				else {window.localStorage.setItem("indextype", index_type);}
 			
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
@@ -101,14 +96,9 @@
         // It will then update the HTML with the data and set up the paging
         function getIndexData()
         {
-			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
-			
-			set_lang_value (window.localStorage.getItem("lang"));
-
-			// select only movie because other type is buggy 
-			var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=movie&sortby=title&sortdir=ASC&artwork=poster&include=genre-"+genre_name
-		//	var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=all&sortby=title&sortdir=ASC&artwork=poster&search="+genre_name+"&field=name";
-				
+		// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+			set_skin_language();
+			var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type="+index_type+"&sortby=title&sortdir=ASC&artwork=poster&include=genre-"+genre_name;
 			var	display_genre = genre_select.toUpperCase() + ":" + genre_name.toUpperCase();
 	
 				$('#printsearch').html(display_genre);
@@ -162,11 +152,59 @@
             console.log("call personindex: ");
             window.location.href="index_person.html";
         }
-		function call_genreindex()
+		function call_genreindex(indextype)
         {
-            console.log("call genreindex: ");
+			localStorage.setItem("indextype", indextype);
+            console.log("call genreindex with indextype: "+indextype);
 			window.location.href="navGenre.html";
         }
+		function open_genre_index(indextype)
+        {
+			localStorage.setItem("indextype", indextype);
+            console.log("Storing value: indextype: " +indextype);
+			window.location.href="index_Genre.html";
+			Mypopup.focus();
+		}
+//************************ LANGUAGE SETTING *********************************************		
+		// include this function to set the skin language , fetched from the yamjv3 database configuration table 
+		// before using this function skin_language varaible should declared with supported value  fr, en, de, es, it 
+		// enter in the browser http://localhost:8888/yamj3/config/list.html
+		// click on enter new configuration ()
+		// enter skin_langauge as key
+		// enter a valid value language as value 
+		// click enter 
+		function set_skin_language()
+		{		
+		var jsonSkinLangUrl = "http://localhost:8888/yamj3/system/config.json?config=skin_language&mode=any";
+		console.log("jsonSkinLangUrl: " + jsonSkinLangUrl);
+				$.ajax({
+                   url: jsonSkinLangUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSkinlanguage)
+                   {
+						jsondata = dataSkinlanguage;
+					//	outputJson(dataSkinlanguage);
+						updateSkinlang(dataSkinlanguage);
+					}
+			});	
+			 return jsondata;
+		}
+		
+		function updateSkinlang(yamjdata) {
+				console.log(yamjdata);
+				var WI = {
+						"tr": {
+							"list<-results":{
+								"td.Value"				: function(arg) {
+								set_lang_value (arg.item.value);
+								return arg.item.value;
+								}	
+							}
+						}
+					};
+				$p('.results').render( yamjdata, WI );			
+			}					
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml
 		function set_lang_value (lang)
 		{
@@ -230,22 +268,39 @@
 			<div class="count_return_genre">
                    <span class="ReturnCount"></span> 
 			</div>
+		<!-- just added to set the language value, shouldn't be displayed  -->
+			<div class="results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Value"></td></tr></table>
+			</div>
+			
+			<form id="monForm">
+				<fieldset style="border:none">
+					<table align="center">
+						<tr>
+							<td class="formSelect">							
+								<input  type="button" onclick="open_genre_index('all')" value="ALL" onclick="SetIndexData('all')" />
+								<input  type="button" onclick="open_genre_index('movie')" value="MOVIE" onclick="SetIndexData('movie')" />
+								<input  type="button" onclick="open_genre_index('series')" value="SERIES" onclick="SetIndexData('series')" />
+								<input  type="button" onclick="open_genre_index('season')" value="SEASON" onclick="SetIndexData('season')" />
+							<td>
+						</tr>
 
-					<table align="center"  >
-						<tr class="tablesearchmethod">
+						<tr class="tableselect">
 							<td>
 								<a id="home_right_person" href="javascript:call_personindex()">
 									<div id="button_personselect"></div>
 								</a>
 							</td>
 							<td>
-								<a id="home_right_genre" href="javascript:call_genreindex()">
+								<a id="home_right_genre" href="javascript:call_genreindex(index_type)">
 									<div id="button_genreselect"></div>
 								</a>
 							</td>
 						</tr>	
+				
 					</table>
-
+				</fieldset>
+			</form>
 			</div>
             <!--Navigation Holder-->
             <div class="holder"></div>

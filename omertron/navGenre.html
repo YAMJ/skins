@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
     <head>
-	
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		
@@ -24,15 +23,35 @@
     </head>
     <body onload="NavData();">
         <script type="text/javascript">
-		
+		var index_type = "all";
+			if (window.localStorage.getItem("indextype"))
+				{index_type = window.localStorage.getItem("indextype");}
+				else {window.localStorage.setItem("indextype", index_type);}
+				
 		 function NavData()
         {
-			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
-			
-			set_lang_value (window.localStorage.getItem("lang"));
-		
+		// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+			set_skin_language();
 		    var jsonUrl = "http://localhost:8888/yamj3/api/api/genres.json?";
-			$('#printsearch').html(genre_select.toUpperCase());
+			switch (index_type)
+				{
+					case 'all':
+						selected_index = all_select.toUpperCase();
+						break;
+					case 'movie,series':
+						selected_index = all_select.toUpperCase();
+						break;
+					case 'movie':
+						selected_index = movie_select.toUpperCase();
+						break;
+					case 'series':
+						selected_index = series_select.toUpperCase();
+						break;
+					case 'season':
+						selected_index = season_select.toUpperCase();
+						break;
+				};
+			$('#printsearch').html(genre_select.toUpperCase()+' '+selected_index);
 
             console.log("URL: " + jsonUrl);
             var jsondata = null;
@@ -109,6 +128,7 @@
         }
 		function open_genre_index(genrename)
         {
+			
 			localStorage.setItem("Genre_name", genrename);
             console.log("Storing value: Genre name: " +genrename);
 			window.location.href="index_Genre.html";
@@ -126,11 +146,52 @@
             console.log("call personindex: ");
             window.location.href="index_person.html";
         }
-		function call_genreindex()
+		function call_genreindex(indextype)
         {
-            console.log("call genreindex: ");
+			window.localStorage.setItem("indextype", indextype);
+            console.log("call genreindex with indextype : "+indextype);
 			window.location.href="navGenre.html";
         }
+//************************ LANGUAGE SETTING *********************************************		
+		// include this function to set the skin language , fetched from the yamjv3 database configuration table 
+		// before using this function skin_language varaible should declared with supported value  fr, en, de, es, it 
+		// enter in the browser http://localhost:8888/yamj3/config/list.html
+		// click on enter new configuration ()
+		// enter skin_langauge as key
+		// enter a valid value language as value 
+		// click enter 
+		function set_skin_language()
+		{		
+		var jsonSkinLangUrl = "http://localhost:8888/yamj3/system/config.json?config=skin_language&mode=any";
+		console.log("jsonSkinLangUrl: " + jsonSkinLangUrl);
+				$.ajax({
+                   url: jsonSkinLangUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSkinlanguage)
+                   {
+						jsondata = dataSkinlanguage;
+					//	outputJson(dataSkinlanguage);
+						updateSkinlang(dataSkinlanguage);
+					}
+			});	
+			 return jsondata;
+		}
+		
+		function updateSkinlang(yamjdata) {
+				console.log(yamjdata);
+				var WI = {
+						"tr": {
+							"list<-results":{
+								"td.Value"				: function(arg) {
+								set_lang_value (arg.item.value);
+								return arg.item.value;
+								}	
+							}
+						}
+					};
+				$p('.results').render( yamjdata, WI );			
+			}		
 		function set_lang_value (lang)
 		{
 
@@ -198,22 +259,39 @@
 					<div class="count_return_genre">
 						   <span class="ReturnCount"></span> 
 					</div>
+		<!-- just added to set the language value, shouldn't be displayed  -->
+			<div class="results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Value"></td></tr></table>
+			</div>					
 					
+			<form id="monForm">
+				<fieldset style="border:none">
+					<table align="center">
+						<tr>
+							<td class="formSelect">							
+								<input  type="button" onclick="call_genreindex('all')" value="ALL" onclick="SetIndexData('all')" />
+								<input  type="button" onclick="call_genreindex('movie')" value="MOVIE" onclick="SetIndexData('movie')" />
+								<input  type="button" onclick="call_genreindex('series')" value="SERIES" onclick="SetIndexData('series')" />
+								<input  type="button" onclick="call_genreindex('season')" value="SEASON" onclick="SetIndexData('season')" />
+							<td>
+						</tr>	
 				<!--  2 buttons personne and genre --> 	
-					<table align="center"  >
-						<tr class="tablesearchmethod">
+					
+						<tr class="tableselect">
 							<td>
 								<a id="home_right_person" href="javascript:call_personindex()">
 									<div id="button_personselect"></div>
 								</a>
 							</td>
 							<td>
-								<a id="home_right_genre" href="javascript:call_genreindex()">
+								<a id="home_right_genre" href="javascript:call_genreindex(index_type)">
 									<div id="button_genreselect"></div>
 								</a>
 							</td>
 						</tr>	
 					</table>
+				</fieldset>
+			</form>
 		</div>					
         <!--Navigation Holder-->
         <div class="holder"></div>

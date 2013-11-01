@@ -6,8 +6,10 @@
         <script src="js/jquery.js"></script>
         <!-- Used for the JSON parsing -->
         <script src="js/pure.js"></script>
-        <!-- Used for the paging of the index -->
-        <script src="js/js.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/set_skin_lang.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>		
         <script src="js/jPages.js"></script>
 
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
@@ -138,7 +140,7 @@
                 'success': function(data)
                 {
                     jsondata = data;
-					
+				//	 outputJson(data); 	
                     updateHtml(data);
                     pageData(perPageValue);
                 }
@@ -153,13 +155,8 @@
         {	
 			$p('.count_return').render(yamjdata, COUNT_HEADER);	
             $p('div.row_person').render(yamjdata, LIST_DIR);
-		var str = JSON.stringify(yamjdata, undefined, 4);
-        //       output(str);	
         }
-		// Add the source output to the end of the page
-        function output(inp) {
-                document.body.appendChild(document.createElement('pre')).innerHTML = inp;
-            }
+	
         // Create the pagination for the index using jPages.
         // Will place the page list in the "div.holder" and page the "yRow" data.
         // Animation comes from animate.css
@@ -233,94 +230,18 @@
 				}
 				console.log("current_pos: " + current_pos + " total_count: " + totalcount+" returncount: " + returncount+ " nextcurrent_count:" + localStorage.getItem("nextcurrent_count")+" max_count:" + max_count );
 		}
-//************************ LANGUAGE SETTING *********************************************		
-		// include this function to set the skin language , fetched from the yamjv3 database configuration table 
-		// before using this function skin_language varaible should declared with supported value  fr, en, de, es, it 
-		// enter in the browser http://localhost:8888/yamj3/config/list.html
-		// click on enter new configuration ()
-		// enter skin_langauge as key
-		// enter a valid value language as value 
-		// click enter 
-		function set_skin_language()
-		{		
-		var jsonSkinLangUrl = "http://localhost:8888/yamj3/system/config.json?config=skin_language&mode=any";
-		console.log("jsonSkinLangUrl: " + jsonSkinLangUrl);
-				$.ajax({
-                   url: jsonSkinLangUrl,
-                    async: false,
-                    dataType: 'jsonp',
-                    'success': function(dataSkinlanguage)
-                   {
-						jsondata = dataSkinlanguage;
-					//	outputJson(dataSkinlanguage);
-						updateSkinlang(dataSkinlanguage);
-					}
-			});	
-			 return jsondata;
-		}
-		
-		function updateSkinlang(yamjdata) {
-				console.log(yamjdata);
-				var WI = {
-						"tr": {
-							"list<-results":{
-								"td.Value"				: function(arg) {
-								set_lang_value (arg.item.value);
-								return arg.item.value;
-								}	
-							}
-						}
-					};
-				$p('.results').render( yamjdata, WI );			
-			}			
-		// store all value according to language setting - from yamjv3_lang_{lang}.xml
-		function set_lang_value (lang)
+//************************ LANGUAGE LOCAL SETTING *********************************************		
+		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
+		function set_context_lang_value (lang)
 		{
-
-			if (window.XMLHttpRequest)
-			  {// code for IE7+, Firefox, Chrome, Opera, Safari
-			  xmlhttp=new XMLHttpRequest();
-			  }
-			else
-			  {// code for IE6, IE5
-			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-			  }
-			xmlhttp.open("GET","yamjv3_lang_"+lang+".xml",false);
-			xmlhttp.send();
-			xmlDoc=xmlhttp.responseXML; 
-			x=xmlDoc.getElementsByTagName('lang');
-			i=0;
-
-			all_select=(x[i].getElementsByTagName("allselected")[0].childNodes[0].nodeValue);
 			document.getElementById("allselect").innerHTML=all_select.toUpperCase();
-			
-			movie_select=(x[i].getElementsByTagName("movieselected")[0].childNodes[0].nodeValue);
 			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
-			
-			series_select=(x[i].getElementsByTagName("serieselected")[0].childNodes[0].nodeValue);
 			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
-			
-			season_select=(x[i].getElementsByTagName("seasonselected")[0].childNodes[0].nodeValue);
 			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
-			
-			start_label=(x[i].getElementsByTagName("startlabel")[0].childNodes[0].nodeValue);
 			document.getElementById("startlabel").innerHTML=start_label.toUpperCase();
-			
-			any_label=(x[i].getElementsByTagName("anylabel")[0].childNodes[0].nodeValue);
 			document.getElementById("anylabel").innerHTML=any_label.toUpperCase();
-			
-			name_label=(x[i].getElementsByTagName("namelabel")[0].childNodes[0].nodeValue);
 			document.getElementById("namelabel").innerHTML=name_label.toUpperCase();
-			
-			genre_select=(x[i].getElementsByTagName("genreselected")[0].childNodes[0].nodeValue);
 			document.getElementById("genreselect").innerHTML=genre_select.toUpperCase();
-			
-			results_text=(x[i].getElementsByTagName("resultstext")[0].childNodes[0].nodeValue);
-			selection_text=(x[i].getElementsByTagName("selection")[0].childNodes[0].nodeValue);
-			series_label=(x[i].getElementsByTagName("serieslabel")[0].childNodes[0].nodeValue);
-			season_label=(x[i].getElementsByTagName("seasonlabel")[0].childNodes[0].nodeValue);
-			person_label=(x[i].getElementsByTagName("personlabel")[0].childNodes[0].nodeValue);
-	
 		}
         </script>
 
@@ -436,6 +357,7 @@
                 <br />
             </div>
         </div>
-
+	<!-- display source data from API if needed  -->
+        <div id="sourceData"></div>
     </body>
 </html>

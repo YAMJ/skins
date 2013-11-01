@@ -5,6 +5,10 @@
         <title>YAMJ v3 detail page</title>
         <script src="js/jquery.js"></script>
         <script src="js/pure.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/set_skin_lang.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css"/>
         <!--Slider stuff-->
         <link href="slideshow/slideshow.css" rel="stylesheet" type="text/css" />
@@ -226,101 +230,19 @@
 
             }
 
-  //************************ LANGUAGE SETTING *********************************************
-  		// include this function to set the skin language , fetched from the yamjv3 database configuration table 
-		// before using this function skin_language varaible should declared with supported value  fr, en, de, es, it 
-		// enter in the browser http://localhost:8888/yamj3/config/list.html
-		// click on enter new configuration ()
-		// enter skin_langauge as key
-		// enter a valid value language as value 
-		// click enter 
-		function set_skin_language()
-		{		
-		var jsonSkinLangUrl = "http://localhost:8888/yamj3/system/config.json?config=skin_language&mode=any";
-		console.log("jsonSkinLangUrl: " + jsonSkinLangUrl);
-				$.ajax({
-                   url: jsonSkinLangUrl,
-                    async: false,
-                    dataType: 'jsonp',
-                    'success': function(dataSkinlanguage)
-                   {
-						jsondata = dataSkinlanguage;
-					//	outputJson(dataSkinlanguage);
-						updateSkinlang(dataSkinlanguage);
-					}
-			});	
-			 return jsondata;
-		}
-		
-		function updateSkinlang(yamjdata) {
-				console.log(yamjdata);
-				var WI = {
-						"tr": {
-							"list<-results":{
-								"td.Value"				: function(arg) {
-								set_lang_value (arg.item.value);
-								return arg.item.value;
-								}	
-							}
-						}
-					};
-				$p('.results').render( yamjdata, WI );			
-			}			
-		// store all value according to language setting - from yamjv3_lang_{lang}.xml
-		function set_lang_value (lang)
+  //************************ LANGUAGE LOCAL SETTING *********************************************			
+		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
+		function set_context_lang_value ()
 		{
-
-			if (window.XMLHttpRequest)
-			  {// code for IE7+, Firefox, Chrome, Opera, Safari
-			  xmlhttp=new XMLHttpRequest();
-			  }
-			else
-			  {// code for IE6, IE5
-			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-			  }
-			xmlhttp.open("GET","yamjv3_lang_"+lang+".xml",false);
-			xmlhttp.send();
-			xmlDoc=xmlhttp.responseXML; 
-			x=xmlDoc.getElementsByTagName('lang');
-			i=0;
-			
-			fanart_show=(x[i].getElementsByTagName("fanartshow")[0].childNodes[0].nodeValue);
 			document.getElementById("fanartshow").innerHTML=fanart_show.toUpperCase();
-			
-			person_show=(x[i].getElementsByTagName("personshow")[0].childNodes[0].nodeValue);
 			document.getElementById("personshow").innerHTML=person_show.toUpperCase();
-			
-			season_label=(x[i].getElementsByTagName("seasonlabel")[0].childNodes[0].nodeValue);
 			document.getElementById("seasonlabel").innerHTML=season_label;
-			
-			episode_label=(x[i].getElementsByTagName("episodelabel")[0].childNodes[0].nodeValue);
-			
-			movie_label=(x[i].getElementsByTagName("movielabel")[0].childNodes[0].nodeValue);
-			
-			series_label=(x[i].getElementsByTagName("serieslabel")[0].childNodes[0].nodeValue);
-			
-			plot_label=(x[i].getElementsByTagName("plotlabel")[0].childNodes[0].nodeValue);
-			
-			
-			genre_label=(x[i].getElementsByTagName("genrelabel")[0].childNodes[0].nodeValue);
-			
-			movie_select=(x[i].getElementsByTagName("movieselected")[0].childNodes[0].nodeValue);
 			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
-			
-			series_select=(x[i].getElementsByTagName("serieselected")[0].childNodes[0].nodeValue);
 			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
 		}
 		
   // ********************* NOW SET VARIOUS FUNCTION **********************************************  
-        // Add the source output to the end of the page
-        function outputJson(yamjdata)
-            {
-                var sourceData = document.getElementById("sourceData");
-                sourceData.setAttribute("class", "code");
-                sourceData.innerHTML = '<h4>Source data:</h4>';
-                sourceData.appendChild(document.createElement('pre')).innerHTML = JSON.stringify(yamjdata, undefined, 4);
-            }
-			
+ 
 	// call the JSON value of season  	
 		function perform_season()
 		{

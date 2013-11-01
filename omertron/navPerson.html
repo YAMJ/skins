@@ -8,6 +8,8 @@
 		<script src="js/pure.js"></script>
         <script src="js/js.js"></script>
         <script src="js/jPages.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>	
 		<link rel="stylesheet" type="text/css" href="css/person-style.css">
         <link rel="stylesheet" type="text/css" href="css/nav-style.css">
         <link rel="stylesheet" href="css/jPages.css">
@@ -34,6 +36,7 @@
                 'success': function(data)
                 {
                     jsondata = data;
+				//	 outputJson(data); 		
                     updateHtml(data);
 	
                 }
@@ -82,27 +85,10 @@ function updateHtml(yamjdata)
 							return outputperson_photo;
 						}
 					};
-				
-
-
-				$p('.table_person_photo').render(yamjdata, LIST_person_photo);	
-				
-				var str = JSON.stringify(yamjdata, undefined, 4);
-			//	 output(str);
-				
+				$p('.table_person_photo').render(yamjdata, LIST_person_photo);			
 			}
 		
 //***************************************************************************************************************		
-		
-
-        // Add the source output to the end of the page
-        function output(inp)
-        {
-            // Clear the "pre" element if it exists
-            $('pre').empty();
-            document.body.appendChild(document.createElement('pre')).innerHTML = inp;
-        }
- 
 	  
 	function open_person_popup(id)
         {
@@ -131,7 +117,7 @@ function updateHtml(yamjdata)
 			</table>
 		</div>
 	
-
-        <!--<h4>Source Data:</h4>-->
+	<!-- display source data from API if needed  -->
+        <div id="sourceData"></div>
     </body>
 </html>

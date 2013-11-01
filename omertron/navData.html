@@ -7,7 +7,8 @@
         <script src="js/pure.js"></script>
         <script src="js/js.js"></script>
         <script src="js/jPages.js"></script>
-
+		<!-- Used for template -->
+		<script src="js/template.js"></script>	
         <link rel="stylesheet" type="text/css" href="css/nav-style.css">
         <link rel="stylesheet" href="css/jPages.css">
         <link rel="stylesheet" href="css/animate.css">
@@ -35,6 +36,7 @@
                 'success': function(data)
                 {
                     jsondata = data;
+				//	 outputJson(data); 		
                     updateHtml(data);
 			// adjust number per page with the popup width and poster + container width			
                     pageData(6);
@@ -90,25 +92,12 @@
                 }
             }
         };
-
-
             $p('div.row').render(yamjdata, LIST_DIR);
-			//      output(str);
-			
 	}
 		
 		
 //***************************************************************************************************************		
 		
-
-        // Add the source output to the end of the page
-        function output(inp)
-        {
-            // Clear the "pre" element if it exists
-            $('pre').empty();
-            document.body.appendChild(document.createElement('pre')).innerHTML = inp;
-        }
-
         function pageData(perPage)
         {
             $("div.holder").jPages({
@@ -146,7 +135,7 @@
                 </div>
             </div>
         </div>
-		
-        <!--<h4>Source Data:</h4>-->
+	<!-- display source data from API if needed  -->
+        <div id="sourceData"></div>
     </body>
 </html>

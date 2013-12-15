@@ -25,7 +25,9 @@
 	
 //***************************************************************************************
         var select = "";
-		var perPageValue = 12;
+		// set default to 2 rows and 6 columns
+		var RowperPageValue = 2;
+		var PerPageValue = 12;
         var jsondata = null;
 		var index_method = "START";
 		// get the search method and reset to default for the next time 
@@ -139,6 +141,7 @@
                     jsondata = data;
 				//	 outputJson(data); 		
                     updateHtml(data);
+					get_poster_number ();
                     pageData(perPageValue);
                 }
             });
@@ -157,12 +160,12 @@
         // Create the pagination for the index using jPages.
         // Will place the page list in the "div.holder" and page the "yRow" data.
         // Animation comes from animate.css
-        function pageData(perPage)
+        function pageData(perPageValue)
         {
             $("div.holder").jPages({
                 containerID: "yRow",
                 animation: "fadeInUpBig",
-                perPage: perPage,
+                perPage: perPageValue,
                 delay: 20
             });
         }
@@ -190,7 +193,126 @@
             console.log("call genreindex with indextype: "+indextype);
 			window.location.href="navGenre.html";
         }
-		
+	// fetch the value in the config database
+		function get_poster_number()
+			{
+				var jsonPosterNbUrl = "http://localhost:8888/yamj3/system/config.json?config=skin_index_row";
+				console.log("jsonPosterNbUrl: " + jsonPosterNbUrl);
+				$.ajax({
+                   url: jsonPosterNbUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSkinPosterNb)
+                   {
+						jsondata = dataSkinPosterNb;
+					//	outputJson(dataSkinPosterNb);
+						updateSkinPosterNb(dataSkinPosterNb);
+					}
+				});	
+			 return jsondata;
+		}
+	// parse the value nbre of row index 
+		function updateSkinPosterNb(yamjdata) {
+				console.log(yamjdata);
+				var PN = {
+						"tr": {
+							"list<-results":{
+								"td.Poster_Value"				: function(arg) {
+								set_poster_value (arg.item.value);
+								return arg.item.value;
+								}	
+							}
+						}
+					};
+				$p('.poster_results').render( yamjdata, PN );			
+			}
+	// set the rules to adjust poster to the number of row choosen
+		function set_poster_value(poster_nb)
+			{
+				RowperPageValue = parseInt(poster_nb, 10);
+				console.log('set index_row:'+poster_nb);
+				if (parseInt(RowperPageValue, 10) < 6  ) {
+					switch (RowperPageValue)
+						{
+						//1 row , 6 columns
+						case 1:
+							perPageValue = 6;
+							$('.row').css('padding', '5px 0px 0px 5px');
+							$('.block').css('height', '330px');
+							$('.block').css('width', '194px');
+							$('.block').css('margin', '3px');
+							$('.block').css('padding', '4px');
+							$('.poster').css('height', '285px');
+							$('.poster').css('width', '190px');
+							$('.title').css('font-size', '0.9em');
+							$('.title').css('line-height', '100%');
+							break;
+						//2 rows , 6 columns
+						case 2:
+							perPageValue = 12;
+							$('.row').css('padding', '5px 0px 0px 5px');
+							$('.block').css('height', '330px');
+							$('.block').css('width', '194px');
+							$('.block').css('margin', '3px');
+							$('.block').css('padding', '4px');
+							$('.poster').css('height', '285px');
+							$('.poster').css('width', '190px');
+							$('.title').css('font-size', '0.9em');
+							$('.title').css('line-height', '100%');
+							break;
+						//3 rows, 9 columns 
+						case 3:
+							perPageValue = 27;
+							$('.row').css('padding', '5px 0px 0px 3px');
+							$('.block').css('height', '225px');
+							$('.block').css('width', '130px');
+							$('.block').css('margin', '3px');
+							$('.block').css('padding', '1px');
+							$('.poster').css('height', '190px');
+							$('.poster').css('width', '127px');
+							$('.title').css('font-size', '0.7em');
+							$('.title').css('line-height', '70%');
+							break;
+						//4 rows, 10 columns 
+						case 4:
+							perPageValue = 44;
+							$('.row').css('padding', '5px 0px 0px 5px');
+							$('.block').css('height', '165px');
+							$('.block').css('width', '104px');
+							$('.block').css('margin', '3px');
+							$('.block').css('padding', '1px');
+							$('.poster').css('height', '152px');
+							$('.poster').css('width', '102px');
+							$('.title').css('font-size', '0.5em');
+							$('.title').css('line-height', '60%');
+							break;	
+						//5 rows, 12 columns
+						case 5:
+							perPageValue = 60;
+							$('.row').css('padding', '5px 0px 0px 15px');
+							$('.block').css('height', '136px');
+							$('.block').css('width', '96px');
+							$('.block').css('margin', '0px 2px 1px 1px');
+							$('.block').css('padding', '0px 1px 0px 1px');
+							$('.poster').css('height', '135px');
+							$('.poster').css('width', '95px');
+							$('.title').css('font-size', '0.4em');
+							$('.title').css('line-height', '30%');
+							break;
+						}
+					} else {
+						perPageValue = 999999; 
+						$('.row').css('padding', '5px 0px 0px 15px');
+						$('.block').css('height', '136px');
+						$('.block').css('width', '96px');
+						$('.block').css('margin', '0px 2px 1px 1px');
+						$('.block').css('padding', '0px 1px 0px 1px');
+						$('.poster').css('height', '135px');
+						$('.poster').css('width', '95px');
+						$('.title').css('font-size', '0.4em');
+						$('.title').css('line-height', '30%');
+					}
+			}
   //************************ LANGUAGE LOCAL SETTING *********************************************
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
 		function set_context_lang_value ()
@@ -231,6 +353,13 @@
 		<div class="results" style="visibility: hidden; display:none;">
 			<table><tr><td class="Value"></td></tr></table>
 		</div>
+		<!-- just added to set the poster number value, shouldn't be displayed  -->
+		<div class="poster_results" style="visibility: hidden; display:none;">
+			<table><tr><td class="Poster_Value"></td></tr></table>
+		</div>
+		
+		</div >
+		<div id="main_index">
 		<!-- search by letter -->				
 						
 			<form id="monForm" >

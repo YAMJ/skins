@@ -205,22 +205,23 @@
                     'success': function(dataSkinPosterNb)
                    {
 						jsondata = dataSkinPosterNb;
-					//	outputJson(dataSkinPosterNb);
+				//		outputJson(dataSkinPosterNb);
 						updateSkinPosterNb(dataSkinPosterNb);
+						adjust_poster_setting (RowperPageValue);
 					}
+					
 				});	
 			 return jsondata;
 		}
 	// parse the value nbre of row index 
 		function updateSkinPosterNb(yamjdata) {
-				console.log(yamjdata);
 				var PN = {
 						"tr": {
 							"list<-results":{
 								"td.Poster_Value"				: function(arg) {
-								set_poster_value (arg.item.value);
-								return arg.item.value;
-								}	
+										set_poster_value (arg.item.value);
+										return arg.item.value;
+								}								
 							}
 						}
 					};
@@ -231,9 +232,23 @@
 			{
 				RowperPageValue = parseInt(poster_nb, 10);
 				console.log('set index_row:'+poster_nb);
+			}
+		function adjust_poster_setting(RowperPageValue) {
 				if (parseInt(RowperPageValue, 10) < 6  ) {
 					switch (RowperPageValue)
 						{
+						// no paging , 12 columns 
+						case 0:
+							$('.row').css('padding', '5px 0px 0px 15px');
+							$('.block').css('height', '136px');
+							$('.block').css('width', '96px');
+							$('.block').css('margin', '0px 2px 1px 1px');
+							$('.block').css('padding', '0px 1px 0px 1px');
+							$('.poster').css('height', '135px');
+							$('.poster').css('width', '95px');
+							$('.title').css('font-size', '0.4em');
+							$('.title').css('line-height', '30%');
+							break;
 						//1 row , 6 columns
 						case 1:
 							perPageValue = 6;
@@ -301,7 +316,8 @@
 							break;
 						}
 					} else {
-						perPageValue = 999999; 
+						// x rows , 12 columns 
+						perPageValue = (parseInt(RowperPageValue, 10) * 12);
 						$('.row').css('padding', '5px 0px 0px 15px');
 						$('.block').css('height', '136px');
 						$('.block').css('width', '96px');

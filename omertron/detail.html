@@ -6,7 +6,7 @@
         <script src="js/jquery.js"></script>
         <script src="js/pure.js"></script>
 		<!-- Used for skin language setting -->
-		<script src="js/set_skin_lang.js"></script>
+		<script src="js/lang.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css"/>
@@ -182,7 +182,7 @@
             function getData()
             {	
 				// fill all value according to language setting - from yamjv3_lang_{lang}.xml
-				set_skin_language();
+				get_lang();
 				// construct JSON request for detail movie/series/season 
 				jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot";
 				console.log("URL: " + jsonUrl);

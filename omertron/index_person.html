@@ -7,7 +7,7 @@
         <!-- Used for the JSON parsing -->
         <script src="js/pure.js"></script>
 		<!-- Used for skin language setting -->
-		<script src="js/set_skin_lang.js"></script>
+		<script src="js/lang.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>		
         <script src="js/jPages.js"></script>
@@ -99,7 +99,7 @@
         function getIndexData()
         {
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
-			set_skin_language();
+			get_lang();
             var jsonUrl = "http://localhost:8888/yamj3/api/index/person.json?sortby=name&sortdir=asc&dataitems=artwork&artwork=photo";
 			
 						
@@ -232,7 +232,7 @@
 		}
 //************************ LANGUAGE LOCAL SETTING *********************************************		
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
-		function set_context_lang_value (lang)
+		function set_context_lang_value ()
 		{
 			document.getElementById("allselect").innerHTML=all_select.toUpperCase();
 			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
@@ -242,6 +242,9 @@
 			document.getElementById("anylabel").innerHTML=any_label.toUpperCase();
 			document.getElementById("namelabel").innerHTML=name_label.toUpperCase();
 			document.getElementById("genreselect").innerHTML=genre_select.toUpperCase();
+			document.getElementById("nbrow").innerHTML=nbofrow.toUpperCase();
+			document.getElementById("language").innerHTML=lang_label.toUpperCase();
+			document.getElementById("configselect").innerHTML=config_select.toUpperCase();
 		}
         </script>
 
@@ -271,7 +274,8 @@
 				<table><tr><td class="Value"></td></tr></table>
 			</div>
 		<!-- search by letter -->				
-						
+		</div >
+		<div id="main_index">			
 			<form id="monForm">
 				<fieldset style="border:none">
 					<table align="center">
@@ -324,25 +328,60 @@
 								<input  type="submit" onclick="SetIndexData(this.form.FormSearch.value)" />
 							</td>
 						</tr>
-						
+					</table>
+				</fieldset>
+			</form>		
 					<!-- selector to search START for the 1rst char , ANY for the all contents -->		
+				<table>
 						<tr class="tablesearchmethod">
-							<td>
+							<td style="width: 160px;">
 								<input type="radio" name="search_method" value="START" onclick="localStorage.setItem('search_method', 'START');" id="FormStart" checked="checked" /><label for="START"><div id='startlabel'></div></label></td>
 								<td><input type="radio" name="search_method" value="ANY" onclick="localStorage.setItem('search_method', 'ANY')" id="FormAny" /> <label for="ANY"><div id='anylabel'></div></label>
 								<td><input type="radio" name="search_method" value="NAME" onclick="localStorage.setItem('search_method', 'NAME')" id="FormName" /> <label for="NAME"><div id='namelabel'></div></label>
 							</td>
-							<td>
+							<td style="width: 160px;" >
 								<a id="home_right_genre" href="javascript:call_genreindex(index_type)">
 									<div id="genreselect"></div>
 								</a>
 							</td>
 						</tr>
-						
-						
+				</table>
+				<table>
+						<tr class="tableconfig">
+							<td>
+								<ul id="row_select">
+								<label id="configselect"></label>
+									<li>
+										<form><label id='nbrow'></label>
+											<select id="row_id" onchange="update_poster_number(document.getElementById('row_id').value);">
+												<option value="0">0</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="99999">~</option>
+											</select> 
+											<noscript><input type="submit" value="Submit"></noscript>
+										</form>
+									</li>
+									<li>
+										<form><label id='language'></div></label>
+											<select id="lang_id" onchange="update_lang(document.getElementById('lang_id').value);">
+												<option value="de">de</option>
+												<option value="en">en</option>
+												<option value="es">es</option>
+												<option value="fr">fr</option>
+												<option value="it">it</option>
+											</select> 
+											<noscript><input type="submit" value="Submit"></noscript>
+										</form>
+									</li>
+								</ul>
+							</td>
+						</tr>
 					</table>
-				</fieldset>
-			</form>
         </div>
 		<!--Navigation Holder-->
          <div class="holder"></div>

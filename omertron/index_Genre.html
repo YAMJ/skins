@@ -10,7 +10,9 @@
         <script src="js/js.js"></script>
         <script src="js/jPages.js"></script>
 		<!-- Used for skin language setting -->
-		<script src="js/set_skin_lang.js"></script>
+		<script src="js/lang.js"></script>
+		<!-- Used for config  setting -->
+		<script src="js/config.js"></script>		
 		<!-- Used for template -->
 		<script src="js/template.js"></script>		
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
@@ -24,7 +26,9 @@
         <script type="text/javascript">
 			
 //***************************************************************************************
-		var perPageValue = 12;
+		// set default to 2 rows and 6 columns
+		var RowperPageValue = 2;
+		var PerPageValue = 12;
         var jsondata = null;
 		var genre_id = "";
 		var genre_name = ""; 
@@ -100,7 +104,7 @@
         function getIndexData()
         {
 		// fill all value according to language setting - from yamjv3_lang_{lang}.xml
-			set_skin_language();
+			get_lang();
 			var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type="+index_type+"&sortby=title&sortdir=ASC&artwork=poster&include=genre-"+genre_name;
 			var	display_genre = genre_select.toUpperCase() + ":" + genre_name.toUpperCase();
 	
@@ -116,6 +120,7 @@
                     jsondata = data;
 				//	 outputJson(data); 	
                     updateHtml(data);
+					get_poster_number ();
                     pageData(perPageValue);
                 }
             });
@@ -168,9 +173,10 @@
 			window.location.href="index_Genre.html";
 			Mypopup.focus();
 		}
+
 //************************ LANGUAGE LOCAL SETTING *********************************************		
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
-		function set_context_lang_value (lang)
+		function set_context_lang_value ()
 		{
 			document.getElementById("allselect").innerHTML=all_select.toUpperCase();
 			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
@@ -178,6 +184,9 @@
 			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();		
 			document.getElementById("button_personselect").innerHTML=person_select.toUpperCase();
 			document.getElementById("button_genreselect").innerHTML=genre_select.toUpperCase();
+			document.getElementById("configselect").innerHTML=config_select.toUpperCase();
+			document.getElementById("nbrow").innerHTML=nbofrow.toUpperCase();
+			document.getElementById("language").innerHTML=lang_label.toUpperCase();
 		}
         </script>
 
@@ -204,7 +213,13 @@
 			<div class="results" style="visibility: hidden; display:none;">
 				<table><tr><td class="Value"></td></tr></table>
 			</div>
-			
+			<!-- just added to set the poster number value, shouldn't be displayed  -->
+			<div class="poster_results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Poster_Value"></td></tr></table>
+			</div>
+		</div >
+		
+		<div id="main_index">			
 			<form id="monForm">
 				<fieldset style="border:none">
 					<table align="center">
@@ -216,7 +231,10 @@
 								<input  type="button" onclick="open_genre_index('season')" value="SEASON" onclick="SetIndexData('season')" />
 							<td>
 						</tr>
-
+					</table>
+				</fieldset>
+			</form>
+					<table>
 						<tr class="tableselect">
 							<td>
 								<a id="home_right_person" href="javascript:call_personindex()">
@@ -228,12 +246,49 @@
 									<div id="button_genreselect"></div>
 								</a>
 							</td>
+							
 						</tr>	
-				
 					</table>
-				</fieldset>
-			</form>
-			</div>
+					<table>
+						<tr class="tableconfig">
+							<td>
+								<ul id="row_select">
+								<label id="configselect"></label>
+									<li>
+										<form><label id='nbrow'></label>
+											<select id="row_id" onchange="update_poster_number(document.getElementById('row_id').value);">
+												<option value="0">0</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="99999">~</option>
+											</select> 
+											<noscript><input type="submit" value="Submit"></noscript>
+										</form>
+									</li>
+									<li>
+										<form><label id='language'></div></label>
+											<select id="lang_id" onchange="update_lang(document.getElementById('lang_id').value);">
+												<option value="de">de</option>
+												<option value="en">en</option>
+												<option value="es">es</option>
+												<option value="fr">fr</option>
+												<option value="it">it</option>
+											</select> 
+											<noscript><input type="submit" value="Submit"></noscript>
+										</form>
+									</li>
+								</ul>
+							</td>
+						</tr>
+					</table> 
+				
+					
+
+		</div>
             <!--Navigation Holder-->
             <div class="holder"></div>
 					

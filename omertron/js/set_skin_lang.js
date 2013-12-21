@@ -63,6 +63,7 @@
 			season_select=(x[i].getElementsByTagName("seasonselected")[0].childNodes[0].nodeValue);
 			person_select=(x[i].getElementsByTagName("personselected")[0].childNodes[0].nodeValue);
 			genre_select=(x[i].getElementsByTagName("genreselected")[0].childNodes[0].nodeValue);
+			config_select=(x[i].getElementsByTagName("configselected")[0].childNodes[0].nodeValue);
 			start_label=(x[i].getElementsByTagName("startlabel")[0].childNodes[0].nodeValue);
 			any_label=(x[i].getElementsByTagName("anylabel")[0].childNodes[0].nodeValue);
 			fanart_show=(x[i].getElementsByTagName("fanartshow")[0].childNodes[0].nodeValue);

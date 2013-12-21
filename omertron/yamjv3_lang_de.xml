@@ -7,6 +7,7 @@
 	<allselected>film und serie</allselected>
 	<personselected>person</personselected>
 	<genreselected>art</genreselected>
+	<configselected>konfiguration</configselected>
 	<fanartshow>nur fanart</fanartshow>
 	<personshow>person</personshow>
 	<seasonlabel>jahreszeit</seasonlabel>
@@ -23,4 +24,6 @@
 	<selection>auswahl</selection>
 	<nobiography>Biografie abwesend</nobiography>
 	<nobirthday>Geburtsdatum unbekannt</nobirthday>
+	<nbrow>anzahl der zeilen</nbrow>
+	<language>sprache</language>
 </lang>

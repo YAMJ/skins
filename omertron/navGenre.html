@@ -11,7 +11,7 @@
         <script src="js/js.js"></script>
         <script src="js/jPages.js"></script>
 		<!-- Used for skin language setting -->
-		<script src="js/set_skin_lang.js"></script>
+		<script src="js/lang.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>		
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
@@ -34,7 +34,7 @@
 		 function NavData()
         {
 		// fill all value according to language setting - from yamjv3_lang_{lang}.xml
-			set_skin_language();
+			get_lang();
 		    var jsonUrl = "http://localhost:8888/yamj3/api/api/genres.json?";
 			switch (index_type)
 				{
@@ -165,6 +165,9 @@
 			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
 			document.getElementById("button_personselect").innerHTML=person_select.toUpperCase();
 			document.getElementById("button_genreselect").innerHTML=genre_select.toUpperCase();
+			document.getElementById("nbrow").innerHTML=nbofrow.toUpperCase();
+			document.getElementById("language").innerHTML=lang_label.toUpperCase();
+			document.getElementById("configselect").innerHTML=config_select.toUpperCase();
 		}
 
         </script>
@@ -222,6 +225,43 @@
 					</table>
 				</fieldset>
 			</form>
+			<table>
+						<tr class="tableconfig">
+							<td>
+								<ul id="row_select">
+								<label id="configselect"></label>
+									<li>
+										<form><label id='nbrow'></label>
+											<select id="row_id" onchange="update_poster_number(document.getElementById('row_id').value);">
+												<option value="0">0</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="99999">~</option>
+											</select> 
+											<noscript><input type="submit" value="Submit"></noscript>
+										</form>
+									</li>
+									<li>
+										<form><label id='language'></div></label>
+											<select id="lang_id" onchange="update_lang(document.getElementById('lang_id').value);">
+												<option value="de">de</option>
+												<option value="en">en</option>
+												<option value="es">es</option>
+												<option value="fr">fr</option>
+												<option value="it">it</option>
+											</select> 
+											<noscript><input type="submit" value="Submit"></noscript>
+										</form>
+									</li>
+								</ul>
+							</td>
+						</tr>
+					</table>
+			
 		</div>					
         <!--Navigation Holder-->
         <div class="holder"></div>

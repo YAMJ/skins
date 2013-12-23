@@ -202,8 +202,8 @@ body {
 	position: absolute;
 	top: 5px;
 	left: 150px;
-    height: 100px;
-    width: 1010px;
+    height: 50px;
+    width: 900px;
     text-align: center;
 
 /*    background:  url(../pictures/yamj-logo_repeat.png) no-repeat right,
@@ -599,7 +599,6 @@ ul#row_select:hover > li{
 	text-align: center;
 	vertical-align: top;
 	line-height:20%;
-
 	}
 /***************************** detail page ***************************************/	
 #logo_detail {

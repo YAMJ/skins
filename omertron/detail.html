@@ -236,9 +236,26 @@
 		{
 			document.getElementById("fanartshow").innerHTML=fanart_show.toUpperCase();
 			document.getElementById("personshow").innerHTML=person_show.toUpperCase();
+			switch (type.toLowerCase()) 
+							{
+							case 'movie':
+								document.getElementById("show").innerHTML=show.toUpperCase() + " " + movie_select.toUpperCase();
+									break;
+							case 'series':
+									document.getElementById("show").innerHTML=show.toUpperCase() + " " + series_select.toUpperCase();
+									break;
+							case 'season':
+									document.getElementById("show").innerHTML=show.toUpperCase() + " " + season_select.toUpperCase();
+									break;
+							}		
 			document.getElementById("seasonlabel").innerHTML=season_label;
 			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
 			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
+			document.getElementById("allselect").innerHTML=all_select.toUpperCase();
+			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
+			document.getElementById("li_selection").innerHTML=selection_label.toUpperCase();
+			document.getElementById("li_language").innerHTML=lang_label.toUpperCase();
+			document.getElementById("li_search").innerHTML=search_select.toUpperCase();
 		}
 		
   // ********************* NOW SET VARIOUS FUNCTION **********************************************  
@@ -568,8 +585,9 @@
 						}
 					}
 	// open a new vertical window for index list 				
-	function ouvre_popup_index(page, direction, current_type) 
+	function ouvre_popup_index(page, direction, current_type, letter_selection) 
 		{
+			localStorage.setItem("selection", letter_selection);
 			localStorage.setItem("direction", direction);
 			localStorage.setItem("type", current_type);
 			Indexpopup = window.open(page, "YAMJv3 Navigation index","channelmode=no, menubar=no, status=no, scrollbars=yes, resizable=yes, menubar=no, location=no, left=2px, top=5px, width=160px, height=1000px");
@@ -601,27 +619,102 @@
 			localStorage.setItem("Genre_name", genrename);
             console.log("Storing value: Genre name: " +genrename);
 			window.location.href="index_Genre.html";
-		}	
+		}
+	function ouvre_popup_search() 
+		{
+			Searchpopup = window.open("search.html", "YAMJ v3 search","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=1190px, height=220px");
+		}
       </script>
     </head>
     <body onload="getData();" onUnload="close_popup();">
 	<!-- navigation to index -->
 
 		<div id="logo">
-						<a id="detail_home_right" href="javascript:ChangeIndex('series')">
-							<img src="./pictures/yamj-logo_repeat.png" width="100px"></img><div id="serieselect"></div>
-						</a>
-
-						<a id="detail_home_left" href="javascript:ChangeIndex('movie')">
-							<img src="./pictures/yamj-logo_repeat.png" width="100px"></img><div id="movieselect"></div>
-						</a>
-	<!-- navigation to next/previous movie which open index toolbar  --> 
-						<a id="previous_movie" href="javascript:ouvre_popup_index('navData.html', 'DESC', type)"></a>
-						<a id="next_movie" href="javascript:ouvre_popup_index('navData.html', 'ASC', type)"></a>
-					
-
-
-
+						<td>
+							<ul id="detail_home_left"><img src="./pictures/yamj-logo_repeat.png" width="90px" />
+							
+									<li><a id="li_all_up" href="javascript:ChangeIndex('movie,series')">
+										<div id="allselect"></div></a></li>
+									<li><a id="li_movie_up" href="javascript:ChangeIndex('movie')">
+										<div id="movieselect"></div></a></li>	
+									<li><a id="li_series_up" href="javascript:ChangeIndex('series')">
+										<div id="serieselect"></div></a></li>	
+									<li><a id="li_season_up" href="javascript:ChangeIndex('season')">
+										<div id="seasonselect"></div></a></li>		
+							</ul>
+						<td>
+	<!-- navigation to next/previous movie which open index toolbar   
+						<a id="previous_movie" href="javascript:ouvre_popup_index('navData.html', 'DESC', type, '')"></a>
+						<a id="next_movie" href="javascript:ouvre_popup_index('navData.html', 'ASC', type, '')"></a>-->
+	<!-- various navigation -->					
+					<td>
+							<ul id="detail_home_right"><img src="./pictures/yamj-logo_repeat.png" width="90px" />
+									<li><a id="li_fanart" href="javascript:toggle_fanart()">
+										<div id="fanartshow"></div></a></li>
+									<li><a id="li_person" href="javascript:ouvre_popup_person()">
+										<div id="personshow"></div></a></li>	
+									<li><a id="li_movie" href="javascript:ouvre_popup_index('navData.html', 'ASC', type, '')">
+										<div id="show"></div></a></li>	
+									<li>
+										<form><label id='li_selection'></label>
+											<select id="selection_id" onchange="javascript:ouvre_popup_index('navData.html', 'ASC', 'movie', document.getElementById('selection_id').value)">
+												<option value=""></option>
+												<option value="A">A</option>
+												<option value="B">B</option>
+												<option value="C">C</option>
+												<option value="D">D</option>
+												<option value="E">E</option>
+												<option value="F">F</option>
+												<option value="G">G</option>
+												<option value="H">H</option>
+												<option value="I">I</option>
+												<option value="J">J</option>
+												<option value="K">K</option>
+												<option value="L">L</option>
+												<option value="M">M</option>
+												<option value="N">N</option>
+												<option value="O">O</option>
+												<option value="Q">Q</option>
+												<option value="R">R</option>
+												<option value="S">S</option>
+												<option value="T">T</option>
+												<option value="U">U</option>
+												<option value="V">V</option>
+												<option value="W">W</option>
+												<option value="X">X</option>
+												<option value="Y">Y</option>
+												<option value="Z">Z</option>
+												<option value="0">0</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+												<option value="9">9</option>
+											</select> 
+											<noscript><input type="submit" value="Submit"></noscript>
+										</form>
+									</li>	
+									<li>
+										<form><label id='li_language'></label>
+											<select id="detail_lang_id" onchange="update_lang(document.getElementById('detail_lang_id').value);">
+												<option value=""></option>
+												<option value="de">de</option>
+												<option value="en">en</option>
+												<option value="es">es</option>
+												<option value="fr">fr</option>
+												<option value="it">it</option>
+											</select> 
+											<noscript><input type="submit" value="Submit"></noscript>
+										</form>
+									</li>
+									<li><a id="li_search" href="javascript:ouvre_popup_search()">
+										<div id="search"></div></a></li>
+							</ul>
+						<td>
         </div>
 	<!--  header for movie/series name -->
 		<div class="header">
@@ -641,12 +734,12 @@
 		</div>
 		
 	<!--  ALL  button -->	
-		<div class="show_fanart">
+	<!--	<div class="show_fanart">
 					<td><a href="#" id="fanart" onclick="toggle_fanart()" ><div id='fanartshow'></div></a></td>
 		</div>
 		<div class="show_person" id="show_person">
 					<td><a href="#" id="person" onclick="ouvre_popup_person()" ><div id='personshow'></div></a></td>
-		</div>
+		</div> -->
 		<div class="test">
 					<td><span class="lastid"></span></td>
 		</div> 

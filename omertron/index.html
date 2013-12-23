@@ -43,7 +43,11 @@
 			if (window.localStorage.getItem("indextype"))
 				{index_type = window.localStorage.getItem("indextype");}
 				else {window.localStorage.setItem("indextype", index_type);}
-			
+		// set a default direction to ASC or set to the direction previously selected if available 	
+		var direction = "ASC";
+			if (window.localStorage.getItem("direction"))
+				{direction = window.localStorage.getItem("direction");}
+				else {window.localStorage.setItem("direction", direction);}	
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
         // img.Poster@src replaces the "src" attribute of the img.Poster
@@ -107,7 +111,7 @@
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 			get_lang();
 			
-            var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type="+index_type+"&sortby=title&sortdir=ASC&artwork=poster";
+            var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type="+index_type+"&sortby=title&sortdir="+direction+"&artwork=poster";
 		
 			switch (index_type)
 				{
@@ -197,7 +201,10 @@
             console.log("call genreindex with indextype: "+indextype);
 			window.location.href="navGenre.html";
         }
-		
+		function ouvre_popup_search() 
+		{
+			Searchpopup = window.open("search.html", "YAMJ v3 search","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=1190px, height=220px");
+		}
   //************************ LANGUAGE LOCAL SETTING *********************************************
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
 		function set_context_lang_value ()
@@ -208,28 +215,32 @@
 			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
 			document.getElementById("personselect").innerHTML=person_select.toUpperCase();
 			document.getElementById("genreselect").innerHTML=genre_select.toUpperCase();
+			document.getElementById("searchselect").innerHTML=search_select.toUpperCase();
 			document.getElementById("configselect").innerHTML=config_select.toUpperCase();
-			document.getElementById("startlabel").innerHTML=start_label.toUpperCase();
-			document.getElementById("anylabel").innerHTML=any_label.toUpperCase();
+	//		document.getElementById("startlabel").innerHTML=start_label.toUpperCase();
+	//		document.getElementById("anylabel").innerHTML=any_label.toUpperCase();
 			document.getElementById("nbrow").innerHTML=nbofrow.toUpperCase();
 			document.getElementById("language").innerHTML=lang_label.toUpperCase();
 		}
         </script>
-
+	<div class="index_header"> 
         <div id="logo_index">
-						<a id="home_right_up" href="javascript:ChangeIndex('series')">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="serieselect"></div>
-						</a>
-						<a id="home_right_down" href="javascript:ChangeIndex('season')">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="seasonselect"></div>
-						</a>
-						
-						<a id="home_left_up" href="javascript:ChangeIndex('movie,series')">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="allselect"></div>
-						</a>
-						<a id="home_left_down" href="javascript:ChangeIndex('movie')">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="movieselect"></div>
-						</a>
+						<td>
+							<ul id="home_left_up"><img src="./pictures/yamj-logo_repeat.png" width="90px" />
+							
+									<li><a id="li_all_up" href="javascript:ChangeIndex('movie,series')">
+										<div id="allselect"></div></a></li>
+									<li><a id="li_movie_up" href="javascript:ChangeIndex('movie')">
+										<div id="movieselect"></div></a></li>	
+									<li><a id="li_series_up" href="javascript:ChangeIndex('series')">
+										<div id="serieselect"></div></a></li>	
+									<li><a id="li_season_up" href="javascript:ChangeIndex('season')">
+										<div id="seasonselect"></div></a></li>		
+							</ul>
+						<td>
+		
+		
+
 			<div class="show_index"><span id="printsearch"></span></div>
 			<div class="count_return_index">
                    <span class="ReturnCount"></span> 
@@ -247,7 +258,7 @@
 		<div id="main_index">
 		<!-- search by letter -->				
 						
-			<form id="monForm" >
+	<!--		<form id="monForm" >
 				<fieldset style="border:none">
 					<table align="center"  >
 						<tr>
@@ -302,17 +313,17 @@
 						</tr>
 					</table>
 				</fieldset>
-			</form>
+			</form> -->
 					<table>
 					<!-- selector to search START for the 1rst char , ANY for the all contents -->
 						<tr class="tablesearchmethod">
 					
-							<td style="width: 160px;">
+			<!--				<td style="width: 160px;">
 								<input type="radio" name="search_method" value="START" onclick="localStorage.setItem('search_method', 'START');" id="FormStart" checked="checked" /><label for="START"><div id='startlabel'></div></label>
 							</td>
 							<td style="width: 140px;">
 								<input type="radio" name="search_method" value="ANY" onclick="localStorage.setItem('search_method', 'ANY')" id="FormAny" /> <label for="ANY"><div id='anylabel'></div></label>
-							</td> 
+							</td> -->
 							<td style="width: 150px;">
 								<a id="home_right_person" href="javascript:call_personindex()">
 									<div id="personselect"></div>
@@ -323,7 +334,11 @@
 									<div id="genreselect"></div>
 								</a>
 							</td>
-				
+							<td style="width: 120px;">
+								<a id="home_right_search" href="javascript:ouvre_popup_search()">
+									<div id="searchselect"></div>
+								</a>
+							</td>
 					
 						</tr>	
 					</table>
@@ -349,7 +364,7 @@
 										</form>
 									</li>
 									<li>
-										<form><label id='language'></div></label>
+										<form><label id='language'></label>
 											<select id="lang_id" onchange="update_lang(document.getElementById('lang_id').value);">
 												<option value=""></option>
 												<option value="de">de</option>
@@ -365,10 +380,10 @@
 							</td>
 						</tr>
 					</table>
-		</div>
+	</div>
             <!--Navigation Holder-->
             <div class="holder"></div>
-
+		</div>
         <!--Data Items Container-->
         <div id="container">
             <div id="yRow" class="row">

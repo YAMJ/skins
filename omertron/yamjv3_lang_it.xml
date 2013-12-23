@@ -7,9 +7,11 @@
 	<allselected>del cinema e serie</allselected>
 	<personselected>persona</personselected>
 	<genreselected>tipo</genreselected>
+	<searchselected>ricerca</searchselected>
 	<configselected>configurazione</configselected>
 	<fanartshow>nur fanart</fanartshow>
 	<personshow>persona</personshow>
+	<show>nastro</show>
 	<seasonlabel>stagione</seasonlabel>
 	<movielabel>del cinema</movielabel>
 	<serieslabel>serie</serieslabel>
@@ -20,6 +22,9 @@
 	<startlabel>inizia con</startlabel>
 	<namelabel>cognome</namelabel>	
 	<anylabel>contiene</anylabel>
+	<selectionlabel>selezione</selectionlabel>
+	<ascending>ascendente</ascending>
+	<descending>discendente</descending>
 	<resultstext>provocare</resultstext>
 	<selection>selezione</selection>
 	<nobiography>biografia assente</nobiography>

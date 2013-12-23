@@ -12,7 +12,6 @@
         <link rel="stylesheet" type="text/css" href="css/nav-style.css">
         <link rel="stylesheet" href="css/jPages.css">
         <link rel="stylesheet" href="css/animate.css">
-		<title>YAMJv3 Navigation index</title>
 	
     </head>
     <body onload="NavData();">
@@ -25,6 +24,11 @@
 			var	directionnav = localStorage.getItem ("direction");
 			var	type = localStorage.getItem ("type");
 		    var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type="+type+"&sortby=title&sortdir="+directionnav+"&artwork=poster";
+			if (window.localStorage.getItem("selection"))
+				{
+						jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("selection") + "&field=title&mode=START";
+						window.localStorage.setItem("selection", "");	
+					}	
 
             console.log("URL: " + jsonUrl);
             var jsondata = null;

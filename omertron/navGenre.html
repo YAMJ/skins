@@ -35,7 +35,7 @@
         {
 		// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 			get_lang();
-		    var jsonUrl = "http://localhost:8888/yamj3/api/api/genres.json?";
+		    var jsonUrl = "http://localhost:8888/yamj3/api/genres.json?";
 			switch (index_type)
 				{
 					case 'all':
@@ -155,6 +155,10 @@
             console.log("call genreindex with indextype : "+indextype);
 			window.location.href="navGenre.html";
         }
+		function ouvre_popup_search() 
+		{
+			Searchpopup = window.open("search.html", "YAMJ v3 search","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=1190px, height=220px");
+		}
 //************************ LANGUAGE LOCAL SETTING *********************************************		
 
 		function set_context_lang_value ()
@@ -163,8 +167,11 @@
 			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
 			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
 			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
-			document.getElementById("button_personselect").innerHTML=person_select.toUpperCase();
-			document.getElementById("button_genreselect").innerHTML=genre_select.toUpperCase();
+			document.getElementById("personselect").innerHTML=person_select.toUpperCase();
+			document.getElementById("genreselect").innerHTML=genre_select.toUpperCase();
+			document.getElementById("searchselect").innerHTML=search_select.toUpperCase();
+		//	document.getElementById("button_personselect").innerHTML=person_select.toUpperCase();
+		//	document.getElementById("button_genreselect").innerHTML=genre_select.toUpperCase();
 			document.getElementById("nbrow").innerHTML=nbofrow.toUpperCase();
 			document.getElementById("language").innerHTML=lang_label.toUpperCase();
 			document.getElementById("configselect").innerHTML=config_select.toUpperCase();
@@ -172,21 +179,21 @@
 
         </script>
    
+    <div class="index_header"> 
         <div id="logo_index">
-				<!--  navigation to index movie and series -->		
-						<a id="home_right_up" href="javascript:ChangeIndex('series')">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="serieselect"></div>
-						</a>
-						<a id="home_right_down" href="javascript:ChangeIndex('season')">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="seasonselect"></div>
-						</a>
-						
-						<a id="home_left_up" href="javascript:ChangeIndex('movie,series')">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="allselect"></div>
-						</a>
-						<a id="home_left_down" href="javascript:ChangeIndex('movie')">
-							<img src="./pictures/yamj-logo_repeat.png" width="90px" /><div id="movieselect"></div>
-						</a>
+						<td>
+							<ul id="home_left_up"><img src="./pictures/yamj-logo_repeat.png" width="90px" />
+							
+									<li><a id="li_all_up" href="javascript:ChangeIndex('movie,series')">
+										<div id="allselect"></div></a></li>
+									<li><a id="li_movie_up" href="javascript:ChangeIndex('movie')">
+										<div id="movieselect"></div></a></li>	
+									<li><a id="li_series_up" href="javascript:ChangeIndex('series')">
+										<div id="serieselect"></div></a></li>	
+									<li><a id="li_season_up" href="javascript:ChangeIndex('season')">
+										<div id="seasonselect"></div></a></li>		
+							</ul>
+						<td>
 				<!-- display screen name and number of genre  --> 		
 					<div class="show_index_genre"><span id="printsearch"></span></div>
 					<div class="count_return_genre">
@@ -195,36 +202,43 @@
 		<!-- just added to set the language value, shouldn't be displayed  -->
 			<div class="results" style="visibility: hidden; display:none;">
 				<table><tr><td class="Value"></td></tr></table>
-			</div>					
-					
-			<form id="monForm">
-				<fieldset style="border:none">
-					<table align="center">
+			</div>	
+		</div>
+		<div id="main_index">				
+<!--			<form id="monForm">
+				<fieldset style="border:none; width: 1125px; margin-top: -4px;">
+					<table align="right">
 						<tr>
 							<td class="formSelect">							
-								<input  type="button" onclick="call_genreindex('all')" value="ALL" onclick="SetIndexData('all')" />
-								<input  type="button" onclick="call_genreindex('movie')" value="MOVIE" onclick="SetIndexData('movie')" />
-								<input  type="button" onclick="call_genreindex('series')" value="SERIES" onclick="SetIndexData('series')" />
-								<input  type="button" onclick="call_genreindex('season')" value="SEASON" onclick="SetIndexData('season')" />
+								<input  type="button" onclick="open_genre_index('all')" value="ALL"  />
+								<input  type="button" onclick="open_genre_index('movie')" value="MOVIE" />
+								<input  type="button" onclick="open_genre_index('series')" value="SERIES"  />
+								<input  type="button" onclick="open_genre_index('season')" value="SEASON" />
 							<td>
-						</tr>	
-				<!--  2 buttons personne and genre --> 	
-					
-						<tr class="tableselect">
+						</tr>
+					</table>
+				</fieldset>
+			</form> -->
+				<table>
+						<tr class="tablesearchmethod">
 							<td>
 								<a id="home_right_person" href="javascript:call_personindex()">
-									<div id="button_personselect"></div>
+									<div id="personselect"></div>
 								</a>
 							</td>
 							<td>
 								<a id="home_right_genre" href="javascript:call_genreindex(index_type)">
-									<div id="button_genreselect"></div>
+									<div id="genreselect"></div>
+								</a>
+							</td>
+							<td style="width: 120px;">
+								<a id="home_right_search" href="javascript:ouvre_popup_search()">
+									<div id="searchselect"></div>
 								</a>
 							</td>
 						</tr>	
 					</table>
-				</fieldset>
-			</form>
+
 			<table>
 						<tr class="tableconfig">
 							<td>
@@ -247,7 +261,7 @@
 										</form>
 									</li>
 									<li>
-										<form><label id='language'></div></label>
+										<form><label id='language'></label>
 											<select id="lang_id" onchange="update_lang(document.getElementById('lang_id').value);">
 												<option value=""></option>
 												<option value="de">de</option>
@@ -267,7 +281,7 @@
 		</div>					
         <!--Navigation Holder-->
         <div class="holder"></div>
-
+	</div>
      
 		 <!--Data Items Container-->
 		<div id="container">

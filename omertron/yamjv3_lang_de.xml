@@ -7,9 +7,11 @@
 	<allselected>film und serie</allselected>
 	<personselected>person</personselected>
 	<genreselected>art</genreselected>
+	<searchselected>suche</searchselected>
 	<configselected>konfiguration</configselected>
 	<fanartshow>nur fanart</fanartshow>
 	<personshow>person</personshow>
+	<show>band</show>
 	<seasonlabel>jahreszeit</seasonlabel>
 	<movielabel>film</movielabel>
 	<serieslabel>serie</serieslabel>
@@ -19,6 +21,9 @@
 	<personlabel>person</personlabel>
 	<startlabel>beginnt mit</startlabel>
 	<anylabel>enthält</anylabel>
+	<selectionlabel>auswahl</selectionlabel>
+	<ascending>aufsteigend</ascending>
+	<descending>absteigend</descending>
 	<namelabel>nachname</namelabel>	
 	<resultstext>ergebnis</resultstext>
 	<selection>auswahl</selection>

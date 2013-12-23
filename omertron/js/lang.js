@@ -106,11 +106,16 @@
 					season_select=(x[i].getElementsByTagName("seasonselected")[0].childNodes[0].nodeValue);
 					person_select=(x[i].getElementsByTagName("personselected")[0].childNodes[0].nodeValue);
 					genre_select=(x[i].getElementsByTagName("genreselected")[0].childNodes[0].nodeValue);
+					search_select=(x[i].getElementsByTagName("searchselected")[0].childNodes[0].nodeValue);
 					config_select=(x[i].getElementsByTagName("configselected")[0].childNodes[0].nodeValue);
 					start_label=(x[i].getElementsByTagName("startlabel")[0].childNodes[0].nodeValue);
+					asc_label=(x[i].getElementsByTagName("ascending")[0].childNodes[0].nodeValue);
+					desc_label=(x[i].getElementsByTagName("descending")[0].childNodes[0].nodeValue);
 					any_label=(x[i].getElementsByTagName("anylabel")[0].childNodes[0].nodeValue);
+					selection_label=(x[i].getElementsByTagName("selectionlabel")[0].childNodes[0].nodeValue);
 					fanart_show=(x[i].getElementsByTagName("fanartshow")[0].childNodes[0].nodeValue);
 					person_show=(x[i].getElementsByTagName("personshow")[0].childNodes[0].nodeValue);
+					show=(x[i].getElementsByTagName("show")[0].childNodes[0].nodeValue);
 					season_label=(x[i].getElementsByTagName("seasonlabel")[0].childNodes[0].nodeValue);
 					series_label=(x[i].getElementsByTagName("serieslabel")[0].childNodes[0].nodeValue);
 					results_text=(x[i].getElementsByTagName("resultstext")[0].childNodes[0].nodeValue);

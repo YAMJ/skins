@@ -26,6 +26,7 @@
     </head>
     <body onload="NavData();">
         <script type="text/javascript">
+		var menuleft_toggle = 0;
 		var index_type = "all";
 			if (window.localStorage.getItem("indextype"))
 				{index_type = window.localStorage.getItem("indextype");}
@@ -36,21 +37,21 @@
 		// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 			get_lang();
 		    var jsonUrl = "http://localhost:8888/yamj3/api/genres.json?";
-			switch (index_type)
+			switch (index_type.toUpperCase())
 				{
-					case 'all':
+					case 'ALL':
 						selected_index = all_select.toUpperCase();
 						break;
-					case 'movie,series':
+					case 'MOVIE,SERIES':
 						selected_index = all_select.toUpperCase();
 						break;
-					case 'movie':
+					case 'MOVIE':
 						selected_index = movie_select.toUpperCase();
 						break;
-					case 'series':
+					case 'SERIES':
 						selected_index = series_select.toUpperCase();
 						break;
-					case 'season':
+					case 'SEASON':
 						selected_index = season_select.toUpperCase();
 						break;
 				};
@@ -110,55 +111,15 @@
 //***************************************************************************************************************		
 		
 
-        // Add the source output to the end of the page
-        function output(inp)
-        {
-            // Clear the "pre" element if it exists
-            $('pre').empty();
-            document.body.appendChild(document.createElement('pre')).innerHTML = inp;
-        }
-
-        function pageData(perPage)
-        {
-            $("div.holder").jPages({
-                containerID: "yRow",
-                animation: "bounceInLeft",
-                perPage: perPage,
-                delay: 20
-	
-				
-            });
-        }
+ 
 		function open_genre_index(genrename)
         {
-			
 			localStorage.setItem("Genre_name", genrename);
             console.log("Storing value: Genre name: " +genrename);
 			window.location.href="index_Genre.html";
 			Mypopup.focus();
 		}
 		
-		function ChangeIndex (indextype)
-		{		
-				window.localStorage.setItem("indextype", indextype);
-				console.log("call Changeindex: "+indextype);
-				window.location.href="index.html";
-		}
-		function call_personindex()
-        {
-            console.log("call personindex: ");
-            window.location.href="index_person.html";
-        }
-		function call_genreindex(indextype)
-        {
-			window.localStorage.setItem("indextype", indextype);
-            console.log("call genreindex with indextype : "+indextype);
-			window.location.href="navGenre.html";
-        }
-		function ouvre_popup_search() 
-		{
-			Searchpopup = window.open("search.html", "YAMJ v3 search","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=1190px, height=220px");
-		}
 //************************ LANGUAGE LOCAL SETTING *********************************************		
 
 		function set_context_lang_value ()
@@ -167,14 +128,12 @@
 			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
 			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
 			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
-			document.getElementById("personselect").innerHTML=person_select.toUpperCase();
-			document.getElementById("genreselect").innerHTML=genre_select.toUpperCase();
 			document.getElementById("searchselect").innerHTML=search_select.toUpperCase();
-		//	document.getElementById("button_personselect").innerHTML=person_select.toUpperCase();
-		//	document.getElementById("button_genreselect").innerHTML=genre_select.toUpperCase();
 			document.getElementById("nbrow").innerHTML=nbofrow.toUpperCase();
 			document.getElementById("language").innerHTML=lang_label.toUpperCase();
 			document.getElementById("configselect").innerHTML=config_select.toUpperCase();
+			document.getElementById("genreindex").innerHTML=genre_select.toUpperCase();
+			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
 		}
 
         </script>
@@ -183,7 +142,7 @@
         <div id="logo_index">
 						<td>
 							<ul id="home_left_up"><img src="./pictures/yamj-logo_repeat.png" width="90px" />
-							
+									<li><a id="li_home_left" href="javascript:toggle_menuleft()"></a></li>
 									<li><a id="li_all_up" href="javascript:ChangeIndex('movie,series')">
 										<div id="allselect"></div></a></li>
 									<li><a id="li_movie_up" href="javascript:ChangeIndex('movie')">
@@ -191,7 +150,11 @@
 									<li><a id="li_series_up" href="javascript:ChangeIndex('series')">
 										<div id="serieselect"></div></a></li>	
 									<li><a id="li_season_up" href="javascript:ChangeIndex('season')">
-										<div id="seasonselect"></div></a></li>		
+										<div id="seasonselect"></div></a></li>	
+									<li><a id="li_person_up" href="javascript:call_personindex('false')">
+										<div id="personindex"></div></a></li>
+									<li><a id="li_genre_up" href="javascript:call_genreindex(index_type, 'false')">
+										<div id="genreindex"></div></a></li>
 							</ul>
 						<td>
 				<!-- display screen name and number of genre  --> 		
@@ -205,32 +168,8 @@
 			</div>	
 		</div>
 		<div id="main_index">				
-<!--			<form id="monForm">
-				<fieldset style="border:none; width: 1125px; margin-top: -4px;">
-					<table align="right">
-						<tr>
-							<td class="formSelect">							
-								<input  type="button" onclick="open_genre_index('all')" value="ALL"  />
-								<input  type="button" onclick="open_genre_index('movie')" value="MOVIE" />
-								<input  type="button" onclick="open_genre_index('series')" value="SERIES"  />
-								<input  type="button" onclick="open_genre_index('season')" value="SEASON" />
-							<td>
-						</tr>
-					</table>
-				</fieldset>
-			</form> -->
 				<table>
 						<tr class="tablesearchmethod">
-							<td>
-								<a id="home_right_person" href="javascript:call_personindex()">
-									<div id="personselect"></div>
-								</a>
-							</td>
-							<td>
-								<a id="home_right_genre" href="javascript:call_genreindex(index_type)">
-									<div id="genreselect"></div>
-								</a>
-							</td>
 							<td style="width: 120px;">
 								<a id="home_right_search" href="javascript:ouvre_popup_search()">
 									<div id="searchselect"></div>
@@ -238,8 +177,7 @@
 							</td>
 						</tr>	
 					</table>
-
-			<table>
+					<table>
 						<tr class="tableconfig">
 							<td>
 								<ul id="row_select">

@@ -41,20 +41,7 @@
 				{direction_temp = window.localStorage.getItem("direction");}
 				else {window.localStorage.setItem("direction", direction_temp);}			
 		var method_selected	= 'MOVIE';
-        // This is the directive used by pure to transform the JSON data into HTML
-        // span.Title is a simple substitution of the title
-        // img.Poster@src replaces the "src" attribute of the img.Poster
-		
-
-	
-        function setId(type, id)
-        {
-            window.localStorage.setItem("type", type);
-            window.localStorage.setItem("id", id);
-            console.log("Storing value: " + type + "-" + id);
-            window.location.href="detail.html";
-        }
-
+ 
         // This function calls the API to get the JSON data.
         // It will then update the HTML with the data and set up the paging
         function getIndexData()
@@ -96,14 +83,14 @@
 						Indexpopup = window.open("index.html", "YAMJ v3 index","");
 						break;
 					case 'GENRE':
-						call_genreindex('all');
+						call_genreindex('all', 'true');
 						break;
 					case 'NAME':
 						window.localStorage.setItem("search_method", 'NAME');	
-						call_personindex();
+						call_personindex('true');
 						break;
 					case 'PERSON':
-						call_personindex();
+						call_personindex('true');
 						break;
 				};
 				
@@ -120,17 +107,7 @@
 			Indexpopup = window.open(page, "YAMJ v3 index","");
 		}
 		
-		function call_personindex()
-        {
-            console.log("call personindex: ");
-			Indexpopup = window.open("index_person.html", "YAMJ v3 index","");
-        }
-		function call_genreindex(indextype)
-        {
-			localStorage.setItem("indextype", indextype);
-            console.log("call genreindex with indextype: "+indextype);
-			Indexpopup = window.open("navGenre.html", "YAMJ v3 index","");
-        }
+
 		
   //************************ LANGUAGE LOCAL SETTING *********************************************
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
@@ -142,7 +119,6 @@
 			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
 			document.getElementById("genreindex").innerHTML=genre_select.toUpperCase();
 			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
-		//	document.getElementById("configselect").innerHTML=config_select.toUpperCase();
 			document.getElementById("startlabel").innerHTML=start_label.toUpperCase();
 			document.getElementById("anylabel").innerHTML=any_label.toUpperCase();
 			document.getElementById("genrelabel").innerHTML=genre_select.toUpperCase();
@@ -154,7 +130,6 @@
 			document.getElementById("seasonlabel").innerHTML=season_select.toUpperCase();
 			document.getElementById("asclabel").innerHTML=asc_label.toUpperCase();
 			document.getElementById("desclabel").innerHTML=desc_label.toUpperCase();
-		//	document.getElementById("nbrow").innerHTML=nbofrow.toUpperCase();
 			document.getElementById("languagelabel").innerHTML=lang_label.toUpperCase();
 		}
         </script>
@@ -171,9 +146,9 @@
 										<div id="serieselect"></div></a></li>	
 									<li><a id="li_season_up" href="javascript:javascript:ouvre_popup_index('index.html', 'ASC', 'season', '')">
 										<div id="seasonselect"></div></a></li>
-									<li><a id="li_person_up" href="javascript:call_personindex()">
+									<li><a id="li_person_up" href="javascript:call_personindex('true')">
 										<div id="personindex"></div></a></li>
-									<li><a id="li_genre_up" href="javascript:call_genreindex(index_type)">
+									<li><a id="li_genre_up" href="javascript:call_genreindex(index_type, 'true')">
 										<div id="genreindex"></div></a></li>
 							</ul>
 						<td>
@@ -274,20 +249,6 @@
 								</td>
 								
 							</table>
-<!--							<td style="width: 150px;">
-								<a id="home_right_person" href="javascript:call_personindex()">
-									<div id="personselect"></div>
-								</a>
-							</td>
-							<td style="width: 120px;">
-								<a id="home_right_genre" href="javascript:call_genreindex(index_type)">
-									<div id="genreselect"></div>
-								</a>
-							</td> -->
-				
-					
-						
-				
 					<table>
 						<tr class="tableconfigsearch">
 							<td>

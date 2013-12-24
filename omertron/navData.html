@@ -43,7 +43,7 @@
 				//	 outputJson(data); 		
                     updateHtml(data);
 			// adjust number per page with the popup width and poster + container width			
-                    pageData(6);
+                    pageData_special(6);
                 }
             });
             return jsondata;
@@ -102,7 +102,7 @@
 		
 //***************************************************************************************************************		
 		
-        function pageData(perPage)
+        function pageData_special(perPage)
         {
             $("div.holder").jPages({
                 containerID: "yRow",

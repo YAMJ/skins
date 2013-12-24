@@ -30,6 +30,7 @@
 		var RowperPageValue = 2;
 		var PerPageValue = 12;
         var jsondata = null;
+		var menuleft_toggle = 0;
 		var genre_id = "";
 		var genre_name = ""; 
 		// get the genre and name id and reset to default for the next time 
@@ -136,46 +137,12 @@
             $p('div.row').render(yamjdata, LIST_DIR);
         }
 
-        // Create the pagination for the index using jPages.
-        // Will place the page list in the "div.holder" and page the "yRow" data.
-        // Animation comes from animate.css
-        function pageData(perPage)
-        {
-            $("div.holder").jPages({
-                containerID: "yRow",
-                animation: "fadeInUpBig",
-                perPage: perPage,
-                delay: 20
-            });
-        }
-
-		function ChangeIndex (indextype)
-		{		
-				window.localStorage.setItem("indextype", indextype);
-				window.location.href="index.html";
-		
-		}
-		function call_personindex()
-        {
-            console.log("call personindex: ");
-            window.location.href="index_person.html";
-        }
-		function call_genreindex(indextype)
-        {
-			localStorage.setItem("indextype", indextype);
-            console.log("call genreindex with indextype: "+indextype);
-			window.location.href="navGenre.html";
-        }
 		function open_genre_index(indextype)
         {
 			localStorage.setItem("indextype", indextype);
             console.log("Storing value: indextype: " +indextype);
 			window.location.href="index_Genre.html";
 			Mypopup.focus();
-		}
-		function ouvre_popup_search() 
-		{
-			Searchpopup = window.open("search.html", "YAMJ v3 search","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=1190px, height=220px");
 		}
 //************************ LANGUAGE LOCAL SETTING *********************************************		
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
@@ -191,6 +158,8 @@
 			document.getElementById("configselect").innerHTML=config_select.toUpperCase();
 			document.getElementById("nbrow").innerHTML=nbofrow.toUpperCase();
 			document.getElementById("language").innerHTML=lang_label.toUpperCase();
+			document.getElementById("genreindex").innerHTML=genre_select.toUpperCase();
+			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
 		}
         </script>
 
@@ -198,7 +167,7 @@
         <div id="logo_index">
 						<td>
 							<ul id="home_left_up"><img src="./pictures/yamj-logo_repeat.png" width="90px" />
-							
+									<li><a id="li_home_left" href="javascript:toggle_menuleft()"></a></li>
 									<li><a id="li_all_up" href="javascript:ChangeIndex('movie,series')">
 										<div id="allselect"></div></a></li>
 									<li><a id="li_movie_up" href="javascript:ChangeIndex('movie')">
@@ -206,7 +175,11 @@
 									<li><a id="li_series_up" href="javascript:ChangeIndex('series')">
 										<div id="serieselect"></div></a></li>	
 									<li><a id="li_season_up" href="javascript:ChangeIndex('season')">
-										<div id="seasonselect"></div></a></li>		
+										<div id="seasonselect"></div></a></li>	
+									<li><a id="li_person_up" href="javascript:call_personindex('false')">
+										<div id="personindex"></div></a></li>
+									<li><a id="li_genre_up" href="javascript:call_genreindex(index_type, 'false')">
+										<div id="genreindex"></div></a></li>
 							</ul>
 						<td>
 			<div class="show_index_genre"><span id="printsearch"></span></div>
@@ -241,12 +214,12 @@
 					<table>
 						<tr class="tablesearchmethod">
 							<td>
-								<a id="home_right_person" href="javascript:call_personindex()">
+								<a id="home_right_person" href="javascript:call_personindex('false')">
 									<div id="personselect"></div>
 								</a>
 							</td>
 							<td>
-								<a id="home_right_genre" href="javascript:call_genreindex(index_type)">
+								<a id="home_right_genre" href="javascript:call_genreindex(index_type, 'false')">
 									<div id="genreselect"></div>
 								</a>
 							</td>

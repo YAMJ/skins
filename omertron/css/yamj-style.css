@@ -403,19 +403,26 @@ ul#home_left_up, ul#home_left_search {
 	}
 
 
-#li_all_up, #li_movie_up, #li_series_up, #li_season_up, #li_person_up, #li_genre_up {
+#li_all_up, #li_movie_up, #li_series_up, #li_season_up, #li_person_up, #li_genre_up, #li_home_left {
 	width: 135px;
 	height:17px;
 	position: absolute;
 	top: 33px;
 	left: 2px;
 	padding:0px 0px 0px 0px;
-	background-color:rgba(255, 255, 255, 0.3);
+	background-color:rgba(0, 0, 0, 0.7);
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
 	z-index: 99;
 	}	
+ #li_home_left {
+	top: -1px;
+	left: -1px;
+	height: 33px;
+	background-color:rgba(0, 0, 0, 0);
+	border: none;
+	}
  #li_movie_up {
 	top: 53px;
 }
@@ -877,7 +884,7 @@ ul#row_select:hover > li{
 	border: 1px solid #fff;
 	}
 /*************************** Header **********************************/	
-#li_fanart, #li_person, #li_movie, #li_search, #li_selection, #selection_id, #li_language, #detail_lang_id {
+#li_fanart, #li_person, #li_movie, #li_search, #li_selection, #selection_id, #li_language, #detail_lang_id, #li_home_right {
 	display: block;
 	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size:1.05em;
@@ -889,12 +896,19 @@ ul#row_select:hover > li{
 	top: 33px;
 	left: -40px;
 	padding:0px 0px 0px 0px;
-	background-color:rgba(255, 255, 255, 0.3);
+	background-color:rgba(0, 0, 0, 0.6);
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
 	z-index: 99;
 	}	
+ #li_home_right {
+	top: -1px;
+	left: -1px;
+	height: 33px;
+	background-color:rgba(0, 0, 0, 0);
+	border: none;
+}	
  #li_person {
 	top: 53px;
 }

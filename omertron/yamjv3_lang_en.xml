@@ -8,8 +8,8 @@
 	<personselected>person</personselected>
 	<genreselected>genre</genreselected>
 	<searchselected>search</searchselected>
-	<configselected>configuration</configselected>
-	<fanartshow>only fanart</fanartshow>
+	<configselected>settings</configselected>
+	<fanartshow>fanart</fanartshow>
 	<personshow>show person</personshow>
 	<show>ribbon</show>
 	<seasonlabel>season</seasonlabel>

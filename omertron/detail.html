@@ -494,13 +494,11 @@
 						{ 
 							fanart_toggle = 1;
 							display_only_fanart ();
-							$('.show_fanart a').css('color', 'red');
-							document.getElementById('fanart').firstChild.nodeValue = "FANART ON";	
+							$('#fanartshow').css('color', 'red');
 						} else {
 							fanart_toggle =  0;
 							display_all ();
-							$('.show_fanart a').css('color', '#b0b0b0');
-							document.getElementById('fanart').firstChild.nodeValue = "SHOW FANART";
+							$('#fanartshow').css('color', 'white');
 						}
 					}
 

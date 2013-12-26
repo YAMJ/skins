@@ -89,7 +89,7 @@
 			{		
 					window.localStorage.setItem("indextype", indextype);
 					console.log("call Changeindex: "+indextype);
-					window.location.reload();
+					window.location.href="index.html";
 			}
 	
 	

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<lang>
+	
+	<movieselected>movie</movieselected>
+	<serieselected>series</serieselected>
+	<seasonselected>season</seasonselected>
+	<allselected>movie and series</allselected>
+	<personselected>person</personselected>
+	<genreselected>genre</genreselected>
+	<searchselected>search</searchselected>
+	<configselected>settings</configselected>
+	<fanartshow>fanart</fanartshow>
+	<personshow>show person</personshow>
+	<show>ribbon</show>
+	<seasonlabel>season</seasonlabel>
+	<movielabel>movie</movielabel>
+	<serieslabel>series</serieslabel>
+	<episodelabel>episode</episodelabel>
+	<plotlabel>plot</plotlabel>
+	<genrelabel>genre</genrelabel>
+	<personlabel>person</personlabel>
+	<startlabel>starts with</startlabel>
+	<anylabel>contains</anylabel>
+	<selectionlabel>selection</selectionlabel>
+	<ascending>ascending</ascending>
+	<descending>descending</descending>
+	<namelabel>lastname</namelabel>	
+	<resultstext>results</resultstext>
+	<selection>selection</selection>
+	<noplot>no plot available</noplot>
+	<nobiography>no biography available</nobiography>
+	<nobirthday>birthday unknown</nobirthday>
+	<noposter>no poster</noposter>
+	<nbrow>nb of row</nbrow>
+	<language>language</language>
+</lang>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>YAMJ v3 index</title>
+        <script src="js/jquery.js"></script>
+        <!-- Used for the JSON parsing -->
+        <script src="js/pure.js"></script>
+        <!-- Used for the paging of the index -->
+        <script src="js/js.js"></script>
+        <script src="js/jPages.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/lang.js"></script>
+		
+		<!-- Used for config  setting -->
+		<script src="js/config.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
+        <!-- Used for the paging of the index -->
+        <link rel="stylesheet" href="css/jPages.css">
+        <!-- Used for the fancy animations -->
+        <link rel="stylesheet" href="css/animate.css">
+	
+    </head>
+    <body onload="getIndexData();">
+        <script type="text/javascript">
+	
+//***************************************************************************************
+        var select = "";
+		// set default to 2 rows and 6 columns
+		var RowperPageValue = 2;
+		var PerPageValue = 12;
+		var LangValue = "en";
+        var jsondata = null;
+		var menuleft_toggle = 0;
+		var index_method = "START";
+		// get the search method and reset to default for the next time 
+		if (localStorage.getItem("search_method"))
+			{index_method = localStorage.getItem("search_method");
+			localStorage.setItem("search_method", "START");}
+		// set a default  if 1rst time and set to the type previously selected if available 	
+		var index_type = "movie,series";
+			if (window.localStorage.getItem("indextype"))
+				{index_type = window.localStorage.getItem("indextype");}
+				else {window.localStorage.setItem("indextype", index_type);}
+		// set a default direction to ASC or set to the direction previously selected if available 	
+		var direction = "ASC";
+			if (window.localStorage.getItem("direction"))
+				{direction = window.localStorage.getItem("direction");}
+				else {window.localStorage.setItem("direction", direction);}	
+        // This is the directive used by pure to transform the JSON data into HTML
+        // span.Title is a simple substitution of the title
+        // img.Poster@src replaces the "src" attribute of the img.Poster
+		var COUNT_HEADER = {
+                'span.ReturnCount': function(arg) {	
+					return arg.context.count+' '+results_text;
+					}
+            };	
+		
+        var LIST_DIR = {
+            "div.block": {
+                "result<-results": {
+                     "span.title": function(arg) {
+						
+					if (( arg.item.artwork.POSTER[0]) && (arg.item.videoType == 'SEASON'))
+						{					
+						return arg.item.title + '<br> '+season_label+': ' + arg.item.season;
+						} else {
+							if (arg.item.videoType == 'SERIES')
+								{ 
+									
+									return arg.item.title +'<br> '+series_label; 
+									
+								} else {
+									return arg.item.title;
+								}
+						}
+					},
+                    "img.poster@src": function(arg) {
+                        // Check to see if there are posters
+                        if (arg.item.artwork.POSTER) {
+                            // Get the first poster from the list
+                            var poster = arg.item.artwork.POSTER[0];
+                            if (poster.generatedId === 0) {
+                                return "pictures/dummy.jpg";
+                            }
+                            return arg.context.baseArtworkUrl + poster.filename;
+                        } else {
+                            return "pictures/dummy.jpg";
+                        }
+                    },
+                    "img.poster@onclick": function(arg) {
+                        return "setId('" + arg.item.videoType + "', " + arg.item.id + ")";
+                    }
+                }
+            }
+        };
+	
+        function setId(type, id)
+        {
+            window.localStorage.setItem("type", type);
+            window.localStorage.setItem("id", id);
+            console.log("Storing value: " + type + "-" + id);
+            window.location.href="detail.html";
+        }
+
+        // This function calls the API to get the JSON data.
+        // It will then update the HTML with the data and set up the paging
+        function getIndexData()
+        {
+			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+			get_lang();
+			
+            var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type="+index_type+"&sortby=title&sortdir="+direction+"&artwork=poster";
+		
+			switch (index_type)
+				{
+					case 'movie,series':
+						selected_index = all_select.toUpperCase();
+						break;
+					case 'movie':
+						selected_index = movie_select.toUpperCase();
+						break;
+					case 'series':
+						selected_index = series_select.toUpperCase();
+						break;
+					case 'season':
+						selected_index = season_select.toUpperCase();
+						break;
+				};
+				
+				if (window.localStorage.getItem("search_index"))
+				{
+			
+						selected_index = selected_index + " (" +window.localStorage.getItem("search_index").toUpperCase() + ")"
+						
+						jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("search_index") + "&field=title&mode="+index_method;
+						window.localStorage.setItem("search_index", "");	
+					}	
+				$('#printsearch').html(selected_index);
+				console.log("URL: " + jsonUrl);
+
+				$.ajax({
+                url: jsonUrl,
+                async: false,
+                dataType: 'jsonp',
+                'success': function(data)
+                {
+                    jsondata = data;
+				//	 outputJson(data); 		
+                    updateHtml(data);
+					get_poster_number ();
+                    pageData(perPageValue);
+                }
+            });
+            return jsondata;
+        }
+			
+        // Run the pure.js function to render the data into the HTML template
+        // div.row is the part of the template to apply it too.
+        // "row" is a CLASS attribute, not the id.
+        function updateHtml(yamjdata)
+        {
+			$p('.count_return_index').render(yamjdata, COUNT_HEADER);	
+            $p('div.row').render(yamjdata, LIST_DIR);
+        }
+
+
+		function SetIndexData (search)
+		{		
+				window.localStorage.setItem("search_index", search);
+				window.location.reload();
+		
+		}
+
+  //************************ LANGUAGE LOCAL SETTING *********************************************
+		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
+		function set_context_lang_value ()
+		{
+			document.getElementById("allselect").innerHTML=all_select.toUpperCase();
+			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
+			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
+			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
+			document.getElementById("searchselect").innerHTML=search_select.toUpperCase();
+			document.getElementById("configselect").innerHTML=config_select.toUpperCase();
+			document.getElementById("nbrow").innerHTML=nbofrow.toUpperCase();
+			document.getElementById("language").innerHTML=lang_label.toUpperCase();
+			document.getElementById("genreindex").innerHTML=genre_select.toUpperCase();
+			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
+		}
+        </script>
+	<div class="index_header"> 
+        <div id="logo_index">
+						<td>
+							<ul id="home_left_up"><img src="./pictures/yamj-logo_repeat.png" width="90px" />
+									<li><a id="li_home_left" href="javascript:toggle_menuleft()"></a></li>
+									<li><a id="li_all_up" href="javascript:ChangeIndex('movie,series')">
+										<div id="allselect"></div></a></li>
+									<li><a id="li_movie_up" href="javascript:ChangeIndex('movie')">
+										<div id="movieselect"></div></a></li>	
+									<li><a id="li_series_up" href="javascript:ChangeIndex('series')">
+										<div id="serieselect"></div></a></li>	
+									<li><a id="li_season_up" href="javascript:ChangeIndex('season')">
+										<div id="seasonselect"></div></a></li>	
+									<li><a id="li_person_up" href="javascript:call_personindex('false')">
+										<div id="personindex"></div></a></li>
+									<li><a id="li_genre_up" href="javascript:call_genreindex(index_type, 'false')">
+										<div id="genreindex"></div></a></li>
+							</ul>
+						<td>
+		
+		
+
+			<div class="show_index"><span id="printsearch"></span></div>
+			<div class="count_return_index">
+                   <span class="ReturnCount"></span> 
+			</div>
+		<!-- just added to set the language value, shouldn't be displayed  -->
+		<div class="results" style="visibility: hidden; display:none;">
+			<table><tr><td class="Value"></td></tr></table>
+		</div>
+		<!-- just added to set the poster number value, shouldn't be displayed  -->
+		<div class="poster_results" style="visibility: hidden; display:none;">
+			<table><tr><td class="Poster_Value"></td></tr></table>
+		</div>
+		
+		</div >
+		<div id="main_index">
+					<table>
+					<!-- selector to search START for the 1rst char , ANY for the all contents -->
+						<tr class="tablesearchmethod">
+							<td style="width: 120px;">
+								<a id="home_right_search" href="javascript:ouvre_popup_search()">
+									<div id="searchselect"></div>
+								</a>
+							</td>
+						</tr>	
+					</table>
+					<table>
+						<tr class="tableconfig">
+							<td>
+								<ul id="row_select">
+								<label id="configselect"></label>
+									<li>
+										<form><label id='nbrow'></label>
+											<select id="row_id" onchange="update_poster_number(document.getElementById('row_id').value);">
+												<option value=""></option>
+												<option value="0">0</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="99999">~</option>
+											</select> 
+											<noscript><input type="submit" value="Submit"></noscript>
+										</form>
+									</li>
+									<li>
+										<form><label id='language'></label>
+											<select id="lang_id" onchange="update_lang(document.getElementById('lang_id').value);">
+												<option value=""></option>
+												<option value="de">de</option>
+												<option value="en">en</option>
+												<option value="es">es</option>
+												<option value="fr">fr</option>
+												<option value="it">it</option>
+											</select> 
+											<noscript><input type="submit" value="Submit"></noscript>
+										</form>
+									</li>
+								</ul>
+							</td>
+						</tr>
+					</table>
+	</div>
+            <!--Navigation Holder-->
+            <div class="holder"></div>
+		</div>
+        <!--Data Items Container-->
+        <div id="container">
+            <div id="yRow" class="row">
+                <div id="yBlock" class="block">
+                    <img class="poster" src=""><br>
+                    <span class="title"></span>
+                </div>
+                <br />
+            </div>
+        </div>
+	<!-- display source data from API if needed  -->
+        <div id="sourceData"></div>
+    </body>
+</html>

@@ -1,0 +1,107 @@
+<html>
+    <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>YAMJ v3 Person popup</title>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/pure.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/set_skin_lang.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>	
+        <link rel="stylesheet" type="text/css" href="css/Popup_Person-style.css">
+    </head>
+    <body onload="PersonData();" >
+        <script type="text/javascript">
+            function PersonData()
+            {
+				var	id = localStorage.getItem ("Person_id");
+			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+				set_skin_language();				
+                jsonUrl = "http://localhost:8888/yamj3/api/person/" + id + ".json?dataitems=artwork,biography";
+                var jsondata = null;
+
+                console.log("Call for URL with person ID:" + id);
+                console.log("URL: " + jsonUrl);
+
+                $.ajax({
+                    url: jsonUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(data)
+                    {
+                        jsondata = data;
+					//	 outputJson(data); 	
+                        updateHtml(data);
+						
+                    }
+                });
+				
+                return jsondata;
+            }
+
+            function updateHtml(yamjdata)
+            {
+                console.log(yamjdata);
+                YAMJ_DIR = {
+              //      'span.id': 'result.id',
+                    'span.name': 'result.name',
+                    'span.birthPlace': 'result.birthPlace',
+					'span.birthDay': function(arg) {
+								if (arg.context.result.birthDay) 
+								{
+									return arg.context.result.birthDay;
+								} else {
+								return nobirthday_text;
+								}
+							},
+                    'span.biography': function(arg) {
+								if (arg.context.result.biography) 
+								{
+									return arg.context.result.biography;
+								} else {
+								return nobiography_text;
+								}
+							},
+                    'span.image': function(arg) {
+                        // Check to see if there is artwork
+                        if (arg.context.result.artwork) {
+                            // Get the first photo from the list
+                            var photo = arg.context.result.artwork[0];
+                            if (photo.generatedId === 0) {
+                                return "<img src=\"pictures/dummy_photo.jpg\">";
+                            }
+                            return "<img src=\"" + arg.context.basePhotoUrl + photo.filename + "\">";
+                        } else {
+                            return "<img src=\"pictures/dummy_photo.jpg\">";
+                        }
+                    }
+                };
+                $p('.template').render(yamjdata, YAMJ_DIR);				
+            }
+
+        </script>
+		<!-- just added to set the language value, shouldn't be displayed  -->
+			<div class="results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Value"></td></tr></table>
+			</div>
+			
+        <div class="template">
+            <table id="headertable">
+                <tr>
+                 
+            <!--        <td><span class="id"></span></td> -->
+                    <td rowspan="4"><span class="image"></span></td>
+                    <td><span class="name"></span>: 
+                    <span class="birthPlace"></span> - 
+                    <span class="birthDay"></span></td>
+                </tr>
+                <tr>
+               
+                    <td><span class="biography"></span></td>
+                </tr>
+            </table>
+        </div>
+	<!-- display source data from API if needed  -->
+        <div id="sourceData"></div>		
+    </body>
+</html>

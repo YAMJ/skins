@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<lang>
+	
+	<movieselected>del cinema</movieselected>
+	<serieselected>serie</serieselected>
+	<seasonselected>stagione</seasonselected>
+	<allselected>del cinema e serie</allselected>
+	<personselected>persona</personselected>
+	<genreselected>tipo</genreselected>
+	<searchselected>ricerca</searchselected>
+	<configselected>configurazione</configselected>
+	<fanartshow>fanart</fanartshow>
+	<personshow>persona</personshow>
+	<show>nastro</show>
+	<seasonlabel>stagione</seasonlabel>
+	<movielabel>del cinema</movielabel>
+	<serieslabel>serie</serieslabel>
+	<episodelabel>episodio</episodelabel>
+	<plotlabel>sinossi</plotlabel>
+	<genrelabel>tipo</genrelabel>
+	<personlabel>persona</personlabel>
+	<startlabel>inizia con</startlabel>
+	<namelabel>cognome</namelabel>	
+	<anylabel>contiene</anylabel>
+	<selectionlabel>selezione</selectionlabel>
+	<ascending>ascendente</ascending>
+	<descending>discendente</descending>
+	<resultstext>provocare</resultstext>
+	<selection>selezione</selection>
+	<noplot>non sinossi disponibili</noplot>
+	<nobiography>biografia assente</nobiography>
+	<nobirthday>data di nascita sconosciuta</nobirthday>
+	<noposter>non manisfesta</noposter>
+	<nbrow>nb di fila</nbrow>
+	<language>lingua</language>
+</lang>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>YAMJ v3 search</title>
+        <script src="js/jquery.js"></script>
+        <!-- Used for the JSON parsing -->
+        <script src="js/pure.js"></script>
+        <!-- Used for the paging of the index -->
+        <script src="js/js.js"></script>
+        <script src="js/jPages.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/lang.js"></script>
+		
+		<!-- Used for config  setting -->
+		<script src="js/config.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
+        <!-- Used for the paging of the index -->
+        <link rel="stylesheet" href="css/jPages.css">
+        <!-- Used for the fancy animations -->
+        <link rel="stylesheet" href="css/animate.css">
+	
+    </head>
+    <body onload="getIndexData();">
+        <script type="text/javascript">
+	
+//***************************************************************************************
+        var select = "";
+		// set default to 2 rows and 6 columns
+		var Indexpopup = "";
+		var LangValue = "en";
+		// set a default  if 1rst time and set to the type previously selected if available 	
+		var index_type = "movie,series";
+			if (window.localStorage.getItem("indextype"))
+				{index_type = window.localStorage.getItem("indextype");}
+				else {window.localStorage.setItem("indextype", index_type);}
+		var direction_temp = "ASC";
+			if (window.localStorage.getItem("direction"))
+				{direction_temp = window.localStorage.getItem("direction");}
+				else {window.localStorage.setItem("direction", direction_temp);}			
+		var method_selected	= 'MOVIE';
+ 
+        // This function calls the API to get the JSON data.
+        // It will then update the HTML with the data and set up the paging
+        function getIndexData()
+        {
+			console.log("getIndexData: ");
+			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+			get_lang();
+			
+		}
+		function SetIndexData (search)
+		{	
+			direction_temp = window.localStorage.getItem("direction")
+			console.log("SetIndexData: search="+search+ " method_selected="+method_selected+ " direction="+direction_temp);	
+			window.localStorage.setItem("search_index", search);	
+			switch (method_selected)
+				{
+					case 'ALL':
+						localStorage.setItem("selection", search);
+	
+						localStorage.setItem("type", 'all');
+						Indexpopup = window.open("index.html", "YAMJ v3 index","");
+						break;
+					case 'MOVIE':
+						localStorage.setItem("selection", search);
+	
+						localStorage.setItem("type", 'movie');
+						Indexpopup = window.open("index.html", "YAMJ v3 index","");
+						break;
+					case 'SERIES':
+						localStorage.setItem("selection", search);
+
+						localStorage.setItem("type", 'series');
+						Indexpopup = window.open("index.html", "YAMJ v3 index","");
+						break;
+					case 'SEASON':
+						localStorage.setItem("selection", search);
+		
+						localStorage.setItem("type", 'season');
+						Indexpopup = window.open("index.html", "YAMJ v3 index","");
+						break;
+					case 'GENRE':
+						call_genreindex('all', 'true');
+						break;
+					case 'NAME':
+						window.localStorage.setItem("search_method", 'NAME');	
+						call_personindex('true');
+						break;
+					case 'PERSON':
+						call_personindex('true');
+						break;
+				};
+				
+		
+		}
+		
+		
+		function ouvre_popup_index(page, direction, current_type, letter_selection) 
+		{
+			console.log("ouvre_popup_index: "+ page + " " + direction + " " + current_type + " " + letter_selection);
+			localStorage.setItem("selection", letter_selection);
+			localStorage.setItem("direction", direction);
+			localStorage.setItem("type", current_type);
+			Indexpopup = window.open(page, "YAMJ v3 index","");
+		}
+		
+
+		
+  //************************ LANGUAGE LOCAL SETTING *********************************************
+		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
+		function set_context_lang_value ()
+		{
+			document.getElementById("allselect").innerHTML=all_select.toUpperCase();
+			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
+			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
+			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
+			document.getElementById("genreindex").innerHTML=genre_select.toUpperCase();
+			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
+			document.getElementById("startlabel").innerHTML=start_label.toUpperCase();
+			document.getElementById("anylabel").innerHTML=any_label.toUpperCase();
+			document.getElementById("genrelabel").innerHTML=genre_select.toUpperCase();
+			document.getElementById("personlabel").innerHTML=person_select.toUpperCase();
+			document.getElementById("namelabel").innerHTML=name_label.toUpperCase();
+			document.getElementById("movielabel").innerHTML=movie_select.toUpperCase();
+			document.getElementById("serieslabel").innerHTML=series_select.toUpperCase();
+			document.getElementById("alllabel").innerHTML=all_select.toUpperCase();
+			document.getElementById("seasonlabel").innerHTML=season_select.toUpperCase();
+			document.getElementById("asclabel").innerHTML=asc_label.toUpperCase();
+			document.getElementById("desclabel").innerHTML=desc_label.toUpperCase();
+			document.getElementById("languagelabel").innerHTML=lang_label.toUpperCase();
+		}
+        </script>
+
+        <div id="logo_search">
+						<td>
+							<ul id="home_left_search"><img src="./pictures/yamj-logo_repeat.png" width="90px" />
+							
+									<li><a id="li_all_up" href="javascript:ouvre_popup_index('index.html', 'ASC', 'movie,series', '')">
+										<div id="allselect"></div></a></li>
+									<li><a id="li_movie_up" href="javascript:ouvre_popup_index('index.html', 'ASC', 'movie', '')">
+										<div id="movieselect"></div></a></li>	
+									<li><a id="li_series_up" href="javascript:ouvre_popup_index('index.html', 'ASC', 'series', '')">
+										<div id="serieselect"></div></a></li>	
+									<li><a id="li_season_up" href="javascript:javascript:ouvre_popup_index('index.html', 'ASC', 'season', '')">
+										<div id="seasonselect"></div></a></li>
+									<li><a id="li_person_up" href="javascript:call_personindex('true')">
+										<div id="personindex"></div></a></li>
+									<li><a id="li_genre_up" href="javascript:call_genreindex(index_type, 'true')">
+										<div id="genreindex"></div></a></li>
+							</ul>
+						<td>
+	
+		<!-- just added to set the language value, shouldn't be displayed  -->
+		<div class="results" style="visibility: hidden; display:none;">
+			<table><tr><td class="Value"></td></tr></table>
+		</div>
+	
+		</div >
+		<div id="main_index">
+		<!-- search by letter -->				
+						
+			<form id="monForm" >
+				<fieldset style="border:none">
+					<table align="center"  >
+						<tr>
+							<td class="formSelect">							
+								<input  type="button" value="A" onclick="SetIndexData('a')"/>
+								<input  type="button" value="B" onclick="SetIndexData('b')"/>
+								<input  type="button" value="C" onclick="SetIndexData('c')"/>
+								<input  type="button" value="D" onclick="SetIndexData('d')"/>
+								<input  type="button" value="E" onclick="SetIndexData('e')"/>
+								<input  type="button" value="F" onclick="SetIndexData('f')"/>
+								<input  type="button" value="G" onclick="SetIndexData('g')"/>
+								<input  type="button" value="H" onclick="SetIndexData('h')"/>
+								<input  type="button" value="I" onclick="SetIndexData('i')"/>
+								<input  type="button" value="J" onclick="SetIndexData('j')"/>
+								<input  type="button" value="K" onclick="SetIndexData('k')"/>
+								<input  type="button" value="L" onclick="SetIndexData('l')"/>
+								<input  type="button" value="M" onclick="SetIndexData('m')"/>
+								<input  type="button" value="N" onclick="SetIndexData('n')"/>
+								<input  type="button" value="O" onclick="SetIndexData('o')"/>
+								<input  type="button" value="P" onclick="SetIndexData('p')"/>
+								<input  type="button" value="Q" onclick="SetIndexData('q')"/>
+								<input  type="button" value="R" onclick="SetIndexData('r')"/>
+								<input  type="button" value="S" onclick="SetIndexData('s')"/>
+								<input  type="button" value="T" onclick="SetIndexData('t')"/>
+								<input  type="button" value="U" onclick="SetIndexData('u')"/>
+								<input  type="button" value="V" onclick="SetIndexData('v')"/>
+								<input  type="button" value="W" onclick="SetIndexData('w')"/>
+								<input  type="button" value="X" onclick="SetIndexData('x')"/>
+								<input  type="button" value="Y" onclick="SetIndexData('y')"/>
+								<input  type="button" value="Z" onclick="SetIndexData('z')"/>
+							<td>
+						</tr>
+						<tr>
+							
+							<td align="right" >
+								<input  type="button" value="1" onclick="SetIndexData('1')"/>
+								<input  type="button" value="2" onclick="SetIndexData('2')"/>
+								<input  type="button" value="3" onclick="SetIndexData('3')"/>
+								<input  type="button" value="4" onclick="SetIndexData('4')"/>
+								<input  type="button" value="5" onclick="SetIndexData('5')"/>
+								<input  type="button" value="6" onclick="SetIndexData('6')"/>
+								<input  type="button" value="7" onclick="SetIndexData('7')"/>
+								<input  type="button" value="8" onclick="SetIndexData('8')"/>
+								<input  type="button" value="9" onclick="SetIndexData('9')"/>
+								<input  type="button" value="0" onclick="SetIndexData('0')"/>
+						
+								<input  type="button" value="ALL" onclick="SetIndexData('')"/>
+								<input  type="text" id="FormSearch" />
+								<input  type="submit" value="press enter" onclick="SetIndexData(document.getElementById('FormSearch').value)" />
+							</td>
+							
+						</tr>
+					</table>
+				</fieldset>
+			</form>
+					
+					<!-- selector to search START for the 1rst char , ANY for the all contents -->
+						
+							<table class="table_search_method" >		
+								<td >
+									<input type="radio" name="search_method" value="START" onclick="localStorage.setItem('search_method', 'START');" id="FormStart" checked="checked" /><label for="START"><div id='startlabel'></div></label><br />
+									<input type="radio" name="search_method" value="ANY" onclick="localStorage.setItem('search_method', 'ANY');" id="FormAny" /><label for="ANY"><div id='anylabel'></div></label><br />
+								</td>
+							</table>
+							<table class="table_direction" >		
+								<td >
+									<input type="radio" name="direction" value="ASC" onclick="localStorage.setItem('direction', 'ASC');" id="FormAsc" checked="checked"/><label for="ASC"><div id='asclabel'></div></label><br />
+									<input type="radio" name="direction" value="DESC" onclick="localStorage.setItem('direction', 'DESC');" id="FormDesc" /><label for="DESC"><div id='desclabel'></div></label>
+								</td>
+							</table>
+							
+							<table class="table_method_select">						
+							
+								<td style="width: 200px; text-align: left;">
+									<input type="radio" name="method_selected" value="All" onclick="method_selected = 'ALL';" id="FormAll" checked="checked" /><label for="ALL"><div id='alllabel'></div></label><br />
+									<input type="radio" name="method_selected" value="Movie" onclick="method_selected = 'MOVIE';" id="FormMovie"  /><label for="MOVIE"><div id='movielabel'></div></label><br />
+									<input type="radio" name="method_selected" value="Series" onclick="method_selected = 'SERIES';" id="FormSeries"  /><label for="SERIES"><div id='serieslabel'></div></label><br />
+									<input type="radio" name="method_selected" value="Season" onclick="method_selected = 'SEASON';" id="FormSeason"  /><label for="SEASON"><div id='seasonlabel'></div></label>
+								</td>
+								<td style="width: 160px; text-align: left;">
+									<input type="radio" name="method_selected" value="Name" onclick="method_selected = 'NAME';" id="FormName"  /><label for="NAME"><div id='namelabel'></div></label><br />
+									<input type="radio" name="method_selected" value="Person" onclick="method_selected ='PERSON';" id="FormPerson"  /><label for="PERSON"><div id='personlabel'></div></label><br />
+									<input type="radio" name="method_selected" value="Genre" onclick="method_selected = 'GENRE';" id="FormGenre" /><label for="GENRE"><div id='genrelabel'></div></label>
+								</td>
+								
+							</table>
+					<table>
+						<tr class="tableconfigsearch">
+							<td>
+								
+										<form><label id='languagelabel'></label>
+											<select id="lang_id" onchange="update_lang(document.getElementById('lang_id').value);">
+												<option value=""></option>
+												<option value="de">de</option>
+												<option value="en">en</option>
+												<option value="es">es</option>
+												<option value="fr">fr</option>
+												<option value="it">it</option>
+											</select> 
+											<noscript><input type="submit" value="Submit"></noscript>
+										</form>
+						
+							</td>
+						</tr>
+					</table>
+
+ 
+	<!-- display source data from API if needed  -->
+        <div id="sourceData"></div>
+    </body>
+</html>

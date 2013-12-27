@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<lang>
+	
+	<movieselected>film</movieselected>
+	<serieselected>série</serieselected>
+	<seasonselected>saison</seasonselected>
+	<allselected>film et série</allselected>
+	<personselected>personne</personselected>
+	<genreselected>genre</genreselected>
+	<searchselected>recherche</searchselected>
+	<configselected>configuration</configselected>
+	<fanartshow>fanart</fanartshow>
+	<personshow>personne</personshow>
+	<show>ruban</show>
+	<seasonlabel>saison</seasonlabel>
+	<movielabel>film</movielabel>
+	<serieslabel>série</serieslabel>
+	<episodelabel>épisode</episodelabel>
+	<plotlabel>synopsis</plotlabel>
+	<genrelabel>genre</genrelabel>
+	<personlabel>personne</personlabel>
+	<startlabel>commence par</startlabel>
+	<namelabel>nom</namelabel>
+	<ascending>ascendant</ascending>
+	<descending>descendant</descending>
+	<anylabel>contient</anylabel>
+	<selectionlabel>selection</selectionlabel>
+	<resultstext>résultats</resultstext>
+	<selection>selection</selection>
+	<nobiography>biographie absente</nobiography>
+	<nobirthday>date de naissance inconnue</nobirthday>
+	<noplot>aucun sysnospis disponible</noplot>
+	<noposter>aucun postère</noposter>
+	<nbrow>nbre de ligne</nbrow>
+	<language>langue</language>
+	
+</lang>
+

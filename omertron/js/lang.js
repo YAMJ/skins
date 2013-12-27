@@ -124,8 +124,10 @@
 					movie_label=(x[i].getElementsByTagName("movielabel")[0].childNodes[0].nodeValue);
 					plot_label=(x[i].getElementsByTagName("plotlabel")[0].childNodes[0].nodeValue);
 					genre_label=(x[i].getElementsByTagName("genrelabel")[0].childNodes[0].nodeValue);
+					noplot_text=(x[i].getElementsByTagName("noplot")[0].childNodes[0].nodeValue);
 					nobiography_text=(x[i].getElementsByTagName("nobiography")[0].childNodes[0].nodeValue);
 					nobirthday_text=(x[i].getElementsByTagName("nobirthday")[0].childNodes[0].nodeValue);
+					noposter_text=(x[i].getElementsByTagName("noposter")[0].childNodes[0].nodeValue);
 					name_label=(x[i].getElementsByTagName("namelabel")[0].childNodes[0].nodeValue);
 					person_label=(x[i].getElementsByTagName("personlabel")[0].childNodes[0].nodeValue);
 					nbofrow=(x[i].getElementsByTagName("nbrow")[0].childNodes[0].nodeValue);

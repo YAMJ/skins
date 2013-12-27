@@ -27,8 +27,10 @@
 	<namelabel>nachname</namelabel>	
 	<resultstext>ergebnis</resultstext>
 	<selection>auswahl</selection>
+	<noplot>keine synopse vorhanden</noplot>
 	<nobiography>Biografie abwesend</nobiography>
 	<nobirthday>Geburtsdatum unbekannt</nobirthday>
+	<noposter>kein poster</noposter>
 	<nbrow>anzahl der zeilen</nbrow>
 	<language>sprache</language>
 </lang>

@@ -27,8 +27,10 @@
 	<namelabel>appelido</namelabel>	
 	<resultstext>resultado</resultstext>
 	<selection>selección</selection>
+	<noplot>sin sinopse disponible</noplot>
 	<nobiography>sin biografía</nobiography>
 	<nobirthday>la fecha de nacimiento</nobirthday>
+	<noposter>no poster</noposter>
 	<nbrow>nb de fila</nbrow>
 	<language>lengua</language>
 </lang>

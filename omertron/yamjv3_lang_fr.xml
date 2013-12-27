@@ -29,6 +29,8 @@
 	<selection>selection</selection>
 	<nobiography>biographie absente</nobiography>
 	<nobirthday>date de naissance inconnue</nobirthday>
+	<noplot>aucun sysnospis disponible</noplot>
+	<noposter>aucun postère</noposter>
 	<nbrow>nbre de ligne</nbrow>
 	<language>langue</language>
 	

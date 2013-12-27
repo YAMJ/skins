@@ -27,8 +27,10 @@
 	<namelabel>lastname</namelabel>	
 	<resultstext>results</resultstext>
 	<selection>selection</selection>
+	<noplot>no plot available</noplot>
 	<nobiography>no biography available</nobiography>
-	<nobirthday>birthday unknown</nobirthday>	
+	<nobirthday>birthday unknown</nobirthday>
+	<noposter>no poster</noposter>
 	<nbrow>nb of row</nbrow>
 	<language>language</language>
 </lang>

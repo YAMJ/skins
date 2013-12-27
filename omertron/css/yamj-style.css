@@ -762,7 +762,7 @@ ul#row_select:hover > li{
 	position: absolute;
 	top: 90px;
 	left: 430px;
-	width: 380px;
+	width: 400px;
 	max-height: 320px;
 	font-family: Arial, Helvetica, sans-serif;
 	color:white;
@@ -1123,16 +1123,18 @@ text {
 	}	
 .plot {
 	width: auto;
+	max-height: 125px;
 	display: block;
 	background-color:rgba(0, 0, 0, 0.3);
 	border: 1px solid gray;	
 	border-right: 5px solid gray;
 	padding: 1px 10px 3px 10px;
-
+	overflow-y: auto;
 	}
 .genres, .test {
+	max-width: 100%;
 	width: auto;
-	display: block;
+	display: inline;
 	background-color:rgba(0, 0, 0, 0.3);
 	border: 1px solid gray;
 	border-right: 5px solid gray;

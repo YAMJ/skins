@@ -27,8 +27,10 @@
 	<descending>discendente</descending>
 	<resultstext>provocare</resultstext>
 	<selection>selezione</selection>
+	<noplot>non sinossi disponibili</noplot>
 	<nobiography>biografia assente</nobiography>
 	<nobirthday>data di nascita sconosciuta</nobirthday>
+	<noposter>non manisfesta</noposter>
 	<nbrow>nb di fila</nbrow>
 	<language>lingua</language>
 </lang>

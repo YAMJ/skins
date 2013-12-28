@@ -25,7 +25,7 @@
 			var	type = localStorage.getItem ("type");
 			var	id = localStorage.getItem ("id");
 			
-			jsonUrl = "http://localhost:8888/yamj3/api/person/"+type+".json?id="+id+"&job=actor,director,writer&dataitems=artwork";
+			jsonUrl = "/yamj3/api/person/"+type+".json?id="+id+"&job=actor,director,writer&dataitems=artwork";
             console.log("URL: " + jsonUrl);
             var jsondata = null;
 

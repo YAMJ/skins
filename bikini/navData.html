@@ -23,7 +23,7 @@
 			localStorage.setItem("update_required", false);
 			var	directionnav = localStorage.getItem ("direction");
 			var	type = localStorage.getItem ("type");
-		    var jsonUrl = "http://localhost:8888/yamj3/api/index/video.json?type="+type+"&sortby=title&sortdir="+directionnav+"&artwork=poster";
+		    var jsonUrl = "/yamj3/api/index/video.json?type="+type+"&sortby=title&sortdir="+directionnav+"&artwork=poster";
 			if (window.localStorage.getItem("selection"))
 				{
 						jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("selection") + "&field=title&mode=START";

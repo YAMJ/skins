@@ -1,7 +1,7 @@
   //************************ CONFIGURATION SETTING *********************************************
   		// include this function to set / add / list configuration key , fetched from the yamjv3 database configuration table 
 		// outside skin configuration could be displayed / update with the following
-		// enter in the browser http://localhost:8888/yamj3/config/list.html
+		// enter in the browser /yamj3/config/list.html
 		// click on enter new configuration ()
 		// enter key : by exemple skin_langauge as key
 		// enter a valid value 

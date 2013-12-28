@@ -186,7 +186,7 @@
 				// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 				get_lang();
 				// construct JSON request for detail movie/series/season 
-				jsonUrl = "http://localhost:8888/yamj3/api/video/" + type.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot";
+				jsonUrl = "/yamj3/api/video/" + type.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot";
 				console.log("URL: " + jsonUrl);
 		
 					
@@ -268,7 +268,7 @@
 	// call the JSON value of season  	
 		function perform_season()
 		{
-		jsonSeasonUrl = "http://localhost:8888/yamj3/api/index/video.json?type=season&sortby=season&sortdir=ASC&field=series_id&search="+series_id+"&artwork=poster";
+		jsonSeasonUrl = "/yamj3/api/index/video.json?type=season&sortby=season&sortdir=ASC&field=series_id&search="+series_id+"&artwork=poster";
 		console.log("URL: " + jsonSeasonUrl);
 					$.ajax({
                    url: jsonSeasonUrl,
@@ -318,7 +318,7 @@
 	// call the JSON value for episode 			
 		function perform_episode()
 		{
-		jsonEpisodeUrl = "http://localhost:8888/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot";
+		jsonEpisodeUrl = "/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot";
 		console.log("URL: " + jsonEpisodeUrl);
 					$.ajax({
                    url: jsonEpisodeUrl,

@@ -1,7 +1,7 @@
   //************************ LANGUAGE SETTING *********************************************
   		// include this function to set the skin language , fetched from the yamjv3 database configuration table 
 		// before using this function skin_language varaible should declared with supported value  fr, en, de, es, it 
-		// enter in the browser http://localhost:8888/yamj3/config/list.html
+		// enter in the browser /yamj3/config/list.html
 		// click on enter new configuration ()
 		// enter skin_langauge as key
 		// enter a valid value language as value 
@@ -9,7 +9,7 @@
  //*****************************************************************************************   
 		function set_skin_language()
 		{		
-		var jsonSkinLangUrl = "http://localhost:8888/yamj3/system/config.json?config=skin_language&mode=any";
+		var jsonSkinLangUrl = "/yamj3/system/config.json?config=skin_language&mode=any";
 		console.log("jsonSkinLangUrl: " + jsonSkinLangUrl);
 				$.ajax({
                    url: jsonSkinLangUrl,

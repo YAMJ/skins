@@ -1,7 +1,7 @@
   //************************ CONFIGURATION SETTING *********************************************
   		// include this function to set / add / list configuration key , fetched from the yamjv3 database configuration table 
 		// outside skin configuration could be displayed / update with the following
-		// enter in the browser http://localhost:8888/yamj3/config/list.html
+		// enter in the browser /yamj3/config/list.html
 		// click on enter new configuration ()
 		// enter key : by exemple skin_langauge as key
 		// enter a valid value 
@@ -10,7 +10,7 @@
 			// fetch the value in the config database
 		function get_lang()
 			{
-				var jsonLangUrl = "http://localhost:8888/yamj3/api/config/list.json?config=skin_language&mode=any";
+				var jsonLangUrl = "/yamj3/api/config/list.json?config=skin_language&mode=any";
 				console.log("jsonLangUrl: " + jsonLangUrl);
 				$.ajax({
                    url: jsonLangUrl,
@@ -32,7 +32,7 @@
 			// update  the value in the config database
 		function update_lang(lang_) 
 		{
-				var jsonLangUrl = "http://localhost:8888/yamj3/api/config/update.json?key=skin_language&value="+lang_+"";
+				var jsonLangUrl = "/yamj3/api/config/update.json?key=skin_language&value="+lang_+"";
 				console.log("jsonLangUrl: " + jsonLangUrl);
 				$.ajax({
                    url: jsonLangUrl,

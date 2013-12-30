@@ -76,13 +76,20 @@
 	// open or change window to select index person page 
 		function call_personindex(newpage)
 			{
-				console.log("call personindex: ");
+				console.log("call_personindex: ");
 				if (newpage) 
 					{
 						Indexpopup = window.open("index_person.html", "YAMJ v3 index","");
 					} else {
 						window.location.href="index_person.html";
 					}
+			}
+	// open or change vertical popup window to select index person page 
+		function call_personpopup()
+			{
+				console.log("call_personpopup: ");
+				Personpopup = window.open("navAllPerson.html", "YAMJv3 Navigation All Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=150px, height=1000px");
+
 			}
 	// change index page 
 		function ChangeIndex (indextype)

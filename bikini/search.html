@@ -41,6 +41,7 @@
 				{direction_temp = window.localStorage.getItem("direction");}
 				else {window.localStorage.setItem("direction", direction_temp);}			
 		var method_selected	= 'MOVIE';
+		var ribbon_display = 'PAGE';
  
         // This function calls the API to get the JSON data.
         // It will then update the HTML with the data and set up the paging
@@ -54,43 +55,65 @@
 		function SetIndexData (search)
 		{	
 			direction_temp = window.localStorage.getItem("direction")
-			console.log("SetIndexData: search="+search+ " method_selected="+method_selected+ " direction="+direction_temp);	
+			console.log("SetIndexData: search="+search+ " method_selected="+method_selected+ " direction="+direction_temp+ " ribbon_display="+ribbon_display);	
 			window.localStorage.setItem("search_index", search);	
 			switch (method_selected)
 				{
 					case 'ALL':
 						localStorage.setItem("selection", search);
-	
 						localStorage.setItem("type", 'all');
-						Indexpopup = window.open("index.html", "YAMJ v3 index","");
+						if (ribbon_display == 'PAGE') {
+							Indexpopup = window.open("index.html", "YAMJ v3 index","");
+							} else {
+							ouvre_popup_index('navData.html', direction_temp, method_selected, search);
+							}
 						break;
 					case 'MOVIE':
 						localStorage.setItem("selection", search);
-	
 						localStorage.setItem("type", 'movie');
-						Indexpopup = window.open("index.html", "YAMJ v3 index","");
+						if (ribbon_display == 'PAGE') {
+							Indexpopup = window.open("index.html", "YAMJ v3 index","");
+							} else {
+							ouvre_popup_index('navData.html', direction_temp, method_selected, search);
+							}
 						break;
 					case 'SERIES':
 						localStorage.setItem("selection", search);
 
 						localStorage.setItem("type", 'series');
-						Indexpopup = window.open("index.html", "YAMJ v3 index","");
+						if (ribbon_display == 'PAGE') {
+							Indexpopup = window.open("index.html", "YAMJ v3 index","");
+							} else {
+							ouvre_popup_index('navData.html', direction_temp, method_selected, search);
+							}
 						break;
 					case 'SEASON':
 						localStorage.setItem("selection", search);
 		
 						localStorage.setItem("type", 'season');
-						Indexpopup = window.open("index.html", "YAMJ v3 index","");
+						if (ribbon_display == 'PAGE') {
+							Indexpopup = window.open("index.html", "YAMJ v3 index","");
+							} else {
+							ouvre_popup_index('navData.html', direction_temp, method_selected, search);
+							}
 						break;
 					case 'GENRE':
 						call_genreindex('all', 'true');
 						break;
 					case 'NAME':
 						window.localStorage.setItem("search_method", 'NAME');	
-						call_personindex('true');
+						if (ribbon_display == 'PAGE') {
+							call_personindex('true');
+							} else {
+							call_personpopup();
+							}
 						break;
 					case 'PERSON':
-						call_personindex('true');
+						if (ribbon_display == 'PAGE') {
+							call_personindex('true');
+							} else {
+							call_personpopup();
+							}
 						break;
 				};
 				
@@ -98,15 +121,23 @@
 		}
 		
 		
+		function ouvre_index(page, direction, current_type, letter_selection) 
+		{
+			console.log("ouvre_index: "+ page + " " + direction + " " + current_type + " " + letter_selection);
+			localStorage.setItem("selection", letter_selection);
+			localStorage.setItem("direction", direction);
+			localStorage.setItem("type", current_type);
+			Indexpopup = window.open(page, "YAMJ v3 index","");
+		}
+		// open a new vertical window for index list 				
 		function ouvre_popup_index(page, direction, current_type, letter_selection) 
 		{
 			console.log("ouvre_popup_index: "+ page + " " + direction + " " + current_type + " " + letter_selection);
 			localStorage.setItem("selection", letter_selection);
 			localStorage.setItem("direction", direction);
 			localStorage.setItem("type", current_type);
-			Indexpopup = window.open(page, "YAMJ v3 index","");
+			Indexpopup = window.open(page, "YAMJv3 Navigation index","channelmode=no, menubar=no, status=no, scrollbars=yes, resizable=yes, menubar=no, location=no, left=2px, top=5px, width=160px, height=1000px");
 		}
-		
 
 		
   //************************ LANGUAGE LOCAL SETTING *********************************************
@@ -121,7 +152,7 @@
 			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
 			document.getElementById("startlabel").innerHTML=start_label.toUpperCase();
 			document.getElementById("anylabel").innerHTML=any_label.toUpperCase();
-			document.getElementById("genrelabel").innerHTML=genre_select.toUpperCase();
+//			document.getElementById("genrelabel").innerHTML=genre_select.toUpperCase();
 			document.getElementById("personlabel").innerHTML=person_select.toUpperCase();
 			document.getElementById("namelabel").innerHTML=name_label.toUpperCase();
 			document.getElementById("movielabel").innerHTML=movie_select.toUpperCase();
@@ -131,6 +162,8 @@
 			document.getElementById("asclabel").innerHTML=asc_label.toUpperCase();
 			document.getElementById("desclabel").innerHTML=desc_label.toUpperCase();
 			document.getElementById("languagelabel").innerHTML=lang_label.toUpperCase();
+			document.getElementById("ribbonlabel").innerHTML=show.toUpperCase();
+			document.getElementById("pagelabel").innerHTML=page_label.toUpperCase();
 		}
         </script>
 
@@ -138,13 +171,13 @@
 						<td>
 							<ul id="home_left_search"><img src="./pictures/yamj-logo_repeat.png" width="90px" />
 							
-									<li><a id="li_all_up" href="javascript:ouvre_popup_index('index.html', 'ASC', 'movie,series', '')">
+									<li><a id="li_all_up" href="javascript:ouvre_index('index.html', 'ASC', 'movie,series', '')">
 										<div id="allselect"></div></a></li>
-									<li><a id="li_movie_up" href="javascript:ouvre_popup_index('index.html', 'ASC', 'movie', '')">
+									<li><a id="li_movie_up" href="javascript:ouvre_index('index.html', 'ASC', 'movie', '')">
 										<div id="movieselect"></div></a></li>	
-									<li><a id="li_series_up" href="javascript:ouvre_popup_index('index.html', 'ASC', 'series', '')">
+									<li><a id="li_series_up" href="javascript:ouvre_index('index.html', 'ASC', 'series', '')">
 										<div id="serieselect"></div></a></li>	
-									<li><a id="li_season_up" href="javascript:javascript:ouvre_popup_index('index.html', 'ASC', 'season', '')">
+									<li><a id="li_season_up" href="javascript:javascript:ouvre_index('index.html', 'ASC', 'season', '')">
 										<div id="seasonselect"></div></a></li>
 									<li><a id="li_person_up" href="javascript:call_personindex('true')">
 										<div id="personindex"></div></a></li>
@@ -233,7 +266,7 @@
 									<input type="radio" name="direction" value="DESC" onclick="localStorage.setItem('direction', 'DESC');" id="FormDesc" /><label for="DESC"><div id='desclabel'></div></label>
 								</td>
 							</table>
-							
+				<!-- selector for type (all, movie, series, season, person, name) -->		
 							<table class="table_method_select">						
 							
 								<td style="width: 200px; text-align: left;">
@@ -243,32 +276,39 @@
 									<input type="radio" name="method_selected" value="Season" onclick="method_selected = 'SEASON';" id="FormSeason"  /><label for="SEASON"><div id='seasonlabel'></div></label>
 								</td>
 								<td style="width: 160px; text-align: left;">
+								<!-- search person by name means select with a blank before the string to search  -->
 									<input type="radio" name="method_selected" value="Name" onclick="method_selected = 'NAME';" id="FormName"  /><label for="NAME"><div id='namelabel'></div></label><br />
 									<input type="radio" name="method_selected" value="Person" onclick="method_selected ='PERSON';" id="FormPerson"  /><label for="PERSON"><div id='personlabel'></div></label><br />
-									<input type="radio" name="method_selected" value="Genre" onclick="method_selected = 'GENRE';" id="FormGenre" /><label for="GENRE"><div id='genrelabel'></div></label>
+			<!--						<input type="radio" name="method_selected" value="Genre" onclick="method_selected = 'GENRE';" id="FormGenre" /><label for="GENRE"><div id='genrelabel'></div></label> -->
 								</td>
 								
 							</table>
-					<table>
-						<tr class="tableconfigsearch">
-							<td>
+				<!-- select language  -->
+							<table>
+								<tr class="tableconfigsearch">
+									<td>
+										
+												<form><label id='languagelabel'></label>
+													<select id="lang_id" onchange="update_lang(document.getElementById('lang_id').value);">
+														<option value=""></option>
+														<option value="de">de</option>
+														<option value="en">en</option>
+														<option value="es">es</option>
+														<option value="fr">fr</option>
+														<option value="it">it</option>
+													</select> 
+													<noscript><input type="submit" value="Submit"></noscript>
+												</form>
 								
-										<form><label id='languagelabel'></label>
-											<select id="lang_id" onchange="update_lang(document.getElementById('lang_id').value);">
-												<option value=""></option>
-												<option value="de">de</option>
-												<option value="en">en</option>
-												<option value="es">es</option>
-												<option value="fr">fr</option>
-												<option value="it">it</option>
-											</select> 
-											<noscript><input type="submit" value="Submit"></noscript>
-										</form>
-						
-							</td>
-						</tr>
-					</table>
-
+									</td>
+								</tr>
+							</table>
+							<table class="table_ribbon_display" >		
+								<td >
+									<input type="radio" name="ribbon_display" value="PAGE" onclick="ribbon_display = 'PAGE';" id="FormPage" checked="checked"/><label for="PAGE"><div id='pagelabel'></div></label><br />
+									<input type="radio" name="ribbon_display" value="RIBBON" onclick="ribbon_display = 'RIBBON';" id="FormRibbon" /><label for="RIBBON"><div id='ribbonlabel'></div></label>									
+								</td>
+							</table>
  
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>

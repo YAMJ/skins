@@ -323,6 +323,17 @@ body {
 	border: 2px solid #b0b0b0;
 	text-align: left;
 }
+
+.table_ribbon_display
+{
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	position: absolute;
+	padding: 0px 10px 5px 0px;
+	top: 70px;
+	left: 200px;
+	border: 2px solid #b0b0b0;
+	text-align: left;
+}
 .table_direction
 {
     font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -367,7 +378,7 @@ body {
 	width: 655px;
 	padding-top: 5px;
 }		
-#startlabel, #anylabel, #namelabel, #personlabel, #genrelabel, #alllabel, #serieslabel, #movielabel, #seasonlabel, #asclabel, #desclabel, #languagelabel {
+#startlabel, #anylabel, #namelabel, #personlabel, #genrelabel, #alllabel, #serieslabel, #movielabel, #seasonlabel, #asclabel, #desclabel, #languagelabel, #pagelabel, #ribbonlabel {
 		display: inline;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
@@ -1117,28 +1128,36 @@ text {
 	text-align: justify;
 	font-size:1.0em;
 	position: absolute;
-	top: 650px;
+	top: 600px;
 	left: 10px;
 	overflow: hidden;
 	}	
 .plot {
 	width: auto;
-	max-height: 125px;
+	max-height: 170px;
+	max-width: 1030px;
 	display: block;
 	background-color:rgba(0, 0, 0, 0.3);
 	border: 1px solid gray;	
 	border-right: 5px solid gray;
 	padding: 1px 10px 3px 10px;
 	overflow-y: auto;
+	position: relative;
+	left: 220px;
 	}
 .genres, .test {
-	max-width: 100%;
+	max-width: 1030px;
 	width: auto;
 	display: inline;
 	background-color:rgba(0, 0, 0, 0.3);
 	border: 1px solid gray;
 	border-right: 5px solid gray;
 	padding: 3px 10px 1px 10px;
+	position: relative;
+	left: 220px;
+	}
+.test {
+	display: none;
 	}
 .genres a {
 	text-decoration: none;

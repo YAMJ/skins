@@ -5,7 +5,7 @@
         <script src="js/jquery.min.js"></script>
         <script src="js/pure.js"></script>
 		<!-- Used for skin language setting -->
-		<script src="js/set_skin_lang.js"></script>
+		<script src="js/lang.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>	
         <link rel="stylesheet" type="text/css" href="css/Popup_Person-style.css">
@@ -16,7 +16,7 @@
             {
 				var	id = localStorage.getItem ("Person_id");
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
-				set_skin_language();				
+				get_lang();				
                 jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=artwork,biography";
                 var jsondata = null;
 
@@ -78,7 +78,11 @@
                 };
                 $p('.template').render(yamjdata, YAMJ_DIR);				
             }
-
+			function set_context_lang_value ()
+		{
+	
+			
+		}
         </script>
 		<!-- just added to set the language value, shouldn't be displayed  -->
 			<div class="results" style="visibility: hidden; display:none;">

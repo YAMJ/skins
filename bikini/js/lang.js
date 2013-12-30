@@ -132,6 +132,7 @@
 					person_label=(x[i].getElementsByTagName("personlabel")[0].childNodes[0].nodeValue);
 					nbofrow=(x[i].getElementsByTagName("nbrow")[0].childNodes[0].nodeValue);
 					lang_label=(x[i].getElementsByTagName("language")[0].childNodes[0].nodeValue);
+					page_label=(x[i].getElementsByTagName("pagelabel")[0].childNodes[0].nodeValue);
 				// now set local lang usage depending of each file
 				set_context_lang_value ();
 			}

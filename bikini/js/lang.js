@@ -10,7 +10,7 @@
 			// fetch the value in the config database
 		function get_lang()
 			{
-				var jsonLangUrl = "/yamj3/api/config/list.json?config=skin_language&mode=any";
+				var jsonLangUrl = "/yamj3/api/config/list.json?config=bikini_skin_language&mode=any";
 				console.log("jsonLangUrl: " + jsonLangUrl);
 				$.ajax({
                    url: jsonLangUrl,
@@ -32,7 +32,7 @@
 			// update  the value in the config database
 		function update_lang(lang_) 
 		{
-				var jsonLangUrl = "/yamj3/api/config/update.json?key=skin_language&value="+lang_+"";
+				var jsonLangUrl = "/yamj3/api/config/update.json?key=bikini_skin_language&value="+lang_+"";
 				console.log("jsonLangUrl: " + jsonLangUrl);
 				$.ajax({
                    url: jsonLangUrl,

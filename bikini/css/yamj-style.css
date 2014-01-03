@@ -415,7 +415,7 @@ ul#home_left_up, ul#home_left_search {
 
 
 #li_all_up, #li_movie_up, #li_series_up, #li_season_up, #li_person_up, #li_genre_up, #li_home_left {
-	width: 135px;
+	width: 175px;
 	height:17px;
 	position: absolute;
 	top: 33px;
@@ -757,7 +757,7 @@ ul#row_select:hover > li{
 	position: absolute;
 	left: 13px;
 	top: 372px;
-	height: 438px;
+	height: 408px;
 	width: 1279px;
 	background: url(../pictures/tvbg-v3.png) no-repeat;
 	visibility: hidden;
@@ -771,7 +771,7 @@ ul#row_select:hover > li{
 .episodeplot51, .episodeplot52, .episodeplot53,.episodeplot54,.episodeplot55,.episodeplot56,.episodeplot57,.episodeplot58,.episodeplot59,.episodeplot60
   {
 	position: absolute;
-	top: 90px;
+	top: 80px;
 	left: 430px;
 	width: 400px;
 	max-height: 320px;
@@ -901,7 +901,7 @@ ul#row_select:hover > li{
 	font-size:1.05em;
 	font-weight: bold;
 	color:white;
-	width: 145px;
+	width: 165px;
 	height:17px;
 	position: absolute;
 	top: 33px;
@@ -1128,7 +1128,7 @@ text {
 	text-align: justify;
 	font-size:1.0em;
 	position: absolute;
-	top: 600px;
+	top: 570px;
 	left: 10px;
 	overflow: hidden;
 	}	

@@ -10,7 +10,7 @@
 			// fetch the value in the config database
 		function get_poster_number()
 			{
-				var jsonPosterNbUrl = "/yamj3/api/config/list.json?config=skin_index_row";
+				var jsonPosterNbUrl = "/yamj3/api/config/list.json?config=bikini_skin_index_row";
 				console.log("jsonPosterNbUrl: " + jsonPosterNbUrl);
 				$.ajax({
                    url: jsonPosterNbUrl,
@@ -32,7 +32,7 @@
 			// update  the value in the config database
 		function update_poster_number(row) 
 		{
-				var jsonPosterNbUrl = "/yamj3/api/config/update.json?key=skin_index_row&value="+row+"";
+				var jsonPosterNbUrl = "/yamj3/api/config/update.json?key=bikini_skin_index_row&value="+row+"";
 				console.log("jsonPosterNbUrl: " + jsonPosterNbUrl);
 				$.ajax({
                    url: jsonPosterNbUrl,

@@ -8,12 +8,16 @@ div#slideshowCtr {
     margin: auto;
     overflow: hidden;
 	position: absolute;
-	left: 20px;
-	top: 60px;
+	left: 17px;
+	top: 455px;
+	border: 2px solid #b0b0b0;
+	border-left: 3px solid #b0b0b0;
+	border-top: 3px solid #b0b0b0;
 }
 
 div.glow {
-    box-shadow: 0px 2px 3px #fff;
+    box-shadow: -2px -3px 6px #fff;
+	
 }
 
 div#imgRoll {
@@ -39,7 +43,7 @@ a#next {
     font-family: Helvetica, sans-serif;
     padding: 4px 20px 4px 10px;
     position: absolute;
-    top: 200px;
+    top: 630px;
 	left: 178px;
 }
 a#prev {
@@ -53,7 +57,7 @@ a#prev {
     font-family: Helvetica, sans-serif;
     padding: 4px 20px 4px 10px;
     position: absolute;
-    top: 200px;
+    top: 630px;
 	left: 20px;
 }
 a#next:hover, a#prev:hover {
@@ -79,7 +83,7 @@ div#slideshowFanart {
     overflow: hidden;
 	opacity: 0.7;
 	position: absolute;
-	top: 92px;
+	top: 62px;
 }
 div#imgRollFanart {
     height: inherit;

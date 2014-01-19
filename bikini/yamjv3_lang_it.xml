@@ -9,15 +9,56 @@
 	<genreselected>tipo</genreselected>
 	<searchselected>ricerca</searchselected>
 	<configselected>configurazione</configselected>
+	<playerselected>giocatore</playerselected>
 	<fanartshow>fanart</fanartshow>
 	<personshow>persona</personshow>
 	<show>nastro</show>
+	<remotelabel>telecommando</remotelabel>
+	<uplabel>top</uplabel>
+	<downlabel>basso</downlabel>
+	<rightlabel>diritto</rightlabel>
+	<leftlabel>sinistra</leftlabel>
+	<homelabel>casa</homelabel>
+	<setuplabel>impostazione</setuplabel>
+	<audiolabel>audio</audiolabel>
+	<mutelabel>muto</mutelabel>
+	<volumeuplabel>vol+</volumeuplabel>
+	<volumedownlabel>vol-</volumedownlabel>
+	<stoplabel>stop</stoplabel>
+	<playlabel>giocare</playlabel>
+	<rewindlabel>riavvolgere</rewindlabel>
+	<prevremotelabel>precedente</prevremotelabel>
+	<nextremotelabel>prossimo</nextremotelabel>
+	<fwdlabel>avanti</fwdlabel>
+	<infolabel>info</infolabel>
+	<repeatlabel>ripetizione</repeatlabel>
+	<subtitlelabel>sottotitlo</subtitlelabel>
+	<menulabel>menu</menulabel>
+	<returnlabel>ritorno</returnlabel>
+	<powerlabel>potenza</powerlabel>
+	<pauselabel>pausa</pauselabel>
+	<closeremotelabel>close remoto</closeremotelabel>
+	<enterlabel>inserire</enterlabel>
+	<redlabel>rosso</redlabel>
+	<bluelabel>blu</bluelabel>
+	<yellowlabel>giallo</yellowlabel>
+	<greenlabel>verde</greenlabel>
+	<ejectlabel>espellere</ejectlabel>
+	<titlelabel>titolo</titlelabel>
+	<filemodelabel>modalita file</filemodelabel>
+	<tvmodelabel>modalia tv</tvmodelabel>
+	<sourcelabel>origine</sourcelabel>
+	<zoomlabel>zoom</zoomlabel>
+	<anglelabel>aspetto</anglelabel>
+	<timeseeklabel>tempo di ricer.</timeseeklabel>
 	<pagelabel>pagina</pagelabel>
+	<stylelabel>stile</stylelabel>
 	<seasonlabel>stagione</seasonlabel>
 	<movielabel>del cinema</movielabel>
 	<serieslabel>serie</serieslabel>
 	<episodelabel>episodio</episodelabel>
 	<plotlabel>sinossi</plotlabel>
+	<filelabel>file</filelabel>
 	<genrelabel>tipo</genrelabel>
 	<personlabel>persona</personlabel>
 	<startlabel>inizia con</startlabel>

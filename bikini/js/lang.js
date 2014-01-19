@@ -107,6 +107,7 @@
 					person_select=(x[i].getElementsByTagName("personselected")[0].childNodes[0].nodeValue);
 					genre_select=(x[i].getElementsByTagName("genreselected")[0].childNodes[0].nodeValue);
 					search_select=(x[i].getElementsByTagName("searchselected")[0].childNodes[0].nodeValue);
+					player_select=(x[i].getElementsByTagName("playerselected")[0].childNodes[0].nodeValue);
 					config_select=(x[i].getElementsByTagName("configselected")[0].childNodes[0].nodeValue);
 					start_label=(x[i].getElementsByTagName("startlabel")[0].childNodes[0].nodeValue);
 					asc_label=(x[i].getElementsByTagName("ascending")[0].childNodes[0].nodeValue);
@@ -123,6 +124,7 @@
 					episode_label=(x[i].getElementsByTagName("episodelabel")[0].childNodes[0].nodeValue);
 					movie_label=(x[i].getElementsByTagName("movielabel")[0].childNodes[0].nodeValue);
 					plot_label=(x[i].getElementsByTagName("plotlabel")[0].childNodes[0].nodeValue);
+					file_label=(x[i].getElementsByTagName("filelabel")[0].childNodes[0].nodeValue);
 					genre_label=(x[i].getElementsByTagName("genrelabel")[0].childNodes[0].nodeValue);
 					noplot_text=(x[i].getElementsByTagName("noplot")[0].childNodes[0].nodeValue);
 					nobiography_text=(x[i].getElementsByTagName("nobiography")[0].childNodes[0].nodeValue);
@@ -132,7 +134,48 @@
 					person_label=(x[i].getElementsByTagName("personlabel")[0].childNodes[0].nodeValue);
 					nbofrow=(x[i].getElementsByTagName("nbrow")[0].childNodes[0].nodeValue);
 					lang_label=(x[i].getElementsByTagName("language")[0].childNodes[0].nodeValue);
+					style_label=(x[i].getElementsByTagName("stylelabel")[0].childNodes[0].nodeValue);
 					page_label=(x[i].getElementsByTagName("pagelabel")[0].childNodes[0].nodeValue);
+					remote_label=(x[i].getElementsByTagName("remotelabel")[0].childNodes[0].nodeValue);
+					up_label=(x[i].getElementsByTagName("uplabel")[0].childNodes[0].nodeValue);
+					down_label=(x[i].getElementsByTagName("downlabel")[0].childNodes[0].nodeValue);
+					right_label=(x[i].getElementsByTagName("rightlabel")[0].childNodes[0].nodeValue);
+					left_label=(x[i].getElementsByTagName("leftlabel")[0].childNodes[0].nodeValue);
+					home_label=(x[i].getElementsByTagName("homelabel")[0].childNodes[0].nodeValue);
+					setup_label=(x[i].getElementsByTagName("setuplabel")[0].childNodes[0].nodeValue);
+					audio_label=(x[i].getElementsByTagName("audiolabel")[0].childNodes[0].nodeValue);
+					mute_label=(x[i].getElementsByTagName("mutelabel")[0].childNodes[0].nodeValue);
+					volumeup_label=(x[i].getElementsByTagName("volumeuplabel")[0].childNodes[0].nodeValue);
+					volumedown_label=(x[i].getElementsByTagName("volumedownlabel")[0].childNodes[0].nodeValue);
+					stop_label=(x[i].getElementsByTagName("stoplabel")[0].childNodes[0].nodeValue);
+					play_label=(x[i].getElementsByTagName("playlabel")[0].childNodes[0].nodeValue);
+					rewind_label=(x[i].getElementsByTagName("rewindlabel")[0].childNodes[0].nodeValue);
+					prev_remote_label=(x[i].getElementsByTagName("prevremotelabel")[0].childNodes[0].nodeValue);
+					next_remote_label=(x[i].getElementsByTagName("nextremotelabel")[0].childNodes[0].nodeValue);
+					fwd_label=(x[i].getElementsByTagName("fwdlabel")[0].childNodes[0].nodeValue);
+					info_label=(x[i].getElementsByTagName("infolabel")[0].childNodes[0].nodeValue);
+					repeat_label=(x[i].getElementsByTagName("repeatlabel")[0].childNodes[0].nodeValue);
+					subtitle_label=(x[i].getElementsByTagName("subtitlelabel")[0].childNodes[0].nodeValue);
+					menu_label=(x[i].getElementsByTagName("menulabel")[0].childNodes[0].nodeValue);
+					return_label=(x[i].getElementsByTagName("returnlabel")[0].childNodes[0].nodeValue);
+					power_label=(x[i].getElementsByTagName("powerlabel")[0].childNodes[0].nodeValue);
+					pause_label=(x[i].getElementsByTagName("pauselabel")[0].childNodes[0].nodeValue);
+					
+					close_remote_label=(x[i].getElementsByTagName("closeremotelabel")[0].childNodes[0].nodeValue);
+					enter_label=(x[i].getElementsByTagName("enterlabel")[0].childNodes[0].nodeValue);
+					red_label=(x[i].getElementsByTagName("redlabel")[0].childNodes[0].nodeValue);
+					blue_label=(x[i].getElementsByTagName("bluelabel")[0].childNodes[0].nodeValue);
+					yellow_label=(x[i].getElementsByTagName("yellowlabel")[0].childNodes[0].nodeValue);
+					green_label=(x[i].getElementsByTagName("greenlabel")[0].childNodes[0].nodeValue);
+					eject_label=(x[i].getElementsByTagName("ejectlabel")[0].childNodes[0].nodeValue);
+					title_label=(x[i].getElementsByTagName("titlelabel")[0].childNodes[0].nodeValue);
+					file_mode_label=(x[i].getElementsByTagName("filemodelabel")[0].childNodes[0].nodeValue);
+					source_label=(x[i].getElementsByTagName("sourcelabel")[0].childNodes[0].nodeValue);
+					zoom_label=(x[i].getElementsByTagName("zoomlabel")[0].childNodes[0].nodeValue);
+					tv_mode_label=(x[i].getElementsByTagName("tvmodelabel")[0].childNodes[0].nodeValue);
+					angle_label=(x[i].getElementsByTagName("anglelabel")[0].childNodes[0].nodeValue);
+					time_seek_label=(x[i].getElementsByTagName("timeseeklabel")[0].childNodes[0].nodeValue);
+					
 				// now set local lang usage depending of each file
 				set_context_lang_value ();
 			}

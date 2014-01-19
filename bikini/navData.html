@@ -22,8 +22,8 @@
 			
 			localStorage.setItem("update_required", false);
 			var	directionnav = localStorage.getItem ("direction");
-			var	type = localStorage.getItem ("type");
-		    var jsonUrl = "/yamj3/api/index/video.json?type="+type+"&sortby=title&sortdir="+directionnav+"&artwork=poster";
+			var	indextype = localStorage.getItem ("type");
+		    var jsonUrl = "/yamj3/api/index/video.json?type="+indextype+"&sortby=title&sortdir="+directionnav+"&artwork=poster";
 			if (window.localStorage.getItem("selection"))
 				{
 						jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("selection") + "&field=title&mode=START";
@@ -43,7 +43,7 @@
 				//	 outputJson(data); 		
                     updateHtml(data);
 			// adjust number per page with the popup width and poster + container width			
-                    pageData_special(6);
+                    pageData_special(99999);
                 }
             });
             return jsondata;
@@ -111,8 +111,8 @@
                 perPage: perPage,
                 delay: 20,
 		        midRange: 1,
-				previous: "<-",
-				next: "->"
+				previous: "",
+				next: ""
 				
             });
         }

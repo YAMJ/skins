@@ -9,15 +9,56 @@
 	<genreselected>art</genreselected>
 	<searchselected>suche</searchselected>
 	<configselected>konfiguration</configselected>
+	<playerselected>spieler</playerselected>
 	<fanartshow>fanart</fanartshow>
 	<personshow>person</personshow>
 	<show>band</show>
+	<remotelabel>fernsteuerung</remotelabel>
+	<uplabel>top</uplabel>
+	<downlabel>niedrig</downlabel>
+	<rightlabel>recht</rightlabel>
+	<leftlabel>links</leftlabel>
+	<homelabel>zuhause</homelabel>
+	<setuplabel>setup</setuplabel>
+	<audiolabel>audio</audiolabel>
+	<mutelabel>stumm</mutelabel>
+	<volumeuplabel>vol+</volumeuplabel>
+	<volumedownlabel>vol-</volumedownlabel>
+	<stoplabel>stoppen</stoplabel>
+	<playlabel>spielen</playlabel>
+	<rewindlabel>zuruckspulen</rewindlabel>
+	<prevremotelabel>fruher</prevremotelabel>
+	<nextremotelabel>nachste</nextremotelabel>
+	<fwdlabel>vorwarts</fwdlabel>
+	<infolabel>info</infolabel>
+	<repeatlabel>wiederholung</repeatlabel>
+	<subtitlelabel>untertitel</subtitlelabel>
+	<menulabel>menu</menulabel>
+	<returnlabel>ruckkehr</returnlabel>
+	<powerlabel>macht</powerlabel>
+	<pauselabel>pause</pauselabel>
+	<closeremotelabel>nahe fern</closeremotelabel>
+	<enterlabel>eingeben</enterlabel>
+	<redlabel>rot</redlabel>
+	<bluelabel>blau</bluelabel>
+	<yellowlabel>gelb</yellowlabel>
+	<greenlabel>grun</greenlabel>
+	<ejectlabel>auswerfen</ejectlabel>
+	<titlelabel>titel</titlelabel>
+	<filemodelabel>datei-modus</filemodelabel>
+	<tvmodelabel>tv-modus</tvmodelabel>
+	<sourcelabel>ursprung</sourcelabel>
+	<zoomlabel>zoom</zoomlabel>
+	<anglelabel>seite</anglelabel>
+	<timeseeklabel>suchzeit</timeseeklabel>
 	<pagelabel>seite</pagelabel>
+	<stylelabel>stil</stylelabel>
 	<seasonlabel>jahreszeit</seasonlabel>
 	<movielabel>film</movielabel>
 	<serieslabel>serie</serieslabel>
 	<episodelabel>folge</episodelabel>
 	<plotlabel>synopse</plotlabel>
+	<filelabel>datei</filelabel>
 	<genrelabel>genre</genrelabel>
 	<personlabel>person</personlabel>
 	<startlabel>beginnt mit</startlabel>

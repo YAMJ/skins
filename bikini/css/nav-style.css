@@ -108,5 +108,44 @@ body {
 	left: 150px;
     }
 
+.table_movie_row {
+	display: block;
+	position: absolute;	
+	width: 1240px;
+	left: 2px;
+	top: 0px;
+	height: 258px;
+	overflow-y: hidden;
+	overflow-x: scroll;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:0.7em;
+	text-align: center;
+	z-index: 3;
 	
-		
+	}
+	
+.movie_block {
+	vertical-align: top;
+	height:200px;
+	overflow: hidden;
+	color:#000000;
+    background-color:#ffffff;
+	}
+	
+.poster_row {
+	width: 127px;
+	height: 190px;	
+
+}
+
+.title_row {
+	
+	text-align: center;
+	vertical-align: top;
+	font-weight: bold;
+	
+
+	}
+
+
+			

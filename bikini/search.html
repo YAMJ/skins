@@ -11,7 +11,6 @@
         <script src="js/jPages.js"></script>
 		<!-- Used for skin language setting -->
 		<script src="js/lang.js"></script>
-		
 		<!-- Used for config  setting -->
 		<script src="js/config.js"></script>
 		<!-- Used for template -->
@@ -31,6 +30,7 @@
 		// set default to 2 rows and 6 columns
 		var Indexpopup = "";
 		var LangValue = "en";
+		var StyleValue = "frame";
 		// set a default  if 1rst time and set to the type previously selected if available 	
 		var index_type = "movie,series";
 			if (window.localStorage.getItem("indextype"))
@@ -50,7 +50,8 @@
 			console.log("getIndexData: ");
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 			get_lang();
-			
+			// fill style value 
+			get_style();
 		}
 		function SetIndexData (search)
 		{	
@@ -144,15 +145,8 @@
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
 		function set_context_lang_value ()
 		{
-			document.getElementById("allselect").innerHTML=all_select.toUpperCase();
-			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
-			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
-			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
-			document.getElementById("genreindex").innerHTML=genre_select.toUpperCase();
-			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
 			document.getElementById("startlabel").innerHTML=start_label.toUpperCase();
 			document.getElementById("anylabel").innerHTML=any_label.toUpperCase();
-//			document.getElementById("genrelabel").innerHTML=genre_select.toUpperCase();
 			document.getElementById("personlabel").innerHTML=person_select.toUpperCase();
 			document.getElementById("namelabel").innerHTML=name_label.toUpperCase();
 			document.getElementById("movielabel").innerHTML=movie_select.toUpperCase();
@@ -161,38 +155,18 @@
 			document.getElementById("seasonlabel").innerHTML=season_select.toUpperCase();
 			document.getElementById("asclabel").innerHTML=asc_label.toUpperCase();
 			document.getElementById("desclabel").innerHTML=desc_label.toUpperCase();
-			document.getElementById("languagelabel").innerHTML=lang_label.toUpperCase();
 			document.getElementById("ribbonlabel").innerHTML=show.toUpperCase();
 			document.getElementById("pagelabel").innerHTML=page_label.toUpperCase();
 		}
         </script>
 
-        <div id="logo_search">
-						<td>
-							<ul id="home_left_search"><img src="./pictures/yamj-logo_repeat.png" width="90px" />
-							
-									<li><a id="li_all_up" href="javascript:ouvre_index('index.html', 'ASC', 'movie,series', '')">
-										<div id="allselect"></div></a></li>
-									<li><a id="li_movie_up" href="javascript:ouvre_index('index.html', 'ASC', 'movie', '')">
-										<div id="movieselect"></div></a></li>	
-									<li><a id="li_series_up" href="javascript:ouvre_index('index.html', 'ASC', 'series', '')">
-										<div id="serieselect"></div></a></li>	
-									<li><a id="li_season_up" href="javascript:javascript:ouvre_index('index.html', 'ASC', 'season', '')">
-										<div id="seasonselect"></div></a></li>
-									<li><a id="li_person_up" href="javascript:call_personindex('true')">
-										<div id="personindex"></div></a></li>
-									<li><a id="li_genre_up" href="javascript:call_genreindex(index_type, 'true')">
-										<div id="genreindex"></div></a></li>
-							</ul>
-						<td>
-	
 		<!-- just added to set the language value, shouldn't be displayed  -->
 		<div class="results" style="visibility: hidden; display:none;">
 			<table><tr><td class="Value"></td></tr></table>
 		</div>
 	
 		</div >
-		<div id="main_index">
+		<div id="main_index" style="left: -50px;">
 		<!-- search by letter -->				
 						
 			<form id="monForm" >
@@ -279,37 +253,22 @@
 								<!-- search person by name means select with a blank before the string to search  -->
 									<input type="radio" name="method_selected" value="Name" onclick="method_selected = 'NAME';" id="FormName"  /><label for="NAME"><div id='namelabel'></div></label><br />
 									<input type="radio" name="method_selected" value="Person" onclick="method_selected ='PERSON';" id="FormPerson"  /><label for="PERSON"><div id='personlabel'></div></label><br />
-			<!--						<input type="radio" name="method_selected" value="Genre" onclick="method_selected = 'GENRE';" id="FormGenre" /><label for="GENRE"><div id='genrelabel'></div></label> -->
 								</td>
 								
 							</table>
-				<!-- select language  -->
-							<table>
-								<tr class="tableconfigsearch">
-									<td>
-										
-												<form><label id='languagelabel'></label>
-													<select id="lang_id" onchange="update_lang(document.getElementById('lang_id').value);">
-														<option value=""></option>
-														<option value="de">de</option>
-														<option value="en">en</option>
-														<option value="es">es</option>
-														<option value="fr">fr</option>
-														<option value="it">it</option>
-													</select> 
-													<noscript><input type="submit" value="Submit"></noscript>
-												</form>
-								
-									</td>
-								</tr>
-							</table>
+
 							<table class="table_ribbon_display" >		
 								<td >
-									<input type="radio" name="ribbon_display" value="PAGE" onclick="ribbon_display = 'PAGE';" id="FormPage" checked="checked"/><label for="PAGE"><div id='pagelabel'></div></label><br />
-									<input type="radio" name="ribbon_display" value="RIBBON" onclick="ribbon_display = 'RIBBON';" id="FormRibbon" /><label for="RIBBON"><div id='ribbonlabel'></div></label>									
+									<input type="radio" name="ribbon_display" value="PAGE" onclick="ribbon_display = 'PAGE';update_Style('page')" id="FormPage" checked="checked"/><label for="PAGE"><div id='pagelabel'></div></label><br />
+									<input type="radio" name="ribbon_display" value="RIBBON" onclick="ribbon_display = 'RIBBON';update_Style('ribbon')" id="FormRibbon" /><label for="RIBBON"><div id='ribbonlabel'></div></label>
 								</td>
 							</table>
- 
+		</div>
+		
+	<!-- display config -->
+		<div id="target_display" style="visibility: hidden; ">		
+			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:900px; height:220px;" allowTransparency="true"></iframe>
+		</div>	
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>
     </body>

@@ -11,7 +11,7 @@
 		<!-- Used for template -->
 		<script src="js/template.js"></script>		
         <script src="js/jPages.js"></script>
-
+		<script src="js/library.js"></script>
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
         <!-- Used for the paging of the index -->
         <link rel="stylesheet" href="css/jPages.css">
@@ -106,6 +106,8 @@
         {
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 			get_lang();
+			get_style();
+			get_player();
             var jsonUrl = "/yamj3/api/index/person.json?sortby=name&sortdir="+direction+"&dataitems=artwork&artwork=photo";
 			
 						
@@ -227,13 +229,10 @@
 			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
 			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
 			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
-			document.getElementById("searchselect").innerHTML=search_select.toUpperCase();
-			document.getElementById("nbrow").innerHTML=nbofrow.toUpperCase();
-			document.getElementById("language").innerHTML=lang_label.toUpperCase();
-			document.getElementById("configselect").innerHTML=config_select.toUpperCase();
 			document.getElementById("genreindex").innerHTML=genre_select.toUpperCase();
 			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
-			document.getElementById("personselect").innerHTML=person_select.toUpperCase();
+			document.getElementById("configindex").innerHTML=config_select.toUpperCase();
+			document.getElementById("searchindex").innerHTML=search_select.toUpperCase();
 		}
         </script>
 
@@ -254,6 +253,10 @@
 										<div id="personindex"></div></a></li>
 									<li><a id="li_genre_up" href="javascript:call_genreindex(index_type, 'false')">
 										<div id="genreindex"></div></a></li>
+									<li><a id="li_search_up" href="javascript:ouvre_popup_search(StyleValue)">
+										<div id="searchindex"></div></a></li>
+									<li><a id="li_config_up" href="javascript:ouvre_config(StyleValue)">
+										<div id="configindex"></div></a></li>
 							</ul>
 						<td>
 			<div class="show_personindex">
@@ -269,63 +272,7 @@
 		<!-- search by letter -->				
 		</div >
 		<div id="main_index">			
-					<!-- selector to search START for the 1rst char , ANY for the all contents -->		
-				<table>
-						<tr class="tablesearchmethod">
-							<td style="width: 120px;">
-								<a id="home_right_search" href="javascript:ouvre_popup_search()">
-									<div id="searchselect"></div>
-								</a>
-							</td>
-				
-				
-							<td style="width: 120px;">
-								<a id="home_right_person" href="javascript:call_personindex('false')">
-									<div id="personselect"></div>
-								</a>
-							</td>
-						</tr>
-				</table>
 
-				
-				<table>
-						<tr class="tableconfig">
-							<td>
-								<ul id="row_select">
-								<label id="configselect"></label>
-									<li>
-										<form><label id='nbrow'></label>
-											<select id="row_id" onchange="update_poster_number(document.getElementById('row_id').value);">
-												<option value=""></option>
-												<option value="0">0</option>
-												<option value="1">1</option>
-												<option value="2">2</option>
-												<option value="3">3</option>
-												<option value="4">4</option>
-												<option value="5">5</option>
-												<option value="6">6</option>
-												<option value="99999">~</option>
-											</select> 
-											<noscript><input type="submit" value="Submit"></noscript>
-										</form>
-									</li>
-									<li>
-										<form><label id='language'></div></label>
-											<select id="lang_id" onchange="update_lang(document.getElementById('lang_id').value);">
-												<option value=""></option>
-												<option value="de">de</option>
-												<option value="en">en</option>
-												<option value="es">es</option>
-												<option value="fr">fr</option>
-												<option value="it">it</option>
-											</select> 
-											<noscript><input type="submit" value="Submit"></noscript>
-										</form>
-									</li>
-								</ul>
-							</td>
-						</tr>
-					</table>
 			</div>
 		<!--Navigation Holder-->
          <div class="holder"></div>
@@ -340,6 +287,10 @@
                 <br />
             </div>
         </div>
+	<!-- display config -->
+		<div id="target_display" style="visibility: hidden; ">		
+			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:900px; height:220px;" allowTransparency="true"></iframe>
+		</div>	
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>
     </body>

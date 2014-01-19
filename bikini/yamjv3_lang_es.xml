@@ -9,15 +9,56 @@
 	<genreselected>tipo</genreselected>
 	<searchselected>busqueda</searchselected>
 	<configselected>configuracion</configselected>
+	<playerselected>del jugador</playerselected>
 	<fanartshow>fanart</fanartshow>
 	<personshow>persona</personshow>
 	<show>cinta</show>
+	<remotelabel>mando a distancia</remotelabel>
+	<uplabel>top</uplabel>
+	<downlabel>bajo</downlabel>
+	<rightlabel>derecho</rightlabel>
+	<leftlabel>izquerda</leftlabel>
+	<homelabel>casa</homelabel>
+	<setuplabel>disposicion</setuplabel>
+	<audiolabel>audio</audiolabel>
+	<mutelabel>mudo</mutelabel>
+	<volumeuplabel>vol+</volumeuplabel>
+	<volumedownlabel>vol-</volumedownlabel>
+	<stoplabel>alto</stoplabel>
+	<playlabel>jugar</playlabel>
+	<rewindlabel>rebobinar</rewindlabel>
+	<prevremotelabel>anterior</prevremotelabel>
+	<nextremotelabel>proximo</nextremotelabel>
+	<fwdlabel>adelante</fwdlabel>
+	<infolabel>info</infolabel>
+	<repeatlabel>repeticion</repeatlabel>
+	<subtitlelabel>subtitulo</subtitlelabel>
+	<menulabel>menu</menulabel>
+	<returnlabel>retorno</returnlabel>
+	<powerlabel>potencia</powerlabel>
+	<pauselabel>pausa</pauselabel>
+	<closeremotelabel>cierre a distancia</closeremotelabel>
+	<enterlabel>entrar</enterlabel>
+	<redlabel>rojo</redlabel>
+	<bluelabel>azuk</bluelabel>
+	<yellowlabel>amarillo</yellowlabel>
+	<greenlabel>verde</greenlabel>
+	<ejectlabel>expulsar</ejectlabel>
+	<titlelabel>titulo</titlelabel>
+	<filemodelabel>modo de archi.</filemodelabel>
+	<tvmodelabel>el modo tv</tvmodelabel>
+	<sourcelabel>origen</sourcelabel>
+	<zoomlabel>zoom</zoomlabel>
+	<anglelabel>aspecto</anglelabel>
+	<timeseeklabel>tiempo de bus.</timeseeklabel>
 	<pagelabel>pagina</pagelabel>
+	<stylelabel>estilo</stylelabel>
 	<seasonlabel>temporada</seasonlabel>
 	<movielabel>película</movielabel>
 	<serieslabel>serie</serieslabel>
 	<episodelabel>epsiode</episodelabel>
 	<plotlabel>sinopse</plotlabel>
+	<filelabel>espediante</filelabel>
 	<genrelabel>tipo</genrelabel>
 	<personlabel>persona</personlabel>
 	<startlabel>comienza con</startlabel>

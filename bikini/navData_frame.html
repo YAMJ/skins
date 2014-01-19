@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>YAMJv3 Navigation index</title>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/pure.js"></script>
+        <script src="js/js.js"></script>
+        <script src="js/jPages.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>	
+        <link rel="stylesheet" type="text/css" href="css/nav-style.css">
+        <link rel="stylesheet" href="css/jPages.css">
+        <link rel="stylesheet" href="css/animate.css">
+	
+    </head>
+    <body onload="NavData();">
+        <script type="text/javascript">
+		
+		 function NavData()
+        {
+			
+			localStorage.setItem("update_required", false);
+			var	directionnav = localStorage.getItem ("direction");
+			var	type = localStorage.getItem ("type");
+			var series_id = localStorage.getItem ("SeriesId");
+		    var jsonUrl = "/yamj3/api/index/video.json?type="+type+"&sortby=title&sortdir="+directionnav+"&artwork=poster";
+			if (window.localStorage.getItem("selection"))
+				{
+						jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("selection") + "&field=title&mode=START";
+						window.localStorage.setItem("selection", "");	
+					}	
+			if (type == "SEASON") 
+				{
+					jsonUrl = jsonUrl + "&field=series_id&search="+series_id;
+					}
+					
+            console.log("URL: " + jsonUrl);
+            var jsondata = null;
+
+            $.ajax({
+                url: jsonUrl,
+                async: false,
+                dataType: 'jsonp',
+                'success': function(data)
+                {
+                    jsondata = data;
+				//	 outputJson(data); 		
+                    updateHtml(data);
+			// adjust number per page with the popup width and poster + container width			
+              //      pageData_special(99999);
+			
+                }
+            });
+            return jsondata;
+        }
+		
+//****************************************************************************		
+		
+     function updateHtml(yamjdata)
+     {
+		    var LIST_DIR = {
+            "td.movie_block": {
+                "result<-results": {
+					"span.title_row": function(arg) {
+								switch (arg.item.videoType.toLowerCase()) 
+								{
+								case 'movie':
+										return arg.item.title;
+										break;
+								case 'series':
+										return "series: "+arg.item.title;
+										break;
+								case 'season':
+										return arg.item.title+ " season:"+arg.item.season;
+										break;
+								}		
+							},
+
+                    "img.poster_row@src": function(arg) {
+                        // Check to see if there are posters
+                        if (arg.item.artwork.POSTER) {
+                            // Get the first poster from the list
+                            var poster = arg.item.artwork.POSTER[0];
+                            if (poster.generatedId === 0) {
+                                return "pictures/dummy.jpg";
+                            }
+							
+                            return arg.context.baseArtworkUrl + poster.filename;
+                        } else {
+                            return "pictures/dummy.jpg";
+                        }
+                    },
+                    "img.poster_row@onclick": function(arg) {
+						if (( arg.item.artwork.POSTER[0]) && (arg.item.videoType == 'SEASON'))
+						{
+						 return "setId('" + arg.item.videoType + "', " + arg.item.id + ", \"\")";
+						} else { 
+						season = "";}
+                        return "setId('" + arg.item.videoType + "', " + arg.item.id + ", \"\")";
+                    }
+                }
+            }
+        };
+            $p('div.row').render(yamjdata, LIST_DIR);
+	}
+		
+		
+//***************************************************************************************************************		
+		
+        function pageData_special(perPage)
+        {
+            $("div.holder").jPages({
+                containerID: "yRow",
+				keyBrowse: true,
+                animation: "bounceInLeft",
+                perPage: perPage,
+                delay: 20,
+		        midRange: 0,
+				
+            });
+        }
+	function setId(type, id)
+        {
+			window.blur();
+            localStorage.setItem("type", type);
+            localStorage.setItem("id", id);
+            console.log("Storing value: " + type + "-" + id);
+			window.open("detail.html", "YAMJ v3 detail page", "");
+        }
+        </script>
+   
+        <!--Navigation Holder-->
+        <div class="holder"></div>
+
+     
+		 <!--Data Items Container-->
+		
+            <div class="row">
+				<table class="table_movie_row">
+					<tr>	
+						<td class="movie_block">
+							<img class="poster_row" src=""/><br>
+							<span class="title_row"></span>
+						</td>
+					</tr>
+				</table>
+            </div>
+      
+	<!-- display source data from API if needed  -->
+        <div id="sourceData"></div>
+    </body>
+</html>

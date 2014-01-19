@@ -84,7 +84,7 @@ body {
 	z-index: 3;
 	}
 	
-.table_person_photoH {
+.table_person_photoH , .table_person_photo_frame {
 	position: absolute;
 	left: 5px;
 	top: 0px;
@@ -98,7 +98,10 @@ body {
 	text-align: center;
 	z-index: 3;
 	}
-
+.table_person_photo_frame {
+	top: 30px;
+	width: 1210px;
+	}
 /* fin horizontal person */	
 .person_biography
 {

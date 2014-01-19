@@ -9,15 +9,56 @@
 	<genreselected>genre</genreselected>
 	<searchselected>search</searchselected>
 	<configselected>settings</configselected>
+	<playerselected>player</playerselected>
 	<fanartshow>fanart</fanartshow>
 	<personshow>show person</personshow>
 	<show>ribbon</show>
+	<remotelabel>remote</remotelabel>
+	<uplabel>up</uplabel>
+	<downlabel>down</downlabel>
+	<rightlabel>right</rightlabel>
+	<leftlabel>left</leftlabel>
+	<homelabel>home</homelabel>
+	<setuplabel>setup</setuplabel>
+	<audiolabel>audio</audiolabel>
+	<mutelabel>mute</mutelabel>
+	<volumeuplabel>vol+</volumeuplabel>
+	<volumedownlabel>vol-</volumedownlabel>
+	<stoplabel>stop</stoplabel>
+	<playlabel>play</playlabel>
+	<rewindlabel>rewind</rewindlabel>
+	<prevremotelabel>previous</prevremotelabel>
+	<nextremotelabel>next</nextremotelabel>
+	<fwdlabel>forward</fwdlabel>
+	<infolabel>info</infolabel>
+	<repeatlabel>repeat</repeatlabel>
+	<subtitlelabel>subtitle</subtitlelabel>
+	<menulabel>menu</menulabel>
+	<returnlabel>retour</returnlabel>
+	<powerlabel>power</powerlabel>
+	<pauselabel>pause</pauselabel>
+	<closeremotelabel>close remote</closeremotelabel>
+	<enterlabel>enter</enterlabel>
+	<redlabel>red</redlabel>
+	<bluelabel>blue</bluelabel>
+	<yellowlabel>yellow</yellowlabel>
+	<greenlabel>green</greenlabel>
+	<ejectlabel>eject</ejectlabel>
+	<titlelabel>title</titlelabel>
+	<filemodelabel>file mode</filemodelabel>
+	<tvmodelabel>tv mode</tvmodelabel>
+	<sourcelabel>source</sourcelabel>
+	<zoomlabel>zoom</zoomlabel>
+	<anglelabel>angle</anglelabel>
+	<timeseeklabel>time seek</timeseeklabel>
 	<pagelabel>page</pagelabel>
+	<stylelabel>style</stylelabel>
 	<seasonlabel>season</seasonlabel>
 	<movielabel>movie</movielabel>
 	<serieslabel>series</serieslabel>
 	<episodelabel>episode</episodelabel>
 	<plotlabel>plot</plotlabel>
+	<filelabel>file</filelabel>
 	<genrelabel>genre</genrelabel>
 	<personlabel>person</personlabel>
 	<startlabel>starts with</startlabel>

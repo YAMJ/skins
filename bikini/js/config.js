@@ -8,6 +8,7 @@
 		// click enter 
  //*****************************************************************************************   
 			// fetch the value in the config database
+		var RowperPageValue = 2;
 		function get_poster_number()
 			{
 				var jsonPosterNbUrl = "/yamj3/api/config/list.json?config=bikini_skin_index_row";
@@ -44,7 +45,7 @@
 				//		outputJson(dataSkinPosterNb);
 						updateSkinPosterNb(dataSkinPosterNb);
 						adjust_poster_setting (RowperPageValue);
-						location.reload();
+						parent.location.reload();
 					}
 					
 				});	

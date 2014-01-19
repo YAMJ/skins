@@ -162,7 +162,17 @@
 				}				
 							
 		}		
-		
+		function commit_nbrow ()
+		{
+				
+				if (StyleValue == 'frame') 
+				{
+					parent.location.reload(false);parent.nodisplay_Id('target_display');
+				} else {
+					window.opener.location.reload(false);
+				}				
+							
+		}		
 		
   //************************ LANGUAGE LOCAL SETTING *********************************************
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
@@ -178,8 +188,10 @@
 		<div class="results" style="visibility: hidden; display:none;">
 			<table><tr><td class="Value"></td></tr></table>
 		</div>
-	
-		</div >
+		<div class="poster_results" style="visibility: hidden; display:none;">
+			<table><tr><td class="Poster_Value"></td></tr></table>
+		</div>
+		
 		<div id="main_index" style="left: -50px;">
 			
 			
@@ -246,7 +258,7 @@
 							<td>
 								
 										<form><label id='nbrow'></label>
-											<select id="row_id" onchange="update_poster_number(document.getElementById('row_id').value);">
+											<select id="row_id" onchange="update_poster_number(document.getElementById('row_id').value);commit_nbrow()">
 												<option value=""></option>
 												<option value="0">0</option>
 												<option value="1">1</option>

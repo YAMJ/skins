@@ -1,0 +1,170 @@
+C'est le readme pour le skin bikini :
+Le skin bikini est conçu pour être utilisé avec  Yamj3 .
+Ce skin peut être utilisé avec un PC et tablette ( Android ) .
+
+Testé avec :
+- Dernière version yamj3 ,
+- PC win7 64b
+- Firefox 26.0
+- Chrome 32.0
+- IE 11.0
+- Android 4.3 ( chrome et IE )
+
+
+installation:
+
+ÉTAPE 1 : INSTALLER
+ - Méthode 1er
+    télécharger bikini.zip
+	extraire sous yamj3/resources/skins
+	aller l'étape 2
+ - 2ème méthode
+    Assurez-vous que le noyau YAMJv3 (jetty) est en cours d'exécution
+    Accédez à http://localhost:8888/yamj3  ou  http://IP_SERVER_JETTY:8888/yamj3
+    Sélectionnez le skin
+    Passé l'URL dans la boite de dialogue " URL to upload " 
+    Cliquez sur " add skin "
+    attendre que  le téléchargement et l'installation se termine 
+	aller à l'étape 2
+
+ÉTAPE 2 : PERSONNALISER
+ - Modifier yamj3/resources/skins/bikini/My_Library.xml
+ 	<players>  <!-- est obligatoire ne sautez pas, modifier, supprimer, .... la 1ère ligne  -->
+	...
+	</players> <!-- est obligatoire ne sautez pas, modifier, supprimer, .... cette dernère ligne, ne pas oublier de fermer -->
+ - 	pour chaque lanceur (le lanceur est le périphérique sur lequel vous voulez lire le film) Ajouter la séquence suivante
+	<player>
+		<playername>Name of the Player</playername> <!-- ce nom est libre, c'est celui qui est utilisé pour sélectionner le lanceur dans le skin --> 
+		<playeradress>IP_player</playeradress>  <!-- IP du lanceur -->
+		<path> <!-- répéter autant de fois qu'il y a des chemins à utiliser) 
+			<sourcepath>drive_letter</sourcepath>  <!-- le chemin cible utilisé lorsque vous ajoutez un partage_réseau, c'est la  lettre du lecteur réseau utilisé à l'intérieur du filescanner.cmd  -->
+			<targetpath>name_of_share</targetpath>  <!-- c'est le chemin du dispositif de part qui sera substitué à SourcePath au moment de la LECTURE  -->
+		</path>
+	</player>  <!-- ne pas oublier de fermer -->
+ - exemple: 	
+	<player>
+		<playername>C200</playername>
+		<playeradress>192.168.1.25</playeradress>
+		<path>
+			<sourcepath>W:</sourcepath>
+			<targetpath>/opt/sybhttpd/localhost.drives/NETWORK_SHARE/READYNAS</targetpath>
+		</path>
+		<path>
+			<sourcepath>D:/Mes films</sourcepath>
+			<targetpath>/opt/sybhttpd/localhost.drives/NETWORK_SHARE/MYPC</targetpath>
+		</path>
+		<path>
+			<sourcepath>U:</sourcepath>
+			<targetpath>/opt/sybhttpd/localhost.drives/SATA_DISK</targetpath>
+		</path>
+	</player>
+- Ne pas oublier de sauvegarder avec le même nom
+
+ÉTAPE 3 : RUN
+   
+    sélectionner bikini lancer la peau
+
+ETAPE 4 : CHOISISSEZ VOTRE CONFIG (obligatoire la 1ere foid que vous installez le skin )
+ - Régler la configuration pour le lanceur / langue / indice de ligne / style
+    sélectionner le menu "configuration" (menu en haut à gauche avec le logo YAMJ )
+	répéter pour les 4 paramètres
+
+Fonctionnalité GÉNÉRALE :
+ - Paramètres ( menu de configuration )
+    ajuster : la langue ( langue disponible  en: anglais, fr: français , de:allemand, es:espagnol , it:italien )
+	ajuster : lanceur ( liste des lanceurs ajoutés dans le fichier My_bibrary.xml )
+	ajuster le nombre de ligne ( disponible 1 à 6 et 0 ou ~ )
+	SELON le paramètre choisi, la dimension du poster et du titre s' ajustera automatiquement 
+		- 0 ou ~ : faire défiler tout les films sans pagination , pas de saut de ligne , paramètre utilisé avec la tablette pour permettre le défilement avec mouvement de la main , pas d'affichage du titre
+		- 1 : 1 ligne et 6 posters , permet d'afficher le titre sous l'affiche
+		- 2 : 2 lignes et 12 affiches , permet d' afficher le titre sous l'affiche
+		- 3 : 3 lignes et 27 Postes ( 9 colonnes) , permet d' afficher le titre sous l'affiche
+		- 4 : 4 lignes et 44 affiches ( 11 Colmns ) , permet d' afficher le titre sous l'affiche
+		- 5 : 5 lignes et 60 affiches (12 colonnes) ,  affichage que des posters
+		- 6 : 6 lignes et 72 affiches (12 colonnes) , affichage que des posters
+	régler: le style
+		menu de gauche : film , série , saison, film et série;  ne sont jamais affectés par ce paramètre , chaque fois ouverture sur la page complète
+		ce paramètre est appliqué à certaines entrées de menu contextuel : personne , cinéma , et sélection;  dans le menu général à gauche: recherche , configuration
+		- Page : ouvrir la fonction sélectionnée dans une nouvelle page
+		- Ruban : utilisé uniquement avec le menu "personne" contextuel et le menu "film" , ouvre une nouvelle ( 1 colonne ) page ruban vertical 
+		- frame : ouvrir un cadre à l'intérieur des fenêtres , ( s'affiche si cachée, se cache si affichée )
+		- Popup : utilisé uniquement avec le menu contextuel droit "personne", ouverture d'une fenêtre horizontale ( 1 ligne ); défilement
+
+ - Menu de gauche (logo YAMJ sur le côté supérieur gauche )
+		ce menu peut être affiché en passant la souris sur le logo et / ou être affiché en permanence avec un clic sur le menu ( cliquez pour masquer / afficher )
+		il s'agit d'un menu permanent qui est hors de contexte , ouvre la fonctionnalité selon le style
+		- Film et série , la liste de tous les contenus du jukebox pour les films et les séries
+		- Film, sélectionne tous les films
+		- Série , sélectionne toutes les séries
+		- Saison , sélectionne toute les saisons
+		- Personne , sélectionne toutes les personnes
+		- Recherche , ouvre la fenêtre de recherche
+		- Configuration , ouvre la fenêtre de configuration
+
+ - Menu de droite (logo YAMJ sur le côté supérieur droit) - disponible uniquement dans la page de détail
+		ce menu peut être affiché en passant la souris sur le logo et / ou être affiché en permanence avec un clic sur le menu ( cliquez pour masquer / afficher )
+		il s'agit d'un menu contextuel qui prend en charge le contexte détaillé sélectionné, ouvre la fonctionnalité selon le style
+		- Fanart , affichage des fonds d'écran; bascule fanart et toutes les infos
+		- Personne , sélectionne et affiche l'équipe et les acteurs de cette vidéo (selon le style )
+		- Film, sélectionne et affiche le type de vidéo de la page de détail (selon le style )
+		- Sélection , permettra de sélectionner et d'afficher la liste alphabétique du type de vidéo à partir de la page en cours (selon le style )
+		- télécommande , l'affichage de la télécommande virtuelle; bascule / cache le menu télécommande ( frame uniquement )
+ 
+ - Page d'index
+		cette page est appelé à partir des menus d'index en fonction des contenus sélectionnés et des paramètres sélectionnés (style, ligne , langue)
+		affiche des posters et des titres (selon le nombre de ligne choisie ) .
+		cliquez sur un poster ouvre la page de détail ou sous-menu.
+		par défaut c'est l'index de tous les vidéos .
+		- Film et série , la liste de tous les contenus du jukebox pour les films et les séries
+		- Film, liste tous les films
+		- Série, liste de toutes les séries
+		- Saison , la liste toute la saison
+		- Personne , liste tous les personnes
+		Attention: en raison de la limitation IE seulement 2500 personnes pouvent être affichées en même temps ( même avec fonctionnalité de pagination )
+		Clique sur rafraîchir, la fenêtre affiche les 2500 personnes suivantes et continu juqu'au 1er 2500.
+		- Genres , la liste de tous les genres
+		- clic sur le genre,  affiche la liste toutes les vidéos du genre sélectionné , le type de vidéo peut être sélectionnés dans la page
+
+ - Index Ruban 
+		selectionne le style de ruban ( menu de configuration ); il est disponible pour personne , la vidéo
+		ouvre un nouveau page verticale, ( 1 colonne ) avec la fonctionnalité sélectionnée
+		défilement vertical
+		cliquez sur une affiche pour afficher la vidéo sélectionnée dans la page détail .
+
+ - Index popup
+		est appelé quand le style popup est sélectionné ( menu de configuration ); il est disponible pour personne
+		ouvre une nouvelle page horizontalement ( ligne 1 ) avec la fonctionnalité sélectionnée
+		défilement horizontale
+		cliquez sur un poster affiche la biographie.
+		à l'intérieur de la page de biographie , cliquez sur l'icône de retour va revenir à la liste des personnes .
+
+ - Index Frame
+		Lorsque l'on appelle le style Frame ( menu de configuration ); il est disponible pour personne , vidéo, film contextuelle , la sélection contextuelle , la recherche , la configuration
+		ouvrir un cadre dans la page affichée avec la fonctionnalité sélectionnée
+		sans ascenseur
+		cliquez sur un poster pour afficher la vidéo sélectionnée dans la page détail .
+
+ - PLAY logo ( en haut à droite sur la page de détail )
+		est affiché dans la page détail de la vidéo sélectionnée;  est disponible pour le film , les épisodes (pas encore testé)
+		ouvre le menu à distance et envoi la commande de lecture au lanceur configuré ( menu de configuration )
+		cliquez sur fermer télécommande pour fermer le menu (n'arrête pas la lecture vidéo ) .
+
+ - Télécommande
+		est appelée lorsque le bouton de lecture est activé ou le lorsque le sous-menu télécommande est appelé
+		ouvre le menu à distance et envoi la commande de lecture au lanceur configuré ( menu de configuration )
+		cliquez sur fermer télécommande pour fermer le menu (n'arrête pas la lecture vidéo ) .
+		avertissement : le bouton de lecture n'est pas appliqué à la vidéo de la fenêtre détail , juste à l' article visible dans le lanceur lui-même .
+
+ - Recherche
+		est appelé Lorsque le menu de recherche est activé ( cadre si frame choisi , sinon les fenêtres popup )
+		ouvre le menu de recherche pour sélectionner :
+		- Le type de la vidéo: film et série , film , série , saison ( film et série par défaut)
+		- Personne : personne sélectionne le nom prénom , nom permet de sélectionner sur le nom ( la chaîne demandé après le 1er blanc ) ( film et série par défaut)
+		- Croissant ou décroissant : ( par ordre croissant par défaut )
+		- Page / ruban : permet de spécifier la forme de la cible de l'écran
+		- Lettre : cliquez sur la lettre pour envoyer directement la commande avec les autres paramètres déjà sélectionnés
+		- Chaîne: besoin de cliquer pour  soumettre la commande avec les autres paramètres déjà sélectionnés
+
+ - Configuration
+		est appelé Lorsque le menu de configuration est activé ( cadre si frame choisi , sinon les fenêtres popup )
+		ouvre le menu de configuration : voir les paramètres au dessus dans  fonctionnalité	

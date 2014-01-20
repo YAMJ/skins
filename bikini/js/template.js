@@ -5,7 +5,7 @@
 	// usage : add  outputJson(yamjdata) in $ajax contents  
 	// display: add  <div id="sourceData"></div>  at the end of the body section 
 //**********************************************************************************************************
-	var StyleValue = "";
+	var StyleValue = "frame";
 	// Add the source output to the end of the page
         function outputJson(yamjdata)
             {
@@ -261,6 +261,7 @@
 			{
 				StyleValue = style_;
 				console.log('set style:'+style_);
+				window.localStorage.setItem("Style", style_);
 		
 			}
 	

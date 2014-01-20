@@ -12,8 +12,7 @@
 		var source_path = new Array ();
 		var playcommand = 'start_vod';
 		var target_path = new Array ();
-		var player_list = new Array(); 
-		var PlayerValue = '';
+		var player_list = new Array(); 	
 		var player_select_rank = 0;
 	// fetch the value in the config database
 		var default_player = 'C200';
@@ -92,7 +91,7 @@
 			{
 				PlayerValue = Player_;
 				console.log('set Player:'+Player_);
-				$('#Player_Value').value = Player_;
+				window.localStorage.setItem("Player", Player_);
 			}
 	
 	// get all the player settings : ip, path for the selected player 'player'

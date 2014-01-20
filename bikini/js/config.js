@@ -8,7 +8,7 @@
 		// click enter 
  //*****************************************************************************************   
 			// fetch the value in the config database
-		var RowperPageValue = 2;
+		RowperPageValue = 2;
 		function get_poster_number()
 			{
 				var jsonPosterNbUrl = "/yamj3/api/config/list.json?config=bikini_skin_index_row";
@@ -83,10 +83,11 @@
 			{
 				RowperPageValue = parseInt(poster_nb, 10);
 				console.log('set index_row:'+poster_nb);
+				window.localStorage.setItem("RowperPage", poster_nb);
 			}
-		function adjust_poster_setting(RowperPageValue) {
-				if (parseInt(RowperPageValue, 10) < 6  ) {
-					switch (RowperPageValue)
+		function adjust_poster_setting(Row_) {
+				if (parseInt(Row_, 10) < 6  ) {
+					switch (Row_)
 						{
 						// no paging , 12 columns 
 						case 0:
@@ -168,7 +169,7 @@
 						}
 					} else {
 						// x rows , 12 columns 
-						perPageValue = (parseInt(RowperPageValue, 10) * 12);
+						perPageValue = (parseInt(Row_, 10) * 12);
 						$('.row').css('padding', '5px 0px 0px 15px');
 						$('.block').css('height', '136px');
 						$('.block').css('width', '96px');

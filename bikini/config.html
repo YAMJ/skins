@@ -31,7 +31,8 @@
 		// set default to 2 rows and 6 columns
 		var Indexpopup = "";
 		var LangValue = "en";
-		var StyleValue = "frame";
+		
+		
 		// set a default  if 1rst time and set to the type previously selected if available 	
 		var index_type = "movie,series";
 			if (window.localStorage.getItem("indextype"))
@@ -43,7 +44,7 @@
 				else {window.localStorage.setItem("direction", direction_temp);}			
 		var method_selected	= 'MOVIE';
 		var ribbon_display = 'PAGE';
- 
+	
         // This function calls the API to get the JSON data.
         // It will then update the HTML with the data and set up the paging
         function getIndexData()
@@ -55,6 +56,7 @@
 			get_style();
 			get_player();
 			set_player_select_list();
+			get_poster_number ();
 			
 		}
 		function SetIndexData (search)
@@ -160,7 +162,7 @@
 				} else {
 					window.opener.location.reload(false);window.close();
 				}				
-							
+				document.getElementById("StyleSetted").innerHTML=window.localStorage.getItem("Style");		
 		}		
 		function commit_nbrow ()
 		{
@@ -170,8 +172,9 @@
 					parent.location.reload(false);parent.nodisplay_Id('target_display');
 				} else {
 					window.opener.location.reload(false);
-				}				
-							
+				}
+				
+				window.close();			
 		}		
 		
   //************************ LANGUAGE LOCAL SETTING *********************************************
@@ -182,12 +185,17 @@
 			document.getElementById("stylelabel").innerHTML=style_label.toUpperCase();
 			document.getElementById("playerlabel").innerHTML=player_select.toUpperCase();
 			document.getElementById("nbrow").innerHTML=nbofrow.toUpperCase();
+			document.getElementById("LangSetted").innerHTML=LangValue;
+			document.getElementById("StyleSetted").innerHTML=window.localStorage.getItem("Style");
+			document.getElementById("PlayerSetted").innerHTML=window.localStorage.getItem("Player");
+			document.getElementById("NblineSetted").innerHTML=window.localStorage.getItem("RowperPage");
 		}
         </script>
 		<!-- just added to set the language value, shouldn't be displayed  -->
 		<div class="results" style="visibility: hidden; display:none;">
 			<table><tr><td class="Value"></td></tr></table>
 		</div>
+		<!-- just added to set the poster number value, shouldn't be displayed  -->
 		<div class="poster_results" style="visibility: hidden; display:none;">
 			<table><tr><td class="Poster_Value"></td></tr></table>
 		</div>
@@ -208,7 +216,7 @@
 														<option value="es">es</option>
 														<option value="fr">fr</option>
 														<option value="it">it</option>
-													</select> 
+													</select><div id="LangSetted"></div> 
 													<noscript><input type="submit" value="Submit"></noscript>
 												</form>
 								
@@ -223,7 +231,7 @@
 												<form><label id='playerlabel'></label>
 												<input list="playerlist_to_select" autocomplete="off" id="player_id" name="player_id" onchange="update_Player(document.getElementById('player_id').value);window.opener.location.reload(false);window.close();"></input>
 												<datalist id="playerlist_to_select"></datalist>
-													
+												<div id="PlayerSetted"></div>	
 												<input type="submit">
 												</form>
 									
@@ -242,7 +250,7 @@
 														<option value="ribbon">ribbon</option>
 														<option value="frame">frame</option>
 														<option value="popup">popup</option>
-													</select> 
+													</select><div id="StyleSetted"></div> 
 													<noscript><input type="submit" value="Submit"></noscript>
 												</form>
 								
@@ -268,17 +276,26 @@
 												<option value="5">5</option>
 												<option value="6">6</option>
 												<option value="99999">~</option>
-											</select> 
+											</select><div id="NblineSetted"></div>
 											<noscript><input type="submit" value="Submit"></noscript>
 										</form>
 								
 							</td>
 						</tr>
 					</table>
-
+			
 	
 		</div>
-
+		<div class="display_settings" >
+			<table>
+				<tr>
+					
+					
+					
+					
+				</tr>
+			</table>
+		</div>
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>
     </body>

@@ -402,7 +402,7 @@ body {
 	width: 655px;
 	padding-top: 5px;
 }		
-#startlabel, #anylabel, #namelabel, #personlabel, #genrelabel, #alllabel, #serieslabel, #movielabel, #seasonlabel, #asclabel, #desclabel, #languagelabel, #stylelabel, #playerlabel, #pagelabel, #ribbonlabel, #nbrow {
+#startlabel, #anylabel, #namelabel, #personlabel, #genrelabel, #alllabel, #serieslabel, #movielabel, #seasonlabel, #asclabel, #desclabel, #languagelabel, #stylelabel, #StyleSetted, #PlayerSetted, #LangSetted, #NblineSetted, #playerlabel, #pagelabel, #ribbonlabel, #nbrow {
 		display: inline;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;

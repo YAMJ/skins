@@ -1,4 +1,9 @@
 change.txt
-
+v1.0.3
+- add current value setting in config display
+V1.0.2
+- fix issue with number of index line commit
+V1.0.1
+- add a lire.txt
 V1.0.0
 - 1rst publication

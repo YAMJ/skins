@@ -83,6 +83,7 @@
 			{
 				LangValue = lang_;
 				console.log('set lang:'+lang_);
+			
 			}
 		function adjust_lang_setting(lang) {
 		console.log("set_lang: "+lang);

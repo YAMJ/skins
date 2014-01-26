@@ -176,7 +176,40 @@
 				
 				window.close();			
 		}		
-		
+		function close_config ()
+			{
+				switch (StyleValue)
+					{
+					case 'frame':
+						{
+							console.log("close_search:  style:"+StyleValue);								
+							parent.document.getElementById('target_display').style.visibility="hidden";
+						
+							break;
+						} 
+					case 'popup':
+						{
+							console.log("close_search:  style:"+StyleValue);
+							window.close();
+							break;
+						}
+					case 'ribbon':
+						{
+							console.log("close_search:  style:"+StyleValue);
+							window.close();
+							break;
+						}
+					case 'page':
+						{
+							console.log("close_search:  style:"+StyleValue);
+							window.close();
+							break;
+						}
+					return;
+					
+				}			
+							
+		}
   //************************ LANGUAGE LOCAL SETTING *********************************************
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
 		function set_context_lang_value ()
@@ -199,7 +232,7 @@
 		<div class="poster_results" style="visibility: hidden; display:none;">
 			<table><tr><td class="Poster_Value"></td></tr></table>
 		</div>
-		
+		<div id="close_icon" onclick="close_config()"><img src="./pictures/close.png" /></div>
 		<div id="main_index" style="left: -50px;">
 			
 			

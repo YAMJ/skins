@@ -140,7 +140,40 @@
 			Indexpopup = window.open(page, "YAMJv3 Navigation index","channelmode=no, menubar=no, status=no, scrollbars=yes, resizable=yes, menubar=no, location=no, left=2px, top=5px, width=160px, height=1000px");
 		}
 
-		
+		function close_search ()
+			{
+				switch (StyleValue)
+					{
+					case 'frame':
+						{
+							console.log("close_search:  style:"+StyleValue);								
+							parent.document.getElementById('target_display').style.visibility="hidden";
+						
+							break;
+						} 
+					case 'popup':
+						{
+							console.log("close_search:  style:"+StyleValue);
+							window.close();
+							break;
+						}
+					case 'ribbon':
+						{
+							console.log("close_search:  style:"+StyleValue);
+							window.close();
+							break;
+						}
+					case 'page':
+						{
+							console.log("close_search:  style:"+StyleValue);
+							window.close();
+							break;
+						}
+					return;
+					
+				}			
+							
+		}
   //************************ LANGUAGE LOCAL SETTING *********************************************
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
 		function set_context_lang_value ()
@@ -157,6 +190,7 @@
 			document.getElementById("desclabel").innerHTML=desc_label.toUpperCase();
 			document.getElementById("ribbonlabel").innerHTML=show.toUpperCase();
 			document.getElementById("pagelabel").innerHTML=page_label.toUpperCase();
+		
 		}
         </script>
 
@@ -164,16 +198,16 @@
 		<div class="results" style="visibility: hidden; display:none;">
 			<table><tr><td class="Value"></td></tr></table>
 		</div>
-	
+		<div id="close_icon" onclick="close_search()"><img src="./pictures/close.png" /></div>
 		</div >
-		<div id="main_index" style="left: -50px;">
+		<div id="main_index" style="left: -10px;">
 		<!-- search by letter -->				
 						
 			<form id="monForm" >
 				<fieldset style="border:none">
 					<table align="center"  >
 						<tr>
-							<td class="formSelect">							
+							<td >							
 								<input  type="button" value="A" onclick="SetIndexData('a')"/>
 								<input  type="button" value="B" onclick="SetIndexData('b')"/>
 								<input  type="button" value="C" onclick="SetIndexData('c')"/>

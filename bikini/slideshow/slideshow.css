@@ -9,7 +9,7 @@ div#slideshowCtr {
     overflow: hidden;
 	position: absolute;
 	left: 17px;
-	top: 455px;
+	top: 400px;
 	border: 2px solid #b0b0b0;
 	border-left: 3px solid #b0b0b0;
 	border-top: 3px solid #b0b0b0;
@@ -78,13 +78,13 @@ a#prev {
 /* fanart section */
 
 div#slideshowFanart {
-    width: 1280px;
-    height: 720px;
+    width: 1337px;
+    height: 733px;
     margin: auto;
     overflow: hidden;
 	opacity: 0.7;
 	position: absolute;
-	top: 62px;
+	top: 0px;
 }
 div#imgRollFanart {
     height: inherit;

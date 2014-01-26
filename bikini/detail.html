@@ -635,20 +635,20 @@
 						$('.genres').css('max-width', '1250px');
 						$('.filepath').css('left', '0px');
 						$('.filepath').css('max-width', '1250px');
-						$('div#slideshowCtr').css('top', '60px');
+						$('div#slideshowCtr').css('top', '50px');
 						$('a#next').css('top', '200px');
 						$('a#prev').css('top', '200px');
 			//			$('.play').css('top', '65px');
 						break;
 					case 'movie':
-						$('.moviedetail').css('top', '558px');
+						$('.moviedetail').css('top', '495px');
 						$('.moviedetail').css('left', '10px');
 						$('.moviedetail').css('width', '1280px');
 						
 			//			nothing special 
 						break;
 					case 'series':
-						$('.moviedetail').css('top', '650px');
+						$('.moviedetail').css('top', '568px');
 						$('.moviedetail').css('left', '10px');
 						$('.moviedetail').css('width', '1280px');
 						$('.plot').css('left', '0px');
@@ -658,7 +658,7 @@
 						$('.filepath').css('left', '0px');
 						$('.filepath').css('max-width', '1250px');
 						$('div#slideshowBanner').css('visibility', 'visible');
-						$('div#slideshowCtr').css('top', '60px');
+						$('div#slideshowCtr').css('top', '50px');
 						$('.seasontable').css('visibility', 'visible');
 						$('a#next').css('top', '200px');
 						$('a#prev').css('top', '200px');
@@ -718,16 +718,16 @@
 						} 
 					case 'popup':
 						{
-							console.log("ouvre_popup_index:  navData for type:" +current_type+ " with style:"+StyleValue);
+							console.log("ouvre_popup_index:  navData_frame for type:" +current_type+ " with style:"+StyleValue);
 							nodisplay_Id('movie_display');
-							Indexpopup = window.open('navData.html', "YAMJv3 Navigation index","channelmode=no, menubar=no, status=no, scrollbars=yes, resizable=yes, menubar=no, location=no, left=2px, top=5px, width=160px, height=1000px");
+							Indexpopup = window.open('navData_frame.html', "YAMJv3 Navigation index","channelmode=no, menubar=no, status=no, scrollbars=yes, resizable=yes, menubar=no, location=no, left=2px, top=5px, width=1250px, height=270px");
 							break;
 						}
 					case 'ribbon':
 						{
 							console.log("ouvre_popup_index:  navData for type:" +current_type+ " with style:"+StyleValue);
 							nodisplay_Id('movie_display');
-							Indexpopup = window.open('navData.html', "YAMJv3 Navigation index","channelmode=no, menubar=no, status=no, scrollbars=yes, resizable=yes, menubar=no, location=no, left=2px, top=5px, width=160px, height=1000px");
+							Indexpopup = window.open('navData.html', "YAMJv3 Navigation index","channelmode=no, menubar=no, status=no, scrollbars=yes, resizable=yes, menubar=no, location=no, left=2px, top=5px, width=180px, height=1000px");
 							break;
 						}
 					case 'page':
@@ -776,9 +776,9 @@
 						}
 					case 'ribbon':
 						{
-							console.log("ouvre_popup_person:  navPersonH.html:");
+							console.log("ouvre_popup_person:  navPerson.html:");
 							nodisplay_Id('person_frame');
-							Personpopup = window.open("navPerson.html", "YAMJv3 Navigation Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=150px, height=1000px");
+							Personpopup = window.open("navPerson.html", "YAMJv3 Navigation Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=165px, height=1000px");
 							break;
 						}
 					case 'page':
@@ -839,9 +839,22 @@
 		//		});	
 		//	 return ;
 
-		$.get(UrlPlay);
-		ouvre_remote ();
+		//$.get(UrlPlay);
+	
+	//confirm(play_label.toUpperCase()+": "+file_name);
+		document.getElementById("infobox").innerHTML=play_label.toUpperCase()+": "+file_name+ " ?";
+		document.getElementById("infobox").style.visibility="visible";
+		myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
+		
 			}
+	
+		function start_playing ()
+		{
+			myStopFunction('infobox');
+			//$.get(UrlPlay);
+			console.log("start_playing:" +file_name);
+			ouvre_remote ();
+		}
 		function ouvre_remote() 
 		{
 		//	Remotepopup = window.open("./remote/my_remote_"+LangValue+".html", "YAMJv3 Remote","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=1050px, top=150px, width=512px, height=312px");
@@ -862,7 +875,7 @@
 		
 		<div id="logo">
 						<td>
-							<ul id="detail_home_left" ><img src="./pictures/yamj-logo_repeat.png" width="90px" />
+							<ul id="detail_home_left"><img src="./pictures/yamj-logo_repeat.png" width="90px" />
 									<li><a id="li_home_left" href="javascript:toggle_menuleft()"></a></li>
 									<li><a id="li_all_up" href="javascript:ChangeIndex('movie,series')">
 										<div id="allselect"></div></a></li>
@@ -948,17 +961,19 @@
 			<table>
 				<tr>
 	
-					<td width="850px">
-						<span class="header_type"></span>
-						<span class="header_title"></span>
-						<span class="header_text"> (</span>
-						<span class="header_year"></span>
+					<td width="950px" >
+						<span class="header_type" ></span>
+						<span class="header_title" ></span>
+						<span class="header_text" > (</span>
+						<span class="header_year" ></span>
 						<span class="header_text">) id:</span>
 						<span class="header_id" ></span>
 						</td>
 				</tr>
 			</table>
 		</div>
+		<!-- display infobox -->
+		<button id="infobox" onclick="javascript:start_playing ()"></button>
 		
 		<div class="test">
 					<td><span class="lastid"></span></td>
@@ -975,8 +990,7 @@
 			<table><tr><td class="Poster_Value"></td></tr></table>
 		</div>
 	<!-- display person -->
-		<div id="person_display" style="visibility: hidden; ">
-		
+		<div id="person_display" style="visibility: hidden; ">	
 			<iframe src="" name="person_frame" resizable="yes" id="person_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1220px; height:335px;" allowTransparency="true"></iframe>
 		</div>	
 	<!-- display Movie -->
@@ -990,7 +1004,7 @@
                   <tbody>
                     <tr>    
 						<!-- fanart animation, automatic every 10s, if more than one fanart -->
-						<td rowspan="10">
+						<td rowspan="1">
                             <div id="slideshowFanart" class="glow">
                                 <div id="imgRollFanart">
                                     <img class="fanart" src=""/>

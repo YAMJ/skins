@@ -91,7 +91,7 @@
 						{
 						// no paging , 12 columns 
 						case 0:
-							$('.row').css('padding', '5px 0px 0px 15px');
+							$('.row').css('padding', '0px 0px 0px 15px');
 							$('.block').css('height', '136px');
 							$('.block').css('width', '96px');
 							$('.block').css('margin', '0px 2px 1px 1px');
@@ -104,8 +104,8 @@
 						//1 row , 6 columns
 						case 1:
 							perPageValue = 6;
-							$('.row').css('padding', '5px 0px 0px 5px');
-							$('.block').css('height', '330px');
+							$('.row').css('padding', '0px 0px 0px 5px');
+							$('.block').css('height', '328px');
 							$('.block').css('width', '194px');
 							$('.block').css('margin', '3px');
 							$('.block').css('padding', '4px');
@@ -117,8 +117,8 @@
 						//2 rows , 6 columns
 						case 2:
 							perPageValue = 12;
-							$('.row').css('padding', '5px 0px 0px 5px');
-							$('.block').css('height', '330px');
+							$('.row').css('padding', '0px 0px 0px 5px');
+							$('.block').css('height', '323px');
 							$('.block').css('width', '194px');
 							$('.block').css('margin', '3px');
 							$('.block').css('padding', '4px');
@@ -130,12 +130,12 @@
 						//3 rows, 9 columns 
 						case 3:
 							perPageValue = 27;
-							$('.row').css('padding', '5px 0px 0px 3px');
-							$('.block').css('height', '225px');
+							$('.row').css('padding', '0px 0px 0px 3px');
+							$('.block').css('height', '215px');
 							$('.block').css('width', '130px');
 							$('.block').css('margin', '3px');
 							$('.block').css('padding', '1px');
-							$('.poster').css('height', '190px');
+							$('.poster').css('height', '185px');
 							$('.poster').css('width', '127px');
 							$('.title').css('font-size', '0.7em');
 							$('.title').css('line-height', '70%');
@@ -143,8 +143,8 @@
 						//4 rows, 10 columns 
 						case 4:
 							perPageValue = 44;
-							$('.row').css('padding', '5px 0px 0px 5px');
-							$('.block').css('height', '165px');
+							$('.row').css('padding', '0px 0px 0px 5px');
+							$('.block').css('height', '160px');
 							$('.block').css('width', '104px');
 							$('.block').css('margin', '3px');
 							$('.block').css('padding', '1px');
@@ -156,8 +156,8 @@
 						//5 rows, 12 columns
 						case 5:
 							perPageValue = 60;
-							$('.row').css('padding', '5px 0px 0px 15px');
-							$('.block').css('height', '136px');
+							$('.row').css('padding', '0px 0px 0px 15px');
+							$('.block').css('height', '132px');
 							$('.block').css('width', '96px');
 							$('.block').css('margin', '0px 2px 1px 1px');
 							$('.block').css('padding', '0px 1px 0px 1px');
@@ -171,7 +171,7 @@
 						// x rows , 12 columns 
 						perPageValue = (parseInt(Row_, 10) * 12);
 						$('.row').css('padding', '5px 0px 0px 15px');
-						$('.block').css('height', '136px');
+						$('.block').css('height', '134px');
 						$('.block').css('width', '96px');
 						$('.block').css('margin', '0px 2px 1px 1px');
 						$('.block').css('padding', '0px 1px 0px 1px');

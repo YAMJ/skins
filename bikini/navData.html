@@ -29,6 +29,10 @@
 						jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("selection") + "&field=title&mode=START";
 						window.localStorage.setItem("selection", "");	
 					}	
+			if (indextype == "SEASON") 
+				{
+					jsonUrl = jsonUrl + "&field=series_id&search="+series_id;
+					}
 
             console.log("URL: " + jsonUrl);
             var jsondata = null;
@@ -127,7 +131,7 @@
         </script>
    
         <!--Navigation Holder-->
-        <div class="holder"></div>
+        <div class="holder" style="display: none;"></div>
 
      
 		 <!--Data Items Container-->

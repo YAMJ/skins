@@ -1,10 +1,13 @@
 /**************** container ************************/
 #container {
     width: 1280px;
-	margin: 2px 2px 0px 2px;
-    border: 5px solid black;
+	position: absolute;
+	top: 40px;
+	border: 1px solid black;
+/*	margin: 2px 2px 0px 0px;
+    
     padding: 5px;
-    background-color: gray;
+    background-color: gray; */
 }
 
 #container .row {
@@ -110,12 +113,16 @@
 	
 	
 }
+
 /********************* general , body ********************************/
 html, #tablelist,#headertable,#logo,#message
 {
     /* Applies to all pages */
     font-family: Arial, Helvetica, sans-serif;
     border-collapse:collapse;
+
+	padding: 0px;
+	margin: 0px;
 }
 
 body {
@@ -136,6 +143,7 @@ body {
 
     /* W3C Markup, IE10 Release Preview */
     background-image: linear-gradient(to right, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
+
 }
 
 /****************** scrollbar settings *************************************************/
@@ -176,16 +184,22 @@ body {
 
 .index_header {
 	border:2px solid grey;
-	width: 1300px;
-	padding-bottom: 6px;
+	width: 1278px;
+	padding-bottom: 0px;
+	top: 0px;
+	position: absolute;
+	height: 35px;
 	}
 	
 #logo_index
 {
     height: 33px;
-    width: 1300px;
+    width: 1290px;
     text-align: center;
 	border: none;
+	vertical-align: top;
+	position: absolute;
+	
 /*    background:  url(../pictures/yamj-logo_repeat.png) no-repeat right,
         url(../pictures/yamj-logo_repeat.png) no-repeat left; */
 }
@@ -203,13 +217,22 @@ body {
 	position: absolute;
 	top: 5px;
 	left: 150px;
-    height: 50px;
-    width: 1010px;
+    height: 30px;
     text-align: center;
 
 /*    background:  url(../pictures/yamj-logo_repeat.png) no-repeat right,
         url(../pictures/yamj-logo_repeat.png) no-repeat left; */
 }
+#monFormGenre 
+	{
+		
+		border:none;
+		width: 770px;
+		margin-top: -1px;
+		margin-left: 20px;
+		height: 30px;
+		top: 0px;
+	}
 #message
 {
     text-align: center;
@@ -239,7 +262,7 @@ body {
 		border-right: 4px solid #b0b0b0;
 		border-radius: 6px 6px 0px 6px;
 		position: absolute;
-		top: 15px;
+		top: 5px;
 		left: 170px;
 		overflow: hidden;
 	}
@@ -262,7 +285,7 @@ body {
 		border-right: 4px solid #b0b0b0;
 		border-radius: 6px 6px 0px 6px;
 		position: absolute;
-		top: 15px;
+		top: 5px;
 		left: 170px;
 		overflow: hidden;
 	}
@@ -281,7 +304,7 @@ body {
 		border-right: 4px solid #b0b0b0;
 		border-radius: 6px 6px 0px 6px;
 		position: absolute;
-		top: 15px;
+		top: 5px;
 		left: 400px;
 		overflow: hidden;
 	}
@@ -370,6 +393,7 @@ body {
 		position: absolute; 
 		top:35px;
 		left: 70px;
+		width: 200px;
 		text-align: left;
 		border: 2px solid #b0b0b0;
 		}
@@ -379,6 +403,7 @@ body {
 	padding: 0px 10px 5px 0px;
 	top: 84px;
 	left: 70px;
+	width: 400px;
 	border: 2px solid #b0b0b0;
 	text-align: left;
 		}
@@ -388,6 +413,7 @@ body {
 	padding: 0px 10px 5px 0px;
 	top: 140px;
 	left: 70px;
+	width: 300px;
 	border: 2px solid #b0b0b0;
 	text-align: left;
 		}
@@ -402,7 +428,7 @@ body {
 	width: 655px;
 	padding-top: 5px;
 }		
-#startlabel, #anylabel, #namelabel, #personlabel, #genrelabel, #alllabel, #serieslabel, #movielabel, #seasonlabel, #asclabel, #desclabel, #languagelabel, #stylelabel, #StyleSetted, #PlayerSetted, #LangSetted, #NblineSetted, #playerlabel, #pagelabel, #ribbonlabel, #nbrow {
+#startlabel, #anylabel, #namelabel, #personlabel, #genrelabel, #alllabel, #serieslabel, #movielabel, #seasonlabel, #asclabel, #desclabel, #languagelabel, #stylelabel, #StyleSetted, #PlayerSetted, #LangSetted, #NblineSetted, #playerlabel, #pagelabel, #ribbonlabel, #nbrow, #infobox {
 		display: inline;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
@@ -418,16 +444,22 @@ body {
 		left: 0px;
 		top: 2px;
 	}	
-
+#infobox {
+	position; absolute; 
+	top: -40px; 
+	left: 920px; 
+	z-index: 8;
+	visibility: hidden;
+	}
 #sourceData {
 	position: absolute;
-	top: 800px;
+	top: 750px;
 	}
 ul#home_left_up, ul#home_left_search {
 	width: 120px;
 	height:31px;
-	position: absolute;
-	top: -3px;
+	position: relative;
+	top: -15px;
 	left: 12px;
 	padding:0px 0px 0px 0px;
 	background-color:rgba(255, 255, 255, 0.3);
@@ -615,13 +647,26 @@ ul#home_left_up:hover > li{
 	vertical-align: top;
 	line-height:20%;
 	position: absolute;
-	top: 15px;
+	top: 5px;
 	right: 80px;
 
 	}
 #config_href {
 	visibility: hidden;
 	}
+	
+#close_icon{
+    width: 40px;
+	height: 40px;
+    position: absolute;
+    top: 15px;
+	left: 860px;
+	
+}
+#close_icon  img{
+	width: 40px;
+	}
+
 /***************************** detail page ***************************************/	
 #logo_detail {
 	padding-top: 7px;
@@ -664,7 +709,7 @@ ul#home_left_up:hover > li{
 	height: 42px;
     position: absolute;
     top: 4px;
-	left: 1107px;
+	left: 1100px;
 	background:  url(../pictures/play.png) no-repeat;
 }
 .play:hover {
@@ -785,7 +830,7 @@ ul#home_left_up:hover > li{
 .table_videoimage {
 	display: block;
 	position: absolute;
-	top: 5px;
+	top: 6px;
 	left: 5px;
 	visibility: hidden;
 	}
@@ -794,7 +839,7 @@ ul#home_left_up:hover > li{
 {
 	position: relative;
 	width: 420px;
-	max-height: 405px;
+	max-height: 345px;
 	margin-left: 845px;
 	display: block;
 	overflow-y: auto;
@@ -822,7 +867,7 @@ ul#home_left_up:hover > li{
 	left: 0px;
 	display: block;
 	width: 720px;
-	height: 413px;
+	height: 365px;
 	margin-left: 15px;
 	}
 .episodetitle0, .episodetitle1, .episodetitle2, .episodetitle3,.episodetitle4,.episodetitle5,.episodetitle6,.episodetitle7,.episodetitle8,.episodetitle9,.episodetitle10,
@@ -866,8 +911,8 @@ ul#home_left_up:hover > li{
 .episode_detail {
 	position: absolute;
 	left: 13px;
-	top: 372px;
-	height: 408px;
+	top: 363px;
+	height: 355px;
 	width: 1279px;
 	background: url(../pictures/tvbg-v3.png) no-repeat;
 	visibility: hidden;
@@ -884,7 +929,7 @@ ul#home_left_up:hover > li{
 	top: 80px;
 	left: 430px;
 	width: 400px;
-	max-height: 320px;
+	max-height: 260px;
 	font-family: Arial, Helvetica, sans-serif;
 	color:white;
 	font-size:1.0em;
@@ -974,7 +1019,7 @@ ul#home_left_up:hover > li{
 {
 	display: table-cell;
     position: absolute;
-	top: 500px;
+	top: 418px;
 	left: 10px;
 	height: auto;
  	font-size:0.9em;
@@ -1015,7 +1060,7 @@ ul#home_left_up:hover > li{
 	height:30px;
 	position: absolute;
 	top: 33px;
-	left: -40px;
+	left: -70px;
 	padding:0px 0px 0px 0px;
 	background-color:rgba(0, 0, 0, 0.6);
 	border: 2px solid #b0b0b0;	
@@ -1089,26 +1134,28 @@ ul#detail_home_left {
 	height:31px;
 	position: absolute;
 	top: -10px;
-	left: 2px;
+	left: 12px;
 	padding:0px 0px 0px 0px;
 	background-color:rgba(255, 255, 255, 0.3);
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
 	list-style: none;
+	z-index:7;
 	}
 ul#detail_home_right {
 	width: 100px;
 	height:31px;
 	position: absolute;
 	top: -10px;
-	left: 1190px;
+	left: 1182px;
 	padding:0px 0px 0px 0px;
 	background-color:rgba(255, 255, 255, 0.3);
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
 	list-style: none;
+	z-index:7;
 	}	
 ul#detail_home_left:hover {
 	background-color:rgba(255, 255, 255, 0.6);
@@ -1140,8 +1187,9 @@ ul#detail_home_left img, ul#detail_home_right img
 {
     display: block;
 	height: auto;
-    width: 962px;
-
+    width: 946px;
+	position: relative;
+	left: 10px;
 	font-size:1.8em;
 	font-weight: bold;
     text-align: center;
@@ -1151,6 +1199,8 @@ ul#detail_home_left img, ul#detail_home_right img
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
+	color: #ffffff;
+	z-index:4;
     }	
 .header_type {
     padding-top:1px;
@@ -1244,7 +1294,7 @@ text {
 	text-align: justify;
 	font-size:1.0em;
 	position: absolute;
-	top: 600px;
+	top: 550px;
 	left: 10px;
 	overflow: hidden;
 	}
@@ -1261,7 +1311,7 @@ text {
 	}	
 .plot {
 	width: auto;
-	max-height: 170px;
+	max-height: 180px;
 	max-width: 1030px;
 	display: block;
 	background-color:rgba(0, 0, 0, 0.3);

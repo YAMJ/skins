@@ -128,8 +128,13 @@
             console.log("Storing value: " + type + "-" + id);
 			window.open("detail.html", "YAMJ v3 detail page", "");
         }
+	function close_data ()
+			{
+				console.log("close_data:  style:"+StyleValue);								
+				parent.document.getElementById('movie_display').style.visibility="hidden";
+			} 
         </script>
-   
+		<div id="close_icon" onclick="close_data()" style="position: absolute; top: 0px; left: 0px; z-index: 6;"><img src="./pictures/close.png" width="40"/></div>
         <!--Navigation Holder-->
         <div class="holder"></div>
 

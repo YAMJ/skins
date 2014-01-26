@@ -142,9 +142,14 @@
 		//	Mypopup.blur();
 			//window.focus();
 		}
+	function close_person ()
+			{
+				console.log("close_person:  style:"+StyleValue);								
+				parent.document.getElementById('person_display').style.visibility="hidden";
+			} 
         </script>
 <!-- *************************************************************************************************************** -->	   
-     
+		<div id="close_icon" onclick="close_person()" style="position: absolute; top: 0px; left: 0px;"><img src="./pictures/close.png" width="40"/></div>
 		<div class="counttest" style="visibility: hidden">
 					<td><span class="itemcount"></span></td>
 		</div> 

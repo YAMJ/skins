@@ -1,9 +1,10 @@
 <skin>
 	<name>Omertron's Skin</name>
-	<version>0.7.6</version>
-	<date>2013-12-24</date>
-	<description>YAMJv3 skin offering full pagination of your collection</description>
-	<description>See thread here http://www.networkedmediatank.com/showthread.php?tid=67943</description>
+	<version>0.7.7</version>
+	<date>2014-01-30</date>
+	<description>YAMJv3 skin offering full pagination of your collection.</description>
+	<description>This is an example skin to get skinners started.</description>
 	<url>http://MediaPlayerSite.com/YAMJv3-Skins/</url>
 	<image>skin-image.png</image>
+	<supportUrl>http://www.networkedmediatank.com/showthread.php?tid=67943</supportUrl>
 </skin>

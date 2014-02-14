@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>YAMJ v3 Genre index</title>
-        <script src="js/jquery.js"></script>
+        <script src="js/jQuery.js"></script>
         <!-- Used for the JSON parsing -->
         <script src="js/pure.js"></script>
         <!-- Used for the paging of the index -->
@@ -113,7 +113,7 @@
 			var	display_genre = genre_select.toUpperCase() + ":" + genre_name.toUpperCase();
 	
 				$('#printsearch').html(display_genre);
-				console.log("URL: " + jsonUrl);
+				console.log("getIndexData URL: " + jsonUrl);
 				
             $.ajax({
                 url: jsonUrl,
@@ -143,7 +143,7 @@
 		function open_genre_index(indextype)
         {
 			localStorage.setItem("indextype", indextype);
-            console.log("Storing value: indextype: " +indextype);
+            console.log("open_genre_index Storing value: indextype: " +indextype);
 			window.location.href="index_Genre.html";
 			Mypopup.focus();
 		}
@@ -165,7 +165,7 @@
     <div class="index_header"> 
         <div id="logo_index">
 						<td>
-							<ul id="home_left_up"><img src="./pictures/yamj-logo_repeat.png" width="90px" />
+							<ul id="home_left_up">
 									<li><a id="li_home_left" href="javascript:toggle_menuleft()"></a></li>
 									<li><a id="li_all_up" href="javascript:ChangeIndex('movie,series')">
 										<div id="allselect"></div></a></li>

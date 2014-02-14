@@ -4,7 +4,7 @@
 	
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>YAMJv3 H Navigation Person</title>
-		<script src="js/jquery.min.js"></script>
+		<script src="js/jQuery.js"></script>
 		<script src="js/pure.js"></script>
         <script src="js/js.js"></script>
         <script src="js/jPages.js"></script>
@@ -25,7 +25,7 @@
 			var	type = localStorage.getItem ("type");
 			var	id = localStorage.getItem ("id");
 			jsonUrl = "/yamj3/api/person/"+type+".json?id="+id+"&job=actor,director,writer&dataitems=artwork,biography";
-            console.log("URL: " + jsonUrl);
+            console.log("PersonData URL: " + jsonUrl);
             var jsondata = null;
 
             $.ajax({

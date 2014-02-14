@@ -7,11 +7,20 @@
 		// enter a valid value 
 		// click enter 
  //*****************************************************************************************   
-			// fetch the value in the config database
+		// set a default skin value 
+		var skin_value = "bikini_skin_default_";
+		// fetch the value in the config database
 		function get_lang()
 			{
-				var jsonLangUrl = "/yamj3/api/config/list.json?config=bikini_skin_language&mode=any";
-				console.log("jsonLangUrl: " + jsonLangUrl);
+			// check if there is an instance of the bikini skin choosen
+				if (localStorage.getItem("skinset"))
+					{skin_value = localStorage.getItem("skinset");}
+					else {
+						localStorage.setItem("skinset", skin_value);
+					}
+				
+				var jsonLangUrl = "/yamj3/api/config/list.json?config="+skin_value+"language&mode=any";
+				console.log("get_lang jsonLangUrl: " + jsonLangUrl);
 				$.ajax({
                    url: jsonLangUrl,
                     async: false,
@@ -19,9 +28,9 @@
                     'success': function(dataSkinLang)
                    {
 						jsondata = dataSkinLang;
-				//		outputJson(dataSkinLang);
+					//	outputJson(dataSkinLang);
+					// check and fetch what lang value has been stored inside the database 
 						checkLang(dataSkinLang);
-						updateLang(dataSkinLang);
 						adjust_lang_setting (LangValue);
 					}
 					
@@ -32,8 +41,8 @@
 			// update  the value in the config database
 		function update_lang(lang_) 
 		{
-				var jsonLangUrl = "/yamj3/api/config/update.json?key=bikini_skin_language&value="+lang_+"";
-				console.log("jsonLangUrl: " + jsonLangUrl);
+				var jsonLangUrl = "/yamj3/api/config/update.json?key="+skin_value+"language&value="+lang_+"";
+				console.log("update_lang jsonLangUrl: " + jsonLangUrl);
 				$.ajax({
                    url: jsonLangUrl,
                     async: false,
@@ -41,9 +50,9 @@
                     'success': function(dataSkinLang)
                    {
 						jsondata = dataSkinLang;
-				//		outputJson(dataSkinLang);
-						updateLang(dataSkinLang);
-						adjust_lang_setting (LangValue);
+					//	outputJson(dataSkinLang);
+						set_lang_value(lang_)
+						adjust_lang_setting (lang_);
 						location.reload();
 					}
 					
@@ -51,42 +60,36 @@
 			 return jsondata;
 
 
-		}				
+		}	
+	// check if a language as been already defined for this skin instance, if OK take it , otherwise store the default language 'en'
 		function checkLang(yamjdata) {
 				var PN = {
 						"td.Value":  function(arg) {
-										if (arg.context.count) {
-										return arg.context.count;} else {update_lang('en');}
+									if (arg.context.count) {
+										console.log("checkLang: "+arg.context.results[0].value);
+										set_lang_value(arg.context.results[0].value);
+										return ;} else {
+										console.log("checkLang: no value found");
+										update_lang('en');
+										return ;}
 								}								
 							
 						};
 				
 				$p('.results').render( yamjdata, PN );			
 			}	
-	// parse the value lang
-		function updateLang(yamjdata) {
-		var WI = {
-						"tr": {
-							"list<-results":{
-								"td.Value"				: function(arg) {
-								set_lang_value (arg.item.value);
-								return arg.item.value;
-								}	
-							}
-						}
-					};
-				$p('.results').render( yamjdata, WI );			
-			}
+
 	
 	// set the rules to adjust lang to the lang choosen
-		function set_lang_value(lang_)
+		function set_lang_value(lang2_)
 			{
-				LangValue = lang_;
-				console.log('set lang:'+lang_);
+				console.log('set_lang_value:'+lang2_);
+				LangValue = lang2_;
+				
 			
 			}
 		function adjust_lang_setting(lang) {
-		console.log("set_lang: "+lang);
+		// console.log("adjust_lang_setting: "+lang);
 					if (window.XMLHttpRequest)
 					  {// code for IE7+, Firefox, Chrome, Opera, Safari
 					  xmlhttp=new XMLHttpRequest();
@@ -161,7 +164,6 @@
 					return_label=(x[i].getElementsByTagName("returnlabel")[0].childNodes[0].nodeValue);
 					power_label=(x[i].getElementsByTagName("powerlabel")[0].childNodes[0].nodeValue);
 					pause_label=(x[i].getElementsByTagName("pauselabel")[0].childNodes[0].nodeValue);
-					
 					close_remote_label=(x[i].getElementsByTagName("closeremotelabel")[0].childNodes[0].nodeValue);
 					enter_label=(x[i].getElementsByTagName("enterlabel")[0].childNodes[0].nodeValue);
 					red_label=(x[i].getElementsByTagName("redlabel")[0].childNodes[0].nodeValue);

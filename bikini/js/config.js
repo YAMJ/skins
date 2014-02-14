@@ -11,8 +11,8 @@
 		RowperPageValue = 2;
 		function get_poster_number()
 			{
-				var jsonPosterNbUrl = "/yamj3/api/config/list.json?config=bikini_skin_index_row";
-				console.log("jsonPosterNbUrl: " + jsonPosterNbUrl);
+				var jsonPosterNbUrl = "/yamj3/api/config/list.json?config="+skin_value+"index_row";
+				console.log("get_poster_number jsonPosterNbUrl: " + jsonPosterNbUrl);
 				$.ajax({
                    url: jsonPosterNbUrl,
                     async: false,
@@ -22,7 +22,6 @@
 						jsondata = dataSkinPosterNb;
 				//		outputJson(dataSkinPosterNb);
 						checkSkinPosterNb(dataSkinPosterNb);
-						updateSkinPosterNb(dataSkinPosterNb);
 						adjust_poster_setting (RowperPageValue);
 					}
 					
@@ -33,8 +32,8 @@
 			// update  the value in the config database
 		function update_poster_number(row) 
 		{
-				var jsonPosterNbUrl = "/yamj3/api/config/update.json?key=bikini_skin_index_row&value="+row+"";
-				console.log("jsonPosterNbUrl: " + jsonPosterNbUrl);
+				var jsonPosterNbUrl = "/yamj3/api/config/update.json?key="+skin_value+"index_row&value="+row+"";
+				console.log("update_poster_number jsonPosterNbUrl: " + jsonPosterNbUrl);
 				$.ajax({
                    url: jsonPosterNbUrl,
                     async: false,
@@ -43,8 +42,8 @@
                    {
 						jsondata = dataSkinPosterNb;
 				//		outputJson(dataSkinPosterNb);
-						updateSkinPosterNb(dataSkinPosterNb);
-						adjust_poster_setting (RowperPageValue);
+						set_poster_value(row)
+						adjust_poster_setting (row);
 						parent.location.reload();
 					}
 					
@@ -52,37 +51,29 @@
 			 return jsondata;
 
 
-		}				
+		}
+						
 		function checkSkinPosterNb(yamjdata) {
 				var PN = {
 						"td.Poster_Value":  function(arg) {
 										if (arg.context.count) {
-										return arg.context.count;} else {update_poster_number(2);}
+										console.log("checkSkinPosterNb: "+arg.context.results[0].value);
+										set_poster_value(arg.context.results[0].value);
+										return arg.context.results[0].value;} else {
+										console.log("checkSkinPosterNb: no value found");
+										update_poster_number(2);}
 								}								
 							
 						};
 				
 				$p('.poster_results').render( yamjdata, PN );			
 			}	
-	// parse the value nbre of row index 
-		function updateSkinPosterNb(yamjdata) {
-				var PN = {
-						"tr": {
-							"list<-results":{
-								"td.Poster_Value"				: function(arg) {
-										set_poster_value (arg.item.value);
-										return arg.item.value;
-								}								
-							}
-						}
-					};
-				$p('.poster_results').render( yamjdata, PN );			
-			}
+
 	// set the rules to adjust poster to the number of row choosen
 		function set_poster_value(poster_nb)
 			{
 				RowperPageValue = parseInt(poster_nb, 10);
-				console.log('set index_row:'+poster_nb);
+				console.log('set_poster_value: '+poster_nb);
 				window.localStorage.setItem("RowperPage", poster_nb);
 			}
 		function adjust_poster_setting(Row_) {

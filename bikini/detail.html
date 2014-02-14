@@ -3,13 +3,13 @@
     <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>YAMJ v3 detail page</title>
-        <script src="js/jquery.js"></script>
+        <script src="js/jQuery.js"></script>
         <script src="js/pure.js"></script>
 		<!-- Used for skin language setting -->
 		<script src="js/lang.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>
-		<script src="remote/my_remote.js"></script>
+		<script src="js/my_remote.js"></script>
 		<script src="js/library.js"></script>
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css"/>
         <!--Slider stuff-->
@@ -30,6 +30,8 @@
             var jsondata;
 			var jsonUrl = "";
 			var jsonSeasonUrl = "";
+			var CurrentUrlPlay;
+			var Currentfilename;
 			var countset = "-1";
 			var fanart_toggle = 0;
 			var menuleft_toggle = 0;
@@ -115,7 +117,7 @@
                     }
                     return output;
                 },
-              
+            // display fanart   
                'img.fanart': {
                     'fanart<-result.artwork.FANART': {
                         '@src': function(arg)
@@ -134,7 +136,7 @@
 
                     }
                 },
-				
+			// display poster 	
 				  'img.poster': {
                     'poster<-result.artwork.POSTER': {
                         '@src': function(arg)
@@ -160,7 +162,7 @@
 
                     }
                 }, 
-				
+			// display banner if season and series 	
 				'img.banner': {
                     'banner<-result.artwork.BANNER': {
                         '@src': function(arg)
@@ -182,24 +184,32 @@
 
                     }
                 }, 
-				
-				'img.play': {
-                    'play<-result.files': {
-                        '@onclick': function(arg)
-                        {
-                           
-                                return "play_to_device('"+ arg.item.filename +"')";
-                            } 
-                        }
-                    },
-					
+			// play button 	
+				"img.play@onclick": function(arg)
+							{
+								switch(arg.context.result.videoType.toLowerCase())
+									{
+										case 'season':
+											return "play_episode()";
+											break;
+										case 'episode':
+											return ;
+											break;
+										case 'movie':								
+											return "play_to_device('"+arg.context.result.files[0].filename+"')";
+											break;
+										case 'series':
+											return ;
+											break;	
+									};
+                            },
+                      
+                  
+			// display the file path stored in database		
 				'span.filepath': function(arg)
                 {
                     var files = arg.context.result.files;
                     return "<text>"+file_label.toUpperCase()+"</text>"+  files[0].filename;
-                   
-                        
-               
                 }
 				
             };
@@ -216,7 +226,7 @@
 				get_player();
 				// construct JSON request for detail movie/series/season 
 				jsonUrl = "/yamj3/api/video/" + indextype.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot,files";
-				console.log("URL: " + jsonUrl);
+				console.log("getData URL: " + jsonUrl);
 		
 					
         // main API call         
@@ -227,7 +237,7 @@
                     'success': function(data)
                     {
                         jsondata = data;
-				//		 outputJson(data); 
+					//	 outputJson(data); 
 				 	
 					$p('.header').render(data, DETAIL_HEADER);
 					 
@@ -265,6 +275,7 @@
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
 		function set_context_lang_value ()
 		{
+		// console.log("detail.html set_context_value");
 			document.getElementById("fanartshow").innerHTML=fanart_show.toUpperCase();
 			document.getElementById("personshow").innerHTML=person_show.toUpperCase();
 			switch (indextype.toLowerCase()) 
@@ -291,44 +302,6 @@
 			document.getElementById("searchindex").innerHTML=search_select.toUpperCase();
 			document.getElementById("configindex").innerHTML=config_select.toUpperCase();
 			document.getElementById("remoteselect").innerHTML=remote_label.toUpperCase();
-			document.getElementById("up").innerHTML=up_label.toUpperCase();
-			document.getElementById("down").innerHTML=down_label.toUpperCase();
-			document.getElementById("right").innerHTML=right_label.toUpperCase();
-			document.getElementById("left").innerHTML=left_label.toUpperCase();
-			document.getElementById("home").innerHTML=home_label.toUpperCase();
-			document.getElementById("setup").innerHTML=setup_label.toUpperCase();
-			document.getElementById("audio").innerHTML=audio_label.toUpperCase();
-			document.getElementById("mute").innerHTML=mute_label.toUpperCase();
-			document.getElementById("volumeup").innerHTML=volumeup_label.toUpperCase();
-			document.getElementById("volumedown").innerHTML=volumedown_label.toUpperCase();
-			document.getElementById("stop").innerHTML=stop_label.toUpperCase();
-			document.getElementById("play").innerHTML=play_label.toUpperCase();
-			document.getElementById("rewind").innerHTML=rewind_label.toUpperCase();
-			document.getElementById("prev_remote").innerHTML=prev_remote_label.toUpperCase();
-			document.getElementById("next_remote").innerHTML=next_remote_label.toUpperCase();
-			document.getElementById("fwd").innerHTML=fwd_label.toUpperCase();
-			document.getElementById("info").innerHTML=info_label.toUpperCase();
-			document.getElementById("repeat").innerHTML=repeat_label.toUpperCase();
-			document.getElementById("subtitle").innerHTML=subtitle_label.toUpperCase();
-			document.getElementById("menu").innerHTML=menu_label.toUpperCase();
-			document.getElementById("return").innerHTML=return_label.toUpperCase();
-			document.getElementById("power").innerHTML=power_label.toUpperCase();
-			document.getElementById("pause").innerHTML=pause_label.toUpperCase();
-			document.getElementById('closeremote').value = close_remote_label.toUpperCase();
-			document.getElementById('enter').value = enter_label.toUpperCase();
-			document.getElementById('red').value = red_label.toUpperCase();
-			document.getElementById('blue').value = blue_label.toUpperCase();
-			document.getElementById('yellow').value = yellow_label.toUpperCase();
-			document.getElementById('green').value = green_label.toUpperCase();
-			document.getElementById('eject').value = eject_label.toUpperCase();
-			document.getElementById('titleremote').value = title_label.toUpperCase();
-			document.getElementById('filemode').value = file_mode_label.toUpperCase();
-			document.getElementById('tvmode').value = tv_mode_label.toUpperCase();
-			document.getElementById('angle').value = angle_label.toUpperCase();
-			document.getElementById('timeseek').value = time_seek_label.toUpperCase();
-			document.getElementById('source').value = source_label.toUpperCase();
-			document.getElementById('zoom').value = zoom_label.toUpperCase();
-			
 			
 		}
 		
@@ -338,7 +311,7 @@
 		function perform_season()
 		{
 		jsonSeasonUrl = "/yamj3/api/index/video.json?type=season&sortby=season&sortdir=ASC&field=series_id&search="+series_id+"&artwork=poster";
-		console.log("URL: " + jsonSeasonUrl);
+		console.log("perform_season URL: " + jsonSeasonUrl);
 					$.ajax({
                    url: jsonSeasonUrl,
                     async: false,
@@ -387,8 +360,9 @@
 	// call the JSON value for episode 			
 		function perform_episode()
 		{
-		jsonEpisodeUrl = "/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot,files";
-		console.log("URL: " + jsonEpisodeUrl);
+	//	jsonEpisodeUrl = "/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot,files";
+		jsonEpisodeUrl = "/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot";
+		console.log("perform_episode URL: " + jsonEpisodeUrl);
 					$.ajax({
                    url: jsonEpisodeUrl,
                     async: false,
@@ -414,8 +388,8 @@
 							var outputepisode_title = "";
 							for (i = 0; i < totalepisode_title.length; i++) 
 							{
-							// construct an activ episode list, click on an episode will display title, videoimage, plot 
-								outputepisode_title +=	"<a href=\"#\" onclick=\"display_Episode_videoimage ('videoimage"+[i]+"','episodeplot"+[i]+"','episodetitle"+[i]+"',"+totalepisode_title.length+")\" >"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</a><br>";
+							// construct an activ episode list, click on an episode will display title, videoimage, plot and prepare the filepath to play 
+								outputepisode_title +=	"<a href=\"#\" onclick=\"episode_to_play('"+totalepisode_title[i].filename+"');display_Episode_videoimage ('videoimage"+[i]+"','episodeplot"+[i]+"','episodetitle"+[i]+"',"+totalepisode_title.length+");\" >"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</a><br>";
 							}
 							return outputepisode_title;
 						},
@@ -501,7 +475,7 @@
 				{     
 				current_id = Newid;
 				localStorage.setItem("id", current_id);
-				console.log("Storing value: " + indextype + "-" + current_id);
+				console.log("set_onlyId Storing value: " + indextype + "-" + current_id);
 				window.location.href="detail.html";
 				}	
 	// prepare to change to the season select by onclick	
@@ -509,7 +483,7 @@
 			{
 				localStorage.setItem("type", indextype);
 				localStorage.setItem("id", SeasonId);
-				console.log("Storing value: " + indextype + "-" + SeasonId);
+				console.log("goto_SeasonId Storing value: " + indextype + "-" + SeasonId);
 				window.location.href="detail.html";
 			}
 			
@@ -518,12 +492,12 @@
 				{
 				series_id = Series_Id;
 				localStorage.setItem("SeriesId", Series_Id);
-				console.log("Storing Series Id value: " + Series_Id);
+				console.log("store_SeriesId Storing Series Id value: " + Series_Id);
 				}	
 	// on click on episode list, display dynamicaly episode videoimage, plot, title 			
 		function display_Episode_videoimage(videoId_to_display, plotId_to_display, titleId_to_display, max_videoimage_to_hidden)
 					{
-						console.log("display_episode_videoimage:" +videoId_to_display+plotId_to_display+titleId_to_display+max_videoimage_to_hidden);
+						console.log("display_episode_videoimage:" +videoId_to_display+", "+plotId_to_display+", "+titleId_to_display+", "+max_videoimage_to_hidden);
 						// just reset what is on the screen before the right display 
 						document.getElementById(current_episode_videoimage).style.visibility="hidden";
 						document.getElementById(current_episode_plot).style.visibility="hidden";
@@ -761,7 +735,7 @@
 					case 'frame':
 						{
 							if (Person_toSet) { 
-								console.log("navPerson_frame:  " +Person_toSet);
+								console.log("ouvre_popup_person:  " +Person_toSet);
 								parent.frames['person_frame'].location.href='navPerson_frame.html';
 								Person_toSet = false; 
 								}
@@ -792,7 +766,7 @@
 				}
 		}
 		
-	// close when leave 
+	// close when leaving
 	function close_popup()
 	{
 		if (Personpopup !== "") {Personpopup.close();}
@@ -802,71 +776,16 @@
 	function call_genreselect(genrename)
         {
 			localStorage.setItem("Genre_name", genrename);
-            console.log("Storing value: Genre name: " +genrename);
+            console.log("call_genreselect Storing value: Genre name: " +genrename);
 			window.location.href="index_Genre.html";
 		}
 		
-	function play_to_device(basefilename)
-			{
-				
-			//	filenametoplay = basefilename.substring(basefilename.lastIndexOf('/')+1); 
-			console.log("play_to_device:"+PlayerValue+" basefilename=" +basefilename); 
-			for(var j = 0; j < (nbre_translate_path+1); j++){
-				if (basefilename.substring(0,source_path[j].length) == source_path[j])
-					{
-				filenametoplay = basefilename.substring(source_path[j].length);
-		//		tempfile = filenametoplay.replace(/\&/g,"%26").replace(/\?/g,"%3F").replace(/\+/g,"%2B");
-		//   will be checked later if necessary		
-				console.log("filename: "+filenametoplay);
-		//		console.log("tempfile" +tempfile);
-				temp_file_name = filenametoplay.substring(0,filenametoplay.lastIndexOf('.'));
-				file_name = temp_file_name.substring(temp_file_name.lastIndexOf('/')+1);
-			//	console.log("play_to_device: file_name=" +file_name+ " filenametoplay=" +filenametoplay+ " target_path="+target_path[j]+ " source_path=" +source_path[j]);
-				var UrlPlay="http://"+Ip_device+":8008/playback?arg0="+playcommand+"&arg1="+file_name+"&arg2="+target_path[j]+filenametoplay+"&arg3=show&arg4=0&arg5=0&arg6=disable";
-					}
-				}
-				console.log("play_to_device:" +UrlPlay);
-
-		//		$.ajax({
-        //           url: UrlPlay,
-        //           async: false,
-        //            'success': function(playdata)
-        //           {
-		//				jsondata = playdata;
-				//		outputJson(playdata);
-		//				ouvre_remote ();
-		//			}
-		//		});	
-		//	 return ;
-
-		//$.get(UrlPlay);
 	
-	//confirm(play_label.toUpperCase()+": "+file_name);
-		document.getElementById("infobox").innerHTML=play_label.toUpperCase()+": "+file_name+ " ?";
-		document.getElementById("infobox").style.visibility="visible";
-		myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
 		
-			}
 	
-		function start_playing ()
-		{
-			myStopFunction('infobox');
-			//$.get(UrlPlay);
-			console.log("start_playing:" +file_name);
-			ouvre_remote ();
-		}
-		function ouvre_remote() 
-		{
-		//	Remotepopup = window.open("./remote/my_remote_"+LangValue+".html", "YAMJv3 Remote","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=1050px, top=150px, width=512px, height=312px");
-			document.getElementById("remote").style.visibility="visible";
-			
-		}
-		function close_remote() 
-		{
 
-			document.getElementById("remote").style.visibility="hidden";
-			
-		}
+	
+
       </script>
 <!-- *************************************************************************************************************** -->
     </head>
@@ -874,8 +793,8 @@
 	<!-- navigation to index -->
 		
 		<div id="logo">
-						<td>
-							<ul id="detail_home_left"><img src="./pictures/yamj-logo_repeat.png" width="90px" />
+						
+							<ul id="detail_home_left">
 									<li><a id="li_home_left" href="javascript:toggle_menuleft()"></a></li>
 									<li><a id="li_all_up" href="javascript:ChangeIndex('movie,series')">
 										<div id="allselect"></div></a></li>
@@ -894,10 +813,10 @@
 									<li><a id="li_config_up" href="javascript:ouvre_config(StyleValue)">
 										<div id="configindex"></div></a></li>
 							</ul>
-						<td>
+						
 	<!-- various navigation -->					
-					<td>
-							<ul id="detail_home_right"><img src="./pictures/yamj-logo_repeat.png" width="90px" />
+					
+							<ul id="detail_home_right">
 									<li><a id="li_home_right" href="javascript:toggle_menuright()"></a></li>
 									<li><a id="li_fanart" href="javascript:toggle_fanart()">
 										<div id="fanartshow"></div></a></li>
@@ -951,10 +870,10 @@
 											<noscript><input type="submit" value="Submit"></noscript>
 										</form>
 									</li>	
-									<li><a id="li_remote" href="javascript:ouvre_remote()">
+									<li><a id="li_remote" href="javascript:ouvre_remote(); ">
 										<div id="remoteselect"></div></a></li>
 							</ul>
-						<td>
+						
         </div>
 	<!--  header for movie/series name -->
 		<div class="header">
@@ -968,7 +887,7 @@
 						<span class="header_year" ></span>
 						<span class="header_text">) id:</span>
 						<span class="header_id" ></span>
-						</td>
+					</td>
 				</tr>
 			</table>
 		</div>
@@ -997,7 +916,10 @@
 		<div id="movie_display" style="visibility: hidden; ">
 			<iframe src="" name="movie_frame" resizable="yes" id="movie_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1245px; height:265px;" allowTransparency="true"></iframe>
 		</div>	
-		
+	<!-- display Remote -->
+		<div id="remote" style="visibility: hidden; ">
+			<iframe src="" name="remote_frame" resizable="yes" id="remote_frame" scrolling="yes" frameborder="0" style="overflow:auto; width:430px; height:660px;" allowTransparency="true"></iframe>
+		</div>		
 	<!-- main table for detail page -->
         <div class="template"> 
            <table>
@@ -1007,22 +929,22 @@
 						<td rowspan="1">
                             <div id="slideshowFanart" class="glow">
                                 <div id="imgRollFanart">
-                                    <img class="fanart" src=""/>
+                                    <img class="fanart" src="" />
                                 </div>
                             </div>
-                            <a id="nextFanart">=></a>
-                            <a id="prevFanart"><=</a>
+                            <a id="nextFanart"> </a>
+                            <a id="prevFanart"> </a>
                         </td>
 						<!-- poster animation, automatic every 3s, if more than one fanart, could be stopped or adjust by button  -->
 						<td rowspan="10">
                             <div id="slideshowCtr" class="glow">
                                 <div id="imgRoll">
-                                    <img class="poster" src=""/>
+                                    <img class="poster" src="" />
                                 </div>
                             </div>
 						
 						<!-- play button -->
-							<img class="play" src=""/>
+							<img class="play"  />
 						
 						<!-- next , previous button -->
                             <a id="next"><img src="./pictures/next.png" /></a>
@@ -1033,7 +955,7 @@
 						<td rowspan="10">
                             <div id="slideshowBanner" class="glow">
                                 <div id="imgRollBanner">
-                                    <img class="banner" src=""/>
+                                    <img class="banner" src="" />
                                 </div>
                             </div>
 								<a id="nextBanner"><img src="./pictures/next.png" /></a>
@@ -1107,331 +1029,11 @@
 			</div>	
 		</div>
 
-		<!-- to display remote --> 
-		<table id="remote" >	
-						<tr align="center">
-							<td><input type="button" onclick="close_remote()" id="closeremote" class="remote_button" /></td>
-						</tr>					
-			<tr><td height="5"></td></tr>
-			<tr>
-				<td valign="top">
-					<table border="0" cellpadding="0" cellspacing="0">					
-						<tr>
-							<td align="center">
-								<input type="image" 
-									onclick="sendKey('power'); "
-									src="./pictures/exit_on.png"
-									class="remote_image"
-									onblur="myStopFunction('power')"
-									onmouseout="this.src='./pictures/exit_on.png';"
-									onmouseover="this.src='./pictures/exit.png';"/>
-								<div id="power"></div>
-							</td>
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('home')"
-									src="./pictures/home3_on.png"
-									class="remote_image"
-									onblur="myStopFunction('home')"
-									onmouseout="this.src='./pictures/home3_on.png';"
-									onmouseover="this.src='./pictures/home3.png';"/>
-								<div id="home"></div>
-							</td>
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('setup')"
-									src="./pictures/setup_on.png"
-									class="remote_image"
-									onblur="myStopFunction('setup')"
-									onmouseout="this.src='./pictures/setup_on.png';"
-									onmouseover="this.src='./pictures/setup.png';"/>
-								<div id="setup"></div>
-							</td>
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('info')"
-									src="./pictures/info2_on.png"
-									class="remote_image"
-									onblur="myStopFunction('info')"
-									onmouseout="this.src='./pictures/info2_on.png';"
-									onmouseover="this.src='./pictures/info2.png';"/>
-								<div id="info"></div>
-							</td>
-						</tr>
-						<tr><td height="5"></td></tr>
-						<tr>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('up')"
-									src="./pictures/up_on.png"
-									class="remote_image"
-									onblur="myStopFunction('up')"
-									onmouseout="this.src='./pictures/up_on.png';"
-									onmouseover="this.src='./pictures/up.png';"/>
-								<div id="up"></div>
-							</td>
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('left')"
-									src="./pictures/back_on.png"
-									class="remote_image"
-									onblur="myStopFunction('left')"
-									onmouseout="this.src='./pictures/back_on.png';"
-									onmouseover="this.src='./pictures/back.png';"/>
-								<div id="left"></div>
-							</td>
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('right')"
-									src="./pictures/fwd_on.png"
-									class="remote_image"
-									onblur="myStopFunction('right')"
-									onmouseout="this.src='./pictures/fwd_on.png';"
-									onmouseover="this.src='./pictures/fwd.png';"/>
-								<div id="right"></div>
-							</td>
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('down')"
-									src="./pictures/down_on.png"
-									class="remote_image"
-									onblur="myStopFunction('down')"
-									onmouseout="this.src='./pictures/down_on.png';"
-									onmouseover="this.src='./pictures/down.png';"/>
-								<div id="down"></div>
-							</td>
-						</tr>
-						<tr><td height="5"></td></tr>
-						<tr>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('rewind')"
-									src="./pictures/rewind_on.png"
-									class="remote_image"
-									onblur="myStopFunction('rewind')"
-									onmouseout="this.src='./pictures/rewind_on.png';"
-									onmouseover="this.src='./pictures/rewind.png';" />
-								<div id="rewind"></div>
-							</td>
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('prev')"
-									src="./pictures/icon-prev_on.png"
-									class="remote_image"
-									onblur="myStopFunction('prev_remote')"
-									onmouseout="this.src='./pictures/icon-prev_on.png';"
-									onmouseover="this.src='./pictures/icon-prev.png';"/>
-								<div id="prev_remote"></div>
-							</td> 
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('next')"
-									src="./pictures/next-icon_on.png"
-									class="remote_image"
-									onblur="myStopFunction('next_remote')"
-									onmouseout="this.src='./pictures/next-icon_on.png';"
-									onmouseover="this.src='./pictures/next-icon.png';"/>
-								<div id="next_remote"></div>
-							</td>
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('fwd')"
-									src="./pictures/forward_on.png"
-									class="remote_image"
-									onblur="myStopFunction('fwd')"
-									onmouseout="this.src='./pictures/forward_on.png';"
-									onmouseover="this.src='./pictures/forward.png';"/>
-								<div id="fwd"></div>
-							</td>
-						</tr>
-						<tr><td height="5"></td></tr>
-						<tr>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('stop')"
-									src="./pictures/icon-stop_on.png"
-									class="remote_image" onblur="myStopFunction('stop')"
-									onmouseout="this.src='./pictures/icon-stop_on.png';"
-									onmouseover="this.src='./pictures/icon-stop.png';"/>
-								<div id="stop"></div>
-							</td>
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('play')"
-									src="./pictures/icon-play_on.png"
-									class="remote_image" onblur="myStopFunction('play')"
-									onmouseout="this.src='./pictures/icon-play_on.png';"
-									onmouseover="this.src='./pictures/icon-play.png';"/>
-								<div id="play"></div>
-							</td>
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('pause')"
-									src="./pictures/icon-pause_on.png"
-									class="remote_image"
-									onblur="myStopFunction('pause')"
-									onmouseout="this.src='./pictures/icon-pause_on.png';"
-									onmouseover="this.src='./pictures/icon-pause.png';"/>
-								<div id="pause"></div>
-							</td>
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('repeat')"
-									src="./pictures/repeat_on.png"
-									class="remote_image"
-									onblur="myStopFunction('repeat')"
-									onmouseout="this.src='./pictures/repeat_on.png';"
-									onmouseover="this.src='./pictures/repeat.png';"/>
-								<div id="repeat"></div>
-							</td>
-						</tr>
-						<tr><td height="5"></td></tr>
-						<tr>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('audio')"
-									src="./pictures/audio_on.png"
-									class="remote_image"
-									onblur="myStopFunction('audio')"
-									onmouseout="this.src='./pictures/audio_on.png';"
-									onmouseover="this.src='./pictures/audio.png';"/>
-								<div id="audio"></div>
-							</td>
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('volumeup')"
-									src="./pictures/audioplus_on.png"
-									class="remote_image" onblur="myStopFunction('volumeup')"
-									onmouseout="this.src='./pictures/audioplus_on.png';"
-									onmouseover="this.src='./pictures/audioplus.png';"/>
-								<div id="volumeup"></div>
-							</td>
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('volumedown')"
-									src="./pictures/audiominus_on.png;"
-									class="remote_image"
-									onblur="myStopFunction('volumedown')"
-									onmouseout="this.src='./pictures/audiominus_on.png';"
-									onmouseover="this.src='./pictures/audiominus.png';"/>
-								<div id="volumedown"></div>
-							</td>
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('mute')"
-									src="./pictures/mute_on.png" class="remote_image" 
-									onblur="myStopFunction('mute')"
-									onmouseout="this.src='./pictures/mute_on.png';"
-									onmouseover="this.src='./pictures/mute.png';"/>
-								<div id="mute"></div>
-							</td>
-						</tr>
-						<tr><td height="5"></td></tr>
-						<tr>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('menu')"
-									src="./pictures/menu3_on.png"
-									class="remote_image"
-									onblur="myStopFunction('menu')"
-									onmouseout="this.src='./pictures/menu3_on.png';"
-									onmouseover="this.src='./pictures/menu3.png';"/>
-								<div id="menu"></div>
-							</td>
-							<td></td>
-							<td width="17%" height="25" align="center"><input type="button" onclick="sendKey('enter')" id="enter" class="button" /></td>
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('return')"
-									src="./pictures/returnbutton_on.png"
-									class="remote_image"
-									onblur="myStopFunction('return')"
-									onmouseout="this.src='./pictures/returnbutton_on.png';"
-									onmouseover="this.src='./pictures/returnbutton.png';"/>
-								<div id="return"></div>
-							</td>
-							<td></td>
-							<td align="center">
-								<input type="image"
-									onclick="sendKey('subtitle')"
-									src="./pictures/subtitles_on.png"
-									class="remote_image"
-									onblur="myStopFunction('subtitle')"
-									onmouseout="this.src='./pictures/subtitles_on.png';"
-									onmouseover="this.src='./pictures/subtitles.png';"/>
-								<div id="subtitle"></div>
-							</td>
-						</tr>
-						<tr><td height="5"></td></tr>
-						<tr>
-							<td align="center"><input type="button" onclick="sendKey('red')" id="red" class="button" style="background-color:red;" /></td>
-							<td></td>
-							<td align="center"><input type="button" onclick="sendKey('green')" id="green" class="button" style="background-color:green;" /></td>
-							<td></td>
-							<td align="center"><input type="button" onclick="sendKey('yellow')"  id="yellow" class="button" style="background-color:yellow;" /></td>
-							<td></td>
-							<td align="center"><input type="button" onclick="sendKey('blue')" id="blue" class="button" style="background-color:blue;" /></td>
-						</tr>
-						<tr><td height="5"></td></tr>
-						<tr>	
-							<td align="center"><input type="button" onclick="sendKey('eject')" id="eject" class="button"/></td>
-							<td></td>
-							<td align="center"><input type="button" onclick="sendKey('title')" id="titleremote" class="button"/></td>
-							<td></td>
-							<td align="center"><input type="button" onclick="sendKey('filemode')" id="filemode" class="button"/></td>
-							<td></td>
-							<td align="center"><input type="button" onclick="sendKey('source')" id="source" class="button"/></td>
-						</tr>
-						<tr><td height="5"></td></tr>
-						<tr>
-							<td align="center"><input type="button" onclick="sendKey('zoom')" id="zoom" class="button"/></td>
-							<td></td>
-							<td align="center"><input type="button" onclick="sendKey('tvmode')" id="tvmode" class="button"/></td>
-							<td></td>
-							<td align="center"><input type="button" onclick="sendKey('angle')" id="angle" class="button"/></td>
-							<td></td>
-							<td align="center"><input  type="button" onclick="sendKey('time seek')" id="timeseek" class="button"/></td>
-						</tr>
-						<tr><td height="5"></td></tr>
-						<table>
-						<tr align="center">
-							<td width="3"></td>
-							<td align="center"><input type="image" onclick="sendKey('zero')" src="./pictures/00.png"  class="remote_number"/></td>							
-							<td align="center"><input type="image" onclick="sendKey('one')" src="./pictures/01.png"  class="remote_number" /></td>							
-							<td align="center"><input type="image" onclick="sendKey('two')" src="./pictures/02.png" class="remote_number"/></td>							
-							<td align="center"><input type="image" onclick="sendKey('three')" src="./pictures/03.png" class="remote_number"/></td>							
-							<td align="center"><input type="image" onclick="sendKey('four')" src="./pictures/04.png" class="remote_number"/></td>																			
-							<td align="center"><input type="image" onclick="sendKey('five')" src="./pictures/05.png" class="remote_number"/></td>
-							<td align="center"><input type="image" onclick="sendKey('six')" src="./pictures/06.png" class="remote_number"/></td>							
-							<td align="center"><input type="image" onclick="sendKey('seven')" src="./pictures/07.png" class="remote_number"/></td>							
-							<td align="center"><input type="image" onclick="sendKey('height')" src="./pictures/08.png" class="remote_number"/></td>							
-							<td align="center"><input type="image" onclick="sendKey('nine')" src="./pictures/09.png" class="remote_number"/></td>
-						</tr>
-						</table>
-					</table>
-				</td>
-			</tr>
-		</table>
-		<div id="cmd" style="visibility: hidden;"></div>
+		
+
 		<!-- display config -->
 		<div id="target_display" style="visibility: hidden; ">		
-			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:900px; height:220px;" allowTransparency="true"></iframe>
+			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:920px; height:320px;" allowTransparency="true"></iframe>
 		</div>	
 		<!-- display source data from API if needed  -->
         <div id="sourceData"></div>

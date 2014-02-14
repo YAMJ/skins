@@ -5,11 +5,11 @@
 		<playername>C200</playername>
 		<playeradress>192.168.1.25</playeradress>
 		<path>
-			<sourcepath>W:</sourcepath>
+			<sourcepath>W:/</sourcepath>
 			<targetpath>/opt/sybhttpd/localhost.drives/NETWORK_SHARE/READYNAS</targetpath>
 		</path>
 		<path>
-			<sourcepath>D:/Mes films</sourcepath>
+			<sourcepath>D:\Mes films/</sourcepath>
 			<targetpath>/opt/sybhttpd/localhost.drives/NETWORK_SHARE/MYPC</targetpath>
 		</path>
 		<path>
@@ -22,10 +22,10 @@
 		<playeradress>192.168.1.26</playeradress>
 		<path>
 			<sourcepath>W:</sourcepath>
-			<targetpath>/opt/sybhttpd/localhost.drives/NETWORK_SHARE/READYNAS</targetpath>
+			<targetpath>/opt/sybhttpd/localhost.drives/NETWORK_SHARE/READYNAS/</targetpath>
 		</path>
 		<path>
-			<sourcepath>D:/Mes films</sourcepath>
+			<sourcepath>D:\Mes films/</sourcepath>
 			<targetpath>/opt/sybhttpd/localhost.drives/NETWORK_SHARE/MYPC</targetpath>
 		</path>
 		<path>

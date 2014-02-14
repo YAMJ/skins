@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>YAMJv3 Navigation index</title>
-        <script src="js/jquery.min.js"></script>
+        <script src="js/jQuery.js"></script>
         <script src="js/pure.js"></script>
         <script src="js/js.js"></script>
         <script src="js/jPages.js"></script>
@@ -29,13 +29,14 @@
 				{
 						jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("selection") + "&field=title&mode=START";
 						window.localStorage.setItem("selection", "");	
-					}	
-			if (type == "SEASON") 
-				{
-					jsonUrl = jsonUrl + "&field=series_id&search="+series_id;
-					}
+					} else {	
+							if (type == "SEASON") 
+								{
+									jsonUrl = jsonUrl + "&field=series_id&search="+series_id;
+								}
+							}
 					
-            console.log("URL: " + jsonUrl);
+            console.log("NavData URL: " + jsonUrl);
             var jsondata = null;
 
             $.ajax({

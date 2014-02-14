@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>YAMJ v3 config</title>
-        <script src="js/jquery.js"></script>
+        <script src="js/jQuery.js"></script>
         <!-- Used for the JSON parsing -->
         <script src="js/pure.js"></script>
         <!-- Used for the paging of the index -->
@@ -151,8 +151,30 @@
 							for (var i = 0; i < player_list.length; i++) {
 							   $('#playerlist_to_select').append("<option value='" + player_list[i] + "'>" + player_list[i] + "</option>");
 							}
+		}	
+		function commit_lang ()
+		{
+				
+				if (StyleValue == 'frame') 
+				{
+					parent.location.reload(false);parent.nodisplay_Id('target_display');
+				} else {
+					window.opener.location.reload(false);window.close();
+				}				
+			
 		}		
 		
+		function commit_skin ()
+		{
+				
+				if (StyleValue == 'frame') 
+				{
+					parent.location.reload(false);parent.nodisplay_Id('target_display');
+				} else {
+					window.opener.location.reload(false);window.close();
+				}				
+			
+		}		
 		function commit_style ()
 		{
 				
@@ -182,26 +204,26 @@
 					{
 					case 'frame':
 						{
-							console.log("close_search:  style:"+StyleValue);								
+							console.log("close_config:  style:"+StyleValue);								
 							parent.document.getElementById('target_display').style.visibility="hidden";
 						
 							break;
 						} 
 					case 'popup':
 						{
-							console.log("close_search:  style:"+StyleValue);
+							console.log("close_config:  style:"+StyleValue);
 							window.close();
 							break;
 						}
 					case 'ribbon':
 						{
-							console.log("close_search:  style:"+StyleValue);
+							console.log("close_config:  style:"+StyleValue);
 							window.close();
 							break;
 						}
 					case 'page':
 						{
-							console.log("close_search:  style:"+StyleValue);
+							console.log("close_config:  style:"+StyleValue);
 							window.close();
 							break;
 						}
@@ -210,18 +232,81 @@
 				}			
 							
 		}
+ // **********************************************  ajout parser xml ***********************		
+		function get_operation_file_list ()
+		{
+		
+			var jsonOperationUrl = "http://"+Ip_device+":8008/file_operation?arg0=list_user_storage_file&arg1=&arg2=0&arg3=100&arg4=true&arg5=true&arg6=true&arg7=";
+				console.log("get_operation_file_list jsonOperationUrl: " + jsonOperationUrl);
+				gestionClic(jsonOperationUrl)
+		}
+
+ 
+		function createRequestObject()
+			{
+				var http;
+				if (window.XMLHttpRequest)
+				{ // Mozilla, Konqueror/Safari, IE7 ...
+					http = new XMLHttpRequest();
+				}
+				else if (window.ActiveXObject)
+				{ // Internet Explorer 6
+					http = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				return http;
+			} // createRequestObject()
+
+		function gestionClic(URL)
+			{
+			  var http = createRequestObject();
+			  http.open('GET', URL, true);
+			  http.onreadystatechange = (function ()
+				{
+				  if (http.readyState == 4)
+				  {
+					if (http.status == 200)
+					{
+						var device_type = new Array();
+						var device_name = new Array();
+						var device_path = new Array();
+						var tree = http.responseXML;
+						current_player = window.localStorage.getItem('Player');
+						z=tree.getElementsByTagName('fileList');
+						
+						for(j = 0; j < z[0].getElementsByTagName('file').length; j++){
+							
+							device_type[j]=z[0].getElementsByTagName("device_type")[j].childNodes[0].nodeValue;
+							device_name[j]=z[0].getElementsByTagName("name")[j].childNodes[0].nodeValue;
+							device_path[j]=z[0].getElementsByTagName("path")[j].childNodes[0].nodeValue;
+							$('#device_content').append("<table style='position: relative; '><tr><td>device type:" + device_type[j] + ", name:" +device_name[j]+ ", path:" +device_path[j]+"</td><tr></table>");
+							
+							console.log("gestionClic  device nb: " +j+ " type:" +device_type[j]+ " name:" +device_name[j]+ " path:" +device_path[j]);
+						
+							}	
+					  }
+					
+					else
+					{
+					  console.log("gestionClic in get_operation_file , wrong request for IP: "+Ip_device );
+					}
+				  }
+				});
+			  http.send(null);
+			} // gestionClic()
   //************************ LANGUAGE LOCAL SETTING *********************************************
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
 		function set_context_lang_value ()
 		{
 			document.getElementById("languagelabel").innerHTML=lang_label.toUpperCase();
 			document.getElementById("stylelabel").innerHTML=style_label.toUpperCase();
+			document.getElementById("skinlabel").innerHTML="SKIN";
 			document.getElementById("playerlabel").innerHTML=player_select.toUpperCase();
 			document.getElementById("nbrow").innerHTML=nbofrow.toUpperCase();
 			document.getElementById("LangSetted").innerHTML=LangValue;
 			document.getElementById("StyleSetted").innerHTML=window.localStorage.getItem("Style");
 			document.getElementById("PlayerSetted").innerHTML=window.localStorage.getItem("Player");
 			document.getElementById("NblineSetted").innerHTML=window.localStorage.getItem("RowperPage");
+			document.getElementById("SkinSetted").innerHTML=window.localStorage.getItem("skinset");
 		}
         </script>
 		<!-- just added to set the language value, shouldn't be displayed  -->
@@ -233,16 +318,21 @@
 			<table><tr><td class="Poster_Value"></td></tr></table>
 		</div>
 		<div id="close_icon" onclick="close_config()"><img src="./pictures/close.png" /></div>
-		<div id="main_index" style="left: -50px;">
+		<div id="info_icon" onclick="get_operation_file_list ()"><img src="./pictures/info2.png" onclick="src='./pictures/info2_on.png'" /></div> 
+	<!--	<div id="info_icon" onclick="myIP();"><img src="./pictures/info2.png" onclick="src='./pictures/info2_on.png'" /></div>	-->
+		<div id="device_content" ></div>
+		<div id="ip" > </div>		
+	
+		<div id="main_index" style="left: -20px;">
 			
-			
+
 				<!-- select language  -->
 							<table>
 								<tr class="tablelang">
 									<td>
 										
 												<form><label id='languagelabel'></label>
-													<select id="lang_id" onchange="update_lang(document.getElementById('lang_id').value);window.opener.location.reload(false);window.close();">
+													<select id="lang_id" onchange="update_lang(document.getElementById('lang_id').value); commit_lang();">
 														<option value=""></option>
 														<option value="de">de</option>
 														<option value="en">en</option>
@@ -277,7 +367,7 @@
 									<td>
 										
 												<form><label id='stylelabel'></label>
-													<select id="style_id" onchange="update_Style(document.getElementById('style_id').value);commit_style()">
+													<select id="style_id" onchange="commit_style();update_Style(document.getElementById('style_id').value);">
 														<option value=""></option>
 														<option value="page">page</option>
 														<option value="ribbon">ribbon</option>
@@ -292,7 +382,7 @@
 							</table>
 	
 		
-		<!--			 selector to search START for the 1rst char , ANY for the all contents -->
+				<!-- select row  -->
 						
 					<table>
 						<tr class="tableconfig">
@@ -316,19 +406,32 @@
 							</td>
 						</tr>
 					</table>
+					
+				<!-- select skin  -->
+							<table>
+								<tr class="tableskin">
+									<td>
+										<form><label id='skinlabel'></label>
+											<select id="skin_id" onchange="commit_skin();update_Skin(document.getElementById('skin_id').value);">
+												<option value=""></option>
+												<option value="bikini_skin_default_">default</option>
+												<option value="bikini_skin_1_">1</option>
+												<option value="bikini_skin_2_">2</option>
+												<option value="bikini_skin_3_">3</option>
+												<option value="bikini_skin_4_">4</option>
+												<option value="bikini_skin_5_">5</option>
+												<option value="bikini_skin_6_">6</option>
+											</select><div id="SkinSetted"></div> 
+											<noscript><input type="submit" value="Submit"></noscript>
+										</form>
+								
+									</td>
+								</tr>
+							</table>
 			
 	
 		</div>
-		<div class="display_settings" >
-			<table>
-				<tr>
-					
-					
-					
-					
-				</tr>
-			</table>
-		</div>
+	
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>
     </body>

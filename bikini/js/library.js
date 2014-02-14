@@ -18,8 +18,8 @@
 		var default_player = 'C200';
 		function get_player()
 			{
-				var jsonPlayerUrl = "/yamj3/api/config/list.json?config=bikini_skin_player&mode=any";
-				console.log("jsonPlayerUrl: " + jsonPlayerUrl);
+				var jsonPlayerUrl = "/yamj3/api/config/list.json?config="+skin_value+"player&mode=any";
+				console.log("get_player jsonPlayerUrl: " + jsonPlayerUrl);
 				$.ajax({
                    url: jsonPlayerUrl,
                     async: false,
@@ -29,8 +29,7 @@
 						jsondata = dataSkinPlayer;
 				//		outputJson(dataSkinPlayer);
 						checkPlayer(dataSkinPlayer);
-						updatePlayer(dataSkinPlayer);
-						get_player_setting (PlayerValue);
+						Player_setting (PlayerValue);
 					}
 					
 				});	
@@ -38,10 +37,12 @@
 		}
 				
 			// update  the value in the config database
+			
+	
 		function update_Player(Player_) 
 		{
-				var jsonPlayerUrl = "/yamj3/api/config/update.json?key=bikini_skin_player&value="+Player_+"";
-				console.log("jsonPlayerUrl: " + jsonPlayerUrl);
+				var jsonPlayerUrl = "/yamj3/api/config/update.json?key="+skin_value+"player&value="+Player_+"";
+				console.log("update_Player jsonPlayerUrl: " + jsonPlayerUrl);
 				$.ajax({
                    url: jsonPlayerUrl,
                     async: false,
@@ -50,8 +51,8 @@
                    {
 						jsondata = dataSkinPlayer;
 				//		outputJson(dataSkinPlayer);
-						updatePlayer(dataSkinPlayer);
-						get_player_setting (PlayerValue);
+						set_Player_value(Player_)
+						Player_setting (Player_);
 						location.reload();
 					}
 					
@@ -59,45 +60,35 @@
 			 return jsondata;
 
 
-		}				
+		}
 		function checkPlayer(yamjdata) {
-				var PN = {
+					var PN = {
 						"td.Value":  function(arg) {
 										if (arg.context.count) {
-										return arg.context.count;} else {update_Player(default_player);}
+										console.log("checkPlayer: "+arg.context.results[0].value);
+										set_Player_value(arg.context.results[0].value);
+										return arg.context.results[0].value;} else {
+										console.log("checkPlayer: no value found");
+										update_Player(default_player);}
 								}								
 							
 						};
 				
 				$p('.results').render( yamjdata, PN );			
 			}	
-	// parse the value Player
-		function updatePlayer(yamjdata) {
-		var WI = {
-						"tr": {
-							"list<-results":{
-								"td.Value"				: function(arg) {
-								set_Player_value (arg.item.value);
-								return arg.item.value;
-								}	
-							}
-						}
-					};
-				$p('.results').render( yamjdata, WI );			
-			}
+	
 	
 	// set the rules to adjust Player to the Player choosen
 		function set_Player_value(Player_)
 			{
 				PlayerValue = Player_;
-				console.log('set Player:'+Player_);
+				console.log('set_Player_value:'+Player_);
 				window.localStorage.setItem("Player", Player_);
 			}
 	
 	// get all the player settings : ip, path for the selected player 'player'
-		function get_player_setting(player) {
+		function Player_setting(player) {
 		
-			console.log("get_player_setting: "+player);
 					if (window.XMLHttpRequest)
 					  {// code for IE7+, Firefox, Chrome, Opera, Safari
 					  xmlhttp=new XMLHttpRequest();
@@ -118,8 +109,9 @@
 				// store ip, path for the selected player 'player'
 					Ip_device=(x.getElementsByTagName("playeradress")[0].childNodes[0].nodeValue);
 					for(j = 0; j < x.getElementsByTagName('path').length; j++){
-					source_path[j]=(x.getElementsByTagName("sourcepath")[j].childNodes[0].nodeValue);
-					target_path[j]=(x.getElementsByTagName("targetpath")[j].childNodes[0].nodeValue);
+					source_path[j]= normalise_path(x.getElementsByTagName("sourcepath")[j].childNodes[0].nodeValue);				
+					target_path[j]= normalise_path(x.getElementsByTagName("targetpath")[j].childNodes[0].nodeValue);
+					console.log ("Player_setting: player= "+player+" change="+source_path[j]+ " by=" + target_path[j]);	
 					nbre_translate_path = j;
 					}	
 			}
@@ -131,5 +123,18 @@
 						player_list[i] = (z[0].getElementsByTagName('playername')[i].childNodes[0].nodeValue);
 						if (player_list[i] == player) {player_select_rank = i;}
 					}
-				console.log("get_player_list: player_select_rank " +player_select_rank);
+			//	console.log("get_player_list: player_select_rank " +player_select_rank);
 			}
+			
+		// normalise any path to avoid unix path, / at the end and so on ...
+		function normalise_path (path_to_normalise)
+			{
+				// change all the \\ by / 
+				var path = path_to_normalise.replace ('\\', '/');
+				// the path should be stored without any / ending the prefix to change 
+				if (path.substring(path.length-1, path.length) == '/') {
+			//		console.log ("normalise_path: change \\ by / and skip last / with path= "+path_to_normalise);	
+					path = path.substring (0, (path.length - 1));}
+				return path;
+			}
+				

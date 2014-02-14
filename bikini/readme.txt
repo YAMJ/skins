@@ -20,7 +20,7 @@ STEP 1: INSTALL
 	goto step 2
  - 2nd method
     Make sure YAMJ core is running
-    Browse to localhost:8888/yamj3
+    Browse to http://localhost:8888/yamj3 or http://IP_SERVER_JETTY:8888/yamj3
     Select skins
     Past the URL into the "URL to download" box
     Click "Add Skin"
@@ -31,13 +31,13 @@ STEP 2: CUSTOMISE
  -  edit yamj3/resources/skins/bikini/My_Library.xml
 	<players>  <!-- is mandatory should be the 1rst line don't skip, modify, delete, .... -->
 	...
-	</players> <!-- is mandatory, shouls be the last line , don't skip, modify, delete, ....don't forget to close -->
+	</players> <!-- is mandatory, should be the last line , don't skip, modify, delete, ....don't forget to close -->
  - 	for each player (player is the device where you want to play the movie) add the following sequence 
 	<player>
 		<playername>Name of the Player</playername> <!-- this name is free, it's the one used to select the player inside the skin --> 
 		<playeradress>IP_player</playeradress>  <!-- IP of the device / player -->
 		<path> <!-- repeat as long as there is various path used) 
-			<sourcepath>drive_letter</sourcepath>  <!-- the target path used when you add a network_share generally it is the lettre_drive used inside the flescanner.cmd  -->
+			<sourcepath>drive_letter</sourcepath>  <!-- the target path used when you add a network_share generally it is the lettre_drive used inside the filescanner.cmd  -->
 			<targetpath>name_of_share</targetpath>  <!-- it's the path of the share device which will be substituate to sourcepath in the order PLAY  -->
 		</path>
 	</player>  <!-- don't forget to close -->

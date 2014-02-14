@@ -3,11 +3,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>YAMJ v3 index</title>
-        <script src="js/jquery.js"></script>
+        <script src="js/jQuery.js"></script>
         <!-- Used for the JSON parsing -->
         <script src="js/pure.js"></script>
         <!-- Used for the paging of the index -->
         <script src="js/js.js"></script>
+		<script src="js/my_remote.js"></script>
         <script src="js/jPages.js"></script>
 		<!-- Used for skin language setting -->
 		<script src="js/lang.js"></script>
@@ -90,8 +91,12 @@
                             return "pictures/dummy.jpg";
                         }
                     },
+		
                     "img.poster@onclick": function(arg) {
                         return "setId('" + arg.item.videoType + "', " + arg.item.id + ")";
+                    },
+					"img.poster2@onclick": function(arg) {
+                        return "direct_play('" + arg.item.videoType + "', " + arg.item.id + ")";
                     }
                 }
             }
@@ -101,7 +106,7 @@
         {
             window.localStorage.setItem("type", type);
             window.localStorage.setItem("id", id);
-            console.log("Storing value: " + type + "-" + id);
+            console.log("setId Storing value: " + type + "-" + id);
             window.location.href="detail.html";
         }
 
@@ -140,7 +145,7 @@
 						window.localStorage.setItem("search_index", "");	
 					}	
 				$('#printsearch').html(selected_index);
-				console.log("URL: " + jsonUrl);
+				console.log("getIndexData URL: " + jsonUrl);
 
 				$.ajax({
                 url: jsonUrl,
@@ -191,62 +196,66 @@
         </script>
 	<div class="index_header"> 
         <div id="logo_index">
-						<td>
-							<ul id="home_left_up"><img src="./pictures/yamj-logo_repeat.png" width="90px" />
-									<li><a id="li_home_left" href="javascript:toggle_menuleft()"></a></li>
-									<li><a id="li_all_up" href="javascript:ChangeIndex('movie,series')">
-										<div id="allselect"></div></a></li>
-									<li><a id="li_movie_up" href="javascript:ChangeIndex('movie')">
-										<div id="movieselect"></div></a></li>	
-									<li><a id="li_series_up" href="javascript:ChangeIndex('series')">
-										<div id="serieselect"></div></a></li>	
-									<li><a id="li_season_up" href="javascript:ChangeIndex('season')">
-										<div id="seasonselect"></div></a></li>	
-									<li><a id="li_person_up" href="javascript:call_personindex('false')">
-										<div id="personindex"></div></a></li>
-									<li><a id="li_genre_up" href="javascript:call_genreindex(index_type, 'false')">
-										<div id="genreindex"></div></a></li>
-									<li><a id="li_search_up" href="javascript:ouvre_popup_search(StyleValue)">
-										<div id="searchindex"></div></a></li>
-									<li><a id="li_config_up" href="javascript:ouvre_config(StyleValue)">
-										<div id="configindex"></div></a></li>
-										
-							</ul>
-						<td>
-		
-		
-
+				<ul id="home_left_up">
+					<li><a id="li_home_left" href="javascript:toggle_menuleft()"></a></li>
+					<li><a id="li_all_up" href="javascript:ChangeIndex('movie,series')">
+						<div id="allselect"></div></a></li>
+					<li><a id="li_movie_up" href="javascript:ChangeIndex('movie')">
+						<div id="movieselect"></div></a></li>	
+					<li><a id="li_series_up" href="javascript:ChangeIndex('series')">
+						<div id="serieselect"></div></a></li>	
+					<li><a id="li_season_up" href="javascript:ChangeIndex('season')">
+						<div id="seasonselect"></div></a></li>	
+					<li><a id="li_person_up" href="javascript:call_personindex('false')">
+						<div id="personindex"></div></a></li>
+					<li><a id="li_genre_up" href="javascript:call_genreindex(index_type, 'false')">
+						<div id="genreindex"></div></a></li>
+					<li><a id="li_search_up" href="javascript:ouvre_popup_search(StyleValue)">
+						<div id="searchindex"></div></a></li>
+					<li><a id="li_config_up" href="javascript:ouvre_config(StyleValue)">
+						<div id="configindex"></div></a></li>		
+				</ul>
 			<div class="show_index"><span id="printsearch"></span></div>
 			<div class="count_return_index">
                    <span class="ReturnCount"></span> 
 			</div>
-		<!-- just added to set the language value, shouldn't be displayed  -->
-		<div class="results" style="visibility: hidden; display:none;">
-			<table><tr><td class="Value"></td></tr></table>
-		</div>
-		<!-- just added to set the poster number value, shouldn't be displayed  -->
-		<div class="poster_results" style="visibility: hidden; display:none;">
-			<table><tr><td class="Poster_Value"></td></tr></table>
-		</div>
+			<!-- just added to set the language value, shouldn't be displayed  -->
+			<div class="results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Value"></td></tr></table>
+			</div>
+			<!-- just added to set the poster number value, shouldn't be displayed  -->
+			<div class="poster_results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Poster_Value"></td></tr></table>
+			</div>
 		
 		</div >	
             <!--Navigation Holder-->
-            <div class="holder"></div>
+        <div class="holder"></div>
 	</div>
         <!--Data Items Container-->
         <div id="container">
             <div id="yRow" class="row">
                 <div id="yBlock" class="block">
-                    <img class="poster" src=""><br>
+					<img class="poster" src="">
+                    <img class="poster2" src="pictures/next.png" style="position: absolute; top: 2px; left: 2px; height: 20px; width: 20px;">
+					<br>
                     <span class="title"></span>
                 </div>
                 <br />
             </div>
         </div>
-	
-	<!-- display config -->
+		<div class="directplay" style="display:none">
+				<span class="filepath"></span>
+		</div>
+	<!-- display infobox -->
+		<button id="infobox" onclick="javascript:start_playing ()"></button>
+	<!-- display Remote -->
+		<div id="remote" style="visibility: hidden; ">
+			<iframe src="" name="remote_frame" resizable="yes" id="remote_frame" scrolling="yes" frameborder="0" style="overflow:auto; width:430px; height:660px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display config / search -->
 		<div id="target_display" style="visibility: hidden; ">		
-			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:900px; height:220px;" allowTransparency="true"></iframe>
+			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:920px; height:320px;" allowTransparency="true"></iframe>
 		</div>	
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>

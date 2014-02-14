@@ -4,7 +4,7 @@
 	
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>YAMJv3 H Navigation Person</title>
-		<script src="js/jquery.min.js"></script>
+		<script src="js/jQuery.js"></script>
 		<script src="js/pure.js"></script>
         <script src="js/js.js"></script>
         <script src="js/jPages.js"></script>
@@ -25,7 +25,7 @@
 			var	type = localStorage.getItem ("type");
 			var	id = localStorage.getItem ("id");
 			jsonUrl = "/yamj3/api/person/"+type+".json?id="+id+"&job=actor,director,writer&dataitems=artwork,biography";
-            console.log("URL: " + jsonUrl);
+            console.log("PersonData URL: " + jsonUrl);
             var jsondata = null;
 
             $.ajax({
@@ -39,9 +39,9 @@
                     updateHtml(data);
 					document.getElementById('Hbiographyshow').firstChild.nodeValue = "biography";	
 				// adjust window to just display poster ribbon
-				//	window.resizeTo (1340, 330);
-				//document.getElementById('person_frame').style.height="500px";
-	
+				parent.document.getElementById('person_display').style.height="300px";  // adjust window
+				parent.document.getElementById('person_frame').style.height="280px";    // adjust frame inside 
+				
                 }
             });
 
@@ -136,11 +136,11 @@
 	function open_person_popup(id)
         {
             localStorage.setItem("Person_id", id);
-            console.log("Storing value: Person_id"  + id);
+            console.log("open_person_popup Storing value: Person_id"  + id);
+		// adjust frame to display biography
+			parent.document.getElementById('person_display').style.height="350px";
+			parent.document.getElementById('person_frame').style.height="340px";
 			window.location.href="Popup_Person.html";
-			//Mypopup = window.open("Popup_Person.html", "YAMJ v3 Person popup","channelmode=no, menubar=no, status=no, scrollbars=no, menubar=no, location=no, left=500px, top=5px, width=1100px, height=400px");
-		//	Mypopup.blur();
-			//window.focus();
 		}
 	function close_person ()
 			{

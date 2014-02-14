@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<title>YAMJv3 Remote</title>
+        <script src="js/jQuery.js"></script>
+        <script src="js/pure.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/lang.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>
+		<script src="js/my_remote.js"></script>
+		<script src="js/library.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/yamj-style.css"/>
+        <!--Slider stuff-->
+        <link href="slideshow/slideshow.css" rel="stylesheet" type="text/css" />
+        <script src="slideshow/slideshow.js" type="text/javascript"></script>
+        <script src="slideshow/slideshowFanart.js" type="text/javascript"></script>
+		<script src="slideshow/slideshowBanner.js" type="text/javascript"></script>
+
+
+</head>
+<script type="text/javascript">
+//************************ LANGUAGE LOCAL SETTING *********************************************			
+		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
+		function set_context_lang_value ()
+		{
+	
+			document.getElementById("up").innerHTML=up_label.toUpperCase();
+			document.getElementById("down").innerHTML=down_label.toUpperCase();
+			document.getElementById("right").innerHTML=right_label.toUpperCase();
+			document.getElementById("left").innerHTML=left_label.toUpperCase();
+			document.getElementById("home").innerHTML=home_label.toUpperCase();
+			document.getElementById("setup").innerHTML=setup_label.toUpperCase();
+			document.getElementById("audio").innerHTML=audio_label.toUpperCase();
+			document.getElementById("mute").innerHTML=mute_label.toUpperCase();
+			document.getElementById("volumeup").innerHTML=volumeup_label.toUpperCase();
+			document.getElementById("volumedown").innerHTML=volumedown_label.toUpperCase();
+			document.getElementById("stop").innerHTML=stop_label.toUpperCase();
+			document.getElementById("play").innerHTML=play_label.toUpperCase();
+			document.getElementById("rewind").innerHTML=rewind_label.toUpperCase();
+			document.getElementById("prev_remote").innerHTML=prev_remote_label.toUpperCase();
+			document.getElementById("next_remote").innerHTML=next_remote_label.toUpperCase();
+			document.getElementById("fwd").innerHTML=fwd_label.toUpperCase();
+			document.getElementById("info").innerHTML=info_label.toUpperCase();
+			document.getElementById("repeat").innerHTML=repeat_label.toUpperCase();
+			document.getElementById("subtitle").innerHTML=subtitle_label.toUpperCase();
+			document.getElementById("menu").innerHTML=menu_label.toUpperCase();
+			document.getElementById("return").innerHTML=return_label.toUpperCase();
+			document.getElementById("power").innerHTML=power_label.toUpperCase();
+			document.getElementById("pause").innerHTML=pause_label.toUpperCase();
+			document.getElementById('closeremote').value = close_remote_label.toUpperCase();
+			document.getElementById('enter').value = enter_label.toUpperCase();
+			document.getElementById('red').value = red_label.toUpperCase();
+			document.getElementById('blue').value = blue_label.toUpperCase();
+			document.getElementById('yellow').value = yellow_label.toUpperCase();
+			document.getElementById('green').value = green_label.toUpperCase();
+			document.getElementById('eject').value = eject_label.toUpperCase();
+			document.getElementById('titleremote').value = title_label.toUpperCase();
+			document.getElementById('filemode').value = file_mode_label.toUpperCase();
+			document.getElementById('tvmode').value = tv_mode_label.toUpperCase();
+			document.getElementById('angle').value = angle_label.toUpperCase();
+			document.getElementById('timeseek').value = time_seek_label.toUpperCase();
+			document.getElementById('source').value = source_label.toUpperCase();
+			document.getElementById('zoom').value = zoom_label.toUpperCase();
+			
+			
+		}
+	function close_remote() 
+		{
+			window.close();
+			parent.document.getElementById('remote').style.visibility = 'hidden';  
+			
+		}
+</script>
+<body onload="get_lang();" marginwidth="0" marginheight="0" leftmargin="0" topmargin="0">
+		<!-- just added to set the language value, shouldn't be displayed  -->
+		<div class="results" style="visibility: hidden; display:none;">
+			<table><tr><td class="Value"></td></tr></table>
+		</div>
+		<table  >	
+						<tr align="center">
+							<td><input type="button" onclick="close_remote()" id="closeremote" class="remote_button" /></td>
+						</tr>					
+			<tr><td height="5"></td></tr>
+			<tr>
+				<td valign="top">
+					<table border="0" cellpadding="0" cellspacing="0">					
+						<tr>
+							<td align="center">
+								<input type="image" 
+									onclick="sendKey('power'); "
+									src="./pictures/exit_on.png"
+									class="remote_image"
+									onblur="myStopFunction('power')"
+									onmouseout="this.src='./pictures/exit_on.png';"
+									onmouseover="this.src='./pictures/exit.png';"/>
+								<div id="power"></div>
+							</td>
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('home')"
+									src="./pictures/home3_on.png"
+									class="remote_image"
+									onblur="myStopFunction('home')"
+									onmouseout="this.src='./pictures/home3_on.png';"
+									onmouseover="this.src='./pictures/home3.png';"/>
+								<div id="home"></div>
+							</td>
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('setup')"
+									src="./pictures/setup_on.png"
+									class="remote_image"
+									onblur="myStopFunction('setup')"
+									onmouseout="this.src='./pictures/setup_on.png';"
+									onmouseover="this.src='./pictures/setup.png';"/>
+								<div id="setup"></div>
+							</td>
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('info')"
+									src="./pictures/info2_on.png"
+									class="remote_image"
+									onblur="myStopFunction('info')"
+									onmouseout="this.src='./pictures/info2_on.png';"
+									onmouseover="this.src='./pictures/info2.png';"/>
+								<div id="info"></div>
+							</td>
+						</tr>
+						<tr><td height="5"></td></tr>
+						<tr>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('up')"
+									src="./pictures/up_on.png"
+									class="remote_image"
+									onblur="myStopFunction('up')"
+									onmouseout="this.src='./pictures/up_on.png';"
+									onmouseover="this.src='./pictures/up.png';"/>
+								<div id="up"></div>
+							</td>
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('left')"
+									src="./pictures/back_on.png"
+									class="remote_image"
+									onblur="myStopFunction('left')"
+									onmouseout="this.src='./pictures/back_on.png';"
+									onmouseover="this.src='./pictures/back.png';"/>
+								<div id="left"></div>
+							</td>
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('right')"
+									src="./pictures/fwd_on.png"
+									class="remote_image"
+									onblur="myStopFunction('right')"
+									onmouseout="this.src='./pictures/fwd_on.png';"
+									onmouseover="this.src='./pictures/fwd.png';"/>
+								<div id="right"></div>
+							</td>
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('down')"
+									src="./pictures/down_on.png"
+									class="remote_image"
+									onblur="myStopFunction('down')"
+									onmouseout="this.src='./pictures/down_on.png';"
+									onmouseover="this.src='./pictures/down.png';"/>
+								<div id="down"></div>
+							</td>
+						</tr>
+						<tr><td height="5"></td></tr>
+						<tr>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('rewind')"
+									src="./pictures/rewind_on.png"
+									class="remote_image"
+									onblur="myStopFunction('rewind')"
+									onmouseout="this.src='./pictures/rewind_on.png';"
+									onmouseover="this.src='./pictures/rewind.png';" />
+								<div id="rewind"></div>
+							</td>
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('prev')"
+									src="./pictures/icon-prev_on.png"
+									class="remote_image"
+									onblur="myStopFunction('prev_remote')"
+									onmouseout="this.src='./pictures/icon-prev_on.png';"
+									onmouseover="this.src='./pictures/icon-prev.png';"/>
+								<div id="prev_remote"></div>
+							</td> 
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('next')"
+									src="./pictures/next-icon_on.png"
+									class="remote_image"
+									onblur="myStopFunction('next_remote')"
+									onmouseout="this.src='./pictures/next-icon_on.png';"
+									onmouseover="this.src='./pictures/next-icon.png';"/>
+								<div id="next_remote"></div>
+							</td>
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('fwd')"
+									src="./pictures/forward_on.png"
+									class="remote_image"
+									onblur="myStopFunction('fwd')"
+									onmouseout="this.src='./pictures/forward_on.png';"
+									onmouseover="this.src='./pictures/forward.png';"/>
+								<div id="fwd"></div>
+							</td>
+						</tr>
+						<tr><td height="5"></td></tr>
+						<tr>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('stop')"
+									src="./pictures/icon-stop_on.png"
+									class="remote_image" onblur="myStopFunction('stop')"
+									onmouseout="this.src='./pictures/icon-stop_on.png';"
+									onmouseover="this.src='./pictures/icon-stop.png';"/>
+								<div id="stop"></div>
+							</td>
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('play')"
+									src="./pictures/icon-play_on.png"
+									class="remote_image" onblur="myStopFunction('play')"
+									onmouseout="this.src='./pictures/icon-play_on.png';"
+									onmouseover="this.src='./pictures/icon-play.png';"/>
+								<div id="play"></div>
+							</td>
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('pause')"
+									src="./pictures/icon-pause_on.png"
+									class="remote_image"
+									onblur="myStopFunction('pause')"
+									onmouseout="this.src='./pictures/icon-pause_on.png';"
+									onmouseover="this.src='./pictures/icon-pause.png';"/>
+								<div id="pause"></div>
+							</td>
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('repeat')"
+									src="./pictures/repeat_on.png"
+									class="remote_image"
+									onblur="myStopFunction('repeat')"
+									onmouseout="this.src='./pictures/repeat_on.png';"
+									onmouseover="this.src='./pictures/repeat.png';"/>
+								<div id="repeat"></div>
+							</td>
+						</tr>
+						<tr><td height="5"></td></tr>
+						<tr>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('audio')"
+									src="./pictures/audio_on.png"
+									class="remote_image"
+									onblur="myStopFunction('audio')"
+									onmouseout="this.src='./pictures/audio_on.png';"
+									onmouseover="this.src='./pictures/audio.png';"/>
+								<div id="audio"></div>
+							</td>
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('volumeup')"
+									src="./pictures/audioplus_on.png"
+									class="remote_image" 
+									onblur="myStopFunction('volumeup')"
+									onmouseout="this.src='./pictures/audioplus_on.png';"
+									onmouseover="this.src='./pictures/audioplus.png';"/>
+								<div id="volumeup"></div>
+							</td>
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('volumedown')"
+									src="./pictures/audiominus_on.png"
+									class="remote_image"
+									onblur="myStopFunction('volumedown')"
+									onmouseout="this.src='./pictures/audiominus_on.png';"
+									onmouseover="this.src='./pictures/audiominus.png';"/>
+								<div id="volumedown"></div>
+							</td>
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('mute')"
+									src="./pictures/mute_on.png" class="remote_image" 
+									onblur="myStopFunction('mute')"
+									onmouseout="this.src='./pictures/mute_on.png';"
+									onmouseover="this.src='./pictures/mute.png';"/>
+								<div id="mute"></div>
+							</td>
+						</tr>
+						<tr><td height="5"></td></tr>
+						<tr>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('menu')"
+									src="./pictures/menu3_on.png"
+									class="remote_image"
+									onblur="myStopFunction('menu')"
+									onmouseout="this.src='./pictures/menu3_on.png';"
+									onmouseover="this.src='./pictures/menu3.png';"/>
+								<div id="menu"></div>
+							</td>
+							<td></td>
+							<td width="17%" height="25" align="center"><input type="button" onclick="sendKey('enter')" id="enter" class="button" /></td>
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('return')"
+									src="./pictures/returnbutton_on.png"
+									class="remote_image"
+									onblur="myStopFunction('return')"
+									onmouseout="this.src='./pictures/returnbutton_on.png';"
+									onmouseover="this.src='./pictures/returnbutton.png';"/>
+								<div id="return"></div>
+							</td>
+							<td></td>
+							<td align="center">
+								<input type="image"
+									onclick="sendKey('subtitle')"
+									src="./pictures/subtitles_on.png"
+									class="remote_image"
+									onblur="myStopFunction('subtitle')"
+									onmouseout="this.src='./pictures/subtitles_on.png';"
+									onmouseover="this.src='./pictures/subtitles.png';"/>
+								<div id="subtitle"></div>
+							</td>
+						</tr>
+						<tr><td height="5"></td></tr>
+						<tr>
+							<td align="center"><input type="button" onclick="sendKey('red')" id="red" class="button" style="background-color:red;" /></td>
+							<td></td>
+							<td align="center"><input type="button" onclick="sendKey('green')" id="green" class="button" style="background-color:green;" /></td>
+							<td></td>
+							<td align="center"><input type="button" onclick="sendKey('yellow')"  id="yellow" class="button" style="background-color:yellow;" /></td>
+							<td></td>
+							<td align="center"><input type="button" onclick="sendKey('blue')" id="blue" class="button" style="background-color:blue;" /></td>
+						</tr>
+						<tr><td height="5"></td></tr>
+						<tr>	
+							<td align="center"><input type="button" onclick="sendKey('eject')" id="eject" class="button"/></td>
+							<td></td>
+							<td align="center"><input type="button" onclick="sendKey('title')" id="titleremote" class="button"/></td>
+							<td></td>
+							<td align="center"><input type="button" onclick="sendKey('filemode')" id="filemode" class="button"/></td>
+							<td></td>
+							<td align="center"><input type="button" onclick="sendKey('source')" id="source" class="button"/></td>
+						</tr>
+						<tr><td height="5"></td></tr>
+						<tr>
+							<td align="center"><input type="button" onclick="sendKey('zoom')" id="zoom" class="button"/></td>
+							<td></td>
+							<td align="center"><input type="button" onclick="sendKey('tvmode')" id="tvmode" class="button"/></td>
+							<td></td>
+							<td align="center"><input type="button" onclick="sendKey('angle')" id="angle" class="button"/></td>
+							<td></td>
+							<td align="center"><input  type="button" onclick="sendKey('time seek')" id="timeseek" class="button"/></td>
+						</tr>
+						<tr><td height="5"></td></tr>
+						<table>
+						<tr align="center">
+							<td width="3"></td>
+							<td align="center"><input type="image" onclick="sendKey('zero')" src="./pictures/00.png"  class="remote_number"/></td>							
+							<td align="center"><input type="image" onclick="sendKey('one')" src="./pictures/01.png"  class="remote_number" /></td>							
+							<td align="center"><input type="image" onclick="sendKey('two')" src="./pictures/02.png" class="remote_number"/></td>							
+							<td align="center"><input type="image" onclick="sendKey('three')" src="./pictures/03.png" class="remote_number"/></td>							
+							<td align="center"><input type="image" onclick="sendKey('four')" src="./pictures/04.png" class="remote_number"/></td>																			
+							<td align="center"><input type="image" onclick="sendKey('five')" src="./pictures/05.png" class="remote_number"/></td>
+							<td align="center"><input type="image" onclick="sendKey('six')" src="./pictures/06.png" class="remote_number"/></td>							
+							<td align="center"><input type="image" onclick="sendKey('seven')" src="./pictures/07.png" class="remote_number"/></td>							
+							<td align="center"><input type="image" onclick="sendKey('height')" src="./pictures/08.png" class="remote_number"/></td>							
+							<td align="center"><input type="image" onclick="sendKey('nine')" src="./pictures/09.png" class="remote_number"/></td>
+						</tr>
+						</table>
+					</table>
+				</td>
+			</tr>
+		</table>
+
+<div id="cmd" style="visibility: hidden;"></div>
+
+</body>
+</html>

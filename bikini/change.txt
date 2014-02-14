@@ -1,4 +1,18 @@
 change.txt
+v1.0.6
+- add direct play from index page 
+- add info button to show share declared in the PCH 
+- add multi-skin
+- add popup remote 
+- fix settings 
+- fix episode selection with ribbon
+- fix closing frame with lang setting
+- adjust get API config 
+- adjust console logging
+- modify search page 
+- modify config page 
+- modify jQuery version to 1.11.0
+- known problem: - play function for episode - not yet working till yamj3 will be fixed
 v1.0.4
 - add movie popup (horizontal ribbon)
 - adjust all the view to the screen 

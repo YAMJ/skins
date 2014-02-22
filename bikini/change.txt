@@ -1,4 +1,17 @@
 change.txt
+v1.0.7
+- add info button to index 
+- add info movie popup window on click on info button 
+- add info series popup window on click on info button 
+- add info episode popup window on click on season image
+- change movie / tv icon - click on detail page allow to play 
+- add yellow border to poster when mouseover
+- adjust type to indextype in all files 
+- fix type settings / display with genre index
+- adjust left menu height
+- adjust page holder size 
+- fix paging is no paging needed (0 and ~) 
+- adjust play icon in index page 
 v1.0.6
 - add direct play from index page 
 - add info button to show share declared in the PCH 

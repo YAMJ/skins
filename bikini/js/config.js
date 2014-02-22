@@ -82,6 +82,7 @@
 						{
 						// no paging , 12 columns 
 						case 0:
+							perPageValue = 99999;
 							$('.row').css('padding', '0px 0px 0px 15px');
 							$('.block').css('height', '136px');
 							$('.block').css('width', '96px');
@@ -99,7 +100,13 @@
 							$('.block').css('height', '328px');
 							$('.block').css('width', '194px');
 							$('.block').css('margin', '3px');
-							$('.block').css('padding', '4px');
+							$('.block').css('padding', '2px');
+							$('.block').mouseover(function() {
+								$(this).css('padding', '0px');
+								$(this).css('border', '5px solid yellow');});
+							$('.block').mouseout(function() {
+								$(this).css('padding', '2px');
+								$(this).css('border', '3px solid white');});
 							$('.poster').css('height', '285px');
 							$('.poster').css('width', '190px');
 							$('.title').css('font-size', '0.9em');
@@ -112,7 +119,13 @@
 							$('.block').css('height', '323px');
 							$('.block').css('width', '194px');
 							$('.block').css('margin', '3px');
-							$('.block').css('padding', '4px');
+							$('.block').mouseover(function() {
+								$(this).css('padding', '0px');
+								$(this).css('border', '5px solid yellow');});
+							$('.block').mouseout(function() {
+								$(this).css('padding', '2px');
+								$(this).css('border', '3px solid white');});
+							$('.block').css('padding', '2px');
 							$('.poster').css('height', '285px');
 							$('.poster').css('width', '190px');
 							$('.title').css('font-size', '0.9em');
@@ -124,12 +137,12 @@
 							$('.row').css('padding', '0px 0px 0px 3px');
 							$('.block').css('height', '215px');
 							$('.block').css('width', '130px');
-							$('.block').css('margin', '3px');
-							$('.block').css('padding', '1px');
+							$('.block').css('margin', '2px');
+							$('.block').css('padding', '0px');
 							$('.poster').css('height', '185px');
 							$('.poster').css('width', '127px');
 							$('.title').css('font-size', '0.7em');
-							$('.title').css('line-height', '70%');
+							$('.title').css('line-height', '50%');
 							break;
 						//4 rows, 10 columns 
 						case 4:
@@ -137,12 +150,12 @@
 							$('.row').css('padding', '0px 0px 0px 5px');
 							$('.block').css('height', '160px');
 							$('.block').css('width', '104px');
-							$('.block').css('margin', '3px');
-							$('.block').css('padding', '1px');
+							$('.block').css('margin', '2px');
+							$('.block').css('padding', '0px');
 							$('.poster').css('height', '152px');
 							$('.poster').css('width', '102px');
 							$('.title').css('font-size', '0.5em');
-							$('.title').css('line-height', '60%');
+							$('.title').css('line-height', '50%');
 							break;	
 						//5 rows, 12 columns
 						case 5:

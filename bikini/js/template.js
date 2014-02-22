@@ -153,7 +153,7 @@
 	// open or change to index genre page
 		function call_genreindex(indextype, newpage)
 			{
-				localStorage.setItem("type", indextype);
+				localStorage.setItem("indextype", indextype);
 				console.log("call_genreindex with type: "+indextype);
 				if (newpage) 
 				{
@@ -184,7 +184,7 @@
 	// change index page 
 		function ChangeIndex (indextype)
 			{		
-					window.localStorage.setItem("type", indextype);
+					window.localStorage.setItem("indextype", indextype);
 					console.log("Changeindex: "+indextype);
 					window.location.href="index.html";
 			}
@@ -317,6 +317,17 @@
 					}
                 });
         }
+	
+	function direct_info (videoType,id ) 
+		{
+			window.localStorage.setItem("indextype", videoType);
+            window.localStorage.setItem("id", id);
+            console.log("direct_info: " + videoType + "-" + id);	
+			parent.frames['detail_frame'].location.href='detail_frame.html';
+			toggle_Id('detail_display');
+          
+        }
+		
 	// called when it's a movie , prepare the play path and set the timer to confirm playing
 	function play_to_device(basefilename)
 			{

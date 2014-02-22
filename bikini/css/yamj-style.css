@@ -35,7 +35,7 @@
 
 #container .block, #container .person_block, #container .genre_block  {
     text-align: center;
-    border: 1px solid white;
+    border: 3px solid white;
     float: left;
     overflow: hidden;
     background-color: whitesmoke;
@@ -57,6 +57,9 @@
     padding: 0px 1px 0px 1px;	*/
 		
 }
+#container .block:hover  {
+	border: 3px solid yellow; 
+	}
 #container .person_block {
     width: 175px;
     height: 290px; 
@@ -96,10 +99,25 @@
 	height: 135px;		*/	
 }
 
+	
+#container .playbutton {
+	position: relative;
+	top: -30px;
+	height: 25px;
+	width: 29px;
+	}
+#container .infobutton {
+	position: relative;
+	top: -30px;
+	height: 25px;
+	width: 25px;
+	}	
 #container .title {
 	overflow: hidden;
 	text-align: center;
 	vertical-align: top;
+	position: relative;
+	top: -30px;
 /* NOW SETTED INSIDE INDEX.html depending of the the number of ROW stored inside config */		
 /* if 12 posters per page, 2 rows 6 columns */
 	font-size:0.9em; 
@@ -216,7 +234,7 @@ body {
 {
 	position: absolute;
 	top: 5px;
-	left: 150px;
+	left: 120px;
     height: 30px;
     text-align: center;
 
@@ -225,13 +243,13 @@ body {
 }
 #monFormGenre 
 	{
-		
+		position: relative;
 		border:none;
 		width: 770px;
 		margin-top: -1px;
 		margin-left: 20px;
 		height: 30px;
-		top: 0px;
+		top: -2px;
 	}
 #message
 {
@@ -263,11 +281,11 @@ body {
 		border-radius: 6px 6px 0px 6px;
 		position: absolute;
 		top: 5px;
-		left: 170px;
+		left: 150px;
 		overflow: hidden;
 	}
 .show_index_genre   {
-		width: 220px;
+		width: 200px;
 		
 	}
 .show_personindex  {
@@ -305,7 +323,7 @@ body {
 		border-radius: 6px 6px 0px 6px;
 		position: absolute;
 		top: 5px;
-		left: 400px;
+		left: 380px;
 		overflow: hidden;
 	}
 .count_return_index  {
@@ -463,6 +481,7 @@ body {
 	z-index: 8;
 	visibility: hidden;
 	}
+
 #sourceData {
 	position: absolute;
 	top: 750px;
@@ -485,7 +504,7 @@ ul#home_left_up, ul#home_left_search {
 
 #li_all_up, #li_movie_up, #li_series_up, #li_season_up, #li_person_up, #li_genre_up, #li_search_up, #li_config_up,  #li_home_left {
 	width: 175px;
-	height:17px;
+	height:27px;
 	position: absolute;
 	top: 33px;
 	left: 2px;
@@ -504,25 +523,25 @@ ul#home_left_up, ul#home_left_search {
 	border: none;
 	}
  #li_movie_up {
-	top: 53px;
+	top: 63px;
 }
  #li_series_up {
-	top: 73px;
-}
- #li_season_up {
 	top: 93px;
 }
+ #li_season_up {
+	top: 123px;
+}
  #li_person_up {
-	top: 113px;
-	}
- #li_genre_up {
-	top: 133px;
-	}
- #li_search_up {
 	top: 153px;
 	}
+ #li_genre_up {
+	top: 183px;
+	}
+ #li_search_up {
+	top: 213px;
+	}
  #li_config_up {
-	top: 173px;
+	top: 243px;
 	}
 ul#home_left_up:hover, ul#home_left_search:hover {
 	background-color:rgba(255, 255, 255, 0.6);
@@ -658,10 +677,9 @@ ul#home_left_up:hover > li{
 .holder {
 	text-align: right;
 	vertical-align: top;
-	line-height:20%;
 	position: absolute;
-	top: 5px;
-	right: 80px;
+	top: -10px;
+	right: 0px;
 
 	}
 #config_href {
@@ -751,6 +769,21 @@ ul#home_left_up:hover > li{
 }
 .play:hover {
 	background:  url(../pictures/play_inactive.png) no-repeat;
+	}
+	
+.play_frame {
+    width: 45px;
+	height: 45px;
+    position: absolute;
+    top: 2px;
+	left: 10px;
+	border-radius: 4px;
+/*	background:  url(../pictures/play.png) no-repeat;*/
+	z-index: 4;
+}
+.play_frame:hover {
+/*	background:  url(../pictures/play_inactive.png) no-repeat;*/
+	
 	}
 /* for test purpose */
 .test, .counttest, .skinlang
@@ -871,7 +904,31 @@ ul#home_left_up:hover > li{
 	left: 5px;
 	visibility: hidden;
 	}
+.table_videoimage_frame {
+	display: block;
+	position: absolute;
+	bottom: 6px;
+	left: 5px;
+	visibility: hidden;
+	}	
+.listepisode_title_frame
+{
+	font-size:1.0em;
+	font-weight: bold;
+	color: white;
+	vertical-align: bottom;
+	
+	}
+.episode_plot_frame {
+	display: block; 
+	position: absolute;
+	bottom: 185px;
+	left: 8px;
+	width: 947px;
+	visibility: hidden;
+	}
 
+	
 #list_episode_title
 {
 	position: relative;
@@ -881,7 +938,20 @@ ul#home_left_up:hover > li{
 	display: block;
 	overflow-y: auto;
 	}
-
+#list_episode_title_frame
+{
+	position: relative;
+	bottom: 0px;
+	width: 420px;
+	max-height: 345px;
+	margin-left: 845px;
+	display: block;
+	overflow-y: auto;
+	margin-left: 15px;
+	max-height: 170px;
+	width: 840px;
+	vertical-align: bottom;
+	}
 .listepisode_title a:focus, .listepisode_title a:hover {
 	font-family: Arial, Helvetica, sans-serif;
 	color:red;
@@ -944,7 +1014,21 @@ ul#home_left_up:hover > li{
 	visibility: hidden;
 	box-shadow: 10px 10px 15px 10px black;
 	}
-	
+#video_frame0, #video_frame1, #video_frame2, #video_frame3,#video_frame4,#video_frame5,#video_frame6,#video_frame7,#video_frame8,#video_frame9,#video_frame10,
+#video_frame11,#video_frame12, #video_frame13,#video_frame14,#video_frame15,#video_frame16,#video_frame17,#video_frame18,#video_frame19,#video_frame20,
+#video_frame21, #video_frame22, #video_frame23,#video_frame24,#video_frame25,#video_frame26,#video_frame27,#video_frame28,#video_frame29,#video_frame30,
+#video_frame31, #video_frame32, #video_frame33,#video_frame34,#video_frame35,#video_frame36,#video_frame37,#video_frame38,#video_frame39,#video_frame40,
+#video_frame41, #video_frame42, #video_frame43,#video_frame44,#video_frame45,#video_frame46,#video_frame47,#video_frame48,#video_frame49,#video_frame50,
+#video_frame51, #video_frame52, #video_frame53,#video_frame54,#video_frame55,#video_frame56,#video_frame57,#video_frame58,#video_frame59,#video_frame60
+  {
+	font-size:0.8em;
+	text-align:center;
+	background-color:rgba(0, 0, 0, 0.4);
+	color: white;
+	vertical-align: top;
+	border: 2px solid grey;
+	}
+
 .episode_detail {
 	position: absolute;
 	left: 13px;
@@ -954,7 +1038,16 @@ ul#home_left_up:hover > li{
 	background: url(../pictures/tvbg-v3.png) no-repeat;
 	visibility: hidden;
 	}
-
+.episode_detail_frame {
+	position: absolute;
+	left: 100px;
+	bottom: 5px;
+	height: 200px;
+	width: 989px;
+	visibility: hidden;
+	font-size:1.0em;
+	font-weight: bold;
+	}
 .episodeplot0, .episodeplot1, .episodeplot2, .episodeplot3,.episodeplot4,.episodeplot5,.episodeplot6,.episodeplot7,.episodeplot8,.episodeplot9,.episodeplot10,
 .episodeplot11,.episodeplot12, .episodeplot13,.episodeplot14,.episodeplot15,.episodeplot16,.episodeplot17,.episodeplot18,.episodeplot19,.episodeplot20,
 .episodeplot21, .episodeplot22, .episodeplot23,.episodeplot24,.episodeplot25,.episodeplot26,.episodeplot27,.episodeplot28,.episodeplot29,.episodeplot30,
@@ -974,7 +1067,25 @@ ul#home_left_up:hover > li{
 	padding: 2px;
 	overflow-y: auto;
 	visibility: hidden;
-	}		
+	}	
+.episodeplot_frame0, .episodeplot_frame1, .episodeplot_frame2, .episodeplot_frame3,.episodeplot_frame4,.episodeplot_frame5,.episodeplot_frame6,.episodeplot_frame7,.episodeplot_frame8,.episodeplot_frame9,.episodeplot_frame10,
+.episodeplot_frame11,.episodeplot_frame12, .episodeplot_frame13,.episodeplot_frame14,.episodeplot_frame15,.episodeplot_frame16,.episodeplot_frame17,.episodeplot_frame18,.episodeplot_frame19,.episodeplot_frame20,
+.episodeplot_frame21, .episodeplot_frame22, .episodeplot_frame23,.episodeplot_frame24,.episodeplot_frame25,.episodeplot_frame26,.episodeplot_frame27,.episodeplot_frame28,.episodeplot_frame29,.episodeplot_frame30,
+.episodeplot_frame31, .episodeplot_frame32, .episodeplot_frame33,.episodeplot_frame34,.episodeplot_frame35,.episodeplot_frame36,.episodeplot_frame37,.episodeplot_frame38,.episodeplot_frame39,.episodeplot_frame40,
+.episodeplot_frame41, .episodeplot_frame42, .episodeplot_frame43,.episodeplot_frame44,.episodeplot_frame45,.episodeplot_frame46,.episodeplot_frame47,.episodeplot_frame48,.episodeplot_frame49,.episodeplot_frame50,
+.episodeplot_frame51, .episodeplot_frame52, .episodeplot_frame53,.episodeplot_frame54,.episodeplot_frame55,.episodeplot_frame56,.episodeplot_frame57,.episodeplot_frame58,.episodeplot_frame59,.episodeplot_frame60
+  {
+	position: absolute; 
+	bottom: 0px; 
+	left : 0px;
+	font-family: Arial, Helvetica, sans-serif;
+	color:white;
+	font-size:1.0em;
+	max-height: 113px;
+	overflow-y: auto;
+	visibility: hidden;
+	background-color:rgba(0, 0, 0, 0.4);
+	}	
 .episodeplot0, .videoimage0, .episodetitle0 {
 	visibility: visible;
 	}
@@ -1067,12 +1178,27 @@ ul#home_left_up:hover > li{
 	table-layout: fixed;
 	overflow-x: auto;
     }
+.seasontable_frame
+{
+	display: table-cell;
+    position: absolute;
+	bottom: 7px;
+	left: 10px;
+	height: auto;
+ 	font-size:0.9em;
+	font-weight: bold;
+    text-align: center;
+	color:#fff;
+	max-width: 1280px;
+	table-layout: fixed;
+	overflow-x: auto;
+    }	
 .season
 {	
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 6px 6px;
-	background-color:rgba(0, 0, 0, 0.3);
+	background-color:rgba(0, 0, 0, 0.4);
 	vertical-align: top;
     }	
 .SeasonID	{
@@ -1242,6 +1368,25 @@ ul#detail_home_left img, ul#detail_home_right img
 	color: #ffffff;
 	z-index:4;
     }	
+.header_frame
+{
+    display: block;
+	height: auto;
+    width: 946px;
+	position: relative;
+	left: 0px;
+	font-size:1.8em;
+	font-weight: bold;
+    text-align: center;
+	margin: -8px 0px 0px -3px;
+	padding: 0px;
+	background-color:rgba(0, 0, 0, 0.2);
+	border: 2px solid #b0b0b0;	
+	border-right: 5px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	color: #ffffff;
+	z-index:4;
+    }	
 .header_type {
     padding-top:1px;
 	font-size:0.8em;
@@ -1254,8 +1399,12 @@ ul#detail_home_left img, ul#detail_home_right img
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
 	}
+.header_type :hover{
+	z-index: 0;
+	}
 .header_title {
     padding:1px 1px 1px 5px;
+	font-size: 1.0em;
 	}
 .header_year {
     padding-top:1px;
@@ -1338,6 +1487,49 @@ text {
 	left: 10px;
 	overflow: hidden;
 	}
+	
+.moviedetail_frame {
+	color:#fff;
+	font-weight: bold;
+	text-align: justify;
+	font-size:1.0em;
+	position: absolute;
+	bottom: 7px;
+	left: 120px;
+	overflow: hidden;
+	max-width: 830px;
+	}
+.filepath_frame {
+	width: auto;
+	display: inline;
+	background-color:rgba(0, 0, 0, 0.4);
+	border: 1px solid gray;	
+	border-right: 5px solid gray;
+	padding: 1px 10px 0px 10px;
+	position: relative;
+	left: 5px;
+	}	
+.plot_frame {
+	width: auto;
+	display: block;
+	background-color:rgba(0, 0, 0, 0.4);
+	border: 1px solid gray;	
+	border-right: 5px solid gray;
+	padding: 1px 10px 3px 10px;
+	overflow-y: auto;
+	position: relative;
+	left: 5px;
+	}
+.genres_frame {
+	width: auto;
+	display: inline;
+	background-color:rgba(0, 0, 0, 0.4);
+	border: 1px solid gray;
+	border-right: 5px solid gray;
+	padding: 2px 10px 1px 10px;
+	position: relative;
+	left: 5px;
+	}	
 .filepath {
 	width: auto;
 	max-width: 1030px;

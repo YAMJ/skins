@@ -1,0 +1,734 @@
+<!doctype html>
+<html>
+    <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>YAMJ v3 detail page</title>
+        <script src="js/jQuery.js"></script>
+        <script src="js/pure.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/lang.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>
+		<script src="js/my_remote.js"></script>
+		<script src="js/library.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/yamj-style.css"/>
+        <!--Slider stuff-->
+        <link href="slideshow/slideshow.css" rel="stylesheet" type="text/css" />
+        <script src="slideshow/slideshow.js" type="text/javascript"></script>
+        <script src="slideshow/slideshowFanart.js" type="text/javascript"></script>
+		<script src="slideshow/slideshowBanner.js" type="text/javascript"></script>
+        <script type="text/javascript">
+// ******************************* ALL GENERAL VARIABLE **********************************************
+			// get the id and the type asked previously, data was stored from index, detail or  index_list pages 
+            var current_id = localStorage.getItem("id");
+            var indextype = localStorage.getItem("indextype");
+			var season = localStorage.getItem("season");
+			var series_id = localStorage.getItem("SeriesId");
+			var dataindex = localStorage.getItem("index-nav");
+			// default general value
+			var season_title = "";
+            var jsondata;
+			var jsonUrl = "";
+			var jsonSeasonUrl = "";
+			var CurrentUrlPlay;
+			var Currentfilename;
+			var countset = "-1";
+			var fanart_toggle = 0;
+			var menuleft_toggle = 0;
+			var menuright_toggle = 0;
+			var padding_season = 35;
+			var Personpopup = "";
+			// default value for episode 
+			var current_episode_videoimage = "video_frame0";
+			var	current_episode_plot = "episodeplot_frame0";
+			var	current_episode_title = "episodetitle0";
+			var nbre_translate_path = 0;
+			var current_file_toplay = "";
+			var myVar = "";
+			var Person_toSet = true;
+			var Movie_toSet = true;
+// ******************************************** COMMON RESULTS MAPPING **********************************			
+			// from jsonUrl
+			var DETAIL_HEADER = {
+						
+					
+							'span.header_title': function (arg) {
+								season_title = arg.context.result.title;
+								if (indextype.toLowerCase() == 'season')
+								{
+								store_SeriesId (arg.context.result.seriesId);
+								return arg.context.result.title + ' '+season_label+': '+ arg.context.result.season;
+								} else {return arg.context.result.title;}
+							},
+							'span.header_year': 'result.videoYear',
+							'span.header_id': function (arg) {
+									if (indextype.toLowerCase() == 'series')   
+										{ 
+										store_SeriesId (arg.context.result.id);   // store the series id for next navigation 
+							
+										}
+								return arg.context.result.id;
+								}
+						
+						};
+			// from jsonUrl		
+            var YAMJ_DIR = {
+                'span.plot_frame': function(arg) {
+				// check if plot is available 
+					if (arg.context.result.plot) {
+							return "<text>"+plot_label.toUpperCase()+"</text>" +arg.context.result.plot;
+								} else {
+							return "<text>"+noplot_text.toUpperCase()+"</text>";
+							}
+				},
+                'span.genres_frame': function(arg)
+                {
+                    var genres = arg.context.result.genres;
+                    var output = "<text>"+genre_label.toUpperCase()+"</text>";
+                    var first_genres = true;
+					// loop thru the list of genres
+                    for (i = 0; i < genres.length; i++) {
+                        if (first_genres) {
+                            first_genres = false;
+                        } else {
+                            output += ", ";
+                        }
+                        output = output +  genres[i].name ;
+                    }
+                    return output;
+                },
+            // display fanart   
+               'img.fanart': {
+                    'fanart<-result.artwork.FANART': {
+                        '@src': function(arg)
+                        {
+                            // Check to see if there are fanart
+                            if (arg.item) {
+                                // Get the first fanart from the list
+                                if (arg.item.generatedId === 0) {
+                                    return "pictures/dummy_fanart.jpg";
+                                }
+                                return arg.context.baseArtworkUrl + arg.item.filename;
+                            } else {
+                                return "pictures/dummy_fanart.jpg";
+                            }
+                        }
+
+                    }
+                },
+			// display poster 	
+				  'img.poster': {
+                    'poster<-result.artwork.POSTER': {
+                        '@src': function(arg)
+                        {
+                            // Check to see if there are posters
+                            if (arg.item) {
+                                // Get the first poster from the list
+                                if (arg.item.generatedId === 0) {
+                                    return "pictures/dummy.jpg";
+                                }
+							// take the opportunity to reset the new season number, in case of next / previous move , only for season type
+								if (indextype.toLowerCase() == 'season')
+								{															
+									season =  arg.item.season;   //  get season number
+									} else {
+									season = "";
+									}
+                                return arg.context.baseArtworkUrl + arg.item.filename;
+                            } else {
+                                return "pictures/dummy.jpg";
+                            }
+                        }
+
+                    }
+                }, 
+			// display banner if season and series 	
+				'img.banner': {
+                    'banner<-result.artwork.BANNER': {
+                        '@src': function(arg)
+                        {
+							if (indextype !== 'MOVIE')  // there is banner only for season and series
+								{	
+                            // Check to see if there are banner
+                            if (arg.item) {
+                                // Get the first banner from the list
+                                if (arg.item.generatedId === 0) {
+                                    return "pictures/dummy_banner.jpg";
+                                }
+                                return arg.context.baseArtworkUrl + arg.item.filename;
+                            } else {
+                                return "pictures/dummy_banner.jpg";
+                            }
+                        }
+					}
+
+                    }
+                }, 
+			// play button 	
+				"img.play_frame@onclick": function(arg)
+							{
+								switch(arg.context.result.videoType.toLowerCase())
+									{
+										case 'season':
+											
+											return "play_episode()";
+											break;
+										case 'episode':
+											
+											return ;
+											break;
+										case 'movie':	
+											
+											return "play_to_device('"+arg.context.result.files[0].filename+"')";
+											break;
+										case 'series':
+											
+											return ;
+											break;	
+									};
+                            },
+                 "img.play_frame@src": function(arg)
+							{
+								switch(arg.context.result.videoType.toLowerCase())
+									{
+										case 'season':
+											
+											return "./pictures/tv-off.png";
+											break;
+										case 'episode':
+											return "./pictures/tv-off.png";
+											
+											break;
+										case 'movie':	
+											return "./pictures/movie-off.png";
+											break;
+										case 'series':
+										return "./pictures/tv-off.png";
+											break;	
+									};
+                            },     
+                  
+			// display the file path stored in database		
+				'span.filepath_frame': function(arg)
+                {
+                    var files = arg.context.result.files;
+                    return "<text>"+file_label.toUpperCase()+"</text>"+  files[0].filename;
+                }
+				
+            };
+
+					
+
+// ***************************************************** GET DATA section ******************************************************	
+				
+            function getData()
+            {	
+				// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+				get_lang();
+				get_style();
+				get_player();
+				// construct JSON request for detail movie/series/season 
+				jsonUrl = "/yamj3/api/video/" + indextype.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot,files";
+				console.log("getData URL: " + jsonUrl);
+		
+					
+        // main API call         
+                $.ajax({
+                    url: jsonUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(data)
+                    {
+                        jsondata = data;
+					//	 outputJson(data); 
+				 	
+					$p('.header_frame').render(data, DETAIL_HEADER);
+					 
+					$p('.template').render(data, YAMJ_DIR); 
+						// add slideshow for fanart
+						  slideshowFanart();
+						// slideshow for poster
+						slideshow();
+						// display fanart
+						display_all ();	
+						
+						
+						switch (indextype.toLowerCase()) 
+							{
+							case 'movie':
+						//			nothing to do
+									break;
+							case 'series':
+									slideshowBanner ();
+									perform_season ();
+									break;
+							case 'season':
+									slideshowBanner ();
+									perform_episode ();
+									break;
+							}		
+						
+				}
+                });
+        
+
+            }
+
+  //************************ LANGUAGE LOCAL SETTING *********************************************			
+		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
+		function set_context_lang_value ()
+		{
+			document.getElementById("seasonlabel").innerHTML=season_label;
+		}
+		
+  // ********************* NOW SET VARIOUS FUNCTION **********************************************  
+ 
+	// call the JSON value of season  	
+		function perform_season()
+		{
+		jsonSeasonUrl = "/yamj3/api/index/video.json?type=season&sortby=season&sortdir=ASC&field=series_id&search="+series_id+"&artwork=poster";
+		console.log("perform_season URL: " + jsonSeasonUrl);
+					$.ajax({
+                   url: jsonSeasonUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSeason)
+                   {
+						jsondata = dataSeason;
+					//	outputJson(dataSeason);
+						updateSeason(dataSeason)
+						display_Id ("seasontable_frame");
+					}
+                });
+		}
+	// map season value 	
+		function updateSeason(dataSeason)
+		{
+				var SEASON = {
+                    "td": {
+                        "season<-results": {
+                           // "span.SeasonType": "season.videoType",
+							"span.SeasonID": "season.id",
+							"span.SeasonNb" : "season.season",
+                            "span.SeasonTitle": "season.title",
+                            "span.SeasonYear": "season.videoYear",
+                            "span.SeasonPoster": function(arg) {
+                                // Check to see if there are posters
+                              if (arg.item.artwork.POSTER) {
+                                   // Get the first poster from the list
+                                    var poster = arg.item.artwork.POSTER[0];
+                                    if (poster.generatedId === 0) {
+                                        return "No Poster<br>was generated";
+                                   }
+						
+                                    return "<a href=\"#\" onclick=\" goto_SeasonId('" + arg.item.videoType + "', " + arg.item.id + ")\"><img src=\"" + arg.context.baseArtworkUrl + poster.filename + "\" height=\"100\"></a>";
+								} else {
+                                    return noposter_text;
+								}
+							   }
+							}
+						}
+					};
+					updateItemCount (dataSeason, "Season");
+					$p('.seasontable_frame').render(dataSeason, SEASON);
+		}
+				
+	// call the JSON value for episode 			
+		function perform_episode()
+		{
+	//	jsonEpisodeUrl = "/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot,files";
+		jsonEpisodeUrl = "/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot";
+		console.log("perform_episode URL: " + jsonEpisodeUrl);
+					$.ajax({
+                   url: jsonEpisodeUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataEpisode)
+                   {
+						jsondata = dataEpisode;
+					//	outputJson(dataEpisode);
+						displayEpisode(dataEpisode);
+					
+						$('.episode_detail').css('visibility', 'visible');
+						display_Id ("list_episode_title_frame");
+					}
+                });
+		}
+	// map episode value 
+	function displayEpisode(dataEpisode)
+        {
+			var LIST_videoimage = {
+					"span.listepisode_title_frame": function(arg) 
+						{
+							var totalepisode_title = arg.context.results;
+							var outputepisode_title = "";
+							for (i = 0; i < totalepisode_title.length; i++) 
+							{
+								if (totalepisode_title[i].videoimage) {
+							// construct an activ episode list, click on an episode will display title, videoimage, plot and prepare the filepath to play 
+						
+								outputepisode_title +=	"<td id='video_frame"+[i]+"'><img onmouseover=\"border_on(this)\" onmouseout=\"border_off(this)\" onclick=\"display_Episode_Plot ('episodeplot_frame"+[i]+"', "+[i]+"); \" src=\"" + arg.context.baseArtworkUrl + totalepisode_title[i].videoimage + "\" height=\"100\" style=\"outline: 1px solid grey;\" ><br>"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</td>";
+								} else {
+								outputepisode_title +=	"<td id='video_frame'><img src=\"./pictures/dummy_videoimage.jpg\" height=\"100\"><br>"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</td>";
+								}
+							}
+							return outputepisode_title;
+						}
+						
+					};	
+			var LIST_Plot_frame = {
+					
+						'span.listepisode_plot': function(arg) 
+						{
+						var totalplot = arg.context.results;
+						var outputplot = "";
+							for (i = 0; i < totalplot.length; i++) 
+							{
+								if (totalplot[i].plot)   // test if there is plot
+								{
+									outputplot +="<td id=\"episodeplot_frame"+i+"\" class=\"episodeplot_frame"+i+"\">"+totalplot[i].plot+"</td>";
+								} else {
+									// if there is no plot just disable the display box
+									outputplot +="<td id=\"episodeplot_frame"+i+"\" class=\"episodeplot_frame"+i+"\" style=\"display: none; \"></td>";	
+									}
+							}
+					
+							return outputplot;
+						} 	
+					};	
+			updateItemCount (dataEpisode, "Episode");          
+			$p('.table_videoimage_frame').render(dataEpisode, LIST_videoimage);	
+			$p('.episode_plot_frame').render(dataEpisode, LIST_Plot_frame);
+        }	
+	// generic function to get count and call the real treatment 	
+		function updateItemCount(data, type_to_update)
+        {
+			var ITEM_COUNT = {
+               'span.itemcount': function(arg) {
+			   switch(type_to_update)
+				{
+					case 'Season':
+						set_seasoncount (arg.context.count);
+						break;
+					case 'Episode':
+						set_episodecount (arg.context.count);
+						break;
+				}
+			   return arg.context.count;
+			   }
+            };
+
+           $p('.counttest').render(data, ITEM_COUNT);
+        }
+		
+
+	// set a new id in the last sequence
+		function set_onlyId(Newid)
+				{     
+				current_id = Newid;
+				localStorage.setItem("id", current_id);
+				console.log("set_onlyId Storing value: " + indextype + "-" + current_id);
+				window.location.href="detail_frame.html";
+				}	
+	// prepare to change to the season select by onclick	
+		function goto_SeasonId(indextype, SeasonId)
+			{
+				localStorage.setItem("indextype", indextype);
+				localStorage.setItem("id", SeasonId);
+				console.log("goto_SeasonId Storing value: " + indextype + "-" + SeasonId);
+				window.location.href="detail_frame.html";
+			}
+			
+	// store the series Id for future use
+		function store_SeriesId (Series_Id)
+				{
+				series_id = Series_Id;
+				localStorage.setItem("SeriesId", Series_Id);
+				console.log("store_SeriesId Storing Series Id value: " + Series_Id);
+				}	
+	// on click on episode list, display dynamicaly episode videoimage, plot, title 			
+		function display_Episode_Plot(plotId_to_display, rank)
+					{
+						var videoframe_rank = 'video_frame'+ rank;
+						console.log("display_episode_plot:" +plotId_to_display+ " videoframe_rank:"+videoframe_rank);
+						// just reset what is on the screen before the right display 
+						
+						document.getElementById(current_episode_plot).style.visibility="hidden";
+						
+		
+						
+						document.getElementById(current_episode_videoimage).style.border="2px solid grey";
+						
+						// now the screen is clean , display what is asked 
+						
+						document.getElementById(plotId_to_display).style.visibility="visible";
+						document.getElementById(videoframe_rank).style.border="2px solid yellow";
+						
+						// store the current value 
+						
+						current_episode_plot = plotId_to_display;
+						current_episode_videoimage = videoframe_rank;
+						//current_target_path = episode_title;
+					}
+	
+	function border_on(x)
+		{
+			x.style.outline="1px solid yellow";
+		}
+	function border_off(x)
+		{
+			x.style.outline="1px solid grey";
+			
+		}
+	
+	// click again on fanart only redisplay the page with all the info 		
+		function display_all ()
+			{
+		
+				$('div#slideshowCtr').css('visibility', 'visible');
+				$('div#slideshowCtr').css('width', '112px');
+				$('div#slideshowCtr').css('height', '166px');
+				$('div#slideshowCtr').css('left', '5px');
+				$('div#slideshowCtr').css('top', '360px');
+				$('div#slideshowFanart').css('opacity', '0.7');
+				$('div#slideshowFanart').css('width', '962px');
+				$('div#slideshowFanart').css('height', '542px');
+				$('div#slideshowFanart').css('padding', '0px');
+				$('.play_frame').css('visibility', 'visible');
+				$('a#next').css('left', '8px');
+				$('a#next').css('top', '400px');
+				$('a#prev').css('top', '400px');
+				$('a#prev').css('left', '70px');
+				$('.season').css('width', '94px');
+				switch (indextype.toLowerCase())
+					{
+					case 'season':
+					//	$('.'+current_episode_plot).css('visibility', 'visible');
+						$('.moviedetail_frame').css('top', '55px');
+						$('.moviedetail_frame').css('left', '0px');
+						$('.moviedetail_frame').css('max-width', '955px');
+						$('div#slideshowBanner').css('visibility', 'visible');
+						$('.episode_detail').css('visibility', 'visible');
+					//	$('#list_episode_title_frame').css('visibility', 'visible');
+					
+						
+						$('.play_frame').mouseover(function() {
+							$('.play_frame').attr('src', './pictures/tv-on.png');
+							});
+						$('.play_frame').mouseout(function() {
+							$('.play_frame').attr('src', './pictures/tv-off.png');
+							});
+				
+			//			$('.play_frame').css('visibility', 'hidden');
+						break;
+					case 'movie':
+						$('.play_frame').mouseover(function() {
+							$('.play_frame').attr('src', './pictures/movie-on.png');
+							});
+						$('.play_frame').mouseout(function() {
+							$('.play_frame').attr('src', './pictures/movie-off.png');
+							});
+			//			nothing special 
+						break;
+					case 'series':
+						$('.moviedetail_frame').css('top', '55px');
+						$('.moviedetail_frame').css('left', '0px');
+						$('.moviedetail_frame').css('max-width', '955px');
+						$('div#slideshowBanner').css('visibility', 'visible');
+						$('.seasontable_frame').css('visibility', 'visible');
+						$('.play_frame').mouseover(function() {
+							$('.play_frame').attr('src', './pictures/tv-on.png');
+							});
+						$('.play_frame').mouseout(function() {
+							$('.play_frame').attr('src', './pictures/tv-off.png');
+							});
+			//			$('.play_frame').css('display', 'none');
+						break;
+					}
+			}
+	
+	// adjust episode scroll bar 
+	function set_episodecount(count_to_set)
+					{
+						if (count_to_set < 1)  // if no episode disable display 
+						{
+						nodisplay_Id('list_episode_title_frame');
+						nodisplay_Id('tablevideoimage');
+						nodisplay_Id('table_episode_plot_frame');
+						} 
+					}
+
+	// adjust season scroll bar 
+	function set_seasoncount(count_to_set)
+					{					
+						if (count_to_set)
+						{					
+							if (count_to_set < 1)
+							{
+							nodisplay_Id('seasontable_frame');
+							} else {
+							padding_season = 135;
+							if (count_to_set > 7)
+								{
+							
+						
+									var maxwidth = count_to_set*120;
+									$('.seasontable_frame').css('width', '810px');
+									$('.seasontable_frame').css('max-width', maxwidth+'px');
+							//		console.log ("width: " + maxwidth);
+								}
+							$('.seasontable_frame').css('left', padding_season+'px');
+							
+							}	
+						} else {
+						
+						$('.seasontable_frame').css('visibility', 'hidden');
+						}
+						console.log ("left: " + padding_season);
+					}
+	function close_frame ()
+			{
+				console.log("close_search:  style:"+StyleValue);								
+				parent.document.getElementById('detail_display').style.visibility="hidden";
+			}
+      </script>
+<!-- *************************************************************************************************************** -->
+    </head>
+    <body onload="getData();" >
+	<!-- navigation to index -->
+	<div id="close_icon" style="position: absolute; top: 2px; left: 913px;  z-index: 10;" onclick="close_frame()"><img src="./pictures/close.png" /></div>
+	<!--  header for movie/series name -->
+		<div class="header_frame" >
+			<table>
+				<tr>
+	
+					<td width="950px"  >
+					<!--	<span class="header_type" ></span> -->
+						<span class="header_title" ></span>
+						<span class="header_text" > (</span>
+						<span class="header_year" ></span>
+						<span class="header_text">) id:</span>
+						<span class="header_id" ></span>
+					</td>
+				</tr>
+			</table>
+		</div>
+	
+		<div class="test">
+					<td><span class="lastid"></span></td>
+		</div> 
+		<div class="counttest">
+					<td><span class="itemcount"></span></td>
+		</div> 
+	<!-- just added to set the language value, shouldn't be displayed  -->
+		<div class="results" style="visibility: hidden; display:none;">
+			<table><tr><td class="Value"></td></tr></table>
+		</div>
+	<!-- just added to set the poster number value, shouldn't be displayed  -->
+		<div class="poster_results" style="visibility: hidden; display:none;">
+			<table><tr><td class="Poster_Value"></td></tr></table>
+		</div>
+
+	<!-- main table for detail page -->
+        <div class="template"> 
+           <table style="border: 0px; position: absolute; left: -3px; top: 0px;">
+                  <tbody>
+                    <tr>    
+						<!-- fanart animation, automatic every 10s, if more than one fanart -->
+						<td rowspan="1">
+                            <div id="slideshowFanart" >
+                                <div id="imgRollFanart">
+                                    <img class="fanart" src="" height="540px" width="960px"/>
+                                </div>
+                            </div>
+                            <a id="nextFanart"> </a>
+                            <a id="prevFanart"> </a>
+                        </td>
+						<!-- poster animation, automatic every 3s, if more than one fanart, could be stopped or adjust by button  -->
+						<td rowspan="10">
+                            <div id="slideshowCtr" style="width: 112px; height: 166px; left:5px;  ">
+                                <div id="imgRoll">
+                                    <img class="poster" src="" height="166px" width="112px"/>
+                                </div>
+                            </div>
+						
+						<!-- play button -->
+							<img class="play_frame" src="" />
+						
+						<!-- next , previous button -->
+                            <a id="next"><img src="./pictures/next.png" /></a>
+                            <a id="prev"><img src="./pictures/previous.png" /></a>
+                        </td>        
+                    
+					<!-- Banner animation, automatic every 10s, if more than one Banner -->
+						<td rowspan="10">
+                            <div id="slideshowBanner" style="left: 630px; top: 47px;" class="glow">
+                                <div id="imgRollBanner">
+                                    <img class="banner" src="" />
+                                </div>
+                            </div>
+								<a id="nextBanner"><img src="./pictures/next.png" /></a>
+								<a id="prevBanner"><img src="./pictures/previous.png" /></a>
+                        </td>
+					</tr>
+			<!-- split table for image and text --> 
+			<!-- add class for each object in the detail section of yamj-style.css -->
+					<table class="moviedetail_frame">
+						<tr>
+							<td><span class="filepath_frame"></span></td>
+						</tr>
+						<tr>
+							<td><span class="genres_frame"></span></td>
+						</tr>
+						<tr >
+							<td ><span class="plot_frame"></span></td>
+						</tr>
+					</table>
+                </tbody>
+            </table> 	
+		</div>
+
+	<!-- display season box , one for each season , add scroll horizontal bar if more than 8 seasons --> 
+		<div class="seasontable_frame" id="seasontable">
+			<table>
+				<tr>
+					<td class="season">
+						<text class="season"> Id: </text>
+						<span class="SeasonID"></span><span class="SeasonPoster"></span>
+						<span class="SeasonYear"></span><br>
+						<text class="season" id='seasonlabel'></text><span class="SeasonNb"></span><br>
+						<span class="SeasonTitle"></span>
+						
+					</td>
+				</tr>
+			</table>
+		</div>
+	<!-- for episode detail section , hidden by default in other display -->	
+		<div class="episode_detail_frame">
+			<div class="table_videoimage_frame">  <!-- to map JSON return -->
+				<table id="list_episode_title_frame">	  <!-- list of episode on the right part, add scrool vertical bar if more than 20 episodes -->
+					<tr>
+						<td>
+						 <span id="no_border" class="listepisode_title_frame"></span>
+						</td>
+					</tr>
+				</table>
+		
+			</div>	
+		</div>
+		<div class="episode_plot_frame">
+				<table id="table_episode_plot_frame">	<!-- display dynamically plot on click on episode if available, add vertical scroll bar if more than 830 chars -->
+					<tr>
+						<td>
+						 <span class="listepisode_plot"></span>
+						</td>
+					</tr>
+				</table>
+		</div>		
+		<!-- display infobox -->
+		
+		<button id="infobox" style="top: 15px; left: 60px;" onclick="javascript:start_playing ()"></button>
+		<!-- display source data from API if needed  -->
+        <div id="sourceData"></div>
+    </body>
+</html>

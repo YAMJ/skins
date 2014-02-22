@@ -29,9 +29,7 @@
         <script type="text/javascript">
 		var menuleft_toggle = 0;
 		var index_type = "all";
-			if (window.localStorage.getItem("indextype"))
-				{index_type = window.localStorage.getItem("indextype");}
-				else {window.localStorage.setItem("indextype", index_type);}
+			
 				
 		 function NavData()
         {
@@ -39,9 +37,16 @@
 			get_lang();
 			get_style();
 			get_player();
+			if (window.localStorage.getItem("indextype"))
+				{index_type = window.localStorage.getItem("indextype");
+				console.log("navGenre get: " + index_type);}
+				else {window.localStorage.setItem("indextype", index_type);
+				console.log("navGenre set: " + index_type);}
 		    var jsonUrl = "/yamj3/api/genres.json?";
+			console.log("navGenre indextype: " + index_type);
 			switch (index_type.toUpperCase())
 				{
+				   
 					case 'ALL':
 						selected_index = all_select.toUpperCase();
 						break;
@@ -60,7 +65,7 @@
 				};
 			$('#printsearch').html(genre_select.toUpperCase()+' '+selected_index);
 
-            console.log("URL: " + jsonUrl);
+            console.log("navGenre URL: " + jsonUrl);
             var jsondata = null;
 
             $.ajax({
@@ -118,7 +123,7 @@
 		function open_genre_index(genrename)
         {
 			localStorage.setItem("Genre_name", genrename);
-            console.log("Storing value: Genre name: " +genrename);
+            console.log("navGenree open_genre_index Storing value: Genre name: " +genrename);
 			window.location.href="index_Genre.html";
 			Mypopup.focus();
 		}

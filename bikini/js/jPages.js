@@ -21,7 +21,7 @@
         links: "numeric", // blank || title
         startPage: 1,
         perPage: 10,
-        midRange: 5,
+        midRange: 4,
         startRange: 1,
         endRange: 1,
         keyBrowse: false,

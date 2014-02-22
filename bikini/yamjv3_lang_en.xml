@@ -5,6 +5,7 @@
 	<serieselected>series</serieselected>
 	<seasonselected>season</seasonselected>
 	<allselected>movie and series</allselected>
+	<allgenre>all</allgenre>
 	<personselected>person</personselected>
 	<genreselected>genre</genreselected>
 	<searchselected>search</searchselected>

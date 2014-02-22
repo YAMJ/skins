@@ -68,7 +68,7 @@
 				{
 					case 'ALL':
 						localStorage.setItem("selection", search);
-						localStorage.setItem("type", 'all');
+						localStorage.setItem("indextype", 'all');
 						if (ribbon_display == 'PAGE') {
 							Indexpopup = window.open("index.html", "YAMJ v3 index","");
 							} else {
@@ -77,7 +77,7 @@
 						break;
 					case 'MOVIE':
 						localStorage.setItem("selection", search);
-						localStorage.setItem("type", 'movie');
+						localStorage.setItem("indextype", 'movie');
 						if (ribbon_display == 'PAGE') {
 							Indexpopup = window.open("index.html", "YAMJ v3 index","");
 							} else {
@@ -87,7 +87,7 @@
 					case 'SERIES':
 						localStorage.setItem("selection", search);
 
-						localStorage.setItem("type", 'series');
+						localStorage.setItem("indextype", 'series');
 						if (ribbon_display == 'PAGE') {
 							Indexpopup = window.open("index.html", "YAMJ v3 index","");
 							} else {
@@ -97,7 +97,7 @@
 					case 'SEASON':
 						localStorage.setItem("selection", search);
 		
-						localStorage.setItem("type", 'season');
+						localStorage.setItem("indextype", 'season');
 						if (ribbon_display == 'PAGE') {
 							Indexpopup = window.open("index.html", "YAMJ v3 index","");
 							} else {
@@ -133,7 +133,7 @@
 			console.log("ouvre_index: "+ page + " " + direction + " " + current_type + " " + letter_selection);
 			localStorage.setItem("selection", letter_selection);
 			localStorage.setItem("direction", direction);
-			localStorage.setItem("type", current_type);
+			localStorage.setItem("indextype", current_type);
 			Indexpopup = window.open(page, "YAMJ v3 index","");
 		}
 		// open a new vertical window for index list 				
@@ -142,7 +142,7 @@
 			console.log("ouvre_popup_index: "+ page + " " + direction + " " + current_type + " " + letter_selection);
 			localStorage.setItem("selection", letter_selection);
 			localStorage.setItem("direction", direction);
-			localStorage.setItem("type", current_type);
+			localStorage.setItem("indextype", current_type);
 			Indexpopup = window.open(page, "YAMJv3 Navigation index","channelmode=no, menubar=no, status=no, scrollbars=yes, resizable=yes, menubar=no, location=no, left=2px, top=5px, width=160px, height=1000px");
 		}
 

@@ -8,6 +8,7 @@
         <script src="js/pure.js"></script>
         <!-- Used for the paging of the index -->
         <script src="js/js.js"></script>
+		<script src="js/my_remote.js"></script>
         <script src="js/jPages.js"></script>
 		<!-- Used for skin language setting -->
 		<script src="js/lang.js"></script>
@@ -87,6 +88,9 @@
                     },
                     "img.poster@onclick": function(arg) {
                         return "setId('" + arg.item.videoType + "', " + arg.item.id + ")";
+                    }, 
+					"img.playbutton@onclick": function(arg) {
+                        return "direct_play('" + arg.item.videoType + "', " + arg.item.id + ")";
                     }
                 }
             }
@@ -95,7 +99,7 @@
         function setId(type, id)
         {
 	
-            window.localStorage.setItem("type", type);
+            window.localStorage.setItem("indextype", type);
             window.localStorage.setItem("id", id);
             console.log("Storing value: " + type + "-" + id);
             window.location.href="detail.html";
@@ -109,11 +113,12 @@
 			get_lang();
 			get_style();
 			get_player();
+			get_type_selected ();
 			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=title&sortdir=ASC&artwork=poster&include=genre-"+genre_name;
 			var	display_genre = genre_select.toUpperCase() + ":" + genre_name.toUpperCase();
 	
 				$('#printsearch').html(display_genre);
-				console.log("getIndexData URL: " + jsonUrl);
+				console.log("index_genre getIndexData URL: " + jsonUrl);
 				
             $.ajax({
                 url: jsonUrl,
@@ -147,14 +152,39 @@
 			window.location.href="index_Genre.html";
 			Mypopup.focus();
 		}
+		function get_type_selected ()
+		{
+			switch (index_type.toLowerCase())
+				{
+					case 'movie,series':
+						document.getElementById("allgenre").style.background = 'grey';
+						break;
+					case 'all':
+						document.getElementById("allgenre").style.background = 'grey';
+						break;
+					case 'movie':
+						document.getElementById("moviegenre").style.background = 'grey';
+						break;
+					case 'series':
+						document.getElementById("seriesgenre").style.background = 'grey';
+						break;
+					case 'season':
+						document.getElementById("seasongenre").style.background = 'grey';
+						break;
+				};
+		}
 //************************ LANGUAGE LOCAL SETTING *********************************************		
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
 		function set_context_lang_value ()
 		{
 			document.getElementById("allselect").innerHTML=all_select.toUpperCase();
+			document.getElementById("allgenre").innerHTML=all_genre.toUpperCase();
 			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
+			document.getElementById("moviegenre").innerHTML=movie_select.toUpperCase();
 			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
-			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();		
+			document.getElementById("seriesgenre").innerHTML=series_select.toUpperCase();
+			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();	
+			document.getElementById("seasongenre").innerHTML=season_select.toUpperCase();
 			document.getElementById("genreindex").innerHTML=genre_select.toUpperCase();
 			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
 			document.getElementById("configindex").innerHTML=config_select.toUpperCase();
@@ -205,30 +235,37 @@
 					<table align="right" >
 						<tr>
 							<td>							
-								<input  type="button" onclick="open_genre_index('all')" value="ALL"  />
-								<input  type="button" onclick="open_genre_index('movie')" value="MOVIE"  />
-								<input  type="button" onclick="open_genre_index('series')" value="SERIES"  />
-								<input  type="button" onclick="open_genre_index('season')" value="SEASON" />
+								<input  type="radio" onclick="open_genre_index('all')" name="select_genre" /><label id='allgenre'></label>
+								<input  type="radio" onclick="open_genre_index('movie')" name="select_genre"/><label id='moviegenre'></label>
+								<input  type="radio" onclick="open_genre_index('series')" name="select_genre"/><label id='seriesgenre'></label>
+								<input  type="radio" onclick="open_genre_index('season')" name="select_genre"/><label id='seasongenre'></label>
 							<td>
 						</tr>
 					</table>
 				
 			</form>
 		</div>
-            <!--Navigation Holder-->
-            <div class="holder"></div>
+		<div class="directplay" style="display:none">
+			<span class="filepath"></span>
+		</div>
+        <!--Navigation Holder-->
+        <div class="holder"></div>
 	</div>				
         
         <!--Data Items Container-->
         <div id="container">
             <div id="yRow" class="row">
                 <div id="yBlock" class="block">
-                    <img class="poster" src=""><br>
+                    <img class="poster" src="">
+					<img class="playbutton" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'">
+					<br>
                     <span class="title"></span>
                 </div>
                 <br />
             </div>
         </div>
+	<!-- display infobox -->
+		<button id="infobox" onclick="javascript:start_playing ()"></button>
 	<!-- display config -->
 		<div id="target_display" style="visibility: hidden; ">		
 			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:900px; height:220px;" allowTransparency="true"></iframe>

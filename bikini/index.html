@@ -42,9 +42,7 @@
 			localStorage.setItem("search_method", "START");}
 		// set a default  if 1rst time and set to the type previously selected if available 	
 		var index_type = "movie,series";
-			if (window.localStorage.getItem("type"))
-				{index_type = window.localStorage.getItem("type");}
-				else {window.localStorage.setItem("type", index_type);}
+		
 		// set a default direction to ASC or set to the direction previously selected if available 	
 		var direction = "ASC";
 			if (window.localStorage.getItem("direction"))
@@ -95,8 +93,11 @@
                     "img.poster@onclick": function(arg) {
                         return "setId('" + arg.item.videoType + "', " + arg.item.id + ")";
                     },
-					"img.poster2@onclick": function(arg) {
+					"img.playbutton@onclick": function(arg) {
                         return "direct_play('" + arg.item.videoType + "', " + arg.item.id + ")";
+                    },
+					"img.infobutton@onclick": function(arg) {
+                        return "direct_info('" + arg.item.videoType + "', " + arg.item.id + ")";
                     }
                 }
             }
@@ -104,7 +105,7 @@
 	
         function setId(type, id)
         {
-            window.localStorage.setItem("type", type);
+            window.localStorage.setItem("indextype", type);
             window.localStorage.setItem("id", id);
             console.log("setId Storing value: " + type + "-" + id);
             window.location.href="detail.html";
@@ -118,6 +119,9 @@
 			get_lang();
 			get_style();
 			get_player();
+			if (window.localStorage.getItem("indextype"))
+				{index_type = window.localStorage.getItem("indextype");}
+				else {window.localStorage.setItem("indextype", index_type);}
             var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=title&sortdir="+direction+"&artwork=poster";
 		
 			switch (index_type.toLowerCase())
@@ -145,7 +149,7 @@
 						window.localStorage.setItem("search_index", "");	
 					}	
 				$('#printsearch').html(selected_index);
-				console.log("getIndexData URL: " + jsonUrl);
+				console.log("Index getIndexData URL: " + jsonUrl);
 
 				$.ajax({
                 url: jsonUrl,
@@ -157,7 +161,9 @@
 				//	 outputJson(data); 		
                     updateHtml(data);
 					get_poster_number ();
-                    pageData(perPageValue);
+                 if (perPageValue < 73) { 
+				//	console.log("GetIndexData: perPageValue="+perPageValue);
+					pageData(perPageValue);}
                 }
             });
             return jsondata;
@@ -237,7 +243,8 @@
             <div id="yRow" class="row">
                 <div id="yBlock" class="block">
 					<img class="poster" src="">
-                    <img class="poster2" src="pictures/next.png" style="position: absolute; top: 2px; left: 2px; height: 20px; width: 20px;">
+                    <img class="playbutton" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'">
+					<img class="infobutton" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'">
 					<br>
                     <span class="title"></span>
                 </div>
@@ -256,6 +263,10 @@
 	<!-- display config / search -->
 		<div id="target_display" style="visibility: hidden; ">		
 			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:920px; height:320px;" allowTransparency="true"></iframe>
+		</div>
+	<!-- display detail  -->
+		<div id="detail_display" style="visibility: hidden; position: absolute; top: 100px; left: 150px;">		
+			<iframe src="" name="detail_frame" resizable="yes" id="detail_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:960px; height:540px;" allowTransparency="true"></iframe>
 		</div>	
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>

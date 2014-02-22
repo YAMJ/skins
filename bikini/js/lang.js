@@ -105,6 +105,7 @@
 					i=0;
 
 					all_select=(x[i].getElementsByTagName("allselected")[0].childNodes[0].nodeValue);
+					all_genre=(x[i].getElementsByTagName("allgenre")[0].childNodes[0].nodeValue);
 					movie_select=(x[i].getElementsByTagName("movieselected")[0].childNodes[0].nodeValue);
 					series_select=(x[i].getElementsByTagName("serieselected")[0].childNodes[0].nodeValue);
 					season_select=(x[i].getElementsByTagName("seasonselected")[0].childNodes[0].nodeValue);

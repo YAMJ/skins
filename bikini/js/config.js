@@ -32,6 +32,12 @@
 			// update  the value in the config database
 		function update_poster_number(row) 
 		{
+				if (row == '99999')
+				{
+					window.localStorage.setItem("Paging", false);
+					console.log("update_poster_number set paging to false and reset: "+row);
+					row = window.localStorage.getItem("RowperPage");	
+				} else {window.localStorage.setItem("Paging", true);}
 				var jsonPosterNbUrl = "/yamj3/api/config/update.json?key="+skin_value+"index_row&value="+row+"";
 				console.log("update_poster_number jsonPosterNbUrl: " + jsonPosterNbUrl);
 				$.ajax({
@@ -77,19 +83,19 @@
 				window.localStorage.setItem("RowperPage", poster_nb);
 			}
 		function adjust_poster_setting(Row_) {
-				if (parseInt(Row_, 10) < 6  ) {
+				if (parseInt(Row_, 10) < 7  ) {
 					switch (Row_)
 						{
 						// no paging , 12 columns 
 						case 0:
 							perPageValue = 99999;
-							$('.row').css('padding', '0px 0px 0px 15px');
-							$('.block').css('height', '136px');
-							$('.block').css('width', '96px');
+							$('.row').css('padding', '0px 0px 0px 4px');
+							$('.block').css('height', '135px');
+							$('.block').css('width', '94px');
 							$('.block').css('margin', '0px 2px 1px 1px');
 							$('.block').css('padding', '0px 1px 0px 1px');
-							$('.poster').css('height', '135px');
-							$('.poster').css('width', '95px');
+							$('.poster').css('height', '134px');
+							$('.poster').css('width', '93px');
 							$('.title').css('font-size', '0.4em');
 							$('.title').css('line-height', '30%');
 							break;
@@ -142,7 +148,7 @@
 							$('.poster').css('height', '185px');
 							$('.poster').css('width', '127px');
 							$('.title').css('font-size', '0.7em');
-							$('.title').css('line-height', '50%');
+							$('.title').css('line-height', '30%');
 							break;
 						//4 rows, 10 columns 
 						case 4:
@@ -152,21 +158,34 @@
 							$('.block').css('width', '104px');
 							$('.block').css('margin', '2px');
 							$('.block').css('padding', '0px');
-							$('.poster').css('height', '152px');
+							$('.poster').css('height', '150px');
 							$('.poster').css('width', '102px');
 							$('.title').css('font-size', '0.5em');
-							$('.title').css('line-height', '50%');
+							$('.title').css('line-height', '30%');
 							break;	
 						//5 rows, 12 columns
 						case 5:
 							perPageValue = 60;
-							$('.row').css('padding', '0px 0px 0px 15px');
+							$('.row').css('padding', '0px 0px 0px 20px');
 							$('.block').css('height', '132px');
-							$('.block').css('width', '96px');
+							$('.block').css('width', '90px');
 							$('.block').css('margin', '0px 2px 1px 1px');
 							$('.block').css('padding', '0px 1px 0px 1px');
-							$('.poster').css('height', '135px');
-							$('.poster').css('width', '95px');
+							$('.poster').css('height', '131px');
+							$('.poster').css('width', '89px');
+							$('.title').css('font-size', '0.4em');
+							$('.title').css('line-height', '30%');
+							break;
+						//6 rows, 12 columns
+						case 6:
+							perPageValue = 72;
+							$('.row').css('padding', '0px 0px 0px 4px');
+							$('.block').css('height', '135px');
+							$('.block').css('width', '94px');
+							$('.block').css('margin', '0px 2px 1px 1px');
+							$('.block').css('padding', '0px 1px 0px 1px');
+							$('.poster').css('height', '134px');
+							$('.poster').css('width', '93px');
 							$('.title').css('font-size', '0.4em');
 							$('.title').css('line-height', '30%');
 							break;
@@ -174,14 +193,14 @@
 					} else {
 						// x rows , 12 columns 
 						perPageValue = (parseInt(Row_, 10) * 12);
-						$('.row').css('padding', '5px 0px 0px 15px');
-						$('.block').css('height', '134px');
-						$('.block').css('width', '96px');
-						$('.block').css('margin', '0px 2px 1px 1px');
-						$('.block').css('padding', '0px 1px 0px 1px');
-						$('.poster').css('height', '135px');
-						$('.poster').css('width', '95px');
-						$('.title').css('font-size', '0.4em');
-						$('.title').css('line-height', '30%');
+						//	$('.row').css('padding', '0px 0px 0px 4px');
+						//	$('.block').css('height', '135px');
+						//	$('.block').css('width', '94px');
+						//	$('.block').css('margin', '0px 2px 1px 1px');
+						//	$('.block').css('padding', '0px 1px 0px 1px');
+						//	$('.poster').css('height', '134px');
+						//	$('.poster').css('width', '93px');
+						//	$('.title').css('font-size', '0.4em');
+						//	$('.title').css('line-height', '30%');
 					}
 			}

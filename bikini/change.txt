@@ -1,4 +1,11 @@
 change.txt
+v1.0.8
+- add if no paging setted, infobex is opened relativly to the cursor position
+- change ~ value, used now as no paging setting , applied to the current line number already choosen
+- add yellow border on season box when mouseover  
+- add yellow border on genre box when mouseover  
+- add info button to genre index wall 
+- clean code
 v1.0.7
 - add info button to index 
 - add info movie popup window on click on info button 

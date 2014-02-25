@@ -50,8 +50,6 @@
 // ******************************************** COMMON RESULTS MAPPING **********************************			
 			// from jsonUrl
 			var DETAIL_HEADER = {
-						
-					
 							'span.header_title': function (arg) {
 								season_title = arg.context.result.title;
 								if (indextype.toLowerCase() == 'season')
@@ -70,7 +68,8 @@
 								return arg.context.result.id;
 								}
 						
-						};
+						}; // end DETAIL_HEADER
+						
 			// from jsonUrl		
             var YAMJ_DIR = {
                 'span.plot_frame': function(arg) {
@@ -90,9 +89,7 @@
                     for (i = 0; i < genres.length; i++) {
                         if (first_genres) {
                             first_genres = false;
-                        } else {
-                            output += ", ";
-                        }
+                        } else { output += ", ";}
                         output = output +  genres[i].name ;
                     }
                     return output;
@@ -111,11 +108,10 @@
                                 return arg.context.baseArtworkUrl + arg.item.filename;
                             } else {
                                 return "pictures/dummy_fanart.jpg";
-                            }
-                        }
-
-                    }
-                },
+								}
+							}
+						}
+					},
 			// display poster 	
 				  'img.poster': {
                     'poster<-result.artwork.POSTER': {
@@ -137,11 +133,10 @@
                                 return arg.context.baseArtworkUrl + arg.item.filename;
                             } else {
                                 return "pictures/dummy.jpg";
-                            }
-                        }
-
-                    }
-                }, 
+								}
+							}
+						}
+					}, 
 			// display banner if season and series 	
 				'img.banner': {
                     'banner<-result.artwork.BANNER': {
@@ -158,13 +153,13 @@
                                 return arg.context.baseArtworkUrl + arg.item.filename;
                             } else {
                                 return "pictures/dummy_banner.jpg";
-                            }
-                        }
-					}
-
-                    }
-                }, 
+									}
+								}
+							}
+						}
+					}, 
 			// play button 	
+				// on click play
 				"img.play_frame@onclick": function(arg)
 							{
 								switch(arg.context.result.videoType.toLowerCase())
@@ -187,6 +182,7 @@
 											break;	
 									};
                             },
+				// set icon to play 
                  "img.play_frame@src": function(arg)
 							{
 								switch(arg.context.result.videoType.toLowerCase())
@@ -208,14 +204,14 @@
 									};
                             },     
                   
-			// display the file path stored in database		
+				// display the file path stored in database		
 				'span.filepath_frame': function(arg)
-                {
-                    var files = arg.context.result.files;
-                    return "<text>"+file_label.toUpperCase()+"</text>"+  files[0].filename;
-                }
+							{
+								var files = arg.context.result.files;
+								return "<text>"+file_label.toUpperCase()+"</text>"+  files[0].filename;
+							}
 				
-            };
+            }; // end YAMJ_DIR
 
 					
 
@@ -267,19 +263,16 @@
 									perform_episode ();
 									break;
 							}		
-						
-				}
-                });
-        
-
-            }
+						}
+					});
+				}  // end getData
 
   //************************ LANGUAGE LOCAL SETTING *********************************************			
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
 		function set_context_lang_value ()
 		{
 			document.getElementById("seasonlabel").innerHTML=season_label;
-		}
+		} // end set_context_lang_value
 		
   // ********************* NOW SET VARIOUS FUNCTION **********************************************  
  
@@ -288,7 +281,7 @@
 		{
 		jsonSeasonUrl = "/yamj3/api/index/video.json?type=season&sortby=season&sortdir=ASC&field=series_id&search="+series_id+"&artwork=poster";
 		console.log("perform_season URL: " + jsonSeasonUrl);
-					$.ajax({
+				$.ajax({
                    url: jsonSeasonUrl,
                     async: false,
                     dataType: 'jsonp',
@@ -300,7 +293,8 @@
 						display_Id ("seasontable_frame");
 					}
                 });
-		}
+		} // end perform_season
+		
 	// map season value 	
 		function updateSeason(dataSeason)
 		{
@@ -320,7 +314,6 @@
                                     if (poster.generatedId === 0) {
                                         return "No Poster<br>was generated";
                                    }
-						
                                     return "<a href=\"#\" onclick=\" goto_SeasonId('" + arg.item.videoType + "', " + arg.item.id + ")\"><img src=\"" + arg.context.baseArtworkUrl + poster.filename + "\" height=\"100\"></a>";
 								} else {
                                     return noposter_text;
@@ -328,10 +321,10 @@
 							   }
 							}
 						}
-					};
-					updateItemCount (dataSeason, "Season");
-					$p('.seasontable_frame').render(dataSeason, SEASON);
-		}
+					}; // end SEASON
+				updateItemCount (dataSeason, "Season");
+				$p('.seasontable_frame').render(dataSeason, SEASON);
+		} // end updateSeason
 				
 	// call the JSON value for episode 			
 		function perform_episode()
@@ -339,7 +332,7 @@
 	//	jsonEpisodeUrl = "/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot,files";
 		jsonEpisodeUrl = "/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot";
 		console.log("perform_episode URL: " + jsonEpisodeUrl);
-					$.ajax({
+				$.ajax({
                    url: jsonEpisodeUrl,
                     async: false,
                     dataType: 'jsonp',
@@ -353,7 +346,8 @@
 						display_Id ("list_episode_title_frame");
 					}
                 });
-		}
+		} // end perform_episode
+		
 	// map episode value 
 	function displayEpisode(dataEpisode)
         {
@@ -374,11 +368,10 @@
 							}
 							return outputepisode_title;
 						}
-						
-					};	
-			var LIST_Plot_frame = {
+					};	// end LIST_videoimage
 					
-						'span.listepisode_plot': function(arg) 
+			var LIST_Plot_frame = {
+					'span.listepisode_plot': function(arg) 
 						{
 						var totalplot = arg.context.results;
 						var outputplot = "";
@@ -395,11 +388,13 @@
 					
 							return outputplot;
 						} 	
-					};	
+					}; // end LIST_Plot_frame
+					
 			updateItemCount (dataEpisode, "Episode");          
 			$p('.table_videoimage_frame').render(dataEpisode, LIST_videoimage);	
 			$p('.episode_plot_frame').render(dataEpisode, LIST_Plot_frame);
-        }	
+        } // end displayEpisode
+		
 	// generic function to get count and call the real treatment 	
 		function updateItemCount(data, type_to_update)
         {
@@ -419,7 +414,7 @@
             };
 
            $p('.counttest').render(data, ITEM_COUNT);
-        }
+        } // end updateItemCount
 		
 
 	// set a new id in the last sequence
@@ -429,7 +424,8 @@
 				localStorage.setItem("id", current_id);
 				console.log("set_onlyId Storing value: " + indextype + "-" + current_id);
 				window.location.href="detail_frame.html";
-				}	
+				} // end set_onlyId
+				
 	// prepare to change to the season select by onclick	
 		function goto_SeasonId(indextype, SeasonId)
 			{
@@ -437,7 +433,7 @@
 				localStorage.setItem("id", SeasonId);
 				console.log("goto_SeasonId Storing value: " + indextype + "-" + SeasonId);
 				window.location.href="detail_frame.html";
-			}
+			} // end goto_SeasonId
 			
 	// store the series Id for future use
 		function store_SeriesId (Series_Id)
@@ -445,46 +441,40 @@
 				series_id = Series_Id;
 				localStorage.setItem("SeriesId", Series_Id);
 				console.log("store_SeriesId Storing Series Id value: " + Series_Id);
-				}	
+				} // end store_SeriesId
+				
 	// on click on episode list, display dynamicaly episode videoimage, plot, title 			
 		function display_Episode_Plot(plotId_to_display, rank)
 					{
 						var videoframe_rank = 'video_frame'+ rank;
-						console.log("display_episode_plot:" +plotId_to_display+ " videoframe_rank:"+videoframe_rank);
+						console.log("display_Episode_Plot:" +plotId_to_display+ " videoframe_rank:"+videoframe_rank);
+						
 						// just reset what is on the screen before the right display 
-						
 						document.getElementById(current_episode_plot).style.visibility="hidden";
-						
-		
-						
 						document.getElementById(current_episode_videoimage).style.border="2px solid grey";
 						
 						// now the screen is clean , display what is asked 
-						
 						document.getElementById(plotId_to_display).style.visibility="visible";
 						document.getElementById(videoframe_rank).style.border="2px solid yellow";
 						
 						// store the current value 
-						
 						current_episode_plot = plotId_to_display;
 						current_episode_videoimage = videoframe_rank;
-						//current_target_path = episode_title;
-					}
+					} // end display_Episode_Plot
 	
 	function border_on(x)
 		{
 			x.style.outline="1px solid yellow";
-		}
+		} // end border_on
 	function border_off(x)
+	
 		{
 			x.style.outline="1px solid grey";
-			
-		}
+		} // end border_off
 	
-	// click again on fanart only redisplay the page with all the info 		
+	// display the page with all the info 		
 		function display_all ()
 			{
-		
 				$('div#slideshowCtr').css('visibility', 'visible');
 				$('div#slideshowCtr').css('width', '112px');
 				$('div#slideshowCtr').css('height', '166px');
@@ -503,22 +493,17 @@
 				switch (indextype.toLowerCase())
 					{
 					case 'season':
-					//	$('.'+current_episode_plot).css('visibility', 'visible');
 						$('.moviedetail_frame').css('top', '55px');
 						$('.moviedetail_frame').css('left', '0px');
 						$('.moviedetail_frame').css('max-width', '955px');
 						$('div#slideshowBanner').css('visibility', 'visible');
 						$('.episode_detail').css('visibility', 'visible');
-					//	$('#list_episode_title_frame').css('visibility', 'visible');
-					
-						
 						$('.play_frame').mouseover(function() {
 							$('.play_frame').attr('src', './pictures/tv-on.png');
 							});
 						$('.play_frame').mouseout(function() {
 							$('.play_frame').attr('src', './pictures/tv-off.png');
 							});
-				
 			//			$('.play_frame').css('visibility', 'hidden');
 						break;
 					case 'movie':
@@ -528,7 +513,6 @@
 						$('.play_frame').mouseout(function() {
 							$('.play_frame').attr('src', './pictures/movie-off.png');
 							});
-			//			nothing special 
 						break;
 					case 'series':
 						$('.moviedetail_frame').css('top', '55px');
@@ -545,7 +529,7 @@
 			//			$('.play_frame').css('display', 'none');
 						break;
 					}
-			}
+			} // end display_all
 	
 	// adjust episode scroll bar 
 	function set_episodecount(count_to_set)
@@ -556,7 +540,7 @@
 						nodisplay_Id('tablevideoimage');
 						nodisplay_Id('table_episode_plot_frame');
 						} 
-					}
+					} // end set_episodecount
 
 	// adjust season scroll bar 
 	function set_seasoncount(count_to_set)
@@ -570,8 +554,6 @@
 							padding_season = 135;
 							if (count_to_set > 7)
 								{
-							
-						
 									var maxwidth = count_to_set*120;
 									$('.seasontable_frame').css('width', '810px');
 									$('.seasontable_frame').css('max-width', maxwidth+'px');
@@ -585,18 +567,21 @@
 						$('.seasontable_frame').css('visibility', 'hidden');
 						}
 						console.log ("left: " + padding_season);
-					}
+					} // end set_seasoncount
+	
+	// close the current frame 
 	function close_frame ()
 			{
 				console.log("close_search:  style:"+StyleValue);								
 				parent.document.getElementById('detail_display').style.visibility="hidden";
-			}
+			} // end close_frame
       </script>
 <!-- *************************************************************************************************************** -->
     </head>
     <body onload="getData();" >
-	<!-- navigation to index -->
-	<div id="close_icon" style="position: absolute; top: 2px; left: 913px;  z-index: 10;" onclick="close_frame()"><img src="./pictures/close.png" /></div>
+	<!-- show the close button , allow to close the frame  -->
+	<div id="close_icon" style="position: absolute;	top: 2px; left: 913px; z-index: 10;" onclick="close_frame()"><img src="./pictures/close.png" /></div>
+
 	<!--  header for movie/series name -->
 		<div class="header_frame" >
 			<table>
@@ -652,7 +637,7 @@
                                 </div>
                             </div>
 						
-						<!-- play button -->
+						<!-- play button, show icon of movie or TV, click open the play dialogue box -->
 							<img class="play_frame" src="" />
 						
 						<!-- next , previous button -->
@@ -675,20 +660,20 @@
 			<!-- add class for each object in the detail section of yamj-style.css -->
 					<table class="moviedetail_frame">
 						<tr>
-							<td><span class="filepath_frame"></span></td>
+							<td><span class="filepath_frame"></span></td>  <!-- display file path -->
 						</tr>
 						<tr>
-							<td><span class="genres_frame"></span></td>
+							<td><span class="genres_frame"></span></td>  <!-- display genres -->
 						</tr>
 						<tr >
-							<td ><span class="plot_frame"></span></td>
+							<td ><span class="plot_frame"></span></td>  <!-- display plot --> 
 						</tr>
 					</table>
                 </tbody>
             </table> 	
 		</div>
 
-	<!-- display season box , one for each season , add scroll horizontal bar if more than 8 seasons --> 
+	<!-- display season box , one for each season , add scroll horizontal bar if more than 7 seasons --> 
 		<div class="seasontable_frame" id="seasontable">
 			<table>
 				<tr>
@@ -706,10 +691,10 @@
 	<!-- for episode detail section , hidden by default in other display -->	
 		<div class="episode_detail_frame">
 			<div class="table_videoimage_frame">  <!-- to map JSON return -->
-				<table id="list_episode_title_frame">	  <!-- list of episode on the right part, add scrool vertical bar if more than 20 episodes -->
+				<table id="list_episode_title_frame">	  <!-- list of episode with videoimage on the bottom part, add scrool horizontal bar if more than 4 episodes -->
 					<tr>
 						<td>
-						 <span id="no_border" class="listepisode_title_frame"></span>
+						 <span id="no_border" class="listepisode_title_frame"></span>  <!-- list videoimage + title -->
 						</td>
 					</tr>
 				</table>
@@ -717,10 +702,10 @@
 			</div>	
 		</div>
 		<div class="episode_plot_frame">
-				<table id="table_episode_plot_frame">	<!-- display dynamically plot on click on episode if available, add vertical scroll bar if more than 830 chars -->
+				<table id="table_episode_plot_frame">	<!-- display dynamically plot on click on episode if available, add vertical scroll bar if more than 120px -->
 					<tr>
 						<td>
-						 <span class="listepisode_plot"></span>
+						 <span class="listepisode_plot"></span>  <!-- epsiode plot -->
 						</td>
 					</tr>
 				</table>

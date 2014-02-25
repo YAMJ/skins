@@ -97,6 +97,7 @@
                         return "direct_play('" + arg.item.videoType + "', " + arg.item.id + ")";
                     },
 					"img.infobutton@onclick": function(arg) {
+						cursor_position (); 
                         return "direct_info('" + arg.item.videoType + "', " + arg.item.id + ")";
                     }
                 }
@@ -161,9 +162,9 @@
 				//	 outputJson(data); 		
                     updateHtml(data);
 					get_poster_number ();
-                 if (perPageValue < 73) { 
-				//	console.log("GetIndexData: perPageValue="+perPageValue);
-					pageData(perPageValue);}
+					console.log("GetIndexData: perPageValue="+perPageValue+" paging:"+ window.localStorage.getItem('Paging'));
+                 if (window.localStorage.getItem("Paging") == 'true') { 	
+						pageData(perPageValue);}
                 }
             });
             return jsondata;
@@ -185,7 +186,8 @@
 				window.location.reload();
 		
 		}
-
+		
+		
   //************************ LANGUAGE LOCAL SETTING *********************************************
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
 		function set_context_lang_value ()

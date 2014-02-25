@@ -91,6 +91,10 @@
                     }, 
 					"img.playbutton@onclick": function(arg) {
                         return "direct_play('" + arg.item.videoType + "', " + arg.item.id + ")";
+                    }, 
+					"img.infobutton@onclick": function(arg) {
+						cursor_position (); 
+                        return "direct_info('" + arg.item.videoType + "', " + arg.item.id + ")";
                     }
                 }
             }
@@ -130,7 +134,8 @@
 				//	 outputJson(data); 	
                     updateHtml(data);
 					get_poster_number ();
-                    pageData(perPageValue);
+                    console.log("GetIndexData: perPageValue="+perPageValue+" paging:"+ window.localStorage.getItem('Paging'));
+					if (window.localStorage.getItem("Paging") == 'true') {pageData(perPageValue);}
                 }
             });
             return jsondata;
@@ -258,6 +263,7 @@
                 <div id="yBlock" class="block">
                     <img class="poster" src="">
 					<img class="playbutton" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'">
+					<img class="infobutton" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'">
 					<br>
                     <span class="title"></span>
                 </div>
@@ -269,6 +275,10 @@
 	<!-- display config -->
 		<div id="target_display" style="visibility: hidden; ">		
 			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:900px; height:220px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display detail  -->
+		<div id="detail_display" style="visibility: hidden; position: absolute; top: 100px; left: 150px;">		
+			<iframe src="" name="detail_frame" resizable="yes" id="detail_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:960px; height:540px;" allowTransparency="true"></iframe>
 		</div>	
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>

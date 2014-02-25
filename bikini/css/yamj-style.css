@@ -57,9 +57,7 @@
     padding: 0px 1px 0px 1px;	*/
 		
 }
-#container .block:hover  {
-	border: 3px solid yellow; 
-	}
+
 #container .person_block {
     width: 175px;
     height: 290px; 
@@ -79,7 +77,9 @@
 	margin: 5px;
     padding: 5px;	
 }
-
+#container .block:hover, #container .genre_block:hover  {
+	border: 3px solid yellow; 
+	}
 .code
 {
     border: dashed 1px #BCBCCB; padding:8px 12px; background-color: #F3F3F9; white-space:pre; font-family:"Courier New", Georgia;
@@ -726,6 +726,7 @@ ul#home_left_up:hover > li{
 #logo_detail {
 	padding-top: 7px;
 	}
+
 #previous_movie {
 	width: 30px;
 	height:30px;
@@ -1200,7 +1201,12 @@ ul#home_left_up:hover > li{
 	border-radius: 6px 6px 6px 6px;
 	background-color:rgba(0, 0, 0, 0.4);
 	vertical-align: top;
-    }	
+    }
+.season:hover
+{	
+	border: 2px solid yellow;	
+	border-right: 5px solid yellow;
+}	
 .SeasonID	{
 	padding: 2px 5px 0px 0px;
 	vertical-align: top;
@@ -1730,7 +1736,7 @@ position: absolute;
 	width: 100px;
 	height:100px;
 	border: 1px solid gray;
-	}	
+	}
 .photo0 {
 	position: relative;
 	width: 100px;

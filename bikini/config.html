@@ -306,6 +306,8 @@
 			document.getElementById("StyleSetted").innerHTML=window.localStorage.getItem("Style");
 			document.getElementById("PlayerSetted").innerHTML=window.localStorage.getItem("Player");
 			document.getElementById("NblineSetted").innerHTML=window.localStorage.getItem("RowperPage");
+			if (window.localStorage.getItem("Paging") != 'true') {document.getElementById("NblineSetted").innerHTML=window.localStorage.getItem("RowperPage")+'~';} else 
+				{document.getElementById("NblineSetted").innerHTML=window.localStorage.getItem("RowperPage");}
 			document.getElementById("SkinSetted").innerHTML=window.localStorage.getItem("skinset");
 		}
         </script>

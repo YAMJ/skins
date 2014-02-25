@@ -97,19 +97,19 @@
 					case 'popup':
 						{
 							console.log("ouvre_popup_search:  style:"+StyleValue);
-							Configpopup = window.open("search.html", "YAMJ v3 config","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=380px, top=5px, width=960px, height=305px");
+							Configpopup = window.open("search.html", "YAMJ v3 config","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=380px, top=5px, width=1040px, height=305px");
 							break;
 						}
 					case 'ribbon':
 						{
 							console.log("ouvre_popup_search:  style:"+StyleValue);
-							Searchpopup = window.open("search.html", "YAMJ v3 search","channelmode=no, status=no, scrollbars=hidden, menubar=no, location=no, resizable=yes, left=380px, top=5px, width=960px, height=305px");
+							Searchpopup = window.open("search.html", "YAMJ v3 search","channelmode=no, status=no, scrollbars=hidden, menubar=no, location=no, resizable=yes, left=380px, top=5px, width=1040px, height=305px");
 							break;
 						}
 					case 'page':
 						{
 							console.log("ouvre_popup_search:  style:"+StyleValue);
-							Configpopup = window.open("search.html", "YAMJ v3 config","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=380px, top=5px, width=960px, height=305px");
+							Configpopup = window.open("search.html", "YAMJ v3 config","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=380px, top=5px, width=1040px, height=305px");
 							break;
 						}
 					return;
@@ -424,4 +424,16 @@
 		function close_remote() 
 		{
 			document.getElementById("remote").style.visibility="hidden";
+		}
+		
+	// get the cursor position , apply this position to the display_frame if not in paging mode 
+		// if at the top of the screen just stay fixed, position the middle of the frame at cursor height position 
+		function cursor_position () {
+		if (window.localStorage.getItem("Paging") != 'true') { 	
+			$(this).mousemove(function(e){
+				if (e.pageY > 850 ) {
+						$('#detail_display').css('top', e.pageY - 250);
+					}
+			});
+			}
 		}

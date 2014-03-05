@@ -50,25 +50,8 @@
 // ******************************************** COMMON RESULTS MAPPING **********************************			
 			// from jsonUrl
 			var DETAIL_HEADER = {
-							'span.header_type': function (arg) {
-							
-								switch(arg.context.result.videoType.toLowerCase())
-									{
-										case 'season':
-											return season_label.toUpperCase();
-											break;
-										case 'episode':
-											return episode_label.toUpperCase();
-											break;
-										case 'movie':
-											return movie_label.toUpperCase();
-											break;
-										case 'series':
-											return series_label.toUpperCase();
-											break;	
-									};
-								},
-					
+			
+						
 							'span.header_title': function (arg) {
 								season_title = arg.context.result.title;
 								if (indextype.toLowerCase() == 'season')
@@ -184,22 +167,47 @@
 
                     }
                 }, 
-			// play button 	
-				"img.play@onclick": function(arg)
+			// play button 
+				// on click play
+				"img.play_detail@onclick": function(arg)
 							{
 								switch(arg.context.result.videoType.toLowerCase())
 									{
 										case 'season':
+											
 											return "play_episode()";
 											break;
 										case 'episode':
+											
 											return ;
 											break;
-										case 'movie':								
-											return "play_to_device('"+arg.context.result.files[0].filename+"')";
+										case 'movie':	
+											return "play_to_device(\""+arg.context.result.files[0].filename+"\")";
+										return;
 											break;
 										case 'series':
+											
 											return ;
+											break;	
+									};
+                            },
+				"img.play_detail@src": function(arg)
+							{
+								switch(arg.context.result.videoType.toLowerCase())
+									{
+										case 'season':
+											
+											return "./pictures/tvshow-off.png";
+											break;
+										case 'episode':
+											return "./pictures/tvshow-off.png";
+											
+											break;
+										case 'movie':	
+											return "./pictures/movie-logo.png";
+											break;
+										case 'series':
+										return "./pictures/tvshow-off.png";
 											break;	
 									};
                             },
@@ -239,7 +247,7 @@
                         jsondata = data;
 					//	 outputJson(data); 
 				 	
-					$p('.header').render(data, DETAIL_HEADER);
+					$p('.header_detail').render(data, DETAIL_HEADER);
 					 
 					$p('.template').render(data, YAMJ_DIR); 
 						// add slideshow for fanart
@@ -301,8 +309,7 @@
 			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
 			document.getElementById("searchindex").innerHTML=search_select.toUpperCase();
 			document.getElementById("configindex").innerHTML=config_select.toUpperCase();
-			document.getElementById("remoteselect").innerHTML=remote_label.toUpperCase();
-			
+			document.getElementById("remoteselect").innerHTML=remote_label.toUpperCase();			
 		}
 		
   // ********************* NOW SET VARIOUS FUNCTION **********************************************  
@@ -541,7 +548,6 @@
 							$('#li_person_ribbon').css('visibility', 'visible');
 							$('#li_movie').css('visibility', 'visible');
 							$('#li_search').css('visibility', 'visible');
-							$('#li_remote').css('visibility', 'visible');
 							$('#li_selection').css('visibility', 'visible');
 							$('#li_language').css('visibility', 'visible');	
 							$('#selection_id').css('visibility', 'visible');	
@@ -555,7 +561,6 @@
 							$('#li_person_ribbon').css('visibility', 'hidden');
 							$('#li_movie').css('visibility', 'hidden');
 							$('#li_search').css('visibility', 'hidden');
-							$('#li_remote').css('visibility', 'hidden');
 							$('#li_selection').css('visibility', 'hidden');
 							$('#li_language').css('visibility', 'hidden');	
 							$('#selection_id').css('visibility', 'hidden');	
@@ -579,7 +584,7 @@
 				$('#list_episode_title').css('visibility', 'hidden');
 				$('.episode_detail').css('visibility', 'hidden');
 				$('div#slideshowFanart').css('opacity', '1');
-				$('a#play').css('visibility', 'hidden');
+				$('a#play_detail').css('visibility', 'hidden');
 			
 			}
 	// click again on fanart only redisplay the page with all the info 		
@@ -590,7 +595,7 @@
 				$('.filepath').css('visibility', 'visible');
 				$('div#slideshowCtr ').css('visibility', 'visible');
 				$('div#slideshowFanart').css('opacity', '0.7');
-				$('.play').css('visibility', 'visible');
+				$('.play_detail').css('visibility', 'visible');
 				switch (indextype.toLowerCase())
 					{
 					case 'season':
@@ -602,41 +607,69 @@
 						$('#list_episode_title').css('visibility', 'visible');
 						$('.moviedetail').css('top', '115px');
 						$('.moviedetail').css('left', '230px');
-						$('.moviedetail').css('width', '1060px');
+						$('.moviedetail').css('width', '1090px');
+						$('.header_detail').css('top', '0px');
+						$('.header_detail').css('left', '120px');
+						$('.play_detail').css('top', '0px');
+						$('.play_detail').css('left', '140px');
 						$('.plot').css('left', '0px');
-						$('.plot').css('max-width', '1250px');
+						$('.plot').css('max-width', '1280px');
 						$('.genres').css('left', '0px');
-						$('.genres').css('max-width', '1250px');
+						$('.genres').css('max-width', '1280px');
 						$('.filepath').css('left', '0px');
-						$('.filepath').css('max-width', '1250px');
+						$('.filepath').css('max-width', '1280px');
 						$('div#slideshowCtr').css('top', '50px');
 						$('a#next').css('top', '200px');
 						$('a#prev').css('top', '200px');
-			//			$('.play').css('top', '65px');
+						$('.play_detail').mouseover(function() {
+							$('.play_detail').attr('src', './pictures/tvshow-on.png');
+							});
+						$('.play_detail').mouseout(function() {
+							$('.play_detail').attr('src', './pictures/tvshow-off.png');
+							});
+			//			$('.play_detail').css('top', '65px');
 						break;
 					case 'movie':
-						$('.moviedetail').css('top', '495px');
+						$('.moviedetail').css('top', '465px');
 						$('.moviedetail').css('left', '10px');
-						$('.moviedetail').css('width', '1280px');
+						$('.moviedetail').css('width', '1320px');
+						$('.play_detail').mouseover(function() {
+							$('.play_detail').attr('src', './pictures/movie-logo-on.png');
+							});
+						$('.play_detail').mouseout(function() {
+							$('.play_detail').attr('src', './pictures/movie-logo.png');
+							});
+						$('#infobox').css('top', '690px');
+						$('#infobox').css('left', '290px');
 						
 			//			nothing special 
 						break;
 					case 'series':
 						$('.moviedetail').css('top', '568px');
 						$('.moviedetail').css('left', '10px');
-						$('.moviedetail').css('width', '1280px');
+						$('.moviedetail').css('width', '1320px');
+						$('.header_detail').css('top', '0px');
+						$('.header_detail').css('left', '120px');
+						$('.play_detail').css('top', '0px');
+						$('.play_detail').css('left', '140px');
 						$('.plot').css('left', '0px');
-						$('.plot').css('max-width', '1250px');
+						$('.plot').css('max-width', '1280px');
 						$('.genres').css('left', '0px');
-						$('.genres').css('max-width', '1250px');
+						$('.genres').css('max-width', '1280px');
 						$('.filepath').css('left', '0px');
-						$('.filepath').css('max-width', '1250px');
+						$('.filepath').css('max-width', '1280px');
 						$('div#slideshowBanner').css('visibility', 'visible');
 						$('div#slideshowCtr').css('top', '50px');
 						$('.seasontable').css('visibility', 'visible');
 						$('a#next').css('top', '200px');
 						$('a#prev').css('top', '200px');
-						$('.play').css('display', 'none');
+						$('.play_detail').mouseover(function() {
+							$('.play_detail').attr('src', './pictures/tvshow-on.png');
+							});
+						$('.play_detail').mouseout(function() {
+							$('.play_detail').attr('src', './pictures/tvshow-off.png');
+							});
+					//	$('.play_detail').css('display', 'none');
 						break;
 					}
 			}
@@ -678,6 +711,7 @@
 			localStorage.setItem("selection", letter_selection);
 			localStorage.setItem("direction", direction);
 			localStorage.setItem("indextype", current_type);
+			window.localStorage.setItem("search_index", letter_selection);	
 			switch (StyleValue)
 					{
 					case 'frame':
@@ -685,9 +719,13 @@
 							if (Movie_toSet) { 
 								console.log("ouvre_popup_index:  navData_frame for type:" +current_type+ " with style:"+StyleValue);
 								parent.frames['movie_frame'].location.href='navData_frame.html';
-								display_Id('movie_display');
+								
 								Movie_toSet = false; 
-							} else {toggle_Id('movie_display');}
+							} 
+							parent.document.getElementById('movie_frame').style.display="block";
+							parent.document.getElementById('movie_display').style.visibility="visible";	
+						//	display_Id('movie_frame');
+						//	display_Id('movie_display');}
 							break;
 						} 
 					case 'popup':
@@ -708,7 +746,7 @@
 						{
 							console.log("ouvre_popup_index:  changeindex for type:" +current_type+ " with style:"+StyleValue);
 							nodisplay_Id('movie_display');
-							ChangeIndex(current_type);
+							Indexpopup = window.open("index.html", "YAMJ v3 index","");
 							break;
 						}
 					
@@ -718,7 +756,7 @@
 	// open a new vertical window for person list 
 	function ouvre_popup_person_ribbon() 
 		{
-			localStorage.setItem("id", localStorage.getItem("id"));
+		//	localStorage.setItem("id", localStorage.getItem("id"));
 			localStorage.setItem("indextype", indextype.toLowerCase());
 			
 			Personpopup = window.open("navPerson.html", "YAMJv3 Navigation Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=150px, height=1000px");
@@ -726,40 +764,44 @@
 		}
 	function ouvre_popup_person() 
 		{
-			var temp_id = localStorage.getItem("id");
-			localStorage.setItem("id", localStorage.getItem("id"));
+		//	var temp_id = localStorage.getItem("id");
+		//	localStorage.setItem("id", localStorage.getItem("id"));
 			localStorage.setItem("indextype", indextype.toLowerCase());
-			console.log("ouvre_popup_person:  style:"+StyleValue+ " type:" +indextype+" id:"+temp_id);
+			console.log("ouvre_popup_person:  style:"+StyleValue+ " type:" +indextype+" id:"+localStorage.getItem('id'));
 			switch (StyleValue)
 					{
 					case 'frame':
 						{
 							if (Person_toSet) { 
 								console.log("ouvre_popup_person:  " +Person_toSet);
-								parent.frames['person_frame'].location.href='navPerson_frame.html';
+								parent.frames['person_frame'].location.href='navPerson_frame.html';								
 								Person_toSet = false; 
 								}
+							parent.document.getElementById('person_frame').style.display="block";
+							parent.document.getElementById('person_display').style.visibility="visible";	
 							break;
 						} 
 					case 'popup':
 						{
-							console.log("ouvre_popup_person:  navPersonH.html:");
-							nodisplay_Id('person_frame');
+							console.log("ouvre_popup_person:  open navPersonH.html:");
+						//	nodisplay_Id('person_frame');
 							Personpopup = window.open("navPersonH.html", "YAMJv3 H Navigation Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=1322px, height=300px");
 							break;
 						}
 					case 'ribbon':
 						{
-							console.log("ouvre_popup_person:  navPerson.html:");
-							nodisplay_Id('person_frame');
+							console.log("ouvre_popup_person:  open navPerson.html:");
+						//	nodisplay_Id('person_frame');
 							Personpopup = window.open("navPerson.html", "YAMJv3 Navigation Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=165px, height=1000px");
 							break;
 						}
 					case 'page':
 						{
-							console.log("ouvre_popup_person:  call_personindex.html:");
-							nodisplay_Id('person_frame');
-							call_personindex(true)
+							console.log("ouvre_popup_person:  open navPerson_page.html:");
+						//	nodisplay_Id('person_frame');
+							Personpopup = window.open("navPerson_page.html", "YAMJ v3 index person","");
+							// window.location.href="navPerson_page.html"
+							//call_person(true);
 							break;
 						}
 					
@@ -789,7 +831,7 @@
       </script>
 <!-- *************************************************************************************************************** -->
     </head>
-    <body onload="getData();" onUnload="close_popup();">
+    <body onload="getData();" onUnload="close_popup();" style="margin: 0px;  width: 1340px; height: 740px;">
 	<!-- navigation to index -->
 		
 		<div id="logo">
@@ -812,15 +854,17 @@
 										<div id="searchindex"></div></a></li>
 									<li><a id="li_config_up" href="javascript:ouvre_config(StyleValue)">
 										<div id="configindex"></div></a></li>
+									<li><a id="li_remote_up" href="javascript:ouvre_remote(); ">
+										<div id="remoteselect"></div></a></li>
 							</ul>
 						
 	<!-- various navigation -->					
 					
 							<ul id="detail_home_right">
-									<li><a id="li_home_right" href="javascript:toggle_menuright()"></a></li>
+									<li><a id="li_home_right" onclick="toggle_menuright()"></a></li>
 									<li><a id="li_fanart" href="javascript:toggle_fanart()">
 										<div id="fanartshow"></div></a></li>
-									<li><a id="li_person" href="javascript:ouvre_popup_person();toggle_Id('person_display')">
+									<li><a id="li_person" href="javascript:ouvre_popup_person();">
 										<div id="personshow"></div></a></li>
 								
 							<!--		<li><a id="li_person_ribbon" href="javascript:ouvre_popup_person_ribbon()">
@@ -870,18 +914,17 @@
 											<noscript><input type="submit" value="Submit"></noscript>
 										</form>
 									</li>	
-									<li><a id="li_remote" href="javascript:ouvre_remote(); ">
-										<div id="remoteselect"></div></a></li>
+								
 							</ul>
 						
         </div>
 	<!--  header for movie/series name -->
-		<div class="header">
+		<div class="header_detail">
 			<table>
 				<tr>
 	
-					<td width="950px" >
-						<span class="header_type" ></span>
+					<td width="1090px" >
+					
 						<span class="header_title" ></span>
 						<span class="header_text" > (</span>
 						<span class="header_year" ></span>
@@ -944,7 +987,7 @@
                             </div>
 						
 						<!-- play button -->
-							<img class="play"  />
+							<img class="play_detail" src="" />
 						
 						<!-- next , previous button -->
                             <a id="next"><img src="./pictures/next.png" /></a>

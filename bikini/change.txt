@@ -1,4 +1,17 @@
 change.txt
+v1.0.9
+- adjust: apply to search page results the style setted 
+- adjust: apply to detail right menu the style setted
+- change: display title on the bottom for movie detail (adjust everything to that new position) 
+- adjust: all index with no paging mode and / or scrolling bar 
+- adjust: play info popup position 
+- fix: play movie with '
+- add: remote to upper left menu / remove from contextual menu - the right one
+- add: movie and tvshow logo - play movie/tv when click
+- adjust: header to the screen in detail page 
+- fix: remote play 
+- fix: close frame with android device 
+- adjust: info button dimension with poster dimension
 v1.0.8
 - add if no paging setted, infobex is opened relativly to the cursor position
 - change ~ value, used now as no paging setting , applied to the current line number already choosen

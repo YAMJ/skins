@@ -56,65 +56,47 @@
 		function SetIndexData (search)
 		{	
 			direction_temp = window.localStorage.getItem("direction")
-			console.log("SetIndexData: search="+search+ " method_selected="+method_selected+ " direction="+direction_temp+ " ribbon_display="+ribbon_display);	
+			console.log("SetIndexData: search="+search+ " method_selected="+method_selected+ " direction="+direction_temp+ " StyleValue="+StyleValue);	
 			window.localStorage.setItem("search_index", search);	
+			window.localStorage.setItem("nextcurrent_count", '-1');
+		
 			switch (method_selected)
 				{
 					case 'ALL':
-						localStorage.setItem("selection", search);
-						localStorage.setItem("indextype", 'all');
-						if (ribbon_display == 'PAGE') {
-							Indexpopup = window.open("index.html", "YAMJ v3 index","");
-							} else {
-							ouvre_popup_index('navData.html', direction_temp, method_selected, search);
-							}
-						break;
 					case 'MOVIE':
-						localStorage.setItem("selection", search);
-						localStorage.setItem("indextype", 'movie');
-						if (ribbon_display == 'PAGE') {
-							Indexpopup = window.open("index.html", "YAMJ v3 index","");
-							} else {
-							ouvre_popup_index('navData.html', direction_temp, method_selected, search);
-							}
-						break;
 					case 'SERIES':
-						localStorage.setItem("selection", search);
-
-						localStorage.setItem("indextype", 'series');
-						if (ribbon_display == 'PAGE') {
-							Indexpopup = window.open("index.html", "YAMJ v3 index","");
-							} else {
-							ouvre_popup_index('navData.html', direction_temp, method_selected, search);
-							}
-						break;
 					case 'SEASON':
 						localStorage.setItem("selection", search);
-		
-						localStorage.setItem("indextype", 'season');
-						if (ribbon_display == 'PAGE') {
-							Indexpopup = window.open("index.html", "YAMJ v3 index","");
-							} else {
-							ouvre_popup_index('navData.html', direction_temp, method_selected, search);
+						localStorage.setItem("indextype", method_selected.toLowerCase());
+						switch (StyleValue)
+							{
+								case 'page':
+									Indexpopup = window.open("index.html", "YAMJ v3 index","");
+								break;
+								case 'ribbon':
+									ouvre_ribbon_index('navData.html', direction_temp, method_selected, search);
+								break;
+								case 'popup':
+									ouvre_popup_index('navData_frame.html', direction_temp, method_selected, search);
+								break;
+								case 'frame':
+									console.log("SetIndexData navData_frame:  " +search+ " with style:"+StyleValue);
+									parent.frames['movie_frame'].location.href='navData_frame.html';
+									parent.document.getElementById('movie_frame').style.display="block";
+									parent.document.getElementById('movie_display').style.visibility="visible";	
+									close_search ();
+								break;
 							}
 						break;
 					case 'GENRE':
 						call_genreindex('all', 'true');
 						break;
+				// NAME and PERSON have the same call_person 
 					case 'NAME':
-						window.localStorage.setItem("search_method", 'NAME');	
-						if (ribbon_display == 'PAGE') {
-							call_personindex('true');
-							} else {
-							call_personpopup();
-							}
-						break;
+						window.localStorage.setItem("search_method", 'NAME');	//  set the search_method to NAME otherwise the default is PERSON
 					case 'PERSON':
-						if (ribbon_display == 'PAGE') {
-							call_personindex('true');
-							} else {
-							call_personpopup();
-							}
+						call_person('true');
+						if (StyleValue == 'frame') { close_search ();}
 						break;
 				};
 				
@@ -131,49 +113,38 @@
 			Indexpopup = window.open(page, "YAMJ v3 index","");
 		}
 		// open a new vertical window for index list 				
+		function ouvre_ribbon_index(page, direction, current_type, letter_selection) 
+		{
+			console.log("ouvre_ribbon_index: "+ page + " " + direction + " " + current_type + " " + letter_selection);
+			localStorage.setItem("selection", letter_selection);
+			localStorage.setItem("direction", direction);
+			localStorage.setItem("indextype", current_type);
+			Indexpopup = window.open(page, "YAMJv3 Navigation index","channelmode=no, menubar=no, status=no, scrollbars=yes, resizable=yes, menubar=no, location=no, left=2px, top=5px, width=160px, height=1000px");
+		}
+		// open a new vertical window for index list 				
 		function ouvre_popup_index(page, direction, current_type, letter_selection) 
 		{
 			console.log("ouvre_popup_index: "+ page + " " + direction + " " + current_type + " " + letter_selection);
 			localStorage.setItem("selection", letter_selection);
 			localStorage.setItem("direction", direction);
 			localStorage.setItem("indextype", current_type);
-			Indexpopup = window.open(page, "YAMJv3 Navigation index","channelmode=no, menubar=no, status=no, scrollbars=yes, resizable=yes, menubar=no, location=no, left=2px, top=5px, width=160px, height=1000px");
+			Indexpopup = window.open(page, "YAMJv3 Navigation index","channelmode=no, menubar=no, status=no, scrollbars=yes, resizable=yes, menubar=no, location=no, left=2px, top=5px, width=1250px, height=270px");
 		}
-
 		function close_search ()
 			{
+				console.log("close_search:  style:"+StyleValue);
 				switch (StyleValue)
-					{
-					case 'frame':
-						{
-							console.log("close_search:  style:"+StyleValue);								
-							parent.document.getElementById('target_display').style.visibility="hidden";
-						
-							break;
-						} 
+				{
+					case 'frame':								
+						parent.document.getElementById('target_display').style.visibility="hidden";
+					break;
 					case 'popup':
-						{
-							console.log("close_search:  style:"+StyleValue);
-							window.close();
-							break;
-						}
-					case 'ribbon':
-						{
-							console.log("close_search:  style:"+StyleValue);
-							window.close();
-							break;
-						}
+					case 'ribbon':	
 					case 'page':
-						{
-							console.log("close_search:  style:"+StyleValue);
-							window.close();
-							break;
-						}
-					return;
-					
-				}			
-							
-		}
+						window.close();
+					break;					
+				};						
+			}
   //************************ LANGUAGE LOCAL SETTING *********************************************
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
 		function set_context_lang_value ()
@@ -188,8 +159,9 @@
 			document.getElementById("seasonlabel").innerHTML=season_select.toUpperCase();
 			document.getElementById("asclabel").innerHTML=asc_label.toUpperCase();
 			document.getElementById("desclabel").innerHTML=desc_label.toUpperCase();
-			document.getElementById("ribbonlabel").innerHTML=show.toUpperCase();
-			document.getElementById("pagelabel").innerHTML=page_label.toUpperCase();
+		//	document.getElementById("ribbonlabel").innerHTML=show.toUpperCase();
+		//	document.getElementById("framelabel").innerHTML='FRAME';
+		//	document.getElementById("pagelabel").innerHTML=page_label.toUpperCase();
 		
 		}
         </script>
@@ -198,7 +170,7 @@
 		<div class="results" style="visibility: hidden; display:none;">
 			<table><tr><td class="Value"></td></tr></table>
 		</div>
-		<div id="close_icon" onclick="close_search()"><img src="./pictures/close.png" /></div>
+		<div id="close_icon" onclick="close_search()"><img src="./pictures/close2.png" /></div>
 		</div >
 		<div id="main_index" style="width: auto; left: 25px;">
 		<!-- search by letter -->				
@@ -291,18 +263,19 @@
 								
 							</table>
 
-							<table class="table_ribbon_display" >		
+	<!--						<table class="table_ribbon_display" >		
 								<td >
 									<input type="radio" name="ribbon_display" value="PAGE" onclick="ribbon_display = 'PAGE';update_Style('page')" id="FormPage" checked="checked"/><label for="PAGE"><div id='pagelabel'></div></label><br />
-									<input type="radio" name="ribbon_display" value="RIBBON" onclick="ribbon_display = 'RIBBON';update_Style('ribbon')" id="FormRibbon" /><label for="RIBBON"><div id='ribbonlabel'></div></label>
+									<input type="radio" name="ribbon_display" value="RIBBON" onclick="ribbon_display = 'RIBBON';update_Style('ribbon')" id="FormRibbon" /><label for="RIBBON"><div id='ribbonlabel'></div></label><br />
+									<input type="radio" name="ribbon_display" value="FRAME" onclick="ribbon_display = 'FRAME';update_Style('frame')" id="FormFrame" /><label for="FRAME"><div id='framelabel'></div></label>
 								</td>
-							</table>
+							</table> -->
 		</div>
 		
 	<!-- display config
 		<div id="target_display" style="visibility: hidden; display: none;">		
 			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:900px; height:220px;" allowTransparency="true"></iframe>
-		</div>	
+		</div>	-->
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>
     </body>

@@ -4,12 +4,16 @@
 	position: absolute;
 	top: 40px;
 	border: 1px solid black;
+	height: 729px;
+	overflow-y: auto;
 /*	margin: 2px 2px 0px 0px;
     
     padding: 5px;
     background-color: gray; */
 }
-
+#yRow {
+	overflow: hidden;
+	}
 #container .row {
     border: 1px solid white;
     margin: 5px;
@@ -23,12 +27,18 @@
     padding: 5px 3px 0px 15px;	*/
 	
 }
-#container .row_person, #container .row_genre {
+#container .row_person{
 	border: 1px solid white;
-    margin: 5px;
+    margin: 0px;
 	background-color: gainsboro;
-    padding: 5px 5px 5px 22px;
+    padding: 5px 0px 5px 0px;
 }
+#container .row_genre {
+	padding: 5px 5px 5px 0px;
+	margin: 5px;
+	border: 1px solid white;
+	background-color: gainsboro;
+	 }
 #container br {
     clear: both;
 }
@@ -120,7 +130,7 @@
 	top: -30px;
 /* NOW SETTED INSIDE INDEX.html depending of the the number of ROW stored inside config */		
 /* if 12 posters per page, 2 rows 6 columns */
-	font-size:0.9em; 
+	font-size:0.8em; 
 /* if 27 posters per page, 3 rows 9 columns 	
 	font-size:0.7em;
 	line-height:70%;
@@ -136,9 +146,10 @@
 html, #tablelist,#headertable,#logo,#message
 {
     /* Applies to all pages */
+
     font-family: Arial, Helvetica, sans-serif;
     border-collapse:collapse;
-
+	overflow: auto;
 	padding: 0px;
 	margin: 0px;
 }
@@ -304,7 +315,7 @@ body {
 		border-radius: 6px 6px 0px 6px;
 		position: absolute;
 		top: 5px;
-		left: 170px;
+		left: 150px;
 		overflow: hidden;
 	}
 .count_return, .count_return_index,.count_return_genre {
@@ -458,7 +469,7 @@ body {
 	padding-top: 5px;
 }	
 	
-#startlabel, #anylabel, #namelabel, #personlabel, #genrelabel, #alllabel, #serieslabel, #movielabel, #seasonlabel, #asclabel, #desclabel, #languagelabel, #stylelabel, #skinlabel, #StyleSetted, #SkinSetted, #PlayerSetted, #LangSetted, #NblineSetted, #playerlabel, #pagelabel, #ribbonlabel, #nbrow, #infobox {
+#startlabel, #anylabel, #namelabel, #personlabel, #genrelabel, #alllabel, #serieslabel, #movielabel, #seasonlabel, #asclabel, #desclabel, #languagelabel, #stylelabel, #skinlabel, #StyleSetted, #SkinSetted, #PlayerSetted, #LangSetted, #NblineSetted, #playerlabel, #pagelabel, #ribbonlabel, #framelabel, #nbrow, #infobox {
 		display: inline;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
@@ -476,8 +487,9 @@ body {
 	}	
 #infobox {
 	position: absolute; 
-	top: 0px; 
-	left: 920px; 
+	top: 40px; 
+	width: auto;
+	left: 120px; 
 	z-index: 8;
 	visibility: hidden;
 	}
@@ -502,7 +514,7 @@ ul#home_left_up, ul#home_left_search {
 	}
 
 
-#li_all_up, #li_movie_up, #li_series_up, #li_season_up, #li_person_up, #li_genre_up, #li_search_up, #li_config_up,  #li_home_left {
+#li_all_up, #li_movie_up, #li_series_up, #li_season_up, #li_person_up, #li_genre_up, #li_search_up, #li_config_up, #li_remote_up, #li_home_left {
 	width: 175px;
 	height:27px;
 	position: absolute;
@@ -542,6 +554,9 @@ ul#home_left_up, ul#home_left_search {
 	}
  #li_config_up {
 	top: 243px;
+	}
+ #li_remote_up {
+	top: 273px;
 	}
 ul#home_left_up:hover, ul#home_left_search:hover {
 	background-color:rgba(255, 255, 255, 0.6);
@@ -609,7 +624,7 @@ ul#home_left_up:hover > li{
 	background-color:rgba(255, 255, 255, 0.6);
 	}	
 
-#allselect, #movieselect, #serieselect, #seasonselect, #genreindex, #personindex, #searchselect, #configselect, #searchindex, #configindex
+#allselect, #movieselect, #serieselect, #seasonselect, #genreindex, #personindex, #searchselect, #configselect, #searchindex, #configindex, #remoteselect
 {
     font-weight: bold;
     color: white;
@@ -670,7 +685,7 @@ ul#home_left_up:hover > li{
 	left: 700px;
 	}
 	
-#language:hover, #nbrow:hover, #allselect:hover, #movieselect:hover, #genreindex:hover, #searchindex:hover, #configindex:hover, #personindex:hover,  #serieselect:hover, #seasonselect:hover, #personselect:hover, #genreselect:hover, #searchselect:hover, #configselect:hover, #button_genreselect:hover, #button_personselect:hover, #button_configselect:hover, #button_genreselect_series:hover
+#language:hover, #nbrow:hover, #allselect:hover, #movieselect:hover, #genreindex:hover, #searchindex:hover, #configindex:hover, #remoteselect:hover, #personindex:hover,  #serieselect:hover, #seasonselect:hover, #personselect:hover, #genreselect:hover, #searchselect:hover, #configselect:hover, #button_genreselect:hover, #button_personselect:hover, #button_configselect:hover, #button_genreselect_series:hover
 {	
 	color: red;	
 }
@@ -760,16 +775,16 @@ ul#home_left_up:hover > li{
 	background-color:rgba(255, 255, 255, 0.3);
 	}
 	
-.play {
-    width: 80px;
-	height: 42px;
+.play_detail {
+    width: 45px;
+	height: 45px;
     position: absolute;
-    top: 4px;
-	left: 1100px;
-	background:  url(../pictures/play.png) no-repeat;
+    top: 670px;
+	left: 240px;
+	z-index: 7;
 }
-.play:hover {
-	background:  url(../pictures/play_inactive.png) no-repeat;
+.play_detail:hover {
+	
 	}
 	
 .play_frame {
@@ -938,6 +953,7 @@ ul#home_left_up:hover > li{
 	margin-left: 845px;
 	display: block;
 	overflow-y: auto;
+	left: 20px;
 	}
 #list_episode_title_frame
 {
@@ -974,7 +990,7 @@ ul#home_left_up:hover > li{
 	top: 0px; 
 	left: 0px;
 	display: block;
-	width: 720px;
+	width: 760px;
 	height: 365px;
 	margin-left: 15px;
 	}
@@ -988,7 +1004,7 @@ ul#home_left_up:hover > li{
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	width: 810px;
+	width: 840px;
 	height: 20px;
 	font-family: Arial, Helvetica, sans-serif;
 	color:white;
@@ -1007,7 +1023,7 @@ ul#home_left_up:hover > li{
 .videoimage51, .videoimage52, .videoimage53,.videoimage54,.videoimage55,.videoimage56,.videoimage57,.videoimage58,.videoimage59,.videoimage60
   {
 	position: absolute;
-	top: 90px;
+	top: 70px;
 	left: 5px;
 	border: 1px solid black;	
 	border-right: 2px solid black;
@@ -1032,11 +1048,11 @@ ul#home_left_up:hover > li{
 
 .episode_detail {
 	position: absolute;
-	left: 13px;
+	left: 15px;
 	top: 363px;
-	height: 355px;
-	width: 1279px;
-	background: url(../pictures/tvbg-v3.png) no-repeat;
+	height: 365px;
+	width: 1309px;
+	background: url(../pictures/tvbg-v4.png) no-repeat;
 	visibility: hidden;
 	}
 .episode_detail_frame {
@@ -1059,7 +1075,7 @@ ul#home_left_up:hover > li{
 	position: absolute;
 	top: 80px;
 	left: 430px;
-	width: 400px;
+	width: 425px;
 	max-height: 260px;
 	font-family: Arial, Helvetica, sans-serif;
 	color:white;
@@ -1168,7 +1184,7 @@ ul#home_left_up:hover > li{
 {
 	display: table-cell;
     position: absolute;
-	top: 418px;
+	top: 378px;
 	left: 10px;
 	height: auto;
  	font-size:0.9em;
@@ -1219,91 +1235,13 @@ ul#home_left_up:hover > li{
 	border: 1px solid #fff;
 	}
 /*************************** Header **********************************/	
-#li_fanart, #li_person, #li_person_ribbon, #li_movie, #li_search, #li_remote, #li_selection, #selection_id, #li_language, #detail_lang_id, #li_home_right {
-	display: block;
-	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-	font-size:1.05em;
-	font-weight: bold;
-	color:white;
-	width: 165px;
-	height:30px;
-	position: absolute;
-	top: 33px;
-	left: -70px;
-	padding:0px 0px 0px 0px;
-	background-color:rgba(0, 0, 0, 0.6);
-	border: 2px solid #b0b0b0;	
-	border-right: 5px solid #b0b0b0;
-	border-radius: 6px 6px 0px 6px;
-	z-index: 99;
-	}	
- #li_home_right {
-	top: 2px;
-	left: -1px;
-	height: 33px;
-	background-color:rgba(0, 0, 0, 0);
-	border: none;
-}	
- #li_person {
-	top: 65px;
-}
-/* #li_person_ribbon {
-	top: 73px;
-} */
- #li_movie {
-	top: 95px;
-}
-#li_selection {
-	top: 125px;
-	height: 30px;
-	}
-#li_language {
-	top: 155px;
-	height: 30px;
-	text-decoration: none;
-	}
-#li_search {
-	top: 185px;
-	text-decoration: none;
-	}
-#li_remote {
-	top: 155px;
-	text-decoration: none;
-	}
-#detail_lang_id {
-	top: 157px;
-	left: 50px;
-	height: 25px;
-	width: 50px;
-	color:black;
-	}	
-#selection_id  {
-	top: 130px;
-	left: 50px;
-	height: 25px;
-	width: 50px;
-	color:black;
-	}
-	
-#fanartshow, #personshow, #show, #person_H_ribbon {
-    font-weight: bold;
-    color: white;
-	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-	font-size:1.0em;
-	position: absolute;	
-	text-align: left;
-	top: -2px;
-	width: 140px;
-	}
-#fanartshow:hover, #personshow:hover, #person_ribbon:hover, #show:hover, #li_selection:hover, #li_language:hover, #li_search:hover, #li_remote:hover {
-	color: red;
-	}
+
 ul#detail_home_left {
 	width: 100px;
 	height:31px;
 	position: absolute;
-	top: -10px;
-	left: 12px;
+	top: -15px;
+	left: 5px;
 	padding:0px 0px 0px 0px;
 	
 	border: 2px solid #b0b0b0;	
@@ -1317,8 +1255,8 @@ ul#detail_home_right {
 	width: 100px;
 	height:31px;
 	position: absolute;
-	top: -10px;
-	left: 1182px;
+	top: -15px;
+	left: 1230px;
 	padding:0px 0px 0px 0px;
 	background-color:rgba(255, 255, 255, 0.3);
 	border: 2px solid #b0b0b0;	
@@ -1354,7 +1292,87 @@ ul#detail_home_left img, ul#detail_home_right img
 		border:none;
 		}
 
+#li_fanart, #li_person, #li_person_ribbon, #li_movie, #li_search, #li_remote, #li_selection, #selection_id, #li_language, #detail_lang_id, #li_home_right {
+	display: block;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:1.05em;
+	font-weight: bold;
+	color:white;
+	width: 165px;
+	height:30px;
+	position: absolute;
+	top: 33px;
+	left: -70px;
+	padding:0px 0px 0px 0px;
+	background-color:rgba(0, 0, 0, 0.6);
+	border: 2px solid #b0b0b0;	
+	border-right: 5px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	z-index: 99;
+	}	
+ #li_home_right {
+	top: 2px;
+	left: -1px;
+	height: 33px;
+	background-color:rgba(0, 0, 0, 0);
+	border: none;
+	width: 100px;
+}	
+ #li_person {
+	top: 65px;
+}
+/* #li_person_ribbon {
+	top: 73px;
+} */
+ #li_movie {
+	top: 95px;
+}
+#li_selection {
+	top: 125px;
+	height: 30px;
+	}
+#li_language {
+	top: 155px;
+	height: 30px;
+	text-decoration: none;
+	}
+#li_search {
+	top: 185px;
+	text-decoration: none;
+	}
+#li_remote {
+	top: 155px;
+	text-decoration: none;
+	}
 
+#detail_lang_id {
+	top: 157px;
+	left: 50px;
+	height: 25px;
+	width: 50px;
+	color:black;
+	}	
+#selection_id  {
+	top: 130px;
+	left: 50px;
+	height: 25px;
+	width: 50px;
+	color:black;
+	}
+	
+#fanartshow, #personshow, #show, #person_H_ribbon {
+    font-weight: bold;
+    color: white;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:1.0em;
+	position: absolute;	
+	text-align: left;
+	top: -2px;
+	width: 140px;
+	}
+#fanartshow:hover, #personshow:hover, #person_ribbon:hover, #show:hover, #li_selection:hover, #li_language:hover, #li_search:hover, #li_remote:hover {
+	color: red;
+	}	
 .header
 {
     display: block;
@@ -1374,6 +1392,26 @@ ul#detail_home_left img, ul#detail_home_right img
 	color: #ffffff;
 	z-index:4;
     }	
+.header_detail
+{
+    display: block;
+	height: auto;
+    width: 1070px;
+	position: absolute;
+	left: 233px;
+	top: 670px;
+	font-size:1.8em;
+	font-weight: bold;
+    text-align: center;
+	margin: 0px;
+	padding-left: 25px;
+	background-color:rgba(0, 0, 0, 0.4);
+	border: 2px solid #b0b0b0;	
+	border-right: 5px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	color: #ffffff;
+	z-index:4;
+    }
 .header_frame
 {
     display: block;
@@ -1483,7 +1521,7 @@ text {
     }
 
 .moviedetail {
-	width: 1280px;
+	width: 1320px;
 	color:#fff;
 	font-weight: bold;
 	text-align: justify;
@@ -1538,19 +1576,19 @@ text {
 	}	
 .filepath {
 	width: auto;
-	max-width: 1030px;
+	max-width: 1070px;
 	display: inline;
 	background-color:rgba(0, 0, 0, 0.3);
 	border: 1px solid gray;	
 	border-right: 5px solid gray;
 	padding: 1px 10px 0px 10px;
 	position: relative;
-	left: 220px;
+	left: 222px;
 	}	
 .plot {
 	width: auto;
 	max-height: 180px;
-	max-width: 1030px;
+	max-width: 1070px;
 	display: block;
 	background-color:rgba(0, 0, 0, 0.3);
 	border: 1px solid gray;	
@@ -1558,10 +1596,10 @@ text {
 	padding: 1px 10px 3px 10px;
 	overflow-y: auto;
 	position: relative;
-	left: 220px;
+	left: 222px;
 	}
 .genres, .test {
-	max-width: 1030px;
+	max-width: 1070px;
 	width: auto;
 	display: inline;
 	background-color:rgba(0, 0, 0, 0.3);
@@ -1569,7 +1607,7 @@ text {
 	border-right: 5px solid gray;
 	padding: 2px 10px 1px 10px;
 	position: relative;
-	left: 220px;
+	left: 222px;
 	}
 .test {
 	display: none;

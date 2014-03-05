@@ -22,9 +22,44 @@
 		
 		 function PersonData()
         {
-			var	type = localStorage.getItem("indextype");
-			var	id = localStorage.getItem ("id");
-			jsonUrl = "/yamj3/api/person/"+type+".json?id="+id+"&job=actor,director,writer&dataitems=artwork,biography";
+		var index_type = "all";
+		if (localStorage.getItem("indextype"))
+			{index_type = localStorage.getItem("indextype");}
+		// get the search method and reset to default for the next time 
+		var index_method = "START";
+		if (localStorage.getItem("search_method"))
+			{index_method = localStorage.getItem("search_method");
+			localStorage.setItem("search_method", "START");}
+		var direction = "ASC";
+			if (window.localStorage.getItem("direction"))
+				{direction = window.localStorage.getItem("direction");}
+				else {window.localStorage.setItem("direction", direction);}		
+		// init search to blank 
+		var search_selection = "";
+		var jsonUrl = "/yamj3/api/index/person.json?sortby=name&sortdir="+direction+"&dataitems=artwork&artwork=photo";
+
+			if (window.localStorage.getItem("search_index"))
+				{
+					switch (index_method) 
+							{
+							case 'ANY':
+									search_selection = window.localStorage.getItem("search_index");
+									
+									break;
+							case 'START':
+									search_selection = window.localStorage.getItem("search_index");
+									
+									break;
+							case 'NAME':
+							// tweak to search by name, add blank before search value and search anywhere in the name
+									search_selection = ' ' +window.localStorage.getItem("search_index");
+								
+									index_method = "ANY";
+									break;
+							}	
+					jsonUrl = jsonUrl + "&search=" + search_selection + "&field=name&mode="+index_method;		
+					window.localStorage.setItem("search_index", "");	
+				}	
             console.log("PersonData URL: " + jsonUrl);
             var jsondata = null;
 
@@ -137,8 +172,7 @@
         {
             localStorage.setItem("Person_id", id);
             console.log("open_person_popup Storing value: Person_id"  + id);
-		// adjust frame to display biography
-				close_person ()
+			close_person ()
 		// adjust frame to display biography
 			parent.document.getElementById('target_display').style.height="350px";
 			parent.document.getElementById('target_frame').style.height="340px";

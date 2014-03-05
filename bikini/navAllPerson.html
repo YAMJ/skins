@@ -92,6 +92,7 @@ function updateHtml(yamjdata)
 							for (i = 0; i < totalperson_photo.length; i++) 
 							{
 									// add name on the top
+								 if (window.localStorage.getItem('Style') == 'popup') {outputperson_photo = outputperson_photo+"<td>"}
 								outputperson_photo = outputperson_photo+"<p class=\"person_name\">"+totalperson_photo[i].name+"</p>";
 									// Check to see if there is artwork
 								if (totalperson_photo[i].artwork[0]) 
@@ -108,6 +109,7 @@ function updateHtml(yamjdata)
 								} else {
 									outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+")\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
 								}
+								
 									// add the role at the bottom 
 								if (totalperson_photo[i].role) {
 								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].role+"</p>";
@@ -115,11 +117,27 @@ function updateHtml(yamjdata)
 									// adjust  Writter, Director  
 								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].job.substr(0,1)+totalperson_photo[i].job.substr(1).toLowerCase()+"</p>";
 								}
+							if (window.localStorage.getItem('Style') == 'popup') {outputperson_photo = outputperson_photo+"</td>"}
 							}
 							return outputperson_photo;
 						}
 					};
-				$p('.table_person_photo').render(yamjdata, LIST_person_photo);			
+				 console.log("naAllPerson style: "  + window.localStorage.getItem('Style'));
+				if (window.localStorage.getItem('Style') == 'popup')
+				{ 
+					$p('.table_person_photoH').render(yamjdata, LIST_person_photo);
+					$('.table_person_photo').css('display', 'none');
+					$('.table_person_photoH').css('width', '1275px');
+					$('.table_person_photoH').css('height', '200px');
+					
+					
+				} else { 
+					$p('.table_person_photo').render(yamjdata, LIST_person_photo); 
+					$('.table_person_photoH').css('display', 'none');
+				
+				
+					
+					}		
 			}
 		
 //***************************************************************************************************************		
@@ -138,8 +156,16 @@ function updateHtml(yamjdata)
 		}
 	
         </script>
-   
-     
+		<div id="close_icon" style="position: absolute;	top: 2px; left: 2px; z-index: 10;" onclick="javascript: window.close()"><img src="./pictures/close2.png" height="30px"/></div>
+     	<div class="table_person_photoH">
+			<table id="tableperson_photo">	
+				<tr>
+					<td class="center">
+					 <span class="totalperson_photo"></span>
+					</td>
+				</tr>
+			</table>
+		</div>
 		
 		<div class="table_person_photo">
 			<table id="tableperson_photo">	

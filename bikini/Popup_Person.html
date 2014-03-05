@@ -78,11 +78,42 @@
                 };
                 $p('.template').render(yamjdata, YAMJ_DIR);				
             }
-			function set_context_lang_value ()
-		{
-	
 			
-		}
+			function back ()
+			{
+				console.log ("Popup_Person: back : style: "+window.localStorage.getItem('Style'));
+				switch (window.localStorage.getItem('Style'))
+				{
+					case 'frame':
+				
+					//	parent.document.getElementById('target_frame').style.display="none";
+						parent.document.getElementById('target_display').style.visibility="hidden";
+						parent.document.getElementById('target_display').style.height="275px";
+						parent.document.getElementById('target_frame').style.height="320px";
+						parent.document.getElementById('target_display').style.width="925px";
+						parent.document.getElementById('target_frame').style.width="920px";
+						parent.document.getElementById('target_display').style.left="200px";
+						parent.document.getElementById('target_display').style.top="70px";
+						parent.document.getElementById('person_frame').style.display="block";
+						parent.document.getElementById('person_display').style.visibility="visible";
+					break;	
+					case 'page':
+						this.window.close();
+					break;
+					case 'ribbon':
+						this.window.close();
+					break;
+					case 'popup':
+						this.window.close();
+					break;
+				}
+				
+			}	
+			
+			function set_context_lang_value ()
+			{		}
+		
+		
         </script>
 		
 		<!-- just added to set the language value, shouldn't be displayed  -->
@@ -98,7 +129,7 @@
                     <td rowspan="4"><span class="image"></span></td>
                     
 					<td>
-				<a href="javascript:history.back()"><img src="./pictures/returnbutton.png" width="30px" align="left" /></a>
+				<a href="javascript:back()"><img src="./pictures/returnbutton.png" width="30px" align="left" /></a>
 					<span class="name"></span>: 
                     <span class="birthPlace"></span> - 
                     <span class="birthDay"></span>

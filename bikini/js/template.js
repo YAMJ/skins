@@ -24,6 +24,7 @@
 					containerID: "yRow",
 					animation: "fadeInUpBig",
 					perPage: perPageValue,
+					minHeight: false,
 					delay: 20
 				});
 			}
@@ -32,12 +33,14 @@
 		function nodisplay_Id(Id_to_nodisplay)
 					{			
 				//		document.getElementById(Id_to_nodisplay).style.visibility="hidden";
+				console.log("nodisplay_Id: "+Id_to_nodisplay);
 				var tempid = "#"+Id_to_nodisplay;
 				$(tempid).css('visibility', 'hidden');
 					}
 	// display the Id selected 
 		function display_Id(Id_to_display)
-					{			
+					{		
+						console.log("display_Id: "+Id_to_display);
 						document.getElementById(Id_to_display).style.visibility="visible";
 					}
 	// on - off on the Id selected 
@@ -67,7 +70,8 @@
 							$('#li_person_up').css('visibility', 'visible');
 							$('#li_genre_up').css('visibility', 'visible');			
 							$('#li_search_up').css('visibility', 'visible');	
-							$('#li_config_up').css('visibility', 'visible');	
+							$('#li_config_up').css('visibility', 'visible');
+							$('#li_remote_up').css('visibility', 'visible');								
 						} else {
 							menuleft_toggle =  0;
 							
@@ -79,6 +83,7 @@
 							$('#li_genre_up').css('visibility', 'hidden');	
 							$('#li_search_up').css('visibility', 'hidden');	
 							$('#li_config_up').css('visibility', 'hidden');
+							$('#li_remote_up').css('visibility', 'hidden');
 						}
 					}
 					
@@ -162,7 +167,45 @@
 					window.location.href="navGenre.html";
 				}
 			}
-			
+	// open all person depending of the style 
+		function call_person(newpage)
+			{
+				console.log("call_person: newpage="+newpage+" style:"+StyleValue);
+				switch (StyleValue)
+					{
+					case 'frame':
+						{
+						
+									parent.frames['person_frame'].location.href='index_Person_frame.html';								
+									parent.document.getElementById('person_frame').style.display="block";
+									parent.document.getElementById('person_display').style.visibility="visible";	
+								
+						break;
+						} 
+					case 'popup':
+						{
+							console.log("ouvre_config:  style:"+StyleValue);
+							Personpopup = window.open("navAllPerson.html", "YAMJv3 Navigation All Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=1290px, height=210px");	
+							break;
+						}
+					case 'ribbon':
+						{
+							console.log("ouvre_config:  style:"+StyleValue);
+							Personpopup = window.open("navAllPerson.html", "YAMJv3 Navigation All Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=150px, height=1000px");
+							break;
+						}
+					case 'page':
+						{
+							if (newpage) 
+								{
+									Indexpopup = window.open("index_person.html", "YAMJ v3 index","");
+								} else {
+									window.location.href="index_person.html";
+								}
+							break;
+						}
+					}
+			}
 	// open or change window to select index person page 
 		function call_personindex(newpage)
 			{
@@ -174,13 +217,20 @@
 						window.location.href="index_person.html";
 					}
 			}
+	// open or change vertical popup - ribbon window to select index person page 
+		function call_personribbon()
+			{
+				console.log("call_personribbon: ");
+				Personpopup = window.open("navAllPerson.html", "YAMJv3 Navigation All Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=150px, height=1000px");
+
+			}
 	// open or change vertical popup window to select index person page 
 		function call_personpopup()
 			{
 				console.log("call_personpopup: ");
-				Personpopup = window.open("navAllPerson.html", "YAMJv3 Navigation All Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=150px, height=1000px");
+				Personpopup = window.open("navAllPerson.html", "YAMJv3 Navigation All Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=1290px, height=210px");
 
-			}
+			}		
 	// change index page 
 		function ChangeIndex (indextype)
 			{		

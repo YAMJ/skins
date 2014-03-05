@@ -29,6 +29,7 @@
 				{
 						jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("selection") + "&field=title&mode=START";
 						window.localStorage.setItem("selection", "");	
+						window.localStorage.setItem("search_index", "");	
 					}	else {	
 							if (indextype == "SEASON") 
 								{
@@ -136,7 +137,7 @@
         <!--Navigation Holder-->
         <div class="holder" style="display: none;"></div>
 
-     
+		<div id="close_icon" style="position: absolute;	top: 2px; left: 2px; z-index: 10;" onclick="javascript: window.close()"><img src="./pictures/close2.png" height="30px"/></div>
 		 <!--Data Items Container-->
 		<div id="container">
             <div id="yRow" class="row">

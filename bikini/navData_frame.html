@@ -29,6 +29,7 @@
 				{
 						jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("selection") + "&field=title&mode=START";
 						window.localStorage.setItem("selection", "");	
+						window.localStorage.setItem("search_index", "");	
 					} else {	
 							if (type == "SEASON") 
 								{
@@ -131,11 +132,15 @@
         }
 	function close_data ()
 			{
-				console.log("close_data:  style:"+StyleValue);								
-				parent.document.getElementById('movie_display').style.visibility="hidden";
+				console.log("close_data:  style:"+StyleValue);	
+				if (window.localStorage.getItem('Style') == "frame")
+				{
+					parent.document.getElementById('movie_frame').style.display="none";
+					parent.document.getElementById('movie_display').style.visibility="hidden";
+				} else { this.window.close();}
 			} 
         </script>
-		<div id="close_icon" onclick="close_data()" style="position: absolute; top: 0px; left: 0px; z-index: 6;"><img src="./pictures/close.png" width="40"/></div>
+		<div id="close_icon" onclick="close_data()" style="position: absolute; top: 0px; left: 0px; z-index: 6;"><img src="./pictures/close2.png" width="40"/></div>
         <!--Navigation Holder-->
         <div class="holder"></div>
 

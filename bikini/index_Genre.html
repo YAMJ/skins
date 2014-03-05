@@ -194,6 +194,7 @@
 			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
 			document.getElementById("configindex").innerHTML=config_select.toUpperCase();
 			document.getElementById("searchindex").innerHTML=search_select.toUpperCase();
+			document.getElementById("remoteselect").innerHTML=remote_label.toUpperCase();
 		}
         </script>
 
@@ -218,6 +219,8 @@
 										<div id="searchindex"></div></a></li>
 									<li><a id="li_config_up" href="javascript:ouvre_config(StyleValue)">
 										<div id="configindex"></div></a></li>
+									<li><a id="li_remote_up" href="javascript:ouvre_remote(); ">
+										<div id="remoteselect"></div></a></li>
 							</ul>
 						<td>
 			<div class="show_index_genre"><span id="printsearch"></span></div>
@@ -274,11 +277,19 @@
 		<button id="infobox" onclick="javascript:start_playing ()"></button>
 	<!-- display config -->
 		<div id="target_display" style="visibility: hidden; ">		
-			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:900px; height:220px;" allowTransparency="true"></iframe>
-		</div>	
+			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:920px; height:320px;" allowTransparency="true"></iframe>
+		</div>
 	<!-- display detail  -->
 		<div id="detail_display" style="visibility: hidden; position: absolute; top: 100px; left: 150px;">		
 			<iframe src="" name="detail_frame" resizable="yes" id="detail_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:960px; height:540px;" allowTransparency="true"></iframe>
+		</div>
+		<!-- display Movie -->
+		<div id="movie_display" style="visibility: hidden; ">
+			<iframe src="" name="movie_frame" resizable="yes" id="movie_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1245px; height:265px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display person -->
+		<div id="person_display" style="visibility: hidden; ">	
+			<iframe src="" name="person_frame" resizable="yes" id="person_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1220px; height:335px;" allowTransparency="true"></iframe>
 		</div>	
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>

@@ -173,8 +173,7 @@
 											return ;
 											break;
 										case 'movie':	
-											
-											return "play_to_device('"+arg.context.result.files[0].filename+"')";
+											return "play_to_device(\""+arg.context.result.files[0].filename+"\")";
 											break;
 										case 'series':
 											
@@ -189,17 +188,17 @@
 									{
 										case 'season':
 											
-											return "./pictures/tv-off.png";
+											return "./pictures/tvshow-off.png";
 											break;
 										case 'episode':
-											return "./pictures/tv-off.png";
+											return "./pictures/tvshow-off.png";
 											
 											break;
 										case 'movie':	
-											return "./pictures/movie-off.png";
+											return "./pictures/movie-logo.png";
 											break;
 										case 'series':
-										return "./pictures/tv-off.png";
+										return "./pictures/tvshow-off.png";
 											break;	
 									};
                             },     
@@ -290,7 +289,7 @@
 						jsondata = dataSeason;
 					//	outputJson(dataSeason);
 						updateSeason(dataSeason)
-						display_Id ("seasontable_frame");
+						$('.seasontable_frame').css('visibility', 'visible');
 					}
                 });
 		} // end perform_season
@@ -499,19 +498,19 @@
 						$('div#slideshowBanner').css('visibility', 'visible');
 						$('.episode_detail').css('visibility', 'visible');
 						$('.play_frame').mouseover(function() {
-							$('.play_frame').attr('src', './pictures/tv-on.png');
+							$('.play_frame').attr('src', './pictures/tvshow-on.png');
 							});
 						$('.play_frame').mouseout(function() {
-							$('.play_frame').attr('src', './pictures/tv-off.png');
+							$('.play_frame').attr('src', './pictures/tvshow-off.png');
 							});
 			//			$('.play_frame').css('visibility', 'hidden');
 						break;
 					case 'movie':
 						$('.play_frame').mouseover(function() {
-							$('.play_frame').attr('src', './pictures/movie-on.png');
+							$('.play_frame').attr('src', './pictures/movie-logo-on.png');
 							});
 						$('.play_frame').mouseout(function() {
-							$('.play_frame').attr('src', './pictures/movie-off.png');
+							$('.play_frame').attr('src', './pictures/movie-logo.png');
 							});
 						break;
 					case 'series':
@@ -521,10 +520,10 @@
 						$('div#slideshowBanner').css('visibility', 'visible');
 						$('.seasontable_frame').css('visibility', 'visible');
 						$('.play_frame').mouseover(function() {
-							$('.play_frame').attr('src', './pictures/tv-on.png');
+							$('.play_frame').attr('src', './pictures/tvshow-on.png');
 							});
 						$('.play_frame').mouseout(function() {
-							$('.play_frame').attr('src', './pictures/tv-off.png');
+							$('.play_frame').attr('src', './pictures/tvshow-off.png');
 							});
 			//			$('.play_frame').css('display', 'none');
 						break;
@@ -549,7 +548,7 @@
 						{					
 							if (count_to_set < 1)
 							{
-							nodisplay_Id('seasontable_frame');
+							$('.seasontable_frame').css('visibility', 'hidden');
 							} else {
 							padding_season = 135;
 							if (count_to_set > 7)
@@ -566,13 +565,12 @@
 						
 						$('.seasontable_frame').css('visibility', 'hidden');
 						}
-						console.log ("left: " + padding_season);
 					} // end set_seasoncount
 	
 	// close the current frame 
 	function close_frame ()
 			{
-				console.log("close_search:  style:"+StyleValue);								
+				console.log("close_frame:  style:"+StyleValue);								
 				parent.document.getElementById('detail_display').style.visibility="hidden";
 			} // end close_frame
       </script>
@@ -580,7 +578,7 @@
     </head>
     <body onload="getData();" >
 	<!-- show the close button , allow to close the frame  -->
-	<div id="close_icon" style="position: absolute;	top: 2px; left: 913px; z-index: 10;" onclick="close_frame()"><img src="./pictures/close.png" /></div>
+	<div id="close_icon" style="position: absolute;	top: 2px; left: 913px; z-index: 10;" onclick="close_frame()"><img src="./pictures/close2.png" /></div>
 
 	<!--  header for movie/series name -->
 		<div class="header_frame" >
@@ -712,7 +710,7 @@
 		</div>		
 		<!-- display infobox -->
 		
-		<button id="infobox" style="top: 15px; left: 60px;" onclick="javascript:start_playing ()"></button>
+		<button id="infobox" style="top: 40px; left: 20px;" onclick="javascript:start_playing ()"></button>
 		<!-- display source data from API if needed  -->
         <div id="sourceData"></div>
     </body>

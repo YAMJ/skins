@@ -9,10 +9,11 @@ div#slideshowCtr {
     overflow: hidden;
 	position: absolute;
 	left: 17px;
-	top: 400px;
+	top: 405px;
 	border: 2px solid #b0b0b0;
 	border-left: 3px solid #b0b0b0;
 	border-top: 3px solid #b0b0b0;
+	z-index: 4;
 }
 
 div.glow {
@@ -45,6 +46,7 @@ a#next {
     position: absolute;
     top: 630px;
 	left: 178px;
+	z-index: 4;
 }
 a#prev {
     width: 20px;
@@ -59,6 +61,7 @@ a#prev {
     position: absolute;
     top: 630px;
 	left: 20px;
+	z-index: 4;
 }
 a#next:hover, a#prev:hover {
     background-color: #000;
@@ -79,8 +82,8 @@ a#prev {
 
 div#slideshowFanart {
     width: 1337px;
-    height: 733px;
-    margin: auto;
+    height: 730px;
+    margin: 0px;
     overflow: hidden;
 	opacity: 0.7;
 	position: absolute;

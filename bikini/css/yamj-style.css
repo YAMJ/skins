@@ -469,7 +469,7 @@ body {
 	padding-top: 5px;
 }	
 	
-#startlabel, #anylabel, #namelabel, #personlabel, #genrelabel, #alllabel, #serieslabel, #movielabel, #seasonlabel, #asclabel, #desclabel, #languagelabel, #stylelabel, #skinlabel, #StyleSetted, #SkinSetted, #PlayerSetted, #LangSetted, #NblineSetted, #playerlabel, #pagelabel, #ribbonlabel, #framelabel, #nbrow, #infobox {
+#startlabel, #anylabel, #namelabel, #personlabel, #yearlabel, #genrelabel, #alllabel, #serieslabel, #movielabel, #seasonlabel, #asclabel, #desclabel, #languagelabel, #stylelabel, #skinlabel, #StyleSetted, #SkinSetted, #PlayerSetted, #LangSetted, #NblineSetted, #playerlabel, #pagelabel, #ribbonlabel, #framelabel, #nbrow, #infobox {
 		display: inline;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
@@ -830,11 +830,39 @@ ul#home_left_up:hover > li{
 #movie_display{
 	height:290px;
 	}
+#vlc {
+	position: absolute;
+	top: 10px; 
+	left: 150px; 
+	z-index: 11;
+	width: 640px;
+	height: 480px;
+	visibility: hidden;
+	}
+
+
+	
+#vlc2 {
+	position: absolute;
+	top: 10px; 
+	left: 400px;
+
+	}
+	
+
+	
+#vlc_close{
+	position: absolute;
+	top: 10px;
+	left: 310px;
+	z-index: 13;
+	visibility: hidden;
+	}
 #target_display{
 	top: 70px; 
 	left: 200px;
 	height:275px;
-	width: 925px;
+	width: 1050px;
 	}
 #seasonhead {
 	visibility: hidden;

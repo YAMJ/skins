@@ -1,79 +1,97 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <lang>
-	
-	<movieselected>del cinema</movieselected>
-	<serieselected>serie</serieselected>
-	<seasonselected>stagione</seasonselected>
-	<allselected>del cinema e serie</allselected>
 	<allgenre>tutti</allgenre>
-	<personselected>persona</personselected>
-	<genreselected>tipo</genreselected>
-	<searchselected>ricerca</searchselected>
-	<configselected>configurazione</configselected>
-	<playerselected>giocatore</playerselected>
-	<fanartshow>fanart</fanartshow>
-	<personshow>persona</personshow>
-	<show>nastro</show>
-	<remotelabel>telecommando</remotelabel>
-	<uplabel>top</uplabel>
-	<downlabel>basso</downlabel>
-	<rightlabel>diritto</rightlabel>
-	<leftlabel>sinistra</leftlabel>
-	<homelabel>casa</homelabel>
-	<setuplabel>impostazione</setuplabel>
-	<audiolabel>audio</audiolabel>
-	<mutelabel>muto</mutelabel>
-	<volumeuplabel>vol+</volumeuplabel>
-	<volumedownlabel>vol-</volumedownlabel>
-	<stoplabel>stop</stoplabel>
-	<playlabel>giocare</playlabel>
-	<rewindlabel>riavvolgere</rewindlabel>
-	<prevremotelabel>precedente</prevremotelabel>
-	<nextremotelabel>prossimo</nextremotelabel>
-	<fwdlabel>avanti</fwdlabel>
-	<infolabel>info</infolabel>
-	<repeatlabel>ripetizione</repeatlabel>
-	<subtitlelabel>sottotitlo</subtitlelabel>
-	<menulabel>menu</menulabel>
-	<returnlabel>ritorno</returnlabel>
-	<powerlabel>potenza</powerlabel>
-	<pauselabel>pausa</pauselabel>
-	<closeremotelabel>close remoto</closeremotelabel>
-	<enterlabel>inserire</enterlabel>
-	<redlabel>rosso</redlabel>
-	<bluelabel>blu</bluelabel>
-	<yellowlabel>giallo</yellowlabel>
-	<greenlabel>verde</greenlabel>
-	<ejectlabel>espellere</ejectlabel>
-	<titlelabel>titolo</titlelabel>
-	<filemodelabel>modalita file</filemodelabel>
-	<tvmodelabel>modalia tv</tvmodelabel>
-	<sourcelabel>origine</sourcelabel>
-	<zoomlabel>zoom</zoomlabel>
+	<allselected>del cinema e serie</allselected>
 	<anglelabel>aspetto</anglelabel>
-	<timeseeklabel>tempo di ricer.</timeseeklabel>
-	<pagelabel>pagina</pagelabel>
-	<stylelabel>stile</stylelabel>
-	<seasonlabel>stagione</seasonlabel>
-	<movielabel>del cinema</movielabel>
-	<serieslabel>serie</serieslabel>
-	<episodelabel>episodio</episodelabel>
-	<plotlabel>sinossi</plotlabel>
-	<filelabel>file</filelabel>
-	<genrelabel>tipo</genrelabel>
-	<personlabel>persona</personlabel>
-	<startlabel>inizia con</startlabel>
-	<namelabel>cognome</namelabel>	
 	<anylabel>contiene</anylabel>
-	<selectionlabel>selezione</selectionlabel>
 	<ascending>ascendente</ascending>
+	<audiolabel>audio</audiolabel>
+	
+	<bluelabel>blu</bluelabel>
+	
+	<configselected>configurazione</configselected>
+	<closeremotelabel>close remoto</closeremotelabel>
+	
 	<descending>discendente</descending>
-	<resultstext>provocare</resultstext>
-	<selection>selezione</selection>
-	<noplot>non sinossi disponibili</noplot>
+	<downlabel>basso</downlabel>
+	
+	<ejectlabel>espellere</ejectlabel>
+	<enterlabel>inserire</enterlabel>
+	<episodelabel>episodio</episodelabel>
+	
+	<fanartshow>fanart</fanartshow>
+	<filelabel>file</filelabel>
+	<filemodelabel>modalita file</filemodelabel>
+	<fwdlabel>avanti</fwdlabel>
+	
+	<genrelabel>tipo</genrelabel>
+	<genreselected>tipo</genreselected>
+	<greenlabel>verde</greenlabel>
+	
+	<homelabel>casa</homelabel>
+	
+	<infolabel>info</infolabel>
+	
+	<language>lingua</language>
+	<leftlabel>sinistra</leftlabel>
+	
+	<menulabel>menu</menulabel>
+	<movielabel>del cinema</movielabel>
+	<mutelabel>muto</mutelabel>
+	<movieselected>del cinema</movieselected>
+	
+	<namelabel>cognome</namelabel>	
+	<nbrow>nb di fila</nbrow>
+	<nextremotelabel>prossimo</nextremotelabel>
 	<nobiography>biografia assente</nobiography>
 	<nobirthday>data di nascita sconosciuta</nobirthday>
+	<noplot>non sinossi disponibili</noplot>
 	<noposter>non manisfesta</noposter>
-	<nbrow>nb di fila</nbrow>
-	<language>lingua</language>
+	
+	<pagelabel>pagina</pagelabel>
+	<pauselabel>pausa</pauselabel>
+	<personlabel>persona</personlabel>
+	<personselected>persona</personselected>
+	<personshow>persona</personshow>
+	<playerselected>giocatore</playerselected>
+	<playlabel>giocare su </playlabel>
+	<plotlabel>sinossi</plotlabel>
+	<powerlabel>potenza</powerlabel>
+	<prevremotelabel>precedente</prevremotelabel>
+	
+	<redlabel>rosso</redlabel>
+	<remotelabel>telecommando</remotelabel>
+	<repeatlabel>ripetizione</repeatlabel>
+	<resultstext>provocare</resultstext>
+	<returnlabel>ritorno</returnlabel>
+	<rewindlabel>riavvolgere</rewindlabel>
+	<rightlabel>diritto</rightlabel>
+	
+	<searchselected>ricerca</searchselected>
+	<seasonlabel>stagione</seasonlabel>
+	<seasonselected>stagione</seasonselected>
+	<selection>selezione</selection>
+	<selectionlabel>selezione</selectionlabel>
+	<serieslabel>serie</serieslabel>
+	<serieselected>serie</serieselected>
+	<setuplabel>impostazione</setuplabel>
+	<show>nastro</show>
+	<sourcelabel>origine</sourcelabel>
+	<startlabel>inizia con</startlabel>
+	<stoplabel>stop</stoplabel>
+	<stylelabel>stile</stylelabel>
+	<subtitlelabel>sottotitlo</subtitlelabel>
+	
+	<titlelabel>titolo</titlelabel>
+	<timeseeklabel>tempo di ricer.</timeseeklabel>
+	<tvmodelabel>modalia tv</tvmodelabel>
+	
+	<uplabel>top</uplabel>
+	
+	<volumedownlabel>vol-</volumedownlabel>
+	<volumeuplabel>vol+</volumeuplabel>
+	
+	<yellowlabel>giallo</yellowlabel>
+	
+	<zoomlabel>zoom</zoomlabel>
 </lang>

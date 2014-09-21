@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<title>YAMJv3 Player</title>
+<script language="javascript" src="js/jQuery.js"></script>
+
+<script type="text/javascript">
+
+	function direct_play () 
+		{
+		//	window.location.hash = !!window.MSInputMethodContext;
+			movie_to_play = localStorage.getItem("ToPlay");
+			$('.test_video').attr('src', movie_to_play);
+			console.log("Popup_Player: " +movie_to_play );
+		}
+    function generateWindowsMediaPlayer(
+        holderId,   // String
+        height,     // Number
+        width,      // Number
+		autoplay 	// String
+       
+        // you can declare more arguments for more flexibility
+        ) 
+		{
+		//	window.location.hash = !!window.MSInputMethodContext;
+			movie_to_play = localStorage.getItem("ToPlay");
+			var holder = document.getElementById(holderId);	
+		//	console.log("Popup_Player: " +movie_to_play + "browser: "+window.location.hash);
+		//	if(window.location.hash == "#true") {
+		// Internet Explorer 11
+			if(IE_browser()) {
+			IEbrowser = true; 
+				var player = '<object ';
+				player += 'id="wmpplayer"';
+				player += 'height="' + height.toString() + '" ';
+				player += 'width="' + width.toString() + '" ';
+				player += 'classid="CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95"'
+				player += 'codebase="http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=5,1,52,701"' 
+				player += 'application/x-oleobject" >';
+				player += '<param name="fullScreen" value="1" >';
+				player += '<param name="FileName" value="' + movie_to_play + '" >';
+				player += '<param name="autoStart" value="' + autoplay + '" >';
+				player += '<embed type="application/x-mplayer2" ';
+				player += 'id="wmpplayer"';
+				player += 'height="' + height.toString() + '" ';
+				player += 'width="' + width.toString() + '" ';
+				player += 'autoStart="' + autoplay + '" ';
+				player += 'FileName="' + movie_to_play + '" ';
+				player += 'fullScreen="1" ';
+				player += ' ></embed>';	
+				player += '</object>';
+			} else {
+		// other browser 
+			IEbrowser = false;
+			var player = '<object ';
+				player += 'id="vlcplayer"';
+				player += 'height="' + height.toString() + '" ';
+				player += 'width="' + width.toString() + '" ';
+				player += 'type="application/x-vlc-plugin" >';
+				player += '<param name="FileName" value="' + movie_to_play + '" >';
+				player += '<param name="autoStart" value="' + autoplay + '" >';
+				player = '<embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org"';
+				player += 'id="vlcplayer"';
+				player += 'height="' + height.toString() + '" ';
+				player += 'width="' + width.toString() + '" ';
+				player += 'autoplay="' + autoplay + '" ';
+				player += 'target="' + movie_to_play + '" ';
+				player += '</embed>';	
+				player += '</object>';
+			}
+			holder.innerHTML = player;
+    }
+	function fullscreen ()
+	{ 
+		if( !IE_browser()) {
+		console.log ("popup_player: fullscreen for vlc");
+			var vlc = document.getElementById("vlcplayer");
+			vlc.video.toggleFullscreen();
+			} else {
+		console.log ("popup_player: fullscreen for wmp");
+			var wmp = document.getElementById("wmpplayer");
+			wmp.fullScreen = 1;
+			}
+			
+	}
+	function IE_browser ()
+	{
+		var trident = !!navigator.userAgent.match(/Trident\/7.0/);
+		var net = !!navigator.userAgent.match(/.NET4.0E/);
+		var IE11 = trident && net
+		var IEold = ( navigator.userAgent.match(/MSIE/i) ? true : false );
+		if(IE11 || IEold){ return true;} else{ return false;}
+	}
+</script>
+</head>
+<body onload="generateWindowsMediaPlayer('wmpHolder', 480, 640, 1); fullscreen ();">
+
+<div id='wmpHolder'></div> 
+<!--<body onload="direct_play()">
+<video class='test_video' src="video.mkv" autoplay controls></video>  -->
+
+</body>
+</html>

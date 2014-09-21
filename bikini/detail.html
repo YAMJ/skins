@@ -17,7 +17,20 @@
         <script src="slideshow/slideshow.js" type="text/javascript"></script>
         <script src="slideshow/slideshowFanart.js" type="text/javascript"></script>
 		<script src="slideshow/slideshowBanner.js" type="text/javascript"></script>
+		
+		
+<!--		<object classid="clsid:9BE31822-FDAD-461B-AD51-BE1D1C159921" codebase="http://download.videolan.org/pub/videolan/vlc/last/win32/axvlc.cab"></object>
+		
+
+
+
+        
+		<object classid="clsid:9BE31822-FDAD-461B-AD51-BE1D1C159921" type="application/x-vlc-plugin" codebase="http://download.videolan.org/pub/videolan/vlc/last/win32/axvlc.cab" width="640"  height="480" id="vlc" >
+		
+		</object>-->
+
         <script type="text/javascript">
+		
 // ******************************* ALL GENERAL VARIABLE **********************************************
 			// get the id and the type asked previously, data was stored from index, detail or  index_list pages 
             var current_id = localStorage.getItem("id");
@@ -47,6 +60,7 @@
 			var myVar = "";
 			var Person_toSet = true;
 			var Movie_toSet = true;
+			
 // ******************************************** COMMON RESULTS MAPPING **********************************			
 			// from jsonUrl
 			var DETAIL_HEADER = {
@@ -181,9 +195,9 @@
 											
 											return ;
 											break;
-										case 'movie':	
+										case 'movie':
+											
 											return "play_to_device(\""+arg.context.result.files[0].filename+"\")";
-										return;
 											break;
 										case 'series':
 											
@@ -211,8 +225,8 @@
 											break;	
 									};
                             },
-                      
-                  
+                
+			
 			// display the file path stored in database		
 				'span.filepath': function(arg)
                 {
@@ -232,6 +246,7 @@
 				get_lang();
 				get_style();
 				get_player();
+			
 				// construct JSON request for detail movie/series/season 
 				jsonUrl = "/yamj3/api/video/" + indextype.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot,files";
 				console.log("getData URL: " + jsonUrl);
@@ -367,8 +382,8 @@
 	// call the JSON value for episode 			
 		function perform_episode()
 		{
-	//	jsonEpisodeUrl = "/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot,files";
-		jsonEpisodeUrl = "/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot";
+		jsonEpisodeUrl = "/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot,files";
+	//	jsonEpisodeUrl = "/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot";
 		console.log("perform_episode URL: " + jsonEpisodeUrl);
 					$.ajax({
                    url: jsonEpisodeUrl,
@@ -823,18 +838,15 @@
 		}
 		
 	
-		
-	
-
-	
 
       </script>
 <!-- *************************************************************************************************************** -->
     </head>
     <body onload="getData();" onUnload="close_popup();" style="margin: 0px;  width: 1340px; height: 740px;">
+	
+	
 	<!-- navigation to index -->
-		
-		<div id="logo">
+	<div id="logo">
 						
 							<ul id="detail_home_left">
 									<li><a id="li_home_left" href="javascript:toggle_menuleft()"></a></li>
@@ -988,6 +1000,8 @@
 						
 						<!-- play button -->
 							<img class="play_detail" src="" />
+			
+				
 						
 						<!-- next , previous button -->
                             <a id="next"><img src="./pictures/next.png" /></a>
@@ -1076,7 +1090,7 @@
 
 		<!-- display config -->
 		<div id="target_display" style="visibility: hidden; ">		
-			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:920px; height:320px;" allowTransparency="true"></iframe>
+			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:1050px; height:320px;" allowTransparency="true"></iframe>
 		</div>	
 		<!-- display source data from API if needed  -->
         <div id="sourceData"></div>

@@ -17,6 +17,7 @@
         <script src="slideshow/slideshow.js" type="text/javascript"></script>
         <script src="slideshow/slideshowFanart.js" type="text/javascript"></script>
 		<script src="slideshow/slideshowBanner.js" type="text/javascript"></script>
+		
         <script type="text/javascript">
 // ******************************* ALL GENERAL VARIABLE **********************************************
 			// get the id and the type asked previously, data was stored from index, detail or  index_list pages 
@@ -222,6 +223,7 @@
 				get_lang();
 				get_style();
 				get_player();
+				
 				// construct JSON request for detail movie/series/season 
 				jsonUrl = "/yamj3/api/video/" + indextype.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot,files";
 				console.log("getData URL: " + jsonUrl);
@@ -577,6 +579,7 @@
 <!-- *************************************************************************************************************** -->
     </head>
     <body onload="getData();" >
+	
 	<!-- show the close button , allow to close the frame  -->
 	<div id="close_icon" style="position: absolute;	top: 2px; left: 913px; z-index: 10;" onclick="close_frame()"><img src="./pictures/close2.png" /></div>
 
@@ -637,7 +640,7 @@
 						
 						<!-- play button, show icon of movie or TV, click open the play dialogue box -->
 							<img class="play_frame" src="" />
-						
+
 						<!-- next , previous button -->
                             <a id="next"><img src="./pictures/next.png" /></a>
                             <a id="prev"><img src="./pictures/previous.png" /></a>

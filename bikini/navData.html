@@ -19,7 +19,11 @@
 		
 		 function NavData()
         {
-			
+			var index_method = "START";
+		// get the search method and reset to default for the next time 
+				if (localStorage.getItem("search_method"))
+					{index_method = localStorage.getItem("search_method");
+			localStorage.setItem("search_method", "START");}
 			localStorage.setItem("update_required", false);
 			var	directionnav = localStorage.getItem ("direction");
 			var	indextype = localStorage.getItem("indextype");
@@ -27,17 +31,26 @@
 		    var jsonUrl = "/yamj3/api/index/video.json?type="+indextype+"&sortby=title&sortdir="+directionnav+"&artwork=poster";
 			if (window.localStorage.getItem("selection"))
 				{
-						jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("selection") + "&field=title&mode=START";
+					if (window.localStorage.getItem("yearselected") == 'true') 
+								{
+									jsonUrl = jsonUrl + "&include=year-"+window.localStorage.getItem("selection");
+									window.localStorage.setItem("yearselected", 'false');
+									window.localStorage.setItem("selection", "");
+									window.localStorage.setItem("search_index", "");	
+								} else {
+						jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("selection") + "&field=title&mode="+index_method;
 						window.localStorage.setItem("selection", "");	
 						window.localStorage.setItem("search_index", "");	
-					}	else {	
-							if (indextype == "SEASON") 
+					} 	
+				
+							
+					
+				} else {
+						if (type == "SEASON") 
 								{
 									jsonUrl = jsonUrl + "&field=series_id&search="+series_id;
 								}
-							}
-		
-
+						}
             console.log("NavData URL: " + jsonUrl);
             var jsondata = null;
 

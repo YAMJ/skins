@@ -120,10 +120,11 @@
 			get_lang();
 			get_style();
 			get_player();
+			
 			if (window.localStorage.getItem("indextype"))
 				{index_type = window.localStorage.getItem("indextype");}
 				else {window.localStorage.setItem("indextype", index_type);}
-            var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=title&sortdir="+direction+"&artwork=poster";
+           
 		
 			switch (index_type.toLowerCase())
 				{
@@ -139,16 +140,30 @@
 					case 'season':
 						selected_index = season_select.toUpperCase();
 						break;
+					default :
+						selected_index = all_select.toUpperCase();
+						window.localStorage.setItem("indextype", 'movie,series');
 				};
+			 var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=title&sortdir="+direction;	
+					if (window.localStorage.getItem("yearselected") == 'true' && window.localStorage.getItem("selection")) 
+								{
+									jsonUrl = jsonUrl + "&include=year-"+window.localStorage.getItem("selection");
+									window.localStorage.setItem("yearselected", 'false');
+									window.localStorage.setItem("selection", "");
+									window.localStorage.setItem("search_index", "");	
+								} else {
 				
-				if (window.localStorage.getItem("search_index"))
-				{
-			
-						selected_index = selected_index + " (" +window.localStorage.getItem("search_index").toUpperCase() + ")"
-						
-						jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("search_index") + "&field=title&mode="+index_method;
-						window.localStorage.setItem("search_index", "");	
-					}	
+								if (window.localStorage.getItem("search_index"))
+								{
+							
+										selected_index = selected_index + " (" +window.localStorage.getItem("search_index").toUpperCase() + ")"
+										
+										jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("search_index") + "&field=title&mode="+index_method;
+										window.localStorage.setItem("search_index", "");	
+									}
+								}
+				jsonUrl += "&artwork=poster";
+				
 				$('#printsearch').html(selected_index);
 				console.log("Index getIndexData URL: " + jsonUrl);
 
@@ -203,6 +218,7 @@
 			document.getElementById("remoteselect").innerHTML=remote_label.toUpperCase();
 		}
         </script>
+	
 	<div class="index_header"> 
         <div id="logo_index">
 				<ul id="home_left_up">
@@ -259,6 +275,7 @@
 		<div class="directplay" style="display:none">
 				<span class="filepath"></span>
 		</div>
+		
 	<!-- display infobox -->
 		<button id="infobox" onclick="javascript:start_playing ()"></button>
 	<!-- display Remote -->
@@ -267,7 +284,7 @@
 		</div>	
 	<!-- display config / search -->
 		<div id="target_display" style="visibility: hidden; ">		
-			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:920px; height:320px;" allowTransparency="true"></iframe>
+			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:1050px; height:320px;" allowTransparency="true"></iframe>
 		</div>
 	<!-- display detail  -->
 		<div id="detail_display" style="visibility: hidden; position: absolute; top: 100px; left: 150px;">		

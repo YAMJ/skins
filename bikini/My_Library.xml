@@ -3,7 +3,8 @@
 <players>
 	<player>
 		<playername>C200</playername>
-		<playeradress>192.168.1.25</playeradress>
+		<playertype>PCH</playertype>
+		<playeradress>192.168.1.16</playeradress>
 		<path>
 			<sourcepath>W:/</sourcepath>
 			<targetpath>/opt/sybhttpd/localhost.drives/NETWORK_SHARE/READYNAS</targetpath>
@@ -16,10 +17,15 @@
 			<sourcepath>U:</sourcepath>
 			<targetpath>/opt/sybhttpd/localhost.drives/SATA_DISK</targetpath>
 		</path>
+		<path>
+			<sourcepath>T:</sourcepath>
+			<targetpath>/opt/sybhttpd/localhost.drives/NETWORK_SHARE/SYNO</targetpath>
+		</path>
 	</player>
 	<player>
 		<playername>C200-2</playername>
-		<playeradress>192.168.1.26</playeradress>
+		<playertype>PCH</playertype>
+		<playeradress>192.168.1.33</playeradress>
 		<path>
 			<sourcepath>W:</sourcepath>
 			<targetpath>/opt/sybhttpd/localhost.drives/NETWORK_SHARE/READYNAS/</targetpath>
@@ -31,6 +37,52 @@
 		<path>
 			<sourcepath>U:</sourcepath>
 			<targetpath>/opt/sybhttpd/localhost.drives/NETWORK_SHARE/PCH-C200</targetpath>
+		</path>
+		<path>
+			<sourcepath>T:</sourcepath>
+			<targetpath>/opt/sybhttpd/localhost.drives/NETWORK_SHARE/SYNO</targetpath>
+		</path>
+	</player>
+	<player>
+		<playername>PC-JLUC</playername>
+		<playertype>PC</playertype>
+		<playeradress>192.168.1.28</playeradress>
+		<path>
+			<sourcepath>W:</sourcepath>
+			<targetpath>file:///W:</targetpath>
+		</path>
+		<path>
+			<sourcepath>D:\Mes films/</sourcepath>
+			<targetpath>file:///D:/Mes films/</targetpath>
+		</path>
+		<path>
+			<sourcepath>U:</sourcepath>
+			<targetpath>file:///U:</targetpath>
+		</path>
+		<path>
+			<sourcepath>/volume1/Media/</sourcepath>
+			<targetpath>file:///T:</targetpath>
+		</path>
+		<path>
+			<sourcepath>T:</sourcepath>
+			<targetpath>file:///T:</targetpath>
+		</path>
+	</player>
+	<player>
+		<playername>TABLET-BB</playername>
+		<playertype>SMARTPHONE</playertype>
+		<playeradress>192.168.1.43</playeradress>
+		<path>
+			<sourcepath>W:</sourcepath>
+			<targetpath>http://127.0.0.1:59767/smb/admin/NAS-READYNAS/media</targetpath>
+		</path>
+		<path>
+			<sourcepath>D:\Mes films/</sourcepath>
+			<targetpath>smb://JEAN_LUC_SEVEN/D$/Mes films/</targetpath>
+		</path>
+		<path>
+			<sourcepath>U:</sourcepath>
+			<targetpath>smb://PCH-C200/share</targetpath>
 		</path>
 	</player>
 </players>

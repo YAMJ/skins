@@ -1,4 +1,10 @@
 change.txt
+v1.1.0
+- add local player for PC with wmp plugin and vlc plugin 
+- add player type PC 
+- fix series/season playback 
+- adjust: reorganize all language with alphabetic order
+- fix : search frame dimension 
 v1.0.9
 - adjust: apply to search page results the style setted 
 - adjust: apply to detail right menu the style setted

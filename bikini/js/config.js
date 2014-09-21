@@ -47,7 +47,7 @@
                     'success': function(dataSkinPosterNb)
                    {
 						jsondata = dataSkinPosterNb;
-				//		outputJson(dataSkinPosterNb);
+						outputJson(dataSkinPosterNb);
 						set_poster_value(row)
 						adjust_poster_setting (row);
 						parent.location.reload();

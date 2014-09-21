@@ -6,6 +6,9 @@
 	// display: add  <div id="sourceData"></div>  at the end of the body section 
 //**********************************************************************************************************
 	var StyleValue = "frame";
+	var vlc_added = null;
+	
+
 	// Add the source output to the end of the page
         function outputJson(yamjdata)
             {
@@ -381,7 +384,7 @@
 	// called when it's a movie , prepare the play path and set the timer to confirm playing
 	function play_to_device(basefilename)
 			{
-			console.log("play_to_device: "+PlayerValue+", basefilename=" +basefilename); 
+			console.log("play_to_device: "+Device_type+":"+PlayerValue+", basefilename=" +basefilename); 
 			for(var j = 0; j < (nbre_translate_path+1); j++){
 				if (basefilename.substring(0,source_path[j].length) == source_path[j])
 					{
@@ -391,24 +394,70 @@
 		//		console.log("play_to_device filename: "+filenametoplay);
 				temp_file_name = filenametoplay.substring(0,filenametoplay.lastIndexOf('.'));
 				file_name = temp_file_name.substring(temp_file_name.lastIndexOf('/')+1);
-				var UrlPlay="http://"+Ip_device+":8008/playback?arg0="+playcommand+"&arg1="+file_name+"&arg2="+target_path[j]+filenametoplay+"&arg3=show&arg4=0&arg5=0&arg6=disable";
-				Currentfilename = file_name;
-				CurrentUrlPlay = UrlPlay;
-					}
+				switch (Device_type)
+					{
+					case 'PCH': 
+						var UrlPlay="http://"+Ip_device+":8008/playback?arg0="+playcommand+"&arg1="+file_name+"&arg2="+target_path[j]+filenametoplay+"&arg3=show&arg4=0&arg5=0&arg6=disable";
+						Currentfilename = file_name;
+						CurrentUrlPlay = UrlPlay;
+									console.log("play_to_device: " +UrlPlay);
+						document.getElementById("infobox").innerHTML=play_label.toUpperCase()+": "+file_name+ " ?";
+						document.getElementById("infobox").style.visibility="visible";
+						myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
+					break; 
+					case 'PC':
+						Currentfilename = file_name;
+						var UrlPlay=target_path[j]+filenametoplay;
+						CurrentUrlPlay = UrlPlay;
+						localStorage.setItem("ToPlay", UrlPlay);
+						PopPlayer ();
+					break; 
+						
+					case 'SMARTPHONE':
+						var UrlPlay=target_path[j]+filenametoplay;
+						$.get(UrlPlay);	
+					break; 
+					};
+				
 				}
-		//	console.log("play_to_device: " +UrlPlay);
-			document.getElementById("infobox").innerHTML=play_label.toUpperCase()+": "+file_name+ " ?";
-			document.getElementById("infobox").style.visibility="visible";
-			myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
-			}	
 
+			}	
+		}
+	function PopPlayer()
+			{
+						console.log("PopPlayer: " +Currentfilename+ ", CurrentUrlPlay: "+CurrentUrlPlay);
+						document.getElementById("infobox").innerHTML=play_label.toUpperCase()+PlayerValue+": "+file_name+ "?"
+						document.getElementById("infobox").style.visibility="visible";
+						myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
+			//	window.open("Popup_Player.html", "YAMJv3 Player", "height=510, width=665, left=0, channelmode=no, directories=no, location=no,	menubar=no, resizable=yes, status=no, scrollbars=no,toolbar=no",false);
+			}
+			
+	
+	
 	// if playing is confirmed stop timer, send the playing command and open remote
 	function start_playing ()
 		{
 			myStopFunction('infobox');
-			$.get(CurrentUrlPlay);
-			console.log("start_playing: " +Currentfilename+ ", CurrentUrlPlay: "+CurrentUrlPlay);
-			ouvre_remote ();
+			switch (Device_type)
+					{
+					case 'PCH': 
+						$.get(CurrentUrlPlay);
+						console.log("start_playing PCH: " +Currentfilename+ ", CurrentUrlPlay: "+CurrentUrlPlay);
+						ouvre_remote ();
+					break; 
+					case 'PC':
+						console.log("start_playing PC: " +Currentfilename+ ", CurrentUrlPlay: "+CurrentUrlPlay);
+						window.open("Popup_Player.html", "YAMJv3 Player", "height=510, width=665, left=0, channelmode=no, directories=no, location=no,	menubar=no, resizable=yes, status=no, scrollbars=no,toolbar=no",false);
+					break; 
+						
+					case 'SMARTPHONE':
+						var UrlPlay=target_path[j]+filenametoplay;
+						$.get(UrlPlay);	
+					break; 
+					};
+			
+			
+	
 		}
 		
 	// this function is called when the episode is selected , start playing needs to click on the play movie icon
@@ -425,9 +474,38 @@
 
 				temp_file_name = filenametoplay.substring(0,filenametoplay.lastIndexOf('.'));
 				file_name = temp_file_name.substring(temp_file_name.lastIndexOf('/')+1);
-				var UrlPlay="http://"+Ip_device+":8008/playback?arg0="+playcommand+"&arg1="+file_name+"&arg2="+target_path[j]+filenametoplay+"&arg3=show&arg4=0&arg5=0&arg6=disable";
-				Currentfilename = file_name;
-				CurrentUrlPlay = UrlPlay;
+		//		var UrlPlay="http://"+Ip_device+":8008/playback?arg0="+playcommand+"&arg1="+file_name+"&arg2="+target_path[j]+filenametoplay+"&arg3=show&arg4=0&arg5=0&arg6=disable";
+		//		Currentfilename = file_name;
+		//		CurrentUrlPlay = UrlPlay;
+				switch (Device_type)
+					{
+					case 'PCH': 
+						var UrlPlay="http://"+Ip_device+":8008/playback?arg0="+playcommand+"&arg1="+file_name+"&arg2="+target_path[j]+filenametoplay+"&arg3=show&arg4=0&arg5=0&arg6=disable";
+						Currentfilename = file_name;
+						CurrentUrlPlay = UrlPlay;
+								//	console.log("play_to_device: " +UrlPlay);
+						document.getElementById("infobox").innerHTML=play_label.toUpperCase()+": "+file_name+ " on "+PlayerValue+"?";
+						document.getElementById("infobox").style.visibility="visible";
+						myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
+					break; 
+					case 'PC':
+						var UrlPlay=target_path[j]+filenametoplay;
+						Currentfilename = file_name;
+						CurrentUrlPlay = UrlPlay;
+						localStorage.setItem("ToPlay", UrlPlay);
+						PopPlayer ();
+					break; 
+						
+					case 'SMARTPHONE':
+						var UrlPlay=target_path[j]+filenametoplay;
+						$.get(UrlPlay);	
+					break; 
+					};
+		
+		
+		
+		
+		
 					}
 				}
 				console.log("episode_to_play:" +CurrentUrlPlay);
@@ -435,7 +513,7 @@
 	// when episode and click on the play icon set timer to confirm playing 
 	function play_episode ()
 		{	
-			document.getElementById("infobox").innerHTML=play_label.toUpperCase()+": "+Currentfilename+ " ?";
+			document.getElementById("infobox").innerHTML=play_label.toUpperCase()+": "+file_name+ " on "+PlayerValue+"?"
 			document.getElementById("infobox").style.visibility="visible";
 			myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
 		}

@@ -1,79 +1,97 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <lang>
-	
-	<movieselected>movie</movieselected>
-	<serieselected>series</serieselected>
-	<seasonselected>season</seasonselected>
-	<allselected>movie and series</allselected>
 	<allgenre>all</allgenre>
-	<personselected>person</personselected>
-	<genreselected>genre</genreselected>
-	<searchselected>search</searchselected>
-	<configselected>settings</configselected>
-	<playerselected>player</playerselected>
-	<fanartshow>fanart</fanartshow>
-	<personshow>show person</personshow>
-	<show>ribbon</show>
-	<remotelabel>remote</remotelabel>
-	<uplabel>up</uplabel>
-	<downlabel>down</downlabel>
-	<rightlabel>right</rightlabel>
-	<leftlabel>left</leftlabel>
-	<homelabel>home</homelabel>
-	<setuplabel>setup</setuplabel>
-	<audiolabel>audio</audiolabel>
-	<mutelabel>mute</mutelabel>
-	<volumeuplabel>vol+</volumeuplabel>
-	<volumedownlabel>vol-</volumedownlabel>
-	<stoplabel>stop</stoplabel>
-	<playlabel>play</playlabel>
-	<rewindlabel>rewind</rewindlabel>
-	<prevremotelabel>previous</prevremotelabel>
-	<nextremotelabel>next</nextremotelabel>
-	<fwdlabel>forward</fwdlabel>
-	<infolabel>info</infolabel>
-	<repeatlabel>repeat</repeatlabel>
-	<subtitlelabel>subtitle</subtitlelabel>
-	<menulabel>menu</menulabel>
-	<returnlabel>retour</returnlabel>
-	<powerlabel>power</powerlabel>
-	<pauselabel>pause</pauselabel>
-	<closeremotelabel>close remote</closeremotelabel>
-	<enterlabel>enter</enterlabel>
-	<redlabel>red</redlabel>
-	<bluelabel>blue</bluelabel>
-	<yellowlabel>yellow</yellowlabel>
-	<greenlabel>green</greenlabel>
-	<ejectlabel>eject</ejectlabel>
-	<titlelabel>title</titlelabel>
-	<filemodelabel>file mode</filemodelabel>
-	<tvmodelabel>tv mode</tvmodelabel>
-	<sourcelabel>source</sourcelabel>
-	<zoomlabel>zoom</zoomlabel>
+	<allselected>movie and series</allselected>
 	<anglelabel>angle</anglelabel>
-	<timeseeklabel>time seek</timeseeklabel>
-	<pagelabel>page</pagelabel>
-	<stylelabel>style</stylelabel>
-	<seasonlabel>season</seasonlabel>
-	<movielabel>movie</movielabel>
-	<serieslabel>series</serieslabel>
-	<episodelabel>episode</episodelabel>
-	<plotlabel>plot</plotlabel>
-	<filelabel>file</filelabel>
-	<genrelabel>genre</genrelabel>
-	<personlabel>person</personlabel>
-	<startlabel>starts with</startlabel>
 	<anylabel>contains</anylabel>
-	<selectionlabel>selection</selectionlabel>
 	<ascending>ascending</ascending>
+	<audiolabel>audio</audiolabel>
+	
+	<bluelabel>blue</bluelabel>
+	
+	<configselected>settings</configselected>
+	<closeremotelabel>close remote</closeremotelabel>
+	
 	<descending>descending</descending>
+	<downlabel>down</downlabel>
+	
+	<ejectlabel>eject</ejectlabel>
+	<enterlabel>enter</enterlabel>
+	<episodelabel>episode</episodelabel>
+	
+	<fanartshow>fanart</fanartshow>
+	<filelabel>file</filelabel>
+	<filemodelabel>file mode</filemodelabel>
+	<fwdlabel>forward</fwdlabel>
+	
+	<genrelabel>genre</genrelabel>
+	<genreselected>genre</genreselected>
+	<greenlabel>green</greenlabel>
+	
+	<homelabel>home</homelabel>
+	
+	<infolabel>info</infolabel>
+	
+	<language>language</language>
+	<leftlabel>left</leftlabel>
+	
+	<menulabel>menu</menulabel>
+	<movielabel>movie</movielabel>
+	<movieselected>movie</movieselected>
+	<mutelabel>mute</mutelabel>
+	
 	<namelabel>lastname</namelabel>	
-	<resultstext>results</resultstext>
-	<selection>selection</selection>
-	<noplot>no plot available</noplot>
+	<nbrow>nb of row</nbrow>
+	<nextremotelabel>next</nextremotelabel>
 	<nobiography>no biography available</nobiography>
 	<nobirthday>birthday unknown</nobirthday>
+	<noplot>no plot available</noplot>
 	<noposter>no poster</noposter>
-	<nbrow>nb of row</nbrow>
-	<language>language</language>
+	
+	<pagelabel>page</pagelabel>
+	<pauselabel>pause</pauselabel>
+	<personlabel>person</personlabel>
+	<personselected>person</personselected>
+	<personshow>show person</personshow>
+	<playerselected>player</playerselected>
+	<playlabel>play on </playlabel>
+	<plotlabel>plot</plotlabel>
+	<powerlabel>power</powerlabel>
+	<prevremotelabel>previous</prevremotelabel>
+	
+	<redlabel>red</redlabel>
+	<remotelabel>remote</remotelabel>
+	<repeatlabel>repeat</repeatlabel>
+	<resultstext>results</resultstext>
+	<returnlabel>retour</returnlabel>
+	<rewindlabel>rewind</rewindlabel>
+	<rightlabel>right</rightlabel>
+	
+	<searchselected>search</searchselected>
+	<seasonlabel>season</seasonlabel>
+	<seasonselected>season</seasonselected>
+	<selection>selection</selection>
+	<selectionlabel>selection</selectionlabel>
+	<serieslabel>series</serieslabel>
+	<serieselected>series</serieselected>
+	<setuplabel>setup</setuplabel>
+	<show>ribbon</show>
+	<sourcelabel>source</sourcelabel>
+	<startlabel>starts with</startlabel>
+	<stoplabel>stop</stoplabel>
+	<stylelabel>style</stylelabel>
+	<subtitlelabel>subtitle</subtitlelabel>
+	
+	<titlelabel>title</titlelabel>
+	<timeseeklabel>time seek</timeseeklabel>
+	<tvmodelabel>tv mode</tvmodelabel>
+	
+	<uplabel>up</uplabel>
+	
+	<volumedownlabel>vol-</volumedownlabel>
+	<volumeuplabel>vol+</volumeuplabel>
+	
+	<yellowlabel>yellow</yellowlabel>
+
+	<zoomlabel>zoom</zoomlabel>
 </lang>

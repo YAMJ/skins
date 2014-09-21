@@ -66,8 +66,10 @@
 					case 'MOVIE':
 					case 'SERIES':
 					case 'SEASON':
+				
 						localStorage.setItem("selection", search);
 						localStorage.setItem("indextype", method_selected.toLowerCase());
+						if (method_selected.toLowerCase() == 'all') {localStorage.setItem("indextype", "movie, series");}
 						switch (StyleValue)
 							{
 								case 'page':
@@ -98,6 +100,7 @@
 						call_person('true');
 						if (StyleValue == 'frame') { close_search ();}
 						break;
+
 				};
 				
 		
@@ -152,6 +155,7 @@
 			document.getElementById("startlabel").innerHTML=start_label.toUpperCase();
 			document.getElementById("anylabel").innerHTML=any_label.toUpperCase();
 			document.getElementById("personlabel").innerHTML=person_select.toUpperCase();
+			document.getElementById("yearlabel").innerHTML='YEAR';
 			document.getElementById("namelabel").innerHTML=name_label.toUpperCase();
 			document.getElementById("movielabel").innerHTML=movie_select.toUpperCase();
 			document.getElementById("serieslabel").innerHTML=series_select.toUpperCase();
@@ -250,15 +254,16 @@
 							<table class="table_method_select">						
 							
 								<td style="width: 200px; text-align: left;">
-									<input type="radio" name="method_selected" value="All" onclick="method_selected = 'ALL';" id="FormAll" checked="checked" /><label for="ALL"><div id='alllabel'></div></label><br />
-									<input type="radio" name="method_selected" value="Movie" onclick="method_selected = 'MOVIE';" id="FormMovie"  /><label for="MOVIE"><div id='movielabel'></div></label><br />
-									<input type="radio" name="method_selected" value="Series" onclick="method_selected = 'SERIES';" id="FormSeries"  /><label for="SERIES"><div id='serieslabel'></div></label><br />
-									<input type="radio" name="method_selected" value="Season" onclick="method_selected = 'SEASON';" id="FormSeason"  /><label for="SEASON"><div id='seasonlabel'></div></label>
+									<input type="radio" name="method_selected" value="All" onclick="method_selected = 'ALL';localStorage.setItem('yearselected', 'false')" id="FormAll" checked="checked" /><label for="ALL"><div id='alllabel'></div></label><br />
+									<input type="radio" name="method_selected" value="Movie" onclick="method_selected = 'MOVIE';localStorage.setItem('yearselected', 'false')" id="FormMovie"  /><label for="MOVIE"><div id='movielabel'></div></label><br />
+									<input type="radio" name="method_selected" value="Series" onclick="method_selected = 'SERIES';localStorage.setItem('yearselected', 'false')" id="FormSeries"  /><label for="SERIES"><div id='serieslabel'></div></label><br />
+									<input type="radio" name="method_selected" value="Season" onclick="method_selected = 'SEASON';localStorage.setItem('yearselected', 'false')" id="FormSeason"  /><label for="SEASON"><div id='seasonlabel'></div></label>
 								</td>
 								<td style="width: 160px; text-align: left;">
 								<!-- search person by name means select with a blank before the string to search  -->
-									<input type="radio" name="method_selected" value="Name" onclick="method_selected = 'NAME';" id="FormName"  /><label for="NAME"><div id='namelabel'></div></label><br />
-									<input type="radio" name="method_selected" value="Person" onclick="method_selected ='PERSON';" id="FormPerson"  /><label for="PERSON"><div id='personlabel'></div></label><br />
+									<input type="radio" name="method_selected" value="Name" onclick="method_selected = 'NAME';localStorage.setItem('yearselected', 'false')" id="FormName"  /><label for="NAME"><div id='namelabel'></div></label><br />
+									<input type="radio" name="method_selected" value="Person" onclick="method_selected ='PERSON';localStorage.setItem('yearselected', 'false')" id="FormPerson"  /><label for="PERSON"><div id='personlabel'></div></label><br />
+									<input type="radio" name="method_selected" value="Year" onclick="localStorage.setItem('yearselected', 'true'); method_selected = localStorage.getItem('indextype').toUpperCase()" id="FormYear"  /><label for="YEAR"><div id='yearlabel'></div></label><br />
 								</td>
 								
 							</table>

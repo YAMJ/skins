@@ -9,6 +9,7 @@
 		// click enter 
  //*****************************************************************************************   
 		var Ip_device = new Array ();
+		var Device_type = new Array ();
 		var source_path = new Array ();
 		var playcommand = 'start_vod';
 		var target_path = new Array ();
@@ -108,6 +109,7 @@
 					x=z[0].getElementsByTagName('player')[player_select_rank];
 				// store ip, path for the selected player 'player'
 					Ip_device=(x.getElementsByTagName("playeradress")[0].childNodes[0].nodeValue);
+					Device_type=(x.getElementsByTagName("playertype")[0].childNodes[0].nodeValue);
 					for(j = 0; j < x.getElementsByTagName('path').length; j++){
 					source_path[j]= normalise_path(x.getElementsByTagName("sourcepath")[j].childNodes[0].nodeValue);				
 					target_path[j]= normalise_path(x.getElementsByTagName("targetpath")[j].childNodes[0].nodeValue);

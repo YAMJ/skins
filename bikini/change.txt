@@ -1,4 +1,19 @@
 change.txt
+V1.2.0
+play function for episode is now working, yamj3 API has been fixed
+- add play button for each episode 
+- add preselection of the play icon when selecting an episode
+- add button to close person frame 
+- add navigation in person windows next 2500, prev 2500, back to 1rst 2500 person
+- add year translation
+- add several genre image 
+- adjust block-genre padding
+- adjust lang.js to reorganise with alphabetical order
+- add video type button on index page 
+- fix person page call when inside person page 
+- add filmography 
+- adjust all page and frame to filmography
+- fix display the 1rst available poster rather than the 1rst on the list
 v1.1.0
 - add local player for PC with wmp plugin and vlc plugin 
 - add player type PC 

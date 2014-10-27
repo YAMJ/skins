@@ -510,6 +510,53 @@
 				}
 				console.log("episode_to_play:" +CurrentUrlPlay);
 			}
+			
+	function preset_episode_to_play(basefilename)
+			{
+			console.log("preset_episode_to_play :"+PlayerValue+" basefilename=" +basefilename); 
+			for(var j = 0; j < (nbre_translate_path+1); j++){
+				if (basefilename.substring(0,source_path[j].length) == source_path[j])
+					{
+				filenametoplay = basefilename.substring(source_path[j].length);
+		//		tempfile = filenametoplay.replace(/\&/g,"%26").replace(/\?/g,"%3F").replace(/\+/g,"%2B");
+		//   	will be checked later if necessary		
+				console.log("filename: "+filenametoplay);
+
+				temp_file_name = filenametoplay.substring(0,filenametoplay.lastIndexOf('.'));
+				file_name = temp_file_name.substring(temp_file_name.lastIndexOf('/')+1);
+		//		var UrlPlay="http://"+Ip_device+":8008/playback?arg0="+playcommand+"&arg1="+file_name+"&arg2="+target_path[j]+filenametoplay+"&arg3=show&arg4=0&arg5=0&arg6=disable";
+		//		Currentfilename = file_name;
+		//		CurrentUrlPlay = UrlPlay;
+				switch (Device_type)
+					{
+					case 'PCH': 
+						var UrlPlay="http://"+Ip_device+":8008/playback?arg0="+playcommand+"&arg1="+file_name+"&arg2="+target_path[j]+filenametoplay+"&arg3=show&arg4=0&arg5=0&arg6=disable";
+						Currentfilename = file_name;
+						CurrentUrlPlay = UrlPlay;
+							console.log("preset_episode_to_play: on PCH " +UrlPlay);
+						document.getElementById("infobox").innerHTML=play_label.toUpperCase()+": "+file_name+ " on "+PlayerValue+"?";
+						// document.getElementById("infobox").style.visibility="visible";
+						// myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
+					break; 
+					case 'PC':
+						var UrlPlay=target_path[j]+filenametoplay;
+						Currentfilename = file_name;
+						CurrentUrlPlay = UrlPlay;
+						localStorage.setItem("ToPlay", UrlPlay);
+							console.log("preset_episode_to_play: pn PC " +UrlPlay);
+						// PopPlayer ();
+					break; 
+						
+					case 'SMARTPHONE':
+						var UrlPlay=target_path[j]+filenametoplay;
+						//	console.log("preset_episode_to_play: on Smartphone " +UrlPlay);
+						// $.get(UrlPlay);	
+					break; 
+					};
+
+					}
+				}
+			}
 	// when episode and click on the play icon set timer to confirm playing 
 	function play_episode ()
 		{	

@@ -411,7 +411,7 @@
 							for (i = 0; i < totalepisode_title.length; i++) 
 							{
 							// construct an activ episode list, click on an episode will display title, videoimage, plot and prepare the filepath to play 
-								outputepisode_title +=	"<a href=\"#\" onclick=\"episode_to_play('"+totalepisode_title[i].filename+"');display_Episode_videoimage ('videoimage"+[i]+"','episodeplot"+[i]+"','episodetitle"+[i]+"',"+totalepisode_title.length+");\" >"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</a><br>";
+								outputepisode_title +=	"<a href=\"#\" onclick=\"display_Episode_videoimage ('videoimage"+[i]+"','episodeplot"+[i]+"','episodetitle"+[i]+"',"+totalepisode_title.length+"); preset_episode_to_play('"+totalepisode_title[i].filename+"')\" >"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</a><img id=img_play_episode src=\"pictures/remote_play.png\"   onclick=\"episode_to_play('"+totalepisode_title[i].filename+"')\"></img><br>";
 							}
 							return outputepisode_title;
 						},
@@ -783,6 +783,7 @@
 		//	localStorage.setItem("id", localStorage.getItem("id"));
 			localStorage.setItem("indextype", indextype.toLowerCase());
 			console.log("ouvre_popup_person:  style:"+StyleValue+ " type:" +indextype+" id:"+localStorage.getItem('id'));
+			localStorage.setItem("back_close", "close");
 			switch (StyleValue)
 					{
 					case 'frame':

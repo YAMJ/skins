@@ -17,9 +17,20 @@
 				var	id = localStorage.getItem ("Person_id");
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 				get_lang();				
-                jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=artwork,biography";
+                jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=artwork,biography,filmography&sort=desc";
                 var jsondata = null;
-
+				switch (window.localStorage.getItem('back_close'))
+				{
+					case 'back':
+						document.getElementById('back_icon').style.visibility="hidden";
+						document.getElementById('close_icon').style.visibility="visible";
+					break;	
+					case 'close':
+						document.getElementById('close_icon').style.visibility="hidden";
+						document.getElementById('back_icon').style.visibility="visible";
+					break;
+					
+				}
                 console.log("Call for URL with person ID:" + id);
                 console.log("URL: " + jsonUrl);
 
@@ -30,7 +41,7 @@
                     'success': function(data)
                     {
                         jsondata = data;
-					//	 outputJson(data); 	
+					//	outputJson(data); 	
                         updateHtml(data);
 						
                     }
@@ -76,9 +87,57 @@
                         }
                     }
                 };
-                $p('.template').render(yamjdata, YAMJ_DIR);				
+			  var LIST_FILMOGRAPHY = {
+						'span.filmography': function(arg)
+						{
+							var filmography_list = arg.context.result.filmography;
+							var output = filmography_label +":<br>";
+						  
+							// loop thru the list of filmography
+							for (i = 0; i < filmography_list.length; i++) {
+								temp_output = filmography_list[i].year + " - " + filmography_list[i].title + " - " + filmography_list[i].job.substring(0,1).toUpperCase() + filmography_list[i].job.substring(1).toLowerCase() + " (" + filmography_list[i].role.italics() +")<br>";
+								
+								if (filmography_list[i].videoDataId != -1)
+									{
+									  temp_output = "<a href=\"javascript:setId('" + filmography_list[i].type + "', '" + filmography_list[i].videoDataId + "')\"><img src=\"pictures\\icon-play_on.png\" ></img></a>" + temp_output ;
+									}
+								output = output +  temp_output;
+							}
+							return output;
+						}
+				};
+				$p('.template').render(yamjdata, YAMJ_DIR);		
+				$p('.result_filmography').render(yamjdata, LIST_FILMOGRAPHY);	
             }
 			
+			 function setId(type, id)
+        {
+            window.localStorage.setItem("indextype", type);
+            window.localStorage.setItem("id", id);
+            console.log("setId Storing value: " + type + "-" + id);
+          	window.open("detail.html", "YAMJ v3 detail page", "");
+        }
+			function close_person ()
+			{
+				console.log("close_person:  style:"+window.localStorage.getItem('Style'));
+				switch (window.localStorage.getItem('Style'))
+				{
+					case 'frame':
+						parent.document.getElementById('person_display').style.visibility="hidden";
+					break;	
+					case 'page':
+						this.window.close();
+					break;
+					case 'ribbon':
+						this.window.close();
+					break;	
+					case 'popup':
+						this.window.close();
+					break;
+					
+				}
+				parent.document.getElementById('person_display').style.visibility="hidden";
+			} 
 			function back ()
 			{
 				console.log ("Popup_Person: back : style: "+window.localStorage.getItem('Style'));
@@ -129,7 +188,8 @@
                     <td rowspan="4"><span class="image"></span></td>
                     
 					<td>
-				<a href="javascript:back()"><img src="./pictures/returnbutton.png" width="30px" align="left" /></a>
+				<div id="close_icon" onclick="close_person()" style="position: absolute; top: 0px; right: 0px;"><img src="./pictures/close2.png" width="40"/></div>
+				<a id="back_icon" href="javascript:back()"><img src="./pictures/returnbutton.png" width="30px" align="left" /></a>
 					<span class="name"></span>: 
                     <span class="birthPlace"></span> - 
                     <span class="birthDay"></span>
@@ -141,8 +201,19 @@
                
                     <td><span class="biography"></span></td>
                 </tr>
+	
+	
             </table>
         </div>
+		<table class="result_filmography">
+			
+						<tr>
+							<td><span class="filmography"></span></td>  <!-- display filmography -->
+						</tr>
+					
+					</table>
+		
+		
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>		
     </body>

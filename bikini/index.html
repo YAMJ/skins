@@ -77,17 +77,23 @@
 						}
 					},
                     "img.poster@src": function(arg) {
+						// set dummy as default poster
+                       var output_poster = "pictures/dummy.jpg";
                         // Check to see if there are posters
                         if (arg.item.artwork.POSTER) {
-                            // Get the first poster from the list
-                            var poster = arg.item.artwork.POSTER[0];
-                            if (poster.generatedId === 0) {
-                                return "pictures/dummy.jpg";
-                            }
-                            return arg.context.baseArtworkUrl + poster.filename;
-                        } else {
-                            return "pictures/dummy.jpg";
-                        }
+						var boucle = true;
+						var poster = arg.item.artwork.POSTER; 
+						// Get the first poster available from the list
+						for (i = 0; boucle && i < poster.length; i++) 
+							{
+								if (poster[i].generatedId != 0)
+								{
+									boucle = false;
+									output_poster = arg.context.baseArtworkUrl + poster[i].filename;
+								} 
+							}
+						}
+						return output_poster;
                     },
 		
                     "img.poster@onclick": function(arg) {
@@ -216,6 +222,10 @@
 			document.getElementById("configindex").innerHTML=config_select.toUpperCase();
 			document.getElementById("searchindex").innerHTML=search_select.toUpperCase();
 			document.getElementById("remoteselect").innerHTML=remote_label.toUpperCase();
+			document.getElementById("allgenre").innerHTML=all_genre.toUpperCase();
+			document.getElementById("moviegenre").innerHTML=movie_select.toUpperCase();
+			document.getElementById("seriesgenre").innerHTML=series_select.toUpperCase();
+			document.getElementById("seasongenre").innerHTML=season_select.toUpperCase();
 		}
         </script>
 	
@@ -275,7 +285,22 @@
 		<div class="directplay" style="display:none">
 				<span class="filepath"></span>
 		</div>
-		
+		<div id="main_index">			
+			<form id="monFormGenre">
+			
+					<table align="right" >
+						<tr>
+							<td>							
+								<input  type="radio" onclick="ChangeIndex('movie,series')" name="select_genre" /><label id='allgenre'></label>
+								<input  type="radio" onclick="ChangeIndex('movie')" name="select_genre"/><label id='moviegenre'></label>
+								<input  type="radio" onclick="ChangeIndex('series')" name="select_genre"/><label id='seriesgenre'></label>
+								<input  type="radio" onclick="ChangeIndex('season')" name="select_genre"/><label id='seasongenre'></label>
+							<td>
+						</tr>
+					</table>
+				
+			</form>
+		</div>
 	<!-- display infobox -->
 		<button id="infobox" onclick="javascript:start_playing ()"></button>
 	<!-- display Remote -->

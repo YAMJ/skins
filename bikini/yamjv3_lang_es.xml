@@ -22,6 +22,7 @@
 	<fanartshow>fanart</fanartshow>
 	<filelabel>espediante</filelabel>
 	<filemodelabel>modo de archi.</filemodelabel>
+	<filmographylabel>filmografia</filmographylabel>
 	<fwdlabel>adelante</fwdlabel>
 	
 	<genrelabel>tipo</genrelabel>
@@ -91,6 +92,7 @@
 	<volumedownlabel>vol-</volumedownlabel>
 	<volumeuplabel>vol+</volumeuplabel>
 	
+	<yearlabel>anos</yearlabel>
 	<yellowlabel>amarillo</yellowlabel>
 
 	<zoomlabel>zoom</zoomlabel>	

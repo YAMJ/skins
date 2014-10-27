@@ -84,8 +84,8 @@
     float: left;
     width: 100px;
     height: 130px;
-	margin: 5px;
-    padding: 5px;	
+	margin: 4px;
+    padding: 4px;	
 }
 #container .block:hover, #container .genre_block:hover  {
 	border: 3px solid yellow; 
@@ -830,6 +830,10 @@ ul#home_left_up:hover > li{
 #movie_display{
 	height:290px;
 	}
+
+#person_display{
+	height:630px;
+	}
 #vlc {
 	position: absolute;
 	top: 10px; 
@@ -971,8 +975,21 @@ ul#home_left_up:hover > li{
 	width: 947px;
 	visibility: hidden;
 	}
+#img_play_episode {
+	position: relative;
+	top: 2px;
+	left: 15px;
+	height: 13px;
+	}
+#img_play_episode:hover {
+	position: relative;
+	top: 4px;
+	left: 15px;
+	height: 15px;
+	}
 
-	
+
+
 #list_episode_title
 {
 	position: relative;

@@ -74,17 +74,23 @@
 						}
 					},
                     "img.poster@src": function(arg) {
+                        	// set dummy as default poster
+                       var output_poster = "pictures/dummy.jpg";
                         // Check to see if there are posters
                         if (arg.item.artwork.POSTER) {
-                            // Get the first poster from the list
-                            var poster = arg.item.artwork.POSTER[0];
-                            if (poster.generatedId === 0) {
-                                return "pictures/dummy.jpg";
-                            }
-                            return arg.context.baseArtworkUrl + poster.filename;
-                        } else {
-                            return "pictures/dummy.jpg";
-                        }
+						var boucle = true;
+						var poster = arg.item.artwork.POSTER; 
+						// Get the first poster available from the list
+						for (i = 0; boucle && i < poster.length; i++) 
+							{
+								if (poster[i].generatedId != 0)
+								{
+									boucle = false;
+									output_poster = arg.context.baseArtworkUrl + poster[i].filename;
+								} 
+							}
+						}
+						return output_poster;
                     },
                     "img.poster@onclick": function(arg) {
                         return "setId('" + arg.item.videoType + "', " + arg.item.id + ")";

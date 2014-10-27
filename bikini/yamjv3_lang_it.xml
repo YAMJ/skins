@@ -22,6 +22,7 @@
 	<fanartshow>fanart</fanartshow>
 	<filelabel>file</filelabel>
 	<filemodelabel>modalita file</filemodelabel>
+	<filmographylabel>filmografia</filmographylabel>
 	<fwdlabel>avanti</fwdlabel>
 	
 	<genrelabel>tipo</genrelabel>
@@ -91,6 +92,7 @@
 	<volumedownlabel>vol-</volumedownlabel>
 	<volumeuplabel>vol+</volumeuplabel>
 	
+	<yearlabel>anno</yearlabel>
 	<yellowlabel>giallo</yellowlabel>
 	
 	<zoomlabel>zoom</zoomlabel>

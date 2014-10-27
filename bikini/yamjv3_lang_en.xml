@@ -22,6 +22,7 @@
 	<fanartshow>fanart</fanartshow>
 	<filelabel>file</filelabel>
 	<filemodelabel>file mode</filemodelabel>
+	<filmographylabel>filmography</filmographylabel>
 	<fwdlabel>forward</fwdlabel>
 	
 	<genrelabel>genre</genrelabel>
@@ -91,6 +92,7 @@
 	<volumedownlabel>vol-</volumedownlabel>
 	<volumeuplabel>vol+</volumeuplabel>
 	
+	<yearlabel>year</yearlabel>
 	<yellowlabel>yellow</yellowlabel>
 
 	<zoomlabel>zoom</zoomlabel>

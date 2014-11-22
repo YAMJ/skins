@@ -1,4 +1,41 @@
 change.txt
+V1.3.0
+- add boxset list and index of video in boxset - need to be completed 
+- add studio list and list of video for a specified studio, activ info studio in detail page 
+- add rating list by rating site or combined all together, list of video for a specified rating, activ info rating in detail page 
+- add certification list, list of video for a specified certification, activ info certification in detail page 
+- add source list, list of video for a specified source, activ info source in detail page 
+- add custom genre page - allow to specify fo r each genre the target genre
+- add scrolling left frame for navigation beetween all the pages 
+- add new scrolling with mouse or finger with the scrolling left frame without scrollbar
+- adjust a lot of positionning info in the info box 
+- add a lot of translating words
+- add watched/unwatched selector
+- add new selector , new icon for 30 days creation in database, and a set a days for new files in the filesystem
+- add icon to select movie, series, season, all
+- add mediainfo in detail page 
+- add delete option for a specified video to remove from the database (not from the filesystem) 
+- add edit function to remove poster and fanart from the detail page - remove from the database 
+- add short cast list in detail page 
+- add left navigation frame auto-visible in detail page 
+- all call to yamjv3 home page from the skin 
+- fix several bugs 
+- fix positionning bugs 
+- adjust all the inner call to yamjv3 API (special thanks to @modmax, which is making a fabulous job) 
+V1.2.1
+- adjust person display popup with filmography
+- add genres target implementation
+- add mediainfo implementation
+- add watched implementation 
+- add contextual menu right icon for detail page
+- add ignore action for unwanted poster
+- add delete entry in database for movie / series 
+- fix pathname with current version
+- fix Filename instead og filename
+- add &used=true to genre selection 
+- add genrelist html page 
+- add genrelist edit function 
+- add menu yamjv3 
 V1.2.0
 play function for episode is now working, yamj3 API has been fixed
 - add play button for each episode 

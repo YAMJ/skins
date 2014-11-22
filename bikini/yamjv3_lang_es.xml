@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <lang>
+	<alllabel>todo</alllabel>
 	<allgenre>todo</allgenre>
 	<allselected>película y serie</allselected>
 	<anglelabel>aspecto</anglelabel>
@@ -9,8 +10,9 @@
 	
 	<bluelabel>azuk</bluelabel>
 	
-	<configselected>configuracion</configselected>
+	<certificationlabel>certificacion</certificationlabel>
 	<closeremotelabel>cierre a distancia</closeremotelabel>
+	<configselected>configuracion</configselected>
 	
 	<descending>descendiente</descending>
 	<downlabel>bajo</downlabel>
@@ -23,9 +25,12 @@
 	<filelabel>espediante</filelabel>
 	<filemodelabel>modo de archi.</filemodelabel>
 	<filmographylabel>filmografia</filmographylabel>
+	<formatlabel>formato</formatlabel>
+	<fpslabel>fps</fpslabel>
 	<fwdlabel>adelante</fwdlabel>
 	
 	<genrelabel>tipo</genrelabel>
+	<genrelistselect>lista de genero</genrelistselect>
 	<genreselected>tipo</genreselected>
 	<greenlabel>verde</greenlabel>
 	
@@ -60,11 +65,14 @@
 	<powerlabel>potencia</powerlabel>
 	<prevremotelabel>anterior</prevremotelabel>
 	
+	<ratinglabel>clasification</ratinglabel>
+	<ratingindex>clasification</ratingindex>
 	<redlabel>rojo</redlabel>
 	<remotelabel>mando a distancia</remotelabel>
 	<repeatlabel>repeticion</repeatlabel>
 	<resultstext>resultado</resultstext>
 	<returnlabel>retorno</returnlabel>
+	<runtimelabel>plazo</runtimelabel>
 	<rewindlabel>rebobinar</rewindlabel>
 	<rightlabel>derecho</rightlabel>
 	
@@ -73,24 +81,29 @@
 	<seasonselected>temporada</seasonselected>
 	<selection>selección</selection>
 	<selectionlabel>seleccion</selectionlabel>
+	<serieslabel>serie</serieslabel>
 	<serieselected>serie</serieselected>
 	<setuplabel>disposicion</setuplabel>
 	<show>cinta</show>
 	<sourcelabel>origen</sourcelabel>
 	<startlabel>comienza con</startlabel>
 	<stoplabel>alto</stoplabel>
+	<studioselected>estudio</studioselected>
 	<stylelabel>estilo</stylelabel>
-	<serieslabel>serie</serieslabel>
 	<subtitlelabel>subtitulo</subtitlelabel>
 	
 	<titlelabel>titulo</titlelabel>
 	<timeseeklabel>tiempo de bus.</timeseeklabel>
 	<tvmodelabel>el modo tv</tvmodelabel>
 	
+	<unwatchedselect>unwatched</unwatchedselect>
 	<uplabel>top</uplabel>
 	
+	<videolabel>video</videolabel>
 	<volumedownlabel>vol-</volumedownlabel>
 	<volumeuplabel>vol+</volumeuplabel>
+	
+	<watchedselect>non visto</watchedselect>
 	
 	<yearlabel>anos</yearlabel>
 	<yellowlabel>amarillo</yellowlabel>

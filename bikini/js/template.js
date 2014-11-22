@@ -56,6 +56,22 @@
 							document.getElementById(Id_to_toggle).style.visibility = "visible";
 						}
 					}
+		// on - off on the class selected 
+		function toggle_class(class_to_toggle)
+					{			
+						if ($('.'+class_to_toggle).css('visibility') == "visible")
+						{ 
+							$('.'+class_to_toggle).css('visibility', 'hidden');
+						} else {
+							$('.'+class_to_toggle).css('visibility', 'visible');
+						}
+					}
+		// on the class selected 
+		function display_class(class_to_toggle)
+					{$('.'+class_to_toggle).css('visibility', 'visible');}
+		// off the class selected 
+		function nodisplay_class(class_to_toggle)
+					{$('.'+class_to_toggle).css('visibility', 'hidden');}
 	// on click, show or hide the submenu, apply to the Yamj left upper menu 
 	// menu is to navigate to all the index pages without an argument 
 		
@@ -163,11 +179,59 @@
 			{
 				localStorage.setItem("indextype", indextype);
 				console.log("call_genreindex with type: "+indextype);
-				if (newpage) 
+				if (newpage == 'true') 
 				{
-					Indexpopup = window.open("navGenre.html", "YAMJ v3 index","");
+					Indexpopup = window.open("navGenre.html", "YAMJv3 Navigation genre index","");
 				} else {
-					window.location.href="navGenre.html";
+					Indexpopup = window.open("navGenre.html", "_self","");
+				}
+			}
+		// open or change to index certification page
+		function call_certificationindex(indextype, newpage)
+			{
+				localStorage.setItem("indextype", indextype);
+				console.log("call_certificationindex with type: "+indextype);
+				if (newpage == 'true') 
+				{
+					Indexpopup = window.open("navCertification.html", "YAMJv3 Navigation certification index","");
+				} else {
+					Indexpopup = window.open("navCertification.html", "_self","");
+				}
+			}
+		// open or change to index studio page
+		function call_studioindex(indextype, newpage)
+			{
+				localStorage.setItem("indextype", indextype);
+				console.log("call_studioindex with type: "+indextype);
+				if (newpage =='true') 
+				{
+					Indexpopup = window.open("navStudio.html", "YAMJv3 Navigation studio index","");
+				} else {
+					Indexpopup = window.open("navStudio.html", "_self","");
+				}
+			}
+		// open or change to index rating page
+		function call_ratingindex(indextype, newpage)
+			{
+				localStorage.setItem("indextype", indextype);
+				console.log("call_ratingindex with type: "+indextype);
+				if (newpage =='true') 
+				{
+					Indexpopup = window.open("navRating.html", "YAMJv3 Navigation rating index","");
+				} else {
+					Indexpopup = window.open("navRating.html", "_self","");
+				}
+			}
+	// open or change to index videosource page
+		function call_videosourceindex(indextype, newpage)
+			{
+				localStorage.setItem("indextype", indextype);
+				console.log("call_videosourceindex with type: "+indextype);
+				if (newpage =='true') 
+				{
+					Indexpopup = window.open("navVideosource.html", "YAMJv3 Navigation videosource index","");
+				} else {
+					Indexpopup = window.open("navVideosource.html", "_self","");
 				}
 			}
 	// open all person depending of the style 
@@ -199,11 +263,11 @@
 						}
 					case 'page':
 						{
-							if (newpage) 
+							if (newpage == 'true') 
 								{
 									Indexpopup = window.open("index_person.html", "YAMJ v3 index","");
 								} else {
-									window.location.href="index_person.html";
+									Indexpopup = window.open("index_person.html", "_self","");
 								}
 							break;
 						}
@@ -212,12 +276,12 @@
 	// open or change window to select index person page 
 		function call_personindex(newpage)
 			{
-				console.log("call_personindex: ");
-				if (newpage) 
+				console.log("call_personindex: newpage=" + newpage);
+				if (newpage == 'true') 
 					{
 						Indexpopup = window.open("index_person.html", "YAMJ v3 index","");
 					} else {
-						window.location.href="index_person.html";
+						Indexpopup = window.open("index_person.html", "_self");
 					}
 			}
 	// open or change vertical popup - ribbon window to select index person page 
@@ -233,13 +297,51 @@
 				console.log("call_personpopup: ");
 				Personpopup = window.open("navAllPerson.html", "YAMJv3 Navigation All Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=1290px, height=210px");
 
-			}		
+			}
+	// open person display for id selected
+		function open_person_popup(id)
+			{
+			   
+				localStorage.setItem("Person_id", id);
+				console.log("open_person_popup Storing value: Person_id"  + id);
+			   
+			   if (window.localStorage.getItem('Style') == "frame")
+					{
+						window.localStorage.setItem('back_close', 'back');
+						parent.frames['person_frame'].location.href='Popup_Person.html';
+						toggle_Id('person_display');
+				
+					} else { 
+					Mypopup = window.open("Popup_Person.html", "YAMJ v3 Person popup","channelmode=no, menubar=no, status=no, scrollbars=no, menubar=no, location=no, left=310px, top=5px, width=1120px, height=720px");
+					Mypopup.focus();
+					}
+			}
 	// change index page 
 		function ChangeIndex (indextype)
 			{		
 					window.localStorage.setItem("indextype", indextype);
 					console.log("Changeindex: "+indextype);
-					window.location.href="index.html";
+					Indexpopup = window.open("index.html", "_self","");
+			}
+	// watched selection 
+		function WatchedSelection (href_target, watchedselect)
+			{		
+					window.localStorage.setItem("watched", watchedselect);
+					console.log("WatchedSelection: "+watchedselect);
+					Indexpopup = window.open(href_target, "_self","");
+			}
+	// newest selection 
+		function NewestSelection (href_target, newestselect)
+			{		
+					window.localStorage.setItem("newest", newestselect);
+					console.log("NewestSelection: "+newestselect);
+					Indexpopup = window.open(href_target, "_self","");
+			}
+	// boxset selection 
+		function BoxsetSelection (href_target)
+			{		
+					console.log("BoxsetSelection: ");
+					Indexpopup = window.open(href_target, "_self","");
 			}
 	// fetch the style value in the config database , value available : page, ribbon, frame, popup
 		function get_style()
@@ -348,8 +450,8 @@
 						'span.filepath': function(arg)
 							{
 								var files = arg.context.result.files;
-								console.log("direct_play file: " + files[0].filename);
-								play_to_device(files[0].filename);
+								console.log("direct_play file: " + files[0].fileName);
+								play_to_device(files[0].fileName);
 								return "";
 								
 							}	
@@ -431,9 +533,37 @@
 						myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
 			//	window.open("Popup_Player.html", "YAMJv3 Player", "height=510, width=665, left=0, channelmode=no, directories=no, location=no,	menubar=no, resizable=yes, status=no, scrollbars=no,toolbar=no",false);
 			}
-			
-	
-	
+	function PopDelete(Current_stage_file_Id, Current_title)
+			{
+						console.log("PopDelete:  Current_stage_file_Id: "+Current_stage_file_Id);
+						document.getElementById("infobox_delete").innerHTML="Delete: "+Current_stage_file_Id+ " : " + Current_title + "?"
+						document.getElementById("infobox_delete").style.visibility="visible";
+						myVar=window.setTimeout(function(){myStopFunction('infobox_delete');},5000);
+			}	
+	// if it is confirmed stop timer and call the delete action to make his job			
+	function start_delete ()
+		{
+			myStopFunction('infobox_delete');
+			delete_stage_file_Id ()
+		}
+	function PopIgnore(Current_artwork_type, Current_located_Id)
+			{
+						console.log("PopIgnore:  Current_located_Id: "+Current_located_Id);
+						var infobox_artwork = ""
+						if (Current_artwork_type == "poster")
+						{ infobox_artwork = "infobox_ignore_poster";}
+						else {infobox_artwork = "infobox_ignore_fanart";}
+
+						document.getElementById(infobox_artwork).innerHTML="Ignore: "+ Current_located_Id + "?"
+						document.getElementById(infobox_artwork).style.visibility="visible";
+						myVar=window.setTimeout(function(){myStopFunction(infobox_artwork);},5000);
+			}	
+	// if it is confirmed stop timer and call the delete action to make his job			
+	function start_ignore (infobox_artwork)
+		{
+			myStopFunction(infobox_artwork);
+			ignore_located_Id ()
+		}
 	// if playing is confirmed stop timer, send the playing command and open remote
 	function start_playing ()
 		{
@@ -611,4 +741,16 @@
 					}
 			});
 			}
+		}
+	// open the general system yamj3 page 	
+	function ouvre_yamj3 ()
+		{
+		console.log("detail ouvre_yamj3");
+		window.open("/yamj3/", "_blank","");
+		}
+	// open the general system yamj3 page 	
+	function ouvre_genrelist ()
+		{
+		console.log("detail ouvre_yamj3");
+		window.open("Genre_Config.html", "_self","");
 		}

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <lang>
+	<alllabel>all</alllabel>
 	<allgenre>all</allgenre>
 	<allselected>movie and series</allselected>
 	<anglelabel>angle</anglelabel>
@@ -9,8 +10,9 @@
 	
 	<bluelabel>blue</bluelabel>
 	
-	<configselected>settings</configselected>
+	<certificationlabel>certification</certificationlabel>
 	<closeremotelabel>close remote</closeremotelabel>
+	<configselected>settings</configselected>
 	
 	<descending>descending</descending>
 	<downlabel>down</downlabel>
@@ -23,9 +25,12 @@
 	<filelabel>file</filelabel>
 	<filemodelabel>file mode</filemodelabel>
 	<filmographylabel>filmography</filmographylabel>
+	<formatlabel>format</formatlabel>
+	<fpslabel>fps</fpslabel>
 	<fwdlabel>forward</fwdlabel>
 	
 	<genrelabel>genre</genrelabel>
+	<genrelistselect>list of genre</genrelistselect>
 	<genreselected>genre</genreselected>
 	<greenlabel>green</greenlabel>
 	
@@ -60,11 +65,14 @@
 	<powerlabel>power</powerlabel>
 	<prevremotelabel>previous</prevremotelabel>
 	
+	<ratinglabel>rating</ratinglabel>
+	<ratingindex>rating</ratingindex>
 	<redlabel>red</redlabel>
 	<remotelabel>remote</remotelabel>
 	<repeatlabel>repeat</repeatlabel>
 	<resultstext>results</resultstext>
 	<returnlabel>retour</returnlabel>
+	<runtimelabel>duree</runtimelabel>
 	<rewindlabel>rewind</rewindlabel>
 	<rightlabel>right</rightlabel>
 	
@@ -80,6 +88,7 @@
 	<sourcelabel>source</sourcelabel>
 	<startlabel>starts with</startlabel>
 	<stoplabel>stop</stoplabel>
+	<studioselected>studio</studioselected>
 	<stylelabel>style</stylelabel>
 	<subtitlelabel>subtitle</subtitlelabel>
 	
@@ -87,13 +96,18 @@
 	<timeseeklabel>time seek</timeseeklabel>
 	<tvmodelabel>tv mode</tvmodelabel>
 	
+	<unwatchedselect>unwatched</unwatchedselect>
 	<uplabel>up</uplabel>
 	
+	<videolabel>video</videolabel>
 	<volumedownlabel>vol-</volumedownlabel>
 	<volumeuplabel>vol+</volumeuplabel>
+		
+	<watchedselect>watched</watchedselect>
 	
 	<yearlabel>year</yearlabel>
 	<yellowlabel>yellow</yellowlabel>
+
 
 	<zoomlabel>zoom</zoomlabel>
 </lang>

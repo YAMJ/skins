@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>YAMJ v3 Videosource index</title>
+        <script src="js/jQuery.js"></script>
+        <!-- Used for the JSON parsing -->
+        <script src="js/pure.js"></script>
+        <!-- Used for the paging of the index -->
+        <script src="js/js.js"></script>
+		<script src="js/my_remote.js"></script>
+        <script src="js/jPages.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/lang.js"></script>
+		<!-- Used for config  setting -->
+		<script src="js/config.js"></script>		
+		<!-- Used for template -->
+		<script src="js/template.js"></script>
+		<script src="js/library.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
+        <!-- Used for the paging of the index -->
+        <link rel="stylesheet" href="css/jPages.css">
+        <!-- Used for the fancy animations -->
+        <link rel="stylesheet" href="css/animate.css">
+		<!-- used for iscroll special -->
+		<script type="text/javascript" src="iscroll-master/build/iscroll.js"></script>
+    </head>
+    <body onload="getIndexData();">
+        <script type="text/javascript">
+			
+//***************************************************************************************
+		// set default to 2 rows and 6 columns
+		var RowperPageValue = 2;
+		var PerPageValue = 12;
+        var jsondata = null;
+		var menuleft_toggle = 0;
+		var videosource_value = ""; 
+		var	display_videosource = "";
+		var watched_method = "all";
+		// get the watched method 
+		if (localStorage.getItem("watched"))
+			{watched_method = localStorage.getItem("watched");}
+		if (localStorage.getItem("Videosource_value"))
+			{videosource_value = localStorage.getItem("Videosource_value");}
+		var index_type = "all";
+			if (window.localStorage.getItem("indextype"))
+				{index_type = window.localStorage.getItem("indextype");}
+				else {window.localStorage.setItem("indextype", index_type);}
+			
+        // This is the directive used by pure to transform the JSON data into HTML
+        // span.Title is a simple substitution of the title
+        // img.Poster@src replaces the "src" attribute of the img.Poster
+		var COUNT_HEADER = {
+                'span.ReturnCount': function(arg) {	
+					return arg.context.count+' '+results_text;
+					}
+            };	
+		
+        var LIST_DIR = {
+            "div.block": {
+                "result<-results": {
+                     "span.title": function(arg) {
+						
+					if (( arg.item.artwork.POSTER[0]) && (arg.item.videoType == 'SEASON'))
+						{					
+						return arg.item.title + '<br> '+season_label+': ' + arg.item.season;
+						} else {
+							if (arg.item.videoType == 'SERIES')
+								{ 
+									
+									return arg.item.title +'<br> '+series_label; 
+									
+								} else {
+									return arg.item.title;
+								}
+						}
+					},
+                    "img.poster@src": function(arg) {
+                        	// set dummy as default poster
+                       var output_poster = "pictures/dummy.jpg";
+                        // Check to see if there are posters
+                        if (arg.item.artwork.POSTER) {
+						var boucle = true;
+						var poster = arg.item.artwork.POSTER; 
+						// Get the first poster available from the list
+						for (i = 0; boucle && i < poster.length; i++) 
+							{
+								if (poster[i].generatedId != 0)
+								{
+									boucle = false;
+									output_poster = arg.context.baseArtworkUrl + poster[i].filename;
+								} 
+							}
+						}
+						return output_poster;
+                    },
+                    "img.poster@onclick": function(arg) {
+                        return "setId('" + arg.item.videoType + "', " + arg.item.id + ")";
+                    }, 
+					"img.playbutton@onclick": function(arg) {
+                        return "direct_play('" + arg.item.videoType + "', " + arg.item.id + ")";
+                    }, 
+					"img.infobutton@onclick": function(arg) {
+						cursor_position (); 
+                        return "direct_info('" + arg.item.videoType + "', " + arg.item.id + ")";
+                    },
+					"img.watched_small@src": function(arg)
+					{
+						if (arg.item.watched) 
+						{return "./pictures/watched.png";} else
+						{return "./pictures/unwatched.png";}
+					}
+                }
+            }
+        };
+
+        function setId(type, id)
+        {
+	
+            window.localStorage.setItem("indextype", type);
+            window.localStorage.setItem("id", id);
+            console.log("Storing value: " + type + "-" + id);
+            window.location.href="detail.html";
+        }
+
+        // This function calls the API to get the JSON data.
+        // It will then update the HTML with the data and set up the paging
+        function getIndexData()
+        {
+		// load the new scolling method for the id and class selected 
+			loaded_iscroll ();
+		// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+			get_lang();
+			get_style();
+			get_player();
+			
+			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=title&sortdir=ASC&artwork=poster&include=videosource-"+videosource_value+"&watched="+watched_method;;
+			display_videosource = video_label.toUpperCase() + ":" + videosource_value.toUpperCase();
+			get_type_selected ();
+			switch (watched_method)
+				{
+					case 'all':
+						display_videosource = display_videosource ;
+						break;
+					case 'true':
+						display_videosource = display_videosource + "(" + watched_select.toUpperCase() + ") ";
+						break;
+					case 'false':
+						display_videosource = display_videosource + "(" + unwatched_select.toUpperCase() + ") ";
+						break;
+					
+					default :
+						display_videosource = display_videosource;
+				};
+				if (display_videosource.length > 45)
+					{$('#printsearch').html(display_videosource.toLowerCase());}
+					else {$('#printsearch').html(display_videosource.toUpperCase());}
+
+				console.log("index_videosource getIndexData URL: " + jsonUrl);
+				
+            $.ajax({
+                url: jsonUrl,
+                async: false,
+                dataType: 'jsonp',
+                'success': function(data)
+                {
+                    jsondata = data;
+				//	 outputJson(data); 	
+                    updateHtml(data);
+					get_poster_number ();
+                    console.log("GetIndexData: perPageValue="+perPageValue+" paging:"+ window.localStorage.getItem('Paging'));
+					if (window.localStorage.getItem("Paging") == 'true') {pageData(perPageValue);}
+                }
+            });
+            return jsondata;
+        }
+
+        // Run the pure.js function to render the data into the HTML template
+        // div.row is the part of the template to apply it too.
+        // "row" is a CLASS attribute, not the id.
+        function updateHtml(yamjdata)
+        {
+			$p('.count_return_videosource').render(yamjdata, COUNT_HEADER);	
+            $p('div.row').render(yamjdata, LIST_DIR);
+        }
+
+		function open_videosource_index(indextype)
+        {
+			localStorage.setItem("indextype", indextype);
+            console.log("open_videosource_index Storing value: indextype: " +indextype);
+			window.location.href="index_Videosource.html";
+			Mypopup.focus();
+		}
+		function get_type_selected ()
+		{
+			switch (index_type.toLowerCase())
+				{
+					case 'movie,series':
+						
+						display_videosource = display_videosource + "(" + all_select.toUpperCase() + ")";
+						break;
+					case 'all':
+						
+						display_videosource = display_videosource + "(" + all_select.toUpperCase() + ")";
+						break;
+					case 'movie':
+						
+						display_videosource = display_videosource + "(" + movie_select.toUpperCase() + ")";
+						break;
+					case 'series':
+					
+						display_videosource = display_videosource + "(" + series_select.toUpperCase() + ")";
+						break;
+					case 'season':
+						
+						display_videosource = display_videosource + "(" + season_select.toUpperCase() + ")";
+						break;
+				};
+		}
+// ****************************** id or class with iscroll **************************************************************
+	var myScroll;
+	function loaded_iscroll () {
+	myScroll = new IScroll('#container_menu', { scrollX: true, scrollY: true, mouseWheel: true });
+	}
+	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+//************************ LANGUAGE LOCAL SETTING *********************************************		
+		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
+		function set_context_lang_value ()
+		{
+			document.getElementById("allselect").innerHTML=all_select.toUpperCase();
+	//		document.getElementById("allstudio").innerHTML=all_studio.toUpperCase();
+			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
+	//		document.getElementById("moviestudio").innerHTML=movie_select.toUpperCase();
+			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
+	//		document.getElementById("seriesstudio").innerHTML=series_select.toUpperCase();
+			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();	
+	//		document.getElementById("seasonstudio").innerHTML=season_select.toUpperCase();
+			document.getElementById("genreindex").innerHTML=genre_select.toUpperCase();
+			document.getElementById("studioindex").innerHTML=studio_select.toUpperCase();
+			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
+			document.getElementById("configindex").innerHTML=config_select.toUpperCase();
+			document.getElementById("searchindex").innerHTML=search_select.toUpperCase();
+			document.getElementById("remoteselect").innerHTML=remote_label.toUpperCase();
+			document.getElementById("yamj3select").innerHTML="YAMJ3";
+			document.getElementById("genrelistselect").innerHTML=genrelist_select.toUpperCase();
+			document.getElementById("certificationindex").innerHTML=certification_label.toUpperCase();
+			document.getElementById("ratingindex").innerHTML=rating_label.toUpperCase();
+			document.getElementById("videosourceindex").innerHTML=source_label.toUpperCase();
+	//		document.getElementById("watchedselect").innerHTML=watched_select.toUpperCase();
+	//		document.getElementById("option_watchedselect").innerHTML=watched_select.toLowerCase();
+	//		document.getElementById("option_unwatchedselect").innerHTML=unwatched_select.toLowerCase();
+	//		document.getElementById("option_allwatchedselect").innerHTML=all_label.toLowerCase();
+		}
+        </script>
+	
+    <div class="index_header"> 
+        <div id="logo_index">
+			<td>
+				<ul id="home_left_up">
+					<li><a id="li_home_left"></a></li>
+				</ul>
+			</td>
+			<div class="show_index_videosource"><span id="printsearch"></span></div>
+			<div class="count_return_videosource">
+                   <span class="ReturnCount"></span> 
+			</div>
+		<!-- just added to set the language value, shouldn't be displayed  -->
+			<div class="results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Value"></td></tr></table>
+			</div>
+			<!-- just added to set the poster number value, shouldn't be displayed  -->
+			<div class="poster_results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Poster_Value"></td></tr></table>
+			</div>
+		</div >
+		
+		<div id="main_index">			
+			<form id="monFormStudio">
+					<table align="right" >
+						<tr>
+							<td>
+								<a href="javascript:open_videosource_index('movie,series')"><img src="pictures/icon/zap/home_all_rv8.png" height="45px" width="45px" alt="tv movie"/><a>
+								<a href="javascript:open_videosource_index('movie')"><img src="pictures/icon/zap/home_movies_rv8.png" height="45x" width="45px" alt="movie" align="top" /></a>
+								<a href="javascript:open_videosource_index('series')"><img src="pictures/icon/zap/home_tv shows_rv8.png" height="45px" width="45px" alt="tv" /></a>
+								<a href="javascript:open_videosource_index('season')"><img src="pictures/icon/zap/home_apps_rv8.png" height="45px" width="45px" alt="season" /></a>
+								<a href="javascript:WatchedSelection('index_Videosource.html', 'all')"><img src="pictures/icon/zap/home_watched_rv8.png" height="45px" width="45px" alt="allwatched" /></a>
+							</td>
+							<td>
+								<a href="javascript:WatchedSelection('index_Videosource.html', 'true')"><img src="pictures/watched.png" height="20px" width="20px" alt="watched" /></a>
+								<a href="javascript:WatchedSelection('index_Videosource.html', 'false')"><img src="pictures/unwatched.png" height="20px" width="20px" alt="unwatched" /></a>
+				 
+							</td>
+						</tr>
+					</table>
+			</form>
+		</div>
+		<div class="directplay" style="display:none">
+			<span class="filepath"></span>
+		</div>
+        <!--Navigation Holder-->
+        <div class="holder"></div>
+	</div>				
+	<!-- left menu with icon -->
+    <div id="container_menu">			
+		<ul id="monFormMenu">
+	
+				<li><a href="javascript:ChangeIndex('movie,series')">
+							<img src="pictures/icon/zap/home_all_rv8.png" height="50px"  width="50px" alt="tv movie" />
+						</a><div id="allselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('movie')">
+							<img src="pictures/icon/zap/home_movies_rv8.png" height="50px"  width="50px" alt="movie" align="top" />
+						</a><div id="movieselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('series')">
+							<img src="pictures/icon/zap/home_tv shows_rv8.png" height="50px"  width="50px" alt="tv" />
+						</a><div id="serieselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('season')">
+							<img src="pictures/icon/zap/home_apps_rv8.png" height="50px"  width="50px" alt="season" />
+						</a><div id="seasonselect"></div>
+				</li>
+				<li><a href="javascript:call_personindex('false')">
+							<img src="pictures/icon/zap/home_person_rv8.png" height="50px"  width="50px" alt="person"  />
+						</a><div id="personindex"></div>
+				</li>
+				<li><a href="javascript:call_genreindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_genres2_rv8.png" height="50px"  width="50px" alt="genre" />
+						</a><div id="genreindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_popup_search(StyleValue)">
+							<img src="pictures/icon/zap/find.png" height="45px" width="50px" alt="find" />
+						</a><div id="searchindex"></div>
+				</li>
+				<li><a href="javascript:call_studioindex(index_type, 'false')">
+							<img src="pictures/icon/zap/Studio.png" height="50px"  width="50px" alt="studio"  />
+						</a><div id="studioindex"></div>
+				</li>
+				<li><a href="javascript:call_ratingindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_rating_rv8.png" height="50px"  width="50px" alt="rating"  />
+						</a><div id="ratingindex"></div>
+				</li>
+				<li><a href="javascript:call_certificationindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_certification_rv8.png" height="50px"  width="50px" alt="certification"  />
+						</a><div id="certificationindex"></div>
+				</li>
+				<li><a href="javascript:call_videosourceindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_videosource_rv8.png" height="50px"  width="50px" alt="videosurce"  />
+						</a><div id="videosourceindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_config(StyleValue)">
+							<img src="pictures/icon/zap/settings.png" height="50px" width="60px" alt="setting" />
+						</a><div id="configindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_yamj3(); ">
+							<img src="pictures/icon/zap/home.png" height="50px"  width="50px" alt="home" />
+						</a><div id="yamj3select"></div>
+				</li>
+				<li><a href="javascript:ouvre_genrelist(); ">
+							<img src="pictures/icon/zap/list_genre.png" height="50px"  width="50px" alt="liste fenre" />
+						</a><div id="genrelistselect"></div>
+				</li>
+				<li><a href="javascript:ouvre_remote(); ">
+							<img src="pictures/icon/zap/remote.png" height="50px"  width="50px" alt="remote" />
+						</a><div id="remoteselect"></div>
+				</li>
+		</ul>
+	</div>          
+        <!--Data Items Container-->
+        <div id="container">
+            <div id="yRow" class="row">
+                <div id="yBlock" class="block">
+                    <img class="poster" src="">
+					<img class="playbutton" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'">
+					<img class="infobutton" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'">
+					<img class="watched_small" src="" />
+					<br>
+                    <span class="title"></span>
+                </div>
+                <br />
+            </div>
+        </div>
+	<!-- display infobox -->
+		<button id="infobox" onclick="javascript:start_playing ()"></button>
+	<!-- display config -->
+		<div id="target_display" style="visibility: hidden; ">		
+			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:1050px; height:320px;" allowTransparency="true"></iframe>
+		</div>
+	<!-- display detail  -->
+		<div id="detail_display" style="visibility: hidden; position: absolute; top: 100px; left: 150px;">		
+			<iframe src="" name="detail_frame" resizable="yes" id="detail_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:960px; height:540px;" allowTransparency="true"></iframe>
+		</div>
+		<!-- display Movie -->
+		<div id="movie_display" style="visibility: hidden; ">
+			<iframe src="" name="movie_frame" resizable="yes" id="movie_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1245px; height:265px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display person -->
+		<div id="person_display" style="visibility: hidden; ">	
+			<iframe src="" name="person_frame" resizable="yes" id="person_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1220px; height:335px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display source data from API if needed  -->
+        <div id="sourceData"></div>
+    </body>
+</html>

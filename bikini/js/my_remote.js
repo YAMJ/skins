@@ -15,7 +15,7 @@ console.log("myTimer: " + myVar);
 
 function myStopFunction(key)
 {
-console.log("myStopFunction: " + myVar);
+console.log("myStopFunction: " + myVar + " Id:" + key);
 if (myVar) {clearInterval(myVar);}
 document.getElementById(key).style.visibility='hidden';
 } 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <lang>
+	<alllabel>tout</alllabel>
 	<allgenre>tout</allgenre>
 	<allselected>film et série</allselected>
 	<anglelabel>aspect</anglelabel>
@@ -9,8 +10,9 @@
 	
 	<bluelabel>bleu</bluelabel>
 	
-	<configselected>configuration</configselected>
+	<certificationlabel>certification</certificationlabel>
 	<closeremotelabel>ferme telecommande</closeremotelabel>
+	<configselected>configuration</configselected>
 	
 	<descending>descendant</descending>
 	<downlabel>bas</downlabel>
@@ -23,9 +25,12 @@
 	<filelabel>fichier</filelabel>
 	<filemodelabel>mode fichier</filemodelabel>
 	<filmographylabel>filmographie</filmographylabel>
+	<formatlabel>format</formatlabel>
+	<fpslabel>fps</fpslabel>
 	<fwdlabel>avance</fwdlabel>
 	
 	<genrelabel>genre</genrelabel>
+	<genrelistselect>liste de genre</genrelistselect>
 	<genreselected>genre</genreselected>
 	<greenlabel>vert</greenlabel>
 	
@@ -60,11 +65,14 @@
 	<powerlabel>marche</powerlabel>
 	<prevremotelabel>precedent</prevremotelabel>
 	
+	<ratinglabel>note</ratinglabel>
+	<ratingindex>note</ratingindex>
 	<redlabel>rouge</redlabel>
 	<remotelabel>telecommande</remotelabel>
 	<repeatlabel>repete</repeatlabel>
 	<resultstext>résultats</resultstext>
 	<returnlabel>retour</returnlabel>
+	<runtimelabel>durée</runtimelabel>
 	<rewindlabel>rembobine</rewindlabel>
 	<rightlabel>droite</rightlabel>
 
@@ -80,6 +88,7 @@
 	<sourcelabel>source</sourcelabel>
 	<startlabel>commence par</startlabel>
 	<stoplabel>stop</stoplabel>
+	<studioselected>studio</studioselected>
 	<stylelabel>style</stylelabel>
 	<subtitlelabel>sous-titre</subtitlelabel>
 	
@@ -87,13 +96,18 @@
 	<timeseeklabel>durée</timeseeklabel>
 	<tvmodelabel>mode tv</tvmodelabel>
 	
+	<unwatchedselect>non vu</unwatchedselect>
 	<uplabel>haut</uplabel>
 	
+	<videolabel>video</videolabel>
 	<volumedownlabel>vol-</volumedownlabel>	
 	<volumeuplabel>vol+</volumeuplabel>
 	
+	<watchedselect>vu</watchedselect>
+	
 	<yearlabel>an</yearlabel>
 	<yellowlabel>jaune</yellowlabel>
+	
 	<zoomlabel>zoom</zoomlabel>
 </lang>
 

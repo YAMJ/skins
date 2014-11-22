@@ -1,26 +1,64 @@
 /**************** container ************************/
-#container {
-    width: 1280px;
+#container, #container_source {
+    width: 1207px;
 	position: absolute;
 	top: 40px;
-	border: 1px solid black;
-	height: 729px;
+/*	border: 1px solid black;*/
+	height: 730px;
+	left: 81px;
 	overflow-y: auto;
 /*	margin: 2px 2px 0px 0px;
     
     padding: 5px;
     background-color: gray; */
 }
+#container_menu {
+    width: 71px;
+	position: absolute;
+	top: 40px;
+	border: 1px solid black;
+	height: 727px;
+	left: 7px;
+	z-index:7;
+
+	overflow: hidden;
+	background-color: gray;
+/*	margin: 2px 2px 0px 0px;
+    
+    padding: 5px;
+    background-color: gray; */
+}
+#container_menu_detail {
+	transition-property:  ;
+    /* La transition durera trois secondes. */
+   transition-duration: 1000ms;
+	width: 80px;
+	position: absolute;
+	top: 0px;
+	border: 1px solid black;
+	height: 727px;
+	left: 0px;
+	z-index:7;
+	background-color: gray;
+	visibility: visible;
+	opacity: 0;
+	overflow: hidden;
+	}
+#container_menu_detail:hover {	
+	opacity: 1;
+	}
 #yRow {
 	overflow: hidden;
 	}
 #container .row {
     border: 1px solid white;
-    margin: 5px;
+    margin: 0px;
 	background-color: gainsboro;
+	height: 726px;
+	overflow-y: auto;
 /* NOW SETTED INSIDE INDEX.html depending of the the number of ROW stored inside config */	
 /* if 12 posters per page, 2 rows 6 columns */	
-    padding: 5px 5px 0px 22px; 
+    padding: 5px 5px 0px 0px; 
 /* if 27 posters per page, 3 rows 9 columns 	
     padding: 5px 3px 0px 3px;*/
 /* if 60 posters per page, 5 rows 12 columns 	
@@ -28,24 +66,30 @@
 	
 }
 #container .row_person{
-	border: 1px solid white;
+/*	border: 1px solid white; */
     margin: 0px;
+	height: 728px;
 	background-color: gainsboro;
-    padding: 5px 0px 5px 0px;
+    padding: 0px;
+	overflow-y: auto;
+	
 }
-#container .row_genre {
+#container .row_genre,#container  .row_studio,#container  .row_rating, #container  .row_boxset,#container  .row_videosource,#container  .row_certification , #container_source  .row_source_rating{
 	padding: 5px 5px 5px 0px;
-	margin: 5px;
+	margin: 1px;
 	border: 1px solid white;
 	background-color: gainsboro;
+	overflow-y: auto;
+	height: 715px;
 	 }
+
 #container br {
     clear: both;
 }
 
-#container .block, #container .person_block, #container .genre_block  {
+#container .block, #container .person_block, #container .genre_block, #container .boxset_block,  #container .studio_block, #container .rating_block, #container .videosource_block, #container .certification_block   {
     text-align: center;
-    border: 3px solid white;
+    border: 1px solid white;
     float: left;
     overflow: hidden;
     background-color: whitesmoke;
@@ -53,8 +97,8 @@
 /* if 12 posters per page, 2 rows 6 columns */
     width: 175px;
     height: 290px; 
-	margin: 5px;
-    padding: 5px;		
+	margin: 0px;
+    padding: 0px;		
 /* if 27 posters per page, 3 rows 9 columns 
     height: 225px;	
 	margin: 3px;
@@ -71,14 +115,21 @@
 #container .person_block {
     width: 175px;
     height: 290px; 
-	margin: 5px;
-    padding: 5px;
+/*	margin: 5px;
+    padding: 5px; */
+	font-size:0.77em;
+    float: left;
+    width: 97px;
+    height: 180px;
+}
+#container .boxset_block {
 	font-size:0.8em;
     float: left;
     width: 100px;
-    height: 190px;
+    height: 130px;
+	margin: 4px;
+    padding: 4px;	
 }
-
 #container .genre_block {
 	font-size:0.8em;
     float: left;
@@ -87,8 +138,40 @@
 	margin: 4px;
     padding: 4px;	
 }
-#container .block:hover, #container .genre_block:hover  {
-	border: 3px solid yellow; 
+#container .studio_block {
+	font-size:0.8em;
+    float: left;
+    width: 100px;
+    height: 79px;
+	margin: 4px;
+    padding: 4px;	
+}
+#container .rating_block {
+	font-size:0.8em;
+    float: left;
+    width: 130px;
+    height: 40px;
+	margin: 4px;
+    padding: 4px;	
+}
+#container .videosource_block {
+	font-size:0.8em;
+    float: left;
+    width: 100px;
+    height: 79px;
+	margin: 4px;
+    padding: 4px;	
+}
+#container .certification_block {
+	font-size:1.0em;
+    float: left;
+    width: 100px;
+    height: 190px;
+	margin: 0px;
+    padding: 0px;	
+}
+#container .block:hover, #container .genre_block:hover, #container .boxset_block:hover, #container .person_block:hover  {
+	border: 1px solid red; 
 	}
 .code
 {
@@ -122,6 +205,13 @@
 	height: 25px;
 	width: 25px;
 	}	
+.watched_small  {
+	position: relative;
+	top: -33px;
+	left: 3px;
+	height: 19px;
+	width: 19px;
+	}	
 #container .title {
 	overflow: hidden;
 	text-align: center;
@@ -149,7 +239,7 @@ html, #tablelist,#headertable,#logo,#message
 
     font-family: Arial, Helvetica, sans-serif;
     border-collapse:collapse;
-	overflow: auto;
+	overflow: hidden;
 	padding: 0px;
 	margin: 0px;
 }
@@ -172,6 +262,8 @@ body {
 
     /* W3C Markup, IE10 Release Preview */
     background-image: linear-gradient(to right, #333333 0%, #CCCCCC 50%, #CCCCCC 50%, #333333 100%);
+	
+	overflow: hidden;
 
 }
 
@@ -252,15 +344,37 @@ body {
 /*    background:  url(../pictures/yamj-logo_repeat.png) no-repeat right,
         url(../pictures/yamj-logo_repeat.png) no-repeat left; */
 }
-#monFormGenre 
+#monFormGenre , #monFormStudio,  #monFormCertification, #monFormRating, #monFormStudio, #monFormVideosource
 	{
 		position: relative;
 		border:none;
-		width: 770px;
+		width: 830px;
 		margin-top: -1px;
 		margin-left: 20px;
 		height: 30px;
-		top: -2px;
+		top: -10px;
+	}
+#monFormGenre
+	{
+		width: 854px;
+	}
+#monFormStudio
+	{
+		width: 870px;
+	}
+#monFormCertification
+	{
+		width: 870px;
+	}
+#monFormRating
+	{
+		width: 870px;
+	}
+#monFormMenu {
+	left: 0px;
+	padding-left: 10px;
+	list-style: none;
+	height: 1050px;
 	}
 #message
 {
@@ -276,7 +390,14 @@ body {
 	-webkit-column-span:all; /* Safari and Chrome */
     text-align: center;
 }
-.show_index, .show_index_genre   {
+.source_logo {
+	text-decoration: none; 
+	color: black; 
+	font-weight: bold;
+	background-color: white;
+	
+	}
+.show_index, .show_index_genre, .show_index_boxset, .show_index_studio, .show_index_rating, .show_index_videosource , .show_index_certification  {
 		display: block;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
@@ -295,9 +416,33 @@ body {
 		left: 150px;
 		overflow: hidden;
 	}
+.show_index   {
+		width: 390px;
+		left: 115px;
+	}
+.show_index_certification   {
+		width: 390px;
+		left: 115px;
+	}
 .show_index_genre   {
-		width: 200px;
-		
+		width: 370px;
+		left: 115px;
+	}
+.show_index_boxset   {
+		width: 370px;
+		left: 115px;
+	}
+.show_index_studio   {
+		width: 390px;
+		left: 115px;
+	}
+.show_index_rating   {
+		width: 390px;
+		left: 115px;
+	}
+.show_index_videosource   {
+		width: 390px;
+		left: 115px;
 	}
 .show_personindex  {
 		display: block;
@@ -318,7 +463,7 @@ body {
 		left: 150px;
 		overflow: hidden;
 	}
-.count_return, .count_return_index,.count_return_genre {
+.count_return, .count_return_index, .count_return_genre, .count_return_boxset, .count_return_studio, .count_return_rating , .count_return_videosource , .count_return_certification  {
 		display: block;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
@@ -338,12 +483,33 @@ body {
 		overflow: hidden;
 	}
 .count_return_index  {
-		width: 175px;
+		left: 515px;
+		width: 205px;
 	}	
+.count_return_boxset {
+		left: 495px;
+		width: 205px;
+	}
 .count_return_genre {
-		width: 220px;
-		
+		left: 495px;
+		width: 205px;
 	}	
+.count_return_studio {
+		left: 515px;
+		width: 205px;
+	}
+.count_return_rating {
+		left: 515px;
+		width: 205px;
+	}
+.count_return_videosource {
+		left: 515px;
+		width: 205px;
+	}
+.count_return_certification {
+		left: 515px;
+		width: 205px;
+	}
 .tablesearchmethod
 {
     font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -469,7 +635,7 @@ body {
 	padding-top: 5px;
 }	
 	
-#startlabel, #anylabel, #namelabel, #personlabel, #yearlabel, #genrelabel, #alllabel, #serieslabel, #movielabel, #seasonlabel, #asclabel, #desclabel, #languagelabel, #stylelabel, #skinlabel, #StyleSetted, #SkinSetted, #PlayerSetted, #LangSetted, #NblineSetted, #playerlabel, #pagelabel, #ribbonlabel, #framelabel, #nbrow, #infobox {
+#startlabel, #anylabel, #namelabel, #personlabel, #yearlabel, #genrelabel, #boxsetlabel, #alllabel, #serieslabel, #movielabel, #seasonlabel, #asclabel, #desclabel, #languagelabel, #stylelabel, #skinlabel, #StyleSetted, #SkinSetted, #PlayerSetted, #LangSetted, #NblineSetted, #playerlabel, #pagelabel, #ribbonlabel, #framelabel, #nbrow, #infobox, #infobox_delete {
 		display: inline;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
@@ -485,7 +651,7 @@ body {
 		left: 0px;
 		top: 2px;
 	}	
-#infobox {
+#infobox, #infobox_delete {
 	position: absolute; 
 	top: 40px; 
 	width: auto;
@@ -493,17 +659,38 @@ body {
 	z-index: 8;
 	visibility: hidden;
 	}
-
+#infobox_delete {
+	top: 60px; 
+	left: 940px; 
+}
+#infobox_ignore_poster {
+	z-index: 8;
+	visibility: hidden;
+	position: absolute; 
+	top: 2px; 
+	width: auto;
+	left: 220px; 
+	z-index: 8;
+}
+#infobox_ignore_fanart {
+	z-index: 8;
+	visibility: hidden;
+	position: absolute; 
+	top: 145px; 
+	width: auto;
+	left: 220px; 
+	z-index: 8;
+}
 #sourceData {
 	position: absolute;
 	top: 750px;
 	}
-ul#home_left_up, ul#home_left_search {
+ul#home_left_search, #li_home_left {
 	width: 100px;
 	height:31px;
 	position: relative;
 	top: -15px;
-	left: 2px;
+	left: 0px;
 	padding:0px 0px 0px 0px;
 
 	border: 2px solid #b0b0b0;	
@@ -514,7 +701,7 @@ ul#home_left_up, ul#home_left_search {
 	}
 
 
-#li_all_up, #li_movie_up, #li_series_up, #li_season_up, #li_person_up, #li_genre_up, #li_search_up, #li_config_up, #li_remote_up, #li_home_left {
+#li_all_up, #li_movie_up, #li_series_up, #li_season_up, #li_person_up, #li_genre_up, #li_certification_up, #li_studio_up, #li_search_up, #li_config_up, #li_remote_up, #li_home_left, #li_yamj3_up, #li_genrelist_up {
 	width: 175px;
 	height:27px;
 	position: absolute;
@@ -528,9 +715,10 @@ ul#home_left_up, ul#home_left_search {
 	z-index: 99;
 	}	
  #li_home_left {
-	top: -1px;
-	left: -1px;
+	top: 0px;
+	left: 0px;
 	height: 33px;
+	width: 70px;
 	background-color:rgba(0, 0, 0, 0);
 	border: none;
 	}
@@ -555,20 +743,39 @@ ul#home_left_up, ul#home_left_search {
  #li_config_up {
 	top: 243px;
 	}
- #li_remote_up {
+ #li_yamj3_up {
 	top: 273px;
 	}
-ul#home_left_up:hover, ul#home_left_search:hover {
+ #li_genrelist_up {
+	top: 303px;
+	}
+#li_studio_up {
+	top: 333px;
+	}	
+#li_certification_up {
+	top: 363px;
+	}
+#li_remote_up {
+	top: 393px;
+	}
+#home_left:hover, ul#home_left_search:hover {
 	background-color:rgba(255, 255, 255, 0.6);
 	}
-	
-ul#home_left_up li{
-	visibility: hidden;
+#home_left {
+	visibility: visible;
+	position: absolute;
+	top: 345px;
+	left: -2px;
+	/*background: url(../pictures/next-icon_on.png) no-repeat center center rgba(255, 255, 255, 0.0);*/
+	z-index: 8;
+	width: 15px;
+	height: 25px;
 	}	
-ul#home_left_up:hover > li{
+	
+#home_left:hover > li{
 	visibility: visible;
 	}			
-#home_left_up img, #home_left_down img, #home_right_up img, #home_right_down  img, #home_left_search img{	
+#home_left img, #home_left_down img, #home_right_up img, #home_right_down  img, #home_left_search img{	
 	border: none;
 	}
 
@@ -624,16 +831,18 @@ ul#home_left_up:hover > li{
 	background-color:rgba(255, 255, 255, 0.6);
 	}	
 
-#allselect, #movieselect, #serieselect, #seasonselect, #genreindex, #personindex, #searchselect, #configselect, #searchindex, #configindex, #remoteselect
+#allselect, #movieselect, #serieselect, #seasonselect, #genreindex, #certificationindex, #ratingindex, #videosourceindex, #studioindex, #personindex, #searchselect, #configselect, #searchindex, #configindex, #remoteselect, #yamj3select, #genrelistselect
 {
     font-weight: bold;
-    color: white;
+    color: black;
 	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-	font-size:1.0em;
-	position: absolute;	
-	text-align: left;
-	top: -2px;
-	width: 140px;
+	font-size:0.6em;
+	position: relative;	
+	text-align: center;
+	top: -8px;
+	width: 70px;
+	left: -11px;
+
 	
 }
 #personselect, #genreselect, #searchselect, #button_personselect, #button_genreselect, #button_configselect, #button_genreselect_series, #rowselect  {
@@ -685,10 +894,11 @@ ul#home_left_up:hover > li{
 	left: 700px;
 	}
 	
-#language:hover, #nbrow:hover, #allselect:hover, #movieselect:hover, #genreindex:hover, #searchindex:hover, #configindex:hover, #remoteselect:hover, #personindex:hover,  #serieselect:hover, #seasonselect:hover, #personselect:hover, #genreselect:hover, #searchselect:hover, #configselect:hover, #button_genreselect:hover, #button_personselect:hover, #button_configselect:hover, #button_genreselect_series:hover
+#language:hover, #nbrow:hover, #allselect:hover, #movieselect:hover, #genreindex:hover, #certificationindex:hover, #ratingindex:hover, #videosourceindex:hover, #studioindex:hover, #searchindex:hover, #configindex:hover, #yamj3select:hover, #genrelistselect:hover , #remoteselect:hover, #personindex:hover,  #serieselect:hover, #seasonselect:hover, #personselect:hover, #genreselect:hover, #searchselect:hover, #configselect:hover, #button_genreselect:hover, #button_personselect:hover, #button_configselect:hover, #button_genreselect_series:hover
 {	
 	color: red;	
 }
+
 .holder {
 	text-align: right;
 	vertical-align: top;
@@ -832,8 +1042,10 @@ ul#home_left_up:hover > li{
 	}
 
 #person_display{
-	height:630px;
+	top: 40px; 
+	height:720px;
 	}
+
 #vlc {
 	position: absolute;
 	top: 10px; 
@@ -933,7 +1145,7 @@ ul#home_left_up:hover > li{
 	border: 2px solid rgba(0, 0, 0, 0.6);
 	border-radius: 20px 20px 20px 20px;
 	}*/
-#up, #down, #right, #left, #power, #home, #setup, #info, #rewind, #next_remote, #prev_remote, #fwd, #audio, #volumeup, #volumedown, #mute, #menu, #return, #subtitle, #repeat, #pause, #stop, #play {
+#up, #down, #right, #left, #power, #home, #setup, #info, #rewind, #next_remote, #prev_remote, #fwd, #audio , #subtitle, #studio, #rating, #videosource, #volumeup, #volumedown, #mute, #menu, #return, #subtitle, #repeat, #pause, #stop, #play {
 	width: 100px;
 
 	font-size:12px;
@@ -944,6 +1156,50 @@ ul#home_left_up:hover > li{
 	border-radius: 6px 6px 6px 6px;
 	border: 1px solid black; 
 	}
+.combined_ratings {
+	height: 20px;
+	position: absolute ; 
+	top: 10px;
+	right: 12px;
+	}
+.image_certification {
+	height: 30px;
+	position: absolute ; 
+	top: 5px;
+	right: 130px;
+	}
+.studio {
+	height: 30px;
+	position: absolute ; 
+	top: 5px;
+	right: 180px;
+	font-size:0.8em;
+	text-align:center;
+	}
+.studio a {
+	color: white; 
+	text-decoration: none;
+	vertical-align: top;
+	}
+.actors, .writer, .director {
+	position: relative; 
+	visibility: visible;
+	font-size:0.9em;
+	font-weight: bold;
+    text-align: left;
+	color: white; 
+	margin-left: 5px;
+	text-decoration: none;
+	}
+#all_person {
+	text-decoration: none;
+	color: white; 
+	}
+.actors:hover, .writer:hover, .director:hover, #all_person:hover, .studio a:hover {
+	color: red;
+	}
+
+
 /*************   episode ****************/	
 .table_videoimage {
 	display: block;
@@ -993,7 +1249,7 @@ ul#home_left_up:hover > li{
 #list_episode_title
 {
 	position: relative;
-	width: 420px;
+	width: 450px;
 	max-height: 345px;
 	margin-left: 845px;
 	display: block;
@@ -1014,6 +1270,7 @@ ul#home_left_up:hover > li{
 	width: 840px;
 	vertical-align: bottom;
 	}
+
 .listepisode_title a:focus, .listepisode_title a:hover {
 	font-family: Arial, Helvetica, sans-serif;
 	color:red;
@@ -1281,14 +1538,13 @@ ul#home_left_up:hover > li{
 	}
 /*************************** Header **********************************/	
 
-ul#detail_home_left {
+#detail_home_left {
 	width: 100px;
 	height:31px;
 	position: absolute;
-	top: -15px;
+	top: 0px;
 	left: 5px;
 	padding:0px 0px 0px 0px;
-	
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
@@ -1310,9 +1566,80 @@ ul#detail_home_right {
 	list-style: none;
 	z-index:7;
 	background: url(../pictures/YAMJ-logo-64-white-reflectv3.png) no-repeat center center rgba(255, 255, 255, 0.3);
-
+	}
+ul#detail_home_right_icon {
+	width: 240px;
+	height:41px;
+	position: absolute;
+	top: -10px;
+	left: 1000px;
+	padding:0px 0px 0px 0px;
+/*	background-color:rgba(255, 255, 255, 0.0);
+	border: 2px solid #b0b0b0;	
+	border-right: 5px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;*/
+	list-style: none;
+	z-index:7;
 	}	
-ul#detail_home_left:hover {
+#li_poster_icon, #li_fanart_icon, #li_person_icon, #li_movie_icon, #li_search_icon, #li_remote_icon, #li_selection_icon, #li_mediainfo_icon, #selection_id_icon, #li_delete_icon {
+	position: absolute;
+	z-index: 99;
+	top: -7px;
+	}
+#li_poster_icon img, #li_fanart_icon img, #li_person_icon img, #li_movie_icon img, #li_search_icon img, #li_remote_icon img, #li_selection_icon img, #li_mediainfo_icon  img, #li_selection_icon img, #selection_id_icon  img, #li_delete_icon img {
+	width: 62px;
+	height: 45px;
+	}	
+#li_poster_icon {
+	top: -5px;
+	left: -20px;
+	}
+#li_mediainfo_icon{
+	top: -9px;
+	left: 0px;
+	}
+#li_person_icon {
+	left: 50px;
+	}
+#li_movie_icon {
+	top: -5px;
+	left: 115px;
+	}
+#li_fanart_icon {
+	left: 170px;
+	}	
+#li_selection_icon {
+	top: -15px;
+	left: 260px;
+	}
+#li_delete_icon {
+	left: 220px;
+	}
+#selection_id_icon {
+	top: 20px;
+	left: 270px;
+	}
+#li_poster_icon  img {
+	width: 40px;
+	height: 40px;
+	}	
+	
+#li_mediainfo_icon  img {
+	width: 50px;
+	height: 50px;
+	}
+#fanartshow_icon, #editshow_icon, #mediainfoshow_icon, #movieshow_icon, #personshow_icon, #selectionshow_icon, #deleteshow_icon {
+	visibility: hidden;
+	font-size:1.0em;
+	font-weight: bold;
+	color: white;
+	padding:0px 0px 0px 0px;
+	background-color:rgba(0, 0, 0, 0.6);
+	border: 2px solid #b0b0b0;	
+	border-right: 5px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	}
+#detail_home_left:hover {
 	background-color:rgba(255, 255, 255, 0.6);
 	}
 ul#detail_home_left li{
@@ -1337,7 +1664,8 @@ ul#detail_home_left img, ul#detail_home_right img
 		border:none;
 		}
 
-#li_fanart, #li_person, #li_person_ribbon, #li_movie, #li_search, #li_remote, #li_selection, #selection_id, #li_language, #detail_lang_id, #li_home_right {
+					
+#li_fanart, #li_person, #li_person_ribbon, #li_movie, #li_search, #li_remote, #li_selection, #selection_id, #li_language, #detail_lang_id, #li_home_right , #li_mediainfo{
 	display: block;
 	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size:1.05em;
@@ -1366,46 +1694,47 @@ ul#detail_home_left img, ul#detail_home_right img
  #li_person {
 	top: 65px;
 }
-/* #li_person_ribbon {
-	top: 73px;
-} */
- #li_movie {
+
+ #li_mediainfo {
 	top: 95px;
+} 
+ #li_movie {
+	top: 125px;
 }
 #li_selection {
-	top: 125px;
+	top: 155px;
 	height: 30px;
 	}
 #li_language {
-	top: 155px;
+	top: 185px;
 	height: 30px;
 	text-decoration: none;
 	}
 #li_search {
-	top: 185px;
+	top: 2155px;
 	text-decoration: none;
 	}
 #li_remote {
-	top: 155px;
+	top: 185px;
 	text-decoration: none;
 	}
 
 #detail_lang_id {
-	top: 157px;
+	top: 187px;
 	left: 50px;
 	height: 25px;
 	width: 50px;
 	color:black;
 	}	
 #selection_id  {
-	top: 130px;
+	top: 160px;
 	left: 50px;
 	height: 25px;
 	width: 50px;
 	color:black;
 	}
 	
-#fanartshow, #personshow, #show, #person_H_ribbon {
+#fanartshow, #personshow, #show, #person_H_ribbon, #mediainfoshow {
     font-weight: bold;
     color: white;
 	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -1415,7 +1744,7 @@ ul#detail_home_left img, ul#detail_home_right img
 	top: -2px;
 	width: 140px;
 	}
-#fanartshow:hover, #personshow:hover, #person_ribbon:hover, #show:hover, #li_selection:hover, #li_language:hover, #li_search:hover, #li_remote:hover {
+#fanartshow:hover, #personshow:hover, #person_ribbon:hover, #show:hover, #mediainfoshow:hover,  #li_selection:hover, #li_language:hover, #li_search:hover, #li_remote:hover {
 	color: red;
 	}	
 .header
@@ -1441,7 +1770,7 @@ ul#detail_home_left img, ul#detail_home_right img
 {
     display: block;
 	height: auto;
-    width: 1070px;
+    width: 910px;
 	position: absolute;
 	left: 233px;
 	top: 670px;
@@ -1492,7 +1821,7 @@ ul#detail_home_left img, ul#detail_home_right img
 	z-index: 0;
 	}
 .header_title {
-    padding:1px 1px 1px 5px;
+    padding:1px 1px 1px 75px;
 	font-size: 1.0em;
 	}
 .header_year {
@@ -1575,8 +1904,43 @@ text {
 	top: 550px;
 	left: 10px;
 	overflow: hidden;
+	background-color:rgba(0, 0, 0, 0.3);
+	border: 2px solid #b0b0b0;	
+	border-right: 5px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	z-index: 2;
 	}
-	
+.mediainfo {
+	width: 1320px;
+	color:#fff;
+	font-weight: bold;
+	text-align: justify;
+	font-size:1.0em;
+	position: absolute;
+	top: 5px;
+	left: 120px;
+	overflow: hidden;
+	background-color:rgba(0, 0, 0, 0.3);
+	border: 2px solid #b0b0b0;	
+	border-right: 5px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	z-index: 2;
+	}	
+.edit_adjust {
+	width: 1100px;
+	color:#fff;
+	font-weight: bold;
+	text-align: justify;
+	font-size:1.0em;
+	position: absolute;
+	top: 400px;
+	left: 234px;
+	overflow: hidden;
+	background-color:rgba(0, 0, 0, 0.3);
+	border: 2px solid #b0b0b0;	
+	border-right: 5px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	}		
 .moviedetail_frame {
 	color:#fff;
 	font-weight: bold;
@@ -1619,20 +1983,22 @@ text {
 	position: relative;
 	left: 5px;
 	}	
-.filepath {
+.videosource, .fps, .codec, .resolution, .audio, .subtitle, .rating, .runtime, .filepath, .stage_fileId, #filepath {
 	width: auto;
-	max-width: 1070px;
-	display: inline;
+	max-width: 770px;
+	display: block;
+	text-align: left;
 	background-color:rgba(0, 0, 0, 0.3);
 	border: 1px solid gray;	
 	border-right: 5px solid gray;
 	padding: 1px 10px 0px 10px;
 	position: relative;
-	left: 222px;
-	}	
+	left: 5px;
+	}
+
 .plot {
 	width: auto;
-	max-height: 180px;
+	max-height: 148px;
 	max-width: 1070px;
 	display: block;
 	background-color:rgba(0, 0, 0, 0.3);
@@ -1641,9 +2007,9 @@ text {
 	padding: 1px 10px 3px 10px;
 	overflow-y: auto;
 	position: relative;
-	left: 222px;
+	left: 2px;
 	}
-.genres, .test {
+.genres,.certifications,.ratings,.videosources, .test {
 	max-width: 1070px;
 	width: auto;
 	display: inline;
@@ -1652,7 +2018,7 @@ text {
 	border-right: 5px solid gray;
 	padding: 2px 10px 1px 10px;
 	position: relative;
-	left: 222px;
+	left: 2px;
 	}
 .test {
 	display: none;
@@ -1662,6 +2028,27 @@ text {
 	color: white;
 	}
 .genres a:hover {
+	color: red;
+	}
+.ratings a {
+	text-decoration: none;
+	color: white;
+	}
+.videsources a:hover {
+	color: red;
+	}
+.videosources a {
+	text-decoration: none;
+	color: white;
+	}
+.ratings a:hover {
+	color: red;
+	}
+.certifications a {
+	text-decoration: none;
+	color: white;
+	}
+.certifications a:hover {
 	color: red;
 	}
 .actor-role{
@@ -1810,8 +2197,8 @@ position: absolute;
 	}
 .person_photo {
 	position: relative;
-	width: 100px;
-	height:150px;
+	width: 98px;
+	height:148px;
 	border: 1px solid gray;
 	}	
 .genre_logo {

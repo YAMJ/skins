@@ -11,13 +11,14 @@
 		<script src="js/template.js"></script>
 		<script src="js/my_remote.js"></script>
 		<script src="js/library.js"></script>
+	
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css"/>
-        <!--Slider stuff-->
+	
         <link href="slideshow/slideshow.css" rel="stylesheet" type="text/css" />
         <script src="slideshow/slideshow.js" type="text/javascript"></script>
         <script src="slideshow/slideshowFanart.js" type="text/javascript"></script>
 		<script src="slideshow/slideshowBanner.js" type="text/javascript"></script>
-		
+		<script type="text/javascript" src="iscroll-master/build/iscroll.js"></script>
 		
 <!--		<object classid="clsid:9BE31822-FDAD-461B-AD51-BE1D1C159921" codebase="http://download.videolan.org/pub/videolan/vlc/last/win32/axvlc.cab"></object>
 		
@@ -40,11 +41,14 @@
 			var dataindex = localStorage.getItem("index-nav");
 			// default general value
 			var season_title = "";
+			var current_title = "";
             var jsondata;
 			var jsonUrl = "";
 			var jsonSeasonUrl = "";
+			var jsonDeleteUrl = "";
 			var CurrentUrlPlay;
 			var Currentfilename;
+			var stage_file_Id = "";
 			var countset = "-1";
 			var fanart_toggle = 0;
 			var menuleft_toggle = 0;
@@ -68,6 +72,7 @@
 						
 							'span.header_title': function (arg) {
 								season_title = arg.context.result.title;
+								current_title = arg.context.result.title;
 								if (indextype.toLowerCase() == 'season')
 								{
 								store_SeriesId (arg.context.result.seriesId);
@@ -85,11 +90,60 @@
 							
 										}
 								return arg.context.result.id;
+								}, 
+							"img.watched@src": function(arg)
+								{
+									if (arg.context.result.watched) 
+									{return "./pictures/watched.png";}
+									else {return "./pictures/unwatched.png";}
+							
+								}, 
+							"img.watched@onclick": function(arg)
+								{
+									if (arg.context.result.watched) 
+									{return "WatchedSelection('index.html', 'true')";}
+									else {return "WatchedSelection('index.html', 'false')";}
+							
 								}
 						
 						};
 			// from jsonUrl		
             var YAMJ_DIR = {
+				'span.director': function(arg)
+							{	
+							if (arg.context.result.cast) {
+								if (arg.context.result.cast.DIRECTOR)
+									{
+										return "<text>DIRECTOR:</text>" + "<a href=\"#\" onclick=\"open_person_popup('" + arg.context.result.cast.DIRECTOR[0].id + "')\" class=\"actors\">" + arg.context.result.cast.DIRECTOR[0].name +"</a>";
+									} else { return ;}
+								}
+							},
+				'span.writer': function(arg)
+							{
+							if (arg.context.result.cast) {
+								if (arg.context.result.cast.WRITER)
+									{
+										return "<text>WRITER:</text>" + "<a href=\"#\" onclick=\"open_person_popup('" + arg.context.result.cast.WRITER[0].id + "')\" class=\"actors\">" + arg.context.result.cast.WRITER[0].name +"</a>";
+									}	else  { return "<text>WRITER:</text> no writer"; }
+								}
+							},
+				'span.actors': function(arg) 
+							{
+							if (arg.context.result.cast) {
+								if (arg.context.result.cast.ACTOR)
+									{
+										var Actors = arg.context.result.cast.ACTOR; 
+										var output_actors = "<text>ACTORS:</text>";
+										
+										for (i = 0; i < Actors.length; i++) 
+											{
+											output_actors = output_actors + "<a href=\"#\" onclick=\"open_person_popup('" + arg.context.result.cast.ACTOR[i].id + "')\" class=\"actors\">" + Actors[i].name +".</a>"
+											}
+										
+										return output_actors;
+									} else { return "<text>ACTORS:</text> no actor"; }
+								}
+							},	
                 'span.plot': function(arg) {
 				// check if plot is available 
 					if (arg.context.result.plot) {
@@ -100,20 +154,134 @@
 				},
                 'span.genres': function(arg)
                 {
-                    var genres = arg.context.result.genres;
                     var output = "<text>"+genre_label.toUpperCase()+"</text>";
-                    var first_genres = true;
-					// loop thru the list of genres
-                    for (i = 0; i < genres.length; i++) {
-                        if (first_genres) {
-                            first_genres = false;
-                        } else {
-                            output += ", ";
-                        }
-                        output = output + "<a href=\"javascript:call_genreselect('" + genres[i].name + "')\" >" + genres[i].name + "</a>";
-                    }
+					if (arg.context.result.genres)
+					{
+						var first_genres = true; 
+						var genres = arg.context.result.genres;
+						// loop thru the list of genres
+						for (i = 0; i < genres.length; i++) {
+							if (first_genres) {
+								first_genres = false;
+							} else {
+								output += ", ";
+							}
+							if (genres[i].target) { output = output + "<a href=\"javascript:call_genreselect('" + genres[i].target + "')\" >" + genres[i].target + "</a>";}
+								else { output = output + "<a href=\"javascript:call_genreselect('" + genres[i].name + "')\" >" + genres[i].name + "</a>";}
+						}
+					}
                     return output;
                 },
+	//			  'span.certifications': function(arg)
+    //            {
+	//				var output = "<text>"+certification_label.toUpperCase()+"</text>";
+	//				if (arg.context.result.certifications)
+	//				{
+	//					var certifications = arg.context.result.certifications;
+	//					
+	//					var first_certifications = true;
+	//					// loop thru the list of genres
+	//					for (i = 0; i < certifications.length; i++) {
+	//						if (first_certifications) {
+	//							first_certifications = false;
+	//						} else {
+	//							output += ", ";
+	//						}
+	//						output = output + "<a href=\"javascript:call_certificationselect('" + certifications[i].country + "-" + certifications[i].certificate + "')\" ><img src='pictures/certification/" + certifications[i].country.toUpperCase() + "/" + certifications[i].certificate + ".png' width=\"20px\" style=\"vertical-align:bottom;\" /></a>";
+	//					}
+	//				}
+    //                return output;
+    //            },
+				'img.image_certification@src': function(arg)
+                {
+					if (arg.context.result.certifications)
+					{
+						var certifications = arg.context.result.certifications;	
+							switch (certifications[0].certificate)
+								{
+								case "3":
+								case "6":
+									output = "pictures/certification/" + certifications[0].country.toUpperCase() + "/10.png"
+									break;
+								
+								default:
+									output = "pictures/certification/" + certifications[0].country.toUpperCase() + "/" + certifications[0].certificate + ".png"
+									break;
+							}
+						} else {
+							output = "pictures/certification/dummy_certification.png"
+					}
+                    return output;
+                },
+				"img.image_certification@onclick": function(arg)
+				{
+					if (arg.context.result.certifications)
+						{
+							var certifications = arg.context.result.certifications;						
+								output = "javascript:call_certificationselect('" + certifications[0].country + "-" + certifications[0].certificate + "', " + certifications[0].id + ")";
+							} else {
+								output = "";
+							}
+						return output;	
+				},
+				'span.studio': function(arg)
+							{
+								var studio = arg.context.result.studios;
+								if (studio)
+								{
+								var output = "";
+								
+								// loop thru the list of studio
+								for (i = 0; i < studio.length; i++) {
+									output = output   + "<a href=\"#\" onclick=\"call_studioselect('" + studio[i].id + "', '" + studio[i].name + "')\" ><img src='pictures/studios/" + studio[i].name + ".png' height=\"30px\" alt=\"" + studio[i].name + "\" /></a>";
+									
+								}
+								return output;
+								} else {output = "<text>" + studio_select.toUpperCase() + "</text> No Studio";}
+							},			
+	//		  'span.ratings': function(arg)
+    //            {
+	//			//	var output = "<text>"+rating_label.toUpperCase()+"</text>";
+	//				var output = "<text>RATING</text>";
+	//				if (arg.context.result.ratings)
+	//				{
+	//					var ratings = arg.context.result.ratings;
+	//					
+	//					var first_ratings = true;
+	//					// loop thru the list of genres
+	//					for (i = 0; i < ratings.length; i++) {
+	//						if (first_ratings) {
+	//							first_ratings = false;
+	//						} else {
+	//							output += ", ";
+	//						}
+	//						output = output + "<a href=\"javascript:call_ratingselect('" + ratings[i].source + "', '" + Math.round(ratings[i].rating/10) + "')\" >" + ratings[i].source + ":" + "<img src='pictures/ratings/rating_" + Math.round(ratings[i].rating/10) + ".png' width=\"75px\" /></a>";
+	//					}
+	//				}
+    //               return output;
+    //            },
+				'img.combined_ratings@src': function(arg)
+                {
+					if (arg.context.result.ratings)
+					{
+						var ratings = arg.context.result.ratings;						
+							output = "pictures/ratings/rating_" + Math.round(ratings[0].rating/10) + ".png" ;
+						} else {
+							output = "pictures/ratings/dummy_rating.png"
+					}
+                    return output;
+                },
+				"img.combined_ratings@onclick": function(arg)
+				{
+					if (arg.context.result.ratings)
+						{
+							var ratings = arg.context.result.ratings;						
+								output = "javascript:call_ratingselect('" + ratings[0].source + "', '" + Math.round(ratings[0].rating/10) + "')";
+							} else {
+								output = "";
+							}
+						return output;	
+				},
             // display fanart   
                'img.fanart': {
                     'fanart<-result.artwork.FANART': {
@@ -196,8 +364,9 @@
 											return ;
 											break;
 										case 'movie':
-											
-											return "play_to_device(\""+arg.context.result.files[0].filename+"\")";
+											var temp_out = arg.context.result.files[0].fileName.replace(/\\/g, "/");
+											console.log("detail fileName: "+temp_out);
+										return "play_to_device('" + temp_out + "')";
 											break;
 										case 'series':
 											
@@ -224,18 +393,135 @@
 										return "./pictures/tvshow-off.png";
 											break;	
 									};
-                            },
-                
-			
-			// display the file path stored in database		
-				'span.filepath': function(arg)
-                {
-                    var files = arg.context.result.files;
-                    return "<text>"+file_label.toUpperCase()+"</text>"+  files[0].filename;
-                }
+                            }
 				
+			
             };
-
+			// display media info
+			var MEDIA_INFO = {
+			
+						// display the file path stored in database		
+							'span.filepath': function(arg)
+							{var output_filepath = "";
+							for (i = 0; i < arg.context.result.files.length; i++) {
+								output_filepath = output_filepath +"<tr><td id='filepath'><text>"+file_label.toUpperCase()+(i+1) + "</text> " +  arg.context.result.files[i].fileName +" (" + arg.context.result.files[i].fileSize + ")</td></tr>"}
+							return output_filepath;
+							},
+							'span.stage_fileId': function (arg) {
+							stage_file_Id = arg.context.result.files[0].fileId;
+							return "<text>Stage_File Id</text>"+  arg.context.result.files[0].fileId ;
+							},
+							'span.videosource': function (arg) {
+							if (arg.context.result.files[0].videoSource) {
+							return "<text>"+source_label.toUpperCase()+"</text>" + "<img src='pictures/videosource/thumb-"+ arg.context.result.files[0].videoSource.toLowerCase() + ".png' alt=\""+ arg.context.result.files[0].videoSource + "\" height=\"20px\" onclick=\"javascript:call_videosourceselect('" + arg.context.result.files[0].videoSource + "')\" />";
+							} else {return "<text>"+source_label.toUpperCase()+"</text><img src='pictures/videosource/thumb-unknown.png' height=\"20px\" />";}
+							},
+							'span.resolution': function (arg) {
+							return "<text>"+format_label.toUpperCase()+"</text>"+  arg.context.result.files[0].width + "x" + arg.context.result.files[0].height;
+							},
+							'span.codec': function (arg) {
+							return "<text>"+video_label.toUpperCase()+"</text>"+  arg.context.result.files[0].codecFormat ;
+							},
+							'span.fps': function (arg) {
+							return "<text>"+fps_label.toUpperCase()+"</text>"+  arg.context.result.files[0].fps ;
+							},
+							'span.runtime': function (arg) {
+							return "<text>"+runtime_label.toUpperCase()+"</text>"+  arg.context.result.files[0].runtime ;
+							},
+							'span.audio': function(arg)
+							{
+								var audio = arg.context.result.files[0].audioCodecs;
+								if (audio)
+								{
+							//	var output = "<text>"+audio_label.toUpperCase()+"</text>";
+								var output = "";
+								
+								// loop thru the list of audio
+								for (i = 0; i < audio.length; i++) {
+									output = output + "<text>"+audio_label.toUpperCase()+(i+1)+"</text>" + " " + audio[i].codecFormat + " "  + audio[i].channels + "ch ";
+									if (audio[i].language != "Undefined") 
+									{output = output + "<img src=\"pictures/flags/" + audio[i].language.toLowerCase() +".png\" alt=\"" + audio[i].language + "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp; ";}
+								}
+								return output;
+								} else {output = "<text>Audio</text> No Audio";}
+							}, 
+							'span.subtitle': function(arg)
+							{
+								var subtitle = arg.context.result.files[0].subtitles;
+								if (subtitle)
+								{
+								var output = "";
+								// loop thru the list of subtitle
+								for (i = 0; i < subtitle.length; i++) {
+									output = output + "<text>"+subtitle_label.toUpperCase()+(i+1)+"</text>" + "<img src=\"pictures/flags/" + subtitle[i].language.toLowerCase() +".png\" alt=\"" + subtitle[i].language + "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp; ";
+								}
+								return output;
+								} else {output = "<text>Subtitle</text> No Subtitle";}
+							}
+				//			'span.studio': function(arg)
+				//			{
+				//				var studio = arg.context.result.studios;
+				//				if (studio)
+				//				{
+				//				var output = "";
+				//				
+								// loop thru the list of audio
+				//				for (i = 0; i < studio.length; i++) {
+				//					output = output + "<text>"+studio_select.toUpperCase()+(i+1)+"</text>" + " " + studio[i].name + "<a href=\"#\" onclick=\"call_studioselect('" + studio[i].id + "', '" + studio[i].name + "')\" ><img src='pictures/studios/" + studio[i].name + ".png'  /></a><sp>  ";
+				//					
+				//				}
+				//				return output;
+				//				} else {output = "<text>" + studio_select.toUpperCase() + "</text> No Studio";}
+				//			}							
+						};
+					var POSTER_INFO = {
+						// display poster 	
+							  'img.poster_list': {
+								'poster<-result.artwork.POSTER': {
+									'@src': function(arg)
+									{
+										// Check to see if there are posters
+										if (arg.item) {
+											// Get the first poster from the list
+											if (arg.item.generatedId === 0) {
+												return "pictures/dummy.jpg";
+											}
+											return arg.context.baseArtworkUrl + arg.item.filename;
+										} else {
+											return "pictures/dummy.jpg";
+										}
+									}, 
+									'@onclick': function(arg)
+									{
+										return "ouvre_popup_ignore('poster', '" + arg.item.locatedId + "')";
+									}
+								}
+							},
+						// display fanart 	
+							  'img.fanart_list': {
+								'poster<-result.artwork.FANART': {
+									'@src': function(arg)
+									{
+										// Check to see if there are posters
+										if (arg.item) {
+											// Get the first poster from the list
+											if (arg.item.generatedId === 0) {
+												return "pictures/dummy_fanart.jpg";
+											}
+											return arg.context.baseArtworkUrl + arg.item.filename;
+										} else {
+											return "pictures/dummy_fanart.jpg";
+										}
+									}, 
+									'@onclick': function(arg)
+									{
+										return "ouvre_popup_ignore('fanart', '" + arg.item.locatedId + "')";
+									}
+								}
+							}
+						};
+				
+				
 					
 
 // ***************************************************** GET DATA section ******************************************************	
@@ -246,9 +532,9 @@
 				get_lang();
 				get_style();
 				get_player();
-			
+				get_alpha_list (); 
 				// construct JSON request for detail movie/series/season 
-				jsonUrl = "/yamj3/api/video/" + indextype.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot,files";
+				jsonUrl = "/yamj3/api/video/" + indextype.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot,files,certification,studio,rating&jobs=actor-5,director-1,writer-1";
 				console.log("getData URL: " + jsonUrl);
 		
 					
@@ -265,6 +551,12 @@
 					$p('.header_detail').render(data, DETAIL_HEADER);
 					 
 					$p('.template').render(data, YAMJ_DIR); 
+					
+					$p('.mediainfo').render(data, MEDIA_INFO); 
+					
+					$p('.edit_adjust').render(data, POSTER_INFO); 
+					
+				
 						// add slideshow for fanart
 						  slideshowFanart();
 						// slideshow for poster
@@ -299,19 +591,30 @@
 		function set_context_lang_value ()
 		{
 		// console.log("detail.html set_context_value");
-			document.getElementById("fanartshow").innerHTML=fanart_show.toUpperCase();
-			document.getElementById("personshow").innerHTML=person_show.toUpperCase();
+		//	document.getElementById("fanartshow").innerHTML=fanart_show.toUpperCase();
+			document.getElementById("fanartshow_icon").innerHTML=fanart_show.toUpperCase();
+			document.getElementById("editshow_icon").innerHTML='EDIT';
+		//	document.getElementById("personshow").innerHTML=person_show.toUpperCase();
+			document.getElementById("personshow_icon").innerHTML=person_show.toUpperCase();
+		//	document.getElementById("mediainfoshow").innerHTML=mediainfo_show.toUpperCase();
+		//	document.getElementById("mediainfoshow").innerHTML="MEDIA-INFO";
+			document.getElementById("mediainfoshow_icon").innerHTML="MEDIAINFO";
+			document.getElementById("deleteshow_icon").innerHTML="DELETE";
+			
 			switch (indextype.toLowerCase()) 
 							{
 							case 'movie':
 						//		document.getElementById("show").innerHTML=show.toUpperCase() + " " + movie_select.toUpperCase();
-								document.getElementById("show").innerHTML=movie_select.toUpperCase();
+						//		document.getElementById("show").innerHTML=movie_select.toUpperCase();
+								document.getElementById("movieshow_icon").innerHTML=movie_select.toUpperCase();
 									break;
 							case 'series':
-									document.getElementById("show").innerHTML=series_select.toUpperCase();
+						//			document.getElementById("show").innerHTML=series_select.toUpperCase();
+									document.getElementById("movieshow_icon").innerHTML=series_select.toUpperCase();
 									break;
 							case 'season':
-									document.getElementById("show").innerHTML=season_select.toUpperCase();
+						//			document.getElementById("show").innerHTML=season_select.toUpperCase();
+									document.getElementById("movieshow_icon").innerHTML=season_select.toUpperCase();
 									break;
 							}		
 			document.getElementById("seasonlabel").innerHTML=season_label;
@@ -319,12 +622,20 @@
 			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
 			document.getElementById("allselect").innerHTML=all_select.toUpperCase();
 			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
-			document.getElementById("li_selection").innerHTML=selection_label.toUpperCase();
+	//		document.getElementById("li_selection").innerHTML=selection_label.toUpperCase();
+			document.getElementById("selectionshow_icon").innerHTML=selection_label.toUpperCase();
 			document.getElementById("genreindex").innerHTML=genre_select.toUpperCase();
+			document.getElementById("certificationindex").innerHTML=certification_label.toUpperCase();
+			document.getElementById("studioindex").innerHTML=studio_select.toUpperCase();
 			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
 			document.getElementById("searchindex").innerHTML=search_select.toUpperCase();
 			document.getElementById("configindex").innerHTML=config_select.toUpperCase();
-			document.getElementById("remoteselect").innerHTML=remote_label.toUpperCase();			
+			document.getElementById("remoteselect").innerHTML=remote_label.toUpperCase();	
+			document.getElementById("yamj3select").innerHTML="YAMJ3";
+			document.getElementById("genrelistselect").innerHTML=genrelist_select.toUpperCase();
+			document.getElementById("certificationindex").innerHTML=certification_label.toUpperCase();
+			document.getElementById("ratingindex").innerHTML=rating_label.toUpperCase();
+			document.getElementById("videosourceindex").innerHTML=source_label.toUpperCase();
 		}
 		
   // ********************* NOW SET VARIOUS FUNCTION **********************************************  
@@ -332,7 +643,7 @@
 	// call the JSON value of season  	
 		function perform_season()
 		{
-		jsonSeasonUrl = "/yamj3/api/index/video.json?type=season&sortby=season&sortdir=ASC&field=series_id&search="+series_id+"&artwork=poster";
+		jsonSeasonUrl = "/yamj3/api/index/video.json?type=season&sortby=season&sortdir=ASC&field=series_id&search="+series_id+"&artwork=poster&dataitems=plot,files,rating";
 		console.log("perform_season URL: " + jsonSeasonUrl);
 					$.ajax({
                    url: jsonSeasonUrl,
@@ -382,7 +693,7 @@
 	// call the JSON value for episode 			
 		function perform_episode()
 		{
-		jsonEpisodeUrl = "/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot,files";
+		jsonEpisodeUrl = "/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot,files,rating";
 	//	jsonEpisodeUrl = "/yamj3/api/video/episodes.json?&seriesid="+series_id+"&seasonid="+current_id+"&dataitems=plot";
 		console.log("perform_episode URL: " + jsonEpisodeUrl);
 					$.ajax({
@@ -410,8 +721,11 @@
 							var outputepisode_title = "";
 							for (i = 0; i < totalepisode_title.length; i++) 
 							{
+								if (totalepisode_title[i].watched) 
 							// construct an activ episode list, click on an episode will display title, videoimage, plot and prepare the filepath to play 
-								outputepisode_title +=	"<a href=\"#\" onclick=\"display_Episode_videoimage ('videoimage"+[i]+"','episodeplot"+[i]+"','episodetitle"+[i]+"',"+totalepisode_title.length+"); preset_episode_to_play('"+totalepisode_title[i].filename+"')\" >"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</a><img id=img_play_episode src=\"pictures/remote_play.png\"   onclick=\"episode_to_play('"+totalepisode_title[i].filename+"')\"></img><br>";
+								{outputepisode_title +=	"<a href=\"#\" style=\"background: green;\" onclick=\"display_Episode_videoimage ('videoimage"+[i]+"','episodeplot"+[i]+"','episodetitle"+[i]+"',"+totalepisode_title.length+"); preset_episode_to_play('"+totalepisode_title[i].files[0].fileName+"')\" >"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</a><img id=img_play_episode src=\"pictures/remote_play.png\"   onclick=\"episode_to_play('"+totalepisode_title[i].files[0].fileName+"')\"></img><br>";}
+								else 
+								{outputepisode_title +=	"<a href=\"#\" onclick=\"display_Episode_videoimage ('videoimage"+[i]+"','episodeplot"+[i]+"','episodetitle"+[i]+"',"+totalepisode_title.length+"); preset_episode_to_play('"+totalepisode_title[i].files[0].fileName+"')\" >"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</a><img id=img_play_episode src=\"pictures/remote_play.png\"   onclick=\"episode_to_play('"+totalepisode_title[i].files[0].fileName+"')\"></img><br>";}
 							}
 							return outputepisode_title;
 						},
@@ -588,9 +902,11 @@
 			{
 				$('.plot').css('visibility', 'hidden');
 				$('.genres').css('visibility', 'hidden');
-				$('.filepath').css('visibility', 'hidden');
+				$('.certifications').css('visibility', 'hidden');
 				$('.seasontable').css('visibility', 'hidden');
-				
+				$('.mediainfo').css('visibility', 'hidden');
+				$('.edit_adjust').css('visibility', 'hidden');
+				$('.moviedetail').css('visibility', 'hidden');
 				$('div#slideshowBanner').css('visibility', 'hidden');
 				$('div#slideshowCtr').css('visibility', 'hidden');
 				$('.'+current_episode_plot).css('visibility', 'hidden');
@@ -600,6 +916,10 @@
 				$('.episode_detail').css('visibility', 'hidden');
 				$('div#slideshowFanart').css('opacity', '1');
 				$('a#play_detail').css('visibility', 'hidden');
+				$('.detail_label').css('visibility', 'hidden');
+				$('.actors').css('visibility', 'hidden');
+				$('.director').css('visibility', 'hidden');
+				$('.writer').css('visibility', 'hidden');
 			
 			}
 	// click again on fanart only redisplay the page with all the info 		
@@ -607,10 +927,17 @@
 			{
 				$('.plot').css('visibility', 'visible');
 				$('.genres').css('visibility', 'visible');
-				$('.filepath').css('visibility', 'visible');
+				$('.certifications').css('visibility', 'visible');
+				$('.mediainfo').css('visibility', 'hidden');
+				$('.edit_adjust').css('visibility', 'hidden');
 				$('div#slideshowCtr ').css('visibility', 'visible');
 				$('div#slideshowFanart').css('opacity', '0.7');
 				$('.play_detail').css('visibility', 'visible');
+				$('.moviedetail').css('visibility', 'visible');
+				$('.detail_label').css('visibility', 'visible');
+				$('.actors').css('visibility', 'visible');
+				$('.director').css('visibility', 'visible');
+				$('.writer').css('visibility', 'visible');
 				switch (indextype.toLowerCase())
 					{
 					case 'season':
@@ -620,19 +947,20 @@
 						$('.'+current_episode_title).css('visibility', 'visible');
 						$('.episode_detail').css('visibility', 'visible');
 						$('#list_episode_title').css('visibility', 'visible');
-						$('.moviedetail').css('top', '115px');
+						$('.moviedetail').css('top', '120px');
 						$('.moviedetail').css('left', '230px');
 						$('.moviedetail').css('width', '1090px');
 						$('.header_detail').css('top', '0px');
-						$('.header_detail').css('left', '120px');
+						$('.header_detail').css('left', '85px');
 						$('.play_detail').css('top', '0px');
 						$('.play_detail').css('left', '140px');
 						$('.plot').css('left', '0px');
 						$('.plot').css('max-width', '1280px');
 						$('.genres').css('left', '0px');
 						$('.genres').css('max-width', '1280px');
-						$('.filepath').css('left', '0px');
-						$('.filepath').css('max-width', '1280px');
+						$('.certifications').css('left', '0px');
+						$('.certifications').css('max-width', '1280px');
+						$('.filepath').css('max-width', '560px');
 						$('div#slideshowCtr').css('top', '50px');
 						$('a#next').css('top', '200px');
 						$('a#prev').css('top', '200px');
@@ -642,12 +970,21 @@
 						$('.play_detail').mouseout(function() {
 							$('.play_detail').attr('src', './pictures/tvshow-off.png');
 							});
+						$('.mediainfo').css('left', '225px');
+						$('.mediainfo').css('top', '50px');
+						$('#li_mediainfo_icon').css('visibility', 'hidden');
+						$('#li_poster_icon').css('left', '28px');
+						$('.edit_adjust').css('left', '235px');
+						$('.edit_adjust').css('top', '50px');
+						$('.edit_adjust').css('width', '1094px');
 			//			$('.play_detail').css('top', '65px');
 						break;
 					case 'movie':
-						$('.moviedetail').css('top', '465px');
-						$('.moviedetail').css('left', '10px');
-						$('.moviedetail').css('width', '1320px');
+						$('.moviedetail').css('top', '405px');
+						$('.moviedetail').css('left', '234px');
+						$('.moviedetail').css('width', '1100px');
+						$('.header_detail').css('width', '1068px');
+						$('.plot').css('max-height', '170px');
 						$('.play_detail').mouseover(function() {
 							$('.play_detail').attr('src', './pictures/movie-logo-on.png');
 							});
@@ -656,6 +993,12 @@
 							});
 						$('#infobox').css('top', '690px');
 						$('#infobox').css('left', '290px');
+						$('.mediainfo').css('left', '234px');
+						$('.mediainfo').css('top', '404px');
+						$('.mediainfo').css('width', '1094px');
+						$('.edit_adjust').css('left', '234px');
+						$('.edit_adjust').css('top', '404px');
+						$('.edit_adjust').css('width', '1094px');
 						
 			//			nothing special 
 						break;
@@ -664,16 +1007,19 @@
 						$('.moviedetail').css('left', '10px');
 						$('.moviedetail').css('width', '1320px');
 						$('.header_detail').css('top', '0px');
-						$('.header_detail').css('left', '120px');
+						$('.header_detail').css('left', '85px');
 						$('.play_detail').css('top', '0px');
 						$('.play_detail').css('left', '140px');
 						$('.plot').css('left', '0px');
 						$('.plot').css('max-width', '1280px');
 						$('.genres').css('left', '0px');
 						$('.genres').css('max-width', '1280px');
-						$('.filepath').css('left', '0px');
-						$('.filepath').css('max-width', '1280px');
+						$('.certifications').css('left', '0px');
+						$('.certifications').css('max-width', '1280px');
+						$('.filepath').css('max-width', '560px');
 						$('div#slideshowBanner').css('visibility', 'visible');
+						$('.mediainfo').css('visibility', 'hidden');
+						$('.edit_adjust').css('visibility', 'hidden');
 						$('div#slideshowCtr').css('top', '50px');
 						$('.seasontable').css('visibility', 'visible');
 						$('a#next').css('top', '200px');
@@ -684,6 +1030,13 @@
 						$('.play_detail').mouseout(function() {
 							$('.play_detail').attr('src', './pictures/tvshow-off.png');
 							});
+						$('.mediainfo').css('left', '230px');
+						$('.mediainfo').css('top', '50px');
+						$('#li_mediainfo_icon').css('visibility', 'hidden');
+						$('#li_poster_icon').css('left', '28px');
+						$('.edit_adjust').css('left', '235px');
+						$('.edit_adjust').css('top', '50px');
+						$('.edit_adjust').css('width', '1094px');
 					//	$('.play_detail').css('display', 'none');
 						break;
 					}
@@ -837,51 +1190,290 @@
             console.log("call_genreselect Storing value: Genre name: " +genrename);
 			window.location.href="index_Genre.html";
 		}
-		
-	
+	// certification list is activ and open certification index menu with the certification selected 
+	function call_certificationselect(certificationvalue, certificationid)
+        {
+			localStorage.setItem("Certification_value", certificationvalue);
+			localStorage.setItem("Certification_id", certificationid);
+            console.log("call_certificationselect Storing value: certification value: " +certificationvalue+ " certification id:" + certificationid);
+			window.location.href="index_Certification.html";
+		}
+	// videosource list is activ and open videosource index menu with the videosource selected 
+	function call_videosourceselect(videosourcevalue)
+        {
+			localStorage.setItem("Videosource_value", videosourcevalue);
+            console.log("call_videosourceselect Storing value: videosource value: " +videosourcevalue);
+			window.location.href="index_Videosource.html";
+		}
+	// studio list is activ and open studio index menu with the studio selected 
+	function call_studioselect(studioid, studioname)
+        {
+			localStorage.setItem("Studio_id", studioid);
+			localStorage.setItem("Studio_name", studioname);
+            console.log("call_studioselect Storing value: studio value: " +studioid+ ", " + studioname);
+			window.location.href="index_Studio.html";
+		}
+	// rating list is activ and open rating index menu with the rating selected 
+	function call_ratingselect(ratingsource, ratingvalue)
+        {
+			localStorage.setItem("Rating_source", ratingsource);
+			localStorage.setItem("Rating_value", ratingvalue);
+            console.log("detail call_ratingselect Storing value: Rating source: " + ratingsource + " Rating value: "+ ratingvalue);
+			window.location.href="index_Rating.html";
+			Mypopup.focus();
+		}
 
+	function ouvre_popup_mediainfo ()
+		{
+			console.log("detail ouvre_popup_mediainfo type:" + indextype);
+			if ($('.mediainfo').css('visibility') == "hidden")
+			{
+			display_class ('mediainfo');
+			switch (indextype.toLowerCase())
+				{
+					case 'season':
+						{
+							nodisplay_class ('genres');
+							nodisplay_class ('certifications');
+							nodisplay_class ('plot');
+							nodisplay_Id ('slideshowBanner');
+							nodisplay_class ('moviedetail');
+							nodisplay_class ('detail_label');
+							nodisplay_class ('actors');
+							nodisplay_class ('director');
+							nodisplay_class ('writer');
+							break;
+						}
+					case 'series':
+						{
+							nodisplay_Id ('slideshowBanner');
+							break;
+						}
+					case 'movie':
+						{
+							nodisplay_class ('genres');
+							nodisplay_class ('certifications');
+							nodisplay_class ('plot');
+							nodisplay_class ('moviedetail');
+							nodisplay_class ('detail_label');
+							nodisplay_class ('edit_adjust');
+							nodisplay_class ('actors');
+							nodisplay_class ('director');
+							nodisplay_class ('writer');
+							nodisplay_class ('header_detail');
+							nodisplay_class ('play_detail');
+							break;	
+						}
+				}
+			} else {
+				nodisplay_class ('mediainfo');
+				nodisplay_class ('edit_adjust');
+				display_class ('genres');
+				display_class ('certifications');
+				display_class ('plot');
+				display_class ('moviedetail');
+				display_class ('detail_label');
+				display_class ('actors');
+				display_class ('director');
+				display_class ('writer');
+				display_class ('header_detail');
+				display_class ('play_detail');
+
+				}
+		}
+	function ouvre_popup_poster ()
+		{
+		console.log("detail ouvre_popup_poster type:" + indextype);
+		if ($('.edit_adjust').css('visibility') == "hidden")
+		{
+		display_class ('edit_adjust');
+		switch (indextype.toLowerCase())
+				{
+				case 'season':
+					{
+						nodisplay_class ('genres');
+						nodisplay_class ('certifications');
+						nodisplay_class ('plot');
+						nodisplay_Id ('slideshowBanner');
+						nodisplay_class ('moviedetail');
+						nodisplay_class ('detail_label');
+						nodisplay_class ('actors');
+						nodisplay_class ('director');
+						nodisplay_class ('writer');
+						break;
+					}
+				case 'series':
+					{
+						nodisplay_Id ('slideshowBanner');
+						break;
+					}
+				case 'movie':
+					{
+						nodisplay_class ('moviedetail');
+						nodisplay_class ('detail_label');
+						nodisplay_class ('mediainfo');
+						nodisplay_class ('genres');
+						nodisplay_class ('certifications');
+						nodisplay_class ('plot');
+						nodisplay_class ('actors');
+						nodisplay_class ('director');
+						nodisplay_class ('writer');
+						break;	
+					}
+				}
+		//	
+		//	nodisplay_class('seasontable');
+		//	
+			} else {
+			if (indextype.toLowerCase() == 'series') {display_class('seasontable');}
+			if (indextype.toLowerCase() == 'season') {display_Id ('slideshowBanner');;}
+			nodisplay_class ('edit_adjust');
+			display_class ('genres');
+			display_class ('certifications');
+			display_class ('plot');
+			display_class ('moviedetail');
+			nodisplay_class ('mediainfo');
+			display_class ('detail_label');
+			display_class ('actors');
+			display_class ('director');
+			display_class ('writer');
+			display_class ('header_detail');
+			display_class ('play_detail');
+			}
+		}
+	function ouvre_popup_delete ()
+		{
+		console.log("detail ouvre_popup_delete stage_file_Id:" + stage_file_Id);
+		// construct JSON request to delete movie/series/season from the stage_file with stage_file_Id
+		
+				jsonDeleteUrl = "/yamj3/api/file/delete/" + stage_file_Id;
+				console.log("getData URL: " + jsonDeleteUrl);
+		PopDelete(stage_file_Id, current_title)
+		}
+	function ouvre_popup_ignore (artwork_type, located_id)
+		{
+		console.log("detail ouvre_popup_ignore located_Id:" + located_id);
+		// construct JSON request to delete movie/series/season from the stage_file with stage_file_Id
+		
+				jsonIgnoreUrl = "/yamj3/api/artwork/located/ignore/" + located_id;
+				console.log("getData URL: " + jsonIgnoreUrl);
+		PopIgnore(artwork_type, located_id)
+		}
+	function delete_stage_file_Id ()
+		{
+        // main API call         
+                $.ajax({
+                    url: jsonDeleteUrl,
+                    async: false,
+                   dataType: 'jsonp',
+                   'success': function(data)
+                    {
+					}
+				})
+		}
+	function ignore_located_Id ()
+		{
+        // main API call         
+                $.ajax({
+                    url: jsonIgnoreUrl,
+                    async: false,
+                   dataType: 'jsonp',
+                   'success': function(data)
+                    {
+					}
+				})
+		}
+// ******************************* get aplhabetical list of available video *********************************************
+	function get_alpha_list ()
+		{
+				jsonUrlAlpla = "/yamj3/api/alphabetical/list.json?type=" + indextype;
+				console.log("get_alpha_list jsonUrlAlpla: " + jsonUrlAlpla);
+				
+				var ALPHALIST = {
+               'span.lastid': function(arg) {
+					 var alpha_list = arg.context.results; 
+					 switch (indextype.toLowerCase())
+					 {
+						case 'movie':
+						{
+							$('#selection_id_icon').append("<option value=''>" + movie_label.toLowerCase() + "</option>");	
+							break;
+						}
+						case 'series':
+						{
+							$('#selection_id_icon').append("<option value=''>" + series_label.toLowerCase() + "</option>");
+							break;
+						}
+						case 'season':
+						{
+							$('#selection_id_icon').append("<option value=''>" + season_label.toLowerCase() + "</option>");
+							break;
+						}
+					}
+					for (var i = 0; i < alpha_list.length; i++) {
+						if (alpha_list[i].name != "") {
+								// only season could have no value 
+							     $('#selection_id_icon').append("<option value='" + alpha_list[i].name + "'>" + alpha_list[i].name + "</option>");
+								 }
+					}
+					return;
+				}
+			};
+
+					
+        // main API call         
+                $.ajax({
+                    url: jsonUrlAlpla,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(data)
+                    {
+                        jsondata = data;
+					//	 outputJson(data); 
+					$p('.test').render(data, ALPHALIST);
+					}
+                });
+		
+		
+		
+		}
+		
+// ****************************** id or class with iscroll **************************************************************
+	var myScroll;
+	function loaded_iscroll () {
+	myScroll = new IScroll('#container_menu_detail', { scrollX: true, scrollY: true, mouseWheel: true });
+	}
+	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+	
+// *******************************to fix alt bug with chrome ***************************************************************************************
+	function showAlt(){$(this).replaceWith(this.alt)};
+	function addShowAlt(selector){$(selector).error(showAlt).attr("src", $(selector).src)};
+	
       </script>
 <!-- *************************************************************************************************************** -->
     </head>
-    <body onload="getData();" onUnload="close_popup();" style="margin: 0px;  width: 1340px; height: 740px;">
+    <body onload="loaded_iscroll(); getData(); addShowAlt('img');" onUnload="close_popup();" style="margin: 0px;  width: 1340px; height: 740px;">
 	
 	
 	<!-- navigation to index -->
-	<div id="logo">
-						
-							<ul id="detail_home_left">
-									<li><a id="li_home_left" href="javascript:toggle_menuleft()"></a></li>
-									<li><a id="li_all_up" href="javascript:ChangeIndex('movie,series')">
-										<div id="allselect"></div></a></li>
-									<li><a id="li_movie_up" href="javascript:ChangeIndex('movie')">
-										<div id="movieselect"></div></a></li>	
-									<li><a id="li_series_up" href="javascript:ChangeIndex('series')">
-										<div id="serieselect"></div></a></li>	
-									<li><a id="li_season_up" href="javascript:ChangeIndex('season')">
-										<div id="seasonselect"></div></a></li>		
-									<li><a id="li_person_up" href="javascript:call_personindex('false')">
-										<div id="personindex"></div></a></li>
-									<li><a id="li_genre_up" href="javascript:call_genreindex(indextype, 'false')">
-										<div id="genreindex"></div></a></li>
-									<li><a id="li_search_up" href="javascript:ouvre_popup_search(StyleValue)">
-										<div id="searchindex"></div></a></li>
-									<li><a id="li_config_up" href="javascript:ouvre_config(StyleValue)">
-										<div id="configindex"></div></a></li>
-									<li><a id="li_remote_up" href="javascript:ouvre_remote(); ">
-										<div id="remoteselect"></div></a></li>
-							</ul>
-						
-	<!-- various navigation -->					
+
+		<div id="logo_index">
+
+	<!-- not needed with opacity effect
+			<td><a id="home_left" onclick="javascript:toggle_Id('container_menu_detail')"><img src="pictures/next-icon_on.png" width="16px" height="24px" /></a></td>
+	-->
+	<!-- various navigation 			
 					
 							<ul id="detail_home_right">
 									<li><a id="li_home_right" onclick="toggle_menuright()"></a></li>
 									<li><a id="li_fanart" href="javascript:toggle_fanart()">
 										<div id="fanartshow"></div></a></li>
+									<li><a id="li_mediainfo" href="javascript:ouvre_popup_mediainfo();">
+										<div id="mediainfoshow"></div></a></li>	
 									<li><a id="li_person" href="javascript:ouvre_popup_person();">
 										<div id="personshow"></div></a></li>
 								
-							<!--		<li><a id="li_person_ribbon" href="javascript:ouvre_popup_person_ribbon()">
-										<div id="person_ribbon"></div></a></li>	 -->
+							
 									<li><a id="li_movie" href="javascript:ouvre_popup_index('', 'ASC', indextype, '')">
 										<div id="show"></div></a></li>	
 									<li>
@@ -928,28 +1520,124 @@
 										</form>
 									</li>	
 								
+							</ul>-->		
+			
+							<ul id="detail_home_right_icon">
+									<li><a id="li_poster_icon" href="javascript:ouvre_popup_poster();" onmouseover="javascript:document.getElementById('editshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('editshow_icon').style.visibility='hidden'">
+										<img src="pictures/icon/edit.png" ></img><div id="editshow_icon"></div></a></li>
+									<li><a id="li_fanart_icon" href="javascript:toggle_fanart()" onmouseover="javascript:document.getElementById('fanartshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('fanartshow_icon').style.visibility='hidden'">
+										<img src="pictures/icon/fanart.png" ></img><div id="fanartshow_icon"></div></a></li>
+									<li><a id="li_mediainfo_icon" href="javascript:ouvre_popup_mediainfo();" onmouseover="javascript:document.getElementById('mediainfoshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('mediainfoshow_icon').style.visibility='hidden'" >
+										<img src="pictures/icon/overview.png"></img><div id="mediainfoshow_icon"></div></a></li>	
+									<li><a id="li_person_icon" href="javascript:ouvre_popup_person();" onmouseover="javascript:document.getElementById('personshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('personshow_icon').style.visibility='hidden'">
+										<img src="pictures/icon/icon_person.png"></img><div id="personshow_icon"></div></a></li>	
+									<li><a id="li_delete_icon" href="javascript:ouvre_popup_delete();" onmouseover="javascript:document.getElementById('deleteshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('deleteshow_icon').style.visibility='hidden'">
+										<img src="pictures/icon/delete.png"></img><div id="deleteshow_icon"></div></a></li>	
+									
+							<!--		<li><a id="li_person_ribbon" href="javascript:ouvre_popup_person_ribbon()">
+										<div id="person_ribbon"></div></a></li>	 -->
+									<li><a id="li_movie_icon" href="javascript:ouvre_popup_index('', 'ASC', indextype, '')" onmouseover="javascript:document.getElementById('movieshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('movieshow_icon').style.visibility='hidden'">
+										<img src="pictures/icon/icon_tv-film.png"></img><div id="movieshow_icon"></div></a></li>
+									<li>
+										<form><label id='li_selection_icon'><img src="pictures/icon/title.png" onmouseover="javascript:document.getElementById('selectionshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('selectionshow_icon').style.visibility='hidden'"></img><div id="selectionshow_icon"></div></label>
+											<select id="selection_id_icon" onchange="Movie_toSet = true;display_Id('movie_display');javascript:ouvre_popup_index('', 'ASC', indextype, document.getElementById('selection_id_icon').value); Movie_toSet = true;" >
+												<option value=""></option>
+												
+											</select> 
+											<noscript><input type="submit" value="Submit"></noscript>
+										</form>
+										
+									</li>	
+								
 							</ul>
-						
+					<button id="infobox_delete" onclick="javascript:start_delete ()"></button>		
         </div>
-	<!--  header for movie/series name -->
+
+	<!-- left menu with icon -->
+    <div id="container_menu_detail">			
+		<ul id="monFormMenu" style="padding-left:15px;">
+	
+				<li><a href="javascript:ChangeIndex('movie,series')">
+							<img src="pictures/icon/zap/home_all_rv8.png" height="50px"  width="50px" alt="tv movie" />
+						</a><div id="allselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('movie')">
+							<img src="pictures/icon/zap/home_movies_rv8.png" height="50px"  width="50px" alt="movie" align="top" />
+						</a><div id="movieselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('series')">
+							<img src="pictures/icon/zap/home_tv shows_rv8.png" height="50px"  width="50px" alt="tv" />
+						</a><div id="serieselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('season')">
+							<img src="pictures/icon/zap/home_apps_rv8.png" height="50px"  width="50px" alt="season" />
+						</a><div id="seasonselect"></div>
+				</li>
+				<li><a href="javascript:call_personindex('false')">
+							<img src="pictures/icon/zap/home_person_rv8.png" height="50px"  width="50px" alt="person"  />
+						</a><div id="personindex"></div>
+				</li>
+				<li><a href="javascript:call_genreindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_genres2_rv8.png" height="50px"  width="50px" alt="genre" />
+						</a><div id="genreindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_popup_search(StyleValue)">
+							<img src="pictures/icon/zap/find.png" height="45px" width="50px" alt="find" />
+						</a><div id="searchindex"></div>
+				</li>
+				<li><a href="javascript:call_studioindex(indextype, 'false')">
+							<img src="pictures/icon/zap/Studio.png" height="50px"  width="50px" alt="studio"  />
+						</a><div id="studioindex"></div>
+				</li>
+				<li><a href="javascript:call_ratingindex(indextype, 'false')">
+							<img src="pictures/icon/zap/home_rating_rv8.png" height="50px"  width="50px" alt="rating"  />
+						</a><div id="ratingindex"></div>
+				</li>
+				<li><a href="javascript:call_certificationindex(indextype, 'false')">
+							<img src="pictures/icon/zap/home_certification_rv8.png" height="50px"  width="50px" alt="certification"  />
+						</a><div id="certificationindex"></div>
+				</li>
+				<li><a href="javascript:call_videosourceindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_videosource_rv8.png" height="50px"  width="50px" alt="videosurce"  />
+						</a><div id="videosourceindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_config(StyleValue)">
+							<img src="pictures/icon/zap/settings.png" height="50px" width="60px" alt="setting" />
+						</a><div id="configindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_yamj3(); ">
+							<img src="pictures/icon/zap/home.png" height="50px"  width="50px" alt="home" />
+						</a><div id="yamj3select"></div>
+				</li>
+				<li><a href="javascript:ouvre_genrelist(); ">
+							<img src="pictures/icon/zap/list_genre.png" height="50px"  width="50px" alt="liste fenre" />
+						</a><div id="genrelistselect"></div>
+				</li>
+				<li><a href="javascript:ouvre_remote(); ">
+							<img src="pictures/icon/zap/remote.png" height="50px"  width="50px" alt="remote" />
+						</a><div id="remoteselect"></div>
+				</li>
+		</ul>
+		
+	</div>          	
+	<!--  footer for movie/series name -->
 		<div class="header_detail">
 			<table>
 				<tr>
-	
-					<td width="1090px" >
-					
+					<td>
 						<span class="header_title" ></span>
 						<span class="header_text" > (</span>
 						<span class="header_year" ></span>
 						<span class="header_text">) id:</span>
 						<span class="header_id" ></span>
+						<a href="#"><img class="watched" src="" onclick=""/></a>
 					</td>
 				</tr>
 			</table>
 		</div>
 		<!-- display infobox -->
 		<button id="infobox" onclick="javascript:start_playing ()"></button>
-		
+
 		<div class="test">
 					<td><span class="lastid"></span></td>
 		</div> 
@@ -996,6 +1684,7 @@
                             <div id="slideshowCtr" class="glow">
                                 <div id="imgRoll">
                                     <img class="poster" src="" />
+									
                                 </div>
                             </div>
 						
@@ -1023,8 +1712,26 @@
 			<!-- split table for image and text --> 
 			<!-- add class for each object in the detail section of yamj-style.css -->
 					<table class="moviedetail">
+						
+					<!--		<td><span class="detail_label"><text>DETAIL</text></span></td> -->
+						
+						<!-- short perso list -->
+
+							<tr>
+								<td>
+									<span class="director"></span>
+									<span class="writer"></span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="actors"></span>
+									<a id="all_person" href="#" onclick="ouvre_popup_person()"> ...</a>
+								</td>
+								
+							</tr>
 						<tr>
-							<td><span class="filepath"></span></td>
+							<td><span class="studio"></span></td>
 						</tr>
 						<tr>
 							<td><span class="genres"></span></td>
@@ -1032,11 +1739,94 @@
 						<tr >
 							<td ><span class="plot"></span></td>
 						</tr>
+			<!--			<tr>
+							<td><span class="ratings"></span></td>
+						</tr> -->
+						<tr>
+							<td><a href="#"><img class="combined_ratings" src="" onclick=""/></a></td>
+						</tr>
+				<!--		<tr>
+							<td><span class="certifications"></span></td>
+						</tr> -->
+						<tr>
+							<td><a href="#"><img class="image_certification" src="" onclick=""/></a></td>
+						</tr>
+						
+						
 					</table>
+	
+				
+
+					
+						
                 </tbody>
             </table> 	
 		</div>
-
+		<div class="mediainfo">
+			<table class="media">
+				<tr>
+					<td><span class="media_label"><text>MEDIA</text></span></td>
+				</tr>
+				<tr>
+					<td><span class="filepath"></span></td>
+				</tr>
+				<tr>
+					<td><span class="stage_fileId"></span></td>
+				</tr>
+				<tr>
+					<td><span class="videosource"><img src="" /></span></td>
+				</tr>
+				<tr>
+					<td><span class="resolution"></span></td>
+				</tr>
+				<tr>
+					<td><span class="codec"></span></td>
+				</tr>
+				<tr>
+					<td><span class="fps"></span></td>
+				</tr>
+				<tr>
+					<td><span class="runtime"></span></td>
+				</tr>
+				<tr>
+					<td><span class="audio"></span></td>
+				</tr>
+				<tr>
+					<td><span class="subtitle"></span></td>
+				</tr>
+			</table>
+					
+		
+		</div>
+		<div class="edit_adjust">
+			<table class="posteradjust">
+			<tr>
+					<td>
+                         
+                                <div>
+									<text style="vertical-align: top;">click on poster to Remove: </text><br><br>
+                                    <img class="poster_list" src="" height="90px" width="60px" align="bottom" style="padding:2px;" onclick="" />
+									<button id="infobox_ignore_poster" onclick="javascript:start_ignore ('infobox_ignore_poster')"></button>
+                                </div>
+					</td>
+				</tr>
+                      
+			</table>
+			<table class="fanartadjust">
+			<tr>
+					<td>
+                         
+                                <div>
+									<text style="vertical-align: top;">click on fanart to Remove: </text><br><br>
+                                    <img class="fanart_list" src="" height="72px" width="128px" align="bottom" style="padding:2px;" onclick="" />
+									<button id="infobox_ignore_fanart" onclick="javascript:start_ignore ('infobox_ignore_fanart')"></button>
+                                </div>
+					</td>
+				</tr>
+                      
+			</table>
+		</div>
+		
 	<!-- display season box , one for each season , add scroll horizontal bar if more than 8 seasons --> 
 		<div class="seasontable" id="seasontable">
 			<table >

@@ -91,7 +91,8 @@
                         if (first_genres) {
                             first_genres = false;
                         } else { output += ", ";}
-                        output = output +  genres[i].name ;
+						if (genres[i].target) {  output = output +  genres[i].target;}
+							else {output = output +  genres[i].name ;}
                     }
                     return output;
                 },
@@ -174,7 +175,7 @@
 											return ;
 											break;
 										case 'movie':	
-											return "play_to_device(\""+arg.context.result.files[0].filename+"\")";
+											return "play_to_device(\""+arg.context.result.files[0].fileName+"\")";
 											break;
 										case 'series':
 											
@@ -208,7 +209,7 @@
 				'span.filepath_frame': function(arg)
 							{
 								var files = arg.context.result.files;
-								return "<text>"+file_label.toUpperCase()+"</text>"+  files[0].filename;
+								return "<text>"+file_label.toUpperCase()+"</text>"+  files[0].fileName;
 							}
 				
             }; // end YAMJ_DIR

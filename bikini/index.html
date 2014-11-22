@@ -22,13 +22,15 @@
         <link rel="stylesheet" href="css/jPages.css">
         <!-- Used for the fancy animations -->
         <link rel="stylesheet" href="css/animate.css">
-	
+		<!-- used for iscroll special -->
+		<script type="text/javascript" src="iscroll-master/build/iscroll.js"></script>
     </head>
     <body onload="getIndexData();">
         <script type="text/javascript">
 	
 //***************************************************************************************
-        var select = "";
+
+		var select = "";
 		// set default to 2 rows and 6 columns
 		var RowperPageValue = 2;
 		var PerPageValue = 12;
@@ -36,6 +38,15 @@
         var jsondata = null;
 		var menuleft_toggle = 0;
 		var index_method = "START";
+		var watched_method = "all";
+		var newest_method = "";
+		// get the newest method and reset the value to ""
+		if (localStorage.getItem("newest"))
+			{newest_method = localStorage.getItem("newest");
+			localStorage.setItem("newest", "");}
+		// get the watched method 
+		if (localStorage.getItem("watched"))
+			{watched_method = localStorage.getItem("watched");}
 		// get the search method and reset to default for the next time 
 		if (localStorage.getItem("search_method"))
 			{index_method = localStorage.getItem("search_method");
@@ -105,7 +116,13 @@
 					"img.infobutton@onclick": function(arg) {
 						cursor_position (); 
                         return "direct_info('" + arg.item.videoType + "', " + arg.item.id + ")";
-                    }
+                    },
+					"img.watched_small@src": function(arg)
+					{
+						if (arg.item.watched) 
+						{return "./pictures/watched.png";} else
+						{return "./pictures/unwatched.png";}
+					}
                 }
             }
         };
@@ -122,6 +139,8 @@
         // It will then update the HTML with the data and set up the paging
         function getIndexData()
         {
+			// load the new scolling method for the id and class selected 
+			loaded_iscroll ();
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 			get_lang();
 			get_style();
@@ -150,6 +169,25 @@
 						selected_index = all_select.toUpperCase();
 						window.localStorage.setItem("indextype", 'movie,series');
 				};
+				switch (watched_method)
+				{
+					case 'all':
+						selected_index = selected_index ;
+						break;
+					case 'true':
+						selected_index = selected_index + "(" + watched_select.toUpperCase() + ") ";
+						break;
+					case 'false':
+						selected_index = selected_index + "(" + unwatched_select.toUpperCase() + ") ";
+						break;
+					
+					default :
+						selected_index = selected_index;
+				};
+				
+				
+				
+				
 			 var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=title&sortdir="+direction;	
 					if (window.localStorage.getItem("yearselected") == 'true' && window.localStorage.getItem("selection")) 
 								{
@@ -168,7 +206,13 @@
 										window.localStorage.setItem("search_index", "");	
 									}
 								}
-				jsonUrl += "&artwork=poster";
+								
+				jsonUrl += "&artwork=poster&watched=" + watched_method;
+				if (newest_method != '' && newest_method != '0')
+				{
+					jsonUrl += "&include=newest-" + newest_method;
+					selected_index = selected_index + ' new:' + newest_method;
+				}
 				
 				$('#printsearch').html(selected_index);
 				console.log("Index getIndexData URL: " + jsonUrl);
@@ -207,8 +251,12 @@
 				window.location.reload();
 		
 		}
-		
-		
+// ****************************** id or class with iscroll **************************************************************
+	var myScroll;
+	function loaded_iscroll () {
+	myScroll = new IScroll('#container_menu', { scrollX: false, scrollY: true, mouseWheel: true });
+	}
+	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
   //************************ LANGUAGE LOCAL SETTING *********************************************
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
 		function set_context_lang_value ()
@@ -218,40 +266,34 @@
 			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
 			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
 			document.getElementById("genreindex").innerHTML=genre_select.toUpperCase();
+			document.getElementById("studioindex").innerHTML=studio_select.toUpperCase();
 			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
 			document.getElementById("configindex").innerHTML=config_select.toUpperCase();
 			document.getElementById("searchindex").innerHTML=search_select.toUpperCase();
 			document.getElementById("remoteselect").innerHTML=remote_label.toUpperCase();
-			document.getElementById("allgenre").innerHTML=all_genre.toUpperCase();
-			document.getElementById("moviegenre").innerHTML=movie_select.toUpperCase();
-			document.getElementById("seriesgenre").innerHTML=series_select.toUpperCase();
-			document.getElementById("seasongenre").innerHTML=season_select.toUpperCase();
+		//	document.getElementById("allgenre").innerHTML=all_genre.toUpperCase();
+		//	document.getElementById("moviegenre").innerHTML=movie_select.toUpperCase();
+		//	document.getElementById("seriesgenre").innerHTML=series_select.toUpperCase();
+		//	document.getElementById("seasongenre").innerHTML=season_select.toUpperCase();
+			document.getElementById("yamj3select").innerHTML="YAMJ3";
+			document.getElementById("genrelistselect").innerHTML=genrelist_select.toUpperCase();
+			document.getElementById("certificationindex").innerHTML=certification_label.toUpperCase();
+			document.getElementById("ratingindex").innerHTML=rating_label.toUpperCase();
+			document.getElementById("videosourceindex").innerHTML=source_label.toUpperCase();
+		//	document.getElementById("watchedselect").innerHTML=watched_select.toUpperCase();
+		//	document.getElementById("option_watchedselect").innerHTML=watched_select.toLowerCase();
+		//	document.getElementById("option_unwatchedselect").innerHTML=unwatched_select.toLowerCase();
+		//	document.getElementById("option_allwatchedselect").innerHTML=all_label.toLowerCase();
 		}
         </script>
-	
 	<div class="index_header"> 
         <div id="logo_index">
+			<td>
 				<ul id="home_left_up">
-					<li><a id="li_home_left" href="javascript:toggle_menuleft()"></a></li>
-					<li><a id="li_all_up" href="javascript:ChangeIndex('movie,series')">
-						<div id="allselect"></div></a></li>
-					<li><a id="li_movie_up" href="javascript:ChangeIndex('movie')">
-						<div id="movieselect"></div></a></li>	
-					<li><a id="li_series_up" href="javascript:ChangeIndex('series')">
-						<div id="serieselect"></div></a></li>	
-					<li><a id="li_season_up" href="javascript:ChangeIndex('season')">
-						<div id="seasonselect"></div></a></li>	
-					<li><a id="li_person_up" href="javascript:call_personindex('false')">
-						<div id="personindex"></div></a></li>
-					<li><a id="li_genre_up" href="javascript:call_genreindex(index_type, 'false')">
-						<div id="genreindex"></div></a></li>
-					<li><a id="li_search_up" href="javascript:ouvre_popup_search(StyleValue)">
-						<div id="searchindex"></div></a></li>
-					<li><a id="li_config_up" href="javascript:ouvre_config(StyleValue)">
-						<div id="configindex"></div></a></li>
-					<li><a id="li_remote_up" href="javascript:ouvre_remote(); ">
-						<div id="remoteselect"></div></a></li>						
+					<li><a id="li_home_left"></a></li>
+					
 				</ul>
+			</td>
 			<div class="show_index"><span id="printsearch"></span></div>
 			<div class="count_return_index">
                    <span class="ReturnCount"></span> 
@@ -273,34 +315,126 @@
         <div id="container" >
             <div id="yRow" class="row">
                 <div id="yBlock" class="block">
-					<img class="poster" src="">
-                    <img class="playbutton" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'">
-					<img class="infobutton" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'">
+					<img class="poster" src="" />
+                    <img class="playbutton" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'" />
+					<img class="infobutton" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'" />
+					<img class="watched_small" src="" />
 					<br>
                     <span class="title"></span>
                 </div>
                 <br />
             </div>
         </div>
-		<div class="directplay" style="display:none">
-				<span class="filepath"></span>
-		</div>
-		<div id="main_index">			
-			<form id="monFormGenre">
-			
-					<table align="right" >
-						<tr>
-							<td>							
-								<input  type="radio" onclick="ChangeIndex('movie,series')" name="select_genre" /><label id='allgenre'></label>
-								<input  type="radio" onclick="ChangeIndex('movie')" name="select_genre"/><label id='moviegenre'></label>
-								<input  type="radio" onclick="ChangeIndex('series')" name="select_genre"/><label id='seriesgenre'></label>
-								<input  type="radio" onclick="ChangeIndex('season')" name="select_genre"/><label id='seasongenre'></label>
-							<td>
-						</tr>
-					</table>
-				
-			</form>
-		</div>
+	<!-- left menu with icon -->
+    <div id="container_menu">			
+		<ul id="monFormMenu">
+	
+				<li><a href="javascript:ChangeIndex('movie,series')">
+							<img src="pictures/icon/zap/home_all_rv8.png" height="50px"  width="50px" alt="tv movie" />
+						</a><div id="allselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('movie')">
+							<img src="pictures/icon/zap/home_movies_rv8.png" height="50px"  width="50px" alt="movie" align="top" />
+						</a><div id="movieselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('series')">
+							<img src="pictures/icon/zap/home_tv shows_rv8.png" height="50px"  width="50px" alt="tv" />
+						</a><div id="serieselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('season')">
+							<img src="pictures/icon/zap/home_apps_rv8.png" height="50px"  width="50px" alt="season" />
+						</a><div id="seasonselect"></div>
+				</li>
+				<li><a href="javascript:call_personindex('false')">
+							<img src="pictures/icon/zap/home_person_rv8.png" height="50px"  width="50px" alt="person"  />
+						</a><div id="personindex"></div>
+				</li>
+				<li><a href="javascript:call_genreindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_genres2_rv8.png" height="50px"  width="50px" alt="genre" />
+						</a><div id="genreindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_popup_search(StyleValue)">
+							<img src="pictures/icon/zap/find.png" height="45px" width="50px" alt="find" />
+						</a><div id="searchindex"></div>
+				</li>
+				<li><a href="javascript:call_studioindex(index_type, 'false')">
+							<img src="pictures/icon/zap/Studio.png" height="50px"  width="50px" alt="studio"  />
+						</a><div id="studioindex"></div>
+				</li>
+				<li><a href="javascript:call_ratingindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_rating_rv8.png" height="50px"  width="50px" alt="rating"  />
+						</a><div id="ratingindex"></div>
+				</li>
+				<li><a href="javascript:call_certificationindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_certification_rv8.png" height="50px"  width="50px" alt="certification"  />
+						</a><div id="certificationindex"></div>
+				</li>
+				<li><a href="javascript:call_videosourceindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_videosource_rv8.png" height="50px"  width="50px" alt="videosurce"  />
+						</a><div id="videosourceindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_config(StyleValue)">
+							<img src="pictures/icon/zap/settings.png" height="50px" width="60px" alt="setting" />
+						</a><div id="configindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_yamj3(); ">
+							<img src="pictures/icon/zap/home.png" height="50px"  width="50px" alt="home" />
+						</a><div id="yamj3select"></div>
+				</li>
+				<li><a href="javascript:ouvre_genrelist(); ">
+							<img src="pictures/icon/zap/list_genre.png" height="50px"  width="50px" alt="liste fenre" />
+						</a><div id="genrelistselect"></div>
+				</li>
+				<li><a href="javascript:ouvre_remote(); ">
+							<img src="pictures/icon/zap/remote.png" height="50px"  width="50px" alt="remote" />
+						</a><div id="remoteselect"></div>
+				</li>
+		</ul>
+	</div> 
+	<div id="main_index">			
+		<form id="monFormGenre">
+				<table align="right" >
+					<tr>
+						<td>
+							<a href="javascript:NewestSelection('index.html', '30-creation')"><img src="pictures/icon/zap/home_new_rv8.png" height="50px"  width="50px" alt="newest" /></a>
+							<select id="newest_icon" style="position:relative; top:-15px; left:-10px;" onchange="javascript:NewestSelection('index.html', document.getElementById('newest_icon').value );" >
+												<option value=""></option>
+												<option value="0">0</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+												<option value="9">9</option>
+												<option value="10">10</option>
+												<option value="20">20</option>
+												<option value="30">30</option>
+												<option value="40">40</option>
+												<option value="50">50</option>
+												<option value="60">60</option>
+												<option value="70">70</option>
+												<option value="80">80</option>
+												<option value="90">90</option>
+												<option value="100">100</option>
+											</select> 
+						</td>
+						<td>							
+							<a href="javascript:BoxsetSelection('navBoxset.html')"><img src="pictures/icon/zap/home_set_rv8.png" height="50px"  width="50px" alt="boxset" /></a>
+						</td>
+						<td>							
+							<a href="javascript:WatchedSelection('index.html', 'all')"><img src="pictures/icon/zap/home_watched_rv8.png" height="50px"  width="50px" alt="allwatched" /></a>
+						</td>
+						<td>
+							<a href="javascript:WatchedSelection('index.html', 'true')"><img src="pictures/watched.png" height="20px" width="20px" alt="watched" /></a>
+							<a href="javascript:WatchedSelection('index.html', 'false')"><img src="pictures/unwatched.png" height="20px" width="20px" alt="unwatched" /></a>	 
+						</td>
+					</tr>
+				</table>
+		</form>
+	</div>	
 	<!-- display infobox -->
 		<button id="infobox" onclick="javascript:start_playing ()"></button>
 	<!-- display Remote -->

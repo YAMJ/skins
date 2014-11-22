@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <lang>
+	<alllabel>tutti</alllabel>
 	<allgenre>tutti</allgenre>
 	<allselected>del cinema e serie</allselected>
 	<anglelabel>aspetto</anglelabel>
@@ -9,8 +10,9 @@
 	
 	<bluelabel>blu</bluelabel>
 	
-	<configselected>configurazione</configselected>
+	<certificationlabel>certificazione</certificationlabel>
 	<closeremotelabel>close remoto</closeremotelabel>
+	<configselected>configurazione</configselected>
 	
 	<descending>discendente</descending>
 	<downlabel>basso</downlabel>
@@ -23,9 +25,12 @@
 	<filelabel>file</filelabel>
 	<filemodelabel>modalita file</filemodelabel>
 	<filmographylabel>filmografia</filmographylabel>
+	<formatlabel>formato</formatlabel>
+	<fpslabel>fps</fpslabel>
 	<fwdlabel>avanti</fwdlabel>
 	
 	<genrelabel>tipo</genrelabel>
+	<genrelistselect>lista dei generi</genrelistselect>
 	<genreselected>tipo</genreselected>
 	<greenlabel>verde</greenlabel>
 	
@@ -60,11 +65,14 @@
 	<powerlabel>potenza</powerlabel>
 	<prevremotelabel>precedente</prevremotelabel>
 	
+	<ratinglabel>valutazione</ratinglabel>
+	<ratingindex>valutazione</ratingindex>
 	<redlabel>rosso</redlabel>
 	<remotelabel>telecommando</remotelabel>
 	<repeatlabel>ripetizione</repeatlabel>
 	<resultstext>provocare</resultstext>
 	<returnlabel>ritorno</returnlabel>
+	<runtimelabel>termine</runtimelabel>
 	<rewindlabel>riavvolgere</rewindlabel>
 	<rightlabel>diritto</rightlabel>
 	
@@ -80,6 +88,7 @@
 	<sourcelabel>origine</sourcelabel>
 	<startlabel>inizia con</startlabel>
 	<stoplabel>stop</stoplabel>
+	<studioselected>studio</studioselected>
 	<stylelabel>stile</stylelabel>
 	<subtitlelabel>sottotitlo</subtitlelabel>
 	
@@ -87,10 +96,14 @@
 	<timeseeklabel>tempo di ricer.</timeseeklabel>
 	<tvmodelabel>modalia tv</tvmodelabel>
 	
+	<unwatchedselect>non visto</unwatchedselect>
 	<uplabel>top</uplabel>
 	
+	<videolabel>video</videolabel>
 	<volumedownlabel>vol-</volumedownlabel>
 	<volumeuplabel>vol+</volumeuplabel>
+	
+	<watchedselect>visto</watchedselect>
 	
 	<yearlabel>anno</yearlabel>
 	<yellowlabel>giallo</yellowlabel>

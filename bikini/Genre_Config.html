@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>YAMJv3 Genrelist</title>
+        <script src="js/jQuery.js"></script>
+        <!-- Used for the JSON parsing -->
+        <script src="js/pure.js"></script>
+        <!-- Used for the paging of the index -->
+        <script src="js/js.js"></script>
+		<script src="js/my_remote.js"></script>
+        <script src="js/jPages.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/lang.js"></script>
+		<!-- Used for config  setting -->
+		<script src="js/config.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>
+		<script src="js/library.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/yamj-config-style.css">
+		<link rel="stylesheet" type="text/css" href="css/yamj-config.css">
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+        <!-- Used for the paging of the index -->
+        <link rel="stylesheet" href="css/jPages.css">
+        <!-- Used for the fancy animations -->
+        <link rel="stylesheet" href="css/animate.css">
+	<!-- used for iscroll special -->
+		<script type="text/javascript" src="iscroll-master/build/iscroll.js"></script>
+    </head>
+	<body onload="getGenreData();">
+		<script type="text/javascript">
+		
+		function getGenreData ()
+		{
+				var index_type = "all";
+				if (window.localStorage.getItem("indextype"))
+					{index_type = window.localStorage.getItem("indextype");}
+					else {window.localStorage.setItem("indextype", index_type);}
+				loaded_iscroll ();
+				get_lang();
+				var jsondata = null;
+				var jsonUrl = "/yamj3/api/genres/list.json?full=true&used=false&sortby=name&sortdir=ASC";
+
+				console.log("URL: " + jsonUrl);
+				
+				$.ajax({
+					url: jsonUrl,
+					async: false,
+					dataType: 'jsonp',
+					'success': function (data)
+					{
+						jsondata = data;
+						updateHtml(data);
+				//		outputJson(jsondata); 
+					}
+				});
+				
+				return jsondata;
+				
+			}
+
+			
+			function updateHtml(yamjdata) {
+		
+				var WI = {
+					"template":"table.results_genrelist",
+					"header": {
+						"column":[ "Name", "Target", "New", "Action"]
+					},
+					"directivehead": {
+						"th": {
+							"c<-column": {
+								".":"c"
+							}
+						},
+						'td':{
+							"c<-column":{
+								"@class":"c"
+							}
+						}
+					},
+					"directivebody": {
+						"tbody tr": {
+							"list<-results":{
+						//		"td.Id"				: "list.id",
+								"td.Name"			: "list.name",
+								"td.Target"			: "list.target",
+								"td.New"			: function(arg)
+									{
+								//	 console.log("Genre_Config arg.item.name:" + arg.item.name)
+									return "<input name=\"formURL" +arg.item.name+ "\" type=\"text\" id=\"formURL" +arg.item.name+ "\"/>"
+									}, 
+									"td.Action"			: function(arg)
+									{
+								//	 console.log("Genre_Config arg.item.name:" + arg.item.name)
+									return "<input type=\"button\" value=\"edit\" onclick=\"Update_GenreData('" +arg.item.name+ "', document.getElementById('formURL" +arg.item.name+ "').value)\"/>"
+									}
+							}
+						}
+					}
+				};
+				
+				var TEMPLATE = $p( WI.template ).render( WI.header, WI.directivehead ).compile( WI.directivebody );
+
+				$p('table.results_genrelist').render( yamjdata, TEMPLATE );
+			
+			
+			}
+	 function Update_GenreData(genre_to_update, target_value)
+			{
+				var jsonGenreUrl = "/yamj3/api/genres/update?name="+ genre_to_update + "&target=" + target_value;
+
+				console.log("URL: " + jsonGenreUrl);
+
+				var Genrejsondata = null;
+
+				$.ajax({
+					url: jsonGenreUrl,
+					async: false,
+					dataType: 'jsonp',
+					'success': function(data)
+					{
+						Genrejsondata = data;
+						// outputJson(data);
+
+					}
+											
+				});
+				window.location.reload();
+				return Genrejsondata;
+			}
+// ****************************** id or class with iscroll **************************************************************
+	var myScroll;
+	function loaded_iscroll () {
+	myScroll = new IScroll('#container_menu', { scrollX: false, scrollY: true, mouseWheel: true });
+	}
+	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+  //************************ LANGUAGE LOCAL SETTING *********************************************
+		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
+		function set_context_lang_value ()
+		{
+			document.getElementById("allselect").innerHTML=all_select.toUpperCase();
+			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
+			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
+			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
+			document.getElementById("genreindex").innerHTML=genre_select.toUpperCase();
+			document.getElementById("studioindex").innerHTML=studio_select.toUpperCase();
+			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
+			document.getElementById("configindex").innerHTML=config_select.toUpperCase();
+			document.getElementById("searchindex").innerHTML=search_select.toUpperCase();
+			document.getElementById("remoteselect").innerHTML=remote_label.toUpperCase();
+			document.getElementById("yamj3select").innerHTML="YAMJ3";
+			document.getElementById("genrelistselect").innerHTML=genrelist_select.toUpperCase();
+			document.getElementById("certificationindex").innerHTML=certification_label.toUpperCase();
+			document.getElementById("ratingindex").innerHTML=rating_label.toUpperCase();
+			document.getElementById("videosourceindex").innerHTML=source_label.toUpperCase();
+		}
+ 		</script>
+<!-- START header fixed navigation-->
+            <div class="topbar">
+                <div class="topbar-inner">
+                    <div class="container-fluid">
+                        <a href="/yamj3/" class="brand" target="_blank"><img alt="YAMJ Logo" src="pictures/YAMJ-logo-120-white-reflectv3.png"></a>
+                        <ul class="nav">
+                            <li><a href="/yamj3/" target="_blank"><i class="fa fa-home fa-2x"></i> Home</a></li>
+                            <li><a href="/yamj3/skin-info.html" target="_blank"><i class="fa fa-ticket fa-2x"></i> Skins</a></li>
+                            <li><a href="/yamj3/config/list.html" target="_blank"><i class="fa fa-cogs fa-2x"></i> Config</a></li>
+                            <li><a href="http://www.networkedmediatank.com/forumdisplay.php?fid=139" target="_blank"><i class="fa fa-comments-o fa-2x"></i> Forums</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+	<!-- just added to set the language value, shouldn't be displayed  -->
+			<div class="results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Value"></td></tr></table>
+			</div>
+
+		
+		
+	<!-- left menu with icon -->
+    <div id="container_menu" >			
+		<ul id="monFormMenu" style="margin: 0px;">
+	
+				<li><a href="javascript:ChangeIndex('movie,series')">
+							<img src="pictures/icon/zap/home_all_rv8.png" height="50px"  width="50px" alt="tv movie" />
+						</a><div id="allselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('movie')">
+							<img src="pictures/icon/zap/home_movies_rv8.png" height="50px"  width="50px" alt="movie" align="top" />
+						</a><div id="movieselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('series')">
+							<img src="pictures/icon/zap/home_tv shows_rv8.png" height="50px"  width="50px" alt="tv" />
+						</a><div id="serieselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('season')">
+							<img src="pictures/icon/zap/home_apps_rv8.png" height="50px"  width="50px" alt="season" />
+						</a><div id="seasonselect"></div>
+				</li>
+				<li><a href="javascript:call_personindex('false')">
+							<img src="pictures/icon/zap/home_person_rv8.png" height="50px"  width="50px" alt="person"  />
+						</a><div id="personindex"></div>
+				</li>
+				<li><a href="javascript:call_genreindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_genres2_rv8.png" height="50px"  width="50px" alt="genre" />
+						</a><div id="genreindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_popup_search(StyleValue)">
+							<img src="pictures/icon/zap/find.png" height="45px" width="50px" alt="find" />
+						</a><div id="searchindex"></div>
+				</li>
+				<li><a href="javascript:call_studioindex(index_type, 'false')">
+							<img src="pictures/icon/zap/Studio.png" height="50px"  width="50px" alt="studio"  />
+						</a><div id="studioindex"></div>
+				</li>
+				<li><a href="javascript:call_ratingindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_rating_rv8.png" height="50px"  width="50px" alt="rating"  />
+						</a><div id="ratingindex"></div>
+				</li>
+				<li><a href="javascript:call_certificationindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_certification_rv8.png" height="50px"  width="50px" alt="certification"  />
+						</a><div id="certificationindex"></div>
+				</li>
+				<li><a href="javascript:call_videosourceindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_videosource_rv8.png" height="50px"  width="50px" alt="videosurce"  />
+						</a><div id="videosourceindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_config(StyleValue)">
+							<img src="pictures/icon/zap/settings.png" height="50px" width="60px" alt="setting" />
+						</a><div id="configindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_yamj3(); ">
+							<img src="pictures/icon/zap/home.png" height="50px"  width="50px" alt="home" />
+						</a><div id="yamj3select"></div>
+				</li>
+				<li><a href="javascript:ouvre_genrelist(); ">
+							<img src="pictures/icon/zap/list_genre.png" height="50px"  width="50px" alt="liste fenre" />
+						</a><div id="genrelistselect"></div>
+				</li>
+				<li><a href="javascript:ouvre_remote(); ">
+							<img src="pictures/icon/zap/remote.png" height="50px"  width="50px" alt="remote" />
+						</a><div id="remoteselect"></div>
+				</li>
+		</ul>
+	</div> 
+
+		<div id="headertable" class="hero-unit" style="width: 80%; margin: auto; position: absolute; top: 50px; left: 100px; "	>
+			<h2>YAMJv3 Genre List</h2>
+			<table id="tablegenrelist" class="results_genrelist">
+				<thead>
+					<tr>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	<!-- display source data from API if needed  -->
+        <div id="sourceData"></div>
+	</body>
+</html>

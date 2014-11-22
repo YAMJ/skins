@@ -1,0 +1,159 @@
+html, #tablegenrelist,#headertable,#logo,#message
+{
+    /* Applies to all pages */
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse:collapse;
+ /*   width: 0%; */
+    font-weight:bold;
+}
+/*
+ * Scaffolding
+ * Basic and global styles for generating a table system, structural layout, and page templates
+ * ------------------------------------------------------------------------------------------- */
+body {
+    background-color: #111111;
+    margin: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 18px;
+    color: #404040;
+}
+
+#tablegenrelist th, #headertable th
+{
+    font-size:1.1em;
+    text-align:left;
+    padding-bottom:4px;
+    border-bottom: 1px solid                          #111111/*{table-border}*/;
+    font-weight: bold;
+    background-color: #222222;
+}
+
+#tablegenrelist td, #headertable td
+{
+    font-size:1em;
+    text-align:left;
+    width:20%;
+    font-weight:bold;
+    padding:4px;
+    border-bottom: 1px solid                          #111111 /*{headertable-border}*/;
+    color:#ffffff;
+}
+
+#tablegenrelist tr:nth-child(odd)
+{
+    font-size:1em;
+    font-weight:bold;
+    text-align:left;
+    color:#444444;
+
+}
+
+#tablegenrelist th.title, #headertable th.title
+{
+    font-size:1.5em;
+    text-shadow: 3px /*{shadow-x}*/ 3px /*{shadow-y}*/ 0 /*{shadow-radius}*/ #111 /*{shadow-color}*/;
+}
+
+#tablegenrelist th.bold, #tablegenrelist td.bold, #headertable th.bold, #headertable td.bold
+{
+    font-weight: bold;
+}
+
+#tablegenrelist th.right, #tablegenrelist td.right, #headertable th.right, #headertable td.right
+{
+    text-align: right;
+}
+
+#tablegenrelist th.center, #tablegenrelist td.center, #headertable th.center, #headertable td.center
+{
+    text-align: center;
+}
+
+#logo
+{
+    height: auto;
+    width: auto;
+    text-align: center;
+    border-bottom:1px solid #111111;
+}
+
+#message
+{
+    text-align:center;
+    font-weight: bold;
+    color: tomato;
+}
+
+#tablegenrelist th.span, #tablegenrelist td.span, #headertable th.span, #headertable td.span
+{
+    column-span: all;
+    text-align: center;
+}
+
+#container_menu {
+
+    width: 80px;
+	position: absolute;
+	top: 70px;
+	border: 1px solid black;
+	height: 727px;
+	left: 10px;
+	z-index:7;
+	color: black;
+	overflow: hidden;
+	background-color: gray;
+	text-align: center;
+}
+#container_menu li {
+	font-weight: bold;
+    color: black;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:0.8em;
+	text-align: center;
+	}
+#monFormMenu {
+	left: 0px;
+	padding-left: 0px;
+	list-style: none;
+	height: 1150px;
+	}
+#version_txt {
+	position: relative;
+	left: 350px;
+	}
+a:-webkit-any-link
+{
+    color: #2489ce;
+    text-decoration: underline;
+    cursor: auto;
+}
+
+.footer
+{
+    height: 40px;
+    position: relative;
+	left: 50px;
+    z-index: 10;
+    overflow: visible;
+    margin-left:auto;
+    margin-right:auto;
+    padding:5px 5px;
+    text-align:center;
+	width: 1250px;
+}
+
+h1 {
+	position: relative;
+    margin-bottom: 18px;
+	margin-left: 50px;
+    font-size: 30px;
+    line-height: 36px;
+}
+h2{
+	margin-left: 50px;
+    margin-bottom: 18px;
+    font-size: 30px;
+    line-height: 36px;
+	}

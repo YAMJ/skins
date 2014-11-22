@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		
+		<script src="js/jQuery.js"></script>
+        <!-- Used for the JSON parsing -->
+        <script src="js/pure.js"></script>
+        <!-- Used for the paging of the index -->
+        <script src="js/js.js"></script>
+        <script src="js/jPages.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/lang.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>	
+		<script src="js/library.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
+        <!-- Used for the paging of the index -->
+        <link rel="stylesheet" href="css/jPages.css">
+        <!-- Used for the fancy animations -->
+        <link rel="stylesheet" href="css/animate.css">
+		<!-- used for iscroll special -->
+		<script type="text/javascript" src="iscroll-master/build/iscroll.js"></script>
+		
+		<title>YAMJv3 Navigation Rating index</title>
+	
+    </head>
+    <body onload="NavData();">
+        <script type="text/javascript">
+		var menuleft_toggle = 0;
+		var index_type = "all";
+		var output = "";	
+		var rating_source = "combined";
+				
+		 function NavData()
+        {
+		if (window.localStorage.getItem("Rating_source"))
+				{rating_source = window.localStorage.getItem("Rating_source");}
+		// load the new scolling method for the id and class selected 
+			loaded_iscroll ();
+		// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+			get_lang();
+			get_style();
+			get_player();
+			display_Id('container');
+			nodisplay_Id('container_source');
+			if (window.localStorage.getItem("indextype"))
+				{index_type = window.localStorage.getItem("indextype");
+				console.log("navRating get: " + index_type);}
+				else {window.localStorage.setItem("indextype", index_type);
+				console.log("navRating set: " + index_type);}
+		    var jsonUrl = "/yamj3/api/ratings/list.json?type=" + index_type + "&source="+ rating_source;
+			console.log("navRating indextype: " + index_type + " source:" +rating_source );
+			switch (index_type.toUpperCase())
+				{
+				   
+					case 'ALL':
+						selected_index = all_select.toUpperCase();
+						break;
+					case 'MOVIE,SERIES':
+						selected_index = all_select.toUpperCase();
+						break;
+					case 'MOVIE':
+						selected_index = movie_select.toUpperCase();
+						break;
+					case 'SERIES':
+						selected_index = series_select.toUpperCase();
+						break;
+					case 'SEASON':
+						selected_index = season_select.toUpperCase();
+						break;
+				};
+		$('#printsearch').html(rating_label.toUpperCase()+'('+ rating_source + ') ' + selected_index);
+		
+            console.log("navRating URL: " + jsonUrl);
+            var jsondata = null;
+
+            $.ajax({
+                url: jsonUrl,
+                async: false,
+                dataType: 'jsonp',
+                'success': function(data)
+                {
+                    jsondata = data;
+				//	 outputJson(data); 
+                    updateHtml(data);
+				// adjust number per page with the popup width and poster + container width			
+                    if (window.localStorage.getItem("Paging") == 'true') {pageData(70);}
+                }
+            });
+            return jsondata;
+        }
+		
+//****************************************************************************		
+		
+     function updateHtml(yamjdata)
+     {
+			var COUNT_HEADER = {
+                'span.ReturnCount': function(arg) {	
+					return arg.context.count+' '+results_text;
+					}
+				};	
+		    var LIST_DIR = {
+            "div.rating_block": {
+                "result<-results": {
+					"span.name": function(arg) {
+							output = arg.item.source + arg.item.rating;
+							return output;
+							},
+					 "img.rating_logo@src": function(arg) {
+							return "pictures/ratings/rating_"+arg.item.rating+".png";
+                           },
+                     "span.name@onclick": function(arg) {
+							if (arg.item.source) 
+							{return "open_rating_index('" + arg.item.source+ "','" + arg.item.rating + "')";}
+							else {return "open_rating_index('" + rating_source+ "','" + arg.item.rating + "')";}
+							},
+					 "img.rating_logo@onclick": function(arg) {
+							if (arg.item.source) 
+							{return "open_rating_index('" + arg.item.source+ "','" + arg.item.rating + "')";}
+							else {return "open_rating_index('" + rating_source+ "','" + arg.item.rating + "')";}
+							}	
+						}
+					}
+				};
+
+			$p('.count_return_rating').render(yamjdata, COUNT_HEADER);	
+            $p('div.row_rating').render(yamjdata, LIST_DIR);
+			
+	}
+		
+		
+//***************************************************************************************************************		
+		function open_rating_nav(index_type)
+        {
+			localStorage.setItem("indextype", index_type);
+            console.log("open_rating_nav Storing value: indextype: " +index_type);
+			window.location.href="navRating.html";
+			
+		}
+		function update_rating_nav()
+        {
+			nodisplay_Id('container');
+			display_Id('container_source');
+		
+		}
+		function select_rating_source(index_type, ratingsource)
+        {
+		localStorage.setItem("Rating_source", ratingsource);
+		 console.log("select_rating_source Storing: indextype: " +index_type+ " source:" + ratingsource);
+		open_rating_nav(index_type);
+		}
+		function open_rating_index(ratingsource, ratingvalue)
+        {
+			localStorage.setItem("Rating_source", ratingsource);
+			localStorage.setItem("Rating_value", ratingvalue);
+            console.log("navRating open_rating_index Storing value: Rating source: " + ratingsource + " Rating value: "+ ratingvalue);
+			window.location.href="index_Rating.html";
+		
+		}
+		function list_rating_source ()
+		{
+		 var jsonUrlSource = "/yamj3/api/ratings/list.json?type=" + index_type +"&rating=false";
+			console.log("navRating  list_rating_source");
+		
+		$('#printsearch').html(rating_label.toUpperCase()+': list');
+		
+            console.log("navRating URLSource: " + jsonUrlSource);
+            var jsondata = null;
+
+            $.ajax({
+                url: jsonUrlSource,
+                async: false,
+                dataType: 'jsonp',
+                'success': function(data)
+                {
+                    jsondata = data;
+				//	 outputJson(data); 
+                    updateHtmlSource(data);
+					nodisplay_Id('container');
+					display_Id('container_source');
+					addShowAlt('img');
+				// adjust number per page with the popup width and poster + container width			
+                    if (window.localStorage.getItem("Paging") == 'true') {pageData(70);}
+                }
+            });
+            return jsondata;
+        }
+		function updateHtmlSource(yamjdata)
+		{
+			var COUNT_HEADER = {
+                'span.ReturnCount': function(arg) {	
+					return arg.context.count+' '+results_text;
+					}
+				};	
+		    var LIST_SOURCE = {
+            "td.rating_block": {
+                "result<-results": {
+					"img.source_logo@src": function(arg) {
+							return "pictures/ratings/"+arg.item.source.toLowerCase()+".png";
+                           },
+					 "img.source_logo@alt": function(arg) {
+							return arg.item.source;
+                           },	
+                     "a.source_logo@onclick": function(arg) {
+							return "select_rating_source('" + index_type + "', '" + arg.item.source + "')";
+							}	
+						}
+					}
+				};
+
+			$p('.count_return_rating').render(yamjdata, COUNT_HEADER);	
+            $p('div.row_source_rating').render(yamjdata, LIST_SOURCE);
+			
+		}
+// ****************************** id or class with iscroll **************************************************************
+	var myScroll;
+	function loaded_iscroll () {
+	myScroll = new IScroll('#container_menu', { scrollX: true, scrollY: true, mouseWheel: true });
+	}
+	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);	
+// *******************************to fix alt bug with chrome ***************************************************************************************
+	function showAlt(){$(this).replaceWith(this.alt)};
+	function addShowAlt(selector){$(selector).error(showAlt).attr("src", $(selector).src)};		
+//************************ LANGUAGE LOCAL SETTING *********************************************		
+
+		function set_context_lang_value ()
+		{
+			document.getElementById("allselect").innerHTML=all_select.toUpperCase();
+		//	document.getElementById("allstudio").innerHTML=all_studio.toUpperCase();
+			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
+		//	document.getElementById("moviestudio").innerHTML=movie_select.toUpperCase();
+			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
+		//	document.getElementById("seriesstudio").innerHTML=series_select.toUpperCase();
+			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();	
+		//	document.getElementById("seasonstudio").innerHTML=season_select.toUpperCase();
+			document.getElementById("genreindex").innerHTML=genre_select.toUpperCase();
+			document.getElementById("studioindex").innerHTML=studio_select.toUpperCase();
+			document.getElementById("remoteselect").innerHTML=remote_label.toUpperCase();
+		//	document.getElementById("studioindex").innerHTML="STUDIO";
+			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
+			document.getElementById("configindex").innerHTML=config_select.toUpperCase();
+			document.getElementById("searchindex").innerHTML=search_select.toUpperCase();
+			document.getElementById("yamj3select").innerHTML="YAMJ3";
+			document.getElementById("genrelistselect").innerHTML=genrelist_select.toUpperCase();
+			document.getElementById("certificationindex").innerHTML=certification_label.toUpperCase();
+			document.getElementById("ratingindex").innerHTML=rating_label.toUpperCase();
+			document.getElementById("videosourceindex").innerHTML=source_label.toUpperCase();
+		}
+
+        </script>
+
+    <div class="index_header"> 
+        <div id="logo_index">
+			<td>
+				<ul id="home_left_up">
+					<li><a id="li_home_left"></a></li>
+					
+				</ul>
+			</td>
+				<!-- display screen name and number of studio  --> 		
+					<div class="show_index_rating"><span id="printsearch"></span></div>
+					<div class="count_return_rating">
+						   <span class="ReturnCount"></span> 
+					</div>
+		<!-- just added to set the language value, shouldn't be displayed  -->
+			<div class="results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Value"></td></tr></table>
+			</div>	
+		</div>
+
+        <!--Navigation Holder-->
+        <div class="holder"></div>
+	</div>
+	<!-- left menu with icon -->
+   	<!-- left menu with icon -->
+    <div id="container_menu">			
+		<ul id="monFormMenu">
+	
+				<li><a href="javascript:ChangeIndex('movie,series')">
+							<img src="pictures/icon/zap/home_all_rv8.png" height="50px"  width="50px" alt="tv movie" />
+						</a><div id="allselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('movie')">
+							<img src="pictures/icon/zap/home_movies_rv8.png" height="50px"  width="50px" alt="movie" align="top" />
+						</a><div id="movieselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('series')">
+							<img src="pictures/icon/zap/home_tv shows_rv8.png" height="50px"  width="50px" alt="tv" />
+						</a><div id="serieselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('season')">
+							<img src="pictures/icon/zap/home_apps_rv8.png" height="50px"  width="50px" alt="season" />
+						</a><div id="seasonselect"></div>
+				</li>
+				<li><a href="javascript:call_personindex('false')">
+							<img src="pictures/icon/zap/home_person_rv8.png" height="50px"  width="50px" alt="person"  />
+						</a><div id="personindex"></div>
+				</li>
+				<li><a href="javascript:call_genreindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_genres2_rv8.png" height="50px"  width="50px" alt="genre" />
+						</a><div id="genreindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_popup_search(StyleValue)">
+							<img src="pictures/icon/zap/find.png" height="45px" width="50px" alt="find" />
+						</a><div id="searchindex"></div>
+				</li>
+				<li><a href="javascript:call_studioindex(index_type, 'false')">
+							<img src="pictures/icon/zap/Studio.png" height="50px"  width="50px" alt="studio"  />
+						</a><div id="studioindex"></div>
+				</li>
+				<li><a href="javascript:call_ratingindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_rating_rv8.png" height="50px"  width="50px" alt="rating"  />
+						</a><div id="ratingindex"></div>
+				</li>
+				<li><a href="javascript:call_certificationindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_certification_rv8.png" height="50px"  width="50px" alt="certification"  />
+						</a><div id="certificationindex"></div>
+				</li>
+				<li><a href="javascript:call_videosourceindex(index_type, 'false')">
+							<img src="pictures/icon/zap/home_videosource_rv8.png" height="50px"  width="50px" alt="videosurce"  />
+						</a><div id="videosourceindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_config(StyleValue)">
+							<img src="pictures/icon/zap/settings.png" height="50px" width="60px" alt="setting" />
+						</a><div id="configindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_yamj3(); ">
+							<img src="pictures/icon/zap/home.png" height="50px"  width="50px" alt="home" />
+						</a><div id="yamj3select"></div>
+				</li>
+				<li><a href="javascript:ouvre_genrelist(); ">
+							<img src="pictures/icon/zap/list_genre.png" height="50px"  width="50px" alt="liste fenre" />
+						</a><div id="genrelistselect"></div>
+				</li>
+				<li><a href="javascript:ouvre_remote(); ">
+							<img src="pictures/icon/zap/remote.png" height="50px"  width="50px" alt="remote" />
+						</a><div id="remoteselect"></div>
+				</li>
+		</ul>
+	</div>          
+	<div id="main_index">			
+			<form id="monFormRating">
+					<table align="right" >
+						<tr>
+							<td>							
+								<a href="javascript:call_ratingindex('movie,series', 'false')"><img src="pictures/icon/zap/home_all_rv8.png" height="45px" width="45px" alt="tv movie"/><a>
+								<a href="javascript:call_ratingindex('movie', 'false')"><img src="pictures/icon/zap/home_movies_rv8.png" height="45x" width="45px" alt="movie" align="top" /></a>
+								<a href="javascript:call_ratingindex('series', 'false')"><img src="pictures/icon/zap/home_tv shows_rv8.png" height="45px" width="45px" alt="tv" /></a>
+						<!--		<a href="javascript:call_ratingindex('season', 'false')"><img src="pictures/icon/zap/home_apps_rv8.png" height="45px" width="45px" alt="season" /></a> -->
+								<a href="javascript:list_rating_source()"><img src="pictures/icon/zap/home_rating_rv8.png" height="45px" width="45px" alt="rating source" /></a>
+							</td>
+						</tr>
+					</table>
+			</form>
+		</div>
+		 <!--Data Items Container-->
+		<div id="container">
+            <div id="yRow" class="row_rating">
+                <div id="yBlock" class="rating_block">
+                    <img class="rating_logo" src=""><br>
+                    <span class="name"></span>
+                </div>
+            </div>
+        </div>
+		<div id="container_source">
+            <div  id="yRow" class="row_source_rating">
+				<table>
+				<tr>
+				<td id="yBlock" class="rating_block">
+                  <a href="#" class="source_logo" onclick="" ><img class="source_logo" src="" alt=""  height="50px" ></img></a>
+				</td>
+				</tr>
+            </table>
+			</div>
+        </div>
+	<!-- display Movie -->
+		<div id="movie_display" style="visibility: hidden; ">
+			<iframe src="" name="movie_frame" resizable="yes" id="movie_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1245px; height:265px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display person -->
+		<div id="person_display" style="visibility: hidden; ">	
+			<iframe src="" name="person_frame" resizable="yes" id="person_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1220px; height:335px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display config -->
+		<div id="target_display" style="visibility: hidden; ">		
+			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:1050px; height:335px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display source data from API if needed  -->
+        <div id="sourceData"></div>
+    </body>
+</html>

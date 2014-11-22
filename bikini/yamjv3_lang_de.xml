@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <lang>
-	 
+	<alllabel>alle</alllabel> 
 	<allgenre>alle</allgenre>
 	<allselected>film und serie</allselected>
 	<anglelabel>seite</anglelabel>
@@ -10,8 +10,9 @@
 	
 	<bluelabel>blau</bluelabel>
 	
-	<configselected>konfiguration</configselected>
+	<certificationlabel>bescheinigung</certificationlabel>
 	<closeremotelabel>nahe fern</closeremotelabel>
+	<configselected>konfiguration</configselected>
 	
 	<descending>absteigend</descending>
 	<downlabel>niedrig</downlabel>
@@ -24,9 +25,12 @@
 	<filelabel>datei</filelabel>
 	<filemodelabel>datei-modus</filemodelabel>
 	<filmographylabel>filmografie</filmographylabel>
+	<formatlabel>format</formatlabel>
+	<fpslabel>fps</fpslabel>
 	<fwdlabel>vorwarts</fwdlabel>
 	
 	<genrelabel>genre</genrelabel>
+	<genrelistselect>liste der genres</genrelistselect>
 	<genreselected>art</genreselected>
 	<greenlabel>grun</greenlabel>
 	
@@ -62,12 +66,15 @@
 	<powerlabel>macht</powerlabel>
 	<prevremotelabel>fruher</prevremotelabel>
 	
+	<ratinglabel>wertung</ratinglabel>
+	<ratingindex>wertung</ratingindex>
 	<redlabel>rot</redlabel>
 	<remotelabel>fernsteuerung</remotelabel>
 	<repeatlabel>wiederholung</repeatlabel>
 	<resultstext>ergebnis</resultstext>
 	<returnlabel>ruckkehr</returnlabel>
 	<rewindlabel>zuruckspulen</rewindlabel>
+	<runtimelabel>begriff</runtimelabel>
 	<rightlabel>recht</rightlabel>
 	
 	<searchselected>suche</searchselected>
@@ -82,6 +89,7 @@
 	<sourcelabel>ursprung</sourcelabel>
 	<startlabel>beginnt mit</startlabel>
 	<stoplabel>stoppen</stoplabel>
+	<studioselected>studio</studioselected>
 	<stylelabel>stil</stylelabel>
 	<subtitlelabel>untertitel</subtitlelabel>
 	
@@ -91,8 +99,12 @@
 	
 	<uplabel>top</uplabel>	
 
+	<videolabel>video</videolabel>
 	<volumedownlabel>vol-</volumedownlabel>
 	<volumeuplabel>vol+</volumeuplabel>
+	
+	<unwatchedselect>nicht gesehen</unwatchedselect>
+	<watchedselect>gesehen</watchedselect>
 	
 	<yearlabel>jahr</yearlabel>
 	<yellowlabel>gelb</yellowlabel>

@@ -95,27 +95,33 @@ function updateHtml(yamjdata)
 								 if (window.localStorage.getItem('Style') == 'popup') {outputperson_photo = outputperson_photo+"<td>"}
 								outputperson_photo = outputperson_photo+"<p class=\"person_name\">"+totalperson_photo[i].name+"</p>";
 									// Check to see if there is artwork
-								if (totalperson_photo[i].artwork[0]) 
-								{
-									// Get the first photo from the list
-									
-									var person_photoselect = totalperson_photo[i].artwork[0];
-									if (person_photoselect.generatedId == 0) 
+								if (totalperson_photo[i].artwork) 
 									{
-										outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+")\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+											if (totalperson_photo[i].artwork[0]) 
+											{
+												// Get the first photo from the list
+												
+												var person_photoselect = totalperson_photo[i].artwork[0];
+												if (person_photoselect.generatedId == 0) 
+												{
+													outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'close')\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+												} else {
+													outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'close')\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + person_photoselect.filename + "\" ></img></a>";
+													}
+											} else {
+												outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'close')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+											}
 									} else {
-										outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+")\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + person_photoselect.filename + "\" ></img></a>";
-										}
-								} else {
-									outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+")\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
-								}
-								
+												outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'close')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+											}
 									// add the role at the bottom 
 								if (totalperson_photo[i].role) {
 								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].role+"</p>";
 								} else {
+								if (totalperson_photo[i].job) {
 									// adjust  Writter, Director  
-								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].job.substr(0,1)+totalperson_photo[i].job.substr(1).toLowerCase()+"</p>";
+									outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].job.substr(0,1)+totalperson_photo[i].job.substr(1).toLowerCase()+"</p>";
+									}
 								}
 							if (window.localStorage.getItem('Style') == 'popup') {outputperson_photo = outputperson_photo+"</td>"}
 							}
@@ -142,7 +148,7 @@ function updateHtml(yamjdata)
 		
 //***************************************************************************************************************		
 	  
-	function open_person_popup(id)
+	function open_person_popup_old(id)
         {
             localStorage.setItem("Person_id", id);
             console.log("Storing value: Person_id"  + id);

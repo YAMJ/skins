@@ -7,6 +7,7 @@
 	height: 730px;
 	left: 81px;
 	overflow-y: auto;
+	z-index: 7;
 /*	margin: 2px 2px 0px 0px;
     
     padding: 5px;
@@ -38,7 +39,7 @@
 	border: 1px solid black;
 	height: 727px;
 	left: 0px;
-	z-index:7;
+	z-index:10;
 	background-color: gray;
 	visibility: visible;
 	opacity: 0;
@@ -98,7 +99,7 @@
     width: 175px;
     height: 290px; 
 	margin: 0px;
-    padding: 0px;		
+    padding: 0px;	
 /* if 27 posters per page, 3 rows 9 columns 
     height: 225px;	
 	margin: 3px;
@@ -376,6 +377,12 @@ body {
 	list-style: none;
 	height: 1050px;
 	}
+#monFormMenu2 {
+	left: 80px;
+	padding-left: 10px;
+	list-style: none;
+	height: 1050px;
+	}	
 #message
 {
     text-align: center;
@@ -532,13 +539,33 @@ body {
 	left: 315px;
 
 }
+.table_new_select
+{
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	position: absolute;
+	padding: 0px 10px 5px 0px;
+	top: 70px;
+	left: 630px;
+	border: 2px solid #b0b0b0;
+	text-align: left;
+}
+.table_watched_select
+{
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	position: absolute;
+	padding: 0px 10px 5px 0px;
+	top: 70px;
+	left: 490px;
+	border: 2px solid #b0b0b0;
+	text-align: left;
+}
 .table_search_method
 {
     font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 	position: absolute;
 	padding: 0px 10px 5px 0px;
 	top: 70px;
-	left: 130px;
+	left: 60px;
 	border: 2px solid #b0b0b0;
 	text-align: left;
 }
@@ -559,7 +586,7 @@ body {
 	position: absolute;
 	padding: 0px 10px 5px 0px;
 	top: 130px;
-	left: 130px;
+	left: 60px;
 	border: 2px solid #b0b0b0;
 	text-align: left;
 }
@@ -569,7 +596,7 @@ body {
 	position: absolute;
 	padding: 0px 0px 5px 0px;
 	top: 70px;
-	left: 330px;
+	left: 260px;
 	border: 2px solid #b0b0b0;
 }
 .tableconfig {
@@ -635,7 +662,7 @@ body {
 	padding-top: 5px;
 }	
 	
-#startlabel, #anylabel, #namelabel, #personlabel, #yearlabel, #genrelabel, #boxsetlabel, #alllabel, #serieslabel, #movielabel, #seasonlabel, #asclabel, #desclabel, #languagelabel, #stylelabel, #skinlabel, #StyleSetted, #SkinSetted, #PlayerSetted, #LangSetted, #NblineSetted, #playerlabel, #pagelabel, #ribbonlabel, #framelabel, #nbrow, #infobox, #infobox_delete {
+#startlabel, #anylabel, #namelabel, #personlabel, #yearlabel, #genrelabel, #boxsetlabel, #alllabel, #serieslabel, #movielabel, #seasonlabel, #asclabel, #desclabel, #languagelabel, #stylelabel, #skinlabel, #StyleSetted, #SkinSetted, #PlayerSetted, #LangSetted, #NblineSetted, #NewSetted, #playerlabel, #pagelabel, #ribbonlabel, #framelabel, #nbrow, #infobox, #infobox_delete, #watchedlabel, #unwatchedlabel, #watched_and_unwatchedlabel, #new_creationlabel, #new_lastscanlabel, #new_filelabel, #new_label, #old_label {
 		display: inline;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
@@ -1039,6 +1066,7 @@ ul#home_left_search, #li_home_left {
 }
 #movie_display{
 	height:290px;
+	left: 90px;
 	}
 
 #person_display{
@@ -1908,7 +1936,7 @@ text {
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
-	z-index: 2;
+	z-index: 7;
 	}
 .mediainfo {
 	width: 1320px;

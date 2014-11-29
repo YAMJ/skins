@@ -6,6 +6,7 @@
 	// display: add  <div id="sourceData"></div>  at the end of the body section 
 //**********************************************************************************************************
 	var StyleValue = "frame";
+	var NewValue = "30-file";
 	var vlc_added = null;
 	
 
@@ -299,19 +300,21 @@
 
 			}
 	// open person display for id selected
-		function open_person_popup(id)
+		function open_person_popup(id, back_close)
 			{
 			   
 				localStorage.setItem("Person_id", id);
-				console.log("open_person_popup Storing value: Person_id"  + id);
+				console.log("template open_person_popup Storing value: Person_id"  + id + " close: " + back_close);
 			   
 			   if (window.localStorage.getItem('Style') == "frame")
 					{
-						window.localStorage.setItem('back_close', 'back');
-						parent.frames['person_frame'].location.href='Popup_Person.html';
-						toggle_Id('person_display');
+						window.localStorage.setItem('back_close', back_close);
+						parent.frames['target_frame'].location.href='Popup_Person.html';
+						parent.document.getElementById('person_display').style.zIndex="2";
+						toggle_Id('target_display');
 				
 					} else { 
+					window.localStorage.setItem('back_close', 'close');
 					Mypopup = window.open("Popup_Person.html", "YAMJ v3 Person popup","channelmode=no, menubar=no, status=no, scrollbars=no, menubar=no, location=no, left=310px, top=5px, width=1120px, height=720px");
 					Mypopup.focus();
 					}
@@ -406,6 +409,73 @@
 				StyleValue = style_;
 				console.log('set style:'+style_);
 				window.localStorage.setItem("Style", style_);
+		
+			}
+			
+			
+		// fetch the new value in the config database , value available : creation, file, lastscan
+		function get_new()
+			{
+				var jsonNewUrl = "/yamj3/api/config/list.json?config="+skin_value+"New&mode=any";
+				console.log("get_style jsonStyleUrl: " + jsonNewUrl);
+				$.ajax({
+                   url: jsonNewUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataNew)
+                   {
+						jsondata = dataNew;
+				//		outputJson(dataSkinLang);
+						checkNew(dataNew);
+						}
+					
+				});	
+			 return jsondata;
+		}
+		
+	// update  the new value in the config database, value available : creation, file, lastscan
+		function update_New(new_) 
+		{
+				var jsonNewUrl = "/yamj3/api/config/update.json?key="+skin_value+"New&value="+new_+"";
+				console.log("update_New jsonNewUrl: " + jsonNewUrl);
+				$.ajax({
+                   url: jsonNewUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataNew)
+                   {
+						jsondata = dataNew;
+					//	outputJson(dataSkinStyle);
+						set_New_value(new_);
+					}
+					
+				});	
+			 return jsondata;
+		}	
+		
+		function checkNew(yamjdata) {
+				var PN = {
+						"td.Value":  function(arg) {
+									if (arg.context.count) {
+										console.log("checkNew: "+arg.context.results[0].value);
+										set_New_value(arg.context.results[0].value);
+										return arg.context.results[0].value;} else {
+										console.log("checkNew: no value found");
+										update_Style('frame');}
+								}								
+							
+						};
+				
+				$p('.results').render( yamjdata, PN );			
+			}	
+	
+	
+	// set the rules to adjust new to the new choosen : value available : creation, file, lastscan
+		function set_New_value(new_)
+			{
+				NewValue = new_;
+				console.log('set new:'+new_);
+				window.localStorage.setItem("New", new_);
 		
 			}
 		function network_device_list ()

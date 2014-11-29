@@ -31,8 +31,7 @@
 		// set default to 2 rows and 6 columns
 		var Indexpopup = "";
 		var LangValue = "en";
-		// default for new method 
-		var newest_type = "file" 
+	
         // This function calls the API to get the JSON data.
         // It will then update the HTML with the data and set up the paging
         function getIndexData()
@@ -44,7 +43,6 @@
 			// fill style value 
 			get_style();
 			get_player();
-			get_new();
 			set_player_select_list();
 			get_poster_number ();
 			init_config ();
@@ -98,18 +96,6 @@
 					window.opener.location.reload(false);window.close();
 				}				
 				document.getElementById("StyleSetted").innerHTML=window.localStorage.getItem("Style");		
-		}
-
-		function commit_new ()
-		{
-				
-				if (StyleValue == 'frame') 
-				{
-					parent.location.reload(false);parent.nodisplay_Id('target_display');
-				} else {
-					window.opener.location.reload(false);window.close();
-				}				
-				document.getElementById("NewSetted").innerHTML=window.localStorage.getItem("New");		
 		}		
 		function commit_nbrow ()
 		{
@@ -219,12 +205,7 @@
 				});
 			  http.send(null);
 			} // gestionClic()
-		function concat_New (new_value) 
-		{
-			var new_str = new_value + "-" + newest_type; 
-			update_New(new_str);
 			
-		}
 		function init_config ()
 		{
 			if (StyleValue == 'frame')
@@ -238,20 +219,15 @@
 			document.getElementById("stylelabel").innerHTML=style_label.toUpperCase();
 			document.getElementById("skinlabel").innerHTML="SKIN";
 			document.getElementById("playerlabel").innerHTML=player_select.toUpperCase();
-		//	document.getElementById("newlabel").innerHTML='NEW';											// player_select.toUpperCase();
 			document.getElementById("nbrow").innerHTML=nbofrow.toUpperCase();
 			document.getElementById("LangSetted").innerHTML=LangValue;
 			document.getElementById("StyleSetted").innerHTML=window.localStorage.getItem("Style");
 			document.getElementById("PlayerSetted").innerHTML=window.localStorage.getItem("Player");
-			document.getElementById("NewSetted").innerHTML=window.localStorage.getItem("New");
 			document.getElementById("NblineSetted").innerHTML=window.localStorage.getItem("RowperPage");
 			if (window.localStorage.getItem("Paging") != 'true') {document.getElementById("NblineSetted").innerHTML=window.localStorage.getItem("RowperPage")+'~';} else 
 				{document.getElementById("NblineSetted").innerHTML=window.localStorage.getItem("RowperPage");}
 			document.getElementById("SkinSetted").innerHTML=window.localStorage.getItem("skinset");
-			document.getElementById("new_creationlabel").innerHTML="INDEX";
-			document.getElementById("new_lastscanlabel").innerHTML="SCAN";
-			document.getElementById("new_filelabel").innerHTML="FICHIER";
-		} 
+		}
         </script>
 		<!-- just added to set the language value, shouldn't be displayed  -->
 		<div class="results" style="visibility: hidden; display:none;">
@@ -349,29 +325,7 @@
 							</td>
 						</tr>
 					</table>
-				<!-- select new value  -->
-							
-							<table class="table_new_select" style="width: 320px; text-align: left;">		 		
-								<tr class="tablenew">
-									<td>
-										
-												<img src="pictures/icon/home_new_rv8.png" height="50px"  width="50px" alt="newest" />
-												<form ><input type="number" list="newlist_to_select" id="new_id" name="new_id" style="width:50px" onchange="concat_New( document.getElementById('new_id').value); window.close();"></input>
-												<div id="NewSetted" />
-												</form>	
-												
-												
-									
-									</td>
-								</tr>
-							
-									
-								<td style="width: 320px; text-align: left;">
-									<input type="radio" name="new_value" value="file" onclick="newest_type = 'file'" id="FormNewFile" /><label for="file"><div id='new_filelabel'></div></label><br />
-									<input type="radio" name="new_value" value="creation" onclick="newest_type = 'creation'" id="FormWNewCreation"  /><label for="creation"><div id='new_creationlabel'></div></label><br />
-									<input type="radio" name="new_value" value="lastscan" onclick="newest_type = 'lastscan'" id="FormNewLastscan"  /><label for="lastscan"><div id='new_lastscanlabel'></div></label>
-								</td>  
-							</table> 
+					
 				<!-- select skin  -->
 							<table>
 								<tr class="tableskin">

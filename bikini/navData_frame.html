@@ -25,9 +25,18 @@
 				{index_method = localStorage.getItem("search_method");
 				localStorage.setItem("search_method", "START");}
 			localStorage.setItem("update_required", false);
-			var	directionnav = localStorage.getItem ("direction");
+			var	directionnav = localStorage.getItem ("direction"); 
 			var	type = localStorage.getItem("indextype");
 			var series_id = localStorage.getItem ("SeriesId");
+			var newest_method = "";
+			// get the newest method and reset the value to ""
+			if (localStorage.getItem("newest"))
+				{newest_method = localStorage.getItem("newest");
+				localStorage.setItem("newest", "");}
+			var watched_method = "all";
+			// get the watched method 
+			if (localStorage.getItem("watched"))
+				{watched_method = localStorage.getItem("watched");}
 		    var jsonUrl = "/yamj3/api/index/video.json?type="+type+"&sortby=title&sortdir="+directionnav;
 			if (window.localStorage.getItem("selection"))
 				{
@@ -51,7 +60,13 @@
 									jsonUrl = jsonUrl + "&field=series_id&search="+series_id;
 								}
 						}
+			init_navdataframe ();			
 			jsonUrl += "&artwork=poster";
+			jsonUrl += "&artwork=poster&watched=" + watched_method;
+				if (newest_method != '' && newest_method != '0')
+				{
+					jsonUrl += "&include=newest-" + newest_method;
+				}
             console.log("NavData URL: " + jsonUrl);
             var jsondata = null;
 
@@ -157,8 +172,13 @@
 				{
 					parent.document.getElementById('movie_frame').style.display="none";
 					parent.document.getElementById('movie_display').style.visibility="hidden";
+					parent.document.getElementById('movie_display').style.zIndex="2";
 				} else { this.window.close();}
 			} 
+	function init_navdataframe ()
+			{
+				if (window.localStorage.getItem('Style') == 'frame') {parent.document.getElementById('movie_display').style.zIndex="11"; }
+			}
         </script>
 		<div id="close_icon" onclick="close_data()" style="position: absolute; top: 0px; left: 0px; z-index: 6;"><img src="./pictures/close2.png" width="40"/></div>
         <!--Navigation Holder-->

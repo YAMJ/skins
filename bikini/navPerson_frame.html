@@ -65,32 +65,40 @@
 								
 								
 									// Check to see if there is artwork
-								if (totalperson_photo[i].artwork[0]) 
-								{
-									// Get the first photo from the list
-									
-									var person_photoselect = totalperson_photo[i].artwork[0];
-									if (person_photoselect.generatedId == 0) 
-									{
-									// on click display biography and big poster
-	
-									outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+")\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
-									
-									} else {
-	
-									outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+")\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + person_photoselect.filename + "\" ></img></a>";
-									}
+									if (totalperson_photo[i].artwork) 
+										{
+										if (totalperson_photo[i].artwork[0]) 
+										{
+											// Get the first photo from the list
+											
+											var person_photoselect = totalperson_photo[i].artwork[0];
+											if (person_photoselect.generatedId == 0) 
+											{
+											// on click display biography and big poster
+			
+											outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'back')\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+											
+											} else {
+			
+											outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'back')\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + person_photoselect.filename + "\" ></img></a>";
+											}
+										} else {
+			
+											outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'back')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+										}
 								} else {
-	
-									outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+")\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
-								}
+			
+									outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'back')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+									}
 									// add the role at the bottom 
 								if (totalperson_photo[i].role) {
 								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].role+"</p></td>";
 								} else {
+									if (totalperson_photo[i].job) {
 									// adjust  Writter, Director  
-								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].job.substr(0,1)+totalperson_photo[i].job.substr(1).toLowerCase()+"</p></td>";
-								}
+										outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].job.substr(0,1)+totalperson_photo[i].job.substr(1).toLowerCase()+"</p></td>";
+										}
+									}
 							}
 							return outputperson_photo;
 						}
@@ -133,22 +141,23 @@
 						{ $('.table_person_photo_frame').css('overflow-x', 'scroll');}
 				}				
 		}	
-	function open_person_popup(id)
+	function open_person_popup_old(id, back)
         {
             localStorage.setItem("Person_id", id);
-            console.log("open_person_popup Storing value: Person_id"  + id);
+			window.localStorage.setItem('back_close', 'back');
+            console.log("navPerson_frame open_person_popup Storing value: Person_id"  + id);
 		// adjust frame to display biography
 				close_person ()
 		// adjust frame to display biography
-			parent.document.getElementById('target_display').style.height="715px";
-			parent.document.getElementById('target_frame').style.height="705px";
-			parent.document.getElementById('target_display').style.width="1100px";
-			parent.document.getElementById('target_frame').style.width="1090px";
-			parent.document.getElementById('target_display').style.left="120px";
-			parent.document.getElementById('target_display').style.top="2px";
+		//	parent.document.getElementById('target_display').style.height="715px";
+		//	parent.document.getElementById('target_frame').style.height="705px";
+		//	parent.document.getElementById('target_display').style.width="1100px";
+		//	parent.document.getElementById('target_frame').style.width="1090px";
+		//	parent.document.getElementById('target_display').style.left="120px";
+		//	parent.document.getElementById('target_display').style.top="2px";
 			parent.frames['target_frame'].location.href='Popup_Person.html';	
 		//	parent.document.getElementById('target_frame').style.display="block";
-			parent.document.getElementById('target_display').style.visibility="visible";
+		//	parent.document.getElementById('target_display').style.visibility="visible";
 		//	window.location.href="Popup_Person.html";
 		}
 	function close_person ()
@@ -156,6 +165,7 @@
 				console.log("close_person:  style:"+StyleValue);
 				parent.document.getElementById('person_frame').style.display="none";
 				parent.document.getElementById('person_display').style.visibility="hidden";
+				parent.document.getElementById('person_display').style.zIndex="2";
 			} 
         </script>
 <!-- *************************************************************************************************************** -->	   

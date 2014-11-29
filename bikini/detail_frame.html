@@ -477,6 +477,7 @@
 	// display the page with all the info 		
 		function display_all ()
 			{
+				parent.document.getElementById('detail_display').style.zIndex = '11';
 				$('div#slideshowCtr').css('visibility', 'visible');
 				$('div#slideshowCtr').css('width', '112px');
 				$('div#slideshowCtr').css('height', '166px');
@@ -575,6 +576,7 @@
 			{
 				console.log("close_frame:  style:"+StyleValue);								
 				parent.document.getElementById('detail_display').style.visibility="hidden";
+				parent.document.getElementById('detail_display').style.zIndex = "0";
 			} // end close_frame
       </script>
 <!-- *************************************************************************************************************** -->

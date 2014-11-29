@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>YAMJ v3</title>
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>YAMJv3 Genrelist</title>
         <script src="js/jQuery.js"></script>
         <!-- Used for the JSON parsing -->
@@ -27,10 +28,11 @@
 	<!-- used for iscroll special -->
 		<script type="text/javascript" src="js/iscroll.js"></script>
     </head>
-	<body onload="getGenreData();">
-		<script type="text/javascript">
-		
-		function getGenreData ()
+	
+	
+   <body onload="getGenreData();">
+	<script type="text/javascript">
+	function getGenreData ()
 		{
 				var index_type = "all";
 				if (window.localStorage.getItem("indextype"))
@@ -38,98 +40,25 @@
 					else {window.localStorage.setItem("indextype", index_type);}
 				loaded_iscroll ();
 				get_lang();
-				var jsondata = null;
-				var jsonUrl = "/yamj3/api/genres/list.json?full=true&used=false&sortby=name&sortdir=ASC";
+				read_version();
+		}
+	function read_version() {
+		 console.log("read_version: ");
+					if (window.XMLHttpRequest)
+					  {// code for IE7+, Firefox, Chrome, Opera, Safari
+					  xmlhttp=new XMLHttpRequest();
+					  }
+					else
+					  {// code for IE6, IE5
+					  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+					  }
+					xmlhttp.open("GET","version.txt",false);
+					xmlhttp.send();
+					xmlDoc=xmlhttp.responseText; 
 
-				console.log("URL: " + jsonUrl);
-				
-				$.ajax({
-					url: jsonUrl,
-					async: false,
-					dataType: 'jsonp',
-					'success': function (data)
-					{
-						jsondata = data;
-						updateHtml(data);
-				//		outputJson(jsondata); 
+					document.getElementById("version_txt").innerHTML=xmlDoc;
 					}
-				});
-				
-				return jsondata;
-				
-			}
-
-			
-			function updateHtml(yamjdata) {
-		
-				var WI = {
-					"template":"table.results_genrelist",
-					"header": {
-						"column":[ "Name", "Target", "New", "Action"]
-					},
-					"directivehead": {
-						"th": {
-							"c<-column": {
-								".":"c"
-							}
-						},
-						'td':{
-							"c<-column":{
-								"@class":"c"
-							}
-						}
-					},
-					"directivebody": {
-						"tbody tr": {
-							"list<-results":{
-						//		"td.Id"				: "list.id",
-								"td.Name"			: "list.name",
-								"td.Target"			: "list.target",
-								"td.New"			: function(arg)
-									{
-								//	 console.log("Genre_Config arg.item.name:" + arg.item.name)
-									return "<input name=\"formURL" +arg.item.name+ "\" type=\"text\" id=\"formURL" +arg.item.name+ "\"/>"
-									}, 
-									"td.Action"			: function(arg)
-									{
-								//	 console.log("Genre_Config arg.item.name:" + arg.item.name)
-									return "<input type=\"button\" value=\"edit\" onclick=\"Update_GenreData('" +arg.item.name+ "', document.getElementById('formURL" +arg.item.name+ "').value)\"/>"
-									}
-							}
-						}
-					}
-				};
-				
-				var TEMPLATE = $p( WI.template ).render( WI.header, WI.directivehead ).compile( WI.directivebody );
-
-				$p('table.results_genrelist').render( yamjdata, TEMPLATE );
-			
-			
-			}
-	 function Update_GenreData(genre_to_update, target_value)
-			{
-				var jsonGenreUrl = "/yamj3/api/genres/update?name="+ genre_to_update + "&target=" + target_value;
-
-				console.log("URL: " + jsonGenreUrl);
-
-				var Genrejsondata = null;
-
-				$.ajax({
-					url: jsonGenreUrl,
-					async: false,
-					dataType: 'jsonp',
-					'success': function(data)
-					{
-						Genrejsondata = data;
-						// outputJson(data);
-
-					}
-											
-				});
-				window.location.reload();
-				return Genrejsondata;
-			}
-// ****************************** id or class with iscroll **************************************************************
+	// ****************************** id or class with iscroll **************************************************************
 	var myScroll;
 	function loaded_iscroll () {
 	myScroll = new IScroll('#container_menu', { scrollX: false, scrollY: true, mouseWheel: true, click: true });
@@ -154,24 +83,50 @@
 			document.getElementById("certificationindex").innerHTML=certification_label.toUpperCase();
 			document.getElementById("ratingindex").innerHTML=rating_label.toUpperCase();
 			document.getElementById("videosourceindex").innerHTML=source_label.toUpperCase();
-		}
+			}
  		</script>
-<!-- START header fixed navigation-->
+ <!-- START header fixed navigation-->
             <div class="topbar">
                 <div class="topbar-inner">
                     <div class="container-fluid">
-                        <a href="/yamj3/" class="brand" target="_blank"><img alt="YAMJ Logo" src="pictures/YAMJ-logo-120-white-reflectv3.png"></a>
+                        <a href="index_Yamj3.html" class="brand"><img alt="YAMJ Logo" src="pictures/YAMJ-logo-120-white-reflectv3.png"></a>
                         <ul class="nav">
-                            <li><a href="/yamj3/" target="_blank"><i class="fa fa-home fa-2x"></i> Home</a></li>
-                            <li><a href="/yamj3/skin-info.html" target="_blank"><i class="fa fa-ticket fa-2x"></i> Skins</a></li>
-                            <li><a href="/yamj3/config/list.html" target="_blank"><i class="fa fa-cogs fa-2x"></i> Config</a></li>
-                            <li><a href="http://www.networkedmediatank.com/forumdisplay.php?fid=139" target="_blank"><i class="fa fa-comments-o fa-2x"></i> Forums</a></li>
+                            <li><a href="index_Yamj3.html"><i class="fa fa-home fa-2x"></i> Home</a></li>
+                            <li><a href="/yamj3/skin-info.html"><i class="fa fa-ticket fa-2x"></i> Skins</a></li>
+                            <li><a href="/yamj3/config/list.html"><i class="fa fa-cogs fa-2x"></i> Config</a></li>
+                            <li><a href="http://www.networkedmediatank.com/forumdisplay.php?fid=139"><i class="fa fa-comments-o fa-2x"></i> Forums</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-	<!-- just added to set the language value, shouldn't be displayed  -->
+      
+        <div id="logo" style="position: relative; top: 150px;">
+            <h2>Skin Listing</h2>
+        </div>
+       
+        <table id="tablelist" class="hero-unit" style="width: 90%; margin: auto;">
+            <tr>
+                <th style="width:10%">Skin Name</th>
+                <th style="width:5%" >Version</th>
+                <th style="width:15%">Image</th>
+                <th style="width:30%">Skin Description</th>
+                <th style="width:20%">Location</th>
+                <th style="width:10%">Support</th>
+            </tr>
+        
+			<tr>
+                    <td>Bikini</td>
+                    <td>V1.2.0</td>
+                    <td class="center"><a href="index.html" target="_blank"><img alt="Skin image" src="skin-image.png" width="200"/></a></td>
+                    <td>Bikini skin for pc tablet<br></td>
+                    <td><a href="index.html" target="_blank">bikini</a></td>
+                    <td class="center"><a href="http://www.networkedmediatank.com/showthread.php?tid=69504">Click here</a></td>
+                </tr>
+			</table>
+			
+			
+<!-- just added to set the language value, shouldn't be displayed  -->
 			<div class="results" style="visibility: hidden; display:none;">
 				<table><tr><td class="Value"></td></tr></table>
 			</div>
@@ -245,22 +200,17 @@
 		</ul>
 	</div> 
 
-		<div id="headertable" class="hero-unit" style="width: 80%; margin: auto; position: absolute; top: 50px; left: 100px; "	>
-			<h2>YAMJv3 Genre List</h2>
-			<table id="tablegenrelist" class="results_genrelist">
-				<thead>
-					<tr>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	<!-- display source data from API if needed  -->
-        <div id="sourceData"></div>
-	</body>
+                  <!-- START Footer -->
+            <br/>
+            <br/>
+            <table class="footer" style="margin: auto; top: 350px;">
+             
+                <tr>
+                    <td><span id="version_txt" /></td>
+                  
+                </tr>
+            </table>
+            <!-- END Footer -->
+
+    </body>
 </html>

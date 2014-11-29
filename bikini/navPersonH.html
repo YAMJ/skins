@@ -80,29 +80,36 @@
 								}
 					//			console.log("navPersonH: loop i=" + i + " str_bio:" + str_bio);	
 									// Check to see if there is artwork
-								if (totalperson_photo[i].artwork[0]) 
+								if (totalperson_photo[i].artwork) 
 								{
-									// Get the first photo from the list
-									
-									var person_photoselect = totalperson_photo[i].artwork[0];
-									if (person_photoselect.generatedId == 0) 
-									{
-									// on click display biography and big poster
-										outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
-									} else {
-										outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('"+ arg.context.basePhotoUrl + person_photoselect.filename +"')\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + person_photoselect.filename + "\" ></img></a>";
-					//					console.log("navPersonH: loop i=" + i + " photo:" + arg.context.basePhotoUrl + person_photoselect.filename);	
+										if (totalperson_photo[i].artwork[0]) 
+										{
+											// Get the first photo from the list
+											
+											var person_photoselect = totalperson_photo[i].artwork[0];
+											if (person_photoselect.generatedId == 0) 
+											{
+											// on click display biography and big poster
+												outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+											} else {
+												outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('"+ arg.context.basePhotoUrl + person_photoselect.filename +"')\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + person_photoselect.filename + "\" ></img></a>";
+							//					console.log("navPersonH: loop i=" + i + " photo:" + arg.context.basePhotoUrl + person_photoselect.filename);	
+												}
+										} else {
+											outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
 										}
 								} else {
-									outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
-								}
+											outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+										}
 									// add the role at the bottom 
 								if (totalperson_photo[i].role) {
 								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].role+"</p></td>";
 					//			console.log("navPersonH: loop i=" + i + " role:" + totalperson_photo[i].role);	
 								} else {
-									// adjust  Writer, Director  
-								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].job.substr(0,1)+totalperson_photo[i].job.substr(1).toLowerCase()+"</p></td>";
+									if (totalperson_photo[i].job) {
+										// adjust  Writer, Director  
+									outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].job.substr(0,1)+totalperson_photo[i].job.substr(1).toLowerCase()+"</p></td>";
+									}
 								}
 							}
 							return outputperson_photo;

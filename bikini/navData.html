@@ -28,6 +28,15 @@
 			var	directionnav = localStorage.getItem ("direction");
 			var	indextype = localStorage.getItem("indextype");
 			var series_id = localStorage.getItem ("SeriesId");
+			var newest_method = "";
+			// get the newest method and reset the value to ""
+			if (localStorage.getItem("newest"))
+				{newest_method = localStorage.getItem("newest");
+				localStorage.setItem("newest", "");}
+			var watched_method = "all";
+			// get the watched method 
+			if (localStorage.getItem("watched"))
+				{watched_method = localStorage.getItem("watched");}
 		    var jsonUrl = "/yamj3/api/index/video.json?type="+indextype+"&sortby=title&sortdir="+directionnav+"&artwork=poster";
 			if (window.localStorage.getItem("selection"))
 				{
@@ -51,6 +60,11 @@
 									jsonUrl = jsonUrl + "&field=series_id&search="+series_id;
 								}
 						}
+				jsonUrl += "&artwork=poster&watched=" + watched_method;
+				if (newest_method != '' && newest_method != '0')
+				{
+					jsonUrl += "&include=newest-" + newest_method;
+				}
             console.log("NavData URL: " + jsonUrl);
             var jsondata = null;
 
@@ -155,7 +169,7 @@
         <!--Navigation Holder-->
         <div class="holder" style="display: none;"></div>
 
-		<div id="close_icon" style="position: absolute;	top: 2px; left: 2px; z-index: 10;" onclick="javascript: window.close()"><img src="./pictures/close2.png" height="30px"/></div>
+		<div id="close_icon" style="position: absolute;	top: 2px; left: 2px; z-index: 10;" onclick="javascript:parent.document.getElementById('movie_display').style.zIndex="1"; window.close(); "><img src="./pictures/close2.png" height="30px"/></div>
 		 <!--Data Items Container-->
 		<div id="container">
             <div id="yRow" class="row">

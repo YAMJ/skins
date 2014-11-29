@@ -23,7 +23,7 @@
         <!-- Used for the fancy animations -->
         <link rel="stylesheet" href="css/animate.css">
 		<!-- used for iscroll special -->
-		<script type="text/javascript" src="iscroll-master/build/iscroll.js"></script>
+		<script type="text/javascript" src="js/iscroll.js"></script>
     </head>
     <body onload="getIndexData();">
         <script type="text/javascript">
@@ -224,9 +224,9 @@
 // ****************************** id or class with iscroll **************************************************************
 	var myScroll;
 	function loaded_iscroll () {
-	myScroll = new IScroll('#container_menu', { scrollX: true, scrollY: true, mouseWheel: true });
+	myScroll = new IScroll('#container_menu', { scrollX: true, scrollY: true, mouseWheel: true, click: true });
 	}
-	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+	//   document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 //************************ LANGUAGE LOCAL SETTING *********************************************		
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
 		function set_context_lang_value ()
@@ -284,11 +284,11 @@
 					<table align="right" >
 						<tr>
 							<td>
-								<a href="javascript:open_genre_index('movie,series')"><img src="pictures/icon/zap/home_all_rv8.png" height="45px" width="45px" alt="tv movie"/><a>
-								<a href="javascript:open_genre_index('movie')"><img src="pictures/icon/zap/home_movies_rv8.png" height="45x" width="45px" alt="movie" align="top" /></a>
-								<a href="javascript:open_genre_index('series')"><img src="pictures/icon/zap/home_tv shows_rv8.png" height="45px" width="45px" alt="tv" /></a>
-								<a href="javascript:open_genre_index('season')"><img src="pictures/icon/zap/home_apps_rv8.png" height="45px" width="45px" alt="season" /></a>
-								<a href="javascript:WatchedSelection('index_Genre.html', 'all')"><img src="pictures/icon/zap/home_watched_rv8.png" height="45px" width="45px" alt="allwatched" /></a>
+								<a href="javascript:open_genre_index('movie,series')"><img src="pictures/icon/home_all_rv8.png" height="45px" width="45px" alt="tv movie"/><a>
+								<a href="javascript:open_genre_index('movie')"><img src="pictures/icon/home_movies_rv8.png" height="45x" width="45px" alt="movie" align="top" /></a>
+								<a href="javascript:open_genre_index('series')"><img src="pictures/icon/home_tv shows_rv8.png" height="45px" width="45px" alt="tv" /></a>
+								<a href="javascript:open_genre_index('season')"><img src="pictures/icon/home_apps_rv8.png" height="45px" width="45px" alt="season" /></a>
+								<a href="javascript:WatchedSelection('index_Genre.html', 'all')"><img src="pictures/icon/home_watched_rv8.png" height="45px" width="45px" alt="allwatched" /></a>
 							</td>
 							<td>
 								<a href="javascript:WatchedSelection('index_Genre.html', 'true')"><img src="pictures/watched.png" height="20px" width="20px" alt="watched" /></a>
@@ -311,63 +311,63 @@
 		<ul id="monFormMenu">
 	
 				<li><a href="javascript:ChangeIndex('movie,series')">
-							<img src="pictures/icon/zap/home_all_rv8.png" height="50px"  width="50px" alt="tv movie" />
+							<img src="pictures/icon/home_all_rv8.png" height="50px"  width="50px" alt="tv movie" />
 						</a><div id="allselect"></div>
 				</li>
 				<li><a href="javascript:ChangeIndex('movie')">
-							<img src="pictures/icon/zap/home_movies_rv8.png" height="50px"  width="50px" alt="movie" align="top" />
+							<img src="pictures/icon/home_movies_rv8.png" height="50px"  width="50px" alt="movie" align="top" />
 						</a><div id="movieselect"></div>
 				</li>
 				<li><a href="javascript:ChangeIndex('series')">
-							<img src="pictures/icon/zap/home_tv shows_rv8.png" height="50px"  width="50px" alt="tv" />
+							<img src="pictures/icon/home_tv shows_rv8.png" height="50px"  width="50px" alt="tv" />
 						</a><div id="serieselect"></div>
 				</li>
 				<li><a href="javascript:ChangeIndex('season')">
-							<img src="pictures/icon/zap/home_apps_rv8.png" height="50px"  width="50px" alt="season" />
+							<img src="pictures/icon/home_apps_rv8.png" height="50px"  width="50px" alt="season" />
 						</a><div id="seasonselect"></div>
 				</li>
 				<li><a href="javascript:call_personindex('false')">
-							<img src="pictures/icon/zap/home_person_rv8.png" height="50px"  width="50px" alt="person"  />
+							<img src="pictures/icon/home_person_rv8.png" height="50px"  width="50px" alt="person"  />
 						</a><div id="personindex"></div>
 				</li>
 				<li><a href="javascript:call_genreindex(index_type, 'false')">
-							<img src="pictures/icon/zap/home_genres2_rv8.png" height="50px"  width="50px" alt="genre" />
+							<img src="pictures/icon/home_genres2_rv8.png" height="50px"  width="50px" alt="genre" />
 						</a><div id="genreindex"></div>
 				</li>
 				<li><a href="javascript:ouvre_popup_search(StyleValue)">
-							<img src="pictures/icon/zap/find.png" height="45px" width="50px" alt="find" />
+							<img src="pictures/icon/find.png" height="45px" width="50px" alt="find" />
 						</a><div id="searchindex"></div>
 				</li>
 				<li><a href="javascript:call_studioindex(index_type, 'false')">
-							<img src="pictures/icon/zap/Studio.png" height="50px"  width="50px" alt="studio"  />
+							<img src="pictures/icon/Studio.png" height="50px"  width="50px" alt="studio"  />
 						</a><div id="studioindex"></div>
 				</li>
 				<li><a href="javascript:call_ratingindex(index_type, 'false')">
-							<img src="pictures/icon/zap/home_rating_rv8.png" height="50px"  width="50px" alt="rating"  />
+							<img src="pictures/icon/home_rating_rv8.png" height="50px"  width="50px" alt="rating"  />
 						</a><div id="ratingindex"></div>
 				</li>
 				<li><a href="javascript:call_certificationindex(index_type, 'false')">
-							<img src="pictures/icon/zap/home_certification_rv8.png" height="50px"  width="50px" alt="certification"  />
+							<img src="pictures/icon/home_certification_rv8.png" height="50px"  width="50px" alt="certification"  />
 						</a><div id="certificationindex"></div>
 				</li>
 				<li><a href="javascript:call_videosourceindex(index_type, 'false')">
-							<img src="pictures/icon/zap/home_videosource_rv8.png" height="50px"  width="50px" alt="videosurce"  />
+							<img src="pictures/icon/home_videosource_rv8.png" height="50px"  width="50px" alt="videosurce"  />
 						</a><div id="videosourceindex"></div>
 				</li>
 				<li><a href="javascript:ouvre_config(StyleValue)">
-							<img src="pictures/icon/zap/settings.png" height="50px" width="60px" alt="setting" />
+							<img src="pictures/icon/settings.png" height="50px" width="60px" alt="setting" />
 						</a><div id="configindex"></div>
 				</li>
 				<li><a href="javascript:ouvre_yamj3(); ">
-							<img src="pictures/icon/zap/home.png" height="50px"  width="50px" alt="home" />
+							<img src="pictures/icon/home.png" height="50px"  width="50px" alt="home" />
 						</a><div id="yamj3select"></div>
 				</li>
 				<li><a href="javascript:ouvre_genrelist(); ">
-							<img src="pictures/icon/zap/list_genre.png" height="50px"  width="50px" alt="liste fenre" />
+							<img src="pictures/icon/list_genre.png" height="50px"  width="50px" alt="liste fenre" />
 						</a><div id="genrelistselect"></div>
 				</li>
 				<li><a href="javascript:ouvre_remote(); ">
-							<img src="pictures/icon/zap/remote.png" height="50px"  width="50px" alt="remote" />
+							<img src="pictures/icon/remote.png" height="50px"  width="50px" alt="remote" />
 						</a><div id="remoteselect"></div>
 				</li>
 		</ul>

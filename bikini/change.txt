@@ -1,4 +1,8 @@
 change.txt
+V1.3.1
+- fix all page display for android (priority of frame, popup ribbon) 
+- add new setting for new value 
+- fix several minor bugs
 V1.3.0
 - add boxset list and index of video in boxset - need to be completed 
 - add studio list and list of video for a specified studio, activ info studio in detail page 

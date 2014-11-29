@@ -123,9 +123,11 @@
 								if (totalperson_photo[i].role) {
 								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].role+"</p></td>";
 								} else {
-									// adjust  Writter, Director  
-								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].job.substr(0,1)+totalperson_photo[i].job.substr(1).toLowerCase()+"</p></td>";
-								}
+									if (totalperson_photo[i].job) {
+											// adjust  Writter, Director  
+										outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].job.substr(0,1)+totalperson_photo[i].job.substr(1).toLowerCase()+"</p></td>";
+										}
+									}
 							}
 							return outputperson_photo;
 						}
@@ -168,7 +170,7 @@
 						{ $('.table_person_photo_frame').css('overflow-x', 'scroll');}
 				}				
 		}	
-	function open_person_popup(id)
+	function open_person_popup_old(id)
         {
             localStorage.setItem("Person_id", id);
             console.log("open_person_popup Storing value: Person_id"  + id);

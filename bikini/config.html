@@ -29,6 +29,7 @@
 //***************************************************************************************
         var select = "";
 		// set default to 2 rows and 6 columns
+		var StyleValue = "";
 		var Indexpopup = "";
 		var LangValue = "en";
 		// default for new method 
@@ -91,13 +92,29 @@
 		function commit_style ()
 		{
 				
-				if (StyleValue == 'frame') 
+				switch (StyleValue) 
 				{
-					parent.location.reload(false);parent.nodisplay_Id('target_display');
-				} else {
-					window.opener.location.reload(false);window.close();
-				}				
-				document.getElementById("StyleSetted").innerHTML=window.localStorage.getItem("Style");		
+					case 'frame':
+					{
+						parent.location.reload(false);
+						parent.nodisplay_Id('target_display');
+				//		window.opener.location.reload(false);
+						break;
+					}
+					case 'page':
+					{
+						window.opener.location.reload(false);
+						break;
+					}
+					case 'ribbon':
+					case 'popup':
+					{
+						window.opener.location.reload(false);
+						break;
+					}
+				}
+				document.getElementById("StyleSetted").innerHTML=window.localStorage.getItem("Style");	
+				window.close();	
 		}
 
 		function commit_new ()

@@ -112,6 +112,7 @@
 					asc_label=(x[i].getElementsByTagName("ascending")[0].childNodes[0].nodeValue);
 					audio_label=(x[i].getElementsByTagName("audiolabel")[0].childNodes[0].nodeValue);
 					blue_label=(x[i].getElementsByTagName("bluelabel")[0].childNodes[0].nodeValue);
+					boxset_label=(x[i].getElementsByTagName("boxsetlabel")[0].childNodes[0].nodeValue);
 					certification_label=(x[i].getElementsByTagName("certificationlabel")[0].childNodes[0].nodeValue);
 					close_remote_label=(x[i].getElementsByTagName("closeremotelabel")[0].childNodes[0].nodeValue);
 					config_select=(x[i].getElementsByTagName("configselected")[0].childNodes[0].nodeValue);

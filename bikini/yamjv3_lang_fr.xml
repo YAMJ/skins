@@ -9,6 +9,7 @@
 	<audiolabel>audio</audiolabel>
 	
 	<bluelabel>bleu</bluelabel>
+	<boxsetlabel>ensemble</boxsetlabel>
 	
 	<certificationlabel>certification</certificationlabel>
 	<closeremotelabel>ferme telecommande</closeremotelabel>

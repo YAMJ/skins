@@ -1,4 +1,10 @@
 change.txt
+V1.3.2
+- fix boxset to add 1rst member poster if no poster is available for set
+- fix boset to display all member in index page 
+- fix config frame set to relaod when style change 
+- fix new default parameter stored in bikini skin
+- add set index page in general left navigation 
 V1.3.1
 - fix all page display for android (priority of frame, popup ribbon) 
 - add new setting for new value 

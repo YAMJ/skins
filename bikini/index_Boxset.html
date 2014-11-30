@@ -65,13 +65,27 @@
 		
         var LIST_DIR = {
             "div.block": {
-                "member<-result.members": {
+                "member<-results": {
                      "span.title": function(arg) {
 						return arg.item.title;
 					},
                     "img.poster@src": function(arg) {
-					// while the API doesn't return artwork directly get the poster from another API call
-						var output_poster = get_poster(arg.item.videoType, arg.item.id);
+					     	// set dummy as default poster
+                       var output_poster = "pictures/dummy.jpg";
+                        // Check to see if there are posters
+                        if (arg.item.artwork.POSTER) {
+						var boucle = true;
+						var poster = arg.item.artwork.POSTER; 
+						// Get the first poster available from the list
+						for (i = 0; boucle && i < poster.length; i++) 
+							{
+								if (poster[i].generatedId != 0)
+								{
+									boucle = false;
+									output_poster = arg.context.baseArtworkUrl + poster[i].filename;
+								} 
+							}
+						}
 						return output_poster;
                     },
                     "img.poster@onclick": function(arg) {
@@ -114,8 +128,8 @@
 			get_style();
 			get_player();
 			
-			var jsonUrl = "/yamj3/api/boxset/"+boxset_id+".json?dataitems=member,artwork";
-			display_genre = "BOXSET:" + boxset_name.toUpperCase();
+			var jsonUrl = "/yamj3/api/index/video.json?include=boxset-"+boxset_id+"&dataitems=member,artwork&artwork=POSTER";
+			display_genre = boxset_label.toUpperCase()+ ": " + boxset_name.toUpperCase();
 		
 			switch (watched_method)
 				{
@@ -164,46 +178,7 @@
             $p('div.row').render(yamjdata, LIST_DIR);
         }
 
-		function get_poster (videotype, videoid) 
-		{
-			var	jsonUrlPoster = "/yamj3/api/video/" + videotype.toLowerCase() + "/" + videoid + ".json?dataitems=artwork&artwork=poster";
-				console.log("navBoxset get_poster URL: " + jsonUrlPoster);
-			var poster_path = "";
-			var POSTER = {
-					'span.postertest': function(arg) {	
-							  poster_path = "pictures/dummy.jpg";
-								// Check to see if there are posters
-								if (arg.context.result.artwork.POSTER) {
-								var boucle = true;
-								var poster = arg.context.result.artwork.POSTER; 
-								// Get the first poster available from the list
-								for (i = 0; boucle && i < poster.length; i++) 
-									{
-										if (poster[i].generatedId != 0)
-										{
-											boucle = false;
-											poster_path = arg.context.baseArtworkUrl + poster[i].filename;
-										} 
-									}
-								}
-							return poster_path;
-						}	
-					};		
-        // main API call         
-                $.ajax({
-                    url: jsonUrlPoster,
-                    async: false,
-                    dataType: 'jsonp',
-                    'success': function(data)
-                    {
-                        jsondata = data;
-					//	 outputJson(data); 		
-					$p('.test').render(data, POSTER);			
-				}
-                });
-		return poster_path ;
-		
-		}
+	
 	
 // ****************************** id or class with iscroll **************************************************************
 	var myScroll;
@@ -234,6 +209,7 @@
 			document.getElementById("certificationindex").innerHTML=certification_label.toUpperCase();
 			document.getElementById("ratingindex").innerHTML=rating_label.toUpperCase();
 			document.getElementById("videosourceindex").innerHTML=source_label.toUpperCase();
+			document.getElementById("boxsetindex").innerHTML=boxset_label.toUpperCase();
 	//		document.getElementById("watchedselect").innerHTML=watched_select.toUpperCase();
 	//		document.getElementById("option_watchedselect").innerHTML=watched_select.toLowerCase();
 	//		document.getElementById("option_unwatchedselect").innerHTML=unwatched_select.toLowerCase();
@@ -320,6 +296,10 @@
 				<li><a href="javascript:call_videosourceindex(index_type, 'false')">
 							<img src="pictures/icon/home_videosource_rv8.png" height="50px"  width="50px" alt="videosurce"  />
 						</a><div id="videosourceindex"></div>
+				</li>
+				<li><a href="javascript:call_boxsetindex(index_type, 'false')">
+							<img src="pictures/icon/home_set_rv8.png" height="50px"  width="50px" alt="videosurce"  />
+						</a><div id="boxsetindex"></div>
 				</li>
 				<li><a href="javascript:ouvre_config(StyleValue)">
 							<img src="pictures/icon/settings.png" height="50px" width="60px" alt="setting" />

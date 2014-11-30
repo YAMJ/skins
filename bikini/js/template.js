@@ -235,6 +235,18 @@
 					Indexpopup = window.open("navVideosource.html", "_self","");
 				}
 			}
+	// open or change to index boxset page
+		function call_boxsetindex(indextype, newpage)
+			{
+				localStorage.setItem("indextype", indextype);
+				console.log("call_boxsetindex with type: "+indextype);
+				if (newpage =='true') 
+				{
+					Indexpopup = window.open("navBoxset.html", "YAMJv3 Navigation boxset index","");
+				} else {
+					Indexpopup = window.open("navBoxset.html", "_self","");
+				}
+			}
 	// open all person depending of the style 
 		function call_person(newpage)
 			{

@@ -636,6 +636,7 @@
 			document.getElementById("certificationindex").innerHTML=certification_label.toUpperCase();
 			document.getElementById("ratingindex").innerHTML=rating_label.toUpperCase();
 			document.getElementById("videosourceindex").innerHTML=source_label.toUpperCase();
+			document.getElementById("boxsetindex").innerHTML=boxset_label.toUpperCase();
 		}
 		
   // ********************* NOW SET VARIOUS FUNCTION **********************************************  
@@ -1621,9 +1622,13 @@
 							<img src="pictures/icon/home_certification_rv8.png" height="50px"  width="50px" alt="certification"  />
 						</a><div id="certificationindex"></div>
 				</li>
-				<li><a href="javascript:call_videosourceindex(index_type, 'false')" >
+				<li><a href="javascript:call_videosourceindex(indextype, 'false')" >
 							<img src="pictures/icon/home_videosource_rv8.png" height="50px"  width="50px" alt="videosurce"  />
 						</a><div id="videosourceindex"></div>
+				</li>
+				<li><a href="javascript:call_boxsetindex(indextype, 'false')">
+							<img src="pictures/icon/home_set_rv8.png" height="50px"  width="50px" alt="videosurce"  />
+						</a><div id="boxsetindex"></div>
 				</li>
 				<li><a href="javascript:ouvre_config(StyleValue)">
 							<img src="pictures/icon/settings.png" height="50px" width="60px" alt="setting" />

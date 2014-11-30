@@ -858,7 +858,7 @@ ul#home_left_search, #li_home_left {
 	background-color:rgba(255, 255, 255, 0.6);
 	}	
 
-#allselect, #movieselect, #serieselect, #seasonselect, #genreindex, #certificationindex, #ratingindex, #videosourceindex, #studioindex, #personindex, #searchselect, #configselect, #searchindex, #configindex, #remoteselect, #yamj3select, #genrelistselect
+#allselect, #movieselect, #serieselect, #seasonselect, #genreindex, #certificationindex, #ratingindex, #videosourceindex, #boxsetindex, #studioindex, #personindex, #searchselect, #configselect, #searchindex, #configindex, #remoteselect, #yamj3select, #genrelistselect
 {
     font-weight: bold;
     color: black;
@@ -921,7 +921,7 @@ ul#home_left_search, #li_home_left {
 	left: 700px;
 	}
 	
-#language:hover, #nbrow:hover, #allselect:hover, #movieselect:hover, #genreindex:hover, #certificationindex:hover, #ratingindex:hover, #videosourceindex:hover, #studioindex:hover, #searchindex:hover, #configindex:hover, #yamj3select:hover, #genrelistselect:hover , #remoteselect:hover, #personindex:hover,  #serieselect:hover, #seasonselect:hover, #personselect:hover, #genreselect:hover, #searchselect:hover, #configselect:hover, #button_genreselect:hover, #button_personselect:hover, #button_configselect:hover, #button_genreselect_series:hover
+#language:hover, #nbrow:hover, #allselect:hover, #movieselect:hover, #genreindex:hover, #certificationindex:hover, #ratingindex:hover, #videosourceindex:hover, #boxsetindex:hover, #studioindex:hover, #searchindex:hover, #configindex:hover, #yamj3select:hover, #genrelistselect:hover , #remoteselect:hover, #personindex:hover,  #serieselect:hover, #seasonselect:hover, #personselect:hover, #genreselect:hover, #searchselect:hover, #configselect:hover, #button_genreselect:hover, #button_personselect:hover, #button_configselect:hover, #button_genreselect_series:hover
 {	
 	color: red;	
 }

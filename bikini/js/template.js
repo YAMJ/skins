@@ -7,6 +7,8 @@
 //**********************************************************************************************************
 	var StyleValue = "frame";
 	var NewValue = "30-file";
+	var Prefered_PageValue = "index_all";
+	var PagingValue = true;
 	var vlc_added = null;
 	
 
@@ -67,6 +69,23 @@
 							$('.'+class_to_toggle).css('visibility', 'visible');
 						}
 					}
+		// display/nodisplay left menu when click on icon open/close
+		function toggle_menu_left ()
+		{
+			if (document.getElementById('open_menu_left').style.visibility == 'visible')
+				{
+					console.log("detail toggle_menu_left: " + document.getElementById('open_menu_left').style.visibility)
+					document.getElementById('container_menu_left').style.opacity = '1';
+					document.getElementById('open_menu_left').style.visibility = 'hidden';
+					document.getElementById('close_menu_left').style.visibility = 'visible';
+				} else 
+				{
+					console.log("detail toggle_menu_left: " + document.getElementById('open_menu_left').style.visibility)
+					document.getElementById('container_menu_left').style.opacity = '0';
+					document.getElementById('open_menu_left').style.visibility = 'visible';
+					document.getElementById('close_menu_left').style.visibility = 'hidden';
+				}
+		}
 		// on the class selected 
 		function display_class(class_to_toggle)
 					{$('.'+class_to_toggle).css('visibility', 'visible');}
@@ -141,36 +160,98 @@
 					
 				}
 			}
+	// open info_config 
+		function ouvre_info_config() 
+			{
+				console.log("ouvre_info_config");								
+				parent.frames['target_frame'].location.href='info_config.html';
+				toggle_Id('target_display');
+			}
 	// open a new window to select configuration functionnality 
 		function ouvre_config(StyleValue) 
 			{
 			switch (StyleValue)
 					{
 					case 'frame':
+					case 'popup':
+					case 'ribbon':
+					case 'page':
+					default:
 						{
 							console.log("ouvre_config:  style:"+StyleValue);								
-							parent.frames['target_frame'].location.href='config.html';
-							toggle_Id('target_display');
+			//				parent.frames['target_frame'].location.href='config.html';
+			//				toggle_Id('target_display');
+							Configpopup = window.open("config2.html", "_self","");
 							break;
 						} 
-					case 'popup':
+				
+					return;
+					
+				}
+			}
+	// fetch prefered page : value available : index_all, index_movie, index_series, person, genre, boxset, rating, certification, source
+		function ouvre_prefered_page() 
+			{
+			if (localStorage.getItem("prefered_page"))
+			{Prefered_PageValue = localStorage.getItem("prefered_page");}
+			else {localStorage.setItem("prefered_page", Prefered_PageValue);}
+			console.log("ouvre_prefered_page:  Prefered_PageValue:"+Prefered_PageValue);	
+			switch (Prefered_PageValue)
+					{
+					case 'index_all':
 						{
-							console.log("ouvre_config:  style:"+StyleValue);
-							Configpopup = window.open("config.html", "YAMJ v3 config","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=380px, top=5px, width=960px, height=320px");
+							localStorage.setItem("indextype", "movie,series");				
+							Configpopup = window.open("index.html", "_self","");
+							break;
+						} 
+					case 'index_movie':
+						{
+							localStorage.setItem("indextype", "movie");							
+							Configpopup = window.open("index.html", "_self","");
+							break;
+						} 
+					case 'index_series':
+						{
+							localStorage.setItem("indextype", "series");								
+							Configpopup = window.open("index.html", "_self","");
+							break;
+						} 
+					case 'person':
+						{	
+							call_personindex(true);
 							break;
 						}
-					case 'ribbon':
+					case 'genre':
 						{
-							console.log("ouvre_config:  style:"+StyleValue);
-							Configpopup = window.open("config.html", "YAMJ v3 config","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=380px, top=5px, width=960px, height=320px");
+							call_genreindex(localStorage.getItem("indextype"), true);
 							break;
 						}
-					case 'page':
+					case 'boxset':
 						{
-							console.log("ouvre_config:  style:"+StyleValue);
-							Configpopup = window.open("config.html", "YAMJ v3 config","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=380px, top=5px, width=960px, height=320px");
+							call_boxsetindex(localStorage.getItem("indextype"), true);
 							break;
 						}
+					case 'rating':
+						{
+							call_ratingindex(localStorage.getItem("indextype"), true);
+							break;
+						}
+					case 'certification':
+						{
+							call_certificationindex(localStorage.getItem("indextype"), true);
+							break;
+						}
+					case 'source':
+						{						
+							call_videosourceindex(localStorage.getItem("indextype"), true);
+							break;
+						} 
+					default:
+						{
+							localStorage.setItem("indextype", "movie,series");				
+							Configpopup = window.open("index.html", "_self","");
+							break;
+						} 
 					return;
 					
 				}
@@ -264,13 +345,13 @@
 						} 
 					case 'popup':
 						{
-							console.log("ouvre_config:  style:"+StyleValue);
+							console.log("call_person:  style:"+StyleValue);
 							Personpopup = window.open("navAllPerson.html", "YAMJv3 Navigation All Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=1290px, height=210px");	
 							break;
 						}
 					case 'ribbon':
 						{
-							console.log("ouvre_config:  style:"+StyleValue);
+							console.log("call_person:  style:"+StyleValue);
 							Personpopup = window.open("navAllPerson.html", "YAMJv3 Navigation All Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=150px, height=1000px");
 							break;
 						}
@@ -423,13 +504,77 @@
 				window.localStorage.setItem("Style", style_);
 		
 			}
-			
+	// fetch prefered page : value available : index_all, index_movie, index_series, person, genre, boxset, rating, certification, source
+		function get_prefered_page()
+			{
+				var jsonPreferedUrl = "/yamj3/api/config/list.json?config="+skin_value+"prefered_page&mode=any";
+				console.log("get_prefered_page jsonPreferedUrl: " + jsonPreferedUrl);
+				$.ajax({
+                   url: jsonPreferedUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSkinPrefered)
+                   {
+						jsondata = dataSkinPrefered;
+				//		outputJson(dataSkinPrefered);
+						checkPrefered_Page(dataSkinPrefered);
+						}
+					
+				});	
+			 return jsondata;
+		}
+		
+	// update prefered page : value available : index_all, index_movie, index_series, person, genre, boxset, rating, certification, source
+		function update_Prefered_Page(prefered_) 
+		{
+				var jsonPreferedUrl = "/yamj3/api/config/update.json?key="+skin_value+"prefered_page&value="+prefered_+"";
+				console.log("update_Prefered_Page jsonPreferedUrl: " + jsonPreferedUrl);
+				$.ajax({
+                   url: jsonPreferedUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSkinPrefered)
+                   {
+						jsondata = dataSkinPrefered;
+					//	outputJson(dataSkinpPrefered);
+						set_Prefered_Page_value(prefered_);
+					}
+					
+				});	
+			 return jsondata;
+		}	
+		
+		function checkPrefered_Page(yamjdata) {
+				var PN = {
+						"td.Value":  function(arg) {
+									if (arg.context.count) {
+										console.log("checkPrefered_Page: "+arg.context.results[0].value);
+										set_Prefered_Page_value(arg.context.results[0].value);
+										return arg.context.results[0].value;} else {
+										console.log("checkPrefered_Page: no value found");
+										update_Prefered_Page('index_all');}
+								}								
+							
+						};
+				
+				$p('.results').render( yamjdata, PN );			
+			}	
+	
+	
+	// set the rules to adjust prefered page : value available : index_all, index_movie, index_series, person, genre, boxset, rating, certification, source
+		function set_Prefered_Page_value(prefered_)
+			{
+				Prefered_PageValue = prefered_;
+				console.log('set prefered page:'+prefered_);
+				window.localStorage.setItem("prefered_page", prefered_);
+		
+			}		
 			
 		// fetch the new value in the config database , value available : creation, file, lastscan
 		function get_new()
 			{
 				var jsonNewUrl = "/yamj3/api/config/list.json?config="+skin_value+"New&mode=any";
-				console.log("get_style jsonStyleUrl: " + jsonNewUrl);
+				console.log("get_style jsonNewUrl: " + jsonNewUrl);
 				$.ajax({
                    url: jsonNewUrl,
                     async: false,
@@ -437,7 +582,7 @@
                     'success': function(dataNew)
                    {
 						jsondata = dataNew;
-				//		outputJson(dataSkinLang);
+				//		outputJson(dataNew);
 						checkNew(dataNew);
 						}
 					
@@ -457,7 +602,7 @@
                     'success': function(dataNew)
                    {
 						jsondata = dataNew;
-					//	outputJson(dataSkinStyle);
+					//	outputJson(dataNew);
 						set_New_value(new_);
 					}
 					
@@ -472,8 +617,8 @@
 										console.log("checkNew: "+arg.context.results[0].value);
 										set_New_value(arg.context.results[0].value);
 										return arg.context.results[0].value;} else {
-										console.log("checkNew: no value found");
-										update_Style('frame');}
+										console.log("checkNew: no value found set default: "+NewValue);
+										update_New(NewValue);}
 								}								
 							
 						};
@@ -490,6 +635,73 @@
 				window.localStorage.setItem("New", new_);
 		
 			}
+	// fetch the paging value in the config database , value available : true , false
+		function get_paging()
+			{
+				var jsonPagingUrl = "/yamj3/api/config/list.json?config="+skin_value+"paging&mode=any";
+				console.log("get_paging jsonPagingUrl: " + jsonPagingUrl);
+				$.ajax({
+                   url: jsonPagingUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataPaging)
+                   {
+						jsondata = dataPaging;
+				//		outputJson(dataPaging);
+						checkPaging(dataPaging);
+						}
+					
+				});	
+			 return jsondata;
+		}
+		
+	// update  the paging value in the config database, value available : true, false
+		function update_Paging(paging_) 
+		{
+				var jsonPagingUrl = "/yamj3/api/config/update.json?key="+skin_value+"paging&value="+paging_+"";
+				console.log("update_Paging jsonPagingUrl: " + jsonPagingUrl);
+				$.ajax({
+                   url: jsonPagingUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataPaging)
+                   {
+						jsondata = dataPaging;
+					//	outputJson(dataPaging);
+						set_Paging_value(paging_);
+					}
+					
+				});	
+			 return jsondata;
+		}	
+		
+		function checkPaging(yamjdata) {
+				var PN = {
+						"td.Value":  function(arg) {
+									if (arg.context.count) {
+										console.log("checkPaging: "+arg.context.results[0].value);
+										set_Paging_value(arg.context.results[0].value);
+										return arg.context.results[0].value;} else {
+										console.log("checkPaging: no value found set default: "+PagingValue);
+										update_Paging(PagingValue);}
+								}								
+							
+						};
+				
+				$p('.results').render( yamjdata, PN );			
+			}	
+	
+	
+	// set the rules to adjust paging to the paging choosen : value available : true, false
+		function set_Paging_value(paging_)
+			{
+				PagingValue = paging_;
+				console.log('set paging:'+paging_);
+				window.localStorage.setItem("Paging", paging_);
+		
+			}
+			
+			
 		function network_device_list ()
 			{
 			
@@ -523,6 +735,7 @@
 			get_style();
 			get_player();
 			get_poster_number ();
+			get_new();
 		}	
 
 	function direct_play (videoType,id ) 

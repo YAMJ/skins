@@ -40,7 +40,31 @@ body {
     border-bottom: 1px solid                          #111111 /*{headertable-border}*/;
     color:#ffffff;
 }
-
+#headertable_config
+{
+    /* Applies to all pages */
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse:collapse;
+ /*   width: 0%; */
+    font-weight:bold;
+	margin: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+	background-color: grey;
+	padding: 30px 0px 0px 5px;
+    line-height: 18px;
+	color: white;
+}
+#headertable_config td
+{
+    font-size:1em;
+    text-align:left;
+    width:20%;
+    font-weight:bold;
+    padding:4px;
+    border-bottom: 1px solid                          #111111 /*{headertable-border}*/;
+    color:#ffffff;
+	}
 #tablegenrelist tr:nth-child(odd)
 {
     font-size:1em;
@@ -117,7 +141,7 @@ body {
 	left: 0px;
 	padding-left: 0px;
 	list-style: none;
-	height: 1150px;
+	height: 1650px;
 	}
 #version_txt {
 	position: relative;
@@ -129,7 +153,10 @@ a:-webkit-any-link
     text-decoration: underline;
     cursor: auto;
 }
-
+.Action
+{
+	z-index: 10;
+}
 .footer
 {
     height: 40px;

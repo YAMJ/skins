@@ -35,7 +35,7 @@
 // ******************************* ALL GENERAL VARIABLE **********************************************
 			// get the id and the type asked previously, data was stored from index, detail or  index_list pages 
             var current_id = localStorage.getItem("id");
-            var indextype = localStorage.getItem("indextype");
+            var index_type = localStorage.getItem("indextype");
 			var season = localStorage.getItem("season");
 			var series_id = localStorage.getItem("SeriesId");
 			var dataindex = localStorage.getItem("index-nav");
@@ -73,7 +73,7 @@
 							'span.header_title': function (arg) {
 								season_title = arg.context.result.title;
 								current_title = arg.context.result.title;
-								if (indextype.toLowerCase() == 'season')
+								if (index_type.toLowerCase() == 'season')
 								{
 								store_SeriesId (arg.context.result.seriesId);
 								return arg.context.result.title + ' '+season_label+': '+ arg.context.result.season;
@@ -84,7 +84,7 @@
 							},
 							'span.header_year': 'result.videoYear',
 							'span.header_id': function (arg) {
-									if (indextype.toLowerCase() == 'series')   
+									if (index_type.toLowerCase() == 'series')   
 										{ 
 										store_SeriesId (arg.context.result.id);   // store the series id for next navigation 
 							
@@ -104,7 +104,16 @@
 									{return "WatchedSelection('index.html', 'true')";}
 									else {return "WatchedSelection('index.html', 'false')";}
 							
+								},
+							'span.country': function(arg)
+							{
+								if (arg.context.result.country) 
+								{
+								return  "<a href=\"#\" ><img class='country' src='pictures/flags/" + arg.context.result.country.toLowerCase() + ".png' alt=\"" + arg.context.result.country + "\" /></a>";	
 								}
+								else {return;}
+							}
+
 						
 						};
 			// from jsonUrl		
@@ -313,7 +322,7 @@
                                     return "pictures/dummy.jpg";
                                 }
 							// take the opportunity to reset the new season number, in case of next / previous move , only for season type
-								if (indextype.toLowerCase() == 'season')
+								if (index_type.toLowerCase() == 'season')
 								{															
 									season =  arg.item.season;   //  get season number
 									} else {
@@ -332,7 +341,7 @@
                     'banner<-result.artwork.BANNER': {
                         '@src': function(arg)
                         {
-							if (indextype !== 'MOVIE')  // there is banner only for season and series
+							if (index_type !== 'MOVIE')  // there is banner only for season and series
 								{	
                             // Check to see if there are banner
                             if (arg.item) {
@@ -534,7 +543,9 @@
 				get_player();
 				get_alpha_list (); 
 				// construct JSON request for detail movie/series/season 
-				jsonUrl = "/yamj3/api/video/" + indextype.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot,files,certification,studio,rating&jobs=actor-5,director-1,writer-1";
+				if (index_type.toLowerCase() == "movie")
+				{jsonUrl = "/yamj3/api/video/" + index_type.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot,country,files,certification,studio,rating&jobs=actor-5,director-1,writer-1";}
+				else {jsonUrl = "/yamj3/api/video/" + index_type.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot,files,certification,studio,rating&jobs=actor-5,director-1,writer-1";}
 				console.log("getData URL: " + jsonUrl);
 		
 					
@@ -565,7 +576,7 @@
 						display_all ();	
 						
 						
-						switch (indextype.toLowerCase()) 
+						switch (index_type.toLowerCase()) 
 							{
 							case 'movie':
 						//			nothing to do
@@ -601,7 +612,7 @@
 			document.getElementById("mediainfoshow_icon").innerHTML="MEDIAINFO";
 			document.getElementById("deleteshow_icon").innerHTML="DELETE";
 			
-			switch (indextype.toLowerCase()) 
+			switch (index_type.toLowerCase()) 
 							{
 							case 'movie':
 						//		document.getElementById("show").innerHTML=show.toUpperCase() + " " + movie_select.toUpperCase();
@@ -812,15 +823,15 @@
 				{     
 				current_id = Newid;
 				localStorage.setItem("id", current_id);
-				console.log("set_onlyId Storing value: " + indextype + "-" + current_id);
+				console.log("set_onlyId Storing value: " + index_type + "-" + current_id);
 				window.location.href="detail.html";
 				}	
 	// prepare to change to the season select by onclick	
-		function goto_SeasonId(indextype, SeasonId)
+		function goto_SeasonId(index_type, SeasonId)
 			{
-				localStorage.setItem("indextype", indextype);
+				localStorage.setItem("indextype", index_type);
 				localStorage.setItem("id", SeasonId);
-				console.log("goto_SeasonId Storing value: " + indextype + "-" + SeasonId);
+				console.log("goto_SeasonId Storing value: " + index_type + "-" + SeasonId);
 				window.location.href="detail.html";
 			}
 			
@@ -940,7 +951,7 @@
 				$('.director').css('visibility', 'visible');
 				$('.writer').css('visibility', 'visible');
 				
-				switch (indextype.toLowerCase())
+				switch (index_type.toLowerCase())
 					{
 					case 'season':
 						$('div#slideshowBanner').css('visibility', 'visible');
@@ -954,9 +965,9 @@
 						$('.moviedetail').css('left', '230px');
 						$('.moviedetail').css('width', '1090px');
 						$('.header_detail').css('top', '0px');
-						$('.header_detail').css('left', '85px');
+						$('.header_detail').css('left', '5px');
 						$('.play_detail').css('top', '0px');
-						$('.play_detail').css('left', '140px');
+						$('.play_detail').css('left', '60px');
 						$('.plot1').css('left', '0px');
 						$('.plot1').css('max-width', '1280px');
 						$('.genres').css('left', '0px');
@@ -1010,9 +1021,9 @@
 						$('.moviedetail').css('left', '10px');
 						$('.moviedetail').css('width', '1320px');
 						$('.header_detail').css('top', '0px');
-						$('.header_detail').css('left', '85px');
+						$('.header_detail').css('left', '5px');
 						$('.play_detail').css('top', '0px');
-						$('.play_detail').css('left', '140px');
+						$('.play_detail').css('left', '60px');
 						$('.plot1').css('left', '0px');
 						$('.plot1').css('max-width', '1280px');
 						$('.genres').css('left', '0px');
@@ -1130,7 +1141,7 @@
 	function ouvre_popup_person_ribbon() 
 		{
 		//	localStorage.setItem("id", localStorage.getItem("id"));
-			localStorage.setItem("indextype", indextype.toLowerCase());
+			localStorage.setItem("indextype", index_type.toLowerCase());
 			
 			Personpopup = window.open("navPerson.html", "YAMJv3 Navigation Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=150px, height=1000px");
 
@@ -1139,8 +1150,8 @@
 		{
 		//	var temp_id = localStorage.getItem("id");
 		//	localStorage.setItem("id", localStorage.getItem("id"));
-			localStorage.setItem("indextype", indextype.toLowerCase());
-			console.log("ouvre_popup_person:  style:"+StyleValue+ " type:" +indextype+" id:"+localStorage.getItem('id'));
+			localStorage.setItem("indextype", index_type.toLowerCase());
+			console.log("ouvre_popup_person:  style:"+StyleValue+ " type:" +index_type+" id:"+localStorage.getItem('id'));
 			localStorage.setItem("back_close", "close");
 			switch (StyleValue)
 					{
@@ -1231,11 +1242,11 @@
 
 	function ouvre_popup_mediainfo ()
 		{
-			console.log("detail ouvre_popup_mediainfo type:" + indextype);
+			console.log("detail ouvre_popup_mediainfo type:" + index_type);
 			if ($('.mediainfo').css('visibility') == "hidden")
 			{
 			display_class ('mediainfo');
-			switch (indextype.toLowerCase())
+			switch (index_type.toLowerCase())
 				{
 					case 'season':
 						{
@@ -1289,11 +1300,11 @@
 		}
 	function ouvre_popup_poster ()
 		{
-		console.log("detail ouvre_popup_poster type:" + indextype);
+		console.log("detail ouvre_popup_poster type:" + index_type);
 		if ($('.edit_adjust').css('visibility') == "hidden")
 		{
 		display_class ('edit_adjust');
-		switch (indextype.toLowerCase())
+		switch (index_type.toLowerCase())
 				{
 				case 'season':
 					{
@@ -1331,8 +1342,8 @@
 		//	nodisplay_class('seasontable');
 		//	
 			} else {
-			if (indextype.toLowerCase() == 'series') {display_class('seasontable');}
-			if (indextype.toLowerCase() == 'season') {display_Id ('slideshowBanner');;}
+			if (index_type.toLowerCase() == 'series') {display_class('seasontable');}
+			if (index_type.toLowerCase() == 'season') {display_Id ('slideshowBanner');;}
 			nodisplay_class ('edit_adjust');
 			display_class ('genres');
 			display_class ('certifications');
@@ -1392,13 +1403,13 @@
 // ******************************* get aplhabetical list of available video *********************************************
 	function get_alpha_list ()
 		{
-				jsonUrlAlpla = "/yamj3/api/alphabetical/list.json?type=" + indextype;
+				jsonUrlAlpla = "/yamj3/api/alphabetical/list.json?type=" + index_type;
 				console.log("get_alpha_list jsonUrlAlpla: " + jsonUrlAlpla);
 				
 				var ALPHALIST = {
                'span.lastid': function(arg) {
 					 var alpha_list = arg.context.results; 
-					 switch (indextype.toLowerCase())
+					 switch (index_type.toLowerCase())
 					 {
 						case 'movie':
 						{
@@ -1443,27 +1454,11 @@
 		
 		
 		}
-		function toggle_menu_left ()
-		{
-		if (document.getElementById('open_menu_left').style.visibility == 'visible')
-		{
-			console.log("detail toggle_menu_left: " + document.getElementById('open_menu_left').style.visibility)
-			document.getElementById('container_menu_detail').style.opacity = '1';
-			document.getElementById('open_menu_left').style.visibility = 'hidden';
-			document.getElementById('close_menu_left').style.visibility = 'visible';
-		} else 
-		{
-			console.log("detail toggle_menu_left: " + document.getElementById('open_menu_left').style.visibility)
-			document.getElementById('container_menu_detail').style.opacity = '0';
-			document.getElementById('open_menu_left').style.visibility = 'visible';
-			document.getElementById('close_menu_left').style.visibility = 'hidden';
-		}
-		
-		}
+	
 // ****************************** id or class with iscroll **************************************************************
 	var myScroll;
 	function loaded_iscroll () {
-	myScroll = new IScroll('#container_menu_detail', { scrollX: true, scrollY: true, mouseWheel: true, click: true });
+	myScroll = new IScroll('#container_menu_left', { scrollX: true, scrollY: true, mouseWheel: true, click: true });
 	}
 	//   document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 	
@@ -1481,7 +1476,7 @@
 		<div id="logo_index">
 
 	<!-- not needed with opacity effect
-			<td><a id="home_left" onclick="javascript:toggle_Id('container_menu_detail')"><img src="pictures/next-icon_on.png" width="16px" height="24px" /></a></td>
+			<td><a id="home_left" onclick="javascript:toggle_Id('container_menu_left')"><img src="pictures/next-icon_on.png" width="16px" height="24px" /></a></td>
 	-->
 	<!-- various navigation 			
 					
@@ -1495,11 +1490,11 @@
 										<div id="personshow"></div></a></li>
 								
 							
-									<li><a id="li_movie" href="javascript:ouvre_popup_index('', 'ASC', indextype, '')">
+									<li><a id="li_movie" href="javascript:ouvre_popup_index('', 'ASC', index_type, '')">
 										<div id="show"></div></a></li>	
 									<li>
 										<form><label id='li_selection'></label>
-											<select id="selection_id" onchange="Movie_toSet = true;display_Id('movie_display');javascript:ouvre_popup_index('', 'ASC', indextype, document.getElementById('selection_id').value); Movie_toSet = true;">
+											<select id="selection_id" onchange="Movie_toSet = true;display_Id('movie_display');javascript:ouvre_popup_index('', 'ASC', index_type, document.getElementById('selection_id').value); Movie_toSet = true;">
 												<option value=""></option>
 												<option value="A">A</option>
 												<option value="B">B</option>
@@ -1557,11 +1552,11 @@
 									
 							<!--		<li><a id="li_person_ribbon" href="javascript:ouvre_popup_person_ribbon()">
 										<div id="person_ribbon"></div></a></li>	 -->
-									<li><a id="li_movie_icon" href="javascript:ouvre_popup_index('', 'ASC', indextype, '')" onmouseover="javascript:document.getElementById('movieshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('movieshow_icon').style.visibility='hidden'">
+									<li><a id="li_movie_icon" href="javascript:ouvre_popup_index('', 'ASC', index_type, '')" onmouseover="javascript:document.getElementById('movieshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('movieshow_icon').style.visibility='hidden'">
 										<img src="pictures/icon/icon_tv-film.png"></img><div id="movieshow_icon"></div></a></li>
 									<li>
 										<form><label id='li_selection_icon'><img src="pictures/icon/title.png" onmouseover="javascript:document.getElementById('selectionshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('selectionshow_icon').style.visibility='hidden'"></img><div id="selectionshow_icon"></div></label>
-											<select id="selection_id_icon" onchange="Movie_toSet = true;display_Id('movie_display');javascript:ouvre_popup_index('', 'ASC', indextype, document.getElementById('selection_id_icon').value); Movie_toSet = true;" >
+											<select id="selection_id_icon" onchange="Movie_toSet = true;display_Id('movie_display');javascript:ouvre_popup_index('', 'ASC', index_type, document.getElementById('selection_id_icon').value); Movie_toSet = true;" >
 												<option value=""></option>
 												
 											</select> 
@@ -1576,74 +1571,74 @@
 
 	<!-- left menu with icon -->
 
-		<img id="open_menu_left" src="pictures/icon-open_frame.png" style="position:absolute; top: 330px; left: 0px; z-index:12; visibility: visible;" height="100px" width="130px" onclick="toggle_menu_left ()" />
-		<img id="close_menu_left" src="pictures/icon-close_frame.png" style="position:absolute; top: 330px; left: 78px; z-index:12; visibility: hidden;" height="110px" width="130px" onclick="toggle_menu_left ()" />
-	    <div id="container_menu_detail">
-			<ul id="monFormMenu" style="padding-left:15px;">
+		<img id="open_menu_left" src="pictures/icon-open_frame.png" style="position:absolute; top: 380px; left: 0px; z-index:12; visibility: visible;" height="100px" width="130px" onclick="toggle_menu_left ()" />
+		<img id="close_menu_left" src="pictures/icon-close_frame.png" style="position:absolute; top: 380px; left: 78px; z-index:12; visibility: hidden;" height="110px" width="130px" onclick="toggle_menu_left ()" />
+	    <div id="container_menu_left">
+			<ul id="monFormMenu" style="padding-left:0px;">
 	
 				<li><a href="javascript:ChangeIndex('movie,series')" >
-							<img src="pictures/icon/home_all_rv8.png" height="50px"  width="50px" alt="tv movie" />
+							<img src="pictures/icon/home_all_rv8.png" height="80px"  width="80px" alt="tv movie" />
 						</a><div id="allselect"></div>
 				</li>
 				<li><a href="javascript:ChangeIndex('movie')" >
-							<img src="pictures/icon/home_movies_rv8.png" height="50px"  width="50px" alt="movie" align="top" />
+							<img src="pictures/icon/home_movies_rv8.png" height="80px"  width="80px" alt="movie" align="top" />
 						</a><div id="movieselect"></div>
 				</li>
 				<li><a href="javascript:ChangeIndex('series')" >
-							<img src="pictures/icon/home_tv shows_rv8.png" height="50px"  width="50px" alt="tv" />
+							<img src="pictures/icon/home_tv shows_rv8.png" height="80px"  width="80px" alt="tv" />
 						</a><div id="serieselect"></div>
 				</li>
 				<li><a href="javascript:ChangeIndex('season')" >
-							<img src="pictures/icon/home_apps_rv8.png" height="50px"  width="50px" alt="season" />
+							<img src="pictures/icon/home_apps_rv8.png" height="100px"  width="100px" style="position: relative; left:-10px" alt="season" />
 						</a><div id="seasonselect"></div>
 				</li>
 				<li><a href="javascript:call_personindex('false')" >
-							<img src="pictures/icon/home_person_rv8.png" height="50px"  width="50px" alt="person"  />
+							<img src="pictures/icon/home_person_rv8.png" height="80px"  width="80px" alt="person"  />
 						</a><div id="personindex"></div>
 				</li>
 				<li><a href="javascript:call_genreindex(index_type, 'false')">
-							<img src="pictures/icon/home_genres2_rv8.png" height="50px"  width="50px" alt="genre" />
+							<img src="pictures/icon/home_genres2_rv8.png" height="80px"  width="80px" alt="genre" />
 						</a><div id="genreindex"></div>
 				</li>
 				<li><a href="javascript:ouvre_popup_search(StyleValue)">
-							<img src="pictures/icon/find.png" height="45px" width="50px" alt="find" />
+							<img src="pictures/icon/find.png" height="60px" width="65px" style="padding-left:10px" alt="find" />
 						</a><div id="searchindex"></div>
 				</li>
-				<li><a href="javascript:call_studioindex(indextype, 'false')">
-							<img src="pictures/icon/Studio.png" height="50px"  width="50px" alt="studio"  />
+				<li><a href="javascript:call_studioindex(index_type, 'false')">
+							<img src="pictures/icon/Studio.png" height="60px"  width="60px" style="position: relative; left:10px" alt="studio"  />
 						</a><div id="studioindex"></div><br />
 				</li>
 
-				<li><a href="javascript:call_ratingindex(indextype, 'false')" >
-							<img src="pictures/icon/home_rating_rv8.png" height="50px"  width="50px" alt="rating"  />
+				<li><a href="javascript:call_ratingindex(index_type, 'false')" >
+							<img src="pictures/icon/home_rating_rv8.png" height="80px"  width="80px" alt="rating"  />
 						</a><div id="ratingindex"></div>
 				</li>
-				<li><a href="javascript:call_certificationindex(indextype, 'false')" >
-							<img src="pictures/icon/home_certification_rv8.png" height="50px"  width="50px" alt="certification"  />
+				<li><a href="javascript:call_certificationindex(index_type, 'false')" >
+							<img src="pictures/icon/home_certification_rv8.png" height="90px"  width="100px"  style="position: relative; left:-10px" alt="certification"  />
 						</a><div id="certificationindex"></div>
 				</li>
-				<li><a href="javascript:call_videosourceindex(indextype, 'false')" >
-							<img src="pictures/icon/home_videosource_rv8.png" height="50px"  width="50px" alt="videosurce"  />
+				<li><a href="javascript:call_videosourceindex(index_type, 'false')" >
+							<img src="pictures/icon/home_videosource_rv8.png" height="80px"  width="80px" style="position: relative; left:0px" alt="videosource"  />
 						</a><div id="videosourceindex"></div>
 				</li>
-				<li><a href="javascript:call_boxsetindex(indextype, 'false')">
-							<img src="pictures/icon/home_set_rv8.png" height="50px"  width="50px" alt="videosurce"  />
+				<li><a href="javascript:call_boxsetindex(index_type, 'false')">
+							<img src="pictures/icon/home_set_rv8.png" height="100px"  width="100px" style="position: relative; left:-10px" alt="set"  />
 						</a><div id="boxsetindex"></div>
 				</li>
 				<li><a href="javascript:ouvre_config(StyleValue)">
-							<img src="pictures/icon/settings.png" height="50px" width="60px" alt="setting" />
+							<img src="pictures/icon/settings.png" height="80px" width="100px" style="padding-left:5px" alt="setting" />
 						</a><div id="configindex"></div>
 				</li>
 				<li><a href="javascript:ouvre_yamj3(); ">
-							<img src="pictures/icon/home.png" height="50px"  width="50px" alt="home" />
+							<img src="pictures/icon/home.png" height="80px"  width="80px" alt="home" />
 						</a><div id="yamj3select"></div>
 				</li>
 				<li><a href="javascript:ouvre_genrelist(); ">
-							<img src="pictures/icon/list_genre.png" height="50px"  width="50px" alt="liste fenre" />
+							<img src="pictures/icon/list_genre.png" height="80px"  width="80px" alt="liste fenre" />
 						</a><div id="genrelistselect"></div>
 				</li>
 				<li><a href="javascript:ouvre_remote(); ">
-							<img src="pictures/icon/remote.png" height="50px"  width="50px" alt="remote" />
+							<img src="pictures/icon/remote.png" height="70px"  width="70px" style="position: relative; left:6px" alt="remote" />
 						</a><div id="remoteselect"></div>
 				</li>
 		</ul>
@@ -1660,6 +1655,7 @@
 						<span class="header_text">) id:</span>
 						<span class="header_id" ></span>
 						<a href="#"><img class="watched" src="" onclick=""/></a>
+						<span class="country" ></span>
 					</td>
 				</tr>
 			</table>

@@ -35,9 +35,11 @@
 				if (row == '99999')
 				{
 					window.localStorage.setItem("Paging", false);
+					set_paging(false);
 					console.log("update_poster_number set paging to false and reset: "+row);
 					row = window.localStorage.getItem("RowperPage");	
-				} else {window.localStorage.setItem("Paging", true);}
+				} else {window.localStorage.setItem("Paging", true); 
+						set_paging(true);}
 				var jsonPosterNbUrl = "/yamj3/api/config/update.json?key="+skin_value+"index_row&value="+row+"";
 				console.log("update_poster_number jsonPosterNbUrl: " + jsonPosterNbUrl);
 				$.ajax({
@@ -58,7 +60,26 @@
 
 
 		}
-						
+		
+		function set_paging(paging)
+			{
+				var jsonPagingNbUrl = "/yamj3/api/config/update.json?key="+skin_value+"paging&value="+paging+"";
+				console.log("config.js set_paging jsonPagingNbUrl: " + jsonPagingNbUrl);
+				$.ajax({
+                   url: jsonPagingNbUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSkinPagingNb)
+                   {
+						jsondata = dataSkinPagingNb;
+						outputJson(dataSkinPagingNb);
+					}
+					
+				});	
+				return jsondata;
+			}
+			
+		
 		function checkSkinPosterNb(yamjdata) {
 				var PN = {
 						"td.Poster_Value":  function(arg) {
@@ -104,7 +125,7 @@
 							perPageValue = 4;
 					//		$('#container').css('top', '80px');
 					//		$('#container').css('height', '565px');
-							$('.row').css('padding', '0px 0px 0px 2px');
+							$('.row').css('padding', '2px 0px 0px 75px');
 							$('.block').css('height', '527px');
 							$('.block').css('width', '290px');
 							$('.block').css('margin', '0px');
@@ -135,7 +156,7 @@
 							perPageValue = 12;
 						//	$('#container').css('top', '65px');
 						//	$('#container').css('height', '690px');
-							$('.row').css('padding', '0px 0px 0px 0px');
+							$('.row').css('padding', '2px 0px 0px 75px');
 							$('.block').css('height', '325px');
 							$('.block').css('width', '194px');
 							$('.block').css('margin', '0px');
@@ -162,8 +183,8 @@
 							break;
 						//3 rows, 9 columns 
 						case 3:
-							perPageValue = 27;
-							$('.row').css('padding', '0px 0px 0px 0px');
+							perPageValue = 30;
+							$('.row').css('padding', '2px 0px 0px 1px');
 							$('.block').css('height', '229px');
 							$('.block').css('width', '129px');
 							$('.block').css('margin', '0px');
@@ -175,8 +196,8 @@
 							break;
 						//4 rows, 11 columns 
 						case 4:
-							perPageValue = 44;
-							$('.row').css('padding', '1px 0px 0px 0px');
+							perPageValue = 48;
+							$('.row').css('padding', '1px 0px 0px 23px');
 							$('.block').css('height', '174px');
 							$('.block').css('width', '103px');
 							$('.block').css('margin', '0px');
@@ -188,14 +209,14 @@
 							break;	
 						//5 rows, 12 columns
 						case 5:
-							perPageValue = 60;
-							$('.row').css('padding', '1px 0px 0px 3px');
+							perPageValue = 70;
+							$('.row').css('padding', '2px 0px 0px 10px');
 							$('.block').css('height', '136px');
-							$('.block').css('width', '94px');
+							$('.block').css('width', '91px');
 							$('.block').css('margin', '0px');
 							$('.block').css('padding', '0px');
 							$('.poster').css('height', '135px');
-							$('.poster').css('width', '93px');
+							$('.poster').css('width', '91px');
 							$('.title').css('font-size', '0.4em');
 							$('.title').css('line-height', '30%');
 							

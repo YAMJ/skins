@@ -1,10 +1,25 @@
 change.txt
+V1.3.3
+- add prefered page to config settings 
+- add prefered page with the yamjv3 logo in index page 
+- modify config page (very great rewriting) 
+- add info_config button (display info config in a frame) 
+- fix some display priority with android
+- modify , generalise left menu with a toggle display/hidden button
+- modify index page to adjust to the same width than the detail page 
+- modify index page to diplay more poster according with the new width
+- modify to enlarge contextual upper left icon (easier to click with a finger) 
+- modify to enlarge left menu icon (easier to click with a finger) 
+- fix synopsis height
+- add video country display in detail page 
+- fix video frame in detail page 
+- modify search page to add various search like new 
 V1.3.2
 - fix boxset to add 1rst member poster if no poster is available for set
-- fix boset to display all member in index page 
-- fix config frame set to relaod when style change 
+- fix boxset to display all member in index page 
+- fix config frame set to reload when style change 
 - fix new default parameter stored in bikini skin
-- add set index page in general left navigation 
+- add boxset index page in general left navigation 
 V1.3.1
 - fix all page display for android (priority of frame, popup ribbon) 
 - add new setting for new value 

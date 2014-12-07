@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>YAMJ v3</title>
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>YAMJv3 Genrelist</title>
+        <script src="js/jQuery.js"></script>
+        <!-- Used for the JSON parsing -->
+        <script src="js/pure.js"></script>
+        <!-- Used for the paging of the index -->
+        <script src="js/js.js"></script>
+		<script src="js/my_remote.js"></script>
+        <script src="js/jPages.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/lang.js"></script>
+		<!-- Used for config  setting -->
+		<script src="js/config.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>
+		<script src="js/library.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="css/yamj-config-style.css">
+		<link rel="stylesheet" type="text/css" href="css/yamj-config.css">
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+        <!-- Used for the paging of the index -->
+        <link rel="stylesheet" href="css/jPages.css">
+        <!-- Used for the fancy animations -->
+        <link rel="stylesheet" href="css/animate.css">
+	<!-- used for iscroll special -->
+		<script type="text/javascript" src="js/iscroll.js"></script>
+    </head>
+	
+	
+  <body onload="getIndexData();">
+        <script type="text/javascript">
+	
+//***************************************************************************************
+        var select = "";
+		// set default to 2 rows and 6 columns
+		var StyleValue = "";
+		var Indexpopup = "";
+		var LangValue = "en";
+		// default for new method 
+		var newest_type = "file" 
+        // This function calls the API to get the JSON data.
+        // It will then update the HTML with the data and set up the paging
+		var index_type = "movie,series";
+		var skin_set = "bikini_skin_0";
+		
+		function getIndexData ()
+		{
+				var index_type = "all";
+				if (window.localStorage.getItem("indextype"))
+					{index_type = window.localStorage.getItem("indextype");}
+					else {window.localStorage.setItem("indextype", index_type);}
+					
+				loaded_iscroll ();
+				get_lang();
+				get_player();
+				get_paging ();
+				get_new();
+				get_style();
+				get_poster_number ();
+				
+				if (window.localStorage.getItem("skinset"))
+					{skin_set = window.localStorage.getItem("skinset");}
+					else {window.localStorage.setItem("skinset", skin_set);}
+				
+				var jsondata = null;
+				var jsonUrl = "/yamj3/api/config/list.json?config=" + skin_set +"&mode=any";
+
+				console.log("URL: " + jsonUrl);
+				
+				$.ajax({
+					url: jsonUrl,
+					async: false,
+					dataType: 'jsonp',
+					'success': function (data)
+					{
+						jsondata = data;
+						updateHtml(data);
+				//		outputJson(jsondata); 
+					}
+				});
+				
+				return jsondata;
+				
+			}
+	
+			function updateHtml(yamjdata) {
+		
+				var WI = {
+					"template":"table.results_skinlist",
+					"header": {
+						"column":[ "Key", "Value", "New", "Action"]
+					},
+					"directivehead": {
+						"th": {
+							"c<-column": {
+								".":"c"
+							}
+						},
+						'td':{
+							"c<-column":{
+								"@class":"c"
+							}
+							
+							
+						}
+					},
+					"directivebody": {
+						"tbody tr": {
+							"list<-results":{
+						//		"td.Id"				: "list.id",
+								"td.Key"			: "list.key",
+								"td.Value"			: "list.value",
+								"td.New"			: function(arg)
+									{
+						//			 console.log("Config2 arg.item.key:" + arg.item.key.substr(14))  // because bikini_skin_x_ = 14 char
+									switch (arg.item.key.substr(14))
+										{
+											
+											case 'player':
+											{
+												var player_output = "<select id='formKey" +arg.item.key+ "' style='height:18px;'></input>"
+												+ "<option value=''></option>"
+												
+												for (var i = 0; i < player_list.length; i++) {
+													player_output = player_output + "<option value='" + player_list[i] + "'>" + player_list[i] + "</option>";
+													}
+												return player_output + "</select>";
+												break;
+											}
+											case 'paging':
+											{
+												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
+														+ "<option value=''></option>"
+														+ "<option value='true'>true</option>"
+														+ "<option value='false'>false</option>"
+														+ "</select>";
+												break;
+											}
+											case 'index_row':
+											{
+												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
+														+ "<option value=''></option>"
+														+ "<option value='1'>0</option>"
+														+ "<option value='1'>1</option>"
+														+ "<option value='2'>2</option>"
+														+ "<option value='3'>3</option>"
+														+ "<option value='4'>4</option>"
+														+ "<option value='5'>5</option>"
+											//			+ "<option value='99999'>~</option>"
+														+ "</select>";
+												break;
+											}
+											case 'language':
+											{
+												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
+														+ "<option value=''></option>"
+														+ "<option value='de'>de</option>"
+														+ "<option value='en'>en</option>"
+														+ "<option value='es'>es</option>"
+														+ "<option value='fr'>fr</option>"
+														+ "<option value='it'>it</option>"
+														+ "</select>";
+												break;
+											}
+											case 'style':
+											{
+												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
+														+ "<option value=''></option>"
+														+ "<option value='page'>page</option>"
+														+ "<option value='ribbon'>ribbon</option>"
+														+ "<option value='frame'>frame</option>"
+														+ "<option value='popup'>popup</option>"
+														+ "</select>";
+												break;
+											}
+											case 'prefered_page':
+											{
+												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
+														+ "<option value=''></option>"
+														+ "<option value='index_all'>index_all</option>"
+														+ "<option value='index_movie'>index_movie</option>"
+														+ "<option value='index_series'>index_series</option>"
+														+ "<option value='person'>person</option>"
+														+ "<option value='boxset'>boxset</option>"
+														+ "<option value='rating'>rating</option>"
+														+ "<option value='certification'>certification</option>"
+														+ "<option value='source'>source</option>"
+														+ "</select>";
+												break;
+											}
+											case 'New':
+											{
+												return "<input name='formKey" +arg.item.key+ "_days' type='text' id='formKey" +arg.item.key+ "_days'/> enter days number"
+													+ "<select name='formKey" +arg.item.key+ "_type' id='formKey" +arg.item.key+ "_type' style='height:18px;'>" 
+													+ "<option value=''></option>"
+													+ "<option value='file'>file</option>"
+													+ "<option value='creation'>creation</option>"
+													+ "<option value='lastscan'>lastscan</option>"
+													+ "</select> select type";
+												break;
+											}
+										}
+									}, 
+									"td.Action"			: function(arg)
+									{
+								 console.log("Config2 arg.item.key:" + arg.item.key.substr(14))  // because bikini_skin_x_ = 14 char
+										switch (arg.item.key.substr(14))
+										{
+											case 'index_row':
+											case 'language':
+											case 'player':
+											case 'style':
+											case 'paging':
+											case 'prefered_page':
+											{
+												return "<input type=\"button\" value=\"edit\" onclick=\"Update_SkinData('" +arg.item.key+ "', document.getElementById('formKey" +arg.item.key+ "').value)\"/>"
+												break;
+											}
+											case 'New':
+											{
+													return "<input type='button' value='edit' "
+														+ "onclick=\"Update_SkinData_New('" + arg.item.key + "', "
+														+ "document.getElementById('formKey" +arg.item.key+ "_days').value , " 
+														+ "document.getElementById('formKey" +arg.item.key+ "_type').value)\"/>";
+												break;
+											}
+										}
+
+									}
+							}
+						}
+					}
+				};
+				
+				var TEMPLATE = $p( WI.template ).render( WI.header, WI.directivehead ).compile( WI.directivebody );
+
+				$p('table.results_skinlist').render( yamjdata, TEMPLATE );
+			
+			
+			}
+			
+		function Update_SkinData_New(key_to_update, days_value, type_value)
+			{
+				var New_value = days_value + "-" + type_value;
+				console.log ("config2 Update_SkinData_New key:" + key_to_update + " days:" + days_value + " type:" + type_value + " New_value:" + New_value);
+				Update_SkinData(key_to_update, New_value);
+			}
+		
+		function Update_SkinData(key_to_update, target_value)
+			{
+				
+				var jsonSkinKeyUrl = "/yamj3/api/config/update.json?key="+key_to_update+"&value="+target_value+"";
+				console.log("Update_SkinData URL: " + jsonSkinKeyUrl);
+
+				var Genrejsondata = null;
+
+				$.ajax({
+					url: jsonSkinKeyUrl,
+					async: false,
+					dataType: 'jsonp',
+					'success': function(data)
+					{
+						Skinjsondata = data;
+						// outputJson(data);
+						update_local_data(key_to_update, target_value); 
+					}
+											
+				});
+				window.location.reload();
+				return Skinjsondata;
+			}
+		
+		function update_local_data(key_to_update, target_value)
+			{
+				console.log("update_local_data key_to_update: " + key_to_update + " target_value:" + target_value);
+				switch (key_to_update.substr(14))
+				{
+					case 'index_row':
+						{ 
+							window.localStorage.setItem("RowperPage", target_value);
+							break; 
+						}
+					case 'language':
+						{ 
+							window.localStorage.setItem("Lang", target_value);
+							break; 
+						}
+					case 'player':
+						{ 
+							window.localStorage.setItem("Player", target_value);
+							break; 
+						}
+					case 'style':
+						{ 
+							window.localStorage.setItem("Style", target_value);
+							break; 
+						}
+					case 'paging':
+						{ 
+							window.localStorage.setItem("Paging", target_value);
+							break; 
+						}
+					case 'prefered_page':
+						{ 
+							window.localStorage.setItem("prefered_page", target_value);
+							break; 
+						}
+					case 'New':
+						{ 
+							window.localStorage.setItem("New", target_value);
+							break; 
+						}
+					}
+			}
+	// ****************************** id or class with iscroll **************************************************************
+	var myScroll;
+	function loaded_iscroll () {
+	myScroll = new IScroll('#container_menu', { scrollX: false, scrollY: true, mouseWheel: true, click: true });
+	}
+	//   document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+  //************************ LANGUAGE LOCAL SETTING *********************************************
+		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
+		function set_context_lang_value ()
+		{
+			document.getElementById("allselect").innerHTML=all_select.toUpperCase();
+			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
+			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
+			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();
+			document.getElementById("genreindex").innerHTML=genre_select.toUpperCase();
+			document.getElementById("studioindex").innerHTML=studio_select.toUpperCase();
+			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
+			document.getElementById("configindex").innerHTML=config_select.toUpperCase();
+			document.getElementById("searchindex").innerHTML=search_select.toUpperCase();
+			document.getElementById("remoteselect").innerHTML=remote_label.toUpperCase();
+			document.getElementById("yamj3select").innerHTML="YAMJ3";
+			document.getElementById("genrelistselect").innerHTML=genrelist_select.toUpperCase();
+			document.getElementById("certificationindex").innerHTML=certification_label.toUpperCase();
+			document.getElementById("ratingindex").innerHTML=rating_label.toUpperCase();
+			document.getElementById("videosourceindex").innerHTML=source_label.toUpperCase();
+			document.getElementById("boxsetindex").innerHTML=boxset_label.toUpperCase();
+			document.getElementById("SkinSetted").innerHTML="current skin " + window.localStorage.getItem("skinset").substring(0,(window.localStorage.getItem("skinset").length - 1)) ;
+			document.getElementById("skinlabel").innerHTML="select SKIN ";
+	//		document.getElementById("pagingSetted").innerHTML="current Paging: " + window.localStorage.getItem("Paging");
+	//		document.getElementById("playerSetted").innerHTML="current Player: " + window.localStorage.getItem("Player");
+	//		document.getElementById("newSetted").innerHTML="current New: " + window.localStorage.getItem("New");
+	//		document.getElementById("rowSetted").innerHTML="current row Per Page: " + window.localStorage.getItem("RowperPage");
+	//		document.getElementById("styleSetted").innerHTML="current Style: " + window.localStorage.getItem("Style");
+	//		document.getElementById("langSetted").innerHTML="current Language: " + window.localStorage.getItem("Lang");
+		}
+		
+ 		</script>
+ <!-- START header fixed navigation-->
+            <div class="topbar">
+                <div class="topbar-inner">
+                    <div class="container-fluid">
+                      <a href="javascript:ouvre_prefered_page()" class="brand"><img alt="YAMJ Logo" src="pictures/YAMJ-logo-120-white-reflectv3.png" /></a>
+                        <ul class="nav">
+                            <li><a href="index_Yamj3.html"><i class="fa fa-home fa-2x"></i> Home</a></li>
+                            <li><a href="/yamj3/skin-info.html"><i class="fa fa-ticket fa-2x"></i> Skins</a></li>
+                            <li><a href="/yamj3/config/list.html"><i class="fa fa-cogs fa-2x"></i> Config</a></li>
+                            <li><a href="http://www.networkedmediatank.com/forumdisplay.php?fid=139"><i class="fa fa-comments-o fa-2x"></i> Forums</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+		<div id="close_icon" onclick="window.close()"><img src="./pictures/close2.png" style="height:40px; width:40px; position:absolute; top:2px; right:10px; z-index:10000;" /></div>
+		
+        <div id="logo" style="position: relative; top: 150px;">
+            <h2>Index of Config</h2>
+        </div>
+		
+       
+		
+			<!-- just added to set the language value, shouldn't be displayed  -->
+		<div class="results" style="visibility: hidden; display:none;">
+			<table><tr><td class="Value"></td></tr></table>
+		</div>
+		<!-- just added to set the poster number value, shouldn't be displayed  -->
+		<div class="poster_results" style="visibility: hidden; display:none;">
+			<table><tr><td class="Poster_Value"></td></tr></table>
+		</div>
+		
+		<div id="headertable" class="hero-unit" style="width: 80%; margin: auto; position: absolute; top: 50px; left: 100px; "	>
+			<h2>YAMJv3 Skin List: <span id="SkinSetted" style="color: white;"></span> </h2>
+			<div id="main_index" style="position: relative; left: 120px;">
+		
+				<!-- select skin  -->
+							<table>
+								<tr class="tableskin">
+									<td>
+										<form><label id='skinlabel' style="color: white; text-align: center;"></label>
+											<select id="skin_id" style="height:18px;" onchange="update_Skin(document.getElementById('skin_id').value);window.location.reload();">
+												<option value=""></option>
+												<option value="bikini_skin_0_">default</option>
+												<option value="bikini_skin_1_">1</option>
+												<option value="bikini_skin_2_">2</option>
+												<option value="bikini_skin_3_">3</option>
+												<option value="bikini_skin_4_">4</option>
+												<option value="bikini_skin_5_">5</option>
+											</select>
+											<noscript><input type="submit" value="Submit"></noscript>
+										</form>
+								
+									</td>
+									
+			<!--						<tr><td><div id="pagingSetted"></div></td>
+									<td><div id="playerSetted"></div></td>
+									<td><div id="newSetted"></div></td></tr>
+									<tr><td><div id="rowSetted"></div></td>
+									<td><div id="styleSetted"></div></td>
+									<td><div id="langSetted"></div></td></tr> -->
+								</tr>
+							</table>
+		</div>
+			<table id="tablegenrelist" class="results_skinlist" >
+				<thead>
+					<tr>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="width:auto"></td>
+					</tr>
+				</tbody>
+			</table>
+	
+		
+	</div>
+
+	<!-- left menu with icon -->
+    <div id="container_menu" >			
+		<ul id="monFormMenu" style="margin: 0px;">
+	
+				<li><a href="javascript:ChangeIndex('movie,series')">
+							<img src="pictures/icon/home_all_rv8.png" height="80px"  width="80px" alt="tv movie" />
+						</a><div id="allselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('movie')">
+							<img src="pictures/icon/home_movies_rv8.png" height="80px"  width="80px" alt="movie" align="top" />
+						</a><div id="movieselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('series')">
+							<img src="pictures/icon/home_tv shows_rv8.png" height="80px"  width="80px" alt="tv" />
+						</a><div id="serieselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('season')">
+							<img src="pictures/icon/home_apps_rv8.png" height="100px"  width="100px" style="position: relative; left:-10px" alt="season" />
+						</a><div id="seasonselect"></div>
+				</li>
+				<li><a href="javascript:call_personindex('false')">
+							<img src="pictures/icon/home_person_rv8.png" height="80px"  width="80px" alt="person"  />
+						</a><div id="personindex"></div>
+				</li>
+				<li><a href="javascript:call_genreindex(index_type, 'false')">
+							<img src="pictures/icon/home_genres2_rv8.png" height="80px"  width="80px" alt="genre" />
+						</a><div id="genreindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_popup_search(StyleValue)">
+							<img src="pictures/icon/find.png" height="60px" width="65px" style="padding-left:10px" alt="find" />
+						</a><div id="searchindex"></div>
+				</li>
+				<li><a href="javascript:call_studioindex(index_type, 'false')">
+							<img src="pictures/icon/Studio.png" height="60px"  width="60px" style="position: relative; left:0px" alt="studio"  />
+						</a><div id="studioindex"></div>
+				</li>
+				<li><a href="javascript:call_ratingindex(index_type, 'false')">
+							<img src="pictures/icon/home_rating_rv8.png" height="80px"  width="80px" alt="rating"  />
+						</a><div id="ratingindex"></div>
+				</li>
+				<li><a href="javascript:call_certificationindex(index_type, 'false')">
+							<img src="pictures/icon/home_certification_rv8.png" height="90px"  width="100px"  style="position: relative; left:-10px" alt="certification"  />
+						</a><div id="certificationindex"></div>
+				</li>
+				<li><a href="javascript:call_videosourceindex(index_type, 'false')">
+							<img src="pictures/icon/home_videosource_rv8.png" height="80px"  width="80px" style="position: relative; left:0px" alt="videosource"  />
+						</a><div id="videosourceindex"></div>
+				</li>
+				<li><a href="javascript:call_boxsetindex(index_type, 'false')">
+							<img src="pictures/icon/home_set_rv8.png" height="100px"  width="100px" style="position: relative; left:-10px" alt="set"  />
+						</a><div id="boxsetindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_config(StyleValue)">
+							<img src="pictures/icon/settings.png" height="80px" width="100px" style="padding-left:5px" alt="setting" />
+						</a><div id="configindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_yamj3(); ">
+							<img src="pictures/icon/home.png" height="80px"  width="80px" alt="home" />
+						</a><div id="yamj3select"></div>
+				</li>
+				<li><a href="javascript:ouvre_genrelist(); ">
+							<img src="pictures/icon/list_genre.png" height="80px"  width="80px" alt="liste fenre" />
+						</a><div id="genrelistselect"></div>
+				</li>
+				<li><a href="javascript:ouvre_remote(); ">
+							<img src="pictures/icon/remote.png" height="70px"  width="70px" style="position: relative; left:6px" alt="remote" />
+						</a><div id="remoteselect"></div>
+				</li>
+		</ul>
+	</div> 
+
+	<!-- display source data from API if needed  -->
+        <div id="sourceData"></div>
+    </body>
+</html>

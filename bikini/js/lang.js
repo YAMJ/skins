@@ -8,7 +8,7 @@
 		// click enter 
  //*****************************************************************************************   
 		// set a default skin value 
-		var skin_value = "bikini_skin_default_";
+		var skin_value = "bikini_skin_0_";
 		// fetch the value in the config database
 		function get_lang()
 			{
@@ -84,6 +84,7 @@
 		function set_lang_value(lang2_)
 			{
 				console.log('set_lang_value:'+lang2_);
+				window.localStorage.setItem("Lang", lang2_);
 				LangValue = lang2_;
 				
 			

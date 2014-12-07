@@ -1,11 +1,11 @@
 /**************** container ************************/
 #container, #container_source {
-    width: 1207px;
+    width: 1333px;
 	position: absolute;
 	top: 40px;
 /*	border: 1px solid black;*/
 	height: 730px;
-	left: 81px;
+	left: 8px;
 	overflow-y: auto;
 	z-index: 7;
 /*	margin: 2px 2px 0px 0px;
@@ -29,7 +29,7 @@
     padding: 5px;
     background-color: gray; */
 }
-#container_menu_detail {
+#container_menu_left {
 	transition-property:  ;
     /* La transition durera trois secondes. */
    transition-duration: 1000ms;
@@ -45,7 +45,7 @@
 	opacity: 0;
 	overflow: hidden;
 	}
-#container_menu_detail:hover {	
+#container_menu_left:hover {	
 	opacity: 1;
 	}
 #yRow {
@@ -212,7 +212,23 @@
 	left: 3px;
 	height: 19px;
 	width: 19px;
-	}	
+	}
+.country  {
+	position: relative;
+	top: 2px;
+	left: 3px;
+	height: 40px;
+	width: 40px;
+	text-decoration: none;
+	}
+.country a  {
+	top: 0px;
+	color: white;
+	text-decoration: none;
+	text-align: left;
+	font-size:0.8em;
+	}
+	
 #container .title {
 	overflow: hidden;
 	text-align: center;
@@ -306,7 +322,7 @@ body {
 
 .index_header {
 	border:2px solid grey;
-	width: 1278px;
+	width: 1330px;
 	padding-bottom: 0px;
 	top: 0px;
 	position: absolute;
@@ -372,16 +388,17 @@ body {
 		width: 870px;
 	}
 #monFormMenu {
-	left: 0px;
-	padding-left: 10px;
+	position: relative;
+	left: -5px;
+	padding-left: 0px;
 	list-style: none;
-	height: 1050px;
+	height: 1550px;
 	}
 #monFormMenu2 {
 	left: 80px;
 	padding-left: 10px;
 	list-style: none;
-	height: 1050px;
+	height: 1550px;
 	}	
 #message
 {
@@ -620,6 +637,19 @@ body {
 	border: 2px solid #b0b0b0;
 	text-align: left;
 		}
+.tableinfo_config {
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	position: relative;
+	padding: 0px 10px 5px 0px;
+	top: 10px;
+	left: 70px;
+	width: 500px;
+	border: 2px solid #b0b0b0;
+	text-align: left;
+		}
+.tableinfo_config  td{
+	padding: 0px 20px 0px 20px;
+	}
 .tablelang {
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		position: absolute; 
@@ -868,7 +898,7 @@ ul#home_left_search, #li_home_left {
 	text-align: center;
 	top: -8px;
 	width: 70px;
-	left: -11px;
+	left: 5px;
 
 	
 }
@@ -1600,7 +1630,7 @@ ul#detail_home_right_icon {
 	height:41px;
 	position: absolute;
 	top: -10px;
-	left: 1000px;
+	left: 920px;
 	padding:0px 0px 0px 0px;
 /*	background-color:rgba(255, 255, 255, 0.0);
 	border: 2px solid #b0b0b0;	
@@ -1614,9 +1644,13 @@ ul#detail_home_right_icon {
 	z-index: 99;
 	top: -7px;
 	}
-#li_poster_icon img, #li_fanart_icon img, #li_person_icon img, #li_movie_icon img, #li_search_icon img, #li_remote_icon img, #li_selection_icon img, #li_mediainfo_icon  img, #li_selection_icon img, #selection_id_icon  img, #li_delete_icon img {
+#li_poster_icon img,  #li_search_icon img, #li_remote_icon img, #li_selection_icon img, #li_mediainfo_icon  img, #li_selection_icon img, #selection_id_icon  img{
 	width: 62px;
 	height: 45px;
+	}
+#li_delete_icon img, #li_fanart_icon img, #li_movie_icon img, #li_person_icon img {
+	width: 64px;
+	height: 55px;
 	}	
 #li_poster_icon {
 	top: -5px;
@@ -1624,37 +1658,36 @@ ul#detail_home_right_icon {
 	}
 #li_mediainfo_icon{
 	top: -9px;
-	left: 0px;
+	left: 15px;
 	}
 #li_person_icon {
-	left: 50px;
+	left: 70px;
 	}
 #li_movie_icon {
 	top: -5px;
-	left: 115px;
+	left: 155px;
 	}
 #li_fanart_icon {
-	left: 170px;
+	left: 225px;
 	}	
 #li_selection_icon {
 	top: -15px;
-	left: 260px;
+	left: 340px;
 	}
 #li_delete_icon {
-	left: 220px;
+	left: 285px;
 	}
 #selection_id_icon {
 	top: 20px;
-	left: 270px;
+	left: 360px;
 	}
 #li_poster_icon  img {
-	width: 40px;
-	height: 40px;
+	width: 55px;
+	height: 55px;
 	}	
-	
 #li_mediainfo_icon  img {
-	width: 50px;
-	height: 50px;
+	width: 60px;
+	height: 60px;
 	}
 #fanartshow_icon, #editshow_icon, #mediainfoshow_icon, #movieshow_icon, #personshow_icon, #selectionshow_icon, #deleteshow_icon {
 	visibility: hidden;
@@ -2024,7 +2057,7 @@ text {
 	left: 5px;
 	}
 
-.plot {
+.plot, .plot1 {
 	width: auto;
 	max-height: 148px;
 	max-width: 1070px;

@@ -181,13 +181,14 @@
 											{
 												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
 														+ "<option value=''></option>"
+														+ "<option value='boxset'>boxset</option>"
+														+ "<option value='certification'>certification</option>"
 														+ "<option value='index_all'>index_all</option>"
 														+ "<option value='index_movie'>index_movie</option>"
 														+ "<option value='index_series'>index_series</option>"
+														+ "<option value='new'>new</option>"
 														+ "<option value='person'>person</option>"
-														+ "<option value='boxset'>boxset</option>"
 														+ "<option value='rating'>rating</option>"
-														+ "<option value='certification'>certification</option>"
 														+ "<option value='source'>source</option>"
 														+ "</select>";
 												break;
@@ -207,7 +208,7 @@
 									}, 
 									"td.Action"			: function(arg)
 									{
-								 console.log("Config2 arg.item.key:" + arg.item.key.substr(14))  // because bikini_skin_x_ = 14 char
+								// console.log("Config2 arg.item.key:" + arg.item.key.substr(14))  // because bikini_skin_x_ = 14 char
 										switch (arg.item.key.substr(14))
 										{
 											case 'index_row':
@@ -217,15 +218,15 @@
 											case 'paging':
 											case 'prefered_page':
 											{
-												return "<input type=\"button\" value=\"edit\" onclick=\"Update_SkinData('" +arg.item.key+ "', document.getElementById('formKey" +arg.item.key+ "').value)\"/>"
+												return "<form><input type=\"button\" value=\"edit\" onclick=\"Update_SkinData('" +arg.item.key+ "', document.getElementById('formKey" +arg.item.key+ "').value)\"/></form>"
 												break;
 											}
 											case 'New':
 											{
-													return "<input type='button' value='edit' "
+													return "<form><input type='button' value='edit' "
 														+ "onclick=\"Update_SkinData_New('" + arg.item.key + "', "
 														+ "document.getElementById('formKey" +arg.item.key+ "_days').value , " 
-														+ "document.getElementById('formKey" +arg.item.key+ "_type').value)\"/>";
+														+ "document.getElementById('formKey" +arg.item.key+ "_type').value)\"/></form>";
 												break;
 											}
 										}
@@ -276,7 +277,7 @@
 		
 		function update_local_data(key_to_update, target_value)
 			{
-				console.log("update_local_data key_to_update: " + key_to_update + " target_value:" + target_value);
+			//	console.log("update_local_data key_to_update: " + key_to_update + " target_value:" + target_value);
 				switch (key_to_update.substr(14))
 				{
 					case 'index_row':
@@ -405,15 +406,7 @@
 											</select>
 											<noscript><input type="submit" value="Submit"></noscript>
 										</form>
-								
 									</td>
-									
-			<!--						<tr><td><div id="pagingSetted"></div></td>
-									<td><div id="playerSetted"></div></td>
-									<td><div id="newSetted"></div></td></tr>
-									<tr><td><div id="rowSetted"></div></td>
-									<td><div id="styleSetted"></div></td>
-									<td><div id="langSetted"></div></td></tr> -->
 								</tr>
 							</table>
 		</div>

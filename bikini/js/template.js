@@ -189,7 +189,7 @@
 					
 				}
 			}
-	// fetch prefered page : value available : index_all, index_movie, index_series, person, genre, boxset, rating, certification, source
+	// fetch prefered page : value available : index_all, index_movie, index_series, person, genre, boxset, rating, certification, source, new
 		function ouvre_prefered_page() 
 			{
 			if (localStorage.getItem("prefered_page"))
@@ -244,6 +244,11 @@
 					case 'source':
 						{						
 							call_videosourceindex(localStorage.getItem("indextype"), true);
+							break;
+						} 
+					case 'new':
+						{						
+							NewestSelection("index.html", localStorage.getItem("New"));
 							break;
 						} 
 					default:
@@ -439,6 +444,7 @@
 					console.log("BoxsetSelection: ");
 					Indexpopup = window.open(href_target, "_self","");
 			}
+		
 	// fetch the style value in the config database , value available : page, ribbon, frame, popup
 		function get_style()
 			{
@@ -459,6 +465,20 @@
 			 return jsondata;
 		}
 		
+		function checkStyle(yamjdata) {
+				var PN = {
+						"td.Value":  function(arg) {
+									if (arg.context.count) {
+										console.log("checkStyle: "+arg.context.results[0].value);
+										set_Style_value(arg.context.results[0].value);
+										return arg.context.results[0].value;} else {
+										console.log("checkStyle: no value found");
+										update_Style('frame');}
+								}								
+						};
+				$p('.results').render( yamjdata, PN );			
+			}	
+		
 	// update  the style value in the config database, value available : page, ribbon, frame, popup
 		function update_Style(style_) 
 		{
@@ -478,33 +498,16 @@
 				});	
 			 return jsondata;
 		}	
-		
-		function checkStyle(yamjdata) {
-				var PN = {
-						"td.Value":  function(arg) {
-									if (arg.context.count) {
-										console.log("checkStyle: "+arg.context.results[0].value);
-										set_Style_value(arg.context.results[0].value);
-										return arg.context.results[0].value;} else {
-										console.log("checkStyle: no value found");
-										update_Style('frame');}
-								}								
-							
-						};
-				
-				$p('.results').render( yamjdata, PN );			
-			}	
-	
-	
+
 	// set the rules to adjust style to the style choosen : value available : page, ribbon, frame, popup
 		function set_Style_value(style_)
 			{
 				StyleValue = style_;
 				console.log('set style:'+style_);
 				window.localStorage.setItem("Style", style_);
-		
 			}
-	// fetch prefered page : value available : index_all, index_movie, index_series, person, genre, boxset, rating, certification, source
+			
+	// fetch prefered page : value available : index_all, index_movie, index_series, person, genre, boxset, rating, certification, source, new
 		function get_prefered_page()
 			{
 				var jsonPreferedUrl = "/yamj3/api/config/list.json?config="+skin_value+"prefered_page&mode=any";
@@ -524,7 +527,7 @@
 			 return jsondata;
 		}
 		
-	// update prefered page : value available : index_all, index_movie, index_series, person, genre, boxset, rating, certification, source
+	// update prefered page : value available : index_all, index_movie, index_series, person, genre, boxset, rating, certification, source, new
 		function update_Prefered_Page(prefered_) 
 		{
 				var jsonPreferedUrl = "/yamj3/api/config/update.json?key="+skin_value+"prefered_page&value="+prefered_+"";
@@ -561,7 +564,7 @@
 			}	
 	
 	
-	// set the rules to adjust prefered page : value available : index_all, index_movie, index_series, person, genre, boxset, rating, certification, source
+	// set the rules to adjust prefered page : value available : index_all, index_movie, index_series, person, genre, boxset, rating, certification, source, new
 		function set_Prefered_Page_value(prefered_)
 			{
 				Prefered_PageValue = prefered_;
@@ -574,7 +577,7 @@
 		function get_new()
 			{
 				var jsonNewUrl = "/yamj3/api/config/list.json?config="+skin_value+"New&mode=any";
-				console.log("get_style jsonNewUrl: " + jsonNewUrl);
+				console.log("get_new jsonNewUrl: " + jsonNewUrl);
 				$.ajax({
                    url: jsonNewUrl,
                     async: false,

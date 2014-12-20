@@ -102,7 +102,7 @@
 						// Get the first poster available from the list
 						for (i = 0; boucle && i < poster.length; i++) 
 							{
-								if (poster[i].generatedId != 0)
+								if (poster[i].generatedId)
 								{
 									boucle = false;
 									output_poster = arg.context.baseArtworkUrl + poster[i].filename;

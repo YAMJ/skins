@@ -296,16 +296,14 @@
                     'fanart<-result.artwork.FANART': {
                         '@src': function(arg)
                         {
+						//	console.log("detail display_fanart");
+							var output_fanart = "pictures/dummy_fanart.jpg";
                             // Check to see if there are fanart
                             if (arg.item) {
-                                // Get the first fanart from the list
-                                if (arg.item.generatedId === 0) {
-                                    return "pictures/dummy_fanart.jpg";
-                                }
-                                return arg.context.baseArtworkUrl + arg.item.filename;
-                            } else {
-                                return "pictures/dummy_fanart.jpg";
-                            }
+                                // Get fanart from the list
+                                if (arg.item.generatedId) {output_fanart = arg.context.baseArtworkUrl + arg.item.filename;}
+                            } 
+                            return output_fanart;
                         }
 
                     }
@@ -318,7 +316,7 @@
                             // Check to see if there are posters
                             if (arg.item) {
                                 // Get the first poster from the list
-                                if (arg.item.generatedId === 0) {
+                                if (!arg.item.generatedId) {
                                     return "pictures/dummy.jpg";
                                 }
 							// take the opportunity to reset the new season number, in case of next / previous move , only for season type
@@ -346,7 +344,7 @@
                             // Check to see if there are banner
                             if (arg.item) {
                                 // Get the first banner from the list
-                                if (arg.item.generatedId === 0) {
+                                if (!arg.item.generatedId) {
                                     return "pictures/dummy_banner.jpg";
                                 }
                                 return arg.context.baseArtworkUrl + arg.item.filename;

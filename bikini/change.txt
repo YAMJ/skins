@@ -1,4 +1,9 @@
 change.txt
+V1.3.4
+- modify the function hover on the left menu
+- add index New to the prefered page 
+- fix few problems with the config page
+- fix dummy poster and dummy fanart 
 V1.3.3
 - add prefered page to config settings 
 - add prefered page with the yamjv3 logo in index page 

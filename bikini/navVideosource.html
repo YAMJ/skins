@@ -172,7 +172,9 @@
 			document.getElementById("genrelistselect").innerHTML=genrelist_select.toUpperCase();
 			document.getElementById("ratingindex").innerHTML=rating_label.toUpperCase();
 			document.getElementById("videosourceindex").innerHTML=source_label.toUpperCase();
-			document.getElementById("boxsetindex").innerHTML=boxset_label.toUpperCase();
+			document.getElementById("boxsetindex").innerHTML=boxset_label.toUpperCase(); 
+			document.getElementById("countryindex").innerHTML=country_label.toUpperCase();
+			document.getElementById("awardsindex").innerHTML=awards_label.toUpperCase();
 		}
 
         </script>
@@ -228,6 +230,14 @@
 				<li><a href="javascript:call_genreindex(index_type, 'false')">
 							<img src="pictures/icon/home_genres2_rv8.png" height="80px"  width="80px" alt="genre" />
 						</a><div id="genreindex"></div>
+				</li>
+				<li><a href="javascript:call_countryindex(index_type, 'false')">
+							<img src="pictures/icon/home_country_rv8.png" height="80px"  width="80px" alt="country" />
+						</a><div id="countryindex"></div>
+				</li>
+				<li><a href="javascript:call_awardsindex(index_type, 'false')">
+							<img src="pictures/icon/home_awards_rv8.png" height="80px"  width="80px" alt="awards" />
+						</a><div id="awardsindex"></div>
 				</li>
 				<li><a href="javascript:ouvre_popup_search(StyleValue)">
 							<img src="pictures/icon/find.png" height="60px" width="65px" style="padding-left:10px" alt="find" />

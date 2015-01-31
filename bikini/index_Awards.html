@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>YAMJ v3 Boxset index</title>
+        <title>YAMJ v3 Awards index</title>
         <script src="js/jQuery.js"></script>
         <!-- Used for the JSON parsing -->
         <script src="js/pure.js"></script>
@@ -32,12 +32,11 @@
 		// set default to 2 rows and 6 columns
 		var RowperPageValue = 2;
 		var PerPageValue = 12;
+		var Prefered_PageValue = "index_all";
         var jsondata = null;
 		var menuleft_toggle = 0;
-		var boxset_id = "";
-		var boxset_name = ""; 
-		var Prefered_PageValue = "index_all";
-		var	display_genre = "";
+		var genre_id = "";
+		var	display_awards = "";
 		var watched_method = "all";
 		// get the prefered_page
 		if (localStorage.getItem("prefered_page"))
@@ -46,13 +45,11 @@
 		// get the watched method 
 		if (localStorage.getItem("watched"))
 			{watched_method = localStorage.getItem("watched");}
-		
+		var awards_event = ""; 
 		// get the genre and name id and reset to default for the next time 
-		if (localStorage.getItem("Boxset_id"))
-			{boxset_id = localStorage.getItem("Boxset_id");
-			}
-		if (localStorage.getItem("Boxset_name"))
-			{boxset_name = localStorage.getItem("Boxset_name");
+		
+		if (localStorage.getItem("Awards_event"))
+			{awards_event = localStorage.getItem("Awards_event");
 			}
 		var index_type = "all";
 			if (window.localStorage.getItem("indextype"))
@@ -70,12 +67,25 @@
 		
         var LIST_DIR = {
             "div.block": {
-                "member<-results": {
+                "result<-results": {
                      "span.title": function(arg) {
-						return arg.item.title;
+						
+					if (( arg.item.artwork.POSTER[0]) && (arg.item.videoType == 'SEASON'))
+						{					
+						return arg.item.title + '<br> '+season_label+': ' + arg.item.season;
+						} else {
+							if (arg.item.videoType == 'SERIES')
+								{ 
+									
+									return arg.item.title +'<br> '+series_label; 
+									
+								} else {
+									return arg.item.title;
+								}
+						}
 					},
                     "img.poster@src": function(arg) {
-					     	// set dummy as default poster
+                        	// set dummy as default poster
                        var output_poster = "pictures/dummy.jpg";
                         // Check to see if there are posters
                         if (arg.item.artwork.POSTER) {
@@ -134,29 +144,30 @@
 			get_player();
 			get_prefered_page();
 			
-			var jsonUrl = "/yamj3/api/index/video.json?include=boxset-"+boxset_id+"&dataitems=member,artwork&artwork=POSTER";
-			display_genre = boxset_label.toUpperCase()+ ": " + boxset_name.toUpperCase();
-		
+			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=title&sortdir=ASC&artwork=poster&include=award-"+awards_event+"&watched="+watched_method;;
+		//	display_awards = country_select.toUpperCase() + ":" + awards_event.toUpperCase();
+			display_awards = "AWARDS:" + awards_event.toUpperCase();
+			get_type_selected ();
 			switch (watched_method)
 				{
 					case 'all':
-						display_genre = display_genre ;
+						display_awards = display_awards ;
 						break;
 					case 'true':
-						display_genre = display_genre + "(" + watched_select.toUpperCase() + ") ";
+						display_awards = display_awards + "(" + watched_select.toUpperCase() + ") ";
 						break;
 					case 'false':
-						display_genre = display_genre + "(" + unwatched_select.toUpperCase() + ") ";
+						display_awards = display_awards + "(" + unwatched_select.toUpperCase() + ") ";
 						break;
 					
 					default :
-						display_genre = display_genre;
+						display_awards = display_awards;
 				};
-				if (display_genre.length > 45)
-					{$('#printsearch').html(display_genre.toLowerCase());}
-					else {$('#printsearch').html(display_genre.toUpperCase());}
+				if (display_awards.length > 45)
+					{$('#printsearch').html(display_awards.toLowerCase());}
+					else {$('#printsearch').html(display_awards.toUpperCase());}
 
-				console.log("index_boxset getIndexData URL: " + jsonUrl);
+				console.log("index_awards getIndexData URL: " + jsonUrl);
 				
             $.ajax({
                 url: jsonUrl,
@@ -180,12 +191,43 @@
         // "row" is a CLASS attribute, not the id.
         function updateHtml(yamjdata)
         {
-			$p('.count_return_boxset').render(yamjdata, COUNT_HEADER);	
+			$p('.count_return_awards').render(yamjdata, COUNT_HEADER);	
             $p('div.row').render(yamjdata, LIST_DIR);
         }
 
-	
-	
+		function open_awards_index(indextype)
+        {
+			localStorage.setItem("indextype", indextype);
+            console.log("open_awards_index Storing value: indextype: " +indextype);
+			window.location.href="index_Awards.html";
+			Mypopup.focus();
+		}
+		function get_type_selected ()
+		{
+			switch (index_type.toLowerCase())
+				{
+					case 'movie,series':
+						
+						display_awards = display_awards + "(" + all_select.toUpperCase() + ")";
+						break;
+					case 'all':
+						
+						display_awards = display_awards + "(" + all_select.toUpperCase() + ")";
+						break;
+					case 'movie':
+						
+						display_awards = display_awards + "(" + movie_select.toUpperCase() + ")";
+						break;
+					case 'series':
+					
+						display_awards = display_awards + "(" + series_select.toUpperCase() + ")";
+						break;
+					case 'season':
+						
+						display_awards = display_awards + "(" + season_select.toUpperCase() + ")";
+						break;
+				};
+		}
 // ****************************** id or class with iscroll **************************************************************
 	var myScroll;
 	function loaded_iscroll () {
@@ -233,8 +275,8 @@
 					
 				</ul>
 			</td>
-			<div class="show_index_boxset"><span id="printsearch"></span></div>
-			<div class="count_return_boxset">
+			<div class="show_index_awards_small"><span id="printsearch"></span></div>
+			<div class="count_return_awards">
                    <span class="ReturnCount"></span> 
 			</div>
 		<!-- just added to set the language value, shouldn't be displayed  -->
@@ -247,9 +289,26 @@
 			</div>
 		</div >
 		
-		<div class="test">
-					<td><span class="postertest"></span></td>
-		</div> 
+		<div id="main_index">			
+			<form id="monFormGenre">
+					<table align="right" >
+						<tr>
+							<td>
+								<a href="javascript:open_awards_index('movie,series')"><img src="pictures/icon/home_all_rv8.png" height="45px" width="45px" alt="tv movie"/><a>
+								<a href="javascript:open_awards_index('movie')"><img src="pictures/icon/home_movies_rv8.png" height="45x" width="45px" alt="movie" align="top" /></a>
+								<a href="javascript:open_awards_index('series')"><img src="pictures/icon/home_tv shows_rv8.png" height="45px" width="45px" alt="tv" /></a>
+								<a href="javascript:open_awards_index('season')"><img src="pictures/icon/home_apps_rv8.png" height="45px" width="45px" alt="season" /></a>
+								<a href="javascript:WatchedSelection('index_Awards.html', 'all')"><img src="pictures/icon/home_watched_rv8.png" height="45px" width="45px" alt="allwatched" /></a>
+							</td>
+							<td>
+								<a href="javascript:WatchedSelection('index_Awards.html', 'true')"><img src="pictures/watched.png" height="20px" width="20px" alt="watched" /></a>
+								<a href="javascript:WatchedSelection('index_Awards.html', 'false')"><img src="pictures/unwatched.png" height="20px" width="20px" alt="unwatched" /></a>
+				
+							</td>
+						</tr>
+					</table>
+			</form>
+		</div>
 		<div class="directplay" style="display:none">
 			<span class="filepath"></span>
 		</div>
@@ -257,7 +316,6 @@
         <div class="holder"></div>
 	</div>
 	<!-- left menu with icon -->
-    	<!-- left menu with icon -->
     <img id="open_menu_left" src="pictures/icon-open_frame.png" style="position:absolute; top: 380px; left: 0px; z-index:12; visibility: visible;" height="100px" width="130px" onclick="toggle_menu_left ()" />
 	<img id="close_menu_left" src="pictures/icon-close_frame.png" style="position:absolute; top: 380px; left: 78px; z-index:12; visibility: hidden;" height="110px" width="130px" onclick="toggle_menu_left ()" />
 	<div id="container_menu_left" style="top:40px;">			

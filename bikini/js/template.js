@@ -167,7 +167,7 @@
 				parent.frames['target_frame'].location.href='info_config.html';
 				toggle_Id('target_display');
 			}
-	// open a new window to select configuration functionnality 
+	// open in the current window to select configuration functionnality 
 		function ouvre_config(StyleValue) 
 			{
 			switch (StyleValue)
@@ -189,7 +189,29 @@
 					
 				}
 			}
-	// fetch prefered page : value available : index_all, index_movie, index_series, person, genre, boxset, rating, certification, source, new
+		// open a new window to select configuration functionnality 
+		function ouvre_config_page(StyleValue) 
+			{
+			switch (StyleValue)
+					{
+					case 'frame':
+					case 'popup':
+					case 'ribbon':
+					case 'page':
+					default:
+						{
+							console.log("ouvre_config:  style:"+StyleValue);								
+			//				parent.frames['target_frame'].location.href='config.html';
+			//				toggle_Id('target_display');
+							Configpopup = window.open("config2.html", "_parent","");
+							break;
+						} 
+				
+					return;
+					
+				}
+			}
+	// fetch prefered page : value available : index_all, index_movie, index_series, person, genre, country, boxset, rating, certification, source, new
 		function ouvre_prefered_page() 
 			{
 			if (localStorage.getItem("prefered_page"))
@@ -224,6 +246,11 @@
 					case 'genre':
 						{
 							call_genreindex(localStorage.getItem("indextype"), true);
+							break;
+						}
+					case 'country':
+						{
+							call_countryindex(localStorage.getItem("indextype"), true);
 							break;
 						}
 					case 'boxset':
@@ -271,6 +298,30 @@
 					Indexpopup = window.open("navGenre.html", "YAMJv3 Navigation genre index","");
 				} else {
 					Indexpopup = window.open("navGenre.html", "_self","");
+				}
+			}
+	// open or change to index country page
+		function call_countryindex(indextype, newpage)
+			{
+				localStorage.setItem("indextype", indextype);
+				console.log("call_countryindex with type: "+indextype);
+				if (newpage == 'true') 
+				{
+					Indexpopup = window.open("navCountry.html", "YAMJv3 Navigation country index","");
+				} else {
+					Indexpopup = window.open("navCountry.html", "_self","");
+				}
+			}
+	// open or change to index awards page
+		function call_awardsindex(indextype, newpage)
+			{
+				localStorage.setItem("indextype", indextype);
+				console.log("call_awardsindex with type: "+indextype);
+				if (newpage == 'true') 
+				{
+					Indexpopup = window.open("navAwards.html", "YAMJv3 Navigation awards index","");
+				} else {
+					Indexpopup = window.open("navAwards.html", "_self","");
 				}
 			}
 		// open or change to index certification page
@@ -507,7 +558,7 @@
 				window.localStorage.setItem("Style", style_);
 			}
 			
-	// fetch prefered page : value available : index_all, index_movie, index_series, person, genre, boxset, rating, certification, source, new
+	// fetch prefered page : value available : index_all, index_movie, index_series, person, genre, country, boxset, rating, certification, source, new
 		function get_prefered_page()
 			{
 				var jsonPreferedUrl = "/yamj3/api/config/list.json?config="+skin_value+"prefered_page&mode=any";
@@ -527,7 +578,7 @@
 			 return jsondata;
 		}
 		
-	// update prefered page : value available : index_all, index_movie, index_series, person, genre, boxset, rating, certification, source, new
+	// update prefered page : value available : index_all, index_movie, index_series, person, genre, country, boxset, rating, certification, source, new
 		function update_Prefered_Page(prefered_) 
 		{
 				var jsonPreferedUrl = "/yamj3/api/config/update.json?key="+skin_value+"prefered_page&value="+prefered_+"";
@@ -564,7 +615,7 @@
 			}	
 	
 	
-	// set the rules to adjust prefered page : value available : index_all, index_movie, index_series, person, genre, boxset, rating, certification, source, new
+	// set the rules to adjust prefered page : value available : index_all, index_movie, index_series, person, genre, country,  boxset, rating, certification, source, new
 		function set_Prefered_Page_value(prefered_)
 			{
 				Prefered_PageValue = prefered_;
@@ -834,7 +885,7 @@
 	function PopDelete(Current_stage_file_Id, Current_title)
 			{
 						console.log("PopDelete:  Current_stage_file_Id: "+Current_stage_file_Id);
-						document.getElementById("infobox_delete").innerHTML="Delete: "+Current_stage_file_Id+ " : " + Current_title + "?"
+						document.getElementById("infobox_delete").innerHTML=delete_text + " stage_file id: "+Current_stage_file_Id+ " " + Current_title + "?"
 						document.getElementById("infobox_delete").style.visibility="visible";
 						myVar=window.setTimeout(function(){myStopFunction('infobox_delete');},5000);
 			}	
@@ -842,6 +893,19 @@
 	function start_delete ()
 		{
 			myStopFunction('infobox_delete');
+			delete_stage_file_Id ()
+		}
+	function PopUpdate(Current_stage_file_Id, Current_title)
+			{
+						console.log("PopUpdate:  Current_stage_file_Id: "+Current_stage_file_Id);
+						document.getElementById("infobox_update").innerHTML=update_label + " stage_file id:"+Current_stage_file_Id+ " " + Current_title + "?"
+						document.getElementById("infobox_update").style.visibility="visible";
+						myVar=window.setTimeout(function(){myStopFunction('infobox_update');},5000);
+			}	
+	// if it is confirmed stop timer and call the update action to make his job			
+	function start_update ()
+		{
+			myStopFunction('infobox_update');
 			delete_stage_file_Id ()
 		}
 	function PopIgnore(Current_artwork_type, Current_located_Id)

@@ -1,21 +1,19 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>YAMJ v3 Boxset index</title>
-        <script src="js/jQuery.js"></script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		
+		<script src="js/jQuery.js"></script>
         <!-- Used for the JSON parsing -->
         <script src="js/pure.js"></script>
         <!-- Used for the paging of the index -->
         <script src="js/js.js"></script>
-		<script src="js/my_remote.js"></script>
         <script src="js/jPages.js"></script>
 		<!-- Used for skin language setting -->
 		<script src="js/lang.js"></script>
-		<!-- Used for config  setting -->
-		<script src="js/config.js"></script>		
 		<!-- Used for template -->
-		<script src="js/template.js"></script>
+		<script src="js/template.js"></script>	
 		<script src="js/library.js"></script>
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
         <!-- Used for the paging of the index -->
@@ -24,107 +22,21 @@
         <link rel="stylesheet" href="css/animate.css">
 		<!-- used for iscroll special -->
 		<script type="text/javascript" src="js/iscroll.js"></script>
+		
+		<title>YAMJv3 Navigation awards index</title>
+	
     </head>
-    <body onload="getIndexData();">
+    <body onload="NavData(); addShowAlt('img');">
         <script type="text/javascript">
-			
-//***************************************************************************************
-		// set default to 2 rows and 6 columns
-		var RowperPageValue = 2;
-		var PerPageValue = 12;
-        var jsondata = null;
 		var menuleft_toggle = 0;
-		var boxset_id = "";
-		var boxset_name = ""; 
-		var Prefered_PageValue = "index_all";
-		var	display_genre = "";
-		var watched_method = "all";
+		var index_type = "all";
+		var Prefered_PageValue = "index_all";	
 		// get the prefered_page
 		if (localStorage.getItem("prefered_page"))
 			{Prefered_PageValue = localStorage.getItem("prefered_page");}
 			else {localStorage.setItem("prefered_page", Prefered_PageValue);}
-		// get the watched method 
-		if (localStorage.getItem("watched"))
-			{watched_method = localStorage.getItem("watched");}
-		
-		// get the genre and name id and reset to default for the next time 
-		if (localStorage.getItem("Boxset_id"))
-			{boxset_id = localStorage.getItem("Boxset_id");
-			}
-		if (localStorage.getItem("Boxset_name"))
-			{boxset_name = localStorage.getItem("Boxset_name");
-			}
-		var index_type = "all";
-			if (window.localStorage.getItem("indextype"))
-				{index_type = window.localStorage.getItem("indextype");}
-				else {window.localStorage.setItem("indextype", index_type);}
 			
-        // This is the directive used by pure to transform the JSON data into HTML
-        // span.Title is a simple substitution of the title
-        // img.Poster@src replaces the "src" attribute of the img.Poster
-		var COUNT_HEADER = {
-                'span.ReturnCount': function(arg) {	
-					return arg.context.count+' '+results_text;
-					}
-            };	
-		
-        var LIST_DIR = {
-            "div.block": {
-                "member<-results": {
-                     "span.title": function(arg) {
-						return arg.item.title;
-					},
-                    "img.poster@src": function(arg) {
-					     	// set dummy as default poster
-                       var output_poster = "pictures/dummy.jpg";
-                        // Check to see if there are posters
-                        if (arg.item.artwork.POSTER) {
-						var boucle = true;
-						var poster = arg.item.artwork.POSTER; 
-						// Get the first poster available from the list
-						for (i = 0; boucle && i < poster.length; i++) 
-							{
-								if (poster[i].generatedId != 0)
-								{
-									boucle = false;
-									output_poster = arg.context.baseArtworkUrl + poster[i].filename;
-								} 
-							}
-						}
-						return output_poster;
-                    },
-                    "img.poster@onclick": function(arg) {
-                        return "setId('" + arg.item.videoType + "', " + arg.item.id + ")";
-                    }, 
-					"img.playbutton@onclick": function(arg) {
-                        return "direct_play('" + arg.item.videoType + "', " + arg.item.id + ")";
-                    }, 
-					"img.infobutton@onclick": function(arg) {
-						cursor_position (); 
-                        return "direct_info('" + arg.item.videoType + "', " + arg.item.id + ")";
-                    },
-					"img.watched_small@src": function(arg)
-					{
-						if (arg.item.watched) 
-						{return "./pictures/watched.png";} else
-						{return "./pictures/unwatched.png";}
-					}
-                }
-            }
-        };
-
-        function setId(type, id)
-        {
-	
-            window.localStorage.setItem("indextype", type);
-            window.localStorage.setItem("id", id);
-            console.log("Storing value: " + type + "-" + id);
-            window.location.href="detail.html";
-        }
-
-        // This function calls the API to get the JSON data.
-        // It will then update the HTML with the data and set up the paging
-        function getIndexData()
+		 function NavData()
         {
 		// load the new scolling method for the id and class selected 
 			loaded_iscroll ();
@@ -134,30 +46,37 @@
 			get_player();
 			get_prefered_page();
 			
-			var jsonUrl = "/yamj3/api/index/video.json?include=boxset-"+boxset_id+"&dataitems=member,artwork&artwork=POSTER";
-			display_genre = boxset_label.toUpperCase()+ ": " + boxset_name.toUpperCase();
-		
-			switch (watched_method)
+			if (window.localStorage.getItem("indextype"))
+				{index_type = window.localStorage.getItem("indextype");
+				console.log("navAwards get: " + index_type);}
+				else {window.localStorage.setItem("indextype", index_type);
+				console.log("navAwards set: " + index_type);}
+		    var jsonUrl = "/yamj3/api/awards/list.json?type=" + index_type + "&sortby=event&sortdir=ASC";
+			console.log("navAwards indextype: " + index_type);
+			switch (index_type.toUpperCase())
 				{
-					case 'all':
-						display_genre = display_genre ;
+				   
+					case 'ALL':
+						selected_index = all_select.toUpperCase();
 						break;
-					case 'true':
-						display_genre = display_genre + "(" + watched_select.toUpperCase() + ") ";
+					case 'MOVIE,SERIES':
+						selected_index = all_select.toUpperCase();
 						break;
-					case 'false':
-						display_genre = display_genre + "(" + unwatched_select.toUpperCase() + ") ";
+					case 'MOVIE':
+						selected_index = movie_select.toUpperCase();
 						break;
-					
-					default :
-						display_genre = display_genre;
+					case 'SERIES':
+						selected_index = series_select.toUpperCase();
+						break;
+					case 'SEASON':
+						selected_index = season_select.toUpperCase();
+						break;
 				};
-				if (display_genre.length > 45)
-					{$('#printsearch').html(display_genre.toLowerCase());}
-					else {$('#printsearch').html(display_genre.toUpperCase());}
+		//	$('#printsearch').html(awards_select.toUpperCase()+' '+selected_index);
+			$('#printsearch').html('AWARDS '+selected_index);
+            console.log("navAwards URL: " + jsonUrl);
+            var jsondata = null;
 
-				console.log("index_boxset getIndexData URL: " + jsonUrl);
-				
             $.ajax({
                 url: jsonUrl,
                 async: false,
@@ -165,45 +84,88 @@
                 'success': function(data)
                 {
                     jsondata = data;
-				//	 outputJson(data); 	
+				//	 outputJson(data); 
                     updateHtml(data);
-					get_poster_number ();
-                    console.log("GetIndexData: perPageValue="+perPageValue+" paging:"+ window.localStorage.getItem('Paging'));
-					if (window.localStorage.getItem("Paging") == 'true') {pageData(perPageValue);}
+				// adjust number per page with the popup width and poster + container width			
+                    pageData(44);
                 }
             });
             return jsondata;
         }
+		
+//****************************************************************************		
+		
+     function updateHtml(yamjdata)
+     {
+			var COUNT_HEADER = {
+                'span.ReturnCount': function(arg) {	
+					return arg.context.count+' '+results_text;
+					}
+				};	
+		    var LIST_DIR = {
+            "div.awards_block": {
+                "result<-results": {
+					"span.awards_id": function(arg) {
+						return "(id:" + arg.item.id + ")";
+						},
+					"span.awards_event": function(arg) {
+						return arg.item.event;
+						},
+					"span.awards_category": function(arg) {
+						return "Category:" + arg.item.category;
+						},
+                    "span.awards_event@onclick": function(arg) {
+							return "open_awards_index('" + arg.item.event+ "')";
+							}
+				
+						}
+					}
+				};
 
-        // Run the pure.js function to render the data into the HTML template
-        // div.row is the part of the template to apply it too.
-        // "row" is a CLASS attribute, not the id.
-        function updateHtml(yamjdata)
+			$p('.count_return_awards').render(yamjdata, COUNT_HEADER);	
+            $p('div.row_awards').render(yamjdata, LIST_DIR);
+			
+	}
+		
+		
+//***************************************************************************************************************		
+		function open_awards_nav(indextype)
         {
-			$p('.count_return_boxset').render(yamjdata, COUNT_HEADER);	
-            $p('div.row').render(yamjdata, LIST_DIR);
-        }
+			localStorage.setItem("indextype", indextype);
+            console.log("open_awards_nav Storing value: indextype: " +indextype);
+			window.location.href="navAwards.html";
+			Mypopup.focus();
+		}
 
-	
-	
+ 
+		function open_awards_index(awardsevent)
+        {
+			localStorage.setItem("Awards_event", awardsevent);
+            console.log("navAwards open_awards_index Storing value: Awards event: " +awardsevent);
+			window.location.href="index_Awards.html";
+			Mypopup.focus();
+		}
 // ****************************** id or class with iscroll **************************************************************
 	var myScroll;
 	function loaded_iscroll () {
 	myScroll = new IScroll('#container_menu_left', { scrollX: true, scrollY: true, mouseWheel: true, click: true });
 	}
-	//   document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+	//   document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);	
+// *******************************to fix alt bug with chrome ***************************************************************************************
+	function showAlt(){$(this).replaceWith(this.alt)};
+	function addShowAlt(selector){$(selector).error(showAlt).attr("src", $(selector).src)};	
 //************************ LANGUAGE LOCAL SETTING *********************************************		
-		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
+
 		function set_context_lang_value ()
 		{
 			document.getElementById("allselect").innerHTML=all_select.toUpperCase();
-	//		document.getElementById("allgenre").innerHTML=all_genre.toUpperCase();
+		//	document.getElementById("allgenre").innerHTML=all_genre.toUpperCase();
 			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
-	//		document.getElementById("moviegenre").innerHTML=movie_select.toUpperCase();
+		//	document.getElementById("moviegenre").innerHTML=movie_select.toUpperCase();
 			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
-	//		document.getElementById("seriesgenre").innerHTML=series_select.toUpperCase();
+		//	document.getElementById("seriesgenre").innerHTML=series_select.toUpperCase();
 			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();	
-	//		document.getElementById("seasongenre").innerHTML=season_select.toUpperCase();
+		//	document.getElementById("seasongenre").innerHTML=season_select.toUpperCase();
 			document.getElementById("genreindex").innerHTML=genre_select.toUpperCase();
 			document.getElementById("studioindex").innerHTML=studio_select.toUpperCase();
 			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
@@ -218,13 +180,11 @@
 			document.getElementById("boxsetindex").innerHTML=boxset_label.toUpperCase(); 
 			document.getElementById("countryindex").innerHTML=country_label.toUpperCase();
 			document.getElementById("awardsindex").innerHTML=awards_label.toUpperCase();
-	//		document.getElementById("watchedselect").innerHTML=watched_select.toUpperCase();
-	//		document.getElementById("option_watchedselect").innerHTML=watched_select.toLowerCase();
-	//		document.getElementById("option_unwatchedselect").innerHTML=unwatched_select.toLowerCase();
-	//		document.getElementById("option_allwatchedselect").innerHTML=all_label.toLowerCase();
-		}
-        </script>
 	
+		}
+
+        </script>
+
     <div class="index_header"> 
         <div id="logo_index">
 			<td>
@@ -233,32 +193,22 @@
 					
 				</ul>
 			</td>
-			<div class="show_index_boxset"><span id="printsearch"></span></div>
-			<div class="count_return_boxset">
-                   <span class="ReturnCount"></span> 
-			</div>
+				<!-- display screen name and number of genre  --> 		
+					<div class="show_index_awards"><span id="printsearch"></span></div>
+					<div class="count_return_awards">
+						   <span class="ReturnCount"></span> 
+					</div>
 		<!-- just added to set the language value, shouldn't be displayed  -->
 			<div class="results" style="visibility: hidden; display:none;">
 				<table><tr><td class="Value"></td></tr></table>
-			</div>
-			<!-- just added to set the poster number value, shouldn't be displayed  -->
-			<div class="poster_results" style="visibility: hidden; display:none;">
-				<table><tr><td class="Poster_Value"></td></tr></table>
-			</div>
-		</div >
-		
-		<div class="test">
-					<td><span class="postertest"></span></td>
-		</div> 
-		<div class="directplay" style="display:none">
-			<span class="filepath"></span>
+			</div>	
 		</div>
+
         <!--Navigation Holder-->
         <div class="holder"></div>
 	</div>
 	<!-- left menu with icon -->
-    	<!-- left menu with icon -->
-    <img id="open_menu_left" src="pictures/icon-open_frame.png" style="position:absolute; top: 380px; left: 0px; z-index:12; visibility: visible;" height="100px" width="130px" onclick="toggle_menu_left ()" />
+   	<img id="open_menu_left" src="pictures/icon-open_frame.png" style="position:absolute; top: 380px; left: 0px; z-index:12; visibility: visible;" height="100px" width="130px" onclick="toggle_menu_left ()" />
 	<img id="close_menu_left" src="pictures/icon-close_frame.png" style="position:absolute; top: 380px; left: 78px; z-index:12; visibility: hidden;" height="110px" width="130px" onclick="toggle_menu_left ()" />
 	<div id="container_menu_left" style="top:40px;">			
 		<ul id="monFormMenu" style="margin: 0px;">
@@ -336,38 +286,45 @@
 						</a><div id="remoteselect"></div>
 				</li>
 		</ul>
-	</div>          
-        <!--Data Items Container-->
-        <div id="container">
-            <div id="yRow" class="row">
-                <div id="yBlock" class="block">
-                    <img class="poster" src="">
-					<img class="playbutton" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'">
-					<img class="infobutton" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'">
-					<img class="watched_small" src="" />
-					<br>
-                    <span class="title"></span>
+	</div>           
+    <div id="main_index">			
+			<form id="monFormGenre">
+					<table align="right" >
+						<tr>
+							<td>							
+								<a href="javascript:call_awardsindex('movie,series', 'false')"><img src="pictures/icon/home_all_rv8.png" height="45px" width="45px" alt="tv movie"/><a>
+								<a href="javascript:call_awardsindex('movie', 'false')"><img src="pictures/icon/home_movies_rv8.png" height="45x" width="45px" alt="movie" align="top" /></a>
+								<a href="javascript:call_awardsindex('series', 'false')"><img src="pictures/icon/home_tv shows_rv8.png" height="45px" width="45px" alt="tv" /></a>
+								<a href="javascript:call_awardsindex('season', 'false')"><img src="pictures/icon/home_apps_rv8.png" height="45px" width="45px" alt="season" /></a>
+							</td>
+						</tr>
+					</table>
+			</form>
+		</div>
+		 <!--Data Items Container-->
+		<div id="container">
+            <div id="yRow" class="row_awards">
+                <div id="yBlock" class="awards_block">
+                <!--    <img class="awards_logo" src=""><br> -->
+					<span style="text-align:left" class="awards_id"></span>
+					<span style="text-align:center; font-weight: bold;" class="awards_event"></span>
+                    <span style="text-align:center; font-style: italic; "class="awards_category"></span>
+					
                 </div>
-                <br />
             </div>
         </div>
-	<!-- display infobox -->
-		<button id="infobox" onclick="javascript:start_playing ()"></button>
-	<!-- display config -->
-		<div id="target_display" style="visibility: hidden; ">		
-			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:1050px; height:320px;" allowTransparency="true"></iframe>
-		</div>
-	<!-- display detail  -->
-		<div id="detail_display" style="visibility: hidden; position: absolute; top: 100px; left: 150px;">		
-			<iframe src="" name="detail_frame" resizable="yes" id="detail_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:960px; height:540px;" allowTransparency="true"></iframe>
-		</div>
-		<!-- display Movie -->
+
+	<!-- display Movie -->
 		<div id="movie_display" style="visibility: hidden; ">
 			<iframe src="" name="movie_frame" resizable="yes" id="movie_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1245px; height:265px;" allowTransparency="true"></iframe>
 		</div>	
 	<!-- display person -->
 		<div id="person_display" style="visibility: hidden; ">	
 			<iframe src="" name="person_frame" resizable="yes" id="person_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1220px; height:335px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display config -->
+		<div id="name_display" style="visibility: hidden; ">		
+			<iframe src="" name="name_frame" resizable="yes" id="name_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:1050px; height:335px;" allowTransparency="true"></iframe>
 		</div>	
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>

@@ -75,7 +75,7 @@
 	overflow-y: auto;
 	
 }
-#container .row_genre,#container  .row_studio,#container  .row_rating, #container  .row_boxset,#container  .row_videosource,#container  .row_certification , #container_source  .row_source_rating{
+#container .row_genre,#container .row_country,#container .row_awards,#container  .row_studio,#container  .row_rating, #container  .row_boxset,#container  .row_videosource,#container  .row_certification , #container_source  .row_source_rating{
 	padding: 5px 5px 5px 0px;
 	margin: 1px;
 	border: 1px solid white;
@@ -88,7 +88,7 @@
     clear: both;
 }
 
-#container .block, #container .person_block, #container .genre_block, #container .boxset_block,  #container .studio_block, #container .rating_block, #container .videosource_block, #container .certification_block   {
+#container .block, #container .person_block, #container .genre_block, #container .country_block, #container .awards_block, #container .boxset_block,  #container .studio_block, #container .rating_block, #container .videosource_block, #container .certification_block   {
     text-align: center;
     border: 1px solid white;
     float: left;
@@ -139,6 +139,22 @@
 	margin: 4px;
     padding: 4px;	
 }
+#container .country_block {
+	font-size:0.8em;
+    float: left;
+    width: 100px;
+    height: 130px;
+	margin: 4px;
+    padding: 4px;	
+}
+#container .awards_block {
+	font-size:0.8em;
+    float: left;
+    width: 100px;
+    height: 130px;
+	margin: 4px;
+    padding: 4px;	
+}
 #container .studio_block {
 	font-size:0.8em;
     float: left;
@@ -171,7 +187,7 @@
 	margin: 0px;
     padding: 0px;	
 }
-#container .block:hover, #container .genre_block:hover, #container .boxset_block:hover, #container .person_block:hover  {
+#container .block:hover, #container .genre_block:hover, #container .country_block:hover, #container .awards_block:hover, #container .boxset_block:hover, #container .person_block:hover  {
 	border: 1px solid red; 
 	}
 .code
@@ -192,7 +208,13 @@
 	width: 95px;
 	height: 135px;		*/	
 }
-
+.videosource_image {
+	position: absolute;
+	top: 1px;
+	left: 4px;
+	opacity: 0.6;
+	z-index: 7;
+	}
 	
 #container .playbutton {
 	position: relative;
@@ -213,12 +235,25 @@
 	height: 19px;
 	width: 19px;
 	}
+.watched  {
+	position: relative;
+	top: 0px;
+	left: -20px;
+	}
 .country  {
 	position: relative;
 	top: 2px;
-	left: 3px;
+	left: -10px;
 	height: 40px;
 	width: 40px;
+	text-decoration: none;
+	}
+.channels  {
+	position: relative;
+	top: 2px;
+	left: -15px;
+	height: 30px;
+	width: 44px;
 	text-decoration: none;
 	}
 .country a  {
@@ -421,7 +456,7 @@ body {
 	background-color: white;
 	
 	}
-.show_index, .show_index_genre, .show_index_boxset, .show_index_studio, .show_index_rating, .show_index_videosource , .show_index_certification  {
+.show_index, .show_index_genre, .show_index_country, .show_index_awards, .show_index_awards_small, .show_index_boxset, .show_index_studio, .show_index_rating, .show_index_videosource , .show_index_certification  {
 		display: block;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
@@ -451,6 +486,19 @@ body {
 .show_index_genre   {
 		width: 370px;
 		left: 115px;
+	}
+.show_index_country   {
+		width: 370px;
+		left: 115px;
+	}
+.show_index_awards   {
+		width: 370px;
+		left: 115px;
+	}
+.show_index_awards_small   {
+		width: 370px;
+		left: 115px;
+		font-size:0.8em;
 	}
 .show_index_boxset   {
 		width: 370px;
@@ -487,7 +535,7 @@ body {
 		left: 150px;
 		overflow: hidden;
 	}
-.count_return, .count_return_index, .count_return_genre, .count_return_boxset, .count_return_studio, .count_return_rating , .count_return_videosource , .count_return_certification  {
+.count_return, .count_return_index, .count_return_genre, .count_return_country, .count_return_awards, .count_return_boxset, .count_return_studio, .count_return_rating , .count_return_videosource , .count_return_certification  {
 		display: block;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
@@ -515,6 +563,14 @@ body {
 		width: 205px;
 	}
 .count_return_genre {
+		left: 495px;
+		width: 205px;
+	}
+.count_return_country {
+		left: 495px;
+		width: 205px;
+	}
+.count_return_awards {
 		left: 495px;
 		width: 205px;
 	}	
@@ -692,7 +748,7 @@ body {
 	padding-top: 5px;
 }	
 	
-#startlabel, #anylabel, #namelabel, #personlabel, #yearlabel, #genrelabel, #boxsetlabel, #alllabel, #serieslabel, #movielabel, #seasonlabel, #asclabel, #desclabel, #languagelabel, #stylelabel, #skinlabel, #StyleSetted, #SkinSetted, #PlayerSetted, #LangSetted, #NblineSetted, #NewSetted, #playerlabel, #pagelabel, #ribbonlabel, #framelabel, #nbrow, #infobox, #infobox_delete, #watchedlabel, #unwatchedlabel, #watched_and_unwatchedlabel, #new_creationlabel, #new_lastscanlabel, #new_filelabel, #new_label, #old_label {
+#startlabel, #anylabel, #namelabel, #personlabel, #yearlabel, #genrelabel, #countrylabel, #boxsetlabel, #alllabel, #serieslabel, #movielabel, #seasonlabel, #asclabel, #desclabel, #languagelabel, #stylelabel, #skinlabel, #StyleSetted, #SkinSetted, #PlayerSetted, #LangSetted, #NblineSetted, #NewSetted, #playerlabel, #pagelabel, #ribbonlabel, #framelabel, #nbrow, #infobox, #infobox_delete, #infobox_update, #watchedlabel, #unwatchedlabel, #watched_and_unwatchedlabel, #new_creationlabel, #new_lastscanlabel, #new_filelabel, #new_label, #old_label {
 		display: inline;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.05em;
@@ -708,7 +764,7 @@ body {
 		left: 0px;
 		top: 2px;
 	}	
-#infobox, #infobox_delete {
+#infobox, #infobox_delete, #infobox_update {
 	position: absolute; 
 	top: 40px; 
 	width: auto;
@@ -717,6 +773,10 @@ body {
 	visibility: hidden;
 	}
 #infobox_delete {
+	top: 60px; 
+	left: 940px; 
+}
+#infobox_update {
 	top: 60px; 
 	left: 940px; 
 }
@@ -758,7 +818,7 @@ ul#home_left_search, #li_home_left {
 	}
 
 
-#li_all_up, #li_movie_up, #li_series_up, #li_season_up, #li_person_up, #li_genre_up, #li_certification_up, #li_studio_up, #li_search_up, #li_config_up, #li_remote_up, #li_home_left, #li_yamj3_up, #li_genrelist_up {
+#li_all_up, #li_movie_up, #li_series_up, #li_season_up, #li_person_up, #li_genre_up, #li_country_up, #li_certification_up, #li_studio_up, #li_search_up, #li_config_up, #li_remote_up, #li_home_left, #li_yamj3_up, #li_genrelist_up {
 	width: 175px;
 	height:27px;
 	position: absolute;
@@ -792,6 +852,9 @@ ul#home_left_search, #li_home_left {
 	top: 153px;
 	}
  #li_genre_up {
+	top: 183px;
+	}
+ #li_country_up {
 	top: 183px;
 	}
  #li_search_up {
@@ -888,7 +951,7 @@ ul#home_left_search, #li_home_left {
 	background-color:rgba(255, 255, 255, 0.6);
 	}	
 
-#allselect, #movieselect, #serieselect, #seasonselect, #genreindex, #certificationindex, #ratingindex, #videosourceindex, #boxsetindex, #studioindex, #personindex, #searchselect, #configselect, #searchindex, #configindex, #remoteselect, #yamj3select, #genrelistselect
+#allselect, #movieselect, #serieselect, #seasonselect, #genreindex, #countryindex, #awardsindex, #certificationindex, #ratingindex, #videosourceindex, #boxsetindex, #studioindex, #personindex, #searchselect, #configselect, #searchindex, #configindex, #remoteselect, #yamj3select, #genrelistselect
 {
     font-weight: bold;
     color: black;
@@ -902,7 +965,7 @@ ul#home_left_search, #li_home_left {
 
 	
 }
-#personselect, #genreselect, #searchselect, #button_personselect, #button_genreselect, #button_configselect, #button_genreselect_series, #rowselect  {
+#personselect, #genreselect, #countryselect, #searchselect, #button_personselect, #button_genreselect, #button_countryselect, #button_configselect, #button_genreselect_series, #button_countryselect_series, #rowselect  {
 	font-weight: bold;
 	height:21px;
     color: #b0b0b0;
@@ -922,7 +985,11 @@ ul#home_left_search, #li_home_left {
 #genreselect  {
 	width: 120px;
 	}
-
+	
+#countryselect  {
+	width: 120px;
+	}
+	
 #configselect {
 	font-weight: bold;
     color: #b0b0b0;
@@ -933,7 +1000,7 @@ ul#home_left_search, #li_home_left {
 	left: -35px;
 }
 	
-#button_personselect, #button_genreselect, #button_configselect, #button_genreselect_series {
+#button_personselect, #button_genreselect, #button_countryselect, #button_configselect, #button_genreselect_series , #button_countryselect_series{
 	width: 130px;
 	position: absolute;	
 	top: 62px;
@@ -944,14 +1011,20 @@ ul#home_left_search, #li_home_left {
 	left: 150px;
 }
 
+#button_countryselect {
+	left: 150px;
+}
+
 #button_configselect {
 	left: 300px;
 }
 #button_genreselect_series {
 	left: 700px;
 	}
-	
-#language:hover, #nbrow:hover, #allselect:hover, #movieselect:hover, #genreindex:hover, #certificationindex:hover, #ratingindex:hover, #videosourceindex:hover, #boxsetindex:hover, #studioindex:hover, #searchindex:hover, #configindex:hover, #yamj3select:hover, #genrelistselect:hover , #remoteselect:hover, #personindex:hover,  #serieselect:hover, #seasonselect:hover, #personselect:hover, #genreselect:hover, #searchselect:hover, #configselect:hover, #button_genreselect:hover, #button_personselect:hover, #button_configselect:hover, #button_genreselect_series:hover
+#button_countryselect_series {
+	left: 700px;
+	}	
+#language:hover, #nbrow:hover, #allselect:hover, #movieselect:hover, #genreindex:hover, #countryindex:hover, #awardsindex:hover, #certificationindex:hover, #ratingindex:hover, #videosourceindex:hover, #boxsetindex:hover, #studioindex:hover, #searchindex:hover, #configindex:hover, #yamj3select:hover, #genrelistselect:hover , #remoteselect:hover, #personindex:hover,  #serieselect:hover, #seasonselect:hover, #personselect:hover, #genreselect:hover, #countryselect:hover, #searchselect:hover, #configselect:hover, #button_genreselect:hover, #button_countryselect:hover, #button_personselect:hover, #button_configselect:hover, #button_genreselect_series:hover, #button_countryselect_series:hover
 {	
 	color: red;	
 }
@@ -1046,7 +1119,7 @@ ul#home_left_search, #li_home_left {
     width: 45px;
 	height: 45px;
     position: absolute;
-    top: 670px;
+    top: 680px;
 	left: 240px;
 	z-index: 7;
 }
@@ -1058,8 +1131,8 @@ ul#home_left_search, #li_home_left {
     width: 45px;
 	height: 45px;
     position: absolute;
-    top: 2px;
-	left: 10px;
+    top: 8px;
+	left: 12px;
 	border-radius: 4px;
 /*	background:  url(../pictures/play.png) no-repeat;*/
 	z-index: 4;
@@ -1639,57 +1712,94 @@ ul#detail_home_right_icon {
 	list-style: none;
 	z-index:7;
 	}	
-#li_poster_icon, #li_fanart_icon, #li_person_icon, #li_movie_icon, #li_search_icon, #li_remote_icon, #li_selection_icon, #li_mediainfo_icon, #selection_id_icon, #li_delete_icon {
+#li_poster_icon, #li_fanart_icon, #li_person_icon, #li_movie_icon, #li_search_icon, #li_remote_icon, #li_selection_icon, #li_mediainfo_icon, #selection_id_icon, #li_delete_icon, #li_update_icon  {
 	position: absolute;
 	z-index: 99;
 	top: -7px;
 	}
-#li_poster_icon img,  #li_search_icon img, #li_remote_icon img, #li_selection_icon img, #li_mediainfo_icon  img, #li_selection_icon img, #selection_id_icon  img{
+#li_search_icon img{
+	position: absolute;
 	width: 62px;
 	height: 45px;
 	}
-#li_delete_icon img, #li_fanart_icon img, #li_movie_icon img, #li_person_icon img {
+#li_remote_icon img{
+	position: absolute;
+	width: 62px;
+	height: 45px;
+	}
+#selection_id_icon  img{
+	position: absolute;
+	width: 62px;
+	height: 45px;
+	}
+#li_movie_icon img {
+	position: absolute;
+	width: 64px;
+	height: 55px;
+	}
+#li_person_icon img {
+	position: absolute;
 	width: 64px;
 	height: 55px;
 	}	
-#li_poster_icon {
-	top: -5px;
-	left: -20px;
+#li_update_icon img {
+	position: absolute;
+	width: 55px;
+	height: 60px;
 	}
-#li_mediainfo_icon{
-	top: -9px;
-	left: 15px;
-	}
-#li_person_icon {
-	left: 70px;
-	}
-#li_movie_icon {
-	top: -5px;
-	left: 155px;
-	}
-#li_fanart_icon {
-	left: 225px;
-	}	
-#li_selection_icon {
-	top: -15px;
-	left: 340px;
-	}
-#li_delete_icon {
-	left: 285px;
-	}
-#selection_id_icon {
-	top: 20px;
-	left: 360px;
+#li_delete_icon img {
+	position: absolute;
+	width: 75px;
+	height: 65px;
 	}
 #li_poster_icon  img {
+	position: absolute;
 	width: 55px;
 	height: 55px;
 	}	
 #li_mediainfo_icon  img {
+	position: absolute;
 	width: 60px;
 	height: 60px;
 	}
-#fanartshow_icon, #editshow_icon, #mediainfoshow_icon, #movieshow_icon, #personshow_icon, #selectionshow_icon, #deleteshow_icon {
+#li_poster_icon {
+	top: -5px;
+	left: -35px;
+	}
+#li_mediainfo_icon{
+	top: -9px;
+	left: 20px;
+	}
+#li_person_icon {
+	left: 77px;
+	}
+#li_movie_icon {
+	top: -5px;
+	left: 135px;
+	}
+#li_fanart_icon {
+	top: -12px;
+	left: 200px;
+	}	
+#li_selection_icon {
+	top: -22px;
+	left: 355px;
+	}
+#li_delete_icon {
+	top: -12px;
+	left: 245px;
+	}
+#li_update_icon {
+	left: 305px;
+	}
+#selection_id_icon {
+	top: 25px;
+	left: 355px;
+	}
+
+#fanartshow_icon, #editshow_icon, #mediainfoshow_icon, #movieshow_icon, #personshow_icon, #selectionshow_icon, #deleteshow_icon, #updateshow_icon {
+	position: absolute;
+	top: 60px;
 	visibility: hidden;
 	font-size:1.0em;
 	font-weight: bold;
@@ -1699,6 +1809,10 @@ ul#detail_home_right_icon {
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
+	}
+#selectionshow_icon {
+	top: 75px;
+	left: -34px;
 	}
 #detail_home_left:hover {
 	background-color:rgba(255, 255, 255, 0.6);
@@ -1851,13 +1965,13 @@ ul#detail_home_left img, ul#detail_home_right img
 {
     display: block;
 	height: auto;
-    width: 946px;
+    width: 935px;
 	position: relative;
 	left: 0px;
 	font-size:1.8em;
 	font-weight: bold;
     text-align: center;
-	margin: -8px 0px 0px -3px;
+	margin: 0px;
 	padding: 0px;
 	background-color:rgba(0, 0, 0, 0.2);
 	border: 2px solid #b0b0b0;	
@@ -1882,22 +1996,55 @@ ul#detail_home_left img, ul#detail_home_right img
 	z-index: 0;
 	}
 .header_title {
-    padding:1px 1px 1px 75px;
+	position: relative;
+	top: -5px;
+    padding-left:75px;
 	font-size: 1.0em;
 	}
-.header_year {
-    padding-top:1px;
-	font-size:0.8em;
-	margin:1px -10px 5px -10px;
+.header_title_frame {
+	position: relative;
+	top: 0px;
+    padding:0px 5px 0px 5px;
+	font-size: 1.0em;
 	}	
-.header_id , .lastid {
+.lastid {
     padding-top:1px;
 	font-size:0.8em;
 	margin:1px 0px 5px -6px;
 	}	
+.header_id {
+	display: none;
+	}
+.header_id_frame{
+	position: relative;
+	font-size: 0.8em;
+	left: -2px;
+	}
 .header_text{
 	font-size:0.8em;
 	margin:-5px 0px 5px 0px;
+	}
+.header_text_frame{
+	font-size:0.8em;
+	margin:-7px;
+	}
+.header_year {
+	font-size: 0.8em;
+	position:relative;
+	top: -7px;
+	left:-8px;
+	}
+.header_year_frame {
+	font-size: 0.8em;
+	position:relative;
+	top: 0px;
+	left:0px;
+	}
+.header_runtime {
+	font-size: 0.8em;
+	position:relative;
+	top: -7px;
+	left:-20px;
 	}
 .id  {
     float: left;
@@ -2044,7 +2191,7 @@ text {
 	position: relative;
 	left: 5px;
 	}	
-.videosource, .fps, .codec, .resolution, .audio, .subtitle, .rating, .runtime, .filepath, .stage_fileId, #filepath {
+.videosource, .fps, .codec, .resolution, .audio, .subtitle, .awards, .rating, .runtime, .filepath, .stage_fileId, #filepath {
 	width: auto;
 	max-width: 770px;
 	display: block;
@@ -2084,7 +2231,7 @@ text {
 .test {
 	display: none;
 	}
-.genres a {
+.genres a{
 	text-decoration: none;
 	color: white;
 	}

@@ -51,7 +51,7 @@
 // ******************************************** COMMON RESULTS MAPPING **********************************			
 			// from jsonUrl
 			var DETAIL_HEADER = {
-							'span.header_title': function (arg) {
+							'span.header_title_frame': function (arg) {
 								season_title = arg.context.result.title;
 								if (indextype.toLowerCase() == 'season')
 								{
@@ -59,8 +59,8 @@
 								return arg.context.result.title + ' '+season_label+': '+ arg.context.result.season;
 								} else {return arg.context.result.title;}
 							},
-							'span.header_year': 'result.videoYear',
-							'span.header_id': function (arg) {
+							'span.header_year_frame': 'result.videoYear',
+							'span.header_id_frame': function (arg) {
 									if (indextype.toLowerCase() == 'series')   
 										{ 
 										store_SeriesId (arg.context.result.id);   // store the series id for next navigation 
@@ -584,7 +584,7 @@
     <body onload="getData();" >
 	
 	<!-- show the close button , allow to close the frame  -->
-	<div id="close_icon" style="position: absolute;	top: 2px; left: 913px; z-index: 10;" onclick="close_frame()"><img src="./pictures/close2.png" /></div>
+	<div id="close_icon" style="position: absolute;	top: 9px; left: 905px; z-index: 10;" onclick="close_frame()"><img src="./pictures/close2.png" /></div>
 
 	<!--  header for movie/series name -->
 		<div class="header_frame" >
@@ -593,11 +593,11 @@
 	
 					<td width="950px"  >
 					<!--	<span class="header_type" ></span> -->
-						<span class="header_title" ></span>
-						<span class="header_text" > (</span>
-						<span class="header_year" ></span>
-						<span class="header_text">) id:</span>
-						<span class="header_id" ></span>
+						<span class="header_title_frame" ></span>
+						<span class="header_text_frame" > (</span>
+						<span class="header_year_frame" ></span>
+						<span class="header_text_frame">) id:</span>
+						<span class="header_id_frame" ></span>
 					</td>
 				</tr>
 			</table>

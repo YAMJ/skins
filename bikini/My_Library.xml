@@ -46,7 +46,7 @@
 	<player>
 		<playername>PC-JLUC</playername>
 		<playertype>PC</playertype>
-		<playeradress>192.168.1.28</playeradress>
+		<playeradress>192.168.1.18</playeradress>
 		<path>
 			<sourcepath>W:</sourcepath>
 			<targetpath>file:///W:</targetpath>

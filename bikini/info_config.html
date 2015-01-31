@@ -83,6 +83,7 @@
 			document.getElementById("styleSetted").innerHTML="current Style: " + window.localStorage.getItem("Style");
 			document.getElementById("langSetted").innerHTML="current Language: " + window.localStorage.getItem("Lang");
 			document.getElementById("prefered_pageSetted").innerHTML="current Prefered Page: " + window.localStorage.getItem("prefered_page");
+			document.getElementById("configindex").innerHTML=config_select.toUpperCase();
 		}
 		
  		</script>
@@ -118,7 +119,11 @@
 								</tr>
 							</table>
 		</div>
-		
+		<div>
+			<a href="javascript:close_info_config (); ouvre_config_page(StyleValue)">
+				<img src="pictures/icon/settings.png" height="80px" width="100px" style="padding-left:5px" alt="setting" />
+			</a><div id="configindex"></div>
+		</div>
 	</div>
 	
 

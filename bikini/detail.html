@@ -91,6 +91,11 @@
 										}
 								return arg.context.result.id;
 								}, 
+							'span.header_runtime': function (arg) {
+								if (arg.context.result.files[0].runtime)
+									{return   arg.context.result.files[0].runtime ;}
+									else {return no_text.toUpperCase(); }
+							},
 							"img.watched@src": function(arg)
 								{
 									if (arg.context.result.watched) 
@@ -107,13 +112,17 @@
 								},
 							'span.country': function(arg)
 							{
-								if (arg.context.result.country) 
+								if (arg.context.result.countries) 
 								{
-								return  "<a href=\"#\" ><img class='country' src='pictures/flags/" + arg.context.result.country.toLowerCase() + ".png' alt=\"" + arg.context.result.country + "\" /></a>";	
+								return  "<a href=\"javascript:call_countryselect('" + arg.context.result.countries[0].name + "')\" ><img class='country' src='pictures/flags/" + arg.context.result.countries[0].name.toLowerCase() + ".png' alt=\"" + arg.context.result.countries[0].name + "\" /></a>";	
 								}
 								else {return;}
-							}
-
+							}, 
+							'img.channels@src': function(arg)
+								{
+									if (arg.context.result.files[0].audioCodecs[0].channels)
+									{return "./pictures/audio/" + arg.context.result.files[0].audioCodecs[0].channels +".png";}
+								}
 						
 						};
 			// from jsonUrl		
@@ -123,7 +132,7 @@
 							if (arg.context.result.cast) {
 								if (arg.context.result.cast.DIRECTOR)
 									{
-										return "<text>DIRECTOR:</text>" + "<a href=\"#\" onclick=\"open_person_popup('" + arg.context.result.cast.DIRECTOR[0].id + "', 'close')\" class=\"actors\">" + arg.context.result.cast.DIRECTOR[0].name +"</a>";
+										return "<text>" + director_label.toUpperCase() + "</text>" + "<a href=\"#\" onclick=\"open_person_popup('" + arg.context.result.cast.DIRECTOR[0].id + "', 'close')\" class=\"actors\">" + arg.context.result.cast.DIRECTOR[0].name +"</a>";
 									} else { return ;}
 								}
 							},
@@ -132,8 +141,8 @@
 							if (arg.context.result.cast) {
 								if (arg.context.result.cast.WRITER)
 									{
-										return "<text>WRITER:</text>" + "<a href=\"#\" onclick=\"open_person_popup('" + arg.context.result.cast.WRITER[0].id + "', 'close')\" class=\"actors\">" + arg.context.result.cast.WRITER[0].name +"</a>";
-									}	else  { return "<text>WRITER:</text> no writer"; }
+										return "<text>" + writer_label.toUpperCase() + "</text>" + "<a href=\"#\" onclick=\"open_person_popup('" + arg.context.result.cast.WRITER[0].id + "', 'close')\" class=\"actors\">" + arg.context.result.cast.WRITER[0].name +"</a>";
+									}	else  { return "<text>" + writer_label.toUpperCase() + ":</text> no writer"; }
 								}
 							},
 				'span.actors': function(arg) 
@@ -142,7 +151,7 @@
 								if (arg.context.result.cast.ACTOR)
 									{
 										var Actors = arg.context.result.cast.ACTOR; 
-										var output_actors = "<text>ACTORS:</text>";
+										var output_actors = "<text>" + actor_label.toUpperCase() + "</text>";
 										
 										for (i = 0; i < Actors.length; i++) 
 											{
@@ -150,7 +159,7 @@
 											}
 										
 										return output_actors;
-									} else { return "<text>ACTORS:</text> no actor"; }
+									} else { return "<text>" + actor_label.toUpperCase() + "</text> no actor"; }
 								}
 							},	
                 'span.plot1': function(arg) {
@@ -400,9 +409,32 @@
 										return "./pictures/tvshow-off.png";
 											break;	
 									};
-                            }
-				
-			
+                            }, 
+				'span.videosource_image': function (arg) 
+							{
+								switch(arg.context.result.videoType.toLowerCase())
+									{
+										case 'season':
+											return "";
+											break;
+										case 'episode':
+											return "";
+											break;
+										case 'movie':	
+										if (arg.context.result.files[0].videoSource) {
+											if (arg.context.result.files[0].videoSource.toLowerCase() === '3d') {
+													return "<embed src='./pictures/videosource/animation_" + arg.context.result.files[0].videoSource.toLowerCase() + ".swf' width='150' height='125' />";
+												} else {
+													return "<img src='./pictures/videosource/videosource_" + arg.context.result.files[0].videoSource.toLowerCase() + ".png' />";}
+												
+											} else {return "<img src='./pictures/videosource/videosource_unknown.png' />";}
+											break;
+										case 'series':
+										return "";
+											break;	
+									};
+							}
+
             };
 			// display media info
 			var MEDIA_INFO = {
@@ -416,8 +448,8 @@
 							},
 							'span.stage_fileId': function (arg) {
 							stage_file_Id = arg.context.result.files[0].fileId;
-							return "<text>Stage_File Id</text>"+  arg.context.result.files[0].fileId ;
-							},
+							return "<text>Stage_File Id</text>"+  arg.context.result.files[0].fileId + "&nbsp;&nbsp;&nbsp;<text>Video Id</text>"  + arg.context.result.id;
+							}, 
 							'span.videosource': function (arg) {
 							if (arg.context.result.files[0].videoSource) {
 							return "<text>"+source_label.toUpperCase()+"</text>" + "<img src='pictures/videosource/thumb-"+ arg.context.result.files[0].videoSource.toLowerCase() + ".png' alt=\""+ arg.context.result.files[0].videoSource + "\" height=\"20px\" onclick=\"javascript:call_videosourceselect('" + arg.context.result.files[0].videoSource + "')\" />";
@@ -450,7 +482,7 @@
 									{output = output + "<img src=\"pictures/flags/" + audio[i].language.toLowerCase() +".png\" alt=\"" + audio[i].language + "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp; ";}
 								}
 								return output;
-								} else {output = "<text>Audio</text> No Audio";}
+								} else {output = "<text>" + audio_label.toUpperCase() + "</text>" + no_text.toUpperCase();}
 							}, 
 							'span.subtitle': function(arg)
 							{
@@ -463,7 +495,20 @@
 									output = output + "<text>"+subtitle_label.toUpperCase()+(i+1)+"</text>" + "<img src=\"pictures/flags/" + subtitle[i].language.toLowerCase() +".png\" alt=\"" + subtitle[i].language + "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp; ";
 								}
 								return output;
-								} else {output = "<text>Subtitle</text> No Subtitle";}
+								} else {return "<text>"+ subtitle_label.toUpperCase() + "</text>" + no_text.toUpperCase();}
+							},
+							'span.awards': function(arg)
+							{
+								var awards = arg.context.result.awards;
+								if (awards)
+								{
+								var output = "<text>" + awards_label.toUpperCase() + "("+ awards.length +")</text>" ;
+								// loop thru the list of awards
+								for (i = 0; i < awards.length; i++) {
+									output = output + awards[i].event + "(" + awards[i].year + "):" + awards[i].category +";" ;
+								}
+								return output;
+								} else {return "<text>" + awards_label.toUpperCase() + "</text> "+ no_text.toUpperCase();}
 							}
 				//			'span.studio': function(arg)
 				//			{
@@ -541,9 +586,7 @@
 				get_player();
 				get_alpha_list (); 
 				// construct JSON request for detail movie/series/season 
-				if (index_type.toLowerCase() == "movie")
-				{jsonUrl = "/yamj3/api/video/" + index_type.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot,country,files,certification,studio,rating&jobs=actor-5,director-1,writer-1";}
-				else {jsonUrl = "/yamj3/api/video/" + index_type.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot,files,certification,studio,rating&jobs=actor-5,director-1,writer-1";}
+				jsonUrl = "/yamj3/api/video/" + index_type.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot,country,award,files,certification,studio,rating&jobs=actor-5,director-1,writer-1";
 				console.log("getData URL: " + jsonUrl);
 		
 					
@@ -608,7 +651,8 @@
 		//	document.getElementById("mediainfoshow").innerHTML=mediainfo_show.toUpperCase();
 		//	document.getElementById("mediainfoshow").innerHTML="MEDIA-INFO";
 			document.getElementById("mediainfoshow_icon").innerHTML="MEDIAINFO";
-			document.getElementById("deleteshow_icon").innerHTML="DELETE";
+			document.getElementById("deleteshow_icon").innerHTML=delete_text.toUpperCase();
+			document.getElementById("updateshow_icon").innerHTML=update_label.toUpperCase();
 			
 			switch (index_type.toLowerCase()) 
 							{
@@ -645,7 +689,10 @@
 			document.getElementById("certificationindex").innerHTML=certification_label.toUpperCase();
 			document.getElementById("ratingindex").innerHTML=rating_label.toUpperCase();
 			document.getElementById("videosourceindex").innerHTML=source_label.toUpperCase();
-			document.getElementById("boxsetindex").innerHTML=boxset_label.toUpperCase();
+			document.getElementById("boxsetindex").innerHTML=boxset_label.toUpperCase(); 
+			document.getElementById("countryindex").innerHTML=country_label.toUpperCase();
+			document.getElementById("awardsindex").innerHTML=awards_label.toUpperCase();
+			
 		}
 		
   // ********************* NOW SET VARIOUS FUNCTION **********************************************  
@@ -1205,6 +1252,13 @@
             console.log("call_genreselect Storing value: Genre name: " +genrename);
 			window.location.href="index_Genre.html";
 		}
+	// country is activ and open genre index menu with the genre selected 
+	function call_countryselect(countryname)
+        {
+			localStorage.setItem("Country_name", countryname);
+            console.log("call_countryselect Storing value: Country name: " +countryname);
+			window.location.href="index_Country.html";
+		}
 	// certification list is activ and open certification index menu with the certification selected 
 	function call_certificationselect(certificationvalue, certificationid)
         {
@@ -1365,6 +1419,15 @@
 				console.log("getData URL: " + jsonDeleteUrl);
 		PopDelete(stage_file_Id, current_title)
 		}
+	function ouvre_popup_update ()
+		{
+		console.log("detail ouvre_popup_update stage_file_Id:" + stage_file_Id);
+		// construct JSON request to update movie/series/season from the stage_file with stage_file_Id
+		
+				jsonDeleteUrl = "/yamj3/api/file/update/" + stage_file_Id;
+				console.log("getData URL: " + jsonDeleteUrl);
+		PopUpdate(stage_file_Id, current_title)
+		}
 	function ouvre_popup_ignore (artwork_type, located_id)
 		{
 		console.log("detail ouvre_popup_ignore located_Id:" + located_id);
@@ -1375,6 +1438,18 @@
 		PopIgnore(artwork_type, located_id)
 		}
 	function delete_stage_file_Id ()
+		{
+        // main API call         
+                $.ajax({
+                    url: jsonDeleteUrl,
+                    async: false,
+                   dataType: 'jsonp',
+                   'success': function(data)
+                    {
+					}
+				})
+		}
+	function update_stage_file_Id ()
 		{
         // main API call         
                 $.ajax({
@@ -1547,6 +1622,8 @@
 										<img src="pictures/icon/icon_person.png"></img><div id="personshow_icon"></div></a></li>	
 									<li><a id="li_delete_icon" href="javascript:ouvre_popup_delete();" onmouseover="javascript:document.getElementById('deleteshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('deleteshow_icon').style.visibility='hidden'">
 										<img src="pictures/icon/delete.png"></img><div id="deleteshow_icon"></div></a></li>	
+									<li><a id="li_update_icon" href="javascript:ouvre_popup_update();" onmouseover="javascript:document.getElementById('updateshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('updateshow_icon').style.visibility='hidden'">
+										<img src="pictures/icon/update.png"></img><div id="updateshow_icon"></div></a></li>	
 									
 							<!--		<li><a id="li_person_ribbon" href="javascript:ouvre_popup_person_ribbon()">
 										<div id="person_ribbon"></div></a></li>	 -->
@@ -1564,7 +1641,8 @@
 									</li>	
 								
 							</ul>
-					<button id="infobox_delete" onclick="javascript:start_delete ()"></button>		
+					<button id="infobox_delete" onclick="javascript:start_delete ()"></button>	
+					<button id="infobox_update" onclick="javascript:start_update ()"></button>
         </div>
 
 	<!-- left menu with icon -->
@@ -1597,6 +1675,14 @@
 				<li><a href="javascript:call_genreindex(index_type, 'false')">
 							<img src="pictures/icon/home_genres2_rv8.png" height="80px"  width="80px" alt="genre" />
 						</a><div id="genreindex"></div>
+				</li>
+				<li><a href="javascript:call_countryindex(index_type, 'false')">
+							<img src="pictures/icon/home_country_rv8.png" height="80px"  width="80px" alt="country" />
+						</a><div id="countryindex"></div>
+				</li>
+				<li><a href="javascript:call_awardsindex(index_type, 'false')">
+							<img src="pictures/icon/home_awards_rv8.png" height="80px"  width="80px" alt="awards" />
+						</a><div id="awardsindex"></div>
 				</li>
 				<li><a href="javascript:ouvre_popup_search(StyleValue)">
 							<img src="pictures/icon/find.png" height="60px" width="65px" style="padding-left:10px" alt="find" />
@@ -1648,12 +1734,16 @@
 				<tr>
 					<td>
 						<span class="header_title" ></span>
-						<span class="header_text" > (</span>
+				
+						<img src="pictures/icon/year.png" width="30px" style="position:relative; top: 0px; "/>
 						<span class="header_year" ></span>
-						<span class="header_text">) id:</span>
 						<span class="header_id" ></span>
+						<img src="pictures/icon/duration.png" width="30px" style="position:relative; top: 0px; left: -10px;"/>
+						<span class="header_runtime" ></span>
+						<span class="header_text"> </span>
 						<a href="#"><img class="watched" src="" onclick=""/></a>
 						<span class="country" ></span>
+						<img class="channels" src=""></img>
 					</td>
 				</tr>
 			</table>
@@ -1731,6 +1821,9 @@
 								<a id="nextBanner"><img src="./pictures/next.png" /></a>
 								<a id="prevBanner"><img src="./pictures/previous.png" /></a>
                         </td>
+						
+					<!-- source image -->
+							<span class="videosource_image"></span>
 					</tr>
 			<!-- split table for image and text --> 
 			<!-- add class for each object in the detail section of yamj-style.css -->
@@ -1816,6 +1909,9 @@
 				</tr>
 				<tr>
 					<td><span class="subtitle"></span></td>
+				</tr>
+				<tr>
+					<td><span class="awards"></span></td>
 				</tr>
 			</table>
 					

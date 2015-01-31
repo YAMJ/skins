@@ -105,6 +105,7 @@
 					x=xmlDoc.getElementsByTagName('lang');
 					i=0;
 
+					actor_label=(x[i].getElementsByTagName("actorlabel")[0].childNodes[0].nodeValue);
 					all_label=(x[i].getElementsByTagName("alllabel")[0].childNodes[0].nodeValue);
 					all_genre=(x[i].getElementsByTagName("allgenre")[0].childNodes[0].nodeValue);
 					all_select=(x[i].getElementsByTagName("allselected")[0].childNodes[0].nodeValue);
@@ -112,12 +113,17 @@
 					any_label=(x[i].getElementsByTagName("anylabel")[0].childNodes[0].nodeValue);
 					asc_label=(x[i].getElementsByTagName("ascending")[0].childNodes[0].nodeValue);
 					audio_label=(x[i].getElementsByTagName("audiolabel")[0].childNodes[0].nodeValue);
+					awards_label=(x[i].getElementsByTagName("awardslabel")[0].childNodes[0].nodeValue);
 					blue_label=(x[i].getElementsByTagName("bluelabel")[0].childNodes[0].nodeValue);
 					boxset_label=(x[i].getElementsByTagName("boxsetlabel")[0].childNodes[0].nodeValue);
 					certification_label=(x[i].getElementsByTagName("certificationlabel")[0].childNodes[0].nodeValue);
 					close_remote_label=(x[i].getElementsByTagName("closeremotelabel")[0].childNodes[0].nodeValue);
 					config_select=(x[i].getElementsByTagName("configselected")[0].childNodes[0].nodeValue);
+					country_label=(x[i].getElementsByTagName("countrylabel")[0].childNodes[0].nodeValue);
+					country_select=(x[i].getElementsByTagName("countryselected")[0].childNodes[0].nodeValue);
+					delete_text=(x[i].getElementsByTagName("deletetext")[0].childNodes[0].nodeValue);
 					desc_label=(x[i].getElementsByTagName("descending")[0].childNodes[0].nodeValue);
+					director_label=(x[i].getElementsByTagName("directorlabel")[0].childNodes[0].nodeValue);
 					down_label=(x[i].getElementsByTagName("downlabel")[0].childNodes[0].nodeValue);
 					eject_label=(x[i].getElementsByTagName("ejectlabel")[0].childNodes[0].nodeValue);
 					enter_label=(x[i].getElementsByTagName("enterlabel")[0].childNodes[0].nodeValue);
@@ -144,6 +150,7 @@
 					name_label=(x[i].getElementsByTagName("namelabel")[0].childNodes[0].nodeValue);
 					next_remote_label=(x[i].getElementsByTagName("nextremotelabel")[0].childNodes[0].nodeValue);
 					nbofrow=(x[i].getElementsByTagName("nbrow")[0].childNodes[0].nodeValue);
+					no_text=(x[i].getElementsByTagName("notext")[0].childNodes[0].nodeValue);
 					nobiography_text=(x[i].getElementsByTagName("nobiography")[0].childNodes[0].nodeValue);
 					noplot_text=(x[i].getElementsByTagName("noplot")[0].childNodes[0].nodeValue);
 					nobirthday_text=(x[i].getElementsByTagName("nobirthday")[0].childNodes[0].nodeValue);
@@ -187,6 +194,7 @@
 					title_label=(x[i].getElementsByTagName("titlelabel")[0].childNodes[0].nodeValue);
 					tv_mode_label=(x[i].getElementsByTagName("tvmodelabel")[0].childNodes[0].nodeValue);
 					unwatched_select=(x[i].getElementsByTagName("unwatchedselect")[0].childNodes[0].nodeValue);
+					update_label=(x[i].getElementsByTagName("updatelabel")[0].childNodes[0].nodeValue);
 					up_label=(x[i].getElementsByTagName("uplabel")[0].childNodes[0].nodeValue);
 					video_label=(x[i].getElementsByTagName("videolabel")[0].childNodes[0].nodeValue);
 					volumedown_label=(x[i].getElementsByTagName("volumedownlabel")[0].childNodes[0].nodeValue);
@@ -194,6 +202,7 @@
 					year_label=(x[i].getElementsByTagName("yearlabel")[0].childNodes[0].nodeValue);
 					yellow_label=(x[i].getElementsByTagName("yellowlabel")[0].childNodes[0].nodeValue);
 					watched_select=(x[i].getElementsByTagName("watchedselect")[0].childNodes[0].nodeValue);
+					writer_label=(x[i].getElementsByTagName("writerlabel")[0].childNodes[0].nodeValue);
 					zoom_label=(x[i].getElementsByTagName("zoomlabel")[0].childNodes[0].nodeValue);
 
 				// now set local lang usage depending of each file

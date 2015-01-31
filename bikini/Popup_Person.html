@@ -94,16 +94,16 @@
 						'span.filmography': function(arg)
 						{
 							var filmography_list = arg.context.result.filmography;
-							var output = filmography_label +":<br>";
+							var output = temp_output = "<table id='filmography_table'><tr><td border='2px' width='50px'>" + year_label + "</td><td border='2px' width='500px'>" + title_label + "</td><td border='2px' width='500px'>job</td></tr></table>";
 							if (arg.context.result.filmography) {
 							// loop thru the list of filmography
 							for (i = 0; i < filmography_list.length; i++)
 							{
 								if (filmography_list[i].role)
 									{
-										temp_output = filmography_list[i].year + " - " + filmography_list[i].title + " - " + filmography_list[i].job.substring(0,1).toUpperCase() + filmography_list[i].job.substring(1).toLowerCase() + " (" + filmography_list[i].role.italics() +")<br>";
+										temp_output = "<table border='2px' style='background-color: rgb(197,197,197);text-align: center; '><tr><td border='2px' width='50px'>" + filmography_list[i].year + "</td><td border='2px' width='500px'>" + filmography_list[i].title + "</td><td border='2px' width='500px'>" + filmography_list[i].job.substring(0,1).toUpperCase() + filmography_list[i].job.substring(1).toLowerCase() + " (" + filmography_list[i].role.italics() +")</td></tr></table>";
 									} else {
-										temp_output = filmography_list[i].year + " - " + filmography_list[i].title + " - " + filmography_list[i].job.substring(0,1).toUpperCase() + filmography_list[i].job.substring(1).toLowerCase() + "<br>";
+										temp_output = "<table border='2px' style='background-color: rgb(197,197,197); text-align: center;'><tr><td border='2px' width='50px'>" + filmography_list[i].year + "</td><td border='2px' width='500px'>" + filmography_list[i].title + "</td><td border='2px' width='500px'>" + filmography_list[i].job.substring(0,1).toUpperCase() + filmography_list[i].job.substring(1).toLowerCase() + "</td></tr></table>";
 										}
 								output = output +  temp_output;
 							}

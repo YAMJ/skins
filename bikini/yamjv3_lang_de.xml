@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <lang>
+	<actorlabel>spieler</actorlabel>
 	<alllabel>alle</alllabel> 
 	<allgenre>alle</allgenre>
 	<allselected>film und serie</allselected>
@@ -7,6 +8,7 @@
 	<anylabel>enthält</anylabel>
 	<ascending>aufsteigend</ascending>
 	<audiolabel>audio</audiolabel>
+	<awardslabel>auscheiznungen</awardslabel>
 	
 	<bluelabel>blau</bluelabel>
 	<boxsetlabel>satz</boxsetlabel>
@@ -14,8 +16,12 @@
 	<certificationlabel>bescheinigung</certificationlabel>
 	<closeremotelabel>nahe fern</closeremotelabel>
 	<configselected>konfiguration</configselected>
+	<countrylabel>land</countrylabel>
+	<countryselected>land</countryselected>
 	
+	<deletetext>loschen</deletetext>
 	<descending>absteigend</descending>
+	<directorlabel>regisseur</directorlabel>
 	<downlabel>niedrig</downlabel>
 	
 	<ejectlabel>auswerfen</ejectlabel>
@@ -54,6 +60,7 @@
 	<nobirthday>Geburtsdatum unbekannt</nobirthday>
 	<noplot>keine synopse vorhanden</noplot>
 	<noposter>kein poster</noposter>
+	<notext>keine</notext>
 	
 	
 	<pagelabel>seite</pagelabel>
@@ -105,7 +112,11 @@
 	<volumeuplabel>vol+</volumeuplabel>
 	
 	<unwatchedselect>nicht gesehen</unwatchedselect>
+	<uplabel>nach oben</uplabel>
+	<updatelabel>aktualisierung</updatelabel>
+	
 	<watchedselect>gesehen</watchedselect>
+	<writerlabel>schriftsteller</writerlabel>
 	
 	<yearlabel>jahr</yearlabel>
 	<yellowlabel>gelb</yellowlabel>

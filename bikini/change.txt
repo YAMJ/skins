@@ -1,4 +1,21 @@
 change.txt
+V1.3.5
+- add 3D animation on detail page 
+- add videosource logo on detail page 
+- translate director, actor, writer, delete, update, no, awards, ....
+- add config icon to open the config page directly from config info frame 
+- modify filmography to display as table
+- add country list (list of country) 
+- add country selection by index
+- add awards list (list of awards) 
+- add awards selection by index 
+- add awards display in mediainfo detail page 
+- modify country fix in API for series 
+- fix no subtitle display
+- add update function in detail page 
+- adjust info line in detail page (add runtime, icon, channels, and suppress id) 
+- add video id in detail page, media info tag
+- adjust title in info frame from index page 
 V1.3.4
 - modify the function hover on the left menu
 - add index New to the prefered page 

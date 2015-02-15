@@ -1,10 +1,10 @@
 /**************** container ************************/
 #container, #container_source {
-    width: 1333px;
+    width: 99.3%;
 	position: absolute;
 	top: 40px;
 /*	border: 1px solid black;*/
-	height: 730px;
+	height: 100%;
 	left: 8px;
 	overflow-y: auto;
 	z-index: 7;
@@ -55,8 +55,8 @@
     border: 1px solid white;
     margin: 0px;
 	background-color: gainsboro;
-	height: 726px;
-	overflow-y: auto;
+/*	height: 726px;
+	overflow-y: auto; */
 /* NOW SETTED INSIDE INDEX.html depending of the the number of ROW stored inside config */	
 /* if 12 posters per page, 2 rows 6 columns */	
     padding: 5px 5px 0px 0px; 
@@ -90,15 +90,19 @@
 
 #container .block, #container .person_block, #container .genre_block, #container .country_block, #container .awards_block, #container .boxset_block,  #container .studio_block, #container .rating_block, #container .videosource_block, #container .certification_block   {
     text-align: center;
-    border: 1px solid white;
+	border-right: 5px solid grey;
+	border-bottom: 1px solid grey;
+	border-top: 1px solid grey;
+	border-left: 1px solid grey;
+	border-radius: 9px;
     float: left;
     overflow: hidden;
     background-color: whitesmoke;
 /* NOW SETTED INSIDE INDEX.html depending of the the number of ROW stored inside config */		
 /* if 12 posters per page, 2 rows 6 columns */
-    width: 175px;
-    height: 290px; 
-	margin: 0px;
+    width: 10vw;
+    height: 17.2vw; 
+	margin: 1px;
     padding: 0px;	
 /* if 27 posters per page, 3 rows 9 columns 
     height: 225px;	
@@ -188,7 +192,7 @@
     padding: 0px;	
 }
 #container .block:hover, #container .genre_block:hover, #container .country_block:hover, #container .awards_block:hover, #container .boxset_block:hover, #container .person_block:hover  {
-	border: 1px solid red; 
+/*	border: 1px solid red; */
 	}
 .code
 {
@@ -199,8 +203,12 @@
 #container .poster {
 /* NOW SETTED INSIDE INDEX.html depending of the the number of ROW stored inside config */	
 /* if 12 posters per page, 2 rows 6 columns */
-    width: 160px;
-	height: 240px;	
+    width: 100%;
+	height: 85%;	
+	position: relative;
+	top: 0%;
+	left: 0%;
+	border-radius: 9px 5px 0px 0px;
 /* if 27 posters per page, 3 rows 9 columns 	
 	width: 127px;
 	height: 190px;	*/
@@ -208,6 +216,7 @@
 	width: 95px;
 	height: 135px;		*/	
 }
+
 .videosource_image {
 	position: absolute;
 	top: 1px;
@@ -218,22 +227,24 @@
 	
 #container .playbutton {
 	position: relative;
-	top: -30px;
-	height: 25px;
-	width: 29px;
+	height: 11%;
+	width: 21%;
+	top: -2.9vw;
+	left: -11%;
 	}
 #container .infobutton {
 	position: relative;
-	top: -30px;
-	height: 25px;
-	width: 25px;
+	top: -2.8vw;
+	height: 11%;
+	width: 19%;
+	left: -3%;
 	}	
 .watched_small  {
 	position: relative;
-	top: -33px;
-	left: 3px;
-	height: 19px;
-	width: 19px;
+	top: -3vw;
+	left: 10%;
+	height: 9.5%;
+	width: 16%;
 	}
 .watched  {
 	position: relative;
@@ -250,9 +261,9 @@
 	}
 .channels  {
 	position: relative;
-	top: 2px;
+	top: -1px;
 	left: -15px;
-	height: 30px;
+	height: 29px;
 	width: 44px;
 	text-decoration: none;
 	}
@@ -265,11 +276,16 @@
 	}
 	
 #container .title {
+	display: inline-block;
 	overflow: hidden;
 	text-align: center;
 	vertical-align: top;
 	position: relative;
-	top: -30px;
+	width: 100%;
+	height: 13%;
+	top: -110%;
+	line-height: 110%;
+	left: 0%;
 /* NOW SETTED INSIDE INDEX.html depending of the the number of ROW stored inside config */		
 /* if 12 posters per page, 2 rows 6 columns */
 	font-size:0.8em; 
@@ -318,6 +334,14 @@ body {
 	overflow: hidden;
 
 }
+#my_left_menu {
+	width: 2%;
+	height: 100%;
+	position:absolute; 
+	top: 0px;
+	left: 0px;
+	z-index:99;
+	}
 
 /****************** scrollbar settings *************************************************/
 
@@ -357,17 +381,19 @@ body {
 
 .index_header {
 	border:2px solid grey;
-	width: 1330px;
+	width: 99%;
 	padding-bottom: 0px;
 	top: 0px;
 	position: absolute;
 	height: 35px;
+	right: 0.1%;
 	}
 	
 #logo_index
 {
     height: 33px;
-    width: 1290px;
+/*    width: 1290px; */
+	width: 100%;
     text-align: center;
 	border: none;
 	vertical-align: top;
@@ -389,45 +415,71 @@ body {
 {
 	position: absolute;
 	top: 5px;
-	left: 120px;
+	right: 23%;
     height: 30px;
     text-align: center;
-
+	width: 30%;
+}
+#main_index_search
+{
+	position: absolute;
+	top: 5px;
+/*	right: 0%; */
+    height: 30px;
+    text-align: center;
+	width: 30%;
 /*    background:  url(../pictures/yamj-logo_repeat.png) no-repeat right,
         url(../pictures/yamj-logo_repeat.png) no-repeat left; */
+}
+#main_index_config
+{
+	position: absolute;
+	top: 5px;
+	right: 25%;
+    height: 30px;
+    text-align: center;
+}
+#main_index_person
+{
+	position: absolute;
+	top: 5px;
+	right: 18%;
+    height: 30px;
+    text-align: center;
+	width: 30%;
 }
 #monFormGenre , #monFormStudio,  #monFormCertification, #monFormRating, #monFormStudio, #monFormVideosource
 	{
 		position: relative;
 		border:none;
-		width: 830px;
+	/*	width: 830px; */
 		margin-top: -1px;
-		margin-left: 20px;
+	/*	margin-left: 20px; */
 		height: 30px;
 		top: -10px;
 	}
 #monFormGenre
 	{
-		width: 854px;
+	/*	width: 854px; */
 	}
 #monFormStudio
 	{
-		width: 870px;
+		width: 100%;
 	}
 #monFormCertification
 	{
-		width: 870px;
+		width: 100%;
 	}
 #monFormRating
 	{
-		width: 870px;
+		width: 100%;
 	}
 #monFormMenu {
 	position: relative;
 	left: -5px;
 	padding-left: 0px;
 	list-style: none;
-	height: 1550px;
+	height: 1750px;
 	}
 #monFormMenu2 {
 	left: 80px;
@@ -456,14 +508,14 @@ body {
 	background-color: white;
 	
 	}
-.show_index, .show_index_genre, .show_index_country, .show_index_awards, .show_index_awards_small, .show_index_boxset, .show_index_studio, .show_index_rating, .show_index_videosource , .show_index_certification  {
+.show_index, .show_index_genre, .show_index_country, .show_index_awards, .show_index_awards_small, .show_index_boxset, .show_index_studio, .show_index_studio_small, .show_index_rating, .show_index_videosource , .show_index_certification  {
 		display: block;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-		font-size:1.05em;
+		font-size:1.4vw;
 		font-weight: bold;
 		color:#b0b0b0;
 		background-color: black;
-		width: 175px;
+		width: auto;
 		text-align: center;
 		margin: 0px 5px 0px -5px;
 		padding: 0px 1px 0px 1px;
@@ -471,12 +523,22 @@ body {
 		border-right: 4px solid #b0b0b0;
 		border-radius: 6px 6px 0px 6px;
 		position: absolute;
-		top: 5px;
-		left: 150px;
+		top: 5%;
+		left: 10%;
 		overflow: hidden;
 	}
+.info_config {
+	position: absolute;
+	top: 0%;
+	left: 6%;
+	width: 2.1%;
+	}
+.info_config img {
+	width: 100%;
+	}
+/*
 .show_index   {
-		width: 390px;
+		width: auto;
 		left: 115px;
 	}
 .show_index_certification   {
@@ -491,15 +553,15 @@ body {
 		width: 370px;
 		left: 115px;
 	}
+
 .show_index_awards   {
-		width: 370px;
-		left: 115px;
+
+	}*/
+.show_index_awards_small, .show_index_studio_small   {
+		top: 0%;
+		font-size:1vw;
 	}
-.show_index_awards_small   {
-		width: 370px;
-		left: 115px;
-		font-size:0.8em;
-	}
+/*
 .show_index_boxset   {
 		width: 370px;
 		left: 115px;
@@ -516,6 +578,7 @@ body {
 		width: 390px;
 		left: 115px;
 	}
+*/
 .show_personindex  {
 		display: block;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -534,15 +597,16 @@ body {
 		top: 5px;
 		left: 150px;
 		overflow: hidden;
-	}
-.count_return, .count_return_index, .count_return_genre, .count_return_country, .count_return_awards, .count_return_boxset, .count_return_studio, .count_return_rating , .count_return_videosource , .count_return_certification  {
+	} 
+
+.count_return, .count_return_index, .count_return_genre, .count_return_country, .count_return_awards, .count_return_awards_small, .count_return_boxset, .count_return_studio, .count_return_studio_small, .count_return_rating , .count_return_videosource , .count_return_certification  {
 		display: block;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-		font-size:1.05em;
+		font-size:1.4vw;
 		font-weight: bold;
 		color:#b0b0b0;
 		background-color: black;
-		width: 255px;
+		width: auto;
 		text-align: center;
 		margin: 0px 5px 0px -5px;
 		padding: 0px 1px 0px 1px;
@@ -550,11 +614,11 @@ body {
 		border-right: 4px solid #b0b0b0;
 		border-radius: 6px 6px 0px 6px;
 		position: absolute;
-		top: 5px;
-		left: 380px;
+		top: 5%;
+		left: 42%;
 		overflow: hidden;
 	}
-.count_return_index  {
+/*.count_return_index  {
 		left: 515px;
 		width: 205px;
 	}	
@@ -570,10 +634,13 @@ body {
 		left: 495px;
 		width: 205px;
 	}
-.count_return_awards {
-		left: 495px;
-		width: 205px;
+*/
+.count_return_awards_small, .count_return_studio_small {
+		left: 25%;
+		top: 58%;
+		font-size:1vw;
 	}	
+/*
 .count_return_studio {
 		left: 515px;
 		width: 205px;
@@ -589,7 +656,7 @@ body {
 .count_return_certification {
 		left: 515px;
 		width: 205px;
-	}
+	}*/
 .tablesearchmethod
 {
     font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -809,12 +876,12 @@ ul#home_left_search, #li_home_left {
 	top: -15px;
 	left: 0px;
 	padding:0px 0px 0px 0px;
-
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
 	list-style: none;
 	background: url(../pictures/YAMJ-logo-64-white-reflectv3.png) no-repeat center center rgba(255, 255, 255, 0.3);
+	background-size: 100%;
 	}
 
 
@@ -833,9 +900,9 @@ ul#home_left_search, #li_home_left {
 	}	
  #li_home_left {
 	top: 0px;
-	left: 0px;
+	left: 0.1%;
 	height: 33px;
-	width: 70px;
+	width: 4.5%;
 	background-color:rgba(0, 0, 0, 0);
 	border: none;
 	}
@@ -1042,15 +1109,27 @@ ul#home_left_search, #li_home_left {
 	}
 	
 #close_icon{
-    width: 40px;
-	height: 40px;
+    width: 100%;
+	height: 100%;
     position: absolute;
-    top: 0px;
-	left: 0px;
+    top: 10px;
+	left: 94%;
 	
 }
 #close_icon  img{
-	width: 40px;
+	width: 3.3%;
+	}
+#close_icon_frame{
+    width: 100%;
+	height: 100%;
+    position: absolute;
+    top: 10px;
+	left: 94%;
+	z-index: 10;
+	
+}
+#close_icon_frame  img{
+	width: 3.3%;
 	}
 #info_icon{
     width: 40px;
@@ -1128,11 +1207,11 @@ ul#home_left_search, #li_home_left {
 	}
 	
 .play_frame {
-    width: 45px;
-	height: 45px;
+    width: 4.5vw;
+/*	height: 45px; */
     position: absolute;
-    top: 8px;
-	left: 12px;
+    top: 7px;
+	left: 80%;
 	border-radius: 4px;
 /*	background:  url(../pictures/play.png) no-repeat;*/
 	z-index: 4;
@@ -1140,6 +1219,19 @@ ul#home_left_search, #li_home_left {
 .play_frame:hover {
 /*	background:  url(../pictures/play_inactive.png) no-repeat;*/
 	
+	}
+.detail_icon_frame {
+    width: 3.0vw;
+/*	height: 45px; */
+    position: absolute;
+    top: 11px;
+	left: 400%;
+	border-radius: 4px;
+	z-index: 4;
+}
+
+.detail_icon_frame:hover {
+	background-color:  red;
 	}
 /* for test purpose */
 .test, .counttest, .skinlang
@@ -1169,11 +1261,12 @@ ul#home_left_search, #li_home_left {
 }
 #movie_display{
 	height:290px;
-	left: 90px;
+	left: 50px;
 	}
 
 #person_display{
-	top: 40px; 
+	top: 60px; 
+	left: 50px;
 	height:720px;
 	}
 
@@ -1216,7 +1309,7 @@ ul#home_left_search, #li_home_left {
 	}
 #remote {
 	visibility: hidden;
-	z-index: 6;
+	z-index: 8;
 	border: 2px solid #b0b0b0; 
 	position: absolute;
 	top: 50px; 
@@ -1357,9 +1450,9 @@ ul#home_left_search, #li_home_left {
 .episode_plot_frame {
 	display: block; 
 	position: absolute;
-	bottom: 185px;
+	bottom: 37%;
 	left: 8px;
-	width: 947px;
+	width: 98.5%;
 	visibility: hidden;
 	}
 #img_play_episode {
@@ -1471,14 +1564,13 @@ ul#home_left_search, #li_home_left {
 #video_frame41, #video_frame42, #video_frame43,#video_frame44,#video_frame45,#video_frame46,#video_frame47,#video_frame48,#video_frame49,#video_frame50,
 #video_frame51, #video_frame52, #video_frame53,#video_frame54,#video_frame55,#video_frame56,#video_frame57,#video_frame58,#video_frame59,#video_frame60
   {
-	font-size:0.8em;
+	font-size:1.2vw;
 	text-align:center;
 	background-color:rgba(0, 0, 0, 0.4);
 	color: white;
 	vertical-align: top;
 	border: 2px solid grey;
 	}
-
 .episode_detail {
 	position: absolute;
 	left: 15px;
@@ -1530,8 +1622,8 @@ ul#home_left_search, #li_home_left {
 	left : 0px;
 	font-family: Arial, Helvetica, sans-serif;
 	color:white;
-	font-size:1.0em;
-	max-height: 113px;
+	font-size:1.65vw;
+/* max-height: 113px; */
 	overflow-y: auto;
 	visibility: hidden;
 	background-color:rgba(0, 0, 0, 0.4);
@@ -1961,14 +2053,15 @@ ul#detail_home_left img, ul#detail_home_right img
 	color: #ffffff;
 	z-index:4;
     }
+
 .header_frame
 {
     display: block;
-	height: auto;
-    width: 935px;
+	height: 3.3vw;
+    width: 99%;
 	position: relative;
-	left: 0px;
-	font-size:1.8em;
+/*	left: 0px; */
+	font-size:2.5vw;
 	font-weight: bold;
     text-align: center;
 	margin: 0px;
@@ -1998,14 +2091,16 @@ ul#detail_home_left img, ul#detail_home_right img
 .header_title {
 	position: relative;
 	top: -5px;
-    padding-left:75px;
-	font-size: 1.0em;
+    padding-left:5px;
+	font-size: 0.9em;
 	}
 .header_title_frame {
-	position: relative;
+	position: absolute;
 	top: 0px;
-    padding:0px 5px 0px 5px;
-	font-size: 1.0em;
+ /*   padding:0px 5px 0px 5px; */
+	font-size: 2.5vw;
+	text-align: center;
+	width: 100%;
 	}	
 .lastid {
     padding-top:1px;
@@ -2153,12 +2248,12 @@ text {
 	color:#fff;
 	font-weight: bold;
 	text-align: justify;
-	font-size:1.0em;
+	font-size:1.65vw;
 	position: absolute;
 	bottom: 7px;
-	left: 120px;
+	left: 12%;
 	overflow: hidden;
-	max-width: 830px;
+	width: 88%;
 	}
 .filepath_frame {
 	width: auto;
@@ -2203,7 +2298,15 @@ text {
 	position: relative;
 	left: 5px;
 	}
-
+.awards {
+	max-width: 1055px;
+	width: 1055px;
+	max-height: 39px;
+	overflow-y: auto;
+	}
+.filepath {
+	display: none;
+	}
 .plot, .plot1 {
 	width: auto;
 	max-height: 148px;

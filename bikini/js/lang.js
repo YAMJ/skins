@@ -9,8 +9,20 @@
  //*****************************************************************************************   
 		// set a default skin value 
 		var skin_value = "bikini_skin_0_";
+		// fetch the value in local storage
+		function get_lang ()
+			{
+				if (localStorage.getItem("Lang"))
+					{
+						LangValue = localStorage.getItem("Lang");
+						console.log("get_lang Lang: " + LangValue);
+						set_context_lang_value ();
+						//adjust_lang_setting(LangValue);
+					}
+				else {get_lang_();}
+			}
 		// fetch the value in the config database
-		function get_lang()
+		function get_lang_()
 			{
 			// check if there is an instance of the bikini skin choosen
 				if (localStorage.getItem("skinset"))
@@ -89,6 +101,9 @@
 				
 			
 			}
+
+			
+			
 		function adjust_lang_setting(lang) {
 		// console.log("adjust_lang_setting: "+lang);
 					if (window.XMLHttpRequest)
@@ -104,106 +119,110 @@
 					xmlDoc=xmlhttp.responseXML; 
 					x=xmlDoc.getElementsByTagName('lang');
 					i=0;
-
-					actor_label=(x[i].getElementsByTagName("actorlabel")[0].childNodes[0].nodeValue);
-					all_label=(x[i].getElementsByTagName("alllabel")[0].childNodes[0].nodeValue);
-					all_genre=(x[i].getElementsByTagName("allgenre")[0].childNodes[0].nodeValue);
-					all_select=(x[i].getElementsByTagName("allselected")[0].childNodes[0].nodeValue);
-					angle_label=(x[i].getElementsByTagName("anglelabel")[0].childNodes[0].nodeValue);
-					any_label=(x[i].getElementsByTagName("anylabel")[0].childNodes[0].nodeValue);
-					asc_label=(x[i].getElementsByTagName("ascending")[0].childNodes[0].nodeValue);
-					audio_label=(x[i].getElementsByTagName("audiolabel")[0].childNodes[0].nodeValue);
-					awards_label=(x[i].getElementsByTagName("awardslabel")[0].childNodes[0].nodeValue);
-					blue_label=(x[i].getElementsByTagName("bluelabel")[0].childNodes[0].nodeValue);
-					boxset_label=(x[i].getElementsByTagName("boxsetlabel")[0].childNodes[0].nodeValue);
-					certification_label=(x[i].getElementsByTagName("certificationlabel")[0].childNodes[0].nodeValue);
-					close_remote_label=(x[i].getElementsByTagName("closeremotelabel")[0].childNodes[0].nodeValue);
-					config_select=(x[i].getElementsByTagName("configselected")[0].childNodes[0].nodeValue);
-					country_label=(x[i].getElementsByTagName("countrylabel")[0].childNodes[0].nodeValue);
-					country_select=(x[i].getElementsByTagName("countryselected")[0].childNodes[0].nodeValue);
-					delete_text=(x[i].getElementsByTagName("deletetext")[0].childNodes[0].nodeValue);
-					desc_label=(x[i].getElementsByTagName("descending")[0].childNodes[0].nodeValue);
-					director_label=(x[i].getElementsByTagName("directorlabel")[0].childNodes[0].nodeValue);
-					down_label=(x[i].getElementsByTagName("downlabel")[0].childNodes[0].nodeValue);
-					eject_label=(x[i].getElementsByTagName("ejectlabel")[0].childNodes[0].nodeValue);
-					enter_label=(x[i].getElementsByTagName("enterlabel")[0].childNodes[0].nodeValue);
-					episode_label=(x[i].getElementsByTagName("episodelabel")[0].childNodes[0].nodeValue);
-					fanart_show=(x[i].getElementsByTagName("fanartshow")[0].childNodes[0].nodeValue);
-					file_label=(x[i].getElementsByTagName("filelabel")[0].childNodes[0].nodeValue);
-					file_mode_label=(x[i].getElementsByTagName("filemodelabel")[0].childNodes[0].nodeValue);
-					filmography_label=(x[i].getElementsByTagName("filmographylabel")[0].childNodes[0].nodeValue);
-					format_label=(x[i].getElementsByTagName("formatlabel")[0].childNodes[0].nodeValue);
-					fps_label=(x[i].getElementsByTagName("fpslabel")[0].childNodes[0].nodeValue);
-					fwd_label=(x[i].getElementsByTagName("fwdlabel")[0].childNodes[0].nodeValue);
-					genre_label=(x[i].getElementsByTagName("genrelabel")[0].childNodes[0].nodeValue);
-					genre_select=(x[i].getElementsByTagName("genreselected")[0].childNodes[0].nodeValue);
-					genrelist_select=(x[i].getElementsByTagName("genrelistselect")[0].childNodes[0].nodeValue);
-					green_label=(x[i].getElementsByTagName("greenlabel")[0].childNodes[0].nodeValue);
-					home_label=(x[i].getElementsByTagName("homelabel")[0].childNodes[0].nodeValue);
-					info_label=(x[i].getElementsByTagName("infolabel")[0].childNodes[0].nodeValue);
-					lang_label=(x[i].getElementsByTagName("language")[0].childNodes[0].nodeValue);
-					left_label=(x[i].getElementsByTagName("leftlabel")[0].childNodes[0].nodeValue);
-					menu_label=(x[i].getElementsByTagName("menulabel")[0].childNodes[0].nodeValue);	
-					movie_label=(x[i].getElementsByTagName("movielabel")[0].childNodes[0].nodeValue);
-					movie_select=(x[i].getElementsByTagName("movieselected")[0].childNodes[0].nodeValue);
-					mute_label=(x[i].getElementsByTagName("mutelabel")[0].childNodes[0].nodeValue);
-					name_label=(x[i].getElementsByTagName("namelabel")[0].childNodes[0].nodeValue);
-					next_remote_label=(x[i].getElementsByTagName("nextremotelabel")[0].childNodes[0].nodeValue);
-					nbofrow=(x[i].getElementsByTagName("nbrow")[0].childNodes[0].nodeValue);
-					no_text=(x[i].getElementsByTagName("notext")[0].childNodes[0].nodeValue);
-					nobiography_text=(x[i].getElementsByTagName("nobiography")[0].childNodes[0].nodeValue);
-					noplot_text=(x[i].getElementsByTagName("noplot")[0].childNodes[0].nodeValue);
-					nobirthday_text=(x[i].getElementsByTagName("nobirthday")[0].childNodes[0].nodeValue);
-					noposter_text=(x[i].getElementsByTagName("noposter")[0].childNodes[0].nodeValue);
-					page_label=(x[i].getElementsByTagName("pagelabel")[0].childNodes[0].nodeValue);
-					pause_label=(x[i].getElementsByTagName("pauselabel")[0].childNodes[0].nodeValue);
-					person_label=(x[i].getElementsByTagName("personlabel")[0].childNodes[0].nodeValue);
-					person_select=(x[i].getElementsByTagName("personselected")[0].childNodes[0].nodeValue);
-					person_show=(x[i].getElementsByTagName("personshow")[0].childNodes[0].nodeValue);
-					play_label=(x[i].getElementsByTagName("playlabel")[0].childNodes[0].nodeValue);
-					player_select=(x[i].getElementsByTagName("playerselected")[0].childNodes[0].nodeValue);
-					plot_label=(x[i].getElementsByTagName("plotlabel")[0].childNodes[0].nodeValue);
-					power_label=(x[i].getElementsByTagName("powerlabel")[0].childNodes[0].nodeValue);
-					prev_remote_label=(x[i].getElementsByTagName("prevremotelabel")[0].childNodes[0].nodeValue);
-					rating_label=(x[i].getElementsByTagName("ratinglabel")[0].childNodes[0].nodeValue);
-					rating_index=(x[i].getElementsByTagName("ratingindex")[0].childNodes[0].nodeValue);
-					red_label=(x[i].getElementsByTagName("redlabel")[0].childNodes[0].nodeValue);
-					remote_label=(x[i].getElementsByTagName("remotelabel")[0].childNodes[0].nodeValue);
-					repeat_label=(x[i].getElementsByTagName("repeatlabel")[0].childNodes[0].nodeValue);
-					results_text=(x[i].getElementsByTagName("resultstext")[0].childNodes[0].nodeValue);
-					return_label=(x[i].getElementsByTagName("returnlabel")[0].childNodes[0].nodeValue);
-					runtime_label=(x[i].getElementsByTagName("runtimelabel")[0].childNodes[0].nodeValue);
-					rewind_label=(x[i].getElementsByTagName("rewindlabel")[0].childNodes[0].nodeValue);
-					right_label=(x[i].getElementsByTagName("rightlabel")[0].childNodes[0].nodeValue);
-					search_select=(x[i].getElementsByTagName("searchselected")[0].childNodes[0].nodeValue);
-					season_label=(x[i].getElementsByTagName("seasonlabel")[0].childNodes[0].nodeValue);
-					season_select=(x[i].getElementsByTagName("seasonselected")[0].childNodes[0].nodeValue);
-					selection_label=(x[i].getElementsByTagName("selectionlabel")[0].childNodes[0].nodeValue);
-					selection_text=(x[i].getElementsByTagName("selection")[0].childNodes[0].nodeValue);
-					series_label=(x[i].getElementsByTagName("serieslabel")[0].childNodes[0].nodeValue);
-					series_select=(x[i].getElementsByTagName("serieselected")[0].childNodes[0].nodeValue);
-					setup_label=(x[i].getElementsByTagName("setuplabel")[0].childNodes[0].nodeValue);
-					show=(x[i].getElementsByTagName("show")[0].childNodes[0].nodeValue);
-					source_label=(x[i].getElementsByTagName("sourcelabel")[0].childNodes[0].nodeValue);
-					start_label=(x[i].getElementsByTagName("startlabel")[0].childNodes[0].nodeValue);
-					stop_label=(x[i].getElementsByTagName("stoplabel")[0].childNodes[0].nodeValue);
-					studio_select=(x[i].getElementsByTagName("studioselected")[0].childNodes[0].nodeValue);
-					style_label=(x[i].getElementsByTagName("stylelabel")[0].childNodes[0].nodeValue);
-					subtitle_label=(x[i].getElementsByTagName("subtitlelabel")[0].childNodes[0].nodeValue);
-					time_seek_label=(x[i].getElementsByTagName("timeseeklabel")[0].childNodes[0].nodeValue);
-					title_label=(x[i].getElementsByTagName("titlelabel")[0].childNodes[0].nodeValue);
-					tv_mode_label=(x[i].getElementsByTagName("tvmodelabel")[0].childNodes[0].nodeValue);
-					unwatched_select=(x[i].getElementsByTagName("unwatchedselect")[0].childNodes[0].nodeValue);
-					update_label=(x[i].getElementsByTagName("updatelabel")[0].childNodes[0].nodeValue);
-					up_label=(x[i].getElementsByTagName("uplabel")[0].childNodes[0].nodeValue);
-					video_label=(x[i].getElementsByTagName("videolabel")[0].childNodes[0].nodeValue);
-					volumedown_label=(x[i].getElementsByTagName("volumedownlabel")[0].childNodes[0].nodeValue);
-					volumeup_label=(x[i].getElementsByTagName("volumeuplabel")[0].childNodes[0].nodeValue);
-					year_label=(x[i].getElementsByTagName("yearlabel")[0].childNodes[0].nodeValue);
-					yellow_label=(x[i].getElementsByTagName("yellowlabel")[0].childNodes[0].nodeValue);
-					watched_select=(x[i].getElementsByTagName("watchedselect")[0].childNodes[0].nodeValue);
-					writer_label=(x[i].getElementsByTagName("writerlabel")[0].childNodes[0].nodeValue);
-					zoom_label=(x[i].getElementsByTagName("zoomlabel")[0].childNodes[0].nodeValue);
+					
+					window.localStorage.setItem("actor_label", (x[i].getElementsByTagName("actorlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("all_label", (x[i].getElementsByTagName("alllabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("all_genre",(x[i].getElementsByTagName("allgenre")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("all_select",(x[i].getElementsByTagName("allselected")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("angle_label",(x[i].getElementsByTagName("anglelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("any_label", (x[i].getElementsByTagName("anylabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("asc_label", (x[i].getElementsByTagName("ascending")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("audio_label", (x[i].getElementsByTagName("audiolabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("awards_label", (x[i].getElementsByTagName("awardslabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("blue_label", (x[i].getElementsByTagName("bluelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("boxset_label", (x[i].getElementsByTagName("boxsetlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("certification_label", (x[i].getElementsByTagName("certificationlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("close_remote_label", (x[i].getElementsByTagName("closeremotelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("config_select", (x[i].getElementsByTagName("configselected")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("country_label", (x[i].getElementsByTagName("countrylabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("country_select", (x[i].getElementsByTagName("countryselected")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("delete_text", (x[i].getElementsByTagName("deletetext")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("desc_label", (x[i].getElementsByTagName("descending")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("director_label", (x[i].getElementsByTagName("directorlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("down_label", (x[i].getElementsByTagName("downlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("eject_label", (x[i].getElementsByTagName("ejectlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("enter_label", (x[i].getElementsByTagName("enterlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("episode_label", (x[i].getElementsByTagName("episodelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("fanart_show", (x[i].getElementsByTagName("fanartshow")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("file_label", (x[i].getElementsByTagName("filelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("file_mode_label", (x[i].getElementsByTagName("filemodelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("filmography_label", (x[i].getElementsByTagName("filmographylabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("format_label", (x[i].getElementsByTagName("formatlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("fps_label", (x[i].getElementsByTagName("fpslabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("fwd_label", (x[i].getElementsByTagName("fwdlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("genre_label", (x[i].getElementsByTagName("genrelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("genre_select", (x[i].getElementsByTagName("genreselected")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("genrelist_select", (x[i].getElementsByTagName("genrelistselect")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("green_label", (x[i].getElementsByTagName("greenlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("home_label", (x[i].getElementsByTagName("homelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("info_label", (x[i].getElementsByTagName("infolabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("lang_label", (x[i].getElementsByTagName("language")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("left_label", (x[i].getElementsByTagName("leftlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("menu_label", (x[i].getElementsByTagName("menulabel")[0].childNodes[0].nodeValue));	
+					window.localStorage.setItem("movie_label", (x[i].getElementsByTagName("movielabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("movie_select", (x[i].getElementsByTagName("movieselected")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("mute_label", (x[i].getElementsByTagName("mutelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("name_label", (x[i].getElementsByTagName("namelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("next_remote_label", (x[i].getElementsByTagName("nextremotelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("new_", (x[i].getElementsByTagName("new")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("nbofrow", (x[i].getElementsByTagName("nbrow")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("no_text", (x[i].getElementsByTagName("notext")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("nobiography_text", (x[i].getElementsByTagName("nobiography")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("noplot_text", (x[i].getElementsByTagName("noplot")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("nobirthday_text", (x[i].getElementsByTagName("nobirthday")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("noposter_text", (x[i].getElementsByTagName("noposter")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("page_label", (x[i].getElementsByTagName("pagelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("pause_label", (x[i].getElementsByTagName("pauselabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("person_label", (x[i].getElementsByTagName("personlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("person_select", (x[i].getElementsByTagName("personselected")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("person_show", (x[i].getElementsByTagName("personshow")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("play_label", (x[i].getElementsByTagName("playlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("player_select", (x[i].getElementsByTagName("playerselected")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("plot_label", (x[i].getElementsByTagName("plotlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("power_label", (x[i].getElementsByTagName("powerlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("prefered_", (x[i].getElementsByTagName("prefered")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("prev_remote_label", (x[i].getElementsByTagName("prevremotelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("rating_label", (x[i].getElementsByTagName("ratinglabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("rating_index", (x[i].getElementsByTagName("ratingindex")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("red_label", (x[i].getElementsByTagName("redlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("remote_label", (x[i].getElementsByTagName("remotelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("repeat_label", (x[i].getElementsByTagName("repeatlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("results_text", (x[i].getElementsByTagName("resultstext")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("return_label", (x[i].getElementsByTagName("returnlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("runtime_label", (x[i].getElementsByTagName("runtimelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("rewind_label", (x[i].getElementsByTagName("rewindlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("right_label", (x[i].getElementsByTagName("rightlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("search_select", (x[i].getElementsByTagName("searchselected")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("season_label", (x[i].getElementsByTagName("seasonlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("season_select", (x[i].getElementsByTagName("seasonselected")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("selected_", (x[i].getElementsByTagName("selected")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("selection_label", (x[i].getElementsByTagName("selectionlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("selection_text", (x[i].getElementsByTagName("selection")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("series_label", (x[i].getElementsByTagName("serieslabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("series_select", (x[i].getElementsByTagName("serieselected")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("setup_label", (x[i].getElementsByTagName("setuplabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("show", (x[i].getElementsByTagName("show")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("skin_", (x[i].getElementsByTagName("skin")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("source_label", (x[i].getElementsByTagName("sourcelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("start_label", (x[i].getElementsByTagName("startlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("stop_label", (x[i].getElementsByTagName("stoplabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("studio_select", (x[i].getElementsByTagName("studioselected")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("style_label", (x[i].getElementsByTagName("stylelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("subtitle_label", (x[i].getElementsByTagName("subtitlelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("time_seek_label", (x[i].getElementsByTagName("timeseeklabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("title_label", (x[i].getElementsByTagName("titlelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("tv_mode_label", (x[i].getElementsByTagName("tvmodelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("unwatched_select", (x[i].getElementsByTagName("unwatchedselect")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("update_label", (x[i].getElementsByTagName("updatelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("up_label", (x[i].getElementsByTagName("uplabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("video_label", (x[i].getElementsByTagName("videolabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("volumedown_label", (x[i].getElementsByTagName("volumedownlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("volumeup_label", (x[i].getElementsByTagName("volumeuplabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("year_label", (x[i].getElementsByTagName("yearlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("yellow_label", (x[i].getElementsByTagName("yellowlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("watched_select", (x[i].getElementsByTagName("watchedselect")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("writer_label", (x[i].getElementsByTagName("writerlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("zoom_label", (x[i].getElementsByTagName("zoomlabel")[0].childNodes[0].nodeValue));
 
 				// now set local lang usage depending of each file
 				set_context_lang_value ();

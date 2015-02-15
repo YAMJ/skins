@@ -54,13 +54,14 @@
 	<mutelabel>silence</mutelabel>
 
 	<namelabel>nom</namelabel>
-	<nbrow>nbre de ligne</nbrow>
+	<nbrow>nbre de colonne</nbrow>
 	<nextremotelabel>suivant</nextremotelabel>
+	<new>nouveauté</new>
 	<nobiography>biographie absente</nobiography>
 	<nobirthday>date de naissance inconnue</nobirthday>
 	<noplot>aucun sysnospis disponible</noplot>
 	<noposter>aucun postère</noposter>
-	<notext>non</notext>
+	<notext>pas de</notext>
 	
 	<pagelabel>page</pagelabel>
 	<pauselabel>pause</pauselabel>
@@ -71,6 +72,7 @@
 	<playlabel>jouer sur </playlabel>
 	<plotlabel>synopsis</plotlabel>
 	<powerlabel>marche</powerlabel>
+	<prefered>préférée</prefered>
 	<prevremotelabel>precedent</prevremotelabel>
 	
 	<ratinglabel>note</ratinglabel>
@@ -87,12 +89,14 @@
 	<searchselected>recherche</searchselected>
 	<seasonlabel>saison</seasonlabel>
 	<seasonselected>saison</seasonselected>
+	<selected>selectionné</selected>
 	<selection>selection</selection>
 	<selectionlabel>selection</selectionlabel>
 	<serieslabel>série</serieslabel>
 	<serieselected>série</serieselected>
 	<setuplabel>param.</setuplabel>
 	<show>ruban</show>
+	<skin>skin</skin>
 	<sourcelabel>source</sourcelabel>
 	<startlabel>commence par</startlabel>
 	<stoplabel>stop</stoplabel>

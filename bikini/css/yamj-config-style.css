@@ -19,7 +19,29 @@ body {
     line-height: 18px;
     color: #404040;
 }
-
+#my_left_menu {
+	width: 2%;
+	height: 100%;
+	position:absolute; 
+	left: 0px;
+	z-index:99;
+	}
+#container_menu_left {
+	transition-property:  ;
+    /* La transition durera trois secondes. */
+   transition-duration: 1000ms;
+	width: 80px;
+	position: absolute;
+	top: 75px;
+	border: 1px solid black;
+	height: 727px;
+	left: 0px;
+	z-index:10;
+	background-color: gray;
+	visibility: visible;
+	opacity: 0;
+	overflow: hidden;
+	}
 #tablegenrelist th, #headertable th
 {
     font-size:1.1em;
@@ -141,8 +163,24 @@ body {
 	left: 0px;
 	padding-left: 0px;
 	list-style: none;
-	height: 1650px;
+	height: 1870px;
 	}
+#allselect, #movieselect, #serieselect, #seasonselect, #genreindex, #countryindex, #awardsindex, #certificationindex, #ratingindex, #videosourceindex, #boxsetindex, #studioindex, #personindex, #searchselect, #configselect, #searchindex, #configindex, #remoteselect, #yamj3select, #genrelistselect
+{
+    font-weight: bold;
+    color: black;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:0.8em;
+	position: relative;	
+	text-align: center;
+	top: -8px;
+	width: 70px;
+	left: 1px;
+}
+#language:hover, #nbrow:hover, #allselect:hover, #movieselect:hover, #genreindex:hover, #countryindex:hover, #awardsindex:hover, #certificationindex:hover, #ratingindex:hover, #videosourceindex:hover, #boxsetindex:hover, #studioindex:hover, #searchindex:hover, #configindex:hover, #yamj3select:hover, #genrelistselect:hover , #remoteselect:hover, #personindex:hover,  #serieselect:hover, #seasonselect:hover, #personselect:hover, #genreselect:hover, #countryselect:hover, #searchselect:hover, #configselect:hover, #button_genreselect:hover, #button_countryselect:hover, #button_personselect:hover, #button_configselect:hover, #button_genreselect_series:hover, #button_countryselect_series:hover
+{	
+	color: red;	
+}
 #version_txt {
 	position: relative;
 	left: 350px;

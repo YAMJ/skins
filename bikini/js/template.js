@@ -75,12 +75,32 @@
 			if (document.getElementById('open_menu_left').style.visibility == 'visible')
 				{
 					console.log("detail toggle_menu_left: " + document.getElementById('open_menu_left').style.visibility)
+					parent.document.getElementById('my_left_menu').style.width = '12%';
 					document.getElementById('container_menu_left').style.opacity = '1';
 					document.getElementById('open_menu_left').style.visibility = 'hidden';
 					document.getElementById('close_menu_left').style.visibility = 'visible';
 				} else 
 				{
 					console.log("detail toggle_menu_left: " + document.getElementById('open_menu_left').style.visibility)
+					parent.document.getElementById('my_left_menu').style.width = '2%';
+					document.getElementById('container_menu_left').style.opacity = '0';
+					document.getElementById('open_menu_left').style.visibility = 'visible';
+					document.getElementById('close_menu_left').style.visibility = 'hidden';
+				}
+		}
+			function toggle_detail_menu_left ()
+		{
+			if (document.getElementById('open_menu_left').style.visibility == 'visible')
+				{
+					console.log("detail toggle_menu_left: " + document.getElementById('open_menu_left').style.visibility)
+			//		parent.document.getElementById('my_left_menu').style.width = '12%';
+					document.getElementById('container_menu_left').style.opacity = '1';
+					document.getElementById('open_menu_left').style.visibility = 'hidden';
+					document.getElementById('close_menu_left').style.visibility = 'visible';
+				} else 
+				{
+					console.log("detail toggle_menu_left: " + document.getElementById('open_menu_left').style.visibility)
+			//		parent.document.getElementById('my_left_menu').style.width = '2%';
 					document.getElementById('container_menu_left').style.opacity = '0';
 					document.getElementById('open_menu_left').style.visibility = 'visible';
 					document.getElementById('close_menu_left').style.visibility = 'hidden';
@@ -92,40 +112,7 @@
 		// off the class selected 
 		function nodisplay_class(class_to_toggle)
 					{$('.'+class_to_toggle).css('visibility', 'hidden');}
-	// on click, show or hide the submenu, apply to the Yamj left upper menu 
-	// menu is to navigate to all the index pages without an argument 
-		
-		function toggle_menuleft()
-					{	
-						
-						if (menuleft_toggle == 0)
-						{ 
-							menuleft_toggle = 1;
-							
-							$('#li_all_up').css('visibility', 'visible');
-							$('#li_movie_up').css('visibility', 'visible');
-							$('#li_series_up').css('visibility', 'visible');
-							$('#li_season_up').css('visibility', 'visible');
-							$('#li_person_up').css('visibility', 'visible');
-							$('#li_genre_up').css('visibility', 'visible');			
-							$('#li_search_up').css('visibility', 'visible');	
-							$('#li_config_up').css('visibility', 'visible');
-							$('#li_remote_up').css('visibility', 'visible');								
-						} else {
-							menuleft_toggle =  0;
-							
-							$('#li_all_up').css('visibility', 'hidden');
-							$('#li_movie_up').css('visibility', 'hidden');
-							$('#li_series_up').css('visibility', 'hidden');
-							$('#li_season_up').css('visibility', 'hidden');
-							$('#li_person_up').css('visibility', 'hidden');
-							$('#li_genre_up').css('visibility', 'hidden');	
-							$('#li_search_up').css('visibility', 'hidden');	
-							$('#li_config_up').css('visibility', 'hidden');
-							$('#li_remote_up').css('visibility', 'hidden');
-						}
-					}
-					
+	
 	// open a new window to select search functionnality 
 		function ouvre_popup_search(StyleValue) 
 			{
@@ -240,37 +227,37 @@
 						} 
 					case 'person':
 						{	
-							call_personindex(true);
+							call_personindex("YAMJ v3 index");
 							break;
 						}
 					case 'genre':
 						{
-							call_genreindex(localStorage.getItem("indextype"), true);
+							call_genreindex(localStorage.getItem("indextype"), "YAMJv3 Navigation genre index");
 							break;
 						}
 					case 'country':
 						{
-							call_countryindex(localStorage.getItem("indextype"), true);
+							call_countryindex(localStorage.getItem("indextype"), "YAMJv3 Navigation country index");
 							break;
 						}
 					case 'boxset':
 						{
-							call_boxsetindex(localStorage.getItem("indextype"), true);
+							call_boxsetindex(localStorage.getItem("indextype"), "YAMJv3 Navigation boxset index");
 							break;
 						}
 					case 'rating':
 						{
-							call_ratingindex(localStorage.getItem("indextype"), true);
+							call_ratingindex(localStorage.getItem("indextype"), "YAMJv3 Navigation rating index");
 							break;
 						}
 					case 'certification':
 						{
-							call_certificationindex(localStorage.getItem("indextype"), true);
+							call_certificationindex(localStorage.getItem("indextype"), "YAMJv3 Navigation certification index");
 							break;
 						}
 					case 'source':
 						{						
-							call_videosourceindex(localStorage.getItem("indextype"), true);
+							call_videosourceindex(localStorage.getItem("indextype"), "YAMJv3 Navigation videosource index");
 							break;
 						} 
 					case 'new':
@@ -289,100 +276,60 @@
 				}
 			}		
 	// open or change to index genre page
-		function call_genreindex(indextype, newpage)
+		function call_genreindex(indextype, page_to_call)
 			{
 				localStorage.setItem("indextype", indextype);
-				console.log("call_genreindex with type: "+indextype);
-				if (newpage == 'true') 
-				{
-					Indexpopup = window.open("navGenre.html", "YAMJv3 Navigation genre index","");
-				} else {
-					Indexpopup = window.open("navGenre.html", "_self","");
-				}
+				console.log("call_genreindex with type: "+ indextype +" with page: " + page_to_call);
+					Indexpopup = window.open("navGenre.html", page_to_call,"");
 			}
 	// open or change to index country page
-		function call_countryindex(indextype, newpage)
+		function call_countryindex(indextype, page_to_set)
 			{
 				localStorage.setItem("indextype", indextype);
-				console.log("call_countryindex with type: "+indextype);
-				if (newpage == 'true') 
-				{
-					Indexpopup = window.open("navCountry.html", "YAMJv3 Navigation country index","");
-				} else {
-					Indexpopup = window.open("navCountry.html", "_self","");
-				}
+				console.log("call_countryindex with type: "+ indextype + " with page : " + page_to_set );
+				Indexpopup = window.open("navCountry.html", page_to_set,"");
 			}
 	// open or change to index awards page
-		function call_awardsindex(indextype, newpage)
+		function call_awardsindex(indextype, page_to_set)
 			{
 				localStorage.setItem("indextype", indextype);
-				console.log("call_awardsindex with type: "+indextype);
-				if (newpage == 'true') 
-				{
-					Indexpopup = window.open("navAwards.html", "YAMJv3 Navigation awards index","");
-				} else {
-					Indexpopup = window.open("navAwards.html", "_self","");
-				}
+				console.log("call_awardsindex with type: "+ indextype + " with page: " + page_to_set );
+				Indexpopup = window.open("navAwards.html", page_to_set,"");
 			}
 		// open or change to index certification page
-		function call_certificationindex(indextype, newpage)
+		function call_certificationindex(indextype, page_to_set)
 			{
 				localStorage.setItem("indextype", indextype);
-				console.log("call_certificationindex with type: "+indextype);
-				if (newpage == 'true') 
-				{
-					Indexpopup = window.open("navCertification.html", "YAMJv3 Navigation certification index","");
-				} else {
-					Indexpopup = window.open("navCertification.html", "_self","");
-				}
+				console.log("call_certificationindex with type: "+indextype + " page to set: " + page_to_set);
+				Indexpopup = window.open("navCertification.html", page_to_set,"");
 			}
 		// open or change to index studio page
-		function call_studioindex(indextype, newpage)
+		function call_studioindex(indextype, page_to_set)
 			{
 				localStorage.setItem("indextype", indextype);
-				console.log("call_studioindex with type: "+indextype);
-				if (newpage =='true') 
-				{
-					Indexpopup = window.open("navStudio.html", "YAMJv3 Navigation studio index","");
-				} else {
-					Indexpopup = window.open("navStudio.html", "_self","");
-				}
+				console.log("call_studioindex with type: "+indextype + " page to set: " + page_to_set);
+				Indexpopup = window.open("navStudio.html", page_to_set,"");
 			}
 		// open or change to index rating page
-		function call_ratingindex(indextype, newpage)
+		function call_ratingindex(indextype, page_to_set)
 			{
 				localStorage.setItem("indextype", indextype);
-				console.log("call_ratingindex with type: "+indextype);
-				if (newpage =='true') 
-				{
-					Indexpopup = window.open("navRating.html", "YAMJv3 Navigation rating index","");
-				} else {
-					Indexpopup = window.open("navRating.html", "_self","");
-				}
+				console.log("call_ratingindex with type: "+indextype + " page to set: " + page_to_set);
+				Indexpopup = window.open("navRating.html", page_to_set,"");
 			}
 	// open or change to index videosource page
-		function call_videosourceindex(indextype, newpage)
+		function call_videosourceindex(indextype, page_to_set)
 			{
 				localStorage.setItem("indextype", indextype);
-				console.log("call_videosourceindex with type: "+indextype);
-				if (newpage =='true') 
-				{
-					Indexpopup = window.open("navVideosource.html", "YAMJv3 Navigation videosource index","");
-				} else {
-					Indexpopup = window.open("navVideosource.html", "_self","");
-				}
+				console.log("call_videosourceindex with type: "+indextype + " page to set: " + page_to_set);
+				Indexpopup = window.open("navVideosource.html", page_to_set,"");
 			}
 	// open or change to index boxset page
-		function call_boxsetindex(indextype, newpage)
+		function call_boxsetindex(indextype, page_to_set)
 			{
 				localStorage.setItem("indextype", indextype);
-				console.log("call_boxsetindex with type: "+indextype);
-				if (newpage =='true') 
-				{
-					Indexpopup = window.open("navBoxset.html", "YAMJv3 Navigation boxset index","");
-				} else {
-					Indexpopup = window.open("navBoxset.html", "_self","");
-				}
+				console.log("call_boxsetindex with type: "+indextype + " page to set: " + page_to_set);
+				Indexpopup = window.open("navBoxset.html", page_to_set,"");
 			}
 	// open all person depending of the style 
 		function call_person(newpage)
@@ -424,15 +371,11 @@
 					}
 			}
 	// open or change window to select index person page 
-		function call_personindex(newpage)
+		function call_personindex(page_to_set)
 			{
-				console.log("call_personindex: newpage=" + newpage);
-				if (newpage == 'true') 
-					{
-						Indexpopup = window.open("index_person.html", "YAMJ v3 index","");
-					} else {
-						Indexpopup = window.open("index_person.html", "_self");
-					}
+				console.log("call_personindex: page to set=" + page_to_set);
+				Indexpopup = window.open("index_person.html", page_to_set);
+				
 			}
 	// open or change vertical popup - ribbon window to select index person page 
 		function call_personribbon()
@@ -473,7 +416,7 @@
 			{		
 					window.localStorage.setItem("indextype", indextype);
 					console.log("Changeindex: "+indextype);
-					Indexpopup = window.open("index.html", "_self","");
+					Indexpopup = window.open("index.html", "_parent","");
 			}
 	// watched selection 
 		function WatchedSelection (href_target, watchedselect)
@@ -495,9 +438,18 @@
 					console.log("BoxsetSelection: ");
 					Indexpopup = window.open(href_target, "_self","");
 			}
-		
-	// fetch the style value in the config database , value available : page, ribbon, frame, popup
+	// fetch the style value in the local storage, value available : page, ribbon, frame, popup
 		function get_style()
+			{
+				if (window.localStorage.getItem("Style"))
+				{
+					StyleValue = window.localStorage.getItem("Style");
+					console.log("get_style Style: " + StyleValue);
+				}
+				else {get_style_();}
+			}
+	// fetch the style value in the config database , value available : page, ribbon, frame, popup
+		function get_style_()
 			{
 				var jsonStyleUrl = "/yamj3/api/config/list.json?config="+skin_value+"style&mode=any";
 				console.log("get_style jsonStyleUrl: " + jsonStyleUrl);
@@ -557,9 +509,19 @@
 				console.log('set style:'+style_);
 				window.localStorage.setItem("Style", style_);
 			}
-			
-	// fetch prefered page : value available : index_all, index_movie, index_series, person, genre, country, boxset, rating, certification, source, new
+	// fetch prefered page in local storage : value available : index_all, index_movie, index_series, person, genre, country, boxset, rating, certification, source, new
 		function get_prefered_page()
+			{
+				if (window.localStorage.getItem("prefered_page"))
+				{ 
+					Prefered_PageValue = window.localStorage.getItem("prefered_page");
+					console.log("get_prefered_page prefered_page: " + Prefered_PageValue);
+				}
+				else {get_prefered_page_();}
+			}
+
+	// fetch prefered page in database: value available : index_all, index_movie, index_series, person, genre, country, boxset, rating, certification, source, new
+		function get_prefered_page_()
 			{
 				var jsonPreferedUrl = "/yamj3/api/config/list.json?config="+skin_value+"prefered_page&mode=any";
 				console.log("get_prefered_page jsonPreferedUrl: " + jsonPreferedUrl);
@@ -622,10 +584,20 @@
 				console.log('set prefered page:'+prefered_);
 				window.localStorage.setItem("prefered_page", prefered_);
 		
-			}		
-			
-		// fetch the new value in the config database , value available : creation, file, lastscan
+			}
+	// fetch from local storage 		
 		function get_new()
+			{
+				if (window.localStorage.getItem("New"))
+				{
+					NewValue = window.localStorage.getItem("New");
+					console.log('get New:'+ NewValue);
+				}
+				else { get_new_(); }
+			}
+			
+	// fetch the new value in the config database , value available : creation, file, lastscan
+		function get_new_()
 			{
 				var jsonNewUrl = "/yamj3/api/config/list.json?config="+skin_value+"New&mode=any";
 				console.log("get_new jsonNewUrl: " + jsonNewUrl);
@@ -689,8 +661,18 @@
 				window.localStorage.setItem("New", new_);
 		
 			}
-	// fetch the paging value in the config database , value available : true , false
+	// fetch the paging value in the local storage , value available : true , false
 		function get_paging()
+			{
+				if (window.localStorage.getItem("Paging"))
+				{
+					PagingValue = window.localStorage.getItem("Paging");
+					console.log('get Paging:'+ PagingValue);
+				}
+				else { get_paging_(); }
+			}
+	// fetch the paging value in the config database , value available : true , false
+		function get_paging_()
 			{
 				var jsonPagingUrl = "/yamj3/api/config/list.json?config="+skin_value+"paging&mode=any";
 				console.log("get_paging jsonPagingUrl: " + jsonPagingUrl);
@@ -781,15 +763,17 @@
 		
 	}//end myIP
 
-	// update  the skin value in the config database, 
+	// update  the skin value in the config database and all value in the local storage
 	function update_Skin(skin_) 
 		{
 			localStorage.setItem("skinset", skin_);
-			get_lang();
-			get_style();
-			get_player();
-			get_poster_number ();
-			get_new();
+			get_lang_();
+			get_style_();
+			get_player_();
+			get_poster_number_ ();
+			get_prefered_page_();
+			get_paging_();
+			get_new_();
 		}	
 
 	function direct_play (videoType,id ) 
@@ -835,7 +819,8 @@
 	// called when it's a movie , prepare the play path and set the timer to confirm playing
 	function play_to_device(basefilename)
 			{
-			console.log("play_to_device: "+Device_type+":"+PlayerValue+", basefilename=" +basefilename); 
+			console.log("play_to_device: "+Device_type+":"+PlayerValue+", basefilename=" +basefilename+ " nbre_translate_path=" +nbre_translate_path); 
+			get_player_();
 			for(var j = 0; j < (nbre_translate_path+1); j++){
 				if (basefilename.substring(0,source_path[j].length) == source_path[j])
 					{
@@ -852,7 +837,7 @@
 						Currentfilename = file_name;
 						CurrentUrlPlay = UrlPlay;
 									console.log("play_to_device: " +UrlPlay);
-						document.getElementById("infobox").innerHTML=play_label.toUpperCase()+": "+file_name+ " ?";
+						document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+": "+file_name+ " ?";
 						document.getElementById("infobox").style.visibility="visible";
 						myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
 					break; 
@@ -877,7 +862,7 @@
 	function PopPlayer()
 			{
 						console.log("PopPlayer: " +Currentfilename+ ", CurrentUrlPlay: "+CurrentUrlPlay);
-						document.getElementById("infobox").innerHTML=play_label.toUpperCase()+PlayerValue+": "+file_name+ "?"
+						document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+PlayerValue+": "+file_name+ "?"
 						document.getElementById("infobox").style.visibility="visible";
 						myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
 			//	window.open("Popup_Player.html", "YAMJv3 Player", "height=510, width=665, left=0, channelmode=no, directories=no, location=no,	menubar=no, resizable=yes, status=no, scrollbars=no,toolbar=no",false);
@@ -885,7 +870,7 @@
 	function PopDelete(Current_stage_file_Id, Current_title)
 			{
 						console.log("PopDelete:  Current_stage_file_Id: "+Current_stage_file_Id);
-						document.getElementById("infobox_delete").innerHTML=delete_text + " stage_file id: "+Current_stage_file_Id+ " " + Current_title + "?"
+						document.getElementById("infobox_delete").innerHTML=localStorage.getItem('delete_text') + " stage_file id: "+Current_stage_file_Id+ " " + Current_title + "?"
 						document.getElementById("infobox_delete").style.visibility="visible";
 						myVar=window.setTimeout(function(){myStopFunction('infobox_delete');},5000);
 			}	
@@ -898,7 +883,7 @@
 	function PopUpdate(Current_stage_file_Id, Current_title)
 			{
 						console.log("PopUpdate:  Current_stage_file_Id: "+Current_stage_file_Id);
-						document.getElementById("infobox_update").innerHTML=update_label + " stage_file id:"+Current_stage_file_Id+ " " + Current_title + "?"
+						document.getElementById("infobox_update").innerHTML=localStorage.getItem('update_label') + " stage_file id:"+Current_stage_file_Id+ " " + Current_title + "?"
 						document.getElementById("infobox_update").style.visibility="visible";
 						myVar=window.setTimeout(function(){myStopFunction('infobox_update');},5000);
 			}	
@@ -976,7 +961,7 @@
 						Currentfilename = file_name;
 						CurrentUrlPlay = UrlPlay;
 								//	console.log("play_to_device: " +UrlPlay);
-						document.getElementById("infobox").innerHTML=play_label.toUpperCase()+": "+file_name+ " on "+PlayerValue+"?";
+						document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+": "+file_name+ " on "+PlayerValue+"?";
 						document.getElementById("infobox").style.visibility="visible";
 						myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
 					break; 
@@ -1026,7 +1011,7 @@
 						Currentfilename = file_name;
 						CurrentUrlPlay = UrlPlay;
 							console.log("preset_episode_to_play: on PCH " +UrlPlay);
-						document.getElementById("infobox").innerHTML=play_label.toUpperCase()+": "+file_name+ " on "+PlayerValue+"?";
+						document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+": "+file_name+ " on "+PlayerValue+"?";
 						// document.getElementById("infobox").style.visibility="visible";
 						// myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
 					break; 
@@ -1052,7 +1037,7 @@
 	// when episode and click on the play icon set timer to confirm playing 
 	function play_episode ()
 		{	
-			document.getElementById("infobox").innerHTML=play_label.toUpperCase()+": "+file_name+ " on "+PlayerValue+"?"
+			document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+": "+file_name+ " on "+PlayerValue+"?"
 			document.getElementById("infobox").style.visibility="visible";
 			myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
 		}
@@ -1111,8 +1096,17 @@
 		window.open("/yamj3/", "_blank","");
 		}
 	// open the general system yamj3 page 	
-	function ouvre_genrelist ()
+	function ouvre_genrelist (page_to_set)
 		{
-		console.log("detail ouvre_yamj3");
-		window.open("Genre_Config.html", "_self","");
+		console.log("detail ouvre_genrelist page to set: " + page_to_set);
+		window.open("Genre_Config.html", page_to_set,"");
 		}
+	function get_player ()
+			{
+				if (localStorage.getItem("Player"))
+					{
+						PlayerValue = localStorage.getItem("Player");
+						console.log("get_player Player: " + PlayerValue);
+					}
+				else {get_player_();}
+			}

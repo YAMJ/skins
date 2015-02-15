@@ -38,8 +38,7 @@
 			
 		 function NavData()
         {
-		// load the new scolling method for the id and class selected 
-			loaded_iscroll ();
+
 		// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 			get_lang();
 			get_style();
@@ -57,22 +56,22 @@
 				{
 				   
 					case 'ALL':
-						selected_index = all_select.toUpperCase();
+						selected_index = window.localStorage.getItem('all_select').toUpperCase();
 						break;
 					case 'MOVIE,SERIES':
-						selected_index = all_select.toUpperCase();
+						selected_index = window.localStorage.getItem('all_select').toUpperCase();
 						break;
 					case 'MOVIE':
-						selected_index = movie_select.toUpperCase();
+						selected_index = window.localStorage.getItem('movie_select').toUpperCase();
 						break;
 					case 'SERIES':
-						selected_index = series_select.toUpperCase();
+						selected_index = window.localStorage.getItem('series_select').toUpperCase();
 						break;
 					case 'SEASON':
-						selected_index = season_select.toUpperCase();
+						selected_index = window.localStorage.getItem('season_select').toUpperCase();
 						break;
 				};
-			$('#printsearch').html(genre_select.toUpperCase()+' '+selected_index);
+			$('#printsearch').html(window.localStorage.getItem('genre_select').toUpperCase()+' '+selected_index);
 
             console.log("navGenre URL: " + jsonUrl);
             var jsondata = null;
@@ -87,7 +86,8 @@
 				//	 outputJson(data); 
                     updateHtml(data);
 				// adjust number per page with the popup width and poster + container width			
-                    pageData(40);
+                      if (window.localStorage.getItem("Paging") == 'true') { 	
+						pageData(40);} 
                 }
             });
             return jsondata;
@@ -99,7 +99,7 @@
      {
 			var COUNT_HEADER = {
                 'span.ReturnCount': function(arg) {	
-					return arg.context.count+' '+results_text;
+					return arg.context.count+' '+ window.localStorage.getItem('results_text');
 					}
 				};	
 		    var LIST_DIR = {
@@ -148,12 +148,7 @@
 			window.location.href="index_Genre.html";
 			Mypopup.focus();
 		}
-// ****************************** id or class with iscroll **************************************************************
-	var myScroll;
-	function loaded_iscroll () {
-	myScroll = new IScroll('#container_menu_left', { scrollX: true, scrollY: true, mouseWheel: true, click: true });
-	}
-	//   document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);	
+
 // *******************************to fix alt bug with chrome ***************************************************************************************
 	function showAlt(){$(this).replaceWith(this.alt)};
 	function addShowAlt(selector){$(selector).error(showAlt).attr("src", $(selector).src)};	
@@ -161,28 +156,7 @@
 
 		function set_context_lang_value ()
 		{
-			document.getElementById("allselect").innerHTML=all_select.toUpperCase();
-		//	document.getElementById("allgenre").innerHTML=all_genre.toUpperCase();
-			document.getElementById("movieselect").innerHTML=movie_select.toUpperCase();
-		//	document.getElementById("moviegenre").innerHTML=movie_select.toUpperCase();
-			document.getElementById("serieselect").innerHTML=series_select.toUpperCase();
-		//	document.getElementById("seriesgenre").innerHTML=series_select.toUpperCase();
-			document.getElementById("seasonselect").innerHTML=season_select.toUpperCase();	
-		//	document.getElementById("seasongenre").innerHTML=season_select.toUpperCase();
-			document.getElementById("genreindex").innerHTML=genre_select.toUpperCase();
-			document.getElementById("studioindex").innerHTML=studio_select.toUpperCase();
-			document.getElementById("personindex").innerHTML=person_select.toUpperCase();
-			document.getElementById("configindex").innerHTML=config_select.toUpperCase();
-			document.getElementById("searchindex").innerHTML=search_select.toUpperCase();
-			document.getElementById("remoteselect").innerHTML=remote_label.toUpperCase();
-			document.getElementById("yamj3select").innerHTML="YAMJ3";
-			document.getElementById("genrelistselect").innerHTML=genrelist_select.toUpperCase();
-			document.getElementById("certificationindex").innerHTML=certification_label.toUpperCase();
-			document.getElementById("ratingindex").innerHTML=rating_label.toUpperCase();
-			document.getElementById("videosourceindex").innerHTML=source_label.toUpperCase();
-			document.getElementById("boxsetindex").innerHTML=boxset_label.toUpperCase(); 
-			document.getElementById("countryindex").innerHTML=country_label.toUpperCase();
-			document.getElementById("awardsindex").innerHTML=awards_label.toUpperCase();
+
 		}
 
         </script>
@@ -195,6 +169,7 @@
 					
 				</ul>
 			</td>
+			<div class="info_config"><a href="javascript:ouvre_info_config()" ><img src="pictures/info2.png" alt="info" /></a></div>
 				<!-- display screen name and number of genre  --> 		
 					<div class="show_index_genre"><span id="printsearch"></span></div>
 					<div class="count_return_genre">
@@ -209,95 +184,24 @@
         <!--Navigation Holder-->
         <div class="holder"></div>
 	</div>
-	<!-- left menu with icon -->
-   	<img id="open_menu_left" src="pictures/icon-open_frame.png" style="position:absolute; top: 380px; left: 0px; z-index:12; visibility: visible;" height="100px" width="130px" onclick="toggle_menu_left ()" />
-	<img id="close_menu_left" src="pictures/icon-close_frame.png" style="position:absolute; top: 380px; left: 78px; z-index:12; visibility: hidden;" height="110px" width="130px" onclick="toggle_menu_left ()" />
-	<div id="container_menu_left" style="top:40px;">			
-		<ul id="monFormMenu" style="margin: 0px;">
-	
-				<li><a href="javascript:ChangeIndex('movie,series')">
-							<img src="pictures/icon/home_all_rv8.png" height="80px"  width="80px" alt="tv movie" />
-						</a><div id="allselect"></div>
-				</li>
-				<li><a href="javascript:ChangeIndex('movie')">
-							<img src="pictures/icon/home_movies_rv8.png" height="80px"  width="80px" alt="movie" align="top" />
-						</a><div id="movieselect"></div>
-				</li>
-				<li><a href="javascript:ChangeIndex('series')">
-							<img src="pictures/icon/home_tv shows_rv8.png" height="80px"  width="80px" alt="tv" />
-						</a><div id="serieselect"></div>
-				</li>
-				<li><a href="javascript:ChangeIndex('season')">
-							<img src="pictures/icon/home_apps_rv8.png" height="100px"  width="100px" style="position: relative; left:-10px" alt="season" />
-						</a><div id="seasonselect"></div>
-				</li>
-				<li><a href="javascript:call_personindex('false')">
-							<img src="pictures/icon/home_person_rv8.png" height="80px"  width="80px" alt="person"  />
-						</a><div id="personindex"></div>
-				</li>
-				<li><a href="javascript:call_genreindex(index_type, 'false')">
-							<img src="pictures/icon/home_genres2_rv8.png" height="80px"  width="80px" alt="genre" />
-						</a><div id="genreindex"></div>
-				</li>
-				<li><a href="javascript:call_countryindex(index_type, 'false')">
-							<img src="pictures/icon/home_country_rv8.png" height="80px"  width="80px" alt="country" />
-						</a><div id="countryindex"></div>
-				</li>
-				<li><a href="javascript:call_awardsindex(index_type, 'false')">
-							<img src="pictures/icon/home_awards_rv8.png" height="80px"  width="80px" alt="awards" />
-						</a><div id="awardsindex"></div>
-				</li>
-				<li><a href="javascript:ouvre_popup_search(StyleValue)">
-							<img src="pictures/icon/find.png" height="60px" width="65px" style="padding-left:10px" alt="find" />
-						</a><div id="searchindex"></div>
-				</li>
-				<li><a href="javascript:call_studioindex(index_type, 'false')">
-							<img src="pictures/icon/Studio.png" height="60px"  width="60px" style="position: relative; left:10px" alt="studio"  />
-						</a><div id="studioindex"></div>
-				</li>
-				<li><a href="javascript:call_ratingindex(index_type, 'false')">
-							<img src="pictures/icon/home_rating_rv8.png" height="80px"  width="80px" alt="rating"  />
-						</a><div id="ratingindex"></div>
-				</li>
-				<li><a href="javascript:call_certificationindex(index_type, 'false')">
-							<img src="pictures/icon/home_certification_rv8.png" height="90px"  width="100px"  style="position: relative; left:-10px" alt="certification"  />
-						</a><div id="certificationindex"></div>
-				</li>
-				<li><a href="javascript:call_videosourceindex(index_type, 'false')">
-							<img src="pictures/icon/home_videosource_rv8.png" height="80px"  width="80px" style="position: relative; left:0px" alt="videosource"  />
-						</a><div id="videosourceindex"></div>
-				</li>
-				<li><a href="javascript:call_boxsetindex(index_type, 'false')">
-							<img src="pictures/icon/home_set_rv8.png" height="100px"  width="100px" style="position: relative; left:-10px" alt="set"  />
-						</a><div id="boxsetindex"></div>
-				</li>
-				<li><a href="javascript:ouvre_config(StyleValue)">
-							<img src="pictures/icon/settings.png" height="80px" width="100px" style="padding-left:5px" alt="setting" />
-						</a><div id="configindex"></div>
-				</li>
-				<li><a href="javascript:ouvre_yamj3(); ">
-							<img src="pictures/icon/home.png" height="80px"  width="80px" alt="home" />
-						</a><div id="yamj3select"></div>
-				</li>
-				<li><a href="javascript:ouvre_genrelist(); ">
-							<img src="pictures/icon/list_genre.png" height="80px"  width="80px" alt="liste fenre" />
-						</a><div id="genrelistselect"></div>
-				</li>
-				<li><a href="javascript:ouvre_remote(); ">
-							<img src="pictures/icon/remote.png" height="70px"  width="70px" style="position: relative; left:6px" alt="remote" />
-						</a><div id="remoteselect"></div>
-				</li>
-		</ul>
-	</div>           
+<!-- add left menu dynamically from a separate file --> 
+	<div >
+      <object data="include_left_menu.html" type="text/html" id="my_left_menu"></object>
+    </div>
     <div id="main_index">			
 			<form id="monFormGenre">
 					<table align="right" >
 						<tr>
+							<td>
+								<a href="javascript:ouvre_popup_search(StyleValue, false)">
+									<img src="pictures/icon/find.png" height="35" width="35"  alt="find" />
+								</a>
+							</td>
 							<td>							
-								<a href="javascript:call_genreindex('movie,series', 'false')"><img src="pictures/icon/home_all_rv8.png" height="45px" width="45px" alt="tv movie"/><a>
-								<a href="javascript:call_genreindex('movie', 'false')"><img src="pictures/icon/home_movies_rv8.png" height="45x" width="45px" alt="movie" align="top" /></a>
-								<a href="javascript:call_genreindex('series', 'false')"><img src="pictures/icon/home_tv shows_rv8.png" height="45px" width="45px" alt="tv" /></a>
-								<a href="javascript:call_genreindex('season', 'false')"><img src="pictures/icon/home_apps_rv8.png" height="45px" width="45px" alt="season" /></a>
+								<a href="javascript:call_genreindex('movie,series', '_self')"><img src="pictures/icon/home_all_rv8.png" height="45" width="45" alt="tv movie"/><a>
+								<a href="javascript:call_genreindex('movie', '_self')"><img src="pictures/icon/home_movies_rv8.png" height="45x" width="45" alt="movie" align="top" /></a>
+								<a href="javascript:call_genreindex('series', '_self')"><img src="pictures/icon/home_tv_shows_rv8.png" height="45" width="45" alt="tv" /></a>
+								<a href="javascript:call_genreindex('season', '_self')"><img src="pictures/icon/home_apps_rv8.png" height="45" width="45" alt="season" /></a>
 							</td>
 						</tr>
 					</table>
@@ -307,7 +211,7 @@
 		<div id="container">
             <div id="yRow" class="row_genre">
                 <div id="yBlock" class="genre_block">
-                    <img class="genre_logo" src=""><br>
+                    <img class="genre_logo" src="./pictures/genres/zap_autres_on2.png" alt="genres"><br>
                     <span class="name"></span>
                 </div>
             </div>

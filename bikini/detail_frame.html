@@ -53,21 +53,17 @@
 			var DETAIL_HEADER = {
 							'span.header_title_frame': function (arg) {
 								season_title = arg.context.result.title;
-								if (indextype.toLowerCase() == 'season')
-								{
-								store_SeriesId (arg.context.result.seriesId);
-								return arg.context.result.title + ' '+season_label+': '+ arg.context.result.season;
-								} else {return arg.context.result.title;}
-							},
-							'span.header_year_frame': 'result.videoYear',
-							'span.header_id_frame': function (arg) {
-									if (indextype.toLowerCase() == 'series')   
+								if (indextype.toLowerCase() == 'series')   
 										{ 
 										store_SeriesId (arg.context.result.id);   // store the series id for next navigation 
-							
+										
 										}
-								return arg.context.result.id;
-								}
+								if (indextype.toLowerCase() == 'season')
+								{
+								store_SeriesId (arg.context.result.seriesId);    // store the series id for next navigation 
+								return arg.context.result.title + ' '+localStorage.getItem('season_label')+': '+ arg.context.result.season+ " (" + arg.context.result.videoYear + ") " + "id: " + arg.context.result.id;
+								} else {return arg.context.result.title + " (" + arg.context.result.videoYear + ") " + "id: " + arg.context.result.id;}
+							}
 						
 						}; // end DETAIL_HEADER
 						
@@ -76,15 +72,15 @@
                 'span.plot_frame': function(arg) {
 				// check if plot is available 
 					if (arg.context.result.plot) {
-							return "<text>"+plot_label.toUpperCase()+"</text>" +arg.context.result.plot;
+							return "<text>"+localStorage.getItem('plot_label').toUpperCase()+"</text>" +arg.context.result.plot;
 								} else {
-							return "<text>"+noplot_text.toUpperCase()+"</text>";
+							return "<text>"+localStorage.getItem('noplot_text').toUpperCase()+"</text>";
 							}
 				},
                 'span.genres_frame': function(arg)
                 {
                     var genres = arg.context.result.genres;
-                    var output = "<text>"+genre_label.toUpperCase()+"</text>";
+                    var output = "<text>"+localStorage.getItem('genre_label').toUpperCase()+"</text>";
                     var first_genres = true;
 					// loop thru the list of genres
                     for (i = 0; i < genres.length; i++) {
@@ -174,8 +170,8 @@
 											
 											return ;
 											break;
-										case 'movie':	
-											return "play_to_device(\""+arg.context.result.files[0].fileName+"\")";
+										case 'movie':
+											return "direct_play('"+arg.context.result.videoType+"', " + arg.context.result.id + ")";
 											break;
 										case 'series':
 											
@@ -209,9 +205,11 @@
 				'span.filepath_frame': function(arg)
 							{
 								var files = arg.context.result.files;
-								return "<text>"+file_label.toUpperCase()+"</text>"+  files[0].fileName;
-							}
-				
+								return "<text>"+localStorage.getItem('file_label').toUpperCase()+"</text>"+  files[0].fileName;
+							},
+				"img.detail_icon_frame@onclick": function(arg) {
+                        return "setId('" + arg.context.result.videoType + "', " + arg.context.result.id + ")";
+                    },
             }; // end YAMJ_DIR
 
 					
@@ -273,7 +271,7 @@
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
 		function set_context_lang_value ()
 		{
-			document.getElementById("seasonlabel").innerHTML=season_label;
+			document.getElementById("seasonlabel").innerHTML=localStorage.getItem('season_label');
 		} // end set_context_lang_value
 		
   // ********************* NOW SET VARIOUS FUNCTION **********************************************  
@@ -418,6 +416,14 @@
            $p('.counttest').render(data, ITEM_COUNT);
         } // end updateItemCount
 		
+		
+	 function setId(type, id)
+        {
+            window.localStorage.setItem("indextype", type);
+            window.localStorage.setItem("id", id);
+            console.log("setId Storing value: " + type + "-" + id);
+            parent.window.location.href="detail.html";
+        }	
 
 	// set a new id in the last sequence
 		function set_onlyId(Newid)
@@ -496,9 +502,9 @@
 				switch (indextype.toLowerCase())
 					{
 					case 'season':
-						$('.moviedetail_frame').css('top', '55px');
+						$('.moviedetail_frame').css('top', '12%');
 						$('.moviedetail_frame').css('left', '0px');
-						$('.moviedetail_frame').css('max-width', '955px');
+						$('.moviedetail_frame').css('width', '99.6%');
 						$('div#slideshowBanner').css('visibility', 'visible');
 						$('.episode_detail').css('visibility', 'visible');
 						$('.play_frame').mouseover(function() {
@@ -518,9 +524,9 @@
 							});
 						break;
 					case 'series':
-						$('.moviedetail_frame').css('top', '55px');
+						$('.moviedetail_frame').css('top', '12%');
 						$('.moviedetail_frame').css('left', '0px');
-						$('.moviedetail_frame').css('max-width', '955px');
+						$('.moviedetail_frame').css('width', '99.6%');
 						$('div#slideshowBanner').css('visibility', 'visible');
 						$('.seasontable_frame').css('visibility', 'visible');
 						$('.play_frame').mouseover(function() {
@@ -584,20 +590,18 @@
     <body onload="getData();" >
 	
 	<!-- show the close button , allow to close the frame  -->
-	<div id="close_icon" style="position: absolute;	top: 9px; left: 905px; z-index: 10;" onclick="close_frame()"><img src="./pictures/close2.png" /></div>
-
+	<div id="close_icon_frame" onclick="close_frame()"><img src="./pictures/close2.png" /></div>
+	
+	
 	<!--  header for movie/series name -->
 		<div class="header_frame" >
 			<table>
 				<tr>
 	
-					<td width="950px"  >
+					<td>
 					<!--	<span class="header_type" ></span> -->
 						<span class="header_title_frame" ></span>
-						<span class="header_text_frame" > (</span>
-						<span class="header_year_frame" ></span>
-						<span class="header_text_frame">) id:</span>
-						<span class="header_id_frame" ></span>
+					
 					</td>
 				</tr>
 			</table>
@@ -617,7 +621,10 @@
 		<div class="poster_results" style="visibility: hidden; display:none;">
 			<table><tr><td class="Poster_Value"></td></tr></table>
 		</div>
-
+	<!-- just added to set the video basename value, shouldn't be displayed  -->
+		<div class="directplay" style="display:none">
+			<span class="filepath"></span>
+		</div>
 	<!-- main table for detail page -->
         <div class="template"> 
            <table style="border: 0px; position: absolute; left: -3px; top: 0px;">
@@ -627,7 +634,7 @@
 						<td rowspan="1">
                             <div id="slideshowFanart" >
                                 <div id="imgRollFanart">
-                                    <img class="fanart" src="" height="540px" width="960px"/>
+                                    <img class="fanart" src="./pictures/dummy_fanart.png" alt="fanart"  height="540" width="960"/>
                                 </div>
                             </div>
                             <a id="nextFanart"> </a>
@@ -637,16 +644,18 @@
 						<td rowspan="10">
                             <div id="slideshowCtr" style="width: 112px; height: 166px; left:5px;  ">
                                 <div id="imgRoll">
-                                    <img class="poster" src="" height="166px" width="112px"/>
+                                    <img class="poster" src="./pictures/dummy.png" height="166" width="112" alt="poster"/>
                                 </div>
                             </div>
 						
 						<!-- play button, show icon of movie or TV, click open the play dialogue box -->
-							<img class="play_frame" src="" />
+							<img class="play_frame" src="./pictures/play.png" alt="play" />
+						<!-- add button , allow to jump to the detail windows  -->
+							<img class="detail_icon_frame" src="pictures/add.png" alt="detail"/>
 
 						<!-- next , previous button -->
-                            <a id="next"><img src="./pictures/next.png" /></a>
-                            <a id="prev"><img src="./pictures/previous.png" /></a>
+                            <a id="next"><img src="./pictures/next.png" alt="next" /></a>
+                            <a id="prev"><img src="./pictures/previous.png" alt="previous" /></a>
                         </td>        
                     
 					<!-- Banner animation, automatic every 10s, if more than one Banner -->
@@ -656,8 +665,8 @@
                                     <img class="banner" src="" />
                                 </div>
                             </div>
-								<a id="nextBanner"><img src="./pictures/next.png" /></a>
-								<a id="prevBanner"><img src="./pictures/previous.png" /></a>
+								<a id="nextBanner"><img src="./pictures/next.png" alt="next" /></a>
+								<a id="prevBanner"><img src="./pictures/previous.png" alt="previous" /></a>
                         </td>
 					</tr>
 			<!-- split table for image and text --> 

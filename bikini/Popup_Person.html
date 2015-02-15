@@ -65,7 +65,7 @@
 								{
 									return arg.context.result.birthDay;
 								} else {
-								return nobirthday_text;
+								return window.localStorage.getItem("nobirthday_text");
 								}
 							},
                     'span.biography': function(arg) {
@@ -73,7 +73,7 @@
 								{
 									return arg.context.result.biography;
 								} else {
-								return nobiography_text;
+								return window.localStorage.getItem("nobiography_text");
 								}
 							},
                     'span.image': function(arg) {
@@ -94,7 +94,7 @@
 						'span.filmography': function(arg)
 						{
 							var filmography_list = arg.context.result.filmography;
-							var output = temp_output = "<table id='filmography_table'><tr><td border='2px' width='50px'>" + year_label + "</td><td border='2px' width='500px'>" + title_label + "</td><td border='2px' width='500px'>job</td></tr></table>";
+							var output = temp_output = "<table id='filmography_table'><tr><td border='2px' width='50px'>" + window.localStorage.getItem('year_label') + "</td><td border='2px' width='500px'>" + window.localStorage.getItem('title_label') + "</td><td border='2px' width='500px'>job</td></tr></table>";
 							if (arg.context.result.filmography) {
 							// loop thru the list of filmography
 							for (i = 0; i < filmography_list.length; i++)
@@ -137,7 +137,8 @@
 			{
  				var LIST_FILMOGRAPHY_INSIDE = { 
 				'span.filmography_inside': function(arg)
-						{
+					{
+						if (arg.context.result.filmography) {
 						var filmography_inside_list = arg.context.result.filmography;
 						$('.Filmography_in').css('display', 'none'); 
 						$('.result_filmography_inside').empty();
@@ -150,6 +151,7 @@
 					//	var output_inside = "<text>Inside filmography: </text><br>";
 					//	 $('.filmography_inside').append(output_inside);
 							// loop thru the list of filmography
+					//		console.log ('Popup_person loop thru filmography inside');
 							for (i = 0; i < filmography_inside_list.length; i++) {	
 								if (filmography_inside_list[i].type == "MOVIE")
 									{
@@ -179,7 +181,8 @@
 									}
 							}
 							return output_inside;
-						}	
+						} else return '';
+					}
 				};
 				$p('.result_filmography_inside').render(Filmography_inside_data, LIST_FILMOGRAPHY_INSIDE);
             }			
@@ -1180,7 +1183,7 @@
                     
 					<td>
 				<div id="close_icon" onclick="close_person()" style="position: absolute; top: 0px; right: 0px;"><img src="./pictures/close2.png" width="40"/></div>
-				<a id="back_icon" href="javascript:back()"><img src="./pictures/returnbutton.png" width="30px" align="left" /></a>
+				<a id="back_icon" href="javascript:back()"><img src="./pictures/returnbutton.png" width="30" align="left" /></a>
 					<span class="name"></span>: 
                     <span class="birthPlace"></span> - 
                     <span class="birthDay"></span>

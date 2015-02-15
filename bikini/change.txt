@@ -1,4 +1,20 @@
 change.txt
+V1.4.0
+- adjust all mediainfo display when no value is available 
+- rebuild: internal rework of all language call to store in local storage rather than openning file each time 
+- rebuild: internal rework of all programs to fix error according with W3C rules 
+- add dummy for each image type or add .png if .jpeg
+- add alt value for each image
+- add info button on each index and nav page 
+- modify: all index and nav page to adjust number of poster per line / per page with the dimension of the windows (responsive response) 
+- rebuild: internal rework of left menu frame to include in an object tag
+- add + button to jump to the detail of the movie selected in detail_frame 
+- fix: player path translation with library.xml contents
+- fix: player setting in config page 
+- add poster border to all index page 
+- adjust all title line, height, width, position in index page according with the poster's number selected 
+- fix when there is no filmography inside 
+- add translation for config 
 V1.3.5
 - add 3D animation on detail page 
 - add videosource logo on detail page 

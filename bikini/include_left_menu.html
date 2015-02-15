@@ -1,0 +1,151 @@
+	
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=yes" />
+        
+        <script src="js/jQuery.js"></script>
+        <!-- Used for the JSON parsing -->
+        <script src="js/pure.js"></script>
+        <!-- Used for the paging of the index -->
+        <script src="js/js.js"></script>
+		<script src="js/my_remote.js"></script>
+        <script src="js/jPages.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/lang.js"></script>
+		<!-- Used for config  setting -->
+		<script src="js/config.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>
+		<script src="js/library.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
+        <!-- Used for the paging of the index -->
+        <link rel="stylesheet" href="css/jPages.css">
+        <!-- Used for the fancy animations -->
+        <link rel="stylesheet" href="css/animate.css">
+		<!-- used for iscroll special -->
+		<script type="text/javascript" src="js/iscroll.js"></script>
+
+    </head>
+
+	<body onload="loaded_iscroll(); get_lang(); get_style();" style="background-image:url(./pictures/empty.png);">
+		<script type="text/javascript">
+		var LangValue = "en";
+		var index_type = "all";
+			if (window.localStorage.getItem("indextype"))
+				{index_type = window.localStorage.getItem("indextype");}
+				else {window.localStorage.setItem("indextype", index_type);}
+		
+		// ****************************** id or class with iscroll **************************************************************
+		var myScroll;
+		function loaded_iscroll () {
+		myScroll = new IScroll('#container_menu_left', { scrollX: false, scrollY: true, mouseWheel: true, click: true });
+		}
+		 //************************ LANGUAGE LOCAL SETTING *********************************************
+		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
+		function set_context_lang_value ()
+		{
+			document.getElementById("allselect").innerHTML=window.localStorage.getItem('all_select').toUpperCase();
+			document.getElementById("movieselect").innerHTML=window.localStorage.getItem('movie_select').toUpperCase();
+			document.getElementById("serieselect").innerHTML=window.localStorage.getItem('series_select').toUpperCase();
+			document.getElementById("seasonselect").innerHTML=window.localStorage.getItem('season_select').toUpperCase();
+			document.getElementById("genreindex").innerHTML=window.localStorage.getItem('genre_select').toUpperCase();
+			document.getElementById("studioindex").innerHTML=window.localStorage.getItem('studio_select').toUpperCase();
+			document.getElementById("personindex").innerHTML=window.localStorage.getItem('person_select').toUpperCase();
+			document.getElementById("configindex").innerHTML=window.localStorage.getItem('config_select').toUpperCase();
+	//		document.getElementById("searchindex").innerHTML=window.localStorage.getItem('search_select').toUpperCase();
+			document.getElementById("remoteselect").innerHTML=window.localStorage.getItem('remote_label').toUpperCase();
+			document.getElementById("yamj3select").innerHTML="YAMJ3";
+			document.getElementById("genrelistselect").innerHTML=window.localStorage.getItem('genrelist_select').toUpperCase();
+			document.getElementById("certificationindex").innerHTML=window.localStorage.getItem('certification_label').toUpperCase();
+			document.getElementById("ratingindex").innerHTML=window.localStorage.getItem('rating_label').toUpperCase();
+			document.getElementById("videosourceindex").innerHTML=window.localStorage.getItem('source_label').toUpperCase();
+			document.getElementById("boxsetindex").innerHTML=window.localStorage.getItem('boxset_label').toUpperCase();
+			document.getElementById("countryindex").innerHTML=window.localStorage.getItem('country_label').toUpperCase();
+			document.getElementById("awardsindex").innerHTML=window.localStorage.getItem('awards_label').toUpperCase();
+
+		}
+		</script>
+	<!-- left menu with icon -->
+	<img id="open_menu_left" src="./pictures/icon-open_frame.png" style="position:absolute; top: 380px; left: 0px; z-index:12; visibility: visible;" height="100" width="130" onclick="toggle_menu_left ()" alt="open" />
+	<img id="close_menu_left" src="./pictures/icon-close_frame.png" style="position:absolute; top: 380px; left: 78px; z-index:12; visibility: hidden;" height="110" width="130" onclick="toggle_menu_left ()" alt="close"/>
+	<div id="container_menu_left" style="top:40px;">			
+		<ul id="monFormMenu" style="margin: 0px;">
+	
+				<li><a href="javascript:ChangeIndex('movie,series'); ">
+							<img src="./pictures/icon/home_all_rv8.png" height="80"  width="80" alt="tv movie" />
+						</a><div id="allselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('movie'); ">
+							<img src="./pictures/icon/home_movies_rv8.png" height="80"  width="80" alt="movie" align="top" />
+						</a><div id="movieselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('series'); ">
+							<img src="./pictures/icon/home_tv_shows_rv8.png" height="80"  width="80" alt="tv" />
+						</a><div id="serieselect"></div>
+				</li>
+				<li><a href="javascript:ChangeIndex('season'); ">
+							<img src="./pictures/icon/home_apps_rv8.png" height="100"  width="100" style="position: relative; left:-10px" alt="season" />
+						</a><div id="seasonselect"></div>
+				</li>
+				<li><a href="javascript:call_personindex('_parent'); ">
+							<img src="./pictures/icon/home_person_rv8.png" height="80"  width="80" alt="person"  />
+						</a><div id="personindex"></div>
+				</li>
+				<li><a href="javascript:call_genreindex(index_type, '_parent'); ">
+							<img src="./pictures/icon/home_genres2_rv8.png" height="80"  width="80" alt="genre" />
+						</a><div id="genreindex"></div>
+				</li>
+				<li><a href="javascript:call_countryindex(index_type, '_parent');">
+							<img src="./pictures/icon/home_country_rv8.png" height="80"  width="80" alt="country" />
+						</a><div id="countryindex"></div>
+				</li>
+				<li><a href="javascript:call_awardsindex(index_type, '_parent'); ">
+							<img src="./pictures/icon/home_awards_rv8.png" height="80"  width="80" alt="awards" />
+						</a><div id="awardsindex"></div>
+				</li>
+	<!--			<li><a href="javascript:ouvre_popup_search(StyleValue, true);">
+							<img src="./pictures/icon/find.png" height="60" width="65" style="padding-left:10px" alt="find" />
+						</a><div id="searchindex"></div>
+				</li> -->
+				<li><a href="javascript:call_studioindex(index_type, '_parent'); ">
+							<img src="./pictures/icon/Studio.png" height="60"  width="60" style="position: relative; left:10px" alt="studio"  />
+						</a><div id="studioindex"></div>
+				</li>
+				<li><a href="javascript:call_ratingindex(index_type, '_parent');">
+							<img src="./pictures/icon/home_rating_rv8.png" height="80"  width="80" alt="rating"  />
+						</a><div id="ratingindex"></div>
+				</li>
+				<li><a href="javascript:call_certificationindex(index_type, '_parent'); ">
+							<img src="./pictures/icon/home_certification_rv8.png" height="90"  width="100"  style="position: relative; left:-10px" alt="certification"  />
+						</a><div id="certificationindex"></div>
+				</li>
+				<li><a href="javascript:call_videosourceindex(index_type, '_parent');">
+							<img src="./pictures/icon/home_videosource_rv8.png" height="80"  width="80" style="position: relative; left:0px" alt="videosource"  />
+						</a><div id="videosourceindex"></div>
+				</li>
+				<li><a href="javascript:call_boxsetindex(index_type, '_parent');">
+							<img src="./pictures/icon/home_set_rv8.png" height="100"  width="100" style="position: relative; left:-10px" alt="set"  />
+						</a><div id="boxsetindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_config_page(StyleValue);">
+							<img src="./pictures/icon/settings.png" height="80" width="100" style="padding-left:5px" alt="setting" />
+						</a><div id="configindex"></div>
+				</li>
+				<li><a href="javascript:ouvre_yamj3(); ">
+							<img src="./pictures/icon/home.png" height="80"  width="80" alt="home" />
+						</a><div id="yamj3select"></div>
+				</li>
+				<li><a href="javascript:ouvre_genrelist('_parent'); ">
+							<img src="./pictures/icon/list_genre.png" height="80"  width="80" alt="liste fenre" />
+						</a><div id="genrelistselect"></div>
+				</li>
+				<li><a href="javascript:ouvre_remote();  ">
+							<img src="./pictures/icon/remote.png" height="70"  width="70" style="position: relative; left:6px" alt="remote" />
+						</a><div id="remoteselect"></div>
+				</li>
+		</ul>
+	</div>
+</body>
+</html>

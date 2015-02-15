@@ -56,6 +56,7 @@
 	<namelabel>nachname</namelabel>
 	<nbrow>anzahl der zeilen</nbrow>	
 	<nextremotelabel>nachste</nextremotelabel>
+	<new>neu</new>
 	<nobiography>Biografie abwesend</nobiography>
 	<nobirthday>Geburtsdatum unbekannt</nobirthday>
 	<noplot>keine synopse vorhanden</noplot>
@@ -72,6 +73,7 @@
 	<playlabel>spielen auf </playlabel>
 	<plotlabel>synopse</plotlabel>
 	<powerlabel>macht</powerlabel>
+	<prefered>favorit</prefered>
 	<prevremotelabel>fruher</prevremotelabel>
 	
 	<ratinglabel>wertung</ratinglabel>
@@ -89,11 +91,13 @@
 	<seasonlabel>jahreszeit</seasonlabel>
 	<seasonselected>jahreszeit</seasonselected>
 	<selection>auswahl</selection>
+	<selected>ausgewahlt</selected>
 	<selectionlabel>auswahl</selectionlabel>
 	<serieslabel>serie</serieslabel>
 	<serieselected>serie</serieselected>
 	<setuplabel>setup</setuplabel>
 	<show>band</show>
+	<skin>skin</skin>
 	<sourcelabel>ursprung</sourcelabel>
 	<startlabel>beginnt mit</startlabel>
 	<stoplabel>stoppen</stoplabel>

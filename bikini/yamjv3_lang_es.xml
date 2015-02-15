@@ -56,6 +56,7 @@
 	<namelabel>appelido</namelabel>	
 	<nbrow>nb de fila</nbrow>
 	<nextremotelabel>proximo</nextremotelabel>
+	<new>nuevo</new>
 	<nobiography>sin biografía</nobiography>
 	<nobirthday>la fecha de nacimiento</nobirthday>
 	<noplot>sin sinopse disponible</noplot>
@@ -71,6 +72,7 @@
 	<playerselected>del jugador</playerselected>
 	<plotlabel>sinopse</plotlabel>
 	<powerlabel>potencia</powerlabel>
+	<prefered>favorito</prefered>
 	<prevremotelabel>anterior</prevremotelabel>
 	
 	<ratinglabel>clasification</ratinglabel>
@@ -88,11 +90,13 @@
 	<seasonlabel>temporada</seasonlabel>
 	<seasonselected>temporada</seasonselected>
 	<selection>selección</selection>
+	<selected>selecionnado</selected>
 	<selectionlabel>seleccion</selectionlabel>
 	<serieslabel>serie</serieslabel>
 	<serieselected>serie</serieselected>
 	<setuplabel>disposicion</setuplabel>
 	<show>cinta</show>
+	<skin>skin</skin>
 	<sourcelabel>origen</sourcelabel>
 	<startlabel>comienza con</startlabel>
 	<stoplabel>alto</stoplabel>

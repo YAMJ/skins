@@ -101,7 +101,7 @@
 							}
 						break;
 					case 'GENRE':
-						call_genreindex('all', 'true');
+						call_genreindex('all', 'YAMJv3 Navigation genre index');
 						break;
 				// NAME and PERSON have the same call_person 
 					case 'NAME':
@@ -167,30 +167,21 @@
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
 		function set_context_lang_value ()
 		{
-			document.getElementById("startlabel").innerHTML=start_label.toUpperCase();
-			document.getElementById("anylabel").innerHTML=any_label.toUpperCase();
-			document.getElementById("personlabel").innerHTML=person_select.toUpperCase();
-			document.getElementById("yearlabel").innerHTML=year_label.toUpperCase();;
-			document.getElementById("namelabel").innerHTML=name_label.toUpperCase();
-			document.getElementById("movielabel").innerHTML=movie_select.toUpperCase();
-			document.getElementById("serieslabel").innerHTML=series_select.toUpperCase();
-			document.getElementById("alllabel").innerHTML=all_select.toUpperCase();
-			document.getElementById("seasonlabel").innerHTML=season_select.toUpperCase();
-			document.getElementById("asclabel").innerHTML=asc_label.toUpperCase();
-			document.getElementById("desclabel").innerHTML=desc_label.toUpperCase();
-		//	document.getElementById("watchedlabel").innerHTML=watched_select.toUpperCase();
-		//	document.getElementById("unwatchedlabel").innerHTML=unwatched_select.toUpperCase();
-		//	document.getElementById("watched_and_unwatchedlabel").innerHTML=all_label.toUpperCase();
+			document.getElementById("startlabel").innerHTML=window.localStorage.getItem("start_label").toUpperCase();
+			document.getElementById("anylabel").innerHTML=window.localStorage.getItem("any_label").toUpperCase();
+			document.getElementById("personlabel").innerHTML=window.localStorage.getItem("person_select").toUpperCase();
+			document.getElementById("yearlabel").innerHTML=window.localStorage.getItem("year_label").toUpperCase();;
+			document.getElementById("namelabel").innerHTML=window.localStorage.getItem("name_label").toUpperCase();
+			document.getElementById("movielabel").innerHTML=window.localStorage.getItem("movie_select").toUpperCase();
+			document.getElementById("serieslabel").innerHTML=window.localStorage.getItem("series_select").toUpperCase();
+			document.getElementById("alllabel").innerHTML=window.localStorage.getItem("all_select").toUpperCase();
+			document.getElementById("seasonlabel").innerHTML=window.localStorage.getItem("season_select").toUpperCase();
+			document.getElementById("asclabel").innerHTML=window.localStorage.getItem("asc_label").toUpperCase();
+			document.getElementById("desclabel").innerHTML=window.localStorage.getItem("desc_label").toUpperCase();
 			document.getElementById("new_creationlabel").innerHTML="INDEX";
 			document.getElementById("new_lastscanlabel").innerHTML="SCAN";
 			document.getElementById("new_filelabel").innerHTML="FICHIER";
-		//	document.getElementById("new_label").innerHTML="NOUVEAUTE";
-		//	document.getElementById("old_label").innerHTML="SANS NOUVEAUTE";
-			
-		//	document.getElementById("ribbonlabel").innerHTML=show.toUpperCase();
-		//	document.getElementById("framelabel").innerHTML='FRAME';
-		//	document.getElementById("pagelabel").innerHTML=page_label.toUpperCase();
-		
+		 
 		}
         </script>
 
@@ -200,7 +191,7 @@
 		</div>
 		<div id="close_icon" onclick="close_search()"><img src="./pictures/close2.png" /></div>
 		</div >
-		<div id="main_index" style="width: auto; left: 25px;">
+		<div id="main_index_search" style="width: auto; left: 25px;">
 		<!-- search by letter -->				
 						
 			<form id="monForm" >
@@ -305,7 +296,7 @@
 						-->
 
 									
-									<img src="pictures/icon/home_new_rv8.png" height="50px"  width="50px" alt="newest" />
+									<img src="pictures/icon/home_new_rv8.png" height="50"  width="50" alt="newest" />
 									<select id="newest_icon" style="position:relative; top:-15px; left:-10px;" onchange="newest_asked = true; newest_value =  document.getElementById('newest_icon').value" >
 												<option value=""></option>
 												<option value="0">0</option>

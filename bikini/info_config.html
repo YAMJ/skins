@@ -74,16 +74,15 @@
 		function set_context_lang_value ()
 		{
 
-			document.getElementById("SkinSetted").innerHTML="current skin " + window.localStorage.getItem("skinset").substring(0,(window.localStorage.getItem("skinset").length - 1)) ;
-			// document.getElementById("skinlabel").innerHTML="select SKIN ";
-			document.getElementById("pagingSetted").innerHTML="current Paging: " + window.localStorage.getItem("Paging");
-			document.getElementById("playerSetted").innerHTML="current Player: " + window.localStorage.getItem("Player");
-			document.getElementById("newSetted").innerHTML="current New: " + window.localStorage.getItem("New");
-			document.getElementById("rowSetted").innerHTML="current row Per Page: " + window.localStorage.getItem("RowperPage");
-			document.getElementById("styleSetted").innerHTML="current Style: " + window.localStorage.getItem("Style");
-			document.getElementById("langSetted").innerHTML="current Language: " + window.localStorage.getItem("Lang");
-			document.getElementById("prefered_pageSetted").innerHTML="current Prefered Page: " + window.localStorage.getItem("prefered_page");
-			document.getElementById("configindex").innerHTML=config_select.toUpperCase();
+			document.getElementById("SkinSetted").innerHTML=window.localStorage.getItem("skin_") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("skinset").substring(0,(window.localStorage.getItem("skinset").length - 1)) ;
+			document.getElementById("pagingSetted").innerHTML=window.localStorage.getItem("page_label") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("Paging");
+			document.getElementById("playerSetted").innerHTML=window.localStorage.getItem("player_select") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("Player");
+			document.getElementById("newSetted").innerHTML=window.localStorage.getItem("new_") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("New");
+			document.getElementById("rowSetted").innerHTML=window.localStorage.getItem("nbofrow") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("RowperPage");
+			document.getElementById("styleSetted").innerHTML=window.localStorage.getItem("style_label") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("Style");
+			document.getElementById("langSetted").innerHTML=window.localStorage.getItem("lang_label") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("Lang");
+			document.getElementById("prefered_pageSetted").innerHTML=window.localStorage.getItem("prefered_") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("prefered_page");
+			document.getElementById("configindex").innerHTML=window.localStorage.getItem("config_select").toUpperCase();
 		}
 		
  		</script>
@@ -99,7 +98,7 @@
 		
 		<div id="headertable_config" style="width: 80%; margin: auto; position: absolute; top: 50px; left: 100px; "	>
 			<h2 style="color: white; text-align: center;"><span id="SkinSetted" ></span> </h2>
-			<div id="main_index" style="position: relative; left: 120px; text-align: left; font-weight:bold; padding: 2px 10px 2px 10px;">
+			<div id="main_index_config" style="position: relative; left: 120px; text-align: left; font-weight:bold; padding: 2px 10px 2px 10px;">
 		
 				<!-- select skin  -->
 							<table>
@@ -121,7 +120,7 @@
 		</div>
 		<div>
 			<a href="javascript:close_info_config (); ouvre_config_page(StyleValue)">
-				<img src="pictures/icon/settings.png" height="80px" width="100px" style="padding-left:5px" alt="setting" />
+				<img src="pictures/icon/settings.png" height="80" width="100" style="padding-left:5px" alt="setting" />
 			</a><div id="configindex"></div>
 		</div>
 	</div>

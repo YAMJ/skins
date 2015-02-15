@@ -56,6 +56,7 @@
 	<namelabel>cognome</namelabel>	
 	<nbrow>nb di fila</nbrow>
 	<nextremotelabel>prossimo</nextremotelabel>
+	<new>nuovo</new>
 	<nobiography>biografia assente</nobiography>
 	<nobirthday>data di nascita sconosciuta</nobirthday>
 	<noplot>non sinossi disponibili</noplot>
@@ -71,6 +72,7 @@
 	<playlabel>giocare su </playlabel>
 	<plotlabel>sinossi</plotlabel>
 	<powerlabel>potenza</powerlabel>
+	<prefered>favorito</prefered>
 	<prevremotelabel>precedente</prevremotelabel>
 	
 	<ratinglabel>valutazione</ratinglabel>
@@ -88,11 +90,13 @@
 	<seasonlabel>stagione</seasonlabel>
 	<seasonselected>stagione</seasonselected>
 	<selection>selezione</selection>
+	<selected>selezionato</selected>
 	<selectionlabel>selezione</selectionlabel>
 	<serieslabel>serie</serieslabel>
 	<serieselected>serie</serieselected>
 	<setuplabel>impostazione</setuplabel>
 	<show>nastro</show>
+	<skin>skin</skin>
 	<sourcelabel>origine</sourcelabel>
 	<startlabel>inizia con</startlabel>
 	<stoplabel>stop</stoplabel>

@@ -15,10 +15,19 @@
 		var target_path = new Array ();
 		var player_list = new Array(); 	
 		var player_select_rank = 0;
+		
 	// fetch the value in the config database
 		var default_player = 'C200';
-		function get_player()
-			{
+	
+		// fetch the value in the config database
+		function get_player_()
+				{if (localStorage.getItem("skinset"))
+					{skin_value = localStorage.getItem("skinset");}
+				else {
+						skin_value = 'bikini_skin_0_';
+						localStorage.setItem("skinset", skin_value);
+					}
+			
 				var jsonPlayerUrl = "/yamj3/api/config/list.json?config="+skin_value+"player&mode=any";
 				console.log("get_player jsonPlayerUrl: " + jsonPlayerUrl);
 				$.ajax({

@@ -1,4 +1,6 @@
 change.txt
+V1.4.1
+- add missing pictures
 V1.4.0
 - adjust all mediainfo display when no value is available 
 - rebuild: internal rework of all language call to store in local storage rather than openning file each time 

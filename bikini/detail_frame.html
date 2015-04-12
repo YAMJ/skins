@@ -2,7 +2,7 @@
 <html>
     <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>YAMJ v3 detail page</title>
+        <title>YAMJ v3 detail frame</title>
         <script src="js/jQuery.js"></script>
         <script src="js/pure.js"></script>
 		<!-- Used for skin language setting -->
@@ -361,9 +361,9 @@
 								if (totalepisode_title[i].videoimage) {
 							// construct an activ episode list, click on an episode will display title, videoimage, plot and prepare the filepath to play 
 						
-								outputepisode_title +=	"<td id='video_frame"+[i]+"'><img onmouseover=\"border_on(this)\" onmouseout=\"border_off(this)\" onclick=\"display_Episode_Plot ('episodeplot_frame"+[i]+"', "+[i]+"); \" src=\"" + arg.context.baseArtworkUrl + totalepisode_title[i].videoimage + "\" height=\"100\" style=\"outline: 1px solid grey;\" ><br>"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</td>";
+								outputepisode_title +=	"<td id='video_frame"+[i]+"'><img onmouseover=\"border_on(this)\" onmouseout=\"border_off(this)\" onclick=\"display_Episode_Plot ('episodeplot_frame"+[i]+"', "+[i]+"); \" src=\"" + arg.context.baseArtworkUrl + totalepisode_title[i].videoimage + "\"  style=\"outline: 1px solid grey; height: 10vw;\" ><br>"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</td>";
 								} else {
-								outputepisode_title +=	"<td id='video_frame'><img src=\"./pictures/dummy_videoimage.jpg\" height=\"100\"><br>"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</td>";
+								outputepisode_title +=	"<td id='video_frame'><img src=\"./pictures/dummy_videoimage.jpg\" style=\"height: 10vw;\"><br>"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</td>";
 								}
 							}
 							return outputepisode_title;
@@ -485,13 +485,14 @@
 			{
 				parent.document.getElementById('detail_display').style.zIndex = '11';
 				$('div#slideshowCtr').css('visibility', 'visible');
-				$('div#slideshowCtr').css('width', '112px');
-				$('div#slideshowCtr').css('height', '166px');
+				$('div#slideshowCtr').css('width', '16vw');
+			//	$('div#slideshowCtr').css('height', '18vw');
 				$('div#slideshowCtr').css('left', '5px');
-				$('div#slideshowCtr').css('top', '360px');
+				$('div#slideshowCtr').css('bottom', '2%');
 				$('div#slideshowFanart').css('opacity', '0.7');
-				$('div#slideshowFanart').css('width', '962px');
-				$('div#slideshowFanart').css('height', '542px');
+				$('div#slideshowFanart').css('width', '100vw');
+			//	$('div#slideshowFanart').css('height', '542px');
+				$('div#slideshowFanart').css('top', '4.5vw');
 				$('div#slideshowFanart').css('padding', '0px');
 				$('.play_frame').css('visibility', 'visible');
 				$('a#next').css('left', '8px');
@@ -506,6 +507,10 @@
 						$('.moviedetail_frame').css('left', '0px');
 						$('.moviedetail_frame').css('width', '99.6%');
 						$('div#slideshowBanner').css('visibility', 'visible');
+						$('div#slideshowBanner').css('left', '60vw');
+						$('div#slideshowBanner').css('top', '8vh');
+						$('div#slideshowBanner').css('width', '18vw');
+						$('div#slideshowBanner').css('height', '3vw');
 						$('.episode_detail').css('visibility', 'visible');
 						$('.play_frame').mouseover(function() {
 							$('.play_frame').attr('src', './pictures/tvshow-on.png');
@@ -513,6 +518,8 @@
 						$('.play_frame').mouseout(function() {
 							$('.play_frame').attr('src', './pictures/tvshow-off.png');
 							});
+						$('div#slideshowCtr').css('top', 'inherit');
+						$('div#slideshowCtr').css('bottom', '0%');
 			//			$('.play_frame').css('visibility', 'hidden');
 						break;
 					case 'movie':
@@ -522,12 +529,17 @@
 						$('.play_frame').mouseout(function() {
 							$('.play_frame').attr('src', './pictures/movie-logo.png');
 							});
+					//	$('div#slideshowCtr').css('bottom', '10%');
 						break;
 					case 'series':
 						$('.moviedetail_frame').css('top', '12%');
 						$('.moviedetail_frame').css('left', '0px');
 						$('.moviedetail_frame').css('width', '99.6%');
 						$('div#slideshowBanner').css('visibility', 'visible');
+						$('div#slideshowBanner').css('left', '60vw');
+						$('div#slideshowBanner').css('top', '8vh');
+						$('div#slideshowBanner').css('width', '18vw');
+						$('div#slideshowBanner').css('height', '3vw');
 						$('.seasontable_frame').css('visibility', 'visible');
 						$('.play_frame').mouseover(function() {
 							$('.play_frame').attr('src', './pictures/tvshow-on.png');
@@ -535,6 +547,8 @@
 						$('.play_frame').mouseout(function() {
 							$('.play_frame').attr('src', './pictures/tvshow-off.png');
 							});
+						$('div#slideshowCtr').css('top', 'inherit');
+						$('div#slideshowCtr').css('bottom', '0%');
 			//			$('.play_frame').css('display', 'none');
 						break;
 					}
@@ -560,15 +574,15 @@
 							{
 							$('.seasontable_frame').css('visibility', 'hidden');
 							} else {
-							padding_season = 135;
+							padding_season = 17;
 							if (count_to_set > 7)
 								{
 									var maxwidth = count_to_set*120;
-									$('.seasontable_frame').css('width', '810px');
+									$('.seasontable_frame').css('width', '81vw');
 									$('.seasontable_frame').css('max-width', maxwidth+'px');
 							//		console.log ("width: " + maxwidth);
 								}
-							$('.seasontable_frame').css('left', padding_season+'px');
+							$('.seasontable_frame').css('left', padding_season+'vw');
 							
 							}	
 						} else {
@@ -587,7 +601,7 @@
       </script>
 <!-- *************************************************************************************************************** -->
     </head>
-    <body onload="getData();" >
+    <body onload="getData();" style="margin: 0px;">
 	
 	<!-- show the close button , allow to close the frame  -->
 	<div id="close_icon_frame" onclick="close_frame()"><img src="./pictures/close2.png" /></div>
@@ -627,14 +641,14 @@
 		</div>
 	<!-- main table for detail page -->
         <div class="template"> 
-           <table style="border: 0px; position: absolute; left: -3px; top: 0px;">
+           <table style="border: 0px; position: absolute; left: -3px; top: 0px; height: 100%;">
                   <tbody>
                     <tr>    
 						<!-- fanart animation, automatic every 10s, if more than one fanart -->
 						<td rowspan="1">
                             <div id="slideshowFanart" >
                                 <div id="imgRollFanart">
-                                    <img class="fanart" src="./pictures/dummy_fanart.png" alt="fanart"  height="540" width="960"/>
+                                    <img class="fanart" src="./pictures/dummy_fanart.png" alt="fanart"  />
                                 </div>
                             </div>
                             <a id="nextFanart"> </a>
@@ -642,9 +656,9 @@
                         </td>
 						<!-- poster animation, automatic every 3s, if more than one fanart, could be stopped or adjust by button  -->
 						<td rowspan="10">
-                            <div id="slideshowCtr" style="width: 112px; height: 166px; left:5px;  ">
+                            <div id="slideshowCtr"  >
                                 <div id="imgRoll">
-                                    <img class="poster" src="./pictures/dummy.png" height="166" width="112" alt="poster"/>
+                                    <img class="poster" src="./pictures/dummy.png"  style="width:16vw;" alt="poster"/>
                                 </div>
                             </div>
 						
@@ -660,7 +674,7 @@
                     
 					<!-- Banner animation, automatic every 10s, if more than one Banner -->
 						<td rowspan="10">
-                            <div id="slideshowBanner" style="left: 630px; top: 47px;" class="glow">
+                            <div id="slideshowBanner" class="glow">
                                 <div id="imgRollBanner">
                                     <img class="banner" src="" />
                                 </div>

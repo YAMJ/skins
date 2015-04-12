@@ -24,7 +24,7 @@
         <script type="text/javascript">
 
 //***************************************************************************************
-        var perPageValue = 52;
+        var perPageValue = 48;
         var jsondata = null;
 		var Prefered_PageValue = "index_all";
 		var menuleft_toggle = 0;
@@ -267,19 +267,9 @@
 		}
         </script>
 		
-       <div class="index_header"> 
-        <div id="logo_index">
-			<td>
-				<ul id="home_left_up">
-					<li><a href="javascript:ouvre_prefered_page()" id="li_home_left"></a></li>
-					
-				</ul>
-			</td>
-			<div class="show_personindex">
-			
-				<span id="printsearch"></span>
-			</div>
-			<div class="info_config"><a href="javascript:ouvre_info_config()" ><img src="pictures/info2.png" alt="info" /></a></div>
+    <div class="index_header"> 
+			<a href="javascript:ouvre_prefered_page()" id="li_home_left"></a>
+			<a id="info_config" href="javascript:ouvre_info_config()" ></a>
 			<div class="count_return">
                    <span class="ReturnCount"></span> 
 			</div>
@@ -288,9 +278,9 @@
 				<table><tr><td class="Value"></td></tr></table>
 			</div>
 					
-		</div >
+		
 		<!--  prev, next 1rst request -->	
-		<div id="main_index_person">
+		<div id="index_tools_person">
 			<div id="next_icon" onclick="ouvre_popup_search(StyleValue, false)" style="position: absolute; top: -3px; left: 65%;"><img src="pictures/icon/find.png" height="35" width="35"  alt="find" /></div>
 			<div id="next_icon" onclick="javascript:localStorage.setItem('nextcurrent_count', -1);call_personindex('_self')" style="position: absolute; top: -3px; left: 35%;"><img src="./pictures/returnbutton.png" height="30" alt=return"/></div>
 			<div id="next_icon" onclick="call_personindex('_self')" style="position: absolute; top: -3px; left: 55%;"><img src="./pictures/fwd.png" height="30" alt="forward"/></div>

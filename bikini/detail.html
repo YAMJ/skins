@@ -78,11 +78,26 @@
 								store_SeriesId (arg.context.result.seriesId);
 								return arg.context.result.title + ' '+window.localStorage.getItem('season_label')+': '+ arg.context.result.season;
 								} else {
-						
-								return arg.context.result.title;
+								
+								return arg.context.result.title ;
 									}
 							},
-							'span.header_year': 'result.videoYear',
+							'span.header_title@style': function (arg) {
+								var temp_style = "font-size: 2.5vw;"
+								
+								if (arg.context.result.title.length > 30)	{temp_style = "font-size: 2.2vw;";}
+								if (arg.context.result.title.length > 35)	{temp_style = "font-size: 2.1vw;";}
+								if (arg.context.result.title.length > 40)	{temp_style = "font-size: 2vw;";}
+								if (arg.context.result.title.length > 44)	{temp_style =  "font-size: 1.7vw;";}
+								if (arg.context.result.title.length > 51)	{temp_style = "font-size: 1.5vw;";}
+								if (arg.context.result.title.length > 57)	{temp_style = "font-size: 1.3vw;";}
+									
+								return temp_style;
+							},
+							'span.header_year': function (arg)
+								{
+										return  "<a href=\"javascript:call_yearselect('" + arg.context.result.videoYear + "')\" >" + arg.context.result.videoYear + "</a>";
+								},
 							'span.header_id': function (arg) {
 									if (index_type.toLowerCase() == 'series')   
 										{ 
@@ -253,11 +268,11 @@
 								
 								// loop thru the list of studio
 								for (i = 0; i < studio.length; i++) {
-									output = output   + "<a href=\"#\" onclick=\"call_studioselect('" + studio[i].id + "', '" + studio[i].name + "')\" ><img src='pictures/studios/" + studio[i].name + ".png' height=\"30px\" alt=\"" + studio[i].name + "\" /></a>";
+									output = output   + "<a href=\"#\" onclick=\"call_studioselect('" + studio[i].id + "', '" + studio[i].name + "')\" ><img src='pictures/studios/" + studio[i].name + ".png' style=\"height: 2.5vw;\" alt=\"" + studio[i].name + "\" /></a>";
 									
 								}
 								return output;
-								} else {output = "<text>" + studio_select.toUpperCase() + "</text> No Studio";}
+								} else {output = "<text>" + window.localStorage.getItem('studio_select').toUpperCase() + "</text> No Studio";}
 							},			
 	//		  'span.ratings': function(arg)
     //            {
@@ -716,6 +731,8 @@
 			document.getElementById("boxsetindex").innerHTML=window.localStorage.getItem('boxset_label').toUpperCase(); 
 			document.getElementById("countryindex").innerHTML=window.localStorage.getItem('country_label').toUpperCase();
 			document.getElementById("awardsindex").innerHTML=window.localStorage.getItem('awards_label').toUpperCase();
+			document.getElementById("clickremovefanart").innerHTML=window.localStorage.getItem('remove_fanart_text').toUpperCase();
+			document.getElementById("clickremoveposter").innerHTML=window.localStorage.getItem('remove_poster_text').toUpperCase();
 			
 		}
 		
@@ -759,7 +776,7 @@
                                         return "No Poster<br>was generated";
                                    }
 						
-                                    return "<a href=\"#\" onclick=\" goto_SeasonId('" + arg.item.videoType + "', " + arg.item.id + ")\"><img src=\"" + arg.context.baseArtworkUrl + poster.filename + "\" height=\"100\"></a>";
+                                    return "<a href=\"#\" onclick=\" goto_SeasonId('" + arg.item.videoType + "', " + arg.item.id + ")\"><img src=\"" + arg.context.baseArtworkUrl + poster.filename + "\" style=\"height:7.95vw;\"></a>";
 								} else {
                                     return window.localStorage.getItem('noposter_text');
 								}
@@ -802,11 +819,13 @@
 							var outputepisode_title = "";
 							for (i = 0; i < totalepisode_title.length; i++) 
 							{
+							//	console.log("detail listepisode_title preset_episode_to_play: " +totalepisode_title[i].files[0].fileName); 
 								if (totalepisode_title[i].watched) 
 							// construct an activ episode list, click on an episode will display title, videoimage, plot and prepare the filepath to play 
-								{outputepisode_title +=	"<a href=\"#\" style=\"background: green;\" onclick=\"display_Episode_videoimage ('videoimage"+[i]+"','episodeplot"+[i]+"','episodetitle"+[i]+"',"+totalepisode_title.length+"); preset_episode_to_play('"+totalepisode_title[i].files[0].fileName+"')\" >"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</a><img id=img_play_episode src=\"pictures/remote_play.png\"   onclick=\"episode_to_play('"+totalepisode_title[i].files[0].fileName+"')\"></img><br>";}
+								
+								{outputepisode_title +=	"<a href=\"#\" style=\"background: green;\" onclick=\"display_Episode_videoimage ('videoimage"+[i]+"','episodeplot"+[i]+"','episodetitle"+[i]+"',"+totalepisode_title.length+"); preset_episode_to_play('"+encodeURIComponent(totalepisode_title[i].files[0].fileName)+"')\" >"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</a><img id=img_play_episode src=\"pictures/remote_play.png\"   onclick=\"episode_to_play('"+encodeURIComponent(totalepisode_title[i].files[0].fileName)+"')\"></img><br>";}
 								else 
-								{outputepisode_title +=	"<a href=\"#\" onclick=\"display_Episode_videoimage ('videoimage"+[i]+"','episodeplot"+[i]+"','episodetitle"+[i]+"',"+totalepisode_title.length+"); preset_episode_to_play('"+totalepisode_title[i].files[0].fileName+"')\" >"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</a><img id=img_play_episode src=\"pictures/remote_play.png\"   onclick=\"episode_to_play('"+totalepisode_title[i].files[0].fileName+"')\"></img><br>";}
+								{outputepisode_title +=	"<a href=\"#\" onclick=\"display_Episode_videoimage ('videoimage"+[i]+"','episodeplot"+[i]+"','episodetitle"+[i]+"',"+totalepisode_title.length+"); preset_episode_to_play('"+encodeURIComponent(totalepisode_title[i].files[0].fileName)+"')\" >"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</a><img id=img_play_episode src=\"pictures/remote_play.png\"   onclick=\"episode_to_play('"+encodeURIComponent(totalepisode_title[i].files[0].fileName)+"')\"></img><br>";}
 							}
 							return outputepisode_title;
 						},
@@ -1030,22 +1049,25 @@
 						$('.episode_detail').css('visibility', 'visible');
 						$('.episode_detail').css('zIndex', '9');
 						$('#list_episode_title').css('visibility', 'visible');
-						$('.moviedetail').css('top', '120px');
-						$('.moviedetail').css('left', '230px');
-						$('.moviedetail').css('width', '1090px');
-						$('.header_detail').css('top', '0px');
-						$('.header_detail').css('left', '5px');
-						$('#header_td').css('width', '905px');
-						$('.play_detail').css('top', '0px');
-						$('.play_detail').css('left', '60px');
+						$('.moviedetail').css('top', '122px');
+						$('.moviedetail').css('left', '18vw');
+					//	$('.moviedetail').css('max-width', '1100px');
+					//	$('.header_detail').css('top', '0px');
+					//	$('.header_detail').css('left', '5px');
+						$('#header_td').css('width', '1000px');
+					//	$('.play_detail').css('top', '0px');
+					//	$('.play_detail').css('left', '60px');
 						$('.plot1').css('left', '0px');
-						$('.plot1').css('max-width', '1280px');
+					//	$('.plot1').css('max-width', '1280px');
 						$('.genres').css('left', '0px');
-						$('.genres').css('max-width', '1280px');
+						$('.genres').css('max-width', '100vw');
 						$('.certifications').css('left', '0px');
 						$('.certifications').css('max-width', '1280px');
 						$('.filepath').css('max-width', '560px');
+						$('div#slideshowCtr').css('bottom', 'inherit');
 						$('div#slideshowCtr').css('top', '50px');
+						$('div#slideshowBanner').css('width', '18vw');
+						$('div#slideshowBanner').css('height', '3vw');
 						$('a#next').css('top', '200px');
 						$('a#prev').css('top', '200px');
 						$('.play_detail').mouseover(function() {
@@ -1054,59 +1076,75 @@
 						$('.play_detail').mouseout(function() {
 							$('.play_detail').attr('src', './pictures/tvshow-off.png');
 							});
-						$('.mediainfo').css('left', '225px');
-						$('.mediainfo').css('top', '50px');
+					//	$('.mediainfo').css('left', '225px');
+					//	$('.mediainfo').css('top', '50px');
 						$('#li_mediainfo_icon').css('visibility', 'hidden');
-						$('#li_poster_icon').css('left', '28px');
-						$('.edit_adjust').css('left', '235px');
+					//	$('#li_poster_icon').css('left', '28px');
+						$('.edit_adjust').css('left', '18vw');
 						$('.edit_adjust').css('top', '50px');
-						$('.edit_adjust').css('width', '1094px');
+						$('.edit_adjust').css('width', '81.5vw');
 			//			$('.play_detail').css('top', '65px');
+						$('#person_display').css('top', '52px');
 						break;
 					case 'movie':
-						$('.moviedetail').css('top', '403px');
-						$('.moviedetail').css('left', '234px');
-						$('.moviedetail').css('width', '1100px');
-						$('.header_detail').css('width', '1068px');
-						$('.header_title ').css('padding-left', '15px');
-						$('#header_td').css('width', '1066px');
-						$('.plot1').css('max-height', '165px');
+						$('.moviedetail').css('font-size', '1.15vw');
+					//	$('.moviedetail').css('left', '232px');
+						$('.moviedetail').css('right', '0.1vw');
+						$('.moviedetail').css('max-width', '81.5vw');
+						$('.moviedetail').css('width', 'auto');
+					//	$('.header_detail').css('width', '1068px');
+					//	$('.header_title').css('padding-left', '25px');
+					//	$('.header_title').css('font-size', '2.5vw');
+						$('#header_td').css('width', '69vw');
+						$('#header_td').css('position', 'absolute');
+						$('#header_td').css('vertical-align', 'super');
+						$('#header_td').css('bottom', '0vw');
+						$('#header_td').css('padding', '0vw 0vw 0.25vw 0vw');
+						$('#header_td').css('max-height', '43px');
+						$('#header_td').css('left', '50px');
+						$('.plot1').css('max-height', '15vw');
+						$('.plot1').css('max-width', 'inherit');
 						$('.play_detail').mouseover(function() {
 							$('.play_detail').attr('src', './pictures/movie-logo-on.png');
 							});
 						$('.play_detail').mouseout(function() {
 							$('.play_detail').attr('src', './pictures/movie-logo.png');
 							});
-						$('#infobox').css('top', '690px');
-						$('#infobox').css('left', '290px');
-						$('.mediainfo').css('left', '234px');
-						$('.mediainfo').css('top', '404px');
-						$('.mediainfo').css('width', '1094px');
-						$('.edit_adjust').css('left', '234px');
-						$('.edit_adjust').css('top', '404px');
-						$('.edit_adjust').css('width', '1094px');
+						$('#infobox').css('top', '55px');
+						$('#infobox').css('left', '5px');
+						$('.mediainfo').css('left', '19vw');
+						$('.mediainfo').css('bottom', '1vw');
+						$('.mediainfo').css('width', '80vw');
+						$('.edit_adjust').css('left', '19vw');
+						$('.edit_adjust').css('bottom', '1vw');
+						$('.edit_adjust').css('width', '80vw');
+						$('.edit_adjust').css('top', 'inherit');
 						$('.episode_detail').css('zIndex', '1');
 						// nothing special 
 						break;
 					case 'series':
-						$('.moviedetail').css('top', '568px');
-						$('.moviedetail').css('left', '10px');
-						$('.moviedetail').css('width', '1320px');
-						$('.header_detail').css('top', '0px');
-						$('.header_detail').css('left', '5px');
-						$('#header_td').css('width', '905px');
-						$('.play_detail').css('top', '0px');
-						$('.play_detail').css('left', '60px');
+						$('.moviedetail').css('font-size', '1.20vw');
+						$('.moviedetail').css('left', '4px');
+						$('.moviedetail').css('width', '99.5vw');
+						$('.moviedetail').css('max-width', '99.5vw');
+					//	$('.header_detail').css('top', '0px');
+					//	$('.header_detail').css('left', '5px');
+						$('#header_td').css('width', '1000px');
+					//	$('.play_detail').css('top', '0px');
+					//	$('.play_detail').css('left', '60px');
 						$('.plot1').css('left', '0px');
-						$('.plot1').css('max-width', '1280px');
+						$('.plot1').css('max-width', '100vw');
 						$('.genres').css('left', '0px');
-						$('.genres').css('max-width', '1280px');
+						$('.genres').css('max-width', '100vw');
 						$('.certifications').css('left', '0px');
 						$('.certifications').css('max-width', '1280px');
 						$('.filepath').css('max-width', '560px');
 						$('div#slideshowBanner').css('visibility', 'visible');
+						$('div#slideshowBanner').css('width', '18vw');
+						$('div#slideshowBanner').css('height', '3vw');
 						$('.mediainfo').css('visibility', 'hidden');
 						$('.edit_adjust').css('visibility', 'hidden');
+						$('div#slideshowCtr').css('bottom', 'inherit');
 						$('div#slideshowCtr').css('top', '50px');
 						$('.seasontable').css('visibility', 'visible');
 						$('a#next').css('top', '200px');
@@ -1117,15 +1155,16 @@
 						$('.play_detail').mouseout(function() {
 							$('.play_detail').attr('src', './pictures/tvshow-off.png');
 							});
-						$('.mediainfo').css('left', '230px');
-						$('.mediainfo').css('top', '50px');
+					//	$('.mediainfo').css('left', '230px');
+					//	$('.mediainfo').css('top', '50px');
 						$('#li_mediainfo_icon').css('visibility', 'hidden');
-						$('#li_poster_icon').css('left', '28px');
-						$('.edit_adjust').css('left', '235px');
+					//	$('#li_poster_icon').css('left', '28px');
+						$('.edit_adjust').css('left', '18vw');
 						$('.edit_adjust').css('top', '50px');
-						$('.edit_adjust').css('width', '1094px');
+						$('.edit_adjust').css('width', '81.5vw');
 						$('.episode_detail').css('zIndex', '9');
 					//	$('.play_detail').css('display', 'none');
+						$('#person_display').css('top', '52px');
 						break;
 					}
 			}
@@ -1287,6 +1326,14 @@
             console.log("call_countryselect Storing value: Country name: " +countryname);
 			window.location.href="index_Country.html";
 		}
+	// year is activ and open year index menu with the year selected 
+	function call_yearselect(yearvalue)
+        {
+			localStorage.setItem("yearselected", 'true');
+			localStorage.setItem("selection", yearvalue);
+            console.log("call_yearselect Storing value: Year value " +yearvalue);
+			window.location.href="index.html";
+		}
 	// certification list is activ and open certification index menu with the certification selected 
 	function call_certificationselect(certificationvalue, certificationid)
         {
@@ -1357,8 +1404,8 @@
 							nodisplay_class ('actors');
 							nodisplay_class ('director');
 							nodisplay_class ('writer');
-							nodisplay_class ('header_detail');
-							nodisplay_class ('play_detail');
+						//	nodisplay_class ('header_detail');
+						//	nodisplay_class ('play_detail');
 							break;	
 						}
 				}
@@ -1574,90 +1621,26 @@
 	
 	<!-- navigation to index -->
 
-		<div id="logo_index">
-
-	<!-- not needed with opacity effect
-			<td><a id="home_left" onclick="javascript:toggle_Id('container_menu_left')"><img src="pictures/next-icon_on.png" width="16px" height="24px" /></a></td>
-	-->
-	<!-- various navigation 			
-					
-							<ul id="detail_home_right">
-									<li><a id="li_home_right" onclick="toggle_menuright()"></a></li>
-									<li><a id="li_fanart" href="javascript:toggle_fanart()">
-										<div id="fanartshow"></div></a></li>
-									<li><a id="li_mediainfo" href="javascript:ouvre_popup_mediainfo();">
-										<div id="mediainfoshow"></div></a></li>	
-									<li><a id="li_person" href="javascript:ouvre_popup_person();">
-										<div id="personshow"></div></a></li>
-								
+		<div id="detail_home_right_icon">
 							
-									<li><a id="li_movie" href="javascript:ouvre_popup_index('', 'ASC', index_type, '')">
-										<div id="show"></div></a></li>	
-									<li>
-										<form><label id='li_selection'></label>
-											<select id="selection_id" onchange="Movie_toSet = true;display_Id('movie_display');javascript:ouvre_popup_index('', 'ASC', index_type, document.getElementById('selection_id').value); Movie_toSet = true;">
-												<option value=""></option>
-												<option value="A">A</option>
-												<option value="B">B</option>
-												<option value="C">C</option>
-												<option value="D">D</option>
-												<option value="E">E</option>
-												<option value="F">F</option>
-												<option value="G">G</option>
-												<option value="H">H</option>
-												<option value="I">I</option>
-												<option value="J">J</option>
-												<option value="K">K</option>
-												<option value="L">L</option>
-												<option value="M">M</option>
-												<option value="N">N</option>
-												<option value="O">O</option>
-												<option value="Q">Q</option>
-												<option value="R">R</option>
-												<option value="S">S</option>
-												<option value="T">T</option>
-												<option value="U">U</option>
-												<option value="V">V</option>
-												<option value="W">W</option>
-												<option value="X">X</option>
-												<option value="Y">Y</option>
-												<option value="Z">Z</option>
-												<option value="0">0</option>
-												<option value="1">1</option>
-												<option value="2">2</option>
-												<option value="3">3</option>
-												<option value="4">4</option>
-												<option value="5">5</option>
-												<option value="6">6</option>
-												<option value="7">7</option>
-												<option value="8">8</option>
-												<option value="9">9</option>
-											</select> 
-											<noscript><input type="submit" value="Submit"></noscript>
-										</form>
-									</li>	
-								
-							</ul>-->		
-			
-							<ul id="detail_home_right_icon">
-									<li><a id="li_poster_icon" href="javascript:ouvre_popup_poster();" onmouseover="javascript:document.getElementById('editshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('editshow_icon').style.visibility='hidden'">
-										<img src="pictures/icon/edit.png" alt="edit" ></img><div id="editshow_icon"></div></a></li>
-									<li><a id="li_fanart_icon" href="javascript:toggle_fanart()" onmouseover="javascript:document.getElementById('fanartshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('fanartshow_icon').style.visibility='hidden'">
-										<img src="pictures/icon/fanart.png" alt="fanart" ></img><div id="fanartshow_icon"></div></a></li>
-									<li><a id="li_mediainfo_icon" href="javascript:ouvre_popup_mediainfo();" onmouseover="javascript:document.getElementById('mediainfoshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('mediainfoshow_icon').style.visibility='hidden'" >
-										<img src="pictures/icon/overview.png" alt="mediainfo"></img><div id="mediainfoshow_icon"></div></a></li>	
-									<li><a id="li_person_icon" href="javascript:ouvre_popup_person();" onmouseover="javascript:document.getElementById('personshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('personshow_icon').style.visibility='hidden'">
-										<img src="pictures/icon/icon_person.png" alt="person"></img><div id="personshow_icon"></div></a></li>	
-									<li><a id="li_delete_icon" href="javascript:ouvre_popup_delete();" onmouseover="javascript:document.getElementById('deleteshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('deleteshow_icon').style.visibility='hidden'">
-										<img src="pictures/icon/delete.png" alt="delete"></img><div id="deleteshow_icon"></div></a></li>	
-									<li><a id="li_update_icon" href="javascript:ouvre_popup_update();" onmouseover="javascript:document.getElementById('updateshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('updateshow_icon').style.visibility='hidden'">
-										<img src="pictures/icon/update.png" alt="update"></img><div id="updateshow_icon"></div></a></li>	
+									<td><a id="li_mediainfo_icon" href="javascript:ouvre_popup_mediainfo();" onmouseover="javascript:document.getElementById('mediainfoshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('mediainfoshow_icon').style.visibility='hidden'" >
+										<img src="pictures/icon/overview.png" alt="mediainfo"></img><div id="mediainfoshow_icon"></div></a></td>	
+									<td><a id="li_poster_icon" href="javascript:ouvre_popup_poster();" onmouseover="javascript:document.getElementById('editshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('editshow_icon').style.visibility='hidden'">
+										<img src="pictures/icon/edit.png" alt="edit" ></img><div id="editshow_icon"></div></a></td>
+									<td><a id="li_person_icon" href="javascript:ouvre_popup_person();" onmouseover="javascript:document.getElementById('personshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('personshow_icon').style.visibility='hidden'">
+										<img src="pictures/icon/icon_person.png" alt="person"></img><div id="personshow_icon"></div></a></td>	
+									<td><a id="li_movie_icon" href="javascript:ouvre_popup_index('', 'ASC', index_type, '')" onmouseover="javascript:document.getElementById('movieshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('movieshow_icon').style.visibility='hidden'">
+										<img src="pictures/icon/icon_tv-film.png" alt="movie"></img><div id="movieshow_icon"></div></a></td>
+									<td><a id="li_fanart_icon" href="javascript:toggle_fanart()" onmouseover="javascript:document.getElementById('fanartshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('fanartshow_icon').style.visibility='hidden'">
+										<img src="pictures/icon/fanart.png" alt="fanart" ></img><div id="fanartshow_icon"></div></a></td>
+									<td><a id="li_delete_icon" href="javascript:ouvre_popup_delete();" onmouseover="javascript:document.getElementById('deleteshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('deleteshow_icon').style.visibility='hidden'">
+										<img src="pictures/icon/delete.png" alt="delete"></img><div id="deleteshow_icon"></div></a></td>	
+									<td><a id="li_update_icon" href="javascript:ouvre_popup_update();" onmouseover="javascript:document.getElementById('updateshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('updateshow_icon').style.visibility='hidden'">
+										<img src="pictures/icon/update.png" alt="update"></img><div id="updateshow_icon"></div></a></td>	
 									
-							<!--		<li><a id="li_person_ribbon" href="javascript:ouvre_popup_person_ribbon()">
-										<div id="person_ribbon"></div></a></li>	 -->
-									<li><a id="li_movie_icon" href="javascript:ouvre_popup_index('', 'ASC', index_type, '')" onmouseover="javascript:document.getElementById('movieshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('movieshow_icon').style.visibility='hidden'">
-										<img src="pictures/icon/icon_tv-film.png" alt="movie"></img><div id="movieshow_icon"></div></a></li>
-									<li>
+							<!--		<td><a id="li_person_ribbon" href="javascript:ouvre_popup_person_ribbon()">
+										<div id="person_ribbon"></div></a></td>	 -->
+									<td>
 										<form><label id='li_selection_icon'><img src="pictures/icon/title.png" onmouseover="javascript:document.getElementById('selectionshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('selectionshow_icon').style.visibility='hidden'"></img><div id="selectionshow_icon"></div></label>
 											<select id="selection_id_icon" onchange="Movie_toSet = true;display_Id('movie_display');javascript:ouvre_popup_index('', 'ASC', index_type, document.getElementById('selection_id_icon').value); Movie_toSet = true;" >
 												<option value=""></option>
@@ -1666,9 +1649,8 @@
 											<noscript><input type="submit" value="Submit"></noscript>
 										</form>
 										
-									</li>	
-								
-							</ul>
+									</td>	
+		
 					<button id="infobox_delete" onclick="javascript:start_delete ()"></button>	
 					<button id="infobox_update" onclick="javascript:start_update ()"></button>
         </div>
@@ -1680,79 +1662,79 @@
 	    <div id="container_menu_left">
 			<ul id="monFormMenu" style="padding-left:0px;">
 	
-				<li><a href="javascript:ChangeIndex('movie,series')" >
+				<td><a href="javascript:ChangeIndex('movie,series')" >
 							<img src="pictures/icon/home_all_rv8.png" height="80"  width="80" alt="tv movie" />
 						</a><div id="allselect"></div>
-				</li>
-				<li><a href="javascript:ChangeIndex('movie')" >
+				</td>
+				<td><a href="javascript:ChangeIndex('movie')" >
 							<img src="pictures/icon/home_movies_rv8.png" height="80"  width="80" alt="movie" align="top" />
 						</a><div id="movieselect"></div>
-				</li>
-				<li><a href="javascript:ChangeIndex('series')" >
+				</td>
+				<td><a href="javascript:ChangeIndex('series')" >
 							<img src="pictures/icon/home_tv_shows_rv8.png" height="80"  width="80" alt="tv" />
 						</a><div id="serieselect"></div>
-				</li>
-				<li><a href="javascript:ChangeIndex('season')" >
+				</td>
+				<td><a href="javascript:ChangeIndex('season')" >
 							<img src="pictures/icon/home_apps_rv8.png" height="100"  width="100" style="position: relative; left:-10px" alt="season" />
 						</a><div id="seasonselect"></div>
-				</li>
-				<li><a href="javascript:call_personindex('_self')" >
+				</td>
+				<td><a href="javascript:call_personindex('_self')" >
 							<img src="pictures/icon/home_person_rv8.png" height="80"  width="80" alt="person"  />
 						</a><div id="personindex"></div>
-				</li>
-				<li><a href="javascript:call_genreindex(index_type, '_self')">
+				</td>
+				<td><a href="javascript:call_genreindex(index_type, '_self')">
 							<img src="pictures/icon/home_genres2_rv8.png" height="80"  width="80" alt="genre" />
 						</a><div id="genreindex"></div>
-				</li>
-				<li><a href="javascript:call_countryindex(index_type, '_self')">
+				</td>
+				<td><a href="javascript:call_countryindex(index_type, '_self')">
 							<img src="pictures/icon/home_country_rv8.png" height="80"  width="80" alt="country" />
 						</a><div id="countryindex"></div>
-				</li>
-				<li><a href="javascript:call_awardsindex(index_type, '_self')">
+				</td>
+				<td><a href="javascript:call_awardsindex(index_type, '_self')">
 							<img src="pictures/icon/home_awards_rv8.png" height="80"  width="80" alt="awards" />
 						</a><div id="awardsindex"></div>
-				</li>
-				<li><a href="javascript:ouvre_popup_search(StyleValue)">
+				</td>
+				<td><a href="javascript:ouvre_popup_search(StyleValue)">
 							<img src="pictures/icon/find.png" height="60" width="65" style="padding-left:10px" alt="find" />
 						</a><div id="searchindex"></div>
-				</li>
-				<li><a href="javascript:call_studioindex(index_type, '_self')">
+				</td>
+				<td><a href="javascript:call_studioindex(index_type, '_self')">
 							<img src="pictures/icon/Studio.png" height="60"  width="60" style="position: relative; left:10px" alt="studio"  />
 						</a><div id="studioindex"></div><br />
-				</li>
+				</td>
 
-				<li><a href="javascript:call_ratingindex(index_type, '_self')" >
+				<td><a href="javascript:call_ratingindex(index_type, '_self')" >
 							<img src="pictures/icon/home_rating_rv8.png" height="80"  width="80" alt="rating"  />
 						</a><div id="ratingindex"></div>
-				</li>
-				<li><a href="javascript:call_certificationindex(index_type, '_self')" >
+				</td>
+				<td><a href="javascript:call_certificationindex(index_type, '_self')" >
 							<img src="pictures/icon/home_certification_rv8.png" height="90"  width="100"  style="position: relative; left:-10px" alt="certification"  />
 						</a><div id="certificationindex"></div>
-				</li>
-				<li><a href="javascript:call_videosourceindex(index_type, '_self')" >
+				</td>
+				<td><a href="javascript:call_videosourceindex(index_type, '_self')" >
 							<img src="pictures/icon/home_videosource_rv8.png" height="80"  width="80" style="position: relative; left:0px" alt="videosource"  />
 						</a><div id="videosourceindex"></div>
-				</li>
-				<li><a href="javascript:call_boxsetindex(index_type, '_self')">
+				</td>
+				<td><a href="javascript:call_boxsetindex(index_type, '_self')">
 							<img src="pictures/icon/home_set_rv8.png" height="100"  width="100" style="position: relative; left:-10px" alt="set"  />
 						</a><div id="boxsetindex"></div>
-				</li>
-				<li><a href="javascript:ouvre_config(StyleValue)">
+				</td>
+				<td><a href="javascript:ouvre_config(StyleValue)">
 							<img src="pictures/icon/settings.png" height="80" width="100" style="padding-left:5px" alt="setting" />
 						</a><div id="configindex"></div>
-				</li>
-				<li><a href="javascript:ouvre_yamj3(); ">
+				</td>
+				<td><a href="javascript:ouvre_yamj3(); ">
 							<img src="pictures/icon/home.png" height="80"  width="80" alt="home" />
 						</a><div id="yamj3select"></div>
-				</li>
-				<li><a href="javascript:ouvre_genrelist('_self'); ">
+				</td>
+				<td><a href="javascript:ouvre_genrelist('_self'); ">
 							<img src="pictures/icon/list_genre.png" height="80"  width="80" alt="liste fenre" />
 						</a><div id="genrelistselect"></div>
-				</li>
-				<li><a href="javascript:ouvre_remote(); ">
+				</td>
+				<td><a href="javascript:ouvre_remote(); ">
 							<img src="pictures/icon/remote.png" height="70"  width="70" style="position: relative; left:6px" alt="remote" />
 						</a><div id="remoteselect"></div>
-				</li>
+				</td>
 		</ul>
 		
 	</div>          	
@@ -1763,13 +1745,13 @@
 					<td id="header_td">
 						<span class="header_title" ></span>
 				
-						<img src="pictures/icon/year.png" width="30" style="position:relative; top: 0px;" alt="year"/>
+						<img src="pictures/icon/year.png" style="position:relative; top: -0.1vw; width: 2.2vw; vertical-align: baseline;"  alt="year"/>
 						<span class="header_year" ></span>
 						<span class="header_id" ></span>
-						<img src="pictures/icon/duration.png" width="30" style="position:relative; top: 0px; left: -10px;" alt="duration"/>
+						<img src="pictures/icon/duration.png" style="position:relative; top: -0.1vw; left: -10px; width: 2.2vw" alt="duration"/>
 						<span class="header_runtime" ></span>
 						<span class="header_text"> </span>
-						<a href="#"><img class="watched" src="./pictures/watched.png" onclick="" alt="watched"/></a>
+						<a href="#"><img class="watched" style="width: 2.1vw;" src="./pictures/watched.png" onclick="" alt="watched"/></a>
 						<span class="country" ></span>
 						<img class="channels" src="./pictures/icon/empty.png" alt="no audio channels"></img>
 					</td>
@@ -1795,11 +1777,11 @@
 		</div>
 	<!-- display person -->
 		<div id="person_display" style="visibility: hidden; ">	
-			<iframe src="" name="person_frame" resizable="yes" id="person_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1220px; height:335px;" allowTransparency="true"></iframe>
+			<iframe src="" name="person_frame" resizable="yes" id="person_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:81.4vw; height:335px; border-radius: 9px;" allowTransparency="true"></iframe>
 		</div>	
 	<!-- display Movie -->
 		<div id="movie_display" style="visibility: hidden; ">
-			<iframe src="" name="movie_frame" resizable="yes" id="movie_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1245px; height:265px;" allowTransparency="true"></iframe>
+			<iframe src="" name="movie_frame" resizable="yes" id="movie_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:91vw; height:265px;" allowTransparency="true"></iframe>
 		</div>	
 	<!-- display Remote -->
 		<div id="remote" style="visibility: hidden; ">
@@ -1951,7 +1933,7 @@
 					<td>
                          
                                 <div>
-									<text style="vertical-align: top;">click on poster to Remove: </text><br><br>
+									<text id="clickremoveposter" style="margin: inherit;"></text><br><br>
                                     <img class="poster_list" src="./pictures/dummy.png" height="90" width="60" align="bottom" style="padding:2px;" onclick="" alt="poster"/>
 									<button id="infobox_ignore_poster" onclick="javascript:start_ignore ('infobox_ignore_poster')"></button>
                                 </div>
@@ -1964,7 +1946,7 @@
 					<td>
                          
                                 <div>
-									<text style="vertical-align: top;">click on fanart to Remove: </text><br><br>
+									<text id="clickremovefanart" style="margin: inherit;"></text><br><br>
                                     <img class="fanart_list" src="./pictures/dummy_fanart.png" height="72" width="128" align="bottom" style="padding:2px;" onclick="" alt="fanart" />
 									<button id="infobox_ignore_fanart" onclick="javascript:start_ignore ('infobox_ignore_fanart')"></button>
                                 </div>
@@ -1980,7 +1962,8 @@
 				<tr>
 					<td class="season">
 						<text class="season"> Id: </text>
-						<span class="SeasonID"></span><span class="SeasonPoster"></span>
+						<span class="SeasonID"></span>
+						<span class="SeasonPoster"></span>
 						<span class="SeasonYear"></span><br>
 						<text class="season" id='seasonlabel'></text><span class="SeasonNb"></span><br>
 						<span class="SeasonTitle"></span>

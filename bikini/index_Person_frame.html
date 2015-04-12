@@ -10,6 +10,7 @@
         <script src="js/jPages.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>	
+		<script src="js/lang.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/person-style.css">
         <link rel="stylesheet" type="text/css" href="css/nav-style.css">
         <link rel="stylesheet" href="css/jPages.css">
@@ -124,12 +125,11 @@
 								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].role+"</p></td>";
 								} else {
 									if (totalperson_photo[i].job) {
-											// adjust  Writter, Director  
-										outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].job.substr(0,1)+totalperson_photo[i].job.substr(1).toLowerCase()+"</p></td>";
+											outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].job+"</p></td>";
 										}
 									}
 							}
-							return outputperson_photo;
+							return translate_job(outputperson_photo);
 						}
 					};
 
@@ -170,23 +170,7 @@
 						{ $('.table_person_photo_frame').css('overflow-x', 'scroll');}
 				}				
 		}	
-	function open_person_popup_old(id)
-        {
-            localStorage.setItem("Person_id", id);
-            console.log("open_person_popup Storing value: Person_id"  + id);
-			close_person ()
-		// adjust frame to display biography
-			parent.document.getElementById('target_display').style.height="650px";
-			parent.document.getElementById('target_frame').style.height="640px";
-			parent.document.getElementById('target_display').style.width="1220px";
-			parent.document.getElementById('target_frame').style.width="1210px";
-			parent.document.getElementById('target_display').style.left="70px";
-			parent.document.getElementById('target_display').style.top="50px";
-			parent.frames['target_frame'].location.href='Popup_Person.html';	
-		//	parent.document.getElementById('target_frame').style.display="block";
-			parent.document.getElementById('target_display').style.visibility="visible";
-		//	window.location.href="Popup_Person.html";
-		}
+
 	function close_person ()
 			{
 				console.log("close_person:  style:"+StyleValue);

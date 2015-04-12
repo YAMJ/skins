@@ -10,6 +10,7 @@
         <script src="js/jPages.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>	
+		<script src="js/lang.js"></script>	
 		<link rel="stylesheet" type="text/css" href="css/person-style.css">
         <link rel="stylesheet" type="text/css" href="css/nav-style.css">
         <link rel="stylesheet" href="css/jPages.css">
@@ -116,16 +117,15 @@ function updateHtml(yamjdata)
 											}
 									// add the role at the bottom 
 								if (totalperson_photo[i].role) {
-								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].role+"</p>";
+								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+ totalperson_photo[i].role +"</p>";
 								} else {
 								if (totalperson_photo[i].job) {
-									// adjust  Writter, Director  
-									outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].job.substr(0,1)+totalperson_photo[i].job.substr(1).toLowerCase()+"</p>";
+										outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+ totalperson_photo[i].job +"</p></td>";
 									}
 								}
 							if (window.localStorage.getItem('Style') == 'popup') {outputperson_photo = outputperson_photo+"</td>"}
 							}
-							return outputperson_photo;
+							return translate_job(outputperson_photo);
 						}
 					};
 				 console.log("naAllPerson style: "  + window.localStorage.getItem('Style'));
@@ -147,18 +147,11 @@ function updateHtml(yamjdata)
 			}
 		
 //***************************************************************************************************************		
-	  
-	function open_person_popup_old(id)
-        {
-            localStorage.setItem("Person_id", id);
-            console.log("Storing value: Person_id"  + id);
-			Mypopup = window.open("Popup_Person.html", "YAMJ v3 Person popup","channelmode=no, menubar=no, status=no, scrollbars=no, menubar=no, location=no, left=500px, top=5px, width=1100px, height=400px");
-		//	Mypopup.blur();
-			window.focus();
-		}
+
 	function Popup_close()
         {
          Mypopup.close ();
+		 Mypopup_Filmographyclose();
 		}
 	
         </script>

@@ -74,11 +74,15 @@
 	<powerlabel>potenza</powerlabel>
 	<prefered>favorito</prefered>
 	<prevremotelabel>precedente</prevremotelabel>
+	<producerlabel>produttore</producerlabel>
 	
 	<ratinglabel>valutazione</ratinglabel>
 	<ratingindex>valutazione</ratingindex>
 	<redlabel>rosso</redlabel>
 	<remotelabel>telecommando</remotelabel>
+	<removetext>rimuovere</removetext>
+	<removefanarttext>clicca su fanart per rimuovere</removefanarttext>
+	<removepostertext>clicca su poster per rimuovere</removepostertext>
 	<repeatlabel>ripetizione</repeatlabel>
 	<resultstext>provocare</resultstext>
 	<returnlabel>ritorno</returnlabel>
@@ -106,6 +110,7 @@
 	
 	<titlelabel>titolo</titlelabel>
 	<timeseeklabel>tempo di ricer.</timeseeklabel>
+	<transformerrortext>in grado di trasformare il controllo source_path target_path</transformerrortext>
 	<tvmodelabel>modalia tv</tvmodelabel>
 	
 	<unwatchedselect>non visto</unwatchedselect>

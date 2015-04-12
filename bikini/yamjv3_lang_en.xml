@@ -74,11 +74,15 @@
 	<powerlabel>power</powerlabel>
 	<prefered>prefered</prefered>
 	<prevremotelabel>previous</prevremotelabel>
+	<producerlabel>producer</producerlabel>
 	
 	<ratinglabel>rating</ratinglabel>
 	<ratingindex>rating</ratingindex>
 	<redlabel>red</redlabel>
 	<remotelabel>remote</remotelabel>
+	<removetext>remove</removetext>
+	<removefanarttext>click on fanart to remove</removefanarttext>
+	<removepostertext>click on poster to remove</removepostertext>
 	<repeatlabel>repeat</repeatlabel>
 	<resultstext>results</resultstext>
 	<returnlabel>retour</returnlabel>
@@ -106,6 +110,7 @@
 	
 	<titlelabel>title</titlelabel>
 	<timeseeklabel>time seek</timeseeklabel>
+	<transformerrortext>unable to transform check source_path target_path</transformerrortext>
 	<tvmodelabel>tv mode</tvmodelabel>
 	
 	<unwatchedselect>unwatched</unwatchedselect>

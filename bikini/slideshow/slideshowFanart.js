@@ -2,73 +2,43 @@
  * http://forrst.com/posts/Quick_Rotating_Slideshow_jQuery-z32
  */
 function slideshowFanart() {
-	
+	var imgcount = 0;
     // get the size of the slideshow container
-    var ctrHeightFanart = $('#slideshowFanart').css('height');
-    var ctrWidthFanart = $('#slideshowFanart').css('width');
-
+	
+	//	var ctrHeightFanart = Math.floor(parseInt($('#slideshowFanart').css('height')) / 1290 * 100);
+	// adjust to full width and a scalable value ; 100vw 
+    var ctrWidthFanart = 100;
+	
     // get number of images and set width of imgRollFanart
     var imgTotalFanart = $('div#imgRollFanart > img').size();
-    var imgRollFanartWidthFanart = imgTotalFanart * parseInt(ctrWidthFanart);
-    $('div#imgRollFanart').css('width', imgRollFanartWidthFanart);
-
-    // set images to the size of the slideshow viewport
-    $('div#imgRollFanart img').css('height', ctrHeightFanart);
-    $('div#imgRollFanart img').css('width', ctrWidthFanart);
-
-    // set maximum scroll distance
-    var maxScrollFanart = imgRollFanartWidthFanart - parseInt(ctrWidthFanart) + 'px';
-
-    // on slideshow hover show fanart, commented to let the button show fanart only
+ //   var imgRollFanartWidthFanart = imgTotalFanart * parseInt(ctrWidthFanart);
+	var imgRollFanartWidthFanart = imgTotalFanart * parseInt(ctrWidthFanart);
+    $('div#imgRollFanart').css('width', imgRollFanartWidthFanart + 'vw');
 	
-    $('div#slideshowFanart').hover(function() {
-	//	$('.plot').css('visibility', 'hidden');
-	//	$('.genres').css('visibility', 'hidden');
-	//	$('#tableactorrole').css('visibility', 'hidden');
-	//	$('#tableactorname').css('visibility', 'hidden');
-	//	$('.table_photo').css('visibility', 'hidden');
-	//	$('div#slideshowCtr ').css('visibility', 'hidden');
-	//	$('div#slideshowFanart').css('opacity', '1');
-    }, function() {
-	//	$('.plot').css('visibility', 'visible');
-	//	$('.genres').css('visibility', 'visible');
-	//	$('#tableactorrole').css('visibility', 'visible');
-	//	$('#tableactorname').css('visibility', 'visible');
-	//	$('.table_photo').css('visibility', 'visible');
-	//	$('div#slideshowCtr ').css('visibility', 'visible');
-	//	$('div#slideshowFanart').css('opacity', '0.7');
-    });
+    // set images to the size of the slideshow viewport
+ //   $('div#imgRollFanart img').css('height', ctrHeightFanart + 'vw');
+    $('div#imgRollFanart img').css('width', ctrWidthFanart + 'vw');
+
 
     // move to nextFanart right image
     $('a#nextFanart').click(function() {
+		imgcount  = imgcount  + 1; 
         // unless on the last image
-        if ($('div#imgRollFanart').css('left') === '-' + maxScrollFanart)
+		 if (imgTotalFanart == imgcount)
         {
-            $('div#imgRollFanart').animate({left: '0px'}, 'slow');
+			imgcount = 0;
+            $('div#imgRollFanart').animate({left: '0vw'}, 'slow');
         } else {
             $('div#imgRollFanart').animate({
-                left: '-=' + parseInt(ctrWidthFanart) + 'px'
+                left: '-=' + parseInt(ctrWidthFanart) + 'vw'
             }, 'slow');
         }
     });
-
-    // move to nextFanart left image
-    $('a#prevFanart').click(function() {
-        // unless on the last image
-        if ($('div#imgRollFanart').css('left') === '0px')
-        {
-            $('div#imgRollFanart').animate({left: '-' + maxScrollFanart}, 'slow');
-        } else {
-            $('div#imgRollFanart').animate({
-                left: '+=' + parseInt(ctrWidthFanart) + 'px'
-            }, 'slow');
-        }
-    });
-
 
     // auto start slideshowFanart
     function slideFanart() {
-        	if (imgTotalFanart == '1')
+		// start slideshow only if there is more than one fanart 
+        if (imgTotalFanart == '1')
 		{} else {
 		$('a#nextFanart').click();
 		}
@@ -78,7 +48,7 @@ function slideshowFanart() {
     var slideDurationFanart = window.setInterval(slideFanart, 10000);
 
     // on click deactivate auto-scrolling
-    $('a#prevFanart, a#nextFanart').click(
+    $('a#nextFanart').click(
             function(event) {
                 if (event.originalEvent) {
                     window.clearInterval(slideDurationFanart);

@@ -54,7 +54,7 @@
 	<mutelabel>silence</mutelabel>
 
 	<namelabel>nom</namelabel>
-	<nbrow>nbre de colonne</nbrow>
+	<nbrow>nbre de ligne</nbrow>
 	<nextremotelabel>suivant</nextremotelabel>
 	<new>nouveauté</new>
 	<nobiography>biographie absente</nobiography>
@@ -74,11 +74,15 @@
 	<powerlabel>marche</powerlabel>
 	<prefered>préférée</prefered>
 	<prevremotelabel>precedent</prevremotelabel>
+	<producerlabel>producteur</producerlabel>
 	
 	<ratinglabel>note</ratinglabel>
 	<ratingindex>note</ratingindex>
 	<redlabel>rouge</redlabel>
 	<remotelabel>telecommande</remotelabel>
+	<removetext>supprimer</removetext>
+	<removefanarttext>clicker sur le fond d'ecran a supprimer</removefanarttext>
+	<removepostertext>clicker sur l'affiche a supprimer</removepostertext>
 	<repeatlabel>repete</repeatlabel>
 	<resultstext>résultats</resultstext>
 	<returnlabel>retour</returnlabel>
@@ -106,6 +110,7 @@
 	
 	<titlelabel>titre</titlelabel>
 	<timeseeklabel>durée</timeseeklabel>
+	<transformerrortext>transformation impossible controler source_path target_path</transformerrortext>
 	<tvmodelabel>mode tv</tvmodelabel>
 	
 	<unwatchedselect>non vu</unwatchedselect>

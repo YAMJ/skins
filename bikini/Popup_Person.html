@@ -9,18 +9,36 @@
 		<!-- Used for template -->
 		<script src="js/template.js"></script>	
         <link rel="stylesheet" type="text/css" href="css/Popup_Person-style.css">
+	<style>
+	html {overflow:hidden; height:1120px; };
+	body {height: 720px;}
+	</style>
     </head>
-    <body onload="PersonData();" >
+    <body onload="PersonData();" onclose="close_person();" >
         <script type="text/javascript">
             function PersonData()
             {
+			// create filmography and clear contents
+				var filmography_list = new Array();
 				var	id = localStorage.getItem ("Person_id");
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 				get_lang();	
 				
-               jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=artwork,biography,filmography_scanned&sortby=year&sortdir=desc";
-		//		jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=artwork,biography,filmography";
-				if (window.localStorage.getItem('Style') == "frame") {init_person_popup(id);}
+			// allow to sort by title , year , asc, desc ; set default to year:desc 	
+			var sort_index = "year";
+			var sort_direction = "desc";			
+			if (window.localStorage.getItem("popup_person_sort"))
+					{ sort_index = window.localStorage.getItem("popup_person_sort");}
+			
+			if (window.localStorage.getItem("popup_person_sort_direction"))
+					{ sort_direction = window.localStorage.getItem("popup_person_sort_direction");}	
+
+			window.localStorage.setItem('popup_person_sort', sort_index);
+			window.localStorage.setItem('popup_person_sort_direction', sort_direction);
+			
+			
+               jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=artwork,biography,filmography_scanned&sortby=" + sort_index + "&sortdir=" + sort_direction;
+				if (window.localStorage.getItem('Style') == "frame") {init_person_popup(id, sort_index, sort_direction);}
                 var jsondata = null;
 				switch (window.localStorage.getItem('back_close'))
 				{
@@ -88,27 +106,42 @@
                         } else {
                             return "<img src=\"pictures/dummy_photo.jpg\">";
                         }
+                    },
+					'img.background@src': function(arg) {
+                        // Check to see if there is artwork
+                        if (arg.context.result.artwork) {
+                            // Get the first photo from the list
+                            var photo = arg.context.result.artwork[0];
+                            if (photo.generatedId === 0) {
+                                return "pictures/dummy_photo.jpg";
+                            }
+                            return arg.context.basePhotoUrl + photo.filename;
+                        } else {
+                            return "pictures/dummy_photo.jpg";
+                        }
                     }
                 };
 			  var LIST_FILMOGRAPHY = {
 						'span.filmography': function(arg)
 						{
-							var filmography_list = arg.context.result.filmography;
-							var output = temp_output = "<table id='filmography_table'><tr><td border='2px' width='50px'>" + window.localStorage.getItem('year_label') + "</td><td border='2px' width='500px'>" + window.localStorage.getItem('title_label') + "</td><td border='2px' width='500px'>job</td></tr></table>";
-							if (arg.context.result.filmography) {
+							filmography_list = arg.context.result.filmography;
+						// commented because text has been replaced by icon which doesn't needed translation
+						//	var output  = "<table id='filmography_table'><tr><td style='border:2px solid black; width:50px;' >" + window.localStorage.getItem('year_label') + "</td><td style='border:2px solid black; width:500px'>" + window.localStorage.getItem('title_label') + "</td><td style='border:2px solid black; width:500px'>job</td></tr></table>";
+							var output = "" ; 
+						if (arg.context.result.filmography) {
 							// loop thru the list of filmography
 							for (i = 0; i < filmography_list.length; i++)
 							{
 								if (filmography_list[i].role)
 									{
-										temp_output = "<table border='2px' style='background-color: rgb(197,197,197);text-align: center; '><tr><td border='2px' width='50px'>" + filmography_list[i].year + "</td><td border='2px' width='500px'>" + filmography_list[i].title + "</td><td border='2px' width='500px'>" + filmography_list[i].job.substring(0,1).toUpperCase() + filmography_list[i].job.substring(1).toLowerCase() + " (" + filmography_list[i].role.italics() +")</td></tr></table>";
+										output += "<table border='2px solid black' style='background-color: rgb(197,197,197);text-align: center;'><tr><td border='2px solid black' width='50px'>" + filmography_list[i].year + "</td><td border='2px' width='500px'><a id='inside_href" + i + "' href='#' style='color:black; text-decoration: none;'>" + filmography_list[i].title + " <img id='inside_img" + i + "' src='./pictures/empty.png' alt='empty' height='15px' /></a></td><td border='2px' width='500px'>" + filmography_list[i].job + " (" + filmography_list[i].role.italics() +")</td></tr></table>";
 									} else {
-										temp_output = "<table border='2px' style='background-color: rgb(197,197,197); text-align: center;'><tr><td border='2px' width='50px'>" + filmography_list[i].year + "</td><td border='2px' width='500px'>" + filmography_list[i].title + "</td><td border='2px' width='500px'>" + filmography_list[i].job.substring(0,1).toUpperCase() + filmography_list[i].job.substring(1).toLowerCase() + "</td></tr></table>";
+										output += "<table border='2px solid black' style='background-color: rgb(197,197,197);text-align: center;'><tr><td border='2px' width='50px'>" + filmography_list[i].year + "</td><td border='2px' width='500px'><a id='inside_href" + i + "' href='#' style='color: black; text-decoration: none;'>" + filmography_list[i].title + " <img id='inside_img" + i + "' src='./pictures/empty.png' alt='empty' height='15px'/></a></td><td border='2px' width='500px'>" + filmography_list[i].job + "</td></tr></table>";
 										}
-								output = output +  temp_output;
+								
 							}
 							}
-							return output;
+							return translate_job(output);
 							
 						}
 				};
@@ -119,7 +152,8 @@
 			
         function update_inside (id)
             {
-			    jsonFilmography_inside = "/yamj3/api/person/" + id + ".json?dataitems=filmography_inside&sortby=year&sortdir=desc";
+		
+			    jsonFilmography_inside = "/yamj3/api/person/" + id + ".json?dataitems=filmography_inside&sortby=year&sortdir=asc";
 				console.log("Popup_Person jsonFilmography_inside: " + jsonFilmography_inside);
 				  $.ajax({
 						url: jsonFilmography_inside,
@@ -138,49 +172,69 @@
  				var LIST_FILMOGRAPHY_INSIDE = { 
 				'span.filmography_inside': function(arg)
 					{
+						// test if there is a filmography_inside returned
 						if (arg.context.result.filmography) {
 						var filmography_inside_list = arg.context.result.filmography;
+						// clear all contents  
 						$('.Filmography_in').css('display', 'none'); 
 						$('.result_filmography_inside').empty();
-						
+						// set header
 						var init_inside = "<tr><td><span class=\"filmography_inside\"></span></td></tr>"
 						$('.result_filmography_inside').append(init_inside);
 						var output_inside =  "";
-	
-					//		var output = filmography_label +":<br>";
-					//	var output_inside = "<text>Inside filmography: </text><br>";
-					//	 $('.filmography_inside').append(output_inside);
 							// loop thru the list of filmography
-					//		console.log ('Popup_person loop thru filmography inside');
 							for (i = 0; i < filmography_inside_list.length; i++) {	
+								var boucle_filmography_compare = true;
+								if (filmography_list) {
+								for (j = 0; j < filmography_list.length && boucle_filmography_compare; j++) {
+							//		console.log ('Popup_person filmography_list.length:' + filmography_list.length + ' filmography_list['+j+'].title:' + filmography_list[j].title + ' filmography_inside_list[' + i + '].title:' +filmography_inside_list[i].title);
+							//	check if it is a movie inside 
+								if (filmography_list[j].title == filmography_inside_list[i].title)
+										{
+										boucle_filmography_compare = false; 
+										console.log ("Popup_person found in filmography a movie stored in db: " +  filmography_list[j].title + " index j:" + j);
+										$("#inside_href"+j).css("color", "red");
+										$("#inside_href"+j).css("font-weight", "bold");
+										document.getElementById("inside_href"+j).href="javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "')";
+										document.getElementById("inside_img"+j).src="./pictures/go_select.png";
+										}
+									}
+								} else {console.log ('Popup_person no filmography_list available')}
+								
 								if (filmography_inside_list[i].type == "MOVIE")
 									{
+									// if there is already one filmography display this section
 									$('.Filmography_in').css('display', 'block'); 
+									// test if there is an actor 
 									if (filmography_inside_list[i].job != 'ACTOR')
 									{
-										temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_name\">"+ filmography_inside_list[i].job.italics() +"</p></a></td>" ;
+										temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff; border-radius:9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_job\">"+ filmography_inside_list[i].job.italics() +"</p></a></td>" ;
 									} else {
-											if (filmography_inside_list[i].role) {temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_name\">"+ filmography_inside_list[i].role.italics() +"</p></a></td>" ;}
-											else {temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_name\"></p></a></td>" ;}
+									// test if the role is not empty
+											if (filmography_inside_list[i].role) {temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff;border-radius:  9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_job\">"+ filmography_inside_list[i].role.italics() +"</p></a></td>" ;}
+											else {temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff; border-radius:9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_job\"></p></a></td>" ;}
 									} 
-									$('.filmography_inside').append(temp_output_inside);
+									// append to display with  job and role translated
+									$('.filmography_inside').append(translate_job(temp_output_inside));
 									get_poster(filmography_inside_list[i].type, filmography_inside_list[i].videoDataId, i); 
 									}
+								// repeat the sequence for series 
 								if (filmography_inside_list[i].type == "SERIES")
 									{
 									$('.Filmography_in').css('display', 'block'); 
 									if (filmography_inside_list[i].job != 'ACTOR')
 									{
-										temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_name\">"+ filmography_inside_list[i].job.italics() +"</p></a></td>" ;
+										temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff; border-radius:9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_job\">"+ filmography_inside_list[i].job.italics() +"</p></a></td>" ;
 									} else {
-											if (filmography_inside_list[i].role) {temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_name\">"+ filmography_inside_list[i].role.italics() +"</p></a></td>" ;}
-											else {temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_name\"></p></a></td>" ;}
+											if (filmography_inside_list[i].role) {
+													temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff; border-radius:9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_job\">"+ filmography_inside_list[i].role.italics() +"</p></a></td>" ;
+											} else {temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff; border-radius:9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_job\"></p></a></td>" ;}
 									} 
-									 $('.filmography_inside').append(temp_output_inside);
+									 $('.filmography_inside').append(translate_job(temp_output_inside));
 									get_poster(filmography_inside_list[i].type, filmography_inside_list[i].seriesId, i); 
 									}
 							}
-							return output_inside;
+							return translate_job(output_inside); 
 						} else return '';
 					}
 				};
@@ -1090,12 +1144,15 @@
 			function close_person ()
 			{
 				console.log("close_person:  style:"+window.localStorage.getItem('Style'));
+				window.localStorage.setItem("popup_person_sort", "year");
+				window.localStorage.setItem("popup_person_sort_direction", "desc");
 				switch (window.localStorage.getItem('Style'))
 				{
 					case 'frame':
 						parent.document.getElementById('person_display').style.visibility="hidden";
 						parent.document.getElementById('target_display').style.visibility="hidden";
 						parent.document.getElementById('target_display').style.zIndex="6";
+					
 					break;	
 					case 'page':
 						this.window.close();
@@ -1113,6 +1170,8 @@
 			function back ()
 			{
 				console.log ("Popup_Person: back : style: "+window.localStorage.getItem('Style'));
+				window.localStorage.removeItem("popup_person_sort");
+				window.localStorage.removeItem("popup_person_sort_direction");
 				switch (window.localStorage.getItem('Style'))
 				{
 					case 'frame':
@@ -1144,29 +1203,94 @@
 			}	
 			
 			function set_context_lang_value ()
-			{		}
+			{
+			//	document.getElementById("_year").innerHTML=window.localStorage.getItem('year_label');
+			//	document.getElementById("_title").innerHTML=window.localStorage.getItem('title_label')
+
+
+			}
 			
 			
-		function init_person_popup(id)
+		function init_person_popup(id, sort_index, sort_direction)
         {
-     
+			
             console.log("Popup_Person Storing value: Person_id"  + id);
-		// adjust frame to display biography
-	
 		// adjust frame to display biography
 			parent.document.getElementById('target_display').style.height="715px";
 			parent.document.getElementById('target_frame').style.height="705px";
 			parent.document.getElementById('target_display').style.width="1100px";
 			parent.document.getElementById('target_frame').style.width="1090px";
 			parent.document.getElementById('target_display').style.left="120px";
-			parent.document.getElementById('target_display').style.top="2px";
+			parent.document.getElementById('target_display').style.top="51px";
 		//	parent.frames['target_frame'].location.href='Popup_Person.html';	
 		//	parent.document.getElementById('target_frame').style.display="block";
 			parent.document.getElementById('target_display').style.visibility="visible";
 		//	window.location.href="Popup_Person.html";
 			parent.document.getElementById('target_display').style.zIndex="11";
+
+			if (sort_index == "title") 
+				{
+					if (sort_direction == 'asc')
+					{
+						document.getElementById("_year_dir").src='./pictures/sort_off.png';
+						document.getElementById("_title_dir").src='./pictures/nav_up.png';
+					}
+					else 
+					{
+						document.getElementById("_year_dir").src='./pictures/sort_off.png';
+						document.getElementById("_title_dir").src='./pictures/nav_down.png';
+					}
+				}
+			else 
+				{
+					if (sort_direction == 'asc')
+					{
+						document.getElementById("_year_dir").src='./pictures/nav_up.png';
+						document.getElementById("_title_dir").src='./pictures/sort_off.png';
+					}
+					else 
+					{
+						document.getElementById("_year_dir").src='./pictures/nav_down.png';
+						document.getElementById("_title_dir").src='./pictures/sort_off.png';
+					}
+				}
 		}
-		
+	function sort_by_title ()
+		{
+			window.localStorage.setItem('popup_person_sort', 'title');
+			if (window.localStorage.getItem("popup_person_sort_direction"))
+					{
+					if (window.localStorage.getItem("popup_person_sort_direction") == "asc") {
+						window.localStorage.setItem('popup_person_sort_direction', 'desc');
+						} else {window.localStorage.setItem('popup_person_sort_direction', 'asc');}
+					} 
+			else {	
+			window.localStorage.setItem('popup_person_sort_direction', 'asc');
+			
+			}
+			console.log ('Popup_Person sort_by_title sort_index:'+window.localStorage.getItem('popup_person_sort')+' sort_direction:' + window.localStorage.getItem("popup_person_sort_direction"));
+			window.location.href="Popup_Person.html";
+		}
+	function sort_by_year ()
+		{
+			window.localStorage.setItem('popup_person_sort', 'year');
+			if (window.localStorage.getItem("popup_person_sort_direction"))
+					{ 
+					if (window.localStorage.getItem("popup_person_sort_direction") == "asc") {
+						
+						
+						window.localStorage.setItem('popup_person_sort_direction', 'desc');
+						} else {
+						window.localStorage.setItem('popup_person_sort_direction', 'asc');
+					
+						}
+					} 
+			else {	
+			window.localStorage.setItem('popup_person_sort_direction', 'desc');
+			}
+			console.log ('Popup_Person sort_by_year sort_index:'+ window.localStorage.getItem('popup_person_sort')+' sort_direction:' + window.localStorage.getItem("popup_person_sort_direction"));
+			window.location.href="Popup_Person.html";
+		}
         </script>
 		
 		<!-- just added to set the language value, shouldn't be displayed  -->
@@ -1176,37 +1300,38 @@
 			
         <div class="template">
             <table id="headertable">
+				<img src="" class="background" style="width:1095px; opacity:0.2; position:absolute; top:-250px; left:0px; z-index:0;"}
                 <tr>
-                 
-            <!--        <td><span class="id"></span></td> -->
                     <td rowspan="4"><span class="image"></span></td>
-                    
 					<td>
-				<div id="close_icon" onclick="close_person()" style="position: absolute; top: 0px; right: 0px;"><img src="./pictures/close2.png" width="40"/></div>
-				<a id="back_icon" href="javascript:back()"><img src="./pictures/returnbutton.png" width="30" align="left" /></a>
+				<div id="close_icon" onclick="close_person()" style="position: absolute; top: 1px; right: 1px;"><img src="./pictures/close2.png" width="40"/></div>
+				<a id="back_icon" style="position: absolute; top: 1px; right: 1px" href="javascript:back()"><img src="./pictures/returnbutton.png" width="30" align="left" /></a>
 					<span class="name"></span>: 
                     <span class="birthPlace"></span> - 
                     <span class="birthDay"></span>
-					
-					
 					</td>
                 </tr>
                 <tr>
-               
                     <td><span class="biography"></span></td>
                 </tr>
-	
-	
             </table>
         </div>
-		<table class="result_filmography">
-			
+		
+		<div class="Filmography_general">
+			<table id='filmography_table'>
+				<tr>
+					<td><div id="_year" onclick="sort_by_year()"/><img src="./pictures/icon/year.png" style="height: 30px; " /><img id="_year_dir" src="./pictures/nav_down.png" style="position: relative; height: 15px; top: -5px; left: 0px;" /></td>
+					<td><div id="_title" onclick="sort_by_title()" /><img src="./pictures/icon/title.png" style="height: 30px; " /><img id="_title_dir" src="./pictures/nav_down.png" style="position: relative; height: 15px; top: -8px; left: 0px;" /></td>
+					<td id="_job" ><img src="./pictures/icon/icon_person.png" style="height: 30px; " /></td>
+				</tr>
+			</table>
+			<table class="result_filmography">
 						<tr>
 							<td><span class="filmography"></span></td>  <!-- display filmography -->
 						</tr>
-					
 					</table>
-					
+		</div>
+		
 		<div class="Filmography_in">
 			<table class="result_filmography_inside">
 				<tr>

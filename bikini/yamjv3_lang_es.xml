@@ -74,11 +74,15 @@
 	<powerlabel>potencia</powerlabel>
 	<prefered>favorito</prefered>
 	<prevremotelabel>anterior</prevremotelabel>
+	<producerlabel>productor</producerlabel>
 	
 	<ratinglabel>clasification</ratinglabel>
 	<ratingindex>clasification</ratingindex>
 	<redlabel>rojo</redlabel>
 	<remotelabel>mando a distancia</remotelabel>
+	<removetext>eliminar</removetext>
+	<removefanarttext>haga clic en fanart para eliminar</removefanarttext>
+	<removepostertext>haga clic en poster para eliminar</removepostertext>
 	<repeatlabel>repeticion</repeatlabel>
 	<resultstext>resultado</resultstext>
 	<returnlabel>retorno</returnlabel>
@@ -106,6 +110,7 @@
 	
 	<titlelabel>titulo</titlelabel>
 	<timeseeklabel>tiempo de bus.</timeseeklabel>
+	<transformerrortext>incapaces de transformar target_path cheque source_path</transformerrortext>
 	<tvmodelabel>el modo tv</tvmodelabel>
 	
 	<unwatchedselect>unwatched</unwatchedselect>

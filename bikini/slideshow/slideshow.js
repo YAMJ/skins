@@ -2,39 +2,45 @@
  * http://forrst.com/posts/Quick_Rotating_Slideshow_jQuery-z32
  */
 function slideshow() {
-
+	// set poster count to initial value 
+	var imgcount = 0;
     // get the size of the slideshow container
-    var ctrHeight = $('#slideshowCtr').css('height');
-    var ctrWidth = $('#slideshowCtr').css('width');
 
+  //  var ctrHeight = Math.floor(parseInt($('#slideshowCtr').css('height')) / 1290 * 100);
+  //  var ctrWidth = Math.floor(parseInt($('#slideshowCtr').css('width')) / 1290 * 100);
+  
+  // adjust to full width and a scalable value ; 16vw 
+	var ctrWidth = 16;
+	
     // get number of images and set width of imgRoll
     var imgTotal = $('div#imgRoll > img').size();
     var imgRollWidth = imgTotal * parseInt(ctrWidth);
-    $('div#imgRoll').css('width', imgRollWidth);
+    $('div#imgRoll').css('width', imgRollWidth + 'vw');
 
     // set images to the size of the slideshow viewport
-    $('div#imgRoll img').css('height', ctrHeight);
-    $('div#imgRoll img').css('width', ctrWidth);
-
-    // set maximum scroll distance
-    var maxScroll = imgRollWidth - parseInt(ctrWidth) + 'px';
+//    $('div#imgRoll img').css('height', ctrHeight + 'vw');
+    $('div#imgRoll img').css('width', ctrWidth + 'vw');
 
     // on slideshow hover show controls
     $('div#slideshowCtr').hover(function() {
-        $('a#next, a#prev').fadeIn('slow');
+        $('a#next').fadeIn('slow');
     }, function() {
-        $('a#next, a#prev').fadeOut('slow');
+        $('a#next').fadeOut('slow');
     });
 
     // move to next right image
     $('a#next').click(function() {
+		imgcount  = imgcount  + 1; 
         // unless on the last image
-        if ($('div#imgRoll').css('left') === '-' + maxScroll)
+        if (imgTotal == imgcount)
         {
-            $('div#imgRoll').animate({left: '0px'}, 'slow');
+			// reset poster count to initial value 
+			imgcount = 0;
+            $('div#imgRoll').animate({left: '0vw'}, 'slow');
         } else {
+			
             $('div#imgRoll').animate({
-                left: '-=' + parseInt(ctrWidth) + 'px'
+                left: '-=' + parseInt(ctrWidth) + 'vw'
             }, 'slow');
         }
     });
@@ -42,12 +48,12 @@ function slideshow() {
     // move to next left image
     $('a#prev').click(function() {
         // unless on the last image
-        if ($('div#imgRoll').css('left') === '0px')
+        if (imgTotal == 0)
         {
-            $('div#imgRoll').animate({left: '-' + maxScroll}, 'slow');
+            $('div#imgRoll').animate({left: '-' + (imgTotal * ctrWidth) + 'vw'}, 'slow');
         } else {
             $('div#imgRoll').animate({
-                left: '+=' + parseInt(ctrWidth) + 'px'
+                left: '+=' + parseInt(ctrWidth) + 'vw'
             }, 'slow');
         }
     });

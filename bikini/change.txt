@@ -1,4 +1,20 @@
 change.txt
+V1.5.0
+- adjust person frame at the same place than the synopsys in detail page
+- fix escape value in filename for episode name while using play function
+- adjust syntax of play confirmation
+- add various translation (previously hardcoded) 
+- fix jquery error with include_menu_left
+- add error message when no source_path/target_path found
+- fix year selection in search page 
+- add year as an activ value in detail page 
+- add icon sort selector in people frame to show the sort selected case 
+- adjust in detail page all activ value are in cyan 
+- modify : split biography and filmography into 2 pages 
+- adjust biography and filmography for responsive design
+- adjust detail frame for responsive design
+- add year to the title in boxset page, sort by year ascending 
+- adjust position of search icon in all index page 
 V1.4.1
 - add missing pictures
 V1.4.0

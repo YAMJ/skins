@@ -1,280 +1,242 @@
-<!doctype html>
-<html lang="en">
+<html>
     <head>
-	
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>YAMJv3 H Navigation Person</title>
-		<script src="js/jQuery.js"></script>
-		<script src="js/pure.js"></script>
-        <script src="js/js.js"></script>
-        <script src="js/jPages.js"></script>
+        <title>YAMJ v3 Person Fimography</title>
+        <script src="js/jQuery.js"></script>
+        <script src="js/pure.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/lang.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>	
-		<script src="js/lang.js"></script>
-		<link rel="stylesheet" type="text/css" href="css/person-style.css">
-        <link rel="stylesheet" type="text/css" href="css/nav-style.css">
-        <link rel="stylesheet" href="css/jPages.css">
-        <link rel="stylesheet" href="css/animate.css">
-	
+        <link rel="stylesheet" type="text/css" href="css/Popup_Person-style.css">
+	<style>
+	html {overflow:hidden; height:1120px; };
+	body {height: 720px;}
+	</style>
     </head>
-	<!-- close (child windows) person popup windows when program exit --> 
-    <body onload="PersonData();" >   
+    <body onload="PersonData();" onclose="close_person();" >
         <script type="text/javascript">
-		
-		 function PersonData()
-        {
-		//	get_lang();	
-			var	type = localStorage.getItem("indextype");
-			var	id = localStorage.getItem ("id");
-			jsonUrl = "/yamj3/api/person/"+type+".json?id="+id+"&job=actor,director,writer&dataitems=artwork,biography";
-		//	  jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=artwork,biography,filmography&sort=desc";
-            console.log("PersonData URL: " + jsonUrl);
-            var jsondata = null;
-
-            $.ajax({
-                url: jsonUrl,
-                async: false,
-                dataType: 'jsonp',
-                'success': function(data)
-                {
-                    jsondata = data;
-				//	outputJson(data); 		
-                    updateHtml(data);
-					document.getElementById('Hbiographyshow').firstChild.nodeValue = "biography";	
-				// adjust window to just display poster ribbon
-					window.resizeTo (1340, 330);
-	
-                }
-            });
-
-            return jsondata;
-        }
-		
-//****************************************************************************		
-
-	function updateHtml(yamjdata)
-			{
-				var LIST_person_photo = {
-             		'span.totalperson_photo': function(arg) 
-					{
-						var totalperson_photo = arg.context.results;
-						var outputperson_photo = "";
-								
-							for (i = 0; i < totalperson_photo.length; i++) 
-							{
-								
-								// add name on the top
-								outputperson_photo = outputperson_photo+"<td><p class=\"person_nameH\">"+totalperson_photo[i].name+"</p>";
-								str_bio = "";
-								str_cv = totalperson_photo[i].name;
-									if (totalperson_photo[i].birthDay) {str_cv += ' - ' +totalperson_photo[i].birthDay ;} 
-									if (totalperson_photo[i].birthPlace) {str_cv += ': '+ totalperson_photo[i].birthPlace ;}
-					//			 console.log("navPersonH: loop i=" + i + " str_cv:" + str_cv);	
-								if (totalperson_photo[i].biography) 
-								{					
-								// replace all ' and " by they corresponding value 
-									str_bio += totalperson_photo[i].biography.replace(/\"/g,"\\&quot;").replace(/\'/g,"\\&apos;").replace(/\n/g,"");
-								} else {
-								// if no biography available , no display
-									str_bio = "nobio"
-								}
-					//			console.log("navPersonH: loop i=" + i + " str_bio:" + str_bio);	
-									// Check to see if there is artwork
-								if (totalperson_photo[i].artwork) 
-								{
-										if (totalperson_photo[i].artwork[0]) 
-										{
-											// Get the first photo from the list
-											
-											var person_photoselect = totalperson_photo[i].artwork[0];
-											if (person_photoselect.generatedId == 0) 
-											{
-											// on click display biography and big poster
-												outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
-											} else {
-												outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('"+ arg.context.basePhotoUrl + person_photoselect.filename +"')\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + person_photoselect.filename + "\" ></img></a>";
-							//					console.log("navPersonH: loop i=" + i + " photo:" + arg.context.basePhotoUrl + person_photoselect.filename);	
-												}
-										} else {
-											outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
-										}
-								} else {
-											outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
-										}
-									// add the role at the bottom 
-								if (totalperson_photo[i].role) {
-								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].role+"</p></td>";
-					//			console.log("navPersonH: loop i=" + i + " role:" + totalperson_photo[i].role);	
-								} else {
-									if (totalperson_photo[i].job) {
-										outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].job+"</p></td>";
-									}
-								}
-							}
-							return translate_job(outputperson_photo);
-						}
-					};
-			$('.Hfilmography').css('display', 'none');
-			updatePersonCount (yamjdata);
-			$p('.table_person_photoH').render(yamjdata, LIST_person_photo);			
-	
+            function PersonData()
+            {
+			// create filmography and clear contents
+				var filmography_list = new Array();
+				var	id = localStorage.getItem ("Person_id");
+			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+				get_lang();	
 				
-			}
-		
-//***************************************************************************************************************		
-	
-	
-	
-	// display biography   
-	function display_bio(string_to_display)
-		{	
-			document.getElementById('Hbiographyshow').firstChild.nodeValue = string_to_display;
-		// display biography, resize the window to display bio and poster and photo ribbon at bottom
-			$('.table_person_photoH').css('top', '515px');
-			window.resizeTo (1340, 830);
-			if (string_to_display == "nobio")
-				{$('.Hbiography').css('display', 'none');} else {$('.Hbiography').css('display', 'block');}
-		}
-	function display_cv(string_cv)
-		{	
-			document.getElementById('person_cv').firstChild.nodeValue = string_cv;
-		// display cv
-			$('#person_cv').css('display', 'block');
-		}
-	// display poster   
-	function display_img(image_to_display)
-		{
-		console.log("display_img :" +image_to_display);
-		$('#image_object_left').css('display', 'block');
-		document.getElementById('image_object_left').src = image_to_display ;	
-		}
-	// get person count 
-	
-	function display_filmography_scanned(id)
-		{
-			jsonFilmography = "/yamj3/api/person/" + id + ".json?dataitems=filmography_scanned&sortby=year&sortdir=desc";
-            console.log("navPersonH jsonFilmography: " + jsonFilmography);
-            var jsondata = null;
-		//	$('.Hfilmography').css('display', 'none');
+			// allow to sort by title , year , asc, desc ; set default to year:desc 	
+			var sort_index = "year";
+			var sort_direction = "desc";			
+			if (window.localStorage.getItem("popup_person_sort"))
+					{ sort_index = window.localStorage.getItem("popup_person_sort");}
 			
-            $.ajax({
-                url: jsonFilmography,
-                async: false,
-                dataType: 'jsonp',
-                'success': function(filmography_data)
-                {
-                    jsondata = filmography_data;
-			//		outputJson(filmography_data); 		
-             var LIST_FILMOGRAPHY = { 
-				'span.Hfilmography': function(arg)
+			if (window.localStorage.getItem("popup_person_sort_direction"))
+					{ sort_direction = window.localStorage.getItem("popup_person_sort_direction");}	
+
+			window.localStorage.setItem('popup_person_sort', sort_index);
+			window.localStorage.setItem('popup_person_sort_direction', sort_direction);
+			
+			
+               jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=artwork,filmography_scanned&sortby=" + sort_index + "&sortdir=" + sort_direction;
+				if (window.localStorage.getItem('Style') == "frame") {init_person_popup(id, sort_index, sort_direction);}
+                var jsondata = null;
+				switch (window.localStorage.getItem('back_close'))
+				{
+					case 'close':
+						document.getElementById('back_icon').style.visibility="hidden";
+						document.getElementById('close_icon').style.visibility="visible";
+					break;	
+					case 'back':
+						document.getElementById('close_icon').style.visibility="hidden";
+						document.getElementById('back_icon').style.visibility="visible";
+					break;
+					
+				}
+                console.log("Popup_Person Call for URL with person ID:" + id);
+				console.log("Popup_Person jsonUrl: " + jsonUrl);
+
+                $.ajax({
+                    url: jsonUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(data)
+                    {
+                        jsondata = data;
+					//	outputJson(data); 	
+                        updateHtml(data);
+						update_inside(id);
+                    }
+                });
+				
+                return jsondata;
+            }
+
+        function updateHtml(yamjdata)
+            {
+            //    console.log(yamjdata);
+                YAMJ_DIR = {
+              //      'span.id': 'result.id',
+                    'span.name': 'result.name',
+                    'span.birthPlace': 'result.birthPlace',
+					'span.birthDay': function(arg) {
+								if (arg.context.result.birthDay) 
+								{
+									return arg.context.result.birthDay;
+								} else {
+								return window.localStorage.getItem("nobirthday_text");
+								}
+							},
+                    'span.image': function(arg) {
+                        // Check to see if there is artwork
+                        if (arg.context.result.artwork) {
+                            // Get the first photo from the list
+                            var photo = arg.context.result.artwork[0];
+                            if (photo.generatedId === 0) {
+                                return "<img src=\"pictures/dummy_photo.jpg\">";
+                            }
+                            return "<img src=\"" + arg.context.basePhotoUrl + photo.filename + "\">";
+                        } else {
+                            return "<img src=\"pictures/dummy_photo.jpg\">";
+                        }
+                    },
+					'img.background_bio@src': function(arg) {
+                        // Check to see if there is artwork
+                        if (arg.context.result.artwork) {
+                            // Get the first photo from the list
+                            var photo = arg.context.result.artwork[0];
+                            if (photo.generatedId === 0) {
+                                return "pictures/dummy_photo.jpg";
+                            }
+                            return arg.context.basePhotoUrl + photo.filename;
+                        } else {
+                            return "pictures/dummy_photo.jpg";
+                        }
+                    }
+                };
+			  var LIST_FILMOGRAPHY = {
+						'span.filmography': function(arg)
 						{
-						
-						if (!arg.context.result.filmography)
-							{$('.H_Filmography').css('display', 'none');} 
-							else {  
-							$('.H_Filmography').css('display', 'block'); $('.Hfilmography').css('display', 'block');
-							var filmography_list = arg.context.result.filmography;
-					//		var output = filmography_label +":<br>";
-							var output = "<text>filmography: </text><br>";
+							filmography_list = arg.context.result.filmography;
+						// commented because text has been replaced by icon which doesn't needed translation
+						//	var output  = "<table id='filmography_table'><tr><td style='border:2px solid black; width:50px;' >" + window.localStorage.getItem('year_label') + "</td><td style='border:2px solid black; width:500px'>" + window.localStorage.getItem('title_label') + "</td><td style='border:2px solid black; width:500px'>job</td></tr></table>";
+							var output = "" ; 
+						if (arg.context.result.filmography) {
 							// loop thru the list of filmography
-							for (i = 0; i < filmography_list.length; i++) {
-							// add year and title 
-								temp_output = filmography_list[i].year + " - " + filmography_list[i].title;
-							// add job if exist
-								if (filmography_list[i].job)
+							for (i = 0; i < filmography_list.length; i++)
+							{
+								if (filmography_list[i].role)
 									{
-										temp_output = temp_output + " - " + filmography_list[i].job ;
-										// add role if exist
-										if (filmography_list[i].role)
-											{temp_output = temp_output + " (" + filmography_list[i].role.italics() +")";}	
-									} 
-								// add newline at the end
-								output = output +  temp_output + "<br>";
-							}  // end loop 
-							return translate_job(output);
+										output += "<table border='2px solid black' style='background-color: rgb(197,197,197);text-align: center;'><tr><td border='2px solid black' style='width:6vw;'>" + filmography_list[i].year + "</td><td border='2px' style='width:43vw;'><a id='inside_href" + i + "' href='#' style='color:black; text-decoration: none;'>" + filmography_list[i].title + " <img id='inside_img" + i + "' src='./pictures/empty.png' alt='empty' height='15px' /></a></td><td border='2px' style='width:43vw;'>" + filmography_list[i].job + " (" + filmography_list[i].role.italics() +")</td></tr></table>";
+									} else {
+										output += "<table border='2px solid black' style='background-color: rgb(197,197,197);text-align: center;'><tr><td border='2px' style='width:6vw;'>" + filmography_list[i].year + "</td><td border='2px' style='width:43vw;'><a id='inside_href" + i + "' href='#' style='color: black; text-decoration: none;'>" + filmography_list[i].title + " <img id='inside_img" + i + "' src='./pictures/empty.png' alt='empty' height='15px'/></a></td><td border='2px' style='width:43vw;'>" + filmography_list[i].job + "</td></tr></table>";
+										}
+								
 							}
-						}	
-					};
-					$('.Hfilmography').css('display', 'block');
-					$p('.result_filmography').render(filmography_data, LIST_FILMOGRAPHY);
-                }
-            });
-            return jsondata;
-		}
-		
-	function display_filmography_inside(id)
-		{
-			jsonFilmography_inside = "/yamj3/api/person/" + id + ".json?dataitems=filmography_inside&sortby=year&sortdir=desc";
-            console.log("navPersonH jsonFilmography_inside: " + jsonFilmography_inside);
-            var jsondata = null;
-		//	$('.Hfilmography').css('display', 'none');
+							}
+							return translate_job(output);
+							
+						}
+				};
+
+				$p('.template').render(yamjdata, YAMJ_DIR);		
+				$p('.result_filmography').render(yamjdata, LIST_FILMOGRAPHY);	
+            }
 			
-            $.ajax({
-                url: jsonFilmography_inside,
-                async: false,
-                dataType: 'jsonp',
-                'success': function(filmography_inside_data)
-                {
-                    jsondata = filmography_inside_data;
-				//	outputJson(filmography_inside_data); 		
-             				
-				var LIST_FILMOGRAPHY_INSIDE = { 
-				'span.Hfilmography_inside': function(arg)
+        function update_inside (id)
+            {
+		
+			    jsonFilmography_inside = "/yamj3/api/person/" + id + ".json?dataitems=filmography_inside&sortby=year&sortdir=asc";
+				console.log("Popup_Person jsonFilmography_inside: " + jsonFilmography_inside);
+				  $.ajax({
+						url: jsonFilmography_inside,
+						async: false,
+						dataType: 'jsonp',
+						'success': function(Filmography_inside_data)
 						{
+							jsondata = Filmography_inside_data;
+						//	outputJson(Filmography_inside_data); 	
+							updateHtml_inside(Filmography_inside_data);
+						}
+					});
+			}
+		function updateHtml_inside (Filmography_inside_data)
+			{
+ 				var LIST_FILMOGRAPHY_INSIDE = { 
+				'span.filmography_inside': function(arg)
+					{
+						// test if there is a filmography_inside returned
+						if (arg.context.result.filmography) {
 						var filmography_inside_list = arg.context.result.filmography;
-						$('.H_Filmography_inside').css('display', 'none'); 
+						// clear all contents  
+						$('.Filmography_in').css('display', 'none'); 
 						$('.result_filmography_inside').empty();
-						
-						var init_inside = "<tr><td><span class=\"Hfilmography_inside\"></span></td></tr>"
+						// set header
+						var init_inside = "<tr><td><span class=\"filmography_inside\"></span></td></tr>"
 						$('.result_filmography_inside').append(init_inside);
 						var output_inside =  "";
-	
-					//		var output = filmography_label +":<br>";
-					//	var output_inside = "<text>Inside filmography: </text><br>";
-					//	 $('.Hfilmography_inside').append(output_inside);
-							// loop thru the list of filmography_inside
+							// loop thru the list of filmography
 							for (i = 0; i < filmography_inside_list.length; i++) {	
+								var boucle_filmography_compare = true;
+								if (filmography_list) {
+								for (j = 0; j < filmography_list.length && boucle_filmography_compare; j++) {
+							//		console.log ('Popup_person filmography_list.length:' + filmography_list.length + ' filmography_list['+j+'].title:' + filmography_list[j].title + ' filmography_inside_list[' + i + '].title:' +filmography_inside_list[i].title);
+							//	check if it is a movie inside 
+								if (filmography_list[j].title == filmography_inside_list[i].title)
+										{
+										boucle_filmography_compare = false; 
+										console.log ("Popup_person found in filmography a movie stored in db: " +  filmography_list[j].title + " index j:" + j);
+										$("#inside_href"+j).css("color", "red");
+										$("#inside_href"+j).css("font-weight", "bold");
+										document.getElementById("inside_href"+j).href="javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "')";
+										document.getElementById("inside_img"+j).src="./pictures/go_select.png";
+										}
+									}
+								} else {console.log ('Popup_person no filmography_list available')}
+								
 								if (filmography_inside_list[i].type == "MOVIE")
 									{
-									$('.H_Filmography_inside').css('display', 'block'); 
+									// if there is already one filmography display this section
+									$('.Filmography_in').css('display', 'block'); 
+									// test if there is an actor 
 									if (filmography_inside_list[i].job != 'ACTOR')
 									{
-										temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "');\"><p class=\"filmography_nameH\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\">"+ filmography_inside_list[i].job.italics() +"</p></a></td>" ;
+										temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff; border-radius:9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" style='width:9.5vw;' ></img><p class=\"filmography_job\">"+ filmography_inside_list[i].job.italics() +"</p></a></td>" ;
 									} else {
-											if (filmography_inside_list[i].role) {temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "');\"><p class=\"filmography_nameH\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\">"+ filmography_inside_list[i].role.italics() +"</p></a></td>" ;}
-											else {temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "');\"><p class=\"filmography_nameH\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\"></p></a></td>" ;}
+									// test if the role is not empty
+											if (filmography_inside_list[i].role) {temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff;border-radius:  9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" style='width:9.5vw;' ></img><p class=\"filmography_job\">"+ filmography_inside_list[i].role.italics() +"</p></a></td>" ;}
+											else {temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff; border-radius:9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" style='width:9.5vw;' ></img><p class=\"filmography_job\"></p></a></td>" ;}
 									} 
-									$('.Hfilmography_inside').append(translate_job(temp_output_inside));
+									// append to display with  job and role translated
+									$('.filmography_inside').append(translate_job(temp_output_inside));
 									get_poster(filmography_inside_list[i].type, filmography_inside_list[i].videoDataId, i); 
 									}
+								// repeat the sequence for series 
 								if (filmography_inside_list[i].type == "SERIES")
 									{
-									$('.H_Filmography_inside').css('display', 'block'); 
+									$('.Filmography_in').css('display', 'block'); 
 									if (filmography_inside_list[i].job != 'ACTOR')
 									{
-										temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_nameH\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\">"+ filmography_inside_list[i].job.italics() +"</p></a></td>" ;
+										temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff; border-radius:9px; font-size: 1.2vw;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" style='width:9.5vw;' ></img><p class=\"filmography_job\">"+ filmography_inside_list[i].job.italics() +"</p></a></td>" ;
 									} else {
-										if (filmography_inside_list[i].role) {temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_nameH\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\">"+ filmography_inside_list[i].role.italics() +"</p></a></td>" ;}
-										else {temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_nameH\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\"></p></a></td>" ;}
+											if (filmography_inside_list[i].role) {
+													temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff; border-radius:9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" style='width:9.5vw;' ></img><p class=\"filmography_job\">"+ filmography_inside_list[i].role.italics() +"</p></a></td>" ;
+											} else {temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff; border-radius:9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" style='width:9.5vw;' ></img><p class=\"filmography_job\"></p></a></td>" ;}
 									} 
-									 $('.Hfilmography_inside').append(translate_job(temp_output_inside));
+									 $('.filmography_inside').append(translate_job(temp_output_inside));
 									get_poster(filmography_inside_list[i].type, filmography_inside_list[i].seriesId, i); 
 									}
 							}
-							
-							return translate_job(output_inside);
-						}	
+							return translate_job(output_inside); 
+						} else return '';
+					}
 				};
-				$p('.result_filmography_inside').render(filmography_inside_data, LIST_FILMOGRAPHY_INSIDE);
-                }
-            });
-            return jsondata;
-		}		
-	function get_poster (type, videodataId, i) {
-				
+				$p('.result_filmography_inside').render(Filmography_inside_data, LIST_FILMOGRAPHY_INSIDE);
+            }			
+	function get_poster (type, videodataId, i) 
+			{
 		//	var jsondata = null;
 				jsonPoster = "/yamj3/api/video/" + type.toLowerCase() + "/" + videodataId + ".json?dataitems=artwork";
-				console.log("navPersonH jsonPoster: " + jsonPoster);
+				console.log("Popup_Person jsonPoster: " + jsonPoster);
 				$.ajax({
                     url: jsonPoster,
                     async: false,
@@ -292,7 +254,7 @@
             {
             	var boucle = true;
 				switch (i) 
-							{
+					{
 							case 0:
 								YAMJ_DIR0 = {
 							   // display poster 	
@@ -1161,84 +1123,218 @@
 								}
 								$p('.result_filmography_inside').render(Posterdata, YAMJ_DIR50); 
 								break;
-							}		
-            }			
-				
-	function updatePersonCount(data)
-		{
-			var ITEM_COUNT = {
-			   'span.itemcount': function(arg) {
-			  		set_personscroll (arg.context.count);			
-					return arg.context.count;
-			   }
-			};
-		   $p('.counttest').render(data, ITEM_COUNT);
-		}
-		
-	// adjust Person scroll bar 
-	function set_personscroll(count_to_set)
-		{	
-			if (count_to_set)
-				{					
-					console.log("set_personscroll: count= " +count_to_set);
-					// if less than 12 person adjust to center and supress scrollbar 
-					if (parseInt(count_to_set, 10) < 12)
-						{ 
-							$('.table_person_photoH').css('overflow-x', 'hidden');
-							$('.table_person_photoH').css('margin-left', (600 - (parseInt(count_to_set, 10)*50)) + "px");
-							$('.table_person_photoH').css('width', (1300 - (600 - (parseInt(count_to_set, 10)*50))) + "px");
-						}
-						else 
-						{ $('.table_person_photoH').css('overflow-x', 'scroll');}
-				}				
-		}
-	 function setId(type, id)
+					}		
+            }
+			
+			 function setId(type, id)
         {
             window.localStorage.setItem("indextype", type);
             window.localStorage.setItem("id", id);
             console.log("setId Storing value: " + type + "-" + id);
           	window.open("detail.html", "YAMJ v3 detail page", "");
         }
+			function close_person ()
+			{
+				console.log("close_person:  style:"+window.localStorage.getItem('Style'));
+				window.localStorage.setItem("popup_person_sort", "year");
+				window.localStorage.setItem("popup_person_sort_direction", "desc");
+				switch (window.localStorage.getItem('Style'))
+				{
+					case 'frame':
+						parent.document.getElementById('person_display').style.visibility="hidden";
+						parent.document.getElementById('target_display').style.visibility="hidden";
+						parent.document.getElementById('target_display').style.zIndex="6";
+					
+					break;	
+					case 'page':
+						this.window.close();
+					break;
+					case 'ribbon':
+						this.window.close();
+					break;	
+					case 'popup':
+						this.window.close();
+					break;
+					
+				}
+				parent.document.getElementById('person_display').style.visibility="hidden";
+			} 
+			function back ()
+			{
+				console.log ("Popup_Person: back : style: "+window.localStorage.getItem('Style'));
+				window.localStorage.removeItem("popup_person_sort");
+				window.localStorage.removeItem("popup_person_sort_direction");
+				switch (window.localStorage.getItem('Style'))
+				{
+					case 'frame':
+				
+					//	parent.document.getElementById('target_frame').style.display="none";
+						parent.document.getElementById('target_display').style.visibility="hidden";
+						parent.document.getElementById('target_display').style.height="275px";
+						parent.document.getElementById('target_frame').style.height="320px";
+						parent.document.getElementById('target_display').style.width="925px";
+						parent.document.getElementById('target_frame').style.width="920px";
+						parent.document.getElementById('target_display').style.left="200px";
+						parent.document.getElementById('target_display').style.top="70px";
+						parent.document.getElementById('person_display').style.zIndex="15";
+						parent.document.getElementById('person_frame').style.display="block";
+						parent.document.getElementById('person_display').style.visibility="visible";
+						parent.document.getElementById('target_display').style.zIndex="6";
+					break;	
+					case 'page':
+						this.window.close();
+					break;
+					case 'ribbon':
+						this.window.close();
+					break;
+					case 'popup':
+						this.window.close();
+					break;
+				}
+				
+			}	
+			
+			function set_context_lang_value ()
+			{
+			//	document.getElementById("_year").innerHTML=window.localStorage.getItem('year_label');
+			//	document.getElementById("_title").innerHTML=window.localStorage.getItem('title_label')
 
+
+			}
+			
+			
+		function init_person_popup(id, sort_index, sort_direction)
+        {
+			
+            console.log("Popup_Person Storing value: Person_id"  + id);
+		// adjust frame to display biography
+			parent.document.getElementById('target_display').style.height="87vh";
+			parent.document.getElementById('target_frame').style.height="87vh";
+			parent.document.getElementById('target_display').style.width="83vw";
+			parent.document.getElementById('target_frame').style.width="83vw";
+			parent.document.getElementById('target_display').style.left="8vw";
+			parent.document.getElementById('target_display').style.top="51px";
+			
+		//	parent.frames['target_frame'].location.href='Popup_Person.html';	
+		//	parent.document.getElementById('target_frame').style.display="block";
+			parent.document.getElementById('target_display').style.visibility="visible";
+		//	window.location.href="Popup_Person.html";
+			parent.document.getElementById('target_display').style.zIndex="11";
+
+			if (sort_index == "title") 
+				{
+					if (sort_direction == 'asc')
+					{
+						document.getElementById("_year_dir").src='./pictures/sort_off.png';
+						document.getElementById("_title_dir").src='./pictures/nav_up.png';
+					}
+					else 
+					{
+						document.getElementById("_year_dir").src='./pictures/sort_off.png';
+						document.getElementById("_title_dir").src='./pictures/nav_down.png';
+					}
+				}
+			else 
+				{
+					if (sort_direction == 'asc')
+					{
+						document.getElementById("_year_dir").src='./pictures/nav_up.png';
+						document.getElementById("_title_dir").src='./pictures/sort_off.png';
+					}
+					else 
+					{
+						document.getElementById("_year_dir").src='./pictures/nav_down.png';
+						document.getElementById("_title_dir").src='./pictures/sort_off.png';
+					}
+				}
+		}
+	function sort_by_title ()
+		{
+			window.localStorage.setItem('popup_person_sort', 'title');
+			if (window.localStorage.getItem("popup_person_sort_direction"))
+					{
+					if (window.localStorage.getItem("popup_person_sort_direction") == "asc") {
+						window.localStorage.setItem('popup_person_sort_direction', 'desc');
+						} else {window.localStorage.setItem('popup_person_sort_direction', 'asc');}
+					} 
+			else {	
+			window.localStorage.setItem('popup_person_sort_direction', 'asc');
+			
+			}
+			console.log ('Popup_Person sort_by_title sort_index:'+window.localStorage.getItem('popup_person_sort')+' sort_direction:' + window.localStorage.getItem("popup_person_sort_direction"));
+			window.location.href="Popup_Person_Filmography.html";
+		}
+	function sort_by_year ()
+		{
+			window.localStorage.setItem('popup_person_sort', 'year');
+			if (window.localStorage.getItem("popup_person_sort_direction"))
+					{ 
+					if (window.localStorage.getItem("popup_person_sort_direction") == "asc") {
+						
+						
+						window.localStorage.setItem('popup_person_sort_direction', 'desc');
+						} else {
+						window.localStorage.setItem('popup_person_sort_direction', 'asc');
+					
+						}
+					} 
+			else {	
+			window.localStorage.setItem('popup_person_sort_direction', 'desc');
+			}
+			console.log ('Popup_Person sort_by_year sort_index:'+ window.localStorage.getItem('popup_person_sort')+' sort_direction:' + window.localStorage.getItem("popup_person_sort_direction"));
+			window.location.href="Popup_Person_Filmography.html";
+		}
         </script>
-<!-- *************************************************************************************************************** -->	   
-     
-		<div class="counttest" style="visibility: hidden">
-					<td><span class="itemcount"></span></td>
-		</div> 
-		<div id="person_cv"> </div>
 		
-		<div id="close_icon" style="position: absolute;	top: 2px; right: 0px; z-index: 10;" onclick="javascript: window.close()"><img src="./pictures/close2.png" height="30px"/></div>			
+		<!-- just added to set the language value, shouldn't be displayed  -->
+			<div class="results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Value"></td></tr></table>
+			</div>
+			
+        <div class="template">
+            <table id="headertable" >
+				<img src="" class="background_bio" }
+                <tr>
+					<div id="Selector">
+						<div id="Biography_selector" onclick="open_biography_popup(localStorage.getItem ('Person_id'), window.localStorage.getItem('back_close'))" style="background: black;">BIOGRAPHY</div>
+						<div id="Filmography_selector" style="background: green;">FILMOGRAPHY</div>
+					</div>
+					<td rowspan="4"><span class="image" style="position:relative; top: 40px;"></span></td>
+					<div id="close_icon" onclick="close_person()"><img src="./pictures/close2.png" width="35"/></div>
+					<a id="back_icon" href="javascript:back()"><img src="./pictures/returnbutton.png" width="30" align="left" /></a>
+						<td id="biography_name">
+							<span class="name"></span>: 
+							<span class="birthPlace"></span> - 
+							<span class="birthDay"></span>
+						</td>
+				</tr>
+            </table>
+        </div>
 		
-		<div class="table_person_photoH">
-			<table id="tableperson_photoH">	
+		<div class="Filmography_general" >
+			<table id='filmography_table'>
 				<tr>
-					<td class="center">
-					 <span class="totalperson_photo"></span>
-					</td>
+					<td><div id="_year" onclick="sort_by_year()"/><img src="./pictures/icon/year.png" /><img id="_year_dir" src="./pictures/nav_down.png" style="position: relative; height: 1.5vw; top: -5px; left: 0px;" /></td>
+					<td><div id="_title" onclick="sort_by_title()" /><img src="./pictures/icon/title.png" /><img id="_title_dir" src="./pictures/nav_down.png" style="position: relative; height: 1.5vw; top: -8px; left: 0px;" /></td>
+					<td><div id="_job"><img src="./pictures/icon/icon_person.png" /></div></td>
 				</tr>
 			</table>
+			<table class="result_filmography" >
+						<tr>
+							<td><span class="filmography" ></span></td>  <!-- display filmography -->
+						</tr>
+					</table>
 		</div>
 		
-		<div ><img id="image_object_left" src="pictures/dummy_photo.jpg" alt="photo"></img> </div>	
-		<div class="Hbiography" id="Hbiographyshow" >		</div>
-		<div class="H_Filmography">
-			<table class="result_filmography">
-				<tr>
-					<td><span class="Hfilmography"></span></td>  <!-- display filmography -->
-				</tr>
-			</table>
-		</div>
-		<div class="H_Filmography_inside">
+		<div class="Filmography_in" >
 			<table class="result_filmography_inside">
 				<tr>
-					<td><span class="Hfilmography_inside"></span></td>  <!-- display filmography inside-->
+					<td><span class="filmography_inside"></span></td>  <!-- display filmography inside-->
 				</tr>
 			</table>
 		</div>
-	
 		
 	<!-- display source data from API if needed  -->
-        <div id="sourceData" ></div>
+        <div id="sourceData"></div>		
     </body>
 </html>

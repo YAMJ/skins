@@ -2,72 +2,51 @@
  * http://forrst.com/posts/Quick_Rotating_Slideshow_jQuery-z32
  */
 function slideshowBanner() {
-	$('div#slideshowBanner').css('visibility', 'visible');
+	var imgcount = 0;
     // get the size of the slideshow container
-    var ctrHeightBanner = $('#slideshowBanner').css('height');
-    var ctrWidthBanner = $('#slideshowBanner').css('width');
-
+	// and as height / width are return with px convert in vw (for responsive design) 
+ //	var ctrHeightBanner = Math.floor(parseInt($('#slideshowBanner').css('height')) / 1450 * 100);
+ //  var ctrWidthBanner = Math.floor(parseInt($('#slideshowBanner').css('width')) / 1450 * 100);
+	var ctrWidthBanner = 18;
     // get number of images and set width of imgRollBanner
     var imgTotalBanner = $('div#imgRollBanner > img').size();
     var imgRollBannerWidthBanner = imgTotalBanner * parseInt(ctrWidthBanner);
-    $('div#imgRollBanner').css('width', imgRollBannerWidthBanner);
-
-    // set images to the size of the slideshow viewport
-    $('div#imgRollBanner img').css('height', ctrHeightBanner);
-    $('div#imgRollBanner img').css('width', ctrWidthBanner);
-
-    // set maximum scroll distance
-    var maxScrollBanner = imgRollBannerWidthBanner - parseInt(ctrWidthBanner) + 'px';
-
-    // on slideshow hover show Banner, commented to let the button show Banner only
+    $('div#imgRollBanner').css('width', imgRollBannerWidthBanner + 'vw');
 	
-    $('div#slideshowBanner').hover(function() {
-	//	$('a#nextBanner, a#prevBanner').fadeIn('slow');
-    }, function() {
-	//	$('a#nextBanner, a#prevBanner').fadeOut('slow');
+    // set images to the size of the slideshow viewport
+ //   $('div#imgRollBanner img').css('height', ctrHeightBanner + 'vw');
+    $('div#imgRollBanner img').css('width', ctrWidthBanner + 'vw');
 
-    });
 
     // move to nextBanner right image
     $('a#nextBanner').click(function() {
+		imgcount  = imgcount  + 1; 
         // unless on the last image
-        if ($('div#imgRollBanner').css('left') === '-' + maxScrollBanner)
+		 if (imgTotalBanner == imgcount)
         {
-            $('div#imgRollBanner').animate({left: '0px'}, 'slow');
+			imgcount = 0;
+            $('div#imgRollBanner').animate({left: '0vw'}, 'slow');
         } else {
             $('div#imgRollBanner').animate({
-                left: '-=' + parseInt(ctrWidthBanner) + 'px'
+                left: '-=' + parseInt(ctrWidthBanner) + 'vw'
             }, 'slow');
         }
     });
-
-    // move to nextBanner left image
-    $('a#prevBanner').click(function() {
-        // unless on the last image
-        if ($('div#imgRollBanner').css('left') === '0px')
-        {
-            $('div#imgRollBanner').animate({left: '-' + maxScrollBanner}, 'slow');
-        } else {
-            $('div#imgRollBanner').animate({
-                left: '+=' + parseInt(ctrWidthBanner) + 'px'
-            }, 'slow');
-        }
-    });
-
 
     // auto start slideshowBanner
     function slideBanner() {
-        	if (imgTotalBanner == '1')
+		// start slideshow only if there is more than one fanart 
+        if (imgTotalBanner == '1')
 		{} else {
 		$('a#nextBanner').click();
 		}
     }
 
-    // simulate click every 3 seconds
-    var slideDurationBanner = window.setInterval(slideBanner, 3000);
+    // simulate click every 10 seconds
+    var slideDurationBanner = window.setInterval(slideBanner, 10000);
 
     // on click deactivate auto-scrolling
-    $('a#prevBanner, a#nextBanner').click(
+    $('a#nextBanner').click(
             function(event) {
                 if (event.originalEvent) {
                     window.clearInterval(slideDurationBanner);

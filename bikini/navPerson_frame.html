@@ -10,6 +10,7 @@
         <script src="js/jPages.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>	
+		<script src="js/lang.js"></script>	
 		<link rel="stylesheet" type="text/css" href="css/person-style.css">
         <link rel="stylesheet" type="text/css" href="css/nav-style.css">
         <link rel="stylesheet" href="css/jPages.css">
@@ -95,12 +96,14 @@
 								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].role+"</p></td>";
 								} else {
 									if (totalperson_photo[i].job) {
-									// adjust  Writter, Director  
-										outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].job.substr(0,1)+totalperson_photo[i].job.substr(1).toLowerCase()+"</p></td>";
+									// adjust  Writer, Director  
+										outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].job+"</p></td>";
+										
 										}
 									}
 							}
-							return outputperson_photo;
+							
+							return translate_job (outputperson_photo);
 						}
 					};
 
@@ -131,7 +134,7 @@
 				{					
 					console.log("set_personscroll: count= " +count_to_set);
 					// if less than 12 person adjust to center and supress scrollbar 
-					if (parseInt(count_to_set, 10) < 12)
+					if (parseInt(count_to_set, 10) < 11)
 						{ 
 							$('.table_person_photo_frame').css('overflow-x', 'hidden');
 							$('.table_person_photo_frame').css('margin-left', (600 - (parseInt(count_to_set, 10)*50)) + "px");
@@ -141,25 +144,7 @@
 						{ $('.table_person_photo_frame').css('overflow-x', 'scroll');}
 				}				
 		}	
-	function open_person_popup_old(id, back)
-        {
-            localStorage.setItem("Person_id", id);
-			window.localStorage.setItem('back_close', 'back');
-            console.log("navPerson_frame open_person_popup Storing value: Person_id"  + id);
-		// adjust frame to display biography
-				close_person ()
-		// adjust frame to display biography
-		//	parent.document.getElementById('target_display').style.height="715px";
-		//	parent.document.getElementById('target_frame').style.height="705px";
-		//	parent.document.getElementById('target_display').style.width="1100px";
-		//	parent.document.getElementById('target_frame').style.width="1090px";
-		//	parent.document.getElementById('target_display').style.left="120px";
-		//	parent.document.getElementById('target_display').style.top="2px";
-			parent.frames['target_frame'].location.href='Popup_Person.html';	
-		//	parent.document.getElementById('target_frame').style.display="block";
-		//	parent.document.getElementById('target_display').style.visibility="visible";
-		//	window.location.href="Popup_Person.html";
-		}
+
 	function close_person ()
 			{
 				console.log("close_person:  style:"+StyleValue);

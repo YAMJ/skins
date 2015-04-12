@@ -141,11 +141,11 @@
 		function normalise_path (path_to_normalise)
 			{
 				// change all the \\ by / 
-				var path = path_to_normalise.replace ('\\', '/');
+				var path = path_to_normalise.replace (/\\/g, "/");
 				// the path should be stored without any / ending the prefix to change 
 				if (path.substring(path.length-1, path.length) == '/') {
-			//		console.log ("normalise_path: change \\ by / and skip last / with path= "+path_to_normalise);	
 					path = path.substring (0, (path.length - 1));}
+				console.log ("normalise_path: "+path_to_normalise + " path normalised:" + path );	
 				return path;
 			}
 				

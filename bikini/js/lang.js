@@ -26,9 +26,11 @@
 			{
 			// check if there is an instance of the bikini skin choosen
 				if (localStorage.getItem("skinset"))
-					{skin_value = localStorage.getItem("skinset");}
+					{skin_value = localStorage.getItem("skinset");
+					console.log("get_lang_  get Lang from local storage: " + skin_value);}
 					else {
 						localStorage.setItem("skinset", skin_value);
+						console.log("get_lang_  set Lang into local storage: " + skin_value);
 					}
 				
 				var jsonLangUrl = "/yamj3/api/config/list.json?config="+skin_value+"language&mode=any";
@@ -182,10 +184,14 @@
 					window.localStorage.setItem("power_label", (x[i].getElementsByTagName("powerlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("prefered_", (x[i].getElementsByTagName("prefered")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("prev_remote_label", (x[i].getElementsByTagName("prevremotelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("producer_label", (x[i].getElementsByTagName("producerlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("rating_label", (x[i].getElementsByTagName("ratinglabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("rating_index", (x[i].getElementsByTagName("ratingindex")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("red_label", (x[i].getElementsByTagName("redlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("remote_label", (x[i].getElementsByTagName("remotelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("remove_text", (x[i].getElementsByTagName("removetext")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("remove_fanart_text", (x[i].getElementsByTagName("removefanarttext")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("remove_poster_text", (x[i].getElementsByTagName("removepostertext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("repeat_label", (x[i].getElementsByTagName("repeatlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("results_text", (x[i].getElementsByTagName("resultstext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("return_label", (x[i].getElementsByTagName("returnlabel")[0].childNodes[0].nodeValue));
@@ -211,6 +217,7 @@
 					window.localStorage.setItem("subtitle_label", (x[i].getElementsByTagName("subtitlelabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("time_seek_label", (x[i].getElementsByTagName("timeseeklabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("title_label", (x[i].getElementsByTagName("titlelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("transform_error_text", (x[i].getElementsByTagName("transformerrortext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("tv_mode_label", (x[i].getElementsByTagName("tvmodelabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("unwatched_select", (x[i].getElementsByTagName("unwatchedselect")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("update_label", (x[i].getElementsByTagName("updatelabel")[0].childNodes[0].nodeValue));
@@ -227,3 +234,15 @@
 				// now set local lang usage depending of each file
 				set_context_lang_value ();
 			}
+
+	 function translate_job (job)  
+		{
+				var res = job.replace(/writer/gi, window.localStorage.getItem('writer_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('writer_label').substring(1).toLowerCase());
+				res = res.replace(/director/gi, window.localStorage.getItem('director_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('director_label').substring(1).toLowerCase());
+				res = res.replace(/actor/gi, window.localStorage.getItem('actor_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('actor_label').substring(1).toLowerCase());
+				res = res.replace(/producer/gi, window.localStorage.getItem('producer_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('producer_label').substring(1).toLowerCase());
+
+	//	console.log("translate_job job:" + job + " res:" + res);
+		return res;
+		}
+	

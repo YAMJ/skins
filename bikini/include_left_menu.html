@@ -29,18 +29,29 @@
 
     </head>
 
-	<body onload="loaded_iscroll(); get_lang(); get_style();" style="background-image:url(./pictures/empty.png);">
+	<body onload="loaded_iscroll(); get_lang(); get_style(); adjust_left_menu();" style="background-image:url(./pictures/empty.png);">
 		<script type="text/javascript">
 		var LangValue = "en";
 		var index_type = "all";
 			if (window.localStorage.getItem("indextype"))
 				{index_type = window.localStorage.getItem("indextype");}
 				else {window.localStorage.setItem("indextype", index_type);}
+		var _window_height = $(parent.window).height();
+		
+	
+	//	console.log ('include_left_menu height:' + _window_height + ' #container_menu_left.height:', + $('#container_menu_left').height());
 		
 		// ****************************** id or class with iscroll **************************************************************
 		var myScroll;
 		function loaded_iscroll () {
 		myScroll = new IScroll('#container_menu_left', { scrollX: false, scrollY: true, mouseWheel: true, click: true });
+		}
+		
+		function adjust_left_menu ()
+		{
+			$('#container_menu_left').css('top', '40px'); 
+			$("#container_menu_left").css('height', '95%');
+			console.log ('include_left_menu #container_menu_left.height:', + $('#container_menu_left').height());
 		}
 		 //************************ LANGUAGE LOCAL SETTING *********************************************
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
@@ -67,10 +78,18 @@
 
 		}
 		</script>
+		<!-- just added to set the language value, shouldn't be displayed  -->
+			<div class="results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Value"></td></tr></table>
+			</div>
+			<!-- just added to set the poster number value, shouldn't be displayed  -->
+			<div class="poster_results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Poster_Value"></td></tr></table>
+			</div>
 	<!-- left menu with icon -->
 	<img id="open_menu_left" src="./pictures/icon-open_frame.png" style="position:absolute; top: 380px; left: 0px; z-index:12; visibility: visible;" height="100" width="130" onclick="toggle_menu_left ()" alt="open" />
 	<img id="close_menu_left" src="./pictures/icon-close_frame.png" style="position:absolute; top: 380px; left: 78px; z-index:12; visibility: hidden;" height="110" width="130" onclick="toggle_menu_left ()" alt="close"/>
-	<div id="container_menu_left" style="top:40px;">			
+	<div id="container_menu_left">			
 		<ul id="monFormMenu" style="margin: 0px;">
 	
 				<li><a href="javascript:ChangeIndex('movie,series'); ">
@@ -138,7 +157,7 @@
 						</a><div id="yamj3select"></div>
 				</li>
 				<li><a href="javascript:ouvre_genrelist('_parent'); ">
-							<img src="./pictures/icon/list_genre.png" height="80"  width="80" alt="liste fenre" />
+							<img src="./pictures/icon/list_genre.png" height="80"  width="80" alt="liste genre" />
 						</a><div id="genrelistselect"></div>
 				</li>
 				<li><a href="javascript:ouvre_remote();  ">

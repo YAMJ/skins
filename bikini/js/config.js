@@ -177,9 +177,9 @@
 							perPageValue = 12;
 						//	$('#container').css('top', '65px');
 						//	$('#container').css('height', '690px');
-							$('.row').css('padding', '2px 0px 0px 15px');
-							$('.block').css('height', '25vw');
-							$('.block').css('width', '14vw');
+							$('.row').css('padding', '2px 0px 0px 5px');
+							$('.block').css('height', '25.3vw');
+							$('.block').css('width', '14.3vw');
 							$('.block').css('margin', '2px 10px 2px 10px');
 						//	$('.block').css('padding', '0px');
 						//	$('.poster').css('height', '82%');
@@ -204,11 +204,11 @@
 							break;
 						//3 rows, 9 columns 
 						case 3:
-							perPageValue = 30;
-							$('.row').css('padding', '2px 0px 0px 5px');
+							perPageValue = 27;
+							$('.row').css('padding', '2px 0px 0px 30px');
 							$('.overlay').css('display', 'none');
-							$('.block').css('height', '17.2vw');
-							$('.block').css('width', '10vw');
+							$('.block').css('height', '16.8vw');
+							$('.block').css('width', '9.7vw');
 							$('.block').css('margin', '1px 2px 1px 2px');
 							$('.block').css('padding', '0px');
 							$('.poster').css('height', '85%');
@@ -217,7 +217,7 @@
 							$('.poster').css('top', '0%');
 							$('.title').css('font-size', '0.8vw');
 					//		$('.title').css('line-height', '35%');
-							$('.title').css('top', '-2.4vw');
+							$('.title').css('top', '-2.3vw');
 							$('.title').css('width', '100%');
 							$('.title').css('height', '2.6vw');
 							$('.title').css('left', '0%');
@@ -238,9 +238,9 @@
 						//4 rows, 11 columns 
 						case 4:
 							perPageValue = 48;
-							$('.row').css('padding', '1px 0px 0px 30px');
-							$('.block').css('height', '13vw');
-							$('.block').css('width', '7.6vw');
+							$('.row').css('padding', '1px 0px 0px 10px');
+							$('.block').css('height', '12.5vw');
+							$('.block').css('width', '7.2vw');
 							$('.block').css('margin', '1px 3px 1px 3px');
 					//		$('.block').css('margin', '0px');
 					//		$('.block').css('padding', '1px');
@@ -267,7 +267,7 @@
 							break;	
 						//5 rows, 12 columns
 						case 5:
-							perPageValue = 70;
+							perPageValue = 65;
 							$('.row').css('padding', '2px 0px 0px 10px');
 							$('.block').css('height', '10vw');
 							$('.block').css('width', '6.8vw');

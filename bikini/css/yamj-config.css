@@ -209,7 +209,7 @@ body {
 .container-fluid {
     position: relative;
     min-width: 940px;
-    padding-left: 20px;
+ /*   padding-left: 20px; */
     padding-right: 20px;
     zoom: 1;
     background-color:#111111;
@@ -1332,8 +1332,8 @@ table .headerSortUp.purple, table .headerSortDown.purple {
 .topbar h3 a, .topbar .brand {
     float: left;
     display: block;
-    padding: 8px 20px 12px;
-    margin-left: -20px;
+ /*   padding: 8px 20px 12px; */
+ /*   margin-left: -20px; */
     color: #ffffff;
     font-size: 20px;
     font-weight: 200;
@@ -1435,7 +1435,7 @@ table .headerSortUp.purple, table .headerSortDown.purple {
 .topbar div > ul a, .nav a {
     display: block;
     float: none;
-    padding: 10px 10px 11px;
+    padding: 10px 20px 0px 20px;
     line-height: 19px;
     text-decoration: none;
 }

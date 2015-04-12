@@ -37,7 +37,7 @@
 		var boxset_id = "";
 		var boxset_name = ""; 
 		var Prefered_PageValue = "index_all";
-		var	display_genre = "";
+		var	display_Boxset = "";
 		var watched_method = "all";
 		var nbre_translate_path = 0;
 		// get the prefered_page
@@ -59,7 +59,14 @@
 			if (window.localStorage.getItem("indextype"))
 				{index_type = window.localStorage.getItem("indextype");}
 				else {window.localStorage.setItem("indextype", index_type);}
-			
+		var direction = "ASC";
+			if (window.localStorage.getItem("direction"))
+				{direction = window.localStorage.getItem("direction");}
+				else {window.localStorage.setItem("direction", direction);}	
+		var sort_type = "title"; 
+			if (window.localStorage.getItem("sort_indextype"))
+				{sort_type = window.localStorage.getItem("sort_indextype");}
+				else {window.localStorage.setItem("sort_indextype", sort_type);}			
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
         // img.Poster@src replaces the "src" attribute of the img.Poster
@@ -73,7 +80,7 @@
             "div.block": {
                 "member<-results": {
                      "span.title": function(arg) {
-						return arg.item.title;
+						return arg.item.title + ' (' + arg.item.videoYear + ')';
 					},
                     "img.poster@src": function(arg) {
 					     	// set dummy as default poster
@@ -134,27 +141,73 @@
 			get_player();
 			get_prefered_page();
 			
-			var jsonUrl = "/yamj3/api/index/video.json?include=boxset-"+boxset_id+"&dataitems=member,artwork&artwork=POSTER"+"&watched="+watched_method;
-			display_genre = window.localStorage.getItem('boxset_label').toUpperCase()+ ": " + boxset_name.toUpperCase();
+			var jsonUrl = "/yamj3/api/index/video.json?include=boxset-"+boxset_id+"&dataitems=member,artwork&artwork=POSTER"+"&watched="+watched_method+"&sortby="+sort_type+"&sortdir="+direction;
+			display_Boxset = window.localStorage.getItem('boxset_label').toUpperCase()+ ": " + boxset_name.toUpperCase();
 		
 			switch (watched_method)
 				{
 					case 'all':
-						display_genre = display_genre ;
+						display_Boxset = display_Boxset ;
+						$('#watched_all img').css('background-color', 'green');
+						$('#watched_true img').css('background-color', '');
+						$('#watched_false img').css('background-color', '');
 						break;
 					case 'true':
-						display_genre = display_genre + "(" + window.localStorage.getItem('watched_select').toUpperCase() + ") ";
+						display_Boxset = display_Boxset + "(" + window.localStorage.getItem('watched_select').toUpperCase() + ") ";
+						$('#watched_all img').css('background-color', '');
+						$('#watched_true img').css('background-color', 'green');
+						$('#watched_false img').css('background-color', '');
 						break;
 					case 'false':
-						display_genre = display_genre + "(" + window.localStorage.getItem('unwatched_select').toUpperCase() + ") ";
+						display_Boxset = display_Boxset + "(" + window.localStorage.getItem('unwatched_select').toUpperCase() + ") ";
+						$('#watched_all img').css('background-color', '');
+						$('#watched_true img').css('background-color', '');
+						$('#watched_false img').css('background-color', 'green');
 						break;
 					
 					default :
-						display_genre = display_genre;
+						display_Boxset = display_Boxset;
 				};
-				if (display_genre.length > 45)
-					{$('#printsearch').html(display_genre.toLowerCase());}
-					else {$('#printsearch').html(display_genre.toUpperCase());}
+				if (sort_type == 'title') 
+					{
+						display_Boxset = display_Boxset + "&nbsp;-&nbsp;" + window.localStorage.getItem('title_label');
+						$('#sort_title img').css('background-color', 'green');
+						$('#sort_year img').css('background-color', '');
+					}
+					else {
+							display_Boxset = display_Boxset + "&nbsp;-&nbsp;" + window.localStorage.getItem('year_label');
+							$('#sort_year img').css('background-color', 'green');
+							$('#sort_title img').css('background-color', '');
+						}
+				if (direction == 'ASC') 
+					{
+						display_Boxset = display_Boxset +  ","+ window.localStorage.getItem('asc_label'); 
+						$('#sort_asc img').css('background-color', 'green');
+						$('#sort_desc img').css('background-color', '');
+					}
+					else {
+							display_Boxset = display_Boxset +  ","+ window.localStorage.getItem('desc_label') ; 
+							$('#sort_desc img').css('background-color', 'green');
+							$('#sort_asc img').css('background-color', '');
+						}
+	//			if (display_Boxset.length > 45)
+	//				{$('#printsearch').html(display_Boxset.toLowerCase());}
+	//				else {$('#printsearch').html(display_Boxset.toUpperCase());}
+					
+				var temp_style = "1.4vw"
+					
+					if (display_Boxset.length > 35)	{temp_style = "1.4vw";}
+					if (display_Boxset.length > 40)	{temp_style = "1.35vw";}
+					if (display_Boxset.length > 44)	{temp_style = "1.3vw";}
+					if (display_Boxset.length > 51)	{temp_style = "1.25vw";}
+					if (display_Boxset.length > 57)	{temp_style = "1.2vw";}
+					if (display_Boxset.length > 61)	{temp_style = "1.15vw";}
+					if (display_Boxset.length > 65)	{temp_style = "1.1vw";}
+					if (display_Boxset.length > 69)	{temp_style = "1.05vw";}
+					if (display_Boxset.length > 72)	{temp_style = "1vw";}
+					if (display_Boxset.length > 74)	{temp_style = "0.95vw";}
+					$(".show_index_boxset").css("font-size", temp_style);
+					$('#printsearch').html(display_Boxset);
 
 				console.log("index_boxset getIndexData URL: " + jsonUrl);
 				
@@ -191,19 +244,15 @@
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
 		function set_context_lang_value ()
 		{
-
+			document.getElementById("watched_all_label").innerHTML=window.localStorage.getItem('watched_select').toLowerCase()+'&'+window.localStorage.getItem('unwatched_select').toLowerCase();
+			document.getElementById("watched_label").innerHTML=window.localStorage.getItem('watched_select').toLowerCase();
+			document.getElementById("unwatched_label").innerHTML=window.localStorage.getItem('unwatched_select').toLowerCase();
 		}
         </script>
 	
     <div class="index_header"> 
-        <div id="logo_index">
-			<td>
-				<ul id="home_left_up">
-					<li><a href="javascript:ouvre_prefered_page()" id="li_home_left"></a></li>
-					
-				</ul>
-			</td>
-			<div class="info_config"><a href="javascript:ouvre_info_config()" ><img src="pictures/info2.png" alt="info" /></a></div>
+			<a href="javascript:ouvre_prefered_page()" id="li_home_left"></a>
+			<a id="info_config" href="javascript:ouvre_info_config()" ></a>
 			<div class="show_index_boxset"><span id="printsearch"></span></div>
 			<div class="count_return_boxset">
                    <span class="ReturnCount"></span> 
@@ -216,31 +265,31 @@
 			<div class="poster_results" style="visibility: hidden; display:none;">
 				<table><tr><td class="Poster_Value"></td></tr></table>
 			</div>
-		</div >
 		
 		<div class="test">
 					<td><span class="postertest"></span></td>
 		</div> 
-		<div id="main_index">			
-			<form id="monFormStudio">
-					<table align="right" >
+		<div id="index_tools">			
+				<table>
 						<tr>
-							<td>
+							<td id="search_section">
 								<a href="javascript:ouvre_popup_search(StyleValue, false)">
 									<img src="pictures/icon/find.png" height="35" width="35"  alt="find" />
 								</a>
 							</td>
-							<td>
-								<a href="javascript:WatchedSelection('index_Boxset.html', 'all')"><img src="pictures/icon/home_watched_rv8.png" height="45" width="45" alt="allwatched" /></a>
+							<td id="watch_section">							
+								<a id="watched_all" href="javascript:WatchedSelection('index_Boxset.html', 'all')"><img src="pictures/watched_unwatched_sort.png" alt="allwatched" /><span id="watched_all_label"></span></a>
+								<a id="watched_true" href="javascript:WatchedSelection('index_Boxset.html', 'true')"><img src="pictures/watched_sort.png" alt="watched" /><span id="watched_label"></span></a>
+								<a id="watched_false" href="javascript:WatchedSelection('index.html', 'false')"><img src="pictures/unwatched_sort.png"  alt="unwatched" /><span id="unwatched_label"></span></a>	 
 							</td>
-							<td>
-								<a href="javascript:WatchedSelection('index_Boxset.html', 'true')"><img src="pictures/watched.png" height="20" width="20" alt="watched" /></a>
-								<a href="javascript:WatchedSelection('index_Boxset.html', 'false')"><img src="pictures/unwatched.png" height="20" width="20" alt="unwatched" /></a>
-				 
+							<td  id="sort_section">
+								<a id="sort_desc" href="javascript:SortDirection('DESC','index_Boxset.html')"><img src="pictures/sort_desc.png" alt="sort_desc" /></a>
+								<a id="sort_asc" href="javascript:SortDirection('ASC','index_Boxset.html')"><img src="pictures/sort_asc.png" alt="sort_asc" /></a>
+								<a id="sort_year" href="javascript:SortIndex('videoYear','index_Boxset.html')"><img src="pictures/year_sort.png" alt="sort_year" /></a>
+								<a id="sort_title" href="javascript:SortIndex('title','index_Boxset.html')"><img src="pictures/title_sort.png" alt="sort_title" /></a>
 							</td>
 						</tr>
 					</table>
-			</form>
 		</div>
 		<div class="directplay" style="display:none">
 			<span class="filepath"></span>
@@ -274,8 +323,8 @@
 			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:1050px; height:320px;" allowTransparency="true"></iframe>
 		</div>
 	<!-- display detail  -->
-		<div id="detail_display" style="visibility: hidden; position: absolute; top: 100px; left: 150px;">		
-			<iframe src="" name="detail_frame" resizable="yes" id="detail_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:960px; height:540px;" allowTransparency="true"></iframe>
+		<div id="detail_display" style="visibility: hidden; position: absolute; top: 15%; left: 16%;">		
+			<iframe src="" name="detail_frame" resizable="yes" id="detail_frame" scrolling="no" frameborder="1" style="overflow:hidden;  width:71vw; height:43vw;" allowTransparency="true"></iframe>
 		</div>
 		<!-- display Movie -->
 		<div id="movie_display" style="visibility: hidden; ">

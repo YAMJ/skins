@@ -87,7 +87,10 @@
                     updateHtml(data);
 				// adjust number per page with the popup width and poster + container width			
                       if (window.localStorage.getItem("Paging") == 'true') { 	
-						pageData(40);} 
+					get_poster_number ();
+					console.log("GetIndexData: perPageValue="+perPageValue+" paging:"+ window.localStorage.getItem('Paging'));
+                	pageData(perPageValue);
+					}
                 }
             });
             return jsondata;
@@ -162,14 +165,8 @@
         </script>
 
     <div class="index_header"> 
-        <div id="logo_index">
-			<td>
-				<ul id="home_left_up">
-					<li><a href="javascript:ouvre_prefered_page()" id="li_home_left"></a></li>
-					
-				</ul>
-			</td>
-			<div class="info_config"><a href="javascript:ouvre_info_config()" ><img src="pictures/info2.png" alt="info" /></a></div>
+			<a href="javascript:ouvre_prefered_page()" id="li_home_left"></a>
+			<a id="info_config" href="javascript:ouvre_info_config()" ></a>
 				<!-- display screen name and number of genre  --> 		
 					<div class="show_index_genre"><span id="printsearch"></span></div>
 					<div class="count_return_genre">
@@ -179,20 +176,10 @@
 			<div class="results" style="visibility: hidden; display:none;">
 				<table><tr><td class="Value"></td></tr></table>
 			</div>	
-		</div>
-
-        <!--Navigation Holder-->
-        <div class="holder"></div>
-	</div>
-<!-- add left menu dynamically from a separate file --> 
-	<div >
-      <object data="include_left_menu.html" type="text/html" id="my_left_menu"></object>
-    </div>
-    <div id="main_index">			
-			<form id="monFormGenre">
-					<table align="right" >
+		 <div id="index_tools">			
+				<table>
 						<tr>
-							<td>
+							<td id="search_section">
 								<a href="javascript:ouvre_popup_search(StyleValue, false)">
 									<img src="pictures/icon/find.png" height="35" width="35"  alt="find" />
 								</a>
@@ -205,8 +192,16 @@
 							</td>
 						</tr>
 					</table>
-			</form>
 		</div>
+
+        <!--Navigation Holder-->
+        <div class="holder"></div>
+	</div>
+<!-- add left menu dynamically from a separate file --> 
+	<div >
+      <object data="include_left_menu.html" type="text/html" id="my_left_menu"></object>
+    </div>
+   
 		 <!--Data Items Container-->
 		<div id="container">
             <div id="yRow" class="row_genre">

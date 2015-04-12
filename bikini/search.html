@@ -76,7 +76,7 @@
 					case 'MOVIE':
 					case 'SERIES':
 					case 'SEASON':
-				
+					case 'MOVIE,SERIES':
 						localStorage.setItem("selection", search);
 						localStorage.setItem("indextype", method_selected.toLowerCase());
 						if (method_selected.toLowerCase() == 'all') {localStorage.setItem("indextype", "movie, series");}
@@ -191,7 +191,7 @@
 		</div>
 		<div id="close_icon" onclick="close_search()"><img src="./pictures/close2.png" /></div>
 		</div >
-		<div id="main_index_search" style="width: auto; left: 25px;">
+		<div id="index_tools_search">
 		<!-- search by letter -->				
 						
 			<form id="monForm" >
@@ -277,7 +277,7 @@
 								<!-- search person by name means select with a blank before the string to search  -->
 									<input type="radio" name="method_selected" value="Name" onclick="method_selected = 'NAME';localStorage.setItem('yearselected', 'false')" id="FormName"  /><label for="NAME"><div id='namelabel'></div></label><br />
 									<input type="radio" name="method_selected" value="Person" onclick="method_selected ='PERSON';localStorage.setItem('yearselected', 'false')" id="FormPerson"  /><label for="PERSON"><div id='personlabel'></div></label><br />
-									<input type="radio" name="method_selected" value="Year" onclick="localStorage.setItem('yearselected', 'true'); method_selected = localStorage.getItem('indextype').toUpperCase()" id="FormYear"  /><label for="YEAR"><div id='yearlabel'></div></label><br />
+									<input type="radio" name="method_selected" value="Year" onclick="console.log('search year selected'); localStorage.setItem('yearselected', 'true'); method_selected = localStorage.getItem('indextype').toUpperCase()" id="FormYear"  /><label for="YEAR"><div id='yearlabel'></div></label><br />
 								</td>
 								
 							</table>

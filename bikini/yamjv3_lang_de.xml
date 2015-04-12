@@ -75,11 +75,15 @@
 	<powerlabel>macht</powerlabel>
 	<prefered>favorit</prefered>
 	<prevremotelabel>fruher</prevremotelabel>
+	<producerlabel>hersteller</producerlabel>
 	
 	<ratinglabel>wertung</ratinglabel>
 	<ratingindex>wertung</ratingindex>
 	<redlabel>rot</redlabel>
 	<remotelabel>fernsteuerung</remotelabel>
+	<removetext>entfernen</removetext>
+	<removefanarttext>klicken sie fanart entfernen</removefanarttext>
+	<removepostertext>klicken sie poster entfernen</removepostertext>
 	<repeatlabel>wiederholung</repeatlabel>
 	<resultstext>ergebnis</resultstext>
 	<returnlabel>ruckkehr</returnlabel>
@@ -107,6 +111,7 @@
 	
 	<titlelabel>titel</titlelabel>
 	<timeseeklabel>suchzeit</timeseeklabel>
+	<transformerrortext>keine Kontrolle source_path target_path verwandeln</transformerrortext>
 	<tvmodelabel>tv-modus</tvmodelabel>
 	
 	<uplabel>top</uplabel>	

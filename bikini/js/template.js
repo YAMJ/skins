@@ -51,12 +51,22 @@
 					}
 	// on - off on the Id selected 
 		function toggle_Id(Id_to_toggle)
-					{			
+					{	
 						if (document.getElementById(Id_to_toggle).style.visibility == "visible")
 						{ 
 							document.getElementById(Id_to_toggle).style.visibility = "hidden";
 						} else {
 							document.getElementById(Id_to_toggle).style.visibility = "visible";
+						}
+					}
+		// on - off on the Id selected 
+		function toggle_Parent_Id(Id_to_toggle)
+					{	
+						if (parent.document.getElementById(Id_to_toggle).style.visibility == "visible")
+						{ 
+							parent.document.getElementById(Id_to_toggle).style.visibility = "hidden";
+						} else {
+							parent.document.getElementById(Id_to_toggle).style.visibility = "visible";
 						}
 					}
 		// on - off on the class selected 
@@ -401,15 +411,69 @@
 			   if (window.localStorage.getItem('Style') == "frame")
 					{
 						window.localStorage.setItem('back_close', back_close);
-						parent.frames['target_frame'].location.href='Popup_Person.html';
-						parent.document.getElementById('person_display').style.zIndex="2";
-						toggle_Id('target_display');
+						parent.frames['target_frame'].location.href='Popup_Person_Biography.html';
+						parent.document.getElementById('person_display').style.zIndex="8";
+						toggle_Parent_Id('target_display');
 				
 					} else { 
 					window.localStorage.setItem('back_close', 'close');
-					Mypopup = window.open("Popup_Person.html", "YAMJ v3 Person popup","channelmode=no, menubar=no, status=no, scrollbars=no, menubar=no, location=no, left=310px, top=5px, width=1120px, height=720px");
+					Mypopup = window.open("Popup_Person_Biography.html", "YAMJ v3 Person Biography","channelmode=no, menubar=no, status=no, scrollbars=no, menubar=no, location=no, left=310px, top=5px, width=1120px, height=720px");
 					Mypopup.focus();
 					}
+			}
+		// open filmography person display for id selected
+		function open_filmography_popup(id, back_close)
+			{
+			   
+				localStorage.setItem("Person_id", id);
+				console.log("template open_filmography_popup Storing value: Person_id"  + id + " close: " + back_close);
+			   
+			   if (window.localStorage.getItem('Style') == "frame")
+					{
+						window.localStorage.setItem('back_close', back_close);
+						parent.frames['target_frame'].location.href='Popup_Person_Filmography.html';
+						parent.document.getElementById('person_display').style.zIndex="8";
+						toggle_Parent_Id('target_display');
+				
+					} else { 
+					window.localStorage.setItem('back_close', 'close');
+					Mypopup_Filmography = window.open("Popup_Person_Filmography.html", "YAMJ v3 Person Filmography","channelmode=no, menubar=no, status=no, scrollbars=no, menubar=no, location=no, left=310px, top=5px, width=1120px, height=720px");
+					Mypopup_Filmography.focus();
+					}
+			}
+		// open biography person display for id selected
+		function open_biography_popup(id, back_close)
+			{
+			   
+				localStorage.setItem("Person_id", id);
+				console.log("template open_biography_popup Storing value: Person_id"  + id + " close: " + back_close);
+			   
+			   if (window.localStorage.getItem('Style') == "frame")
+					{
+						window.localStorage.setItem('back_close', back_close);
+						parent.frames['target_frame'].location.href='Popup_Person_Biography.html';
+						parent.document.getElementById('person_display').style.zIndex="8";
+						toggle_Parent_Id('target_display');
+				
+					} else { 
+					window.localStorage.setItem('back_close', 'close');
+					Mypopup = window.open("Popup_Person_Biography.html", "YAMJ v3 Person Biography","channelmode=no, menubar=no, status=no, scrollbars=no, menubar=no, location=no, left=310px, top=5px, width=1120px, height=720px");
+					Mypopup.focus();
+					}
+			}
+	// sort index page 
+		function SortIndex (sort_indextype, url)
+			{		
+					window.localStorage.setItem("sort_indextype", sort_indextype);
+					console.log("refresh: " + url + " Sortindex: "+sort_indextype);
+					Indexpopup = window.open(url, "_parent","");
+			}
+	// sort index page 
+		function SortDirection (direction, url)
+			{		
+					window.localStorage.setItem("direction", direction);
+					console.log("refresh: " + url + " SortDirection: "+direction);
+					Indexpopup = window.open(url, "_parent","");
 			}
 	// change index page 
 		function ChangeIndex (indextype)
@@ -819,44 +883,66 @@
 	// called when it's a movie , prepare the play path and set the timer to confirm playing
 	function play_to_device(basefilename)
 			{
+			if (!source_path[0]) {get_player_();}
 			console.log("play_to_device: "+Device_type+":"+PlayerValue+", basefilename=" +basefilename+ " nbre_translate_path=" +nbre_translate_path); 
-			get_player_();
-			for(var j = 0; j < (nbre_translate_path+1); j++){
-				if (basefilename.substring(0,source_path[j].length) == source_path[j])
-					{
-				filenametoplay = basefilename.substring(source_path[j].length);
-		//		tempfile = filenametoplay.replace(/\&/g,"%26").replace(/\?/g,"%3F").replace(/\+/g,"%2B");
-		//   	will be checked later if necessary		
-		//		console.log("play_to_device filename: "+filenametoplay);
-				temp_file_name = filenametoplay.substring(0,filenametoplay.lastIndexOf('.'));
-				file_name = temp_file_name.substring(temp_file_name.lastIndexOf('/')+1);
-				switch (Device_type)
-					{
-					case 'PCH': 
-						var UrlPlay="http://"+Ip_device+":8008/playback?arg0="+playcommand+"&arg1="+file_name+"&arg2="+target_path[j]+filenametoplay+"&arg3=show&arg4=0&arg5=0&arg6=disable";
-						Currentfilename = file_name;
-						CurrentUrlPlay = UrlPlay;
-									console.log("play_to_device: " +UrlPlay);
-						document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+": "+file_name+ " ?";
-						document.getElementById("infobox").style.visibility="visible";
-						myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
-					break; 
-					case 'PC':
-						Currentfilename = file_name;
-						var UrlPlay=target_path[j]+filenametoplay;
-						CurrentUrlPlay = UrlPlay;
-						localStorage.setItem("ToPlay", UrlPlay);
-						PopPlayer ();
-					break; 
-						
-					case 'SMARTPHONE':
-						var UrlPlay=target_path[j]+filenametoplay;
-						$.get(UrlPlay);	
-					break; 
-					};
-				
+			var boucle = true; 
+			for(var j = 0; boucle && j < (nbre_translate_path+2); j++){
+				if (j == (nbre_translate_path+1))
+				{ 
+					console.log ("template play_to_device no source_path found to transform :" + basefilename);
+					document.getElementById("infobox").onclick = '';
+					myVar=window.setTimeout(function(){myStopFunction('infobox');},10000);
+					document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+ " " + PlayerValue +": " +basefilename+  ": " + localStorage.getItem('transform_error_text');
+					document.getElementById("infobox").style.visibility="visible";
+					//document.getElementById("infobox").click=(function(){clearInterval(myVar);document.getElementById("infobox").style.visibility="hidden";});
+					$("button#infobox").click(
+							function(event) {
+								if (event.originalEvent) {
+									console.log ("template play_to_device stop timer :" + myVar);
+									clearInterval(myVar);
+									document.getElementById("infobox").style.visibility="hidden";
+								}
+							}
+					);
+					break;
+				} else {
+				//	console.log ("template play_to_device j :" + j + " source_path:" + source_path[j]);
+					if (basefilename.substring(0,source_path[j].length) == source_path[j])
+						{
+					boucle = false;
+					filenametoplay = normalise_path(basefilename.substring(source_path[j].length));
+			//		tempfile = filenametoplay.replace(/\&/g,"%26").replace(/\?/g,"%3F").replace(/\+/g,"%2B");
+			//   	will be checked later if necessary		
+			//		console.log("play_to_device filename: "+filenametoplay);
+					temp_file_name = filenametoplay.substring(0,filenametoplay.lastIndexOf('.'));
+					file_name = temp_file_name.substring(temp_file_name.lastIndexOf('/')+1);
+					switch (Device_type)
+						{
+						case 'PCH': 
+							var UrlPlay="http://"+Ip_device+":8008/playback?arg0="+playcommand+"&arg1="+file_name+"&arg2="+target_path[j]+filenametoplay+"&arg3=show&arg4=0&arg5=0&arg6=disable";
+							Currentfilename = file_name;
+							CurrentUrlPlay = UrlPlay;
+							console.log("play_to_device: " +UrlPlay);
+							document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+ " " + PlayerValue +": "+file_name+ " ?";
+							document.getElementById("infobox").style.visibility="visible";
+							myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
+						break; 
+						case 'PC':
+							Currentfilename = file_name;
+							var UrlPlay=target_path[j]+filenametoplay;
+							CurrentUrlPlay = UrlPlay;
+							localStorage.setItem("ToPlay", UrlPlay);
+							PopPlayer ();
+						break; 
+							
+						case 'SMARTPHONE':
+							var UrlPlay=target_path[j]+filenametoplay;
+							$.get(UrlPlay);	
+						break; 
+						};
+					
+					} 
 				}
-
 			}	
 		}
 	function PopPlayer()
@@ -901,7 +987,7 @@
 						{ infobox_artwork = "infobox_ignore_poster";}
 						else {infobox_artwork = "infobox_ignore_fanart";}
 
-						document.getElementById(infobox_artwork).innerHTML="Ignore: "+ Current_located_Id + "?"
+						document.getElementById(infobox_artwork).innerHTML=localStorage.getItem('remove_text') + ": "+ Current_located_Id + "?"
 						document.getElementById(infobox_artwork).style.visibility="visible";
 						myVar=window.setTimeout(function(){myStopFunction(infobox_artwork);},5000);
 			}	
@@ -940,14 +1026,15 @@
 	// this function is called when the episode is selected , start playing needs to click on the play movie icon
 	function episode_to_play(basefilename)
 			{
-			console.log("episode_to_play :"+PlayerValue+" basefilename=" +basefilename); 
+			console.log("episode_to_play :"+PlayerValue+" basefilename=" +decodeURIComponent(basefilename)); 
+			if (!source_path[0]) {get_player_();}
 			for(var j = 0; j < (nbre_translate_path+1); j++){
-				if (basefilename.substring(0,source_path[j].length) == source_path[j])
+				if (decodeURIComponent(basefilename).substring(0,source_path[j].length) == source_path[j])
 					{
-				filenametoplay = basefilename.substring(source_path[j].length);
+				filenametoplay = normalise_path(decodeURIComponent(basefilename).substring(source_path[j].length));
 		//		tempfile = filenametoplay.replace(/\&/g,"%26").replace(/\?/g,"%3F").replace(/\+/g,"%2B");
 		//   	will be checked later if necessary		
-				console.log("filename: "+filenametoplay);
+		//		console.log("filename: "+filenametoplay);
 
 				temp_file_name = filenametoplay.substring(0,filenametoplay.lastIndexOf('.'));
 				file_name = temp_file_name.substring(temp_file_name.lastIndexOf('/')+1);
@@ -961,7 +1048,7 @@
 						Currentfilename = file_name;
 						CurrentUrlPlay = UrlPlay;
 								//	console.log("play_to_device: " +UrlPlay);
-						document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+": "+file_name+ " on "+PlayerValue+"?";
+						document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+" "+PlayerValue+": "+file_name+"?";
 						document.getElementById("infobox").style.visibility="visible";
 						myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
 					break; 
@@ -990,14 +1077,15 @@
 			
 	function preset_episode_to_play(basefilename)
 			{
-			console.log("preset_episode_to_play :"+PlayerValue+" basefilename=" +basefilename); 
+			console.log("preset_episode_to_play :"+PlayerValue+" basefilename=" +decodeURIComponent(basefilename)); 
+			if (!source_path[0]) {get_player_();}
 			for(var j = 0; j < (nbre_translate_path+1); j++){
-				if (basefilename.substring(0,source_path[j].length) == source_path[j])
+				if (decodeURIComponent(basefilename).substring(0,source_path[j].length) == source_path[j])
 					{
-				filenametoplay = basefilename.substring(source_path[j].length);
+				filenametoplay = normalise_path(decodeURIComponent(basefilename).substring(source_path[j].length));
 		//		tempfile = filenametoplay.replace(/\&/g,"%26").replace(/\?/g,"%3F").replace(/\+/g,"%2B");
 		//   	will be checked later if necessary		
-				console.log("filename: "+filenametoplay);
+		//		console.log("filename: "+normalise_path(filenametoplay));
 
 				temp_file_name = filenametoplay.substring(0,filenametoplay.lastIndexOf('.'));
 				file_name = temp_file_name.substring(temp_file_name.lastIndexOf('/')+1);
@@ -1011,7 +1099,7 @@
 						Currentfilename = file_name;
 						CurrentUrlPlay = UrlPlay;
 							console.log("preset_episode_to_play: on PCH " +UrlPlay);
-						document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+": "+file_name+ " on "+PlayerValue+"?";
+						document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+" "+PlayerValue+": "+file_name+"?";
 						// document.getElementById("infobox").style.visibility="visible";
 						// myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
 					break; 
@@ -1020,7 +1108,7 @@
 						Currentfilename = file_name;
 						CurrentUrlPlay = UrlPlay;
 						localStorage.setItem("ToPlay", UrlPlay);
-							console.log("preset_episode_to_play: pn PC " +UrlPlay);
+							console.log("preset_episode_to_play: on PC " +UrlPlay);
 						// PopPlayer ();
 					break; 
 						
@@ -1037,7 +1125,7 @@
 	// when episode and click on the play icon set timer to confirm playing 
 	function play_episode ()
 		{	
-			document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+": "+file_name+ " on "+PlayerValue+"?"
+			document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+" "+PlayerValue+": "+file_name+ "?"
 			document.getElementById("infobox").style.visibility="visible";
 			myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
 		}

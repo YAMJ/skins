@@ -1,4 +1,6 @@
 change.txt
+V1.5.1
+- add missing pictures
 V1.5.0
 - adjust person frame at the same place than the synopsys in detail page
 - fix escape value in filename for episode name while using play function

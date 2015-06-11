@@ -234,6 +234,11 @@
 							$('.watched_small').css('top', '-3vw');
 							$('.watched_small').css('left', '10%');
 							$('.title_boxset').css('height', '2.4vw');
+							//	$('#watch_label').css('left', '27%');
+							$('.watch_label').css('top', '-17%');
+							$('.watch_label').css('left', '38%');
+						//	$('#play_label').css('left', '-20%');
+						//	$('#info_label').css('left', '-30%');
 							break;
 						//4 rows, 11 columns 
 						case 4:

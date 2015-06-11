@@ -557,7 +557,59 @@
 								return output;
 								} 
 								else {return "<text>" + window.localStorage.getItem('awards_label').toUpperCase() + "</text> "+ window.localStorage.getItem('no_text').toLowerCase() + " " + window.localStorage.getItem('awards_label').toLowerCase();}
+							}, 
+							'span.external_Id': function(arg) {
+								var output_externalid = ''; 
+								if (arg.context.result.externalids)
+								{
+									var external_list = arg.context.result.externalids; 
+									for (var i = 0; i < external_list.length; i++) {
+										switch (external_list[i].sourcedb.toLowerCase())
+											{
+											case 'allocine':
+												{	
+													output_externalid += "<text>"+window.localStorage.getItem('source_label')+" "+external_list[i].sourcedb+ "<img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" /></text><a class='external_href' href='http://www.allocine.fr/film/fichefilm_gen_cfilm=" + external_list[i].externalid + ".html' target='_blank' >"+ external_list[i].externalid + "&nbsp; </a>";
+													break;
+												}
+											case 'tmdb':
+												{	
+													output_externalid += "<text>"+window.localStorage.getItem('source_label')+" "+external_list[i].sourcedb+ "<img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" /></text><a class='external_href' href='https://www.themoviedb.org/movie/" + external_list[i].externalid + "' target='_blank' >"+ external_list[i].externalid + "&nbsp; </a>";
+													break;
+												}
+											case 'imdb':
+												{	
+													output_externalid += "<text>"+window.localStorage.getItem('source_label')+" "+external_list[i].sourcedb+ "<img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" /></text><a class='external_href' href='http://www.imdb.com/title/" + external_list[i].externalid + "' target='_blank' >"+ external_list[i].externalid + "&nbsp; </a>";
+													break;
+												}
+											default: 
+												{
+													output_externalid += "<text>"+window.localStorage.getItem('source_label')+" "+external_list[i].sourcedb+ "<img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" /></text>" +  external_list[i].externalid + "&nbsp; ";
+													break;
+												}
+											}
+										}
+								}
+								return output_externalid + "&nbsp;<text><img src=\"./pictures/add.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_class('externalId_add')\" /></text>";
+							
+							}, 
+							'span.externalId_delete_form': function (arg) {
+								var output_externalid_form = ''; 
+								if (arg.context.result.externalids)
+								{
+									var external_list_form = arg.context.result.externalids; 
+									for (var i = 0; i < external_list_form.length; i++) {
+										
+													output_externalid_form = output_externalid_form
+													+ "<form id='delete_"+ external_list_form[i].sourcedb +"' style='position: absolute; top:0.1vw; left: 2vw; display: none; width: 20vw;' action=\"javascript:open_delete_externalId ('" + external_list_form[i].sourcedb + "')\" method='post'>"
+													+ "<label for='delete_"+ external_list_form[i].sourcedb +"'>"+window.localStorage.getItem('source_label')+" "+ external_list_form[i].sourcedb + " </label>"
+													+ "<INPUT type='submit' value='"+window.localStorage.getItem('delete_text')+"'></input>"
+													+ "</form>"	;
+									
+											}
+								}
+								return output_externalid_form;
 							}
+						
 				//			'span.studio': function(arg)
 				//			{
 				//				var studio = arg.context.result.studios;
@@ -634,7 +686,7 @@
 				get_player();
 				get_alpha_list (); 
 				// construct JSON request for detail movie/series/season 
-				jsonUrl = "/yamj3/api/video/" + index_type.toLowerCase() + "/" + current_id + ".json?dataitems=genre,artwork,plot,country,award,files,certification,studio,rating&jobs=actor-5,director-1,writer-1";
+				jsonUrl = "/yamj3/api/video/" + index_type.toLowerCase() + "/" + current_id + ".json?dataitems=externalid,genre,artwork,plot,country,award,files,certification,studio,rating&jobs=actor-5,director-1,writer-1";
 				console.log("getData URL: " + jsonUrl);
 		
 					
@@ -658,12 +710,13 @@
 					
 				
 						// add slideshow for fanart
-						  slideshowFanart();
+						slideshowFanart();
 						// slideshow for poster
 						slideshow();
 						// display fanart
 						display_all ();	
-						
+						// add external id 
+					//	get_externalId ();
 						
 						switch (index_type.toLowerCase()) 
 							{
@@ -715,7 +768,9 @@
 			document.getElementById("serieselect").innerHTML=window.localStorage.getItem('series_select').toUpperCase();
 			document.getElementById("allselect").innerHTML=window.localStorage.getItem('all_select').toUpperCase();
 			document.getElementById("seasonselect").innerHTML=window.localStorage.getItem('season_select').toUpperCase();
-			document.getElementById("selectionshow_icon").innerHTML=window.localStorage.getItem('selection_label').toUpperCase();
+		//	document.getElementById("selectionshow_icon").innerHTML=window.localStorage.getItem('selection_label').toUpperCase();
+			document.getElementById("titleindex").innerHTML=window.localStorage.getItem('title_label').toUpperCase();
+			document.getElementById("search_icon").innerHTML=window.localStorage.getItem('search_select').toUpperCase();
 			document.getElementById("genreindex").innerHTML=window.localStorage.getItem('genre_select').toUpperCase();
 			document.getElementById("certificationindex").innerHTML=window.localStorage.getItem('certification_label').toUpperCase();
 			document.getElementById("studioindex").innerHTML=window.localStorage.getItem('studio_select').toUpperCase();
@@ -733,7 +788,11 @@
 			document.getElementById("awardsindex").innerHTML=window.localStorage.getItem('awards_label').toUpperCase();
 			document.getElementById("clickremovefanart").innerHTML=window.localStorage.getItem('remove_fanart_text').toUpperCase();
 			document.getElementById("clickremoveposter").innerHTML=window.localStorage.getItem('remove_poster_text').toUpperCase();
-			
+			document.getElementById("sourcelabel").innerHTML=window.localStorage.getItem('source_label').toLowerCase();
+			document.getElementById("updatelabel").innerHTML=window.localStorage.getItem('update_label').toLowerCase();
+			document.getElementById("open_menu_left").title=localStorage.getItem('open_navigation_menu').toLowerCase();
+			document.getElementById("close_menu_left").title=localStorage.getItem('close_navigation_menu').toLowerCase();
+			document.getElementsByClassName("play_detail")[0].title=localStorage.getItem('play_label').toLowerCase();
 		}
 		
   // ********************* NOW SET VARIOUS FUNCTION **********************************************  
@@ -1051,12 +1110,6 @@
 						$('#list_episode_title').css('visibility', 'visible');
 						$('.moviedetail').css('top', '122px');
 						$('.moviedetail').css('left', '18vw');
-					//	$('.moviedetail').css('max-width', '1100px');
-					//	$('.header_detail').css('top', '0px');
-					//	$('.header_detail').css('left', '5px');
-						$('#header_td').css('width', '1000px');
-					//	$('.play_detail').css('top', '0px');
-					//	$('.play_detail').css('left', '60px');
 						$('.plot1').css('left', '0px');
 					//	$('.plot1').css('max-width', '1280px');
 						$('.genres').css('left', '0px');
@@ -1092,16 +1145,6 @@
 						$('.moviedetail').css('right', '0.1vw');
 						$('.moviedetail').css('max-width', '81.5vw');
 						$('.moviedetail').css('width', 'auto');
-					//	$('.header_detail').css('width', '1068px');
-					//	$('.header_title').css('padding-left', '25px');
-					//	$('.header_title').css('font-size', '2.5vw');
-						$('#header_td').css('width', '69vw');
-						$('#header_td').css('position', 'absolute');
-						$('#header_td').css('vertical-align', 'super');
-						$('#header_td').css('bottom', '0vw');
-						$('#header_td').css('padding', '0vw 0vw 0.25vw 0vw');
-						$('#header_td').css('max-height', '43px');
-						$('#header_td').css('left', '50px');
 						$('.plot1').css('max-height', '15vw');
 						$('.plot1').css('max-width', 'inherit');
 						$('.play_detail').mouseover(function() {
@@ -1127,11 +1170,6 @@
 						$('.moviedetail').css('left', '4px');
 						$('.moviedetail').css('width', '99.5vw');
 						$('.moviedetail').css('max-width', '99.5vw');
-					//	$('.header_detail').css('top', '0px');
-					//	$('.header_detail').css('left', '5px');
-						$('#header_td').css('width', '1000px');
-					//	$('.play_detail').css('top', '0px');
-					//	$('.play_detail').css('left', '60px');
 						$('.plot1').css('left', '0px');
 						$('.plot1').css('max-width', '100vw');
 						$('.genres').css('left', '0px');
@@ -1274,9 +1312,12 @@
 								parent.frames['person_frame'].location.href='navPerson_frame.html';								
 								Person_toSet = false; 
 								}
+							parent.document.getElementById('person_display').style.height="300px";  // adjust window
+							parent.document.getElementById('person_frame').style.height="290px";    // adjust frame inside windows
 							parent.document.getElementById('person_frame').style.display="block";
 							parent.document.getElementById('person_display').style.visibility="visible";	
 							parent.document.getElementById('person_display').style.zIndex="15";
+							
 							break;
 						} 
 					case 'popup':
@@ -1603,6 +1644,45 @@
 		
 		}
 	
+		function open_update_externalId (source_to_set, id_to_set)
+		{
+				jsonUrlUpdateExternalId = "/yamj3/api/video/externalids/update.json?id=" + current_id + "&sourcedb=" + source_to_set + "&externalid=" + id_to_set;
+				console.log("open_update_externalId jsonUrlUpdateExternalId: " + jsonUrlUpdateExternalId);
+			
+        //  externalId update API call         
+                $.ajax({
+                    url: jsonUrlUpdateExternalId,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(data)
+                    {
+                        jsondata = data;
+					//	 outputJson(data); 
+					location.reload(); 
+				
+					}
+                });
+		}
+		function open_delete_externalId (source_to_set)
+		{
+				jsonUrlDeleteExternalId = "/yamj3/api/video/externalids/delete.json?id=" + current_id + "&sourcedb=" + source_to_set ;
+				console.log("open_delete_externalId jsonUrlDeleteExternalId: " + jsonUrlDeleteExternalId);
+			
+        //  externalId update API call         
+                $.ajax({
+                    url: jsonUrlDeleteExternalId,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(data)
+                    {
+                        jsondata = data;
+					//	 outputJson(data); 
+					
+					location.reload(); 
+				
+					}
+                });
+		}
 // ****************************** id or class with iscroll **************************************************************
 	var myScroll;
 	function loaded_iscroll () {
@@ -1639,7 +1719,7 @@
 										<img src="pictures/icon/update.png" alt="update"></img><div id="updateshow_icon"></div></a></td>	
 									
 							<!--		<td><a id="li_person_ribbon" href="javascript:ouvre_popup_person_ribbon()">
-										<div id="person_ribbon"></div></a></td>	 -->
+										<div id="person_ribbon"></div></a></td>	 
 									<td>
 										<form><label id='li_selection_icon'><img src="pictures/icon/title.png" onmouseover="javascript:document.getElementById('selectionshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('selectionshow_icon').style.visibility='hidden'"></img><div id="selectionshow_icon"></div></label>
 											<select id="selection_id_icon" onchange="Movie_toSet = true;display_Id('movie_display');javascript:ouvre_popup_index('', 'ASC', index_type, document.getElementById('selection_id_icon').value); Movie_toSet = true;" >
@@ -1649,16 +1729,19 @@
 											<noscript><input type="submit" value="Submit"></noscript>
 										</form>
 										
-									</td>	
-		
+									</td>	-->
+									<td><a id='li_search_icon' href="javascript:ouvre_popup_search(StyleValue)" onmouseover="javascript:document.getElementById('search_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('search_icon').style.visibility='hidden'" >
+										<img src="pictures/icon/find.png" alt="find" />
+										</a><div id="search_icon"></div>
+									</td>
 					<button id="infobox_delete" onclick="javascript:start_delete ()"></button>	
 					<button id="infobox_update" onclick="javascript:start_update ()"></button>
         </div>
 
 	<!-- left menu with icon -->
 
-		<img id="open_menu_left" src="pictures/icon-open_frame.png" style="position:absolute; top: 380px; left: 0px; z-index:12; visibility: visible;" height="100" width="130" onclick="toggle_detail_menu_left ()" alt="open"/>
-		<img id="close_menu_left" src="pictures/icon-close_frame.png" style="position:absolute; top: 380px; left: 78px; z-index:12; visibility: hidden;" height="110" width="130" onclick="toggle_detail_menu_left ()" alt="close"/>
+		<img id="open_menu_left" src="pictures/icon-open_frame.png" data-tip="open navigation menu" style="position:absolute; top: 380px; left: 0px; z-index:12; visibility: visible;" height="100" width="130" onclick="toggle_detail_menu_left ()" alt="open"/>
+		<img id="close_menu_left" src="pictures/icon-close_frame.png" data-tip="close navigation menu" style="position:absolute; top: 380px; left: 78px; z-index:12; visibility: hidden;" height="110" width="130" onclick="toggle_detail_menu_left ()" alt="close"/>
 	    <div id="container_menu_left">
 			<ul id="monFormMenu" style="padding-left:0px;">
 	
@@ -1694,6 +1777,10 @@
 							<img src="pictures/icon/home_awards_rv8.png" height="80"  width="80" alt="awards" />
 						</a><div id="awardsindex"></div>
 				</td>
+				<li><a href="javascript:call_available_title(index_type, '_parent');">
+							<img src="./pictures/title.png" height="65" width="75" style="padding-left:7px" alt="title" />
+						</a><div id="titleindex" style="padding-top: 5px;"></div>
+				</li> 
 				<td><a href="javascript:ouvre_popup_search(StyleValue)">
 							<img src="pictures/icon/find.png" height="60" width="65" style="padding-left:10px" alt="find" />
 						</a><div id="searchindex"></div>
@@ -1812,7 +1899,7 @@
                             </div>
 						
 						<!-- play button -->
-							<img class="play_detail" src="./pictures/empty.png" alt="play" />
+							<img class="play_detail" data-tip="play" src="./pictures/empty.png" alt="play" />
 			
 				
 						
@@ -1889,9 +1976,25 @@
             </table> 	
 		</div>
 		<div class="mediainfo">
+			<tr>
+				<td><span class="media_label" style="position: relative; top: 0.1vw; left: 0.5vw;"><text>MEDIA</text></span></td>
+			</tr>
+		<div class="externalId_delete" >
+		<span class="externalId_delete_form" style="position: absolute; top:0.1vw; left: 5vw; display:none;"/>
+		</div>
+		<div class="externalId_add" style="visibility:hidden;  position: absolute; top:0.1vw; left: 5vw;">
+			<form action="javascript:open_update_externalId (document.getElementById('external_source').value, document.getElementById('external_id').value)" method="post">
+				<label for="external_source"><div id="updatelabel" style="display: inline;"></div>:&nbsp;<div id="sourcelabel" style="display: inline;"></div></label>
+				<input id="external_source" type="text" ></input>
+				<label for="external_id">Id</label>
+				<input id="external_id" type="text" ></input>
+				<INPUT type="submit" ></input>
+			</form>
+		</div>	
+		
 			<table class="media">
 				<tr>
-					<td><span class="media_label"><text>MEDIA</text></span></td>
+					<td><span class="external_Id"></span></td>
 				</tr>
 				<tr>
 					<td><span class="filepath"></span></td>
@@ -1924,9 +2027,10 @@
 					<td><span class="awards"></span></td>
 				</tr>
 			</table>
-					
+			
 		
 		</div>
+		
 		<div class="edit_adjust">
 			<table class="posteradjust">
 			<tr>
@@ -1955,6 +2059,7 @@
                       
 			</table>
 		</div>
+		
 		
 	<!-- display season box , one for each season , add scroll horizontal bar if more than 8 seasons --> 
 		<div class="seasontable" id="seasontable">

@@ -228,14 +228,20 @@
 
 		function set_context_lang_value ()
 		{
-
+			document.getElementById("search_item").attributes.getNamedItem("data-tip-search").value=window.localStorage.getItem('search_select').toLowerCase();
+			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('info_label').toLowerCase();
+			document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
+			document.getElementById("movie_series_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('all_label').toLowerCase();
+			document.getElementById("series_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('series_label').toLowerCase();
+			document.getElementById("movie_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('movie_label').toLowerCase();
+		//	document.getElementById("season_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('season_label').toLowerCase();
 		}
 
         </script>
 
     <div class="index_header"> 
-			<a href="javascript:ouvre_prefered_page()" id="li_home_left"></a>
-			<a id="info_config" href="javascript:ouvre_info_config()" ></a>
+			<a href="javascript:ouvre_prefered_page()" id="li_home_left" data-tip2="prefered page"></a>
+			<a id="info_config" data-tip2="info" href="javascript:ouvre_info_config()" ></a>
 				<!-- display screen name and number of studio  --> 		
 					<div class="show_index_rating"><span id="printsearch"></span></div>
 					<div class="count_return_rating">
@@ -245,21 +251,20 @@
 			<div class="results" style="visibility: hidden; display:none;">
 				<table><tr><td class="Value"></td></tr></table>
 			</div>	
-		<div id="index_tools">			
+		<div id="index_tools_nav">			
 					<table>
 						<tr>
-							<td id="search_section">
-								<a href="javascript:ouvre_popup_search(StyleValue, false)">
-									<img src="pictures/icon/find.png" height="35" width="35"  alt="find" />
+							<td id="search_section_nav">
+								<a id="search_item" data-tip-search="search" href="javascript:ouvre_popup_search(StyleValue, false)">
+									<img src="pictures/find.png"  alt="find" />
 								</a>
 							</td>
-							<td>							
-								<a href="javascript:call_ratingindex('movie,series', '_self')"><img src="pictures/icon/home_all_rv8.png" height="45" width="45" alt="tv movie"/><a>
-								<a href="javascript:call_ratingindex('movie', '_self')"><img src="pictures/icon/home_movies_rv8.png" height="45x" width="45" alt="movie" align="top" /></a>
-								<a href="javascript:call_ratingindex('series', '_self')"><img src="pictures/icon/home_tv_shows_rv8.png" height="45" width="45" alt="tv" /></a>
-						<!--		<a href="javascript:call_ratingindex('season', 'false')"><img src="pictures/icon/home_apps_rv8.png" height="45" width="45" alt="season" /></a> -->
-						
-							</td>
+							<td id="videotype_section">							
+								<a id="movie_series_icon" data-tip-item="movie,series" href="javascript:call_ratingindex('movie,series', '_self')"><img src="pictures/all.png" alt="tv movie"/><a>
+								<a id="movie_icon" data-tip-item="movie" href="javascript:call_ratingindex('movie', '_self')"><img src="pictures/home_movies.png" alt="movie" align="top" /></a>
+								<a id="series_icon" data-tip-item="series" href="javascript:call_ratingindex('series', '_self')"><img src="pictures/tv_shows.png" alt="tv" /></a>
+						<!--		<a id="season_icon" data-tip-item="season" href="javascript:call_ratingindex('season', '_self')"><img src="pictures/season.png" alt="season" /></a> -->
+							</td>							
 						</tr>
 					</table>
 		</div>

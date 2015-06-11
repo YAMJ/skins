@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <lang>
+	<actionlabel>action</actionlabel>
 	<actorlabel>actor</actorlabel>
 	<alllabel>all</alllabel>
 	<allgenre>all</allgenre>
@@ -14,26 +15,36 @@
 	<boxsetlabel>set</boxsetlabel>
 	
 	<certificationlabel>certification</certificationlabel>
+	<closelabel>close</closelabel>
+	<closenavigationmenu>close navigation menu</closenavigationmenu>
 	<closeremotelabel>close remote</closeremotelabel>
 	<configselected>settings</configselected>
 	<countrylabel>country</countrylabel>
 	<countryselected>country</countryselected>
+	<creationcomment>yamj3 creation date</creationcomment>
+	<creationlabel>creation</creationlabel>
 	
 	<deletetext>delete</deletetext>
 	<descending>descending</descending>
+	<detailcomment>detail</detailcomment>
 	<directorlabel>director</directorlabel>
 	<downlabel>down</downlabel>
 	
 	<ejectlabel>eject</ejectlabel>
+	<enterdaynumber>enter day number</enterdaynumber>
 	<enterlabel>enter</enterlabel>
 	<episodelabel>episode</episodelabel>
 	
+	<falsetext>false</falsetext>
 	<fanartshow>fanart</fanartshow>
+	<filecomment>video file date</filecomment>
 	<filelabel>file</filelabel>
 	<filemodelabel>file mode</filemodelabel>
 	<filmographylabel>filmography</filmographylabel>
 	<formatlabel>format</formatlabel>
 	<fpslabel>fps</fpslabel>
+	<framecomment>windows frame inside the current page</framecomment>
+	<framelabel>frame</framelabel>
 	<fwdlabel>forward</fwdlabel>
 	
 	<genrelabel>genre</genrelabel>
@@ -45,7 +56,12 @@
 	
 	<infolabel>info</infolabel>
 	
+	<keylabel>key</keylabel>
+	
+	<langcomment>langue to apply</langcomment>
 	<language>language</language>
+	<lastscancomment>yamj3 last scan date</lastscancomment>
+	<lastscanlabel>last scan</lastscanlabel>
 	<leftlabel>left</leftlabel>
 	
 	<menulabel>menu</menulabel>
@@ -55,24 +71,34 @@
 	
 	<namelabel>lastname</namelabel>	
 	<nbrow>nb of row</nbrow>
+	<nbrowcomment>nomber of row to display within index page</nbrowcomment>
 	<nextremotelabel>next</nextremotelabel>
 	<new>new</new>
+	<newcomment>new function parameter</newcomment>
 	<nobiography>no biography available</nobiography>
 	<nobirthday>birthday unknown</nobirthday>
 	<noplot>no plot available</noplot>
 	<noposter>no poster</noposter>
 	<notext>no</notext>
 	
+	<opennavigationmenu>open navigation menu</opennavigationmenu>
+	
+	<pagecomment>paging (true) , without paging (false)</pagecomment>
 	<pagelabel>page</pagelabel>
+	<pagestylecomment>new page</pagestylecomment>
 	<pauselabel>pause</pauselabel>
 	<personlabel>person</personlabel>
 	<personselected>person</personselected>
 	<personshow>show person</personshow>
+	<playercomment>device where to display video</playercomment>
 	<playerselected>player</playerselected>
 	<playlabel>play on </playlabel>
 	<plotlabel>plot</plotlabel>
+	<popupcomment>floating horizontal ribbon windows</popupcomment>
+	<popuplabel>horizontal band</popuplabel>
 	<powerlabel>power</powerlabel>
 	<prefered>prefered</prefered>
+	<preferedcomment>prefered page selected with yamj3 logo</preferedcomment>
 	<prevremotelabel>previous</prevremotelabel>
 	<producerlabel>producer</producerlabel>
 	
@@ -86,6 +112,8 @@
 	<repeatlabel>repeat</repeatlabel>
 	<resultstext>results</resultstext>
 	<returnlabel>retour</returnlabel>
+	<ribboncomment>floating vertical ribbon windows</ribboncomment>
+	<ribbonlabel>vertical band</ribbonlabel>
 	<runtimelabel>duree</runtimelabel>
 	<rewindlabel>rewind</rewindlabel>
 	<rightlabel>right</rightlabel>
@@ -93,6 +121,7 @@
 	<searchselected>search</searchselected>
 	<seasonlabel>season</seasonlabel>
 	<seasonselected>season</seasonselected>
+	<selecttype>selection type</selecttype>
 	<selected>selected</selected>
 	<selection>selection</selection>
 	<selectionlabel>selection</selectionlabel>
@@ -101,22 +130,26 @@
 	<setuplabel>setup</setuplabel>
 	<show>ribbon</show>
 	<skin>skin</skin>
+	<sortlabel>sort</sortlabel>
 	<sourcelabel>source</sourcelabel>
 	<startlabel>starts with</startlabel>
 	<stoplabel>stop</stoplabel>
 	<studioselected>studio</studioselected>
+	<stylecomment>style to apply for new function</stylecomment>
 	<stylelabel>style</stylelabel>
 	<subtitlelabel>subtitle</subtitlelabel>
 	
 	<titlelabel>title</titlelabel>
 	<timeseeklabel>time seek</timeseeklabel>
 	<transformerrortext>unable to transform check source_path target_path</transformerrortext>
+	<truetext>true</truetext>
 	<tvmodelabel>tv mode</tvmodelabel>
 	
 	<unwatchedselect>unwatched</unwatchedselect>
 	<uplabel>up</uplabel>
 	<updatelabel>update</updatelabel>
 	
+	<valuelabel>value</valuelabel>
 	<videolabel>video</videolabel>
 	<volumedownlabel>vol-</volumedownlabel>
 	<volumeuplabel>vol+</volumeuplabel>

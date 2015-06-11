@@ -125,7 +125,7 @@ body {
     width: 80vw;
 	max-height: 90vh; 
 	height: auto;
-	font-size:1.0em;
+	font-size:1.5vw;
 	font-weight: bold;
 	color:#fff;
     text-align: justify;
@@ -144,7 +144,7 @@ body {
 	position: absolute;
     display: block;
 	table-layout: center;
-	font-size:1.0em;
+	font-size:1.5vw;
 	font-weight: bold;
 	color:#fff;
     text-align: justify;
@@ -261,6 +261,33 @@ body {
 #_year img, #_title img, #_job img{
 	height: 3vw;
 	}
-	
+[data-tip-person] {
+	position: relative;
+}
+
+/* new element :after on hover :*/
+[data-tip-person]:hover:after,
+[data-tip-person]:focus:after {
+	content: attr(data-tip-person);
+	/*on affiche data-tip*/
+	position: absolute;
+	top: 40px;
+	right: 0;
+	white-space: nowrap;
+	/*on interdit le retour à la ligne*/
+	color:white;
+	background-color: black;
+	width: auto;
+	text-align: center;
+	margin: 0px 5px 0px -5px;
+	padding: 0px 1px 1px 1px;
+	border: 1px solid #b0b0b0;
+	border-right: 4px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	z-index: 500;
+}
+[data-tip-person]:focus {
+	outline: none;
+}
 
 

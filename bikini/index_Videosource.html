@@ -25,10 +25,13 @@
 		<!-- used for iscroll special -->
 		<script type="text/javascript" src="js/iscroll.js"></script>
     </head>
-    <body onload="getIndexData();">
+    <body onload="getIndexData();animate_watched ();">
         <script type="text/javascript">
 			
 //***************************************************************************************
+		var show_sorted = false;
+		var show_watched = false;
+		var show_type = false;
 		// set default to 2 rows and 6 columns
 		var RowperPageValue = 2;
 		var PerPageValue = 12;
@@ -122,6 +125,22 @@
 						if (arg.item.watched) 
 						{return "./pictures/watched.png";} else
 						{return "./pictures/unwatched.png";}
+					},
+					"img.watched_small@onmouseout": function(arg)
+					{
+						if (arg.item.watched) 
+						{return "src='pictures/watched.png'";} else
+						{return "src='pictures/unwatched.png'";}
+					},
+					"img.watched_small@onclick": function(arg)
+					{
+						return "toggle_watched (" +arg.item.watched + ", " + arg.item.id + ", '" + arg.item.videoType + "'); " ;
+					},
+					"img.watched_small@title": function(arg)
+					{
+						if (arg.item.watched) 
+						{return window.localStorage.getItem('watched_select').toLowerCase();} else
+						{return window.localStorage.getItem('unwatched_select').toLowerCase();}
 					}
                 }
             }
@@ -279,15 +298,34 @@
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
 		function set_context_lang_value ()
 		{
-			document.getElementById("watched_all_label").innerHTML=window.localStorage.getItem('watched_select').toLowerCase()+'&'+window.localStorage.getItem('unwatched_select').toLowerCase();
-			document.getElementById("watched_label").innerHTML=window.localStorage.getItem('watched_select').toLowerCase();
-			document.getElementById("unwatched_label").innerHTML=window.localStorage.getItem('unwatched_select').toLowerCase();
+			document.getElementById("watched_all").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('watched_select').toLowerCase()+'&'+window.localStorage.getItem('unwatched_select').toLowerCase();
+			document.getElementById("watched_true").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('watched_select').toLowerCase();
+			document.getElementById("watched_false").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('unwatched_select').toLowerCase();
+			document.getElementById("watched_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('watched_select').toLowerCase();
+			document.getElementById("sort_year").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('year_label').toLowerCase();
+			document.getElementById("search_function").attributes.getNamedItem("data-tip-search").value=window.localStorage.getItem('search_select').toLowerCase();
+			document.getElementById("new_function").attributes.getNamedItem("data-tip-search").value=window.localStorage.getItem('new_').toLowerCase();
+			document.getElementById("sort_asc").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('asc_label').toLowerCase();
+			document.getElementById("sort_desc").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('desc_label').toLowerCase();
+			document.getElementById("sort_title").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('title_label').toLowerCase();
+			document.getElementById("sort_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('sort_label').toLowerCase();
+			document.getElementById("movie_series_type").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('all_label').toLowerCase();
+			document.getElementById("movie_type").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('movie_label').toLowerCase();
+			document.getElementById("series_type").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('series_label').toLowerCase();
+			document.getElementById("season_type").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('season_label').toLowerCase();
+			document.getElementById("type_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('video_label').toLowerCase();
+			
+			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('info_label').toLowerCase();
+			document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
+
+			document.getElementsByClassName("playbutton")[0].title=window.localStorage.getItem('play_label').toLowerCase();
+			document.getElementsByClassName("infobutton")[0].title=window.localStorage.getItem('info_label').toLowerCase();
 		}
         </script>
 	
     <div class="index_header"> 
-			<a href="javascript:ouvre_prefered_page()" id="li_home_left"></a>
-			<a id="info_config" href="javascript:ouvre_info_config()" ></a><div class="show_index_videosource"><span id="printsearch"></span></div>
+			<a href="javascript:ouvre_prefered_page()" id="li_home_left" data-tip2="prefered page"></a>
+			<a id="info_config" data-tip2="info" href="javascript:ouvre_info_config()" ></a><div class="show_index_videosource"><span id="printsearch"></span></div>
 			<div class="count_return_videosource">
                    <span class="ReturnCount"></span> 
 			</div>
@@ -300,35 +338,38 @@
 				<table><tr><td class="Poster_Value"></td></tr></table>
 			</div>
 		
-		<div id="index_tools_genre">			
-					<table>
-						<tr>
-							<td id="search_section">
-								<a href="javascript:ouvre_popup_search(StyleValue, false)">
-									<img src="pictures/icon/find.png" height="35" width="35"  alt="find" />
-								</a>
-							</td>
-							<td id="videotype_section">
-								<a href="javascript:open_videosource_index('movie,series')"><img src="pictures/icon/home_all_rv8.png" height="45" width="45" alt="tv movie"/><a>
-								<a href="javascript:open_videosource_index('movie')"><img src="pictures/icon/home_movies_rv8.png" height="45x" width="45" alt="movie" align="top" /></a>
-								<a href="javascript:open_videosource_index('series')"><img src="pictures/icon/home_tv_shows_rv8.png" height="45" width="45" alt="tv" /></a>
-								<a href="javascript:open_videosource_index('season')"><img src="pictures/icon/home_apps_rv8.png" height="45" width="45" alt="season" /></a>
-								
-							</td>
-							<td id="watch_section">							
-								<a id="watched_all" href="javascript:WatchedSelection('index_Videosource.html', 'all')"><img src="pictures/watched_unwatched_sort.png" alt="allwatched" /><span id="watched_all_label"></span></a>
-								<a id="watched_true" href="javascript:WatchedSelection('index_Videosource.html', 'true')"><img src="pictures/watched_sort.png" alt="watched" /><span id="watched_label"></span></a>
-								<a id="watched_false" href="javascript:WatchedSelection('index_Videosource.html', 'false')"><img src="pictures/unwatched_sort.png"  alt="unwatched" /><span id="unwatched_label"></span></a>	 
-							</td>
-							<td  id="sort_section">
-								<a id="sort_desc" href="javascript:SortDirection('DESC','index_Videosource.html')"><img src="pictures/sort_desc.png" alt="sort_desc" /></a>
-								<a id="sort_asc" href="javascript:SortDirection('ASC','index_Videosource.html')"><img src="pictures/sort_asc.png" alt="sort_asc" /></a>
-								<a id="sort_year" href="javascript:SortIndex('videoYear','index_Videosource.html')"><img src="pictures/year_sort.png" alt="sort_year" /></a>
-								<a id="sort_title" href="javascript:SortIndex('title','index_Videosource.html')"><img src="pictures/title_sort.png" alt="sort_title" /></a>
-							</td>
-						</tr>
-					</table>
-		</div>
+		<div id="index_tools_index" >			
+
+						<ul id="search_section">
+							<a id="search_function" style="left: 0vw; z-index: 10;" data-tip-search="search" href="javascript:ouvre_popup_search(StyleValue, false)">
+								<img src="pictures/find.png" style="height: 2.2vw; width: 2.4vw;"  alt="find" />
+							</a>
+						</ul>
+						<ul id="new_section">
+							<a id="new_function" style="left: 1vw;" data-tip-search="new" href="javascript:NewestSelection('index_Videosource.html', window.localStorage.getItem('New'))"><img src="pictures/new.png" alt="newest" style="left: 0px; width: 3.2vw; height: 2.2vw;" /></a>
+						</ul>
+						<ul id="watch_section">
+							<li><a id="watched_item" data-tip-item="watched"><img src="pictures/watched_unwatched_sort.png" alt="allwatched" style="height: 2.2vw;" onclick="toggle_show_watched()" /></a></li>							
+							<li><a id="watched_all" data-tip-sort="watched all" href="javascript:WatchedSelection('index_Videosource.html', 'all')"><img src="pictures/watched_unwatched_sort.png" alt="allwatched" /></a></li>
+							<li><a id="watched_true" data-tip-sort="watched" href="javascript:WatchedSelection('index_Videosource.html', 'true')"><img src="pictures/watched_sort.png" alt="watched" /></a></li>
+							<li><a id="watched_false" data-tip-sort="unwatched"  href="javascript:WatchedSelection('index_Videosource.html', 'false')"><img src="pictures/unwatched_sort.png"  alt="unwatched" /></a></li>
+						</ul>
+						<ul  id="sort_section">
+							<li><a id="sort_item" data-tip-item="sort" alt="sort"><img  src="pictures/sort.png" style="height: 2.2vw; width: 2.9vw" onclick="toggle_show_sort()"/></a></li>
+							<li><a id="sort_desc" data-tip-sort="descending" href="javascript:SortDirection('DESC','index_Videosource.html')" ><img src="pictures/sort_desc.png" alt="sort_desc" /></a></li>
+							<li><a id="sort_asc" data-tip-sort="ascending" href="javascript:SortDirection('ASC','index_Videosource.html')" ><img src="pictures/sort_asc.png" alt="sort_asc"/></a></li>
+							<li><a id="sort_year" data-tip-sort="year" href="javascript:SortIndex('videoYear','index_Videosource.html')" ><img src="pictures/year_sort.png" alt="sort_year" /></a></li>
+							<li><a id="sort_title" data-tip-sort="title" href="javascript:SortIndex('title','index_Videosource.html')" ><img src="pictures/title_sort.png" alt="sort_title"/></a></li>
+						</ul>
+						<ul id="type_section" >
+							<li><a id="type_item" data-tip-item="type" alt="type"><img  src="pictures/home_movies.png" style="height: 2.4vw; width: 3.1vw;" onclick="toggle_show_type()"/></a></li>
+							<li><a id="movie_series_type" data-tip-sort="movie,series" href="javascript:open_self_index('movie,series', 'index_Videosource.html')"><img src="pictures/icon/home_all_rv8.png" height="45" width="45" alt="tv movie"/><a></li>
+							<li><a id="movie_type" data-tip-sort="movie" href="javascript:open_self_index('movie', 'index_Videosource.html')"><img src="pictures/icon/home_movies_rv8.png" height="45x" width="45" alt="movie"/></a></li>
+							<li><a id="series_type" data-tip-sort="series" href="javascript:open_self_index('series', 'index_Videosource.html')"><img src="pictures/icon/home_tv_shows_rv8.png" height="45" width="45" alt="tv" /></a></li>
+							<li><a id="season_type" data-tip-sort="season" href="javascript:open_self_index('season', 'index_Videosource.html')"><img src="pictures/icon/home_apps_rv8.png" height="45" width="45" alt="season" /></a></li>
+						</ul>
+				
+			</div>	
 		<div class="directplay" style="display:none">
 			<span class="filepath"></span>
 		</div>
@@ -343,13 +384,12 @@
         <div id="container">
             <div id="yRow" class="row">
                 <div id="yBlock" class="block">
-					
-                    <img class="poster" src="./pictures/dummy.png" alt="poster">
-					<img class="playbutton" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'" alt="play">
-					<img class="infobutton" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'" alt="info">
-					<img class="watched_small" src=".pictures/watched.png" alt="watched" />
+					<img class="poster" src="pictures/dummy.png" alt="poster"  />
+                    <img class="playbutton" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'" alt="next" title="play"></img>
+					<img class="infobutton" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'" alt="info" title="info" ></img>
+					<img class="watched_small" src="pictures/empty.png" alt="watched" onmouseout="src='pictures/empty.png'" data-tip="watch"></img>
 					<br>
-                    <span class="title"></span>
+                    <span class="title" ></span>
                 </div>
                 <br />
             </div>

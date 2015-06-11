@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <lang>
+	<actionlabel>action</actionlabel>
 	<actorlabel>acteur</actorlabel>
 	<alllabel>tout</alllabel>
 	<allgenre>tout</allgenre>
@@ -14,26 +15,36 @@
 	<boxsetlabel>ensemble</boxsetlabel>
 	
 	<certificationlabel>certification</certificationlabel>
+	<closelabel>ferme</closelabel>
+	<closenavigationmenu>ferme le menu de navigation</closenavigationmenu>
 	<closeremotelabel>ferme telecommande</closeremotelabel>
 	<configselected>configuration</configselected>
 	<countrylabel>pays</countrylabel>
 	<countryselected>pays</countryselected>
+	<creationcomment>date de creation dans yamj3</creationcomment>
+	<creationlabel>creation</creationlabel>
 	
 	<deletetext>supprimer</deletetext>
 	<descending>descendant</descending>
+	<detailcomment>detail</detailcomment>
 	<directorlabel>directeur</directorlabel>
 	<downlabel>bas</downlabel>
 	
 	<ejectlabel>eject.</ejectlabel>
+	<enterdaynumber>entrer le nombre de jour</enterdaynumber>
 	<enterlabel>entree</enterlabel>
 	<episodelabel>épisode</episodelabel>
 	
+	<falsetext>faux</falsetext>
 	<fanartshow>fanart</fanartshow>
+	<filecomment>date du fichier de la vidéo</filecomment>
 	<filelabel>fichier</filelabel>
 	<filemodelabel>mode fichier</filemodelabel>
 	<filmographylabel>filmographie</filmographylabel>
 	<formatlabel>format</formatlabel>
 	<fpslabel>fps</fpslabel>
+	<framecomment>fenêtre en incrustation</framecomment>
+	<framelabel>incrustation</framelabel>
 	<fwdlabel>avance</fwdlabel>
 	
 	<genrelabel>genre</genrelabel>
@@ -45,7 +56,12 @@
 	
 	<infolabel>info</infolabel>
 	
+	<keylabel>clé</keylabel>
+	
+	<langcomment>langue à appliquer</langcomment>
 	<language>langue</language>
+	<lastscancomment>date de dernière mise à jour dans yamj3</lastscancomment>
+	<lastscanlabel>dernièrement scanné</lastscanlabel>
 	<leftlabel>gauche</leftlabel>
 	
 	<menulabel>menu</menulabel>
@@ -54,25 +70,35 @@
 	<mutelabel>silence</mutelabel>
 
 	<namelabel>nom</namelabel>
+	<nbrowcomment>nombre de ligne affichée dans les pages d index</nbrowcomment>
 	<nbrow>nbre de ligne</nbrow>
 	<nextremotelabel>suivant</nextremotelabel>
 	<new>nouveauté</new>
+	<newcomment>paramètre de la fonction nouveauté</newcomment>
 	<nobiography>biographie absente</nobiography>
 	<nobirthday>date de naissance inconnue</nobirthday>
 	<noplot>aucun sysnospis disponible</noplot>
 	<noposter>aucun postère</noposter>
 	<notext>pas de</notext>
 	
+	<opennavigationmenu>ouvre le menu de navigation</opennavigationmenu>
+	
+	<pagecomment>avec pagination (vrai), sans pagination (faux)</pagecomment>
 	<pagelabel>page</pagelabel>
+	<pagestylecomment>nouvelle page</pagestylecomment>
 	<pauselabel>pause</pauselabel>
 	<personlabel>personne</personlabel>
 	<personselected>personne</personselected>
 	<personshow>personne</personshow>
+	<playercomment>dispositif sur lequel afficher la video</playercomment>
 	<playerselected>lanceur</playerselected>
 	<playlabel>jouer sur </playlabel>
 	<plotlabel>synopsis</plotlabel>
+	<popupcomment>fenêtre ruban horizontal flottant</popupcomment>
+	<popuplabel>ruban horizontal</popuplabel>
 	<powerlabel>marche</powerlabel>
 	<prefered>préférée</prefered>
+	<preferedcomment>page préférée via le logo yamj3</preferedcomment>
 	<prevremotelabel>precedent</prevremotelabel>
 	<producerlabel>producteur</producerlabel>
 	
@@ -86,6 +112,8 @@
 	<repeatlabel>repete</repeatlabel>
 	<resultstext>résultats</resultstext>
 	<returnlabel>retour</returnlabel>
+	<ribboncomment>fenêtre ruban vertical flottante</ribboncomment>
+	<ribbonlabel>ruban vertical</ribbonlabel>
 	<runtimelabel>durée</runtimelabel>
 	<rewindlabel>rembobine</rewindlabel>
 	<rightlabel>droite</rightlabel>
@@ -93,6 +121,7 @@
 	<searchselected>recherche</searchselected>
 	<seasonlabel>saison</seasonlabel>
 	<seasonselected>saison</seasonselected>
+	<selecttype>nature de la selection</selecttype>
 	<selected>selectionné</selected>
 	<selection>selection</selection>
 	<selectionlabel>selection</selectionlabel>
@@ -101,22 +130,26 @@
 	<setuplabel>param.</setuplabel>
 	<show>ruban</show>
 	<skin>skin</skin>
+	<sortlabel>tri</sortlabel>
 	<sourcelabel>source</sourcelabel>
 	<startlabel>commence par</startlabel>
 	<stoplabel>stop</stoplabel>
 	<studioselected>studio</studioselected>
+	<stylecomment>style à appliquer aux fonctions appelées</stylecomment>
 	<stylelabel>style</stylelabel>
 	<subtitlelabel>sous-titre</subtitlelabel>
 	
 	<titlelabel>titre</titlelabel>
 	<timeseeklabel>durée</timeseeklabel>
 	<transformerrortext>transformation impossible controler source_path target_path</transformerrortext>
+	<truetext>vrai</truetext>
 	<tvmodelabel>mode tv</tvmodelabel>
 	
 	<unwatchedselect>non vu</unwatchedselect>
 	<uplabel>haut</uplabel>
 	<updatelabel>mise-a-jour</updatelabel>
 	
+	<valuelabel>valeur</valuelabel>
 	<videolabel>video</videolabel>
 	<volumedownlabel>vol-</volumedownlabel>	
 	<volumeuplabel>vol+</volumeuplabel>

@@ -57,6 +57,7 @@
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
 		function set_context_lang_value ()
 		{
+		//	console.log ('set_context_lang_value ()');
 			document.getElementById("allselect").innerHTML=window.localStorage.getItem('all_select').toUpperCase();
 			document.getElementById("movieselect").innerHTML=window.localStorage.getItem('movie_select').toUpperCase();
 			document.getElementById("serieselect").innerHTML=window.localStorage.getItem('series_select').toUpperCase();
@@ -65,7 +66,7 @@
 			document.getElementById("studioindex").innerHTML=window.localStorage.getItem('studio_select').toUpperCase();
 			document.getElementById("personindex").innerHTML=window.localStorage.getItem('person_select').toUpperCase();
 			document.getElementById("configindex").innerHTML=window.localStorage.getItem('config_select').toUpperCase();
-	//		document.getElementById("searchindex").innerHTML=window.localStorage.getItem('search_select').toUpperCase();
+			document.getElementById("titleindex").innerHTML=window.localStorage.getItem('title_label').toUpperCase();
 			document.getElementById("remoteselect").innerHTML=window.localStorage.getItem('remote_label').toUpperCase();
 			document.getElementById("yamj3select").innerHTML="YAMJ3";
 			document.getElementById("genrelistselect").innerHTML=window.localStorage.getItem('genrelist_select').toUpperCase();
@@ -124,10 +125,10 @@
 							<img src="./pictures/icon/home_awards_rv8.png" height="80"  width="80" alt="awards" />
 						</a><div id="awardsindex"></div>
 				</li>
-	<!--			<li><a href="javascript:ouvre_popup_search(StyleValue, true);">
-							<img src="./pictures/icon/find.png" height="60" width="65" style="padding-left:10px" alt="find" />
-						</a><div id="searchindex"></div>
-				</li> -->
+				<li><a href="javascript:call_available_title(index_type, '_parent');">
+							<img src="./pictures/title.png" height="65" width="75" style="padding-left:7px" alt="title" />
+						</a><div id="titleindex" style="padding-top: 5px;"></div>
+				</li> 
 				<li><a href="javascript:call_studioindex(index_type, '_parent'); ">
 							<img src="./pictures/icon/Studio.png" height="60"  width="60" style="position: relative; left:10px" alt="studio"  />
 						</a><div id="studioindex"></div>

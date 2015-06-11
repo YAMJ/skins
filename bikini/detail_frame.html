@@ -272,6 +272,10 @@
 		function set_context_lang_value ()
 		{
 			document.getElementById("seasonlabel").innerHTML=localStorage.getItem('season_label');
+			document.getElementById("close_icon_frame").attributes.getNamedItem("data-tip2").value=localStorage.getItem('close_label').toLowerCase();
+			document.getElementsByClassName("play_frame")[0].title=localStorage.getItem('play_label').toLowerCase();
+			document.getElementsByClassName("detail_icon_frame")[0].title=localStorage.getItem('detail_comment').toLowerCase(); 
+			
 		} // end set_context_lang_value
 		
   // ********************* NOW SET VARIOUS FUNCTION **********************************************  
@@ -484,6 +488,7 @@
 		function display_all ()
 			{
 				parent.document.getElementById('detail_display').style.zIndex = '11';
+				parent.document.getElementById('detail_display').style.top = '5vw';
 				$('div#slideshowCtr').css('visibility', 'visible');
 				$('div#slideshowCtr').css('width', '16vw');
 			//	$('div#slideshowCtr').css('height', '18vw');
@@ -604,7 +609,7 @@
     <body onload="getData();" style="margin: 0px;">
 	
 	<!-- show the close button , allow to close the frame  -->
-	<div id="close_icon_frame" onclick="close_frame()"><img src="./pictures/close2.png" /></div>
+	<div data-tip2="close" id="close_icon_frame" onclick="close_frame()"><img src="./pictures/close2.png" /></div>
 	
 	
 	<!--  header for movie/series name -->
@@ -663,9 +668,9 @@
                             </div>
 						
 						<!-- play button, show icon of movie or TV, click open the play dialogue box -->
-							<img class="play_frame" src="./pictures/play.png" alt="play" />
+							<img data-tip="play" class="play_frame" src="./pictures/play.png" alt="play" />
 						<!-- add button , allow to jump to the detail windows  -->
-							<img class="detail_icon_frame" src="pictures/add.png" alt="detail"/>
+							<img data-tip="open movie" class="detail_icon_frame" src="pictures/add.png" alt="detail"/>
 
 						<!-- next , previous button -->
                             <a id="next"><img src="./pictures/next.png" alt="next" /></a>

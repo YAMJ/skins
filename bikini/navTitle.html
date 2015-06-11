@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		
+		<script src="js/jQuery.js"></script>
+        <!-- Used for the JSON parsing -->
+        <script src="js/pure.js"></script>
+        <!-- Used for the paging of the index -->
+        <script src="js/js.js"></script>
+        <script src="js/jPages.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/lang.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>	
+		<script src="js/library.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
+        <!-- Used for the paging of the index -->
+        <link rel="stylesheet" href="css/jPages.css">
+        <!-- Used for the fancy animations -->
+        <link rel="stylesheet" href="css/animate.css">
+		<!-- used for iscroll special -->
+		<script type="text/javascript" src="js/iscroll.js"></script>
+		
+		<title>YAMJv3 Navigation title index</title>
+	
+    </head>
+    <body onload="NavData(); addShowAlt('img');">
+        <script type="text/javascript">
+		var menuleft_toggle = 0;
+		var index_type = "all";
+		var ForceStyleValue = "page";
+		var Prefered_PageValue = "index_all";	
+		// get the prefered_page
+		if (localStorage.getItem("prefered_page"))
+			{Prefered_PageValue = localStorage.getItem("prefered_page");}
+			else {localStorage.setItem("prefered_page", Prefered_PageValue);}
+			
+		 function NavData()
+        {
+
+		// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+			get_lang();
+			get_style();
+			get_player();
+			get_prefered_page();
+			
+			if (window.localStorage.getItem("indextype"))
+				{index_type = window.localStorage.getItem("indextype");
+				console.log("navTitle get: " + index_type);}
+				else {window.localStorage.setItem("indextype", index_type);
+				console.log("navTitle set: " + index_type);}
+		    var jsonUrl = "/yamj3/api/alphabetical/list.json?type=" + index_type;
+			console.log("navTitle index_type: " + index_type);
+			switch (index_type.toUpperCase())
+				{
+				   
+					case 'ALL':
+						selected_index = window.localStorage.getItem('all_select').toUpperCase();
+						break;
+					case 'MOVIE,SERIES':
+						selected_index = window.localStorage.getItem('all_select').toUpperCase();
+						break;
+					case 'MOVIE':
+						selected_index = window.localStorage.getItem('movie_select').toUpperCase();
+						break;
+					case 'SERIES':
+						selected_index = window.localStorage.getItem('series_select').toUpperCase();
+						break;
+					case 'SEASON':
+						selected_index = window.localStorage.getItem('season_select').toUpperCase();
+						break;
+					case 'PERSON':
+						selected_index = window.localStorage.getItem('person_select').toUpperCase();
+						break;
+				};
+			$('#printsearch').html(window.localStorage.getItem('title_label').toUpperCase()+' '+selected_index);
+
+            console.log("navTitle URL: " + jsonUrl);
+            var jsondata = null;
+
+            $.ajax({
+                url: jsonUrl,
+                async: false,
+                dataType: 'jsonp',
+                'success': function(data)
+                {
+                    jsondata = data;
+				//	 outputJson(data); 
+                    updateHtml(data);
+				// adjust number per page with the popup width and poster + container width			
+                      if (window.localStorage.getItem("Paging") == 'true') { 	
+					get_poster_number ();
+					console.log("navTitle GetIndexData: perPageValue="+perPageValue+" paging:"+ window.localStorage.getItem('Paging'));
+                	pageData(perPageValue);
+					}
+                }
+            });
+            return jsondata;
+        }
+		
+//****************************************************************************		
+		
+     function updateHtml(yamjdata)
+     {
+			var COUNT_HEADER = {
+                'span.ReturnCount': function(arg) {	
+					return arg.context.count+' '+ window.localStorage.getItem('results_text');
+					}
+				};	
+		    var LIST_DIR = {
+            "div.genre_block": {
+                "result<-results": {
+					"span.name": function(arg) {
+							return arg.item.name;
+							},
+					 "img.genre_logo@src": function(arg) {
+							return "pictures/title/"+arg.item.name+".png";
+                           },
+                     "span.name@onclick": function(arg) {
+							
+							return "SetIndexData('" + arg.item.name+ "')";
+							},
+					 "img.genre_logo@onclick": function(arg) {
+							return "SetIndexData('" + arg.item.name+ "')";
+							}	
+						}
+					}
+				};
+
+			$p('.count_return_genre').render(yamjdata, COUNT_HEADER);	
+            $p('div.row_genre').render(yamjdata, LIST_DIR);
+			
+	}
+		
+		
+//***************************************************************************************************************		
+
+		function open_title_index(titlename)
+        {
+			localStorage.setItem("selection", titlename);
+		//	localStorage.setItem("direction", "ASC");
+		//	localStorage.setItem("indextype", index_type);
+			
+            console.log("navTitle open_title_index Storing value: Title name: " +titlename);
+		//	Indexpopup = window.open(page, "YAMJ v3 index","");
+			window.location.href="index.html";
+			Mypopup.focus();
+		}
+		
+		function SetIndexData (titlename)
+		{	
+			direction_temp = window.localStorage.getItem("direction")
+			console.log("navTitle SetIndexData: search="+titlename+ " method_selected="+index_type+ " direction="+direction_temp+ " ForceStyleValue="+ForceStyleValue);	
+			window.localStorage.setItem("search_index", titlename);	
+			window.localStorage.setItem("nextcurrent_count", '-1');
+			
+			
+			switch (index_type.toUpperCase())
+				{
+					case 'ALL':
+					case 'MOVIE':
+					case 'SERIES':
+					case 'SEASON':
+					case 'MOVIE,SERIES':
+						localStorage.setItem("selection", titlename);
+						localStorage.setItem("indextype", index_type.toLowerCase());
+						if (index_type.toLowerCase() == 'all') {localStorage.setItem("indextype", "movie, series");}
+						switch (ForceStyleValue)
+							{
+								case 'page':
+									window.location.href="index.html";
+								break;
+								case 'ribbon':
+									ouvre_ribbon_index('navData.html', direction_temp, index_type, titlename);
+								break;
+								case 'popup':
+									ouvre_popup_index('navData_frame.html', direction_temp, index_type, titlename);
+								break;
+								case 'frame':
+									console.log("SetIndexData navData_frame:  " +titlename+ " with style:"+ForceStyleValue);
+									parent.frames['movie_frame'].location.href='navData_frame.html';
+									parent.document.getElementById('movie_frame').style.display="block";
+									parent.document.getElementById('movie_display').style.visibility="visible";	
+									
+								break;
+							}
+						break;
+					case 'GENRE':
+						call_genreindex('all', 'YAMJv3 Navigation genre index');
+						break;
+				// NAME and PERSON have the same call_person 
+					case 'NAME':
+						window.localStorage.setItem("search_method", 'NAME');	//  set the search_method to NAME otherwise the default is PERSON
+					case 'PERSON':
+						call_personindex('_self');
+					//	if (StyleValue == 'frame') { }
+						break;
+
+				};
+				
+		
+		}
+// *******************************to fix alt bug with chrome ***************************************************************************************
+	function showAlt(){$(this).replaceWith(this.alt)};
+	function addShowAlt(selector){$(selector).error(showAlt).attr("src", $(selector).src)};	
+//************************ LANGUAGE LOCAL SETTING *********************************************		
+
+		function set_context_lang_value ()
+		{
+			document.getElementById("search_item").attributes.getNamedItem("data-tip-search").value=window.localStorage.getItem('search_select').toLowerCase();
+			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('info_label').toLowerCase();
+			document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
+			document.getElementById("movie_series_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('all_label').toLowerCase();
+			document.getElementById("series_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('series_label').toLowerCase();
+			document.getElementById("movie_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('movie_label').toLowerCase();
+			document.getElementById("season_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('season_label').toLowerCase();
+
+			document.getElementById("person_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('person_label').toLowerCase();
+		}
+
+        </script>
+
+    <div class="index_header"> 
+			<a href="javascript:ouvre_prefered_page()" id="li_home_left" data-tip2="prefered page"></a>
+			<a id="info_config" data-tip2="info" href="javascript:ouvre_info_config()" ></a>
+				<!-- display screen name and number of genre  --> 		
+					<div class="show_index_genre"><span id="printsearch"></span></div>
+					<div class="count_return_genre">
+						   <span class="ReturnCount"></span> 
+					</div>
+		<!-- just added to set the language value, shouldn't be displayed  -->
+			<div class="results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Value"></td></tr></table>
+			</div>	
+			<div id="index_tools_nav" style="width: 23%; right: 26%;">			
+				<table>
+						<tr>
+							<td id="search_section_nav" style="top: 0px; left: -2.5vw;">
+								<a id="search_item" data-tip-search="search" href="javascript:ouvre_popup_search(StyleValue, false)">
+									<img src="pictures/find.png" alt="find" />
+								</a>
+							</td>
+							<td id="videotype_section">							
+								<a id="movie_series_icon" data-tip-item="movie,series" href="javascript:call_countryindex('movie,series', '_self')"><img src="pictures/all.png" alt="tv movie"/><a>
+								<a id="movie_icon" data-tip-item="movie" href="javascript:call_countryindex('movie', '_self')"><img src="pictures/home_movies.png" alt="movie" align="top" /></a>
+								<a id="series_icon" data-tip-item="series" href="javascript:call_countryindex('series', '_self')"><img src="pictures/tv_shows.png" alt="tv" /></a>
+								<a id="season_icon" data-tip-item="season" href="javascript:call_countryindex('season', '_self')"><img src="pictures/season.png" alt="season" /></a>
+								<a id="person_icon" data-tip-item="person"  href="javascript:call_available_title('person', '_self')"><img src="pictures/person.png" alt="person" /></a> 
+							</td>							
+						</tr>
+					</table>
+			</div>
+		 
+
+        <!--Navigation Holder-->
+        <div class="holder"></div>
+	</div>
+<!-- add left menu dynamically from a separate file --> 
+	<div >
+      <object data="include_left_menu.html" type="text/html" id="my_left_menu"></object>
+    </div>
+   
+		 <!--Data Items Container-->
+		<div id="container">
+            <div id="yRow" class="row_genre">
+                <div id="yBlock" class="genre_block">
+                    <img class="genre_logo" src="./pictures/title/@.png" alt="title"><br>
+                    <span class="name"></span>
+                </div>
+            </div>
+        </div>
+
+	<!-- display Movie -->
+		<div id="movie_display" style="visibility: hidden; ">
+			<iframe src="" name="movie_frame" resizable="yes" id="movie_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1245px; height:265px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display person -->
+		<div id="person_display" style="visibility: hidden; ">	
+			<iframe src="" name="person_frame" resizable="yes" id="person_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1220px; height:335px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display config -->
+		<div id="target_display" style="visibility: hidden; ">		
+			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:1050px; height:335px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display source data from API if needed  -->
+        <div id="sourceData"></div>
+    </body>
+</html>

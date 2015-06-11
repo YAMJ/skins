@@ -139,7 +139,8 @@
 					jsonUrl = jsonUrl + "&search=" + search_selection + "&field=name&mode="+index_method;		
 					window.localStorage.setItem("search_index", "");	
 				}	else {
-					selected_index = window.localStorage.getItem("person_label")+ " (" +window.localStorage.getItem("selection_text")+ ")";
+					selected_index = window.localStorage.getItem("person_label") ;
+				//	+ " (" +window.localStorage.getItem("selection_text")+ ")";
 						}
 				$('#printsearch').html(selected_index);
 				localStorage.setItem("current_jsonUrl", jsonUrl);
@@ -263,13 +264,18 @@
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
 		function set_context_lang_value ()
 		{
-
+			document.getElementById("return_icon").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('home_label').toLowerCase();
+			document.getElementById("next_icon").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('next_remote_label').toLowerCase();
+			document.getElementById("prev_icon").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prev_remote_label').toLowerCase();
+			document.getElementById("search_item").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('search_select').toLowerCase();
+			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('info_label').toLowerCase();
+			document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
 		}
         </script>
 		
     <div class="index_header"> 
-			<a href="javascript:ouvre_prefered_page()" id="li_home_left"></a>
-			<a id="info_config" href="javascript:ouvre_info_config()" ></a>
+			<a href="javascript:ouvre_prefered_page()" id="li_home_left" data-tip2="prefered page"></a>
+			<a id="info_config" data-tip2="info" href="javascript:ouvre_info_config()" ></a><div class="show_index_videosource"><span id="printsearch"></span></div>
 			<div class="count_return">
                    <span class="ReturnCount"></span> 
 			</div>
@@ -281,10 +287,10 @@
 		
 		<!--  prev, next 1rst request -->	
 		<div id="index_tools_person">
-			<div id="next_icon" onclick="ouvre_popup_search(StyleValue, false)" style="position: absolute; top: -3px; left: 65%;"><img src="pictures/icon/find.png" height="35" width="35"  alt="find" /></div>
-			<div id="next_icon" onclick="javascript:localStorage.setItem('nextcurrent_count', -1);call_personindex('_self')" style="position: absolute; top: -3px; left: 35%;"><img src="./pictures/returnbutton.png" height="30" alt=return"/></div>
-			<div id="next_icon" onclick="call_personindex('_self')" style="position: absolute; top: -3px; left: 55%;"><img src="./pictures/fwd.png" height="30" alt="forward"/></div>
-			<div id="prev_icon" onclick="back_asked (); call_personindex('_self')" style="position: absolute; top: -3px; left: 45%;"><img src="./pictures/back.png" height="30" alt="back"/></div>
+			<div id="search_item" data-tip2="search" onclick="ouvre_popup_search(StyleValue, false)" style="position: absolute; top: -3px; left: 65%;"><img src="pictures/icon/find.png" height="35" width="35"  alt="find" /></div>
+			<div id="return_icon" data-tip2="return" onclick="javascript:localStorage.setItem('nextcurrent_count', -1);call_personindex('_self')" ><img src="./pictures/returnbutton.png" alt=return"/></div>
+			<div id="next_icon" data-tip2="next" onclick="call_personindex('_self')" ><img src="./pictures/fwd.png" alt="forward"/></div>
+			<div id="prev_icon" data-tip2="previous" onclick="back_asked (); call_personindex('_self')" ><img src="./pictures/back.png" alt="back"/></div>
 		</div>
 		<!--Navigation Holder-->
          <div class="holder"></div>

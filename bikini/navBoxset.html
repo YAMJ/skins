@@ -30,6 +30,7 @@
     </head>
     <body onload="NavData(); addShowAlt('img');">
         <script type="text/javascript">
+		var show_sorted = false;
 		var menuleft_toggle = 0;
 		var index_type = "all";
 		var Prefered_PageValue = "index_all";
@@ -37,7 +38,10 @@
 		if (localStorage.getItem("prefered_page"))
 			{Prefered_PageValue = localStorage.getItem("prefered_page");}
 			else {localStorage.setItem("prefered_page", Prefered_PageValue);}
-				
+		var direction = "ASC";
+			if (window.localStorage.getItem("direction"))
+				{direction = window.localStorage.getItem("direction");}
+				else {window.localStorage.setItem("direction", direction);}			
 		 function NavData()
         {
 
@@ -52,9 +56,19 @@
 				console.log("navBoxset get: " + index_type);}
 				else {window.localStorage.setItem("indextype", index_type);
 				console.log("navBoxset set: " + index_type);}
-		    var jsonUrl = "/yamj3/api/boxset/list.json?";
+		    var jsonUrl = "/yamj3/api/boxset/list.json?&sortby=name&sortdir=" + direction;
 			var selected_index = window.localStorage.getItem('boxset_label').toUpperCase();
-			
+			if (direction == 'ASC') 
+					{
+						selected_index = selected_index +  ","+ window.localStorage.getItem('asc_label'); 
+						$('#sort_asc img').css('background-color', 'green');
+						$('#sort_desc img').css('background-color', '');
+					}
+					else {
+							selected_index = selected_index +  ","+ window.localStorage.getItem('desc_label') ; 
+							$('#sort_desc img').css('background-color', 'green');
+							$('#sort_asc img').css('background-color', '');
+						}
 			$('#printsearch').html(selected_index);
 
             console.log("navBoxset URL: " + jsonUrl);
@@ -93,7 +107,9 @@
 					"span.title": function(arg) {
 						return arg.item.name;
 							},
-				
+					"span.member": function(arg) {
+						return '(' + arg.item.memberCount + ')';
+							},
                      "span.title@onclick": function(arg) {
 						return "open_boxset_index('" + arg.item.id+ "', '" + arg.item.name + "')";
 							},
@@ -116,7 +132,7 @@
 		
 	function get_poster_for_boxset (boxsetid) 
 		{
-			var	jsonUrlPoster = "/yamj3/api/index/video.json?include=boxset-"+ boxsetid + "&dataitems=artwork&artwork=poster";
+			var	jsonUrlPoster = "/yamj3/api/index/video.json?include=boxset-"+ boxsetid + "&dataitems=artwork&artwork=poster" ;
 				console.log("navBoxset get_poster_for_boxset URL: " + jsonUrlPoster);
 			var poster_path = "";
 			var POSTER = {
@@ -180,14 +196,22 @@
 
 		function set_context_lang_value ()
 		{
-
+		
+			
+			document.getElementById("sort_asc").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('asc_label').toLowerCase();
+			document.getElementById("sort_desc").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('desc_label').toLowerCase();
+			document.getElementById("sort_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('sort_label').toLowerCase();
+						
+			document.getElementById("search_item").attributes.getNamedItem("data-tip-search").value=window.localStorage.getItem('search_select').toLowerCase();
+			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('info_label').toLowerCase();
+			document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
 		}
 
         </script>
 
     <div class="index_header"> 
-			<a href="javascript:ouvre_prefered_page()" id="li_home_left"></a>
-			<a id="info_config" href="javascript:ouvre_info_config()" ></a>
+			<a href="javascript:ouvre_prefered_page()" id="li_home_left" data-tip2="prefered page"></a>
+			<a id="info_config" data-tip2="info" href="javascript:ouvre_info_config()" ></a>
 				<!-- display screen name and number of genre  --> 		
 					<div class="show_index_boxset"><span id="printsearch"></span></div>
 					<div class="count_return_boxset">
@@ -202,15 +226,20 @@
 			<div class="poster_results" style="visibility: hidden; display:none;">
 				<table><tr><td class="Poster_Value"></td></tr></table>
 			</div>
-			<div id="index_tools">			
+			<div id="index_tools_nav">			
 				<table>
 						<tr>
-							<td id="search_section">
-								<a href="javascript:ouvre_popup_search(StyleValue, false)">
-									<img src="pictures/icon/find.png" height="35" width="35"  alt="find" />
+							<td id="search_section_nav">
+								<a id="search_item" data-tip-search="search" href="javascript:ouvre_popup_search(StyleValue, false)">
+									<img src="pictures/find.png"  alt="find" />
 								</a>
 							</td>
 						</tr>
+						<ul  id="sort_section" style="position: absolute; left: 4vw;  top: -10px; list-style-type: none; display: inline-table;">
+							<li><a id="sort_item" data-tip-item="sort" alt="sort"><img  src="pictures/sort.png" style="height: 2.2vw; width: 2.9vw" onclick="toggle_show_sort()"/></a></li>
+							<li><a id="sort_desc" data-tip-sort="descending" href="javascript:SortDirection('DESC','navBoxset.html')" ><img src="pictures/sort_desc.png" alt="sort_desc" /></a></li>
+							<li><a id="sort_asc" data-tip-sort="ascending" href="javascript:SortDirection('ASC','navBoxset.html')" ><img src="pictures/sort_asc.png" alt="sort_asc"/></a></li>
+						</ul>
 					</table>
 			</div>
         <!--Navigation Holder-->
@@ -232,6 +261,7 @@
 					<br />
 					<div class="title_boxset" style="position: relative; height: 4vw;" >&nbsp;</div>
                     <span class="title"></span>
+					<span class="member"></span>
                 </div>
                 <br />
             </div>

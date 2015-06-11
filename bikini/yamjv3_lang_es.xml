@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <lang>
+	<actionlabel>accion</actionlabel>
 	<actorlabel>jugador</actorlabel>
 	<alllabel>todo</alllabel>
 	<allgenre>todo</allgenre>
@@ -14,26 +15,36 @@
 	<boxsetlabel>conjunto</boxsetlabel>
 	
 	<certificationlabel>certificacion</certificationlabel>
+	<closelabel>cierre</closelabel>
+	<closenavigationmenu>cierra el menu de navegacion</closenavigationmenu>
 	<closeremotelabel>cierre a distancia</closeremotelabel>
 	<configselected>configuracion</configselected>
 	<countrylabel>pais</countrylabel>
 	<countryselected>pais</countryselected>
+	<creationcomment>fecha de creacion en yamj3</creationcomment>
+	<creationlabel>creacion</creationlabel>
 	
 	<deletetext>borrar</deletetext>
 	<descending>descendiente</descending>
+	<detailcomment>detalle</detailcomment>
 	<directorlabel>director</directorlabel>
 	<downlabel>bajo</downlabel>
 	
 	<ejectlabel>expulsar</ejectlabel>
+	<enterdaynumber>entroduzca el numero de dias</enterdaynumber>
 	<enterlabel>entrar</enterlabel>
 	<episodelabel>epsiode</episodelabel>
 	
+	<falsetext>faux</falsetext>
 	<fanartshow>fanart</fanartshow>
+	<filecomment>fecha del archivo de video</filecomment>
 	<filelabel>espediante</filelabel>
 	<filemodelabel>modo de archi.</filemodelabel>
 	<filmographylabel>filmografia</filmographylabel>
 	<formatlabel>formato</formatlabel>
 	<fpslabel>fps</fpslabel>
+	<framelabel>incrustacion</framelabel>
+	<framecomment>marco de las ventanas dentro de la pagina actual</framecomment>
 	<fwdlabel>adelante</fwdlabel>
 	
 	<genrelabel>tipo</genrelabel>
@@ -45,7 +56,12 @@
 	
 	<infolabel>info</infolabel>
 	
+	<keylabel>clave</keylabel>
+	
+	<langcomment>idioma para aplicar</langcomment>
 	<language>lengua</language>
+	<lastscancomment>fecha de la ultima actualizacion en yamj3</lastscancomment>
+	<lastscanlabel>ultima escanada</lastscanlabel>
 	<leftlabel>izquerda</leftlabel>
 	
 	<menulabel>menu</menulabel>
@@ -55,23 +71,33 @@
 	
 	<namelabel>appelido</namelabel>	
 	<nbrow>nb de fila</nbrow>
+	<nbrowcomment>numero de linea aparece en las paginas de indice</nbrowcomment>
 	<nextremotelabel>proximo</nextremotelabel>
 	<new>nuevo</new>
+	<newcomment>parametro de la nueva funcion</newcomment>
 	<nobiography>sin biografía</nobiography>
 	<nobirthday>la fecha de nacimiento</nobirthday>
 	<noplot>sin sinopse disponible</noplot>
 	<noposter>no poster</noposter>
 	<notext>non</notext>
 	
+	<opennavigationmenu>abre el menu de navegacion</opennavigationmenu>
+	
+	<pagecomment>paginacion (verdadera), sin paginacion (falso)</pagecomment>
 	<pagelabel>pagina</pagelabel>
+	<pagestylecomment>pagina nueva</pagestylecomment>
 	<pauselabel>pausa</pauselabel>
 	<personlabel>persona</personlabel>
 	<personselected>persona</personselected>
 	<personshow>persona</personshow>
 	<playlabel>jugar en</playlabel>
+	<playercomment>dispositivo en el que la pantalla de video</playercomment>
 	<playerselected>del jugador</playerselected>
 	<plotlabel>sinopse</plotlabel>
+	<popupcomment>ventana de la cinta horizontal flotante</popupcomment>
+	<popuplabel>horizontal band</popuplabel>
 	<powerlabel>potencia</powerlabel>
+	<preferedcomment>pagina favorita a traves de logo yamj3</preferedcomment>
 	<prefered>favorito</prefered>
 	<prevremotelabel>anterior</prevremotelabel>
 	<producerlabel>productor</producerlabel>
@@ -86,6 +112,8 @@
 	<repeatlabel>repeticion</repeatlabel>
 	<resultstext>resultado</resultstext>
 	<returnlabel>retorno</returnlabel>
+	<ribboncomment>ventana de la cinta flotando verticales</ribboncomment>
+	<ribbonlabel>cinta vertical</ribbonlabel>
 	<runtimelabel>plazo</runtimelabel>
 	<rewindlabel>rebobinar</rewindlabel>
 	<rightlabel>derecho</rightlabel>
@@ -93,6 +121,7 @@
 	<searchselected>busqueda</searchselected>
 	<seasonlabel>temporada</seasonlabel>
 	<seasonselected>temporada</seasonselected>
+	<selecttype>la naturaleza de la seleccion</selecttype>
 	<selection>selección</selection>
 	<selected>selecionnado</selected>
 	<selectionlabel>seleccion</selectionlabel>
@@ -101,22 +130,26 @@
 	<setuplabel>disposicion</setuplabel>
 	<show>cinta</show>
 	<skin>skin</skin>
+	<sortlabel>clasificacion</sortlabel>
 	<sourcelabel>origen</sourcelabel>
 	<startlabel>comienza con</startlabel>
 	<stoplabel>alto</stoplabel>
 	<studioselected>estudio</studioselected>
+	<stylecomment>estilo para aplicar a llamadas funciones</stylecomment>
 	<stylelabel>estilo</stylelabel>
 	<subtitlelabel>subtitulo</subtitlelabel>
 	
 	<titlelabel>titulo</titlelabel>
 	<timeseeklabel>tiempo de bus.</timeseeklabel>
 	<transformerrortext>incapaces de transformar target_path cheque source_path</transformerrortext>
+	<truetext>real</truetext>
 	<tvmodelabel>el modo tv</tvmodelabel>
 	
 	<unwatchedselect>unwatched</unwatchedselect>
 	<uplabel>top</uplabel>
 	<updatelabel>actualizacion</updatelabel>
 	
+	<valuelabel>valor</valuelabel>
 	<videolabel>video</videolabel>
 	<volumedownlabel>vol-</volumedownlabel>
 	<volumeuplabel>vol+</volumeuplabel>

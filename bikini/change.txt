@@ -1,4 +1,25 @@
 change.txt
+V1.6.0
+- fix person display frame in index page 
+- adjust display priority for person frame 
+- add external_id to mediainfo in detail page 
+- add allow to go to the target site with external_ids 
+- add update (add, update, delete) external_id 
+- add allow user to change watched status directly from index page 
+- adjust title font depending of the length of the title in detail page 
+- adjust info count font depending of the length of the info count in all index page 
+- adjust font-size biography to responsive design
+- add filmography_inside to biography
+- replace video selector by search popup in detail page 
+- adjust fanart / plot display when search popup is called
+- adjust biography popup height to allow selection of other person 
+- fix several undefined value 
+- adjust direct info toggle in index page 
+- add available title menu in index and detail
+- add available title or person page 
+- add translation for skin config
+- add info popup for several icon 
+- adjust sort item, watched item in all index page
 V1.5.1
 - add missing pictures
 V1.5.0

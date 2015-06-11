@@ -34,7 +34,30 @@
 					delay: 20
 				});
 			}
-			
+	// display none what is asked 
+		function display_none_Id(Id_to_nodisplay)
+					{			
+				//		document.getElementById(Id_to_nodisplay).style.visibility="hidden";
+				console.log("display_none_Id: "+Id_to_nodisplay);
+				var tempid = "#"+Id_to_nodisplay;
+				$(tempid).css('display', 'none');
+					}
+	// display block the Id selected 
+		function display_block_Id(Id_to_display)
+					{		
+						console.log("display_block_Id: "+Id_to_display);
+						document.getElementById(Id_to_display).style.display="block";
+					}	
+	// display on - off on the Id selected 
+		function toggle_display_Id(Id_to_toggle)
+					{	
+						if (document.getElementById(Id_to_toggle).style.display == "block")
+						{ 
+							document.getElementById(Id_to_toggle).style.display = "none";
+						} else {
+							document.getElementById(Id_to_toggle).style.display = "block";
+						}
+					}					
 	// hidden what is asked 
 		function nodisplay_Id(Id_to_nodisplay)
 					{			
@@ -79,6 +102,102 @@
 							$('.'+class_to_toggle).css('visibility', 'visible');
 						}
 					}
+		// on - off display for the class selected 
+		function toggle_display_class(class_to_toggle)
+					{			
+						if ($('.'+class_to_toggle).css('display') == "none")
+						{ 
+							$('.'+class_to_toggle).css('display', 'block');
+						} else {
+							$('.'+class_to_toggle).css('display', 'none');
+						}
+					}
+		// toggle the sort item to hide / show the sort feature - sort by year or title , sort ascending descending			
+		function toggle_show_sort ()
+		{
+			if (!show_sorted)
+				{
+					$("#sort_desc").css("visibility", "visible");
+					$("#sort_asc").css("visibility", "visible");
+					$("#sort_year").css("visibility", "visible");
+					$("#sort_title").css("visibility", "visible");
+					$("#sort_section").css("background", "grey");
+					$("#sort_section").css("outline", "2px solid black");
+					$("#sort_section").css("z-index", "10");
+					$("#sort_item").css("z-index", "9");
+					show_sorted = true;
+				}
+			else
+				{
+					$("#sort_desc").css("visibility", "hidden");
+					$("#sort_asc").css("visibility", "hidden");
+					$("#sort_year").css("visibility", "hidden");
+					$("#sort_title").css("visibility", "hidden");
+					$("#sort_section").css("background", "none");
+					$("#sort_section").css("outline", "none");
+			
+				
+					show_sorted = false;
+				}
+		}
+		// toggle the watched item to hide / show the watched selector watched_all , watched , unwatched 
+		function toggle_show_watched ()
+		{
+			if (!show_watched)
+				{
+					$("#watched_all").css("visibility", "visible");
+					$("#watched_true").css("visibility", "visible");
+					$("#watched_false").css("visibility", "visible");
+					
+					$("#watch_section").css("background", "grey");
+					$("#watch_section").css("outline", "2px solid black");
+					$("#watch_section").css("z-index", "10");
+					$("#watch_item").css("z-index", "9");
+					show_watched = true;
+				}
+			else
+				{
+					$("#watched_all").css("visibility", "hidden");
+					$("#watched_true").css("visibility", "hidden");
+					$("#watched_false").css("visibility", "hidden");
+					
+					$("#watch_section").css("background", "none");
+					$("#watch_section").css("outline", "none");
+			
+
+					show_watched = false;
+				}
+		}
+		// toggle the videotype item to hide / show the videotype selector movie and series, movie, series, season 
+		function toggle_show_type ()
+		{
+			if (!show_type)
+				{
+					$("#movie_series_type").css("visibility", "visible");
+					$("#movie_type").css("visibility", "visible");
+					$("#series_type").css("visibility", "visible");
+					$("#season_type").css("visibility", "visible");
+					
+					$("#type_section").css("background", "grey");
+					$("#type_section").css("outline", "2px solid black");
+					$("#type_section").css("z-index", "10");
+					$("#type_item").css("z-index", "9");
+					show_type = true;
+				}
+			else
+				{
+					$("#movie_series_type").css("visibility", "hidden");
+					$("#movie_type").css("visibility", "hidden");
+					$("#series_type").css("visibility", "hidden");
+					$("#season_type").css("visibility", "hidden");
+					
+					$("#type_section").css("background", "none");
+					$("#type_section").css("outline", "none");
+			
+
+					show_type = false;
+				}
+		}
 		// display/nodisplay left menu when click on icon open/close
 		function toggle_menu_left ()
 		{
@@ -115,6 +234,37 @@
 					document.getElementById('open_menu_left').style.visibility = 'visible';
 					document.getElementById('close_menu_left').style.visibility = 'hidden';
 				}
+		}
+		// change watched_api status 
+		function toggle_watched(watchedflag, videoid, videotype)
+				{	
+				if (watchedflag)
+					{ watched_to_set = 'unwatched';}
+					else {watched_to_set = 'watched';}
+							
+				console.log("template toggle_watched:  videotype:" + videotype + " watched_to_set:" + watched_to_set + " id:" + videoid);
+				var jsonWatchedUrl = "/yamj3/api/"+ watched_to_set + "/" + videotype.toLowerCase() + "/" + videoid;
+				console.log("template toggle_watched:  jsonWatchedUrl: " + jsonWatchedUrl);
+				$.ajax({
+                   url: jsonWatchedUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataWatched)
+					{
+						jsondata = dataWatched;
+						
+				//		outputJson(dataWatched);
+					}
+				});
+				Watchedpopup = window.open("index.html", "_self","");
+				}
+		// display update icon on mouseover with watched_small
+		function animate_watched ()
+		{
+			$(".watched_small").mouseover(function(){
+				$(this).attr('src','./pictures/update_watched.png'); 
+			});
+		
 		}
 		// on the class selected 
 		function display_class(class_to_toggle)
@@ -284,13 +434,27 @@
 					return;
 					
 				}
-			}		
+			}
+	// open or change index page
+		function open_self_index(indextype, index_to_call)
+			{
+				localStorage.setItem("indextype", indextype);
+				console.log("open_self_index with type: "+ indextype +" with index: " + index_to_call);
+					Indexpopup = window.open(index_to_call, "_self", "");
+			}
 	// open or change to index genre page
 		function call_genreindex(indextype, page_to_call)
 			{
 				localStorage.setItem("indextype", indextype);
 				console.log("call_genreindex with type: "+ indextype +" with page: " + page_to_call);
 					Indexpopup = window.open("navGenre.html", page_to_call,"");
+			}
+	// open or change to index title page
+		function call_available_title(indextype, page_to_call)
+			{
+				localStorage.setItem("indextype", indextype);
+				console.log("call_available_title with type: "+ indextype +" with page: " + page_to_call);
+				Indexpopup = window.open("navTitle.html", page_to_call,"");
 			}
 	// open or change to index country page
 		function call_countryindex(indextype, page_to_set)
@@ -353,6 +517,7 @@
 									parent.frames['person_frame'].location.href='index_Person_frame.html';								
 									parent.document.getElementById('person_frame').style.display="block";
 									parent.document.getElementById('person_display').style.visibility="visible";	
+									parent.document.getElementById('person_display').style.zindex="9";
 								
 						break;
 						} 
@@ -876,7 +1041,7 @@
             window.localStorage.setItem("id", id);
             console.log("direct_info: " + videoType + "-" + id);	
 			parent.frames['detail_frame'].location.href='detail_frame.html';
-			toggle_Id('detail_display');
+			display_Id('detail_display');
           
         }
 		

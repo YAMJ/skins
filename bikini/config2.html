@@ -28,12 +28,20 @@
         <link rel="stylesheet" href="css/animate.css">
 	<!-- used for iscroll special -->
 		<script type="text/javascript" src="js/iscroll.js"></script>
+<style>
+::-webkit-input-placeholder { color:black; }
+::-moz-placeholder { color:black; } /* firefox 19+ */
+:-ms-input-placeholder { color:black; } /* ie */
+input:-moz-placeholder { color:black; }
+
+</style>
     </head>
 	
 	
   <body onload="getIndexData();">
-        <script type="text/javascript">
-	
+  <script type="text/javascript">
+		
+
 //***************************************************************************************
         var select = "";
 		// set default to 2 rows and 6 columns
@@ -94,27 +102,50 @@
 				var WI = {
 					"template":"table.results_skinlist",
 					"header": {
-						"column":[ "Key", "Value", "New", "Action"]
+						"column":[ "Key" , "Value", "New", "Action"]
 					},
 					"directivehead": {
 						"th": {
 							"c<-column": {
-								".":"c"
+								".":function(arg)
+								{
+									switch (arg.item)
+										{
+											case 'Key':
+											{
+												return window.localStorage.getItem('key_label');
+												break;
+											}
+											case 'Value':
+											{
+												return window.localStorage.getItem('value_label');
+												break;
+											}
+											case 'New':
+											{
+												return window.localStorage.getItem('new_');
+												break;
+											}
+											case 'Action':
+											{
+												return window.localStorage.getItem('action_label');
+												break;
+											}
+										}
+								}
 							}
 						},
 						'td':{
 							"c<-column":{
 								"@class":"c"
 							}
-							
-							
 						}
 					},
 					"directivebody": {
 						"tbody tr": {
 							"list<-results":{
 						//		"td.Id"				: "list.id",
-								"td.Key"			: function(arg)
+								"td.Key" 		: function(arg)
 									{
 						//			 console.log("Config2 arg.item.key:" + arg.item.key.substr(14))  // because bikini_skin_x_ = 14 char
 									switch (arg.item.key.substr(14))
@@ -122,37 +153,44 @@
 											
 											case 'player':
 											{
-												return window.localStorage.getItem("player_select");
+												return "<img title='" + window.localStorage.getItem("player_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												+ window.localStorage.getItem("player_select");
 												break;
 											}
 											case 'paging':
 											{
-												return window.localStorage.getItem("page_label");
+												return "<img title='" + window.localStorage.getItem("page_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												+ window.localStorage.getItem("page_label");
 												break;
 											}
 											case 'index_row':
 											{
-												return window.localStorage.getItem("nbofrow");
+												return "<img title='" + window.localStorage.getItem("nbrow_comment") + "' src='./pictures/information2.png' style='height: 18px; '></img>&nbsp;"
+												+ window.localStorage.getItem("nbofrow");
 												break;
 											}
 											case 'language':
 											{
-												return window.localStorage.getItem("lang_label");
+												return "<img title='" + window.localStorage.getItem("lang_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												 + window.localStorage.getItem("lang_label");
 												break;
 											}
 											case 'style':
 											{
-												return window.localStorage.getItem("style_label");
+												return "<img title='" + window.localStorage.getItem("style_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												+ window.localStorage.getItem("style_label");
 												break;
 											}
 											case 'prefered_page':
 											{
-												return window.localStorage.getItem("prefered_");
+												return "<img title='" + window.localStorage.getItem("prefered_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												+ window.localStorage.getItem("prefered_");
 												break;
 											}
 											case 'New':
 											{
-												return window.localStorage.getItem("new_");
+												return "<img title='" + window.localStorage.getItem("new_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												+ window.localStorage.getItem("new_");
 												break;
 											}
 										}
@@ -167,7 +205,7 @@
 											case 'player':
 											{
 												var player_output = "<select id='formKey" +arg.item.key+ "' style='height:18px;'></input>"
-												+ "<option value=''></option>"
+												+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("player_comment") + "'></option>"
 												if (player_list.length == 0) {get_player_();}
 												console.log("config2 player list length: " + player_list.length);
 												for (var i = 0; i < player_list.length; i++) {
@@ -179,16 +217,16 @@
 											case 'paging':
 											{
 												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
-														+ "<option value=''></option>"
-														+ "<option value='true'>true</option>"
-														+ "<option value='false'>false</option>"
+														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("page_comment") + "'></option>"
+														+ "<option value='true'>" + window.localStorage.getItem("true_text") + "</option>"
+														+ "<option value='false'>" + window.localStorage.getItem("false_text") + "</option>"
 														+ "</select>";
 												break;
 											}
 											case 'index_row':
 											{
 												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
-														+ "<option value=''></option>"
+														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("nbrow_comment") + "'></option>"
 														+ "<option value='1'>0</option>"
 														+ "<option value='1'>1</option>"
 														+ "<option value='2'>2</option>"
@@ -202,7 +240,7 @@
 											case 'language':
 											{
 												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
-														+ "<option value=''></option>"
+														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("lang_comment") + "'></option>"
 														+ "<option value='de'>de</option>"
 														+ "<option value='en'>en</option>"
 														+ "<option value='es'>es</option>"
@@ -214,39 +252,45 @@
 											case 'style':
 											{
 												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
-														+ "<option value=''></option>"
-														+ "<option value='page'>page</option>"
-														+ "<option value='ribbon'>ribbon</option>"
-														+ "<option value='frame'>frame</option>"
-														+ "<option value='popup'>popup</option>"
+														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("style_comment") + "'></option>"
+														+ "<option value='page'>" + window.localStorage.getItem("page_label") + "&nbsp;(" + window.localStorage.getItem("page_style_comment") + ")</option>" 
+														+ "<option value='ribbon'>" + window.localStorage.getItem("ribbon_label") + "&nbsp;(" + window.localStorage.getItem("ribbon_comment") + ")</option>"
+														+ "<option value='frame'>" + window.localStorage.getItem("frame_label")  + "&nbsp;(" + window.localStorage.getItem("frame_comment") + ")</option>"
+														+ "<option value='popup'>" + window.localStorage.getItem("popup_label") + "&nbsp;(" + window.localStorage.getItem("popup_comment") + ")</option>"
 														+ "</select>";
 												break;
 											}
 											case 'prefered_page':
 											{
 												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
-														+ "<option value=''></option>"
-														+ "<option value='boxset'>boxset</option>"
-														+ "<option value='certification'>certification</option>"
-														+ "<option value='index_all'>index_all</option>"
-														+ "<option value='index_movie'>index_movie</option>"
-														+ "<option value='index_series'>index_series</option>"
-														+ "<option value='new'>new</option>"
-														+ "<option value='person'>person</option>"
-														+ "<option value='rating'>rating</option>"
-														+ "<option value='source'>source</option>"
+														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("prefered_comment") + "'></option>"
+														+ "<option value='boxset'>" + window.localStorage.getItem("boxset_label") + "</option>"
+														+ "<option value='certification'>" + window.localStorage.getItem("certification_label") + "</option>"
+														+ "<option value='index_all'>" + window.localStorage.getItem("all_label") + "</option>"
+														+ "<option value='index_movie'>" + window.localStorage.getItem("movie_label") + "</option>"
+														+ "<option value='index_series'>" + window.localStorage.getItem("series_label") + "</option>"
+														+ "<option value='new'>" + window.localStorage.getItem("new_") + "</option>"
+														+ "<option value='person'>" + window.localStorage.getItem("person_label") + "</option>"
+														+ "<option value='rating'>" + window.localStorage.getItem("rating_label") + "</option>"
+														+ "<option value='source'>" + window.localStorage.getItem("source_label") + "</option>"
 														+ "</select>";
 												break;
 											}
 											case 'New':
 											{
-												return "<input name='formKey" +arg.item.key+ "_days' type='text' id='formKey" +arg.item.key+ "_days'/> enter days number"
-													+ "<select name='formKey" +arg.item.key+ "_type' id='formKey" +arg.item.key+ "_type' style='height:18px;'>" 
-													+ "<option value=''></option>"
-													+ "<option value='file'>file</option>"
-													+ "<option value='creation'>creation</option>"
-													+ "<option value='lastscan'>lastscan</option>"
-													+ "</select> select type";
+												return  "<input placeholder='" + window.localStorage.getItem('enter_day_number') +" ' name='formKey" + arg.item.key + "_days' type='text' id='formKey" +arg.item.key+ "_days' style='width: auto; vertical-align: top;'/>"
+													+ "&nbsp;" // + window.localStorage.getItem('enter_day_number') + "&nbsp;"
+													+ "<select name='formKey" + arg.item.key + "_type' id='formKey" + arg.item.key + "_type' style='height:18px; vertical-align: top;' title='"
+													+ window.localStorage.getItem("file_label") + "=" + window.localStorage.getItem("file_comment") + " &#10;" + window.localStorage.getItem("creation_label")
+													+ "=" + window.localStorage.getItem("creation_comment") + " &#10;" + window.localStorage.getItem("lastscan_label")
+													+ "=" + window.localStorage.getItem("lastscan_comment") + " '>" 
+													+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem('select_type') + "'></option>"
+													+ "<option title='" + window.localStorage.getItem("file_comment") + "' value='file'>" + window.localStorage.getItem("file_label") + " (" + window.localStorage.getItem("file_comment") + ")</option>"
+													+ "<option title='" + window.localStorage.getItem("creation_comment") + "' value='creation'>" + window.localStorage.getItem("creation_label") + " (" + window.localStorage.getItem("creation_comment") + ")</option>"
+													+ "<option title='" + window.localStorage.getItem("lastscan_comment") + "' value='lastscan'>" + window.localStorage.getItem("lastscan_label") + " (" + window.localStorage.getItem("lastscan_comment") + ")</option>"
+													+ "</select> "
+											//		+ window.localStorage.getItem('select_type') + "&nbsp;&nbsp;"
+													
 												break;
 											}
 										}
@@ -263,12 +307,12 @@
 											case 'paging':
 											case 'prefered_page':
 											{
-												return "<form><input type=\"button\" value=\"edit\" onclick=\"Update_SkinData('" +arg.item.key+ "', document.getElementById('formKey" +arg.item.key+ "').value)\"/></form>"
+												return "<form><input type=\"button\" value='"+ window.localStorage.getItem('update_label') + "' onclick=\"Update_SkinData('" +arg.item.key+ "', document.getElementById('formKey" +arg.item.key+ "').value)\"/></form>"
 												break;
 											}
 											case 'New':
 											{
-													return "<form><input type='button' value='edit' "
+													return "<form><input type='button' value='"+ window.localStorage.getItem('update_label') + "' "
 														+ "onclick=\"Update_SkinData_New('" + arg.item.key + "', "
 														+ "document.getElementById('formKey" +arg.item.key+ "_days').value , " 
 														+ "document.getElementById('formKey" +arg.item.key+ "_type').value)\"/></form>";
@@ -373,7 +417,8 @@
 
 			document.getElementById("SkinSetted").innerHTML=window.localStorage.getItem("skin_") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("skinset").substring(0,(window.localStorage.getItem("skinset").length - 1)) ;
 			document.getElementById("skinlabel").innerHTML=window.localStorage.getItem("selection_label") + "&nbsp;" + window.localStorage.getItem("skin_");
-
+			document.getElementById("close_icon").title=localStorage.getItem('close_label').toLowerCase();
+			document.getElementById("prefered_icon").title=localStorage.getItem('prefered_comment').toLowerCase();
 		}
 		
  		</script>
@@ -381,7 +426,7 @@
             <div class="topbar">
                 <div class="topbar-inner">
                     <div class="container-fluid">
-                      <a href="javascript:ouvre_prefered_page()" class="brand"><img alt="YAMJ Logo" src="pictures/YAMJ-logo-120-white-reflectv3.png" height="40" /></a>
+                      <a id="prefered_icon" href="javascript:ouvre_prefered_page()" title="prefered page" class="brand"><img alt="YAMJ Logo" src="pictures/YAMJ-logo-120-white-reflectv3.png" height="40" /></a>
                         <ul class="nav">
                             <li><a href="index_Yamj3.html"><i class="fa fa-home fa-2x"></i> Home</a></li>
                             <li><a href="/yamj3/skin-info.html"><i class="fa fa-ticket fa-2x"></i> Skins</a></li>
@@ -392,7 +437,7 @@
                 </div>
             </div>
 
-		<div id="close_icon" onclick="window.close()"><img src="./pictures/close2.png" style="height:40px; width:40px; position:absolute; top:2px; right:10px; z-index:10000;" alt="close"/></div>
+		<div id="close_icon" title="close" onclick="window.close()"><img src="./pictures/close2.png" style="height:40px; width:40px; position:absolute; top:2px; right:10px; z-index:10000;" alt="close"/></div>
 		
  <!--       <div id="logo" style="position: relative; top: 150px;">
             <h2>Index of Config</h2>
@@ -411,7 +456,7 @@
 		
 		<div id="headertable" class="hero-unit" style="width: 80%; margin: auto; position: absolute; top: 50px; left: 100px; "	>
 			<h2>YAMJv3: <span id="SkinSetted" style="color: white;"></span> </h2>
-			<div id="index_tools" style="position: relative; left: 120px;">
+			<div id="index_tools" style="position: relative; ">
 		
 				<!-- select skin  -->
 							<table>
@@ -453,6 +498,7 @@
 	<div >
       <object data="include_left_menu.html" type="text/html" id="my_left_menu"></object>
     </div>
+	
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>
     </body>

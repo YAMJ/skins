@@ -101,7 +101,7 @@
 								
 								
 									// Check to see if there is artwork
-								if (totalperson_photo[i].artwork[0]) 
+								if (totalperson_photo[i].artwork) 
 								{
 									// Get the first photo from the list
 									
@@ -127,8 +127,10 @@
 									if (totalperson_photo[i].job) {
 											outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].job+"</p></td>";
 										}
+									else {outputperson_photo = outputperson_photo+"</td>";}
 									}
 							}
+							console.log('index_person_frame outputperson_photo :' + outputperson_photo);
 							return translate_job(outputperson_photo);
 						}
 					};

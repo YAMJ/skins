@@ -127,6 +127,8 @@
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
 		function set_context_lang_value ()
 		{
+			
+			document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
 
 		}
         </script>
@@ -134,8 +136,8 @@
        <div class="index_header"> 
         <div id="logo_index">
 			<td>
-				<ul id="home_left_up">
-					<li><a href="javascript:ouvre_prefered_page()" id="li_home_left"></a></li>
+				<ul id="home_left_up" data-tip2="prefered page">
+					<li><a href="javascript:ouvre_prefered_page()" id="li_home_left" data-tip2="prefered page"></a></li>
 					
 				</ul>
 			</td>

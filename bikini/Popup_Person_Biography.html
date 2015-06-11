@@ -8,6 +8,7 @@
 		<script src="js/lang.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>	
+		<script src="js/filmography_inside.js"></script>	
         <link rel="stylesheet" type="text/css" href="css/Popup_Person-style.css">
 	<style>
 	html {overflow:hidden; height:1120px; };
@@ -16,9 +17,10 @@
     </head>
     <body onload="PersonData();" onclose="close_person();" >
         <script type="text/javascript">
+		var filmography_list = false;
             function PersonData()
             {
-				var filmography_list = new Array();
+				
 				var	id = localStorage.getItem ("Person_id");
 				var back_close = window.localStorage.getItem('back_close');
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
@@ -51,7 +53,7 @@
                         jsondata = data;
 					//	outputJson(data); 	
                         updateHtml(data);
-			
+						update_inside(id);	
                     }
                 });
 				
@@ -175,6 +177,8 @@
 			{
 			//	document.getElementById("_year").innerHTML=window.localStorage.getItem('year_label');
 			//	document.getElementById("_title").innerHTML=window.localStorage.getItem('title_label')
+			document.getElementById("close_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('close_label').toLowerCase();
+			document.getElementById("back_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('return_label').toLowerCase();
 
 
 			}
@@ -185,10 +189,10 @@
 			
             console.log("Popup_Person Storing value: Person_id"  + id);
 		// adjust frame to display biography
-			parent.document.getElementById('target_display').style.height="87vh";
-			parent.document.getElementById('target_frame').style.height="87vh";
+			parent.document.getElementById('target_display').style.height="80vh";
+			parent.document.getElementById('target_frame').style.height="79.5vh";
 			parent.document.getElementById('target_display').style.width="83vw";
-			parent.document.getElementById('target_frame').style.width="83vw";
+			parent.document.getElementById('target_frame').style.width="82.5vw";
 			parent.document.getElementById('target_display').style.left="8vw";
 			parent.document.getElementById('target_display').style.top="51px";
 		//	parent.frames['target_frame'].location.href='Popup_Person.html';	
@@ -196,7 +200,7 @@
 			parent.document.getElementById('target_display').style.visibility="visible";
 		//	window.location.href="Popup_Person.html";
 			parent.document.getElementById('target_display').style.zIndex="11";
-			$('.biography').css('max-height', '90vh');
+			$('.biography').css('max-height', '55vh');
 			$('.biography').css('height', 'auto');
 		}
 
@@ -216,8 +220,8 @@
 						<div id="Filmography_selector" onclick="open_filmography_popup(localStorage.getItem ('Person_id'), window.localStorage.getItem('back_close'))">FILMOGRAPHY</div>
 					</div>
 					<td rowspan="4"><span class="image" style="position:relative; top: 40px;"></span></td>
-					<div id="close_icon" onclick="close_person()"><img src="./pictures/close2.png" width="35"/></div>
-					<a id="back_icon" href="javascript:back()"><img src="./pictures/returnbutton.png" width="30" align="left" /></a>
+					<div id="close_icon" data-tip-person="close" onclick="close_person()"><img src="./pictures/close2.png" width="35"/></div>
+					<a id="back_icon" data-tip-person="return" href="javascript:back()"><img src="./pictures/returnbutton.png" width="30" align="left" /></a>
 						<td id="biography_name">	
 							<span class="name"></span>: 
 							<span class="birthPlace"></span> - 
@@ -229,7 +233,13 @@
                 </tr>
             </table>
         </div>
-
+		<div class="Filmography_in" style="top: 65vh;left: 0.5vw;width: 95vw;">
+			<table class="result_filmography_inside">
+				<tr>
+					<td><span class="filmography_inside"></span></td>  <!-- display filmography inside-->
+				</tr>
+			</table>
+		</div>
 		
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>		

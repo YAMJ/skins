@@ -29,9 +29,7 @@
         <script type="text/javascript">
 			
 //***************************************************************************************
-		var show_sorted = false;
-		var show_watched = false;
-		var show_type = false;
+		
 		// set default to 2 rows and 6 columns
 		var RowperPageValue = 2;
 		var PerPageValue = 12;
@@ -51,9 +49,16 @@
 			{watched_method = localStorage.getItem("watched");}
 		if (localStorage.getItem("Videosource_value"))
 			{videosource_value = localStorage.getItem("Videosource_value");}
-		var index_type = "all";
+		var index_type = "movie,series";
 			if (window.localStorage.getItem("indextype"))
-				{index_type = window.localStorage.getItem("indextype");}
+				{index_type = window.localStorage.getItem("indextype");
+				// reset to all if indextype = person
+				if (index_type.toUpperCase() == 'PERSON')
+					{
+						window.localStorage.setItem("indextype", 'movie,series');
+						index_type = 'movie,series';
+					}
+				}
 				else {window.localStorage.setItem("indextype", index_type);}
 		var direction = "ASC";
 			if (window.localStorage.getItem("direction"))
@@ -173,51 +178,22 @@
 				{
 					case 'all':
 						display_videosource = display_videosource ;
-						$('#watched_all img').css('background-color', 'green');
-						$('#watched_true img').css('background-color', '');
-						$('#watched_false img').css('background-color', '');
 						break;
 					case 'true':
 						display_videosource = display_videosource + "(" + window.localStorage.getItem('watched_select').toUpperCase() + ") ";
-						$('#watched_all img').css('background-color', '');
-						$('#watched_true img').css('background-color', 'green');
-						$('#watched_false img').css('background-color', '');
 						break;
 					case 'false':
 						display_videosource = display_videosource + "(" + window.localStorage.getItem('unwatched_select').toUpperCase() + ") ";
-						$('#watched_all img').css('background-color', '');
-						$('#watched_true img').css('background-color', '');
-						$('#watched_false img').css('background-color', 'green');
 						break;
-					
 					default :
 						display_videosource = display_videosource;
-						$('#watched_all img').css('background-color', 'green');
-						$('#watched_true img').css('background-color', '');
-						$('#watched_false img').css('background-color', '');
 				};
 				if (sort_type == 'title') 
-					{
-						display_videosource = display_videosource + "&nbsp;-&nbsp;" + window.localStorage.getItem('title_label');
-						$('#sort_title img').css('background-color', 'green');
-						$('#sort_year img').css('background-color', '');
-					}
-					else {
-							display_videosource = display_videosource + "&nbsp;-&nbsp;" + window.localStorage.getItem('year_label');
-							$('#sort_year img').css('background-color', 'green');
-							$('#sort_title img').css('background-color', '');
-						}
+					{display_videosource = display_videosource + "&nbsp;-&nbsp;" + window.localStorage.getItem('title_label');}
+					else {display_videosource = display_videosource + "&nbsp;-&nbsp;" + window.localStorage.getItem('year_label');}
 				if (direction == 'ASC') 
-					{
-						display_videosource = display_videosource +  ","+ window.localStorage.getItem('asc_label'); 
-						$('#sort_asc img').css('background-color', 'green');
-						$('#sort_desc img').css('background-color', '');
-					}
-					else {
-							display_videosource = display_videosource +  ","+ window.localStorage.getItem('desc_label') ; 
-							$('#sort_desc img').css('background-color', 'green');
-							$('#sort_asc img').css('background-color', '');
-						}
+					{display_videosource = display_videosource +  ","+ window.localStorage.getItem('asc_label');}
+					else {display_videosource = display_videosource +  ","+ window.localStorage.getItem('desc_label') ;}
 				var temp_style = "1.4vw"
 					
 					if (display_videosource.length > 35)	{temp_style = "1.4vw";}
@@ -298,22 +274,7 @@
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
 		function set_context_lang_value ()
 		{
-			document.getElementById("watched_all").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('watched_select').toLowerCase()+'&'+window.localStorage.getItem('unwatched_select').toLowerCase();
-			document.getElementById("watched_true").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('watched_select').toLowerCase();
-			document.getElementById("watched_false").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('unwatched_select').toLowerCase();
-			document.getElementById("watched_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('watched_select').toLowerCase();
-			document.getElementById("sort_year").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('year_label').toLowerCase();
-			document.getElementById("search_function").attributes.getNamedItem("data-tip-search").value=window.localStorage.getItem('search_select').toLowerCase();
-			document.getElementById("new_function").attributes.getNamedItem("data-tip-search").value=window.localStorage.getItem('new_').toLowerCase();
-			document.getElementById("sort_asc").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('asc_label').toLowerCase();
-			document.getElementById("sort_desc").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('desc_label').toLowerCase();
-			document.getElementById("sort_title").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('title_label').toLowerCase();
-			document.getElementById("sort_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('sort_label').toLowerCase();
-			document.getElementById("movie_series_type").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('all_label').toLowerCase();
-			document.getElementById("movie_type").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('movie_label').toLowerCase();
-			document.getElementById("series_type").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('series_label').toLowerCase();
-			document.getElementById("season_type").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('season_label').toLowerCase();
-			document.getElementById("type_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('video_label').toLowerCase();
+			
 			
 			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('info_label').toLowerCase();
 			document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
@@ -337,39 +298,11 @@
 			<div class="poster_results" style="visibility: hidden; display:none;">
 				<table><tr><td class="Poster_Value"></td></tr></table>
 			</div>
+			<!-- include navigation header after context return , page info and count return -->		
+			<div>
+				<object data="include_header_index_menu.html" type="text/html" id="my_header_menu" style="position: absolute; height: 60px; width: 100%; left: 0%; z-index:10;"></object>
+			</div>
 		
-		<div id="index_tools_index" >			
-
-						<ul id="search_section">
-							<a id="search_function" style="left: 0vw; z-index: 10;" data-tip-search="search" href="javascript:ouvre_popup_search(StyleValue, false)">
-								<img src="pictures/find.png" style="height: 2.2vw; width: 2.4vw;"  alt="find" />
-							</a>
-						</ul>
-						<ul id="new_section">
-							<a id="new_function" style="left: 1vw;" data-tip-search="new" href="javascript:NewestSelection('index_Videosource.html', window.localStorage.getItem('New'))"><img src="pictures/new.png" alt="newest" style="left: 0px; width: 3.2vw; height: 2.2vw;" /></a>
-						</ul>
-						<ul id="watch_section">
-							<li><a id="watched_item" data-tip-item="watched"><img src="pictures/watched_unwatched_sort.png" alt="allwatched" style="height: 2.2vw;" onclick="toggle_show_watched()" /></a></li>							
-							<li><a id="watched_all" data-tip-sort="watched all" href="javascript:WatchedSelection('index_Videosource.html', 'all')"><img src="pictures/watched_unwatched_sort.png" alt="allwatched" /></a></li>
-							<li><a id="watched_true" data-tip-sort="watched" href="javascript:WatchedSelection('index_Videosource.html', 'true')"><img src="pictures/watched_sort.png" alt="watched" /></a></li>
-							<li><a id="watched_false" data-tip-sort="unwatched"  href="javascript:WatchedSelection('index_Videosource.html', 'false')"><img src="pictures/unwatched_sort.png"  alt="unwatched" /></a></li>
-						</ul>
-						<ul  id="sort_section">
-							<li><a id="sort_item" data-tip-item="sort" alt="sort"><img  src="pictures/sort.png" style="height: 2.2vw; width: 2.9vw" onclick="toggle_show_sort()"/></a></li>
-							<li><a id="sort_desc" data-tip-sort="descending" href="javascript:SortDirection('DESC','index_Videosource.html')" ><img src="pictures/sort_desc.png" alt="sort_desc" /></a></li>
-							<li><a id="sort_asc" data-tip-sort="ascending" href="javascript:SortDirection('ASC','index_Videosource.html')" ><img src="pictures/sort_asc.png" alt="sort_asc"/></a></li>
-							<li><a id="sort_year" data-tip-sort="year" href="javascript:SortIndex('videoYear','index_Videosource.html')" ><img src="pictures/year_sort.png" alt="sort_year" /></a></li>
-							<li><a id="sort_title" data-tip-sort="title" href="javascript:SortIndex('title','index_Videosource.html')" ><img src="pictures/title_sort.png" alt="sort_title"/></a></li>
-						</ul>
-						<ul id="type_section" >
-							<li><a id="type_item" data-tip-item="type" alt="type"><img  src="pictures/home_movies.png" style="height: 2.4vw; width: 3.1vw;" onclick="toggle_show_type()"/></a></li>
-							<li><a id="movie_series_type" data-tip-sort="movie,series" href="javascript:open_self_index('movie,series', 'index_Videosource.html')"><img src="pictures/icon/home_all_rv8.png" height="45" width="45" alt="tv movie"/><a></li>
-							<li><a id="movie_type" data-tip-sort="movie" href="javascript:open_self_index('movie', 'index_Videosource.html')"><img src="pictures/icon/home_movies_rv8.png" height="45x" width="45" alt="movie"/></a></li>
-							<li><a id="series_type" data-tip-sort="series" href="javascript:open_self_index('series', 'index_Videosource.html')"><img src="pictures/icon/home_tv_shows_rv8.png" height="45" width="45" alt="tv" /></a></li>
-							<li><a id="season_type" data-tip-sort="season" href="javascript:open_self_index('season', 'index_Videosource.html')"><img src="pictures/icon/home_apps_rv8.png" height="45" width="45" alt="season" /></a></li>
-						</ul>
-				
-			</div>	
 		<div class="directplay" style="display:none">
 			<span class="filepath"></span>
 		</div>

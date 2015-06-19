@@ -32,7 +32,7 @@
 	<body onload="loaded_iscroll(); get_lang(); get_style(); adjust_left_menu();" style="background-image:url(./pictures/empty.png);">
 		<script type="text/javascript">
 		var LangValue = "en";
-		var index_type = "all";
+		var index_type = "movie,series";
 			if (window.localStorage.getItem("indextype"))
 				{index_type = window.localStorage.getItem("indextype");}
 				else {window.localStorage.setItem("indextype", index_type);}
@@ -113,39 +113,39 @@
 							<img src="./pictures/icon/home_person_rv8.png" height="80"  width="80" alt="person"  />
 						</a><div id="personindex"></div>
 				</li>
-				<li><a href="javascript:call_genreindex(index_type, '_parent'); ">
+				<li><a href="javascript:open_parent_index (index_type, 'navGenre.html'); ">
 							<img src="./pictures/icon/home_genres2_rv8.png" height="80"  width="80" alt="genre" />
 						</a><div id="genreindex"></div>
 				</li>
-				<li><a href="javascript:call_countryindex(index_type, '_parent');">
+				<li><a href="javascript:open_parent_index (index_type, 'navCountry.html');">
 							<img src="./pictures/icon/home_country_rv8.png" height="80"  width="80" alt="country" />
 						</a><div id="countryindex"></div>
 				</li>
-				<li><a href="javascript:call_awardsindex(index_type, '_parent'); ">
+				<li><a href="javascript:open_parent_index (index_type, 'navAwards.html'); ">
 							<img src="./pictures/icon/home_awards_rv8.png" height="80"  width="80" alt="awards" />
 						</a><div id="awardsindex"></div>
 				</li>
-				<li><a href="javascript:call_available_title(index_type, '_parent');">
+				<li><a href="javascript:open_parent_index (index_type, 'navTitle.html', '_parent');">
 							<img src="./pictures/title.png" height="65" width="75" style="padding-left:7px" alt="title" />
 						</a><div id="titleindex" style="padding-top: 5px;"></div>
 				</li> 
-				<li><a href="javascript:call_studioindex(index_type, '_parent'); ">
+				<li><a href="javascript:open_parent_index (index_type, 'navStudio.html'); ">
 							<img src="./pictures/icon/Studio.png" height="60"  width="60" style="position: relative; left:10px" alt="studio"  />
 						</a><div id="studioindex"></div>
 				</li>
-				<li><a href="javascript:call_ratingindex(index_type, '_parent');">
+				<li><a href="javascript:open_parent_index(index_type, 'navRating.html');">
 							<img src="./pictures/icon/home_rating_rv8.png" height="80"  width="80" alt="rating"  />
 						</a><div id="ratingindex"></div>
 				</li>
-				<li><a href="javascript:call_certificationindex(index_type, '_parent'); ">
+				<li><a href="javascript:open_parent_index (index_type, 'navCertification.html'); ">
 							<img src="./pictures/icon/home_certification_rv8.png" height="90"  width="100"  style="position: relative; left:-10px" alt="certification"  />
 						</a><div id="certificationindex"></div>
 				</li>
-				<li><a href="javascript:call_videosourceindex(index_type, '_parent');">
+				<li><a href="javascript:open_parent_index (index_type, 'navVideosource.html');">
 							<img src="./pictures/icon/home_videosource_rv8.png" height="80"  width="80" style="position: relative; left:0px" alt="videosource"  />
 						</a><div id="videosourceindex"></div>
 				</li>
-				<li><a href="javascript:call_boxsetindex(index_type, '_parent');">
+				<li><a href="javascript:open_parent_index (index_type, 'navBoxset.html');">
 							<img src="./pictures/icon/home_set_rv8.png" height="100"  width="100" style="position: relative; left:-10px" alt="set"  />
 						</a><div id="boxsetindex"></div>
 				</li>
@@ -161,7 +161,7 @@
 							<img src="./pictures/icon/list_genre.png" height="80"  width="80" alt="liste genre" />
 						</a><div id="genrelistselect"></div>
 				</li>
-				<li><a href="javascript:ouvre_remote();  ">
+				<li><a href="javascript:ouvre_remote(StyleValue);  ">
 							<img src="./pictures/icon/remote.png" height="70"  width="70" style="position: relative; left:6px" alt="remote" />
 						</a><div id="remoteselect"></div>
 				</li>

@@ -125,6 +125,7 @@
 					$("#sort_section").css("outline", "2px solid black");
 					$("#sort_section").css("z-index", "10");
 					$("#sort_item").css("z-index", "9");
+					parent.document.getElementById('my_header_menu').style.height = '240px';
 					show_sorted = true;
 				}
 			else
@@ -135,7 +136,7 @@
 					$("#sort_title").css("visibility", "hidden");
 					$("#sort_section").css("background", "none");
 					$("#sort_section").css("outline", "none");
-			
+					parent.document.getElementById('my_header_menu').style.height = '60px';
 				
 					show_sorted = false;
 				}
@@ -153,6 +154,7 @@
 					$("#watch_section").css("outline", "2px solid black");
 					$("#watch_section").css("z-index", "10");
 					$("#watch_item").css("z-index", "9");
+					parent.document.getElementById('my_header_menu').style.height = '240px';
 					show_watched = true;
 				}
 			else
@@ -163,7 +165,7 @@
 					
 					$("#watch_section").css("background", "none");
 					$("#watch_section").css("outline", "none");
-			
+					parent.document.getElementById('my_header_menu').style.height = '60px';
 
 					show_watched = false;
 				}
@@ -182,6 +184,7 @@
 					$("#type_section").css("outline", "2px solid black");
 					$("#type_section").css("z-index", "10");
 					$("#type_item").css("z-index", "9");
+					parent.document.getElementById('my_header_menu').style.height = '240px';
 					show_type = true;
 				}
 			else
@@ -193,7 +196,7 @@
 					
 					$("#type_section").css("background", "none");
 					$("#type_section").css("outline", "none");
-			
+					parent.document.getElementById('my_header_menu').style.height = '60px';
 
 					show_type = false;
 				}
@@ -282,7 +285,41 @@
 						{
 							console.log("ouvre_popup_search:  style:"+StyleValue);								
 							parent.frames['target_frame'].location.href='search.html';
-							toggle_Id('target_display');
+							toggle_Parent_Id('target_display');
+							break;
+						} 
+					case 'popup':
+						{
+							console.log("ouvre_popup_search:  style:"+StyleValue);
+							Configpopup = window.open("search.html", "YAMJ v3 config","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=380px, top=5px, width=1040px, height=305px");
+							break;
+						}
+					case 'ribbon':
+						{
+							console.log("ouvre_popup_search:  style:"+StyleValue);
+							Searchpopup = window.open("search.html", "YAMJ v3 search","channelmode=no, status=no, scrollbars=hidden, menubar=no, location=no, resizable=yes, left=380px, top=5px, width=1040px, height=305px");
+							break;
+						}
+					case 'page':
+						{
+							console.log("ouvre_popup_search:  style:"+StyleValue);
+							Configpopup = window.open("search.html", "YAMJ v3 config","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=380px, top=5px, width=1040px, height=305px");
+							break;
+						}
+					return;
+					
+				}
+			}
+		// open a new window to select search functionnality and display in parent windows
+		function ouvre_parent_popup_search(StyleValue) 
+			{
+				switch (StyleValue)
+					{
+					case 'frame':
+						{
+							console.log("ouvre_parent_popup_search:  style:"+StyleValue);								
+							parent.frames['target_frame'].location.href='search.html';
+							toggle_Parent_Id('target_display');
 							break;
 						} 
 					case 'popup':
@@ -392,32 +429,32 @@
 						}
 					case 'genre':
 						{
-							call_genreindex(localStorage.getItem("indextype"), "YAMJv3 Navigation genre index");
+							open_self_index(localStorage.getItem("indextype"), "navGenre.html");
 							break;
 						}
 					case 'country':
 						{
-							call_countryindex(localStorage.getItem("indextype"), "YAMJv3 Navigation country index");
+							open_name_index(localStorage.getItem("indextype"), "navCountry.html", "YAMJv3 Navigation country index");
 							break;
 						}
 					case 'boxset':
 						{
-							call_boxsetindex(localStorage.getItem("indextype"), "YAMJv3 Navigation boxset index");
+							open_name_index(localStorage.getItem("indextype"), "navBoxset.html", "YAMJv3 Navigation boxset index");
 							break;
 						}
 					case 'rating':
 						{
-							call_ratingindex(localStorage.getItem("indextype"), "YAMJv3 Navigation rating index");
+							open_name_index(localStorage.getItem("indextype"), "navRating.html", "YAMJv3 Navigation rating index");
 							break;
 						}
 					case 'certification':
 						{
-							call_certificationindex(localStorage.getItem("indextype"), "YAMJv3 Navigation certification index");
+							open_name_index(localStorage.getItem("indextype"), "navCertification.html", "YAMJv3 Navigation certification index");
 							break;
 						}
 					case 'source':
 						{						
-							call_videosourceindex(localStorage.getItem("indextype"), "YAMJv3 Navigation videosource index");
+							open_name_index(localStorage.getItem("indextype"), "navSource.html", "YAMJv3 Navigation videosource index");
 							break;
 						} 
 					case 'new':
@@ -435,76 +472,28 @@
 					
 				}
 			}
-	// open or change index page
-		function open_self_index(indextype, index_to_call)
+	// open or change index page in the same windows
+		function open_self_index(indextype, index_to_call, windows_name)
 			{
 				localStorage.setItem("indextype", indextype);
-				console.log("open_self_index with type: "+ indextype +" with index: " + index_to_call);
+				console.log("open_self_index with type: "+ indextype +" with index: " + index_to_call + " self windows");
 					Indexpopup = window.open(index_to_call, "_self", "");
 			}
-	// open or change to index genre page
-		function call_genreindex(indextype, page_to_call)
+	// open or change index page in parent windows
+		function open_parent_index(indextype, index_to_call)
 			{
 				localStorage.setItem("indextype", indextype);
-				console.log("call_genreindex with type: "+ indextype +" with page: " + page_to_call);
-					Indexpopup = window.open("navGenre.html", page_to_call,"");
+				console.log("open_parent_index with type: "+ indextype +" with index: " + index_to_call + " parent windows");
+					Indexpopup = window.open(index_to_call, "_parent", "");
 			}
-	// open or change to index title page
-		function call_available_title(indextype, page_to_call)
+	// open or change index page in a named windows
+		function open_name_index(indextype, index_to_call, windows_name)
 			{
 				localStorage.setItem("indextype", indextype);
-				console.log("call_available_title with type: "+ indextype +" with page: " + page_to_call);
-				Indexpopup = window.open("navTitle.html", page_to_call,"");
+				console.log("open_name_index with type: "+ indextype +" with index: " + index_to_call + " windows name:" + windows_name);
+					Indexpopup = window.open(index_to_call, windows_name, "");
 			}
-	// open or change to index country page
-		function call_countryindex(indextype, page_to_set)
-			{
-				localStorage.setItem("indextype", indextype);
-				console.log("call_countryindex with type: "+ indextype + " with page : " + page_to_set );
-				Indexpopup = window.open("navCountry.html", page_to_set,"");
-			}
-	// open or change to index awards page
-		function call_awardsindex(indextype, page_to_set)
-			{
-				localStorage.setItem("indextype", indextype);
-				console.log("call_awardsindex with type: "+ indextype + " with page: " + page_to_set );
-				Indexpopup = window.open("navAwards.html", page_to_set,"");
-			}
-		// open or change to index certification page
-		function call_certificationindex(indextype, page_to_set)
-			{
-				localStorage.setItem("indextype", indextype);
-				console.log("call_certificationindex with type: "+indextype + " page to set: " + page_to_set);
-				Indexpopup = window.open("navCertification.html", page_to_set,"");
-			}
-		// open or change to index studio page
-		function call_studioindex(indextype, page_to_set)
-			{
-				localStorage.setItem("indextype", indextype);
-				console.log("call_studioindex with type: "+indextype + " page to set: " + page_to_set);
-				Indexpopup = window.open("navStudio.html", page_to_set,"");
-			}
-		// open or change to index rating page
-		function call_ratingindex(indextype, page_to_set)
-			{
-				localStorage.setItem("indextype", indextype);
-				console.log("call_ratingindex with type: "+indextype + " page to set: " + page_to_set);
-				Indexpopup = window.open("navRating.html", page_to_set,"");
-			}
-	// open or change to index videosource page
-		function call_videosourceindex(indextype, page_to_set)
-			{
-				localStorage.setItem("indextype", indextype);
-				console.log("call_videosourceindex with type: "+indextype + " page to set: " + page_to_set);
-				Indexpopup = window.open("navVideosource.html", page_to_set,"");
-			}
-	// open or change to index boxset page
-		function call_boxsetindex(indextype, page_to_set)
-			{
-				localStorage.setItem("indextype", indextype);
-				console.log("call_boxsetindex with type: "+indextype + " page to set: " + page_to_set);
-				Indexpopup = window.open("navBoxset.html", page_to_set,"");
-			}
+
 	// open all person depending of the style 
 		function call_person(newpage)
 			{
@@ -652,14 +641,14 @@
 			{		
 					window.localStorage.setItem("watched", watchedselect);
 					console.log("WatchedSelection: "+watchedselect);
-					Indexpopup = window.open(href_target, "_self","");
+					Indexpopup = window.open(href_target, "_parent","");
 			}
 	// newest selection 
 		function NewestSelection (href_target, newestselect)
 			{		
 					window.localStorage.setItem("newest", newestselect);
 					console.log("NewestSelection: "+newestselect);
-					Indexpopup = window.open(href_target, "_self","");
+					Indexpopup = window.open(href_target, "_parent","");
 			}
 	// boxset selection 
 		function BoxsetSelection (href_target)
@@ -1296,14 +1285,14 @@
 		}
 		
 		// open remote 
-		function ouvre_remote() 
+		function ouvre_remote(StyleValue) 
 		{
 				switch (StyleValue)
 					{
 					case 'frame':
 						{
 							parent.frames['remote_frame'].location.href='my_remote.html';
-							document.getElementById("remote").style.visibility="visible";
+							parent.document.getElementById("remote").style.visibility="visible";
 							break;
 						} 
 					case 'popup':

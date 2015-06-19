@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=yes" />
+        
+        <script src="js/jQuery.js"></script>
+        <!-- Used for the JSON parsing -->
+        <script src="js/pure.js"></script>
+        <!-- Used for the paging of the index -->
+        <script src="js/js.js"></script>
+		<script src="js/my_remote.js"></script>
+        <script src="js/jPages.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/lang.js"></script>
+		<!-- Used for config  setting -->
+		<script src="js/config.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>
+		<script src="js/library.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
+        <!-- Used for the paging of the index -->
+        <link rel="stylesheet" href="css/jPages.css">
+        <!-- Used for the fancy animations -->
+        <link rel="stylesheet" href="css/animate.css">
+		<!-- used for iscroll special -->
+		<script type="text/javascript" src="js/iscroll.js"></script>
+
+    </head>
+
+	<body onload="adjust_header_menu(); get_lang(); get_style(); " style="position: relative; left: 5px; height: 80px; padding: 0px; margin: 0px; background-image:url(./pictures/empty.png); ">
+		<script type="text/javascript">
+		var LangValue = "en";
+		var index_type = "movie,series";
+			if (window.localStorage.getItem("indextype"))
+				{
+				
+				
+				index_type = window.localStorage.getItem("indextype");}
+				else {window.localStorage.setItem("indextype", index_type);}
+		var _window_width = $(parent.window).width();
+		
+	
+	//	console.log ('include_header_menu width:' + _window_width + ' #index_tools_nav.width:', + $('#index_tools_nav').width());
+		
+		// ****************************** id or class with iscroll **************************************************************
+		var myScroll;
+		function loaded_iscroll () {
+		myScroll = new IScroll('#index_tools_nav', { scrollX: false, scrollY: true, mouseWheel: true, click: true });
+		}
+		
+		function adjust_header_menu ()
+		{
+			// console.log("include_header_menu location: " + parent.location.href.substring(parent.location.href.lastIndexOf('/') + 1));
+			if (parent.location.href.substring(parent.location.href.lastIndexOf('/') + 1) == 'navTitle.html')
+					{
+						$('#person_icon').show();
+					}
+		//	$('#container_menu_left').css('top', '40px'); 
+		//	$("#container_menu_left").css('height', '95%');
+		//	console.log ('include_header_menu #index_tools_nav.width:', + $('#index_tools_nav').width());
+		}
+		 //************************ LANGUAGE LOCAL SETTING *********************************************
+		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
+		function set_context_lang_value ()
+		{
+			document.getElementById("search_item").attributes.getNamedItem("data-tip-search").value=window.localStorage.getItem('search_select').toLowerCase();
+			document.getElementById("movie_series_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('all_label').toLowerCase();
+			document.getElementById("series_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('series_label').toLowerCase();
+			document.getElementById("movie_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('movie_label').toLowerCase();
+			document.getElementById("season_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('season_label').toLowerCase();
+			document.getElementById("person_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('person_label').toLowerCase();
+			
+		}
+		</script>
+	
+			<div id="index_tools_nav" style="width: 100%; left: 5%;">			
+				<table>
+						<tr>
+							<td id="search_section_nav">
+								<a id="search_item" data-tip-search="search" href="javascript:ouvre_popup_search(StyleValue, false)">
+									<img src="pictures/find.png" alt="find" />
+								</a>
+							</td>
+							<td id="videotype_section">							
+								<a id="movie_series_icon" data-tip-item="movie,series" href="javascript:open_parent_index('movie,series', parent.location.href)"><img src="pictures/all.png" alt="tv movie"/><a>
+								<a id="movie_icon" data-tip-item="movie" href="javascript:open_parent_index('movie', parent.location.href)"><img src="pictures/home_movies.png" alt="movie" align="top" /></a>
+								<a id="series_icon" data-tip-item="series" href="javascript:open_parent_index('series', parent.location.href)"><img src="pictures/tv_shows.png" alt="tv" /></a>
+								<a id="season_icon" data-tip-item="season" href="javascript:open_parent_index('season', parent.location.href)"><img src="pictures/season.png" alt="season" /></a>
+								<a id="person_icon" data-tip-item="person"  href="javascript:open_parent_index('person', parent.location.href)"><img src="pictures/person.png" alt="person" /></a> 
+							</td>							
+						</tr>
+					</table>
+			</div>
+</body>
+</html>

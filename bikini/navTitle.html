@@ -29,7 +29,7 @@
     <body onload="NavData(); addShowAlt('img');">
         <script type="text/javascript">
 		var menuleft_toggle = 0;
-		var index_type = "all";
+		var index_type = "movie,series";
 		var ForceStyleValue = "page";
 		var Prefered_PageValue = "index_all";	
 		// get the prefered_page
@@ -48,7 +48,8 @@
 			
 			if (window.localStorage.getItem("indextype"))
 				{index_type = window.localStorage.getItem("indextype");
-				console.log("navTitle get: " + index_type);}
+				console.log("navTitle get: " + index_type);
+				}
 				else {window.localStorage.setItem("indextype", index_type);
 				console.log("navTitle set: " + index_type);}
 		    var jsonUrl = "/yamj3/api/alphabetical/list.json?type=" + index_type;
@@ -89,6 +90,7 @@
                     jsondata = data;
 				//	 outputJson(data); 
                     updateHtml(data);
+					if (index_type.toUpperCase() == 'PERSON') {clean_person_list ();};
 				// adjust number per page with the popup width and poster + container width			
                       if (window.localStorage.getItem("Paging") == 'true') { 	
 					get_poster_number ();
@@ -113,13 +115,16 @@
             "div.genre_block": {
                 "result<-results": {
 					"span.name": function(arg) {
+							
 							return arg.item.name;
 							},
 					 "img.genre_logo@src": function(arg) {
 							return "pictures/title/"+arg.item.name+".png";
                            },
+					 "img.genre_logo@alt": function(arg) {
+							return arg.item.name;
+                           },
                      "span.name@onclick": function(arg) {
-							
 							return "SetIndexData('" + arg.item.name+ "')";
 							},
 					 "img.genre_logo@onclick": function(arg) {
@@ -187,12 +192,6 @@
 								break;
 							}
 						break;
-					case 'GENRE':
-						call_genreindex('all', 'YAMJv3 Navigation genre index');
-						break;
-				// NAME and PERSON have the same call_person 
-					case 'NAME':
-						window.localStorage.setItem("search_method", 'NAME');	//  set the search_method to NAME otherwise the default is PERSON
 					case 'PERSON':
 						call_personindex('_self');
 					//	if (StyleValue == 'frame') { }
@@ -202,6 +201,20 @@
 				
 		
 		}
+		function clean_person_list ()
+		
+		{
+				var elements = document.getElementsByClassName('genre_logo');
+					for(var i = 0, length = elements.length; i < length; i++) {
+		//				console.log ("elements[i].alt: " + elements[i].alt);
+						if( elements[i].alt == '&' || elements[i].alt == '(' || elements[i].alt == '-'){
+							elements[i].style.display = 'none';
+							document.getElementsByClassName('genre_block')[i].style.display = 'none';
+							document.getElementsByClassName('ReturnCount')[0].textContent = (parseInt(document.getElementsByClassName('ReturnCount')[0].textContent, 10) - 1)  +' '+ window.localStorage.getItem('results_text');
+		//					console.log ("document.getElementsByClassName('ReturnCount')[0] " + (parseInt(document.getElementsByClassName('ReturnCount')[0].textContent, 10) - 1));
+							}
+					}
+		  }
 // *******************************to fix alt bug with chrome ***************************************************************************************
 	function showAlt(){$(this).replaceWith(this.alt)};
 	function addShowAlt(selector){$(selector).error(showAlt).attr("src", $(selector).src)};	
@@ -209,15 +222,10 @@
 
 		function set_context_lang_value ()
 		{
-			document.getElementById("search_item").attributes.getNamedItem("data-tip-search").value=window.localStorage.getItem('search_select').toLowerCase();
+			
 			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('info_label').toLowerCase();
 			document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
-			document.getElementById("movie_series_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('all_label').toLowerCase();
-			document.getElementById("series_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('series_label').toLowerCase();
-			document.getElementById("movie_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('movie_label').toLowerCase();
-			document.getElementById("season_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('season_label').toLowerCase();
-
-			document.getElementById("person_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('person_label').toLowerCase();
+			
 		}
 
         </script>
@@ -234,26 +242,11 @@
 			<div class="results" style="visibility: hidden; display:none;">
 				<table><tr><td class="Value"></td></tr></table>
 			</div>	
-			<div id="index_tools_nav" style="width: 23%; right: 26%;">			
-				<table>
-						<tr>
-							<td id="search_section_nav" style="top: 0px; left: -2.5vw;">
-								<a id="search_item" data-tip-search="search" href="javascript:ouvre_popup_search(StyleValue, false)">
-									<img src="pictures/find.png" alt="find" />
-								</a>
-							</td>
-							<td id="videotype_section">							
-								<a id="movie_series_icon" data-tip-item="movie,series" href="javascript:call_countryindex('movie,series', '_self')"><img src="pictures/all.png" alt="tv movie"/><a>
-								<a id="movie_icon" data-tip-item="movie" href="javascript:call_countryindex('movie', '_self')"><img src="pictures/home_movies.png" alt="movie" align="top" /></a>
-								<a id="series_icon" data-tip-item="series" href="javascript:call_countryindex('series', '_self')"><img src="pictures/tv_shows.png" alt="tv" /></a>
-								<a id="season_icon" data-tip-item="season" href="javascript:call_countryindex('season', '_self')"><img src="pictures/season.png" alt="season" /></a>
-								<a id="person_icon" data-tip-item="person"  href="javascript:call_available_title('person', '_self')"><img src="pictures/person.png" alt="person" /></a> 
-							</td>							
-						</tr>
-					</table>
+			<!-- include navigation header after context return , page info and count return -->		
+			<div>
+				<object data="include_header_nav_menu.html" type="text/html" id="my_header_menu" style="position: absolute; height: 70px; width: 30%; left: 50%; z-index:10;"></object>
 			</div>
-		 
-
+			
         <!--Navigation Holder-->
         <div class="holder"></div>
 	</div>
@@ -266,7 +259,7 @@
 		<div id="container">
             <div id="yRow" class="row_genre">
                 <div id="yBlock" class="genre_block">
-                    <img class="genre_logo" src="./pictures/title/@.png" alt="title"><br>
+                    <img class="genre_logo" src="./pictures/title/@.png" alt="title" ><br>
                     <span class="name"></span>
                 </div>
             </div>

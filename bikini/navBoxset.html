@@ -32,7 +32,7 @@
         <script type="text/javascript">
 		var show_sorted = false;
 		var menuleft_toggle = 0;
-		var index_type = "all";
+		var index_type = "movie,series";
 		var Prefered_PageValue = "index_all";
 		// get the prefered_page
 		if (localStorage.getItem("prefered_page"))
@@ -53,7 +53,14 @@
 			
 			if (window.localStorage.getItem("indextype"))
 				{index_type = window.localStorage.getItem("indextype");
-				console.log("navBoxset get: " + index_type);}
+				console.log("navBoxset get: " + index_type);
+				// reset to all if indextype = person
+				if (index_type.toUpperCase() == 'PERSON')
+					{
+						window.localStorage.setItem("indextype", 'movie,series');
+						index_type = 'movie,series';
+					}
+				}
 				else {window.localStorage.setItem("indextype", index_type);
 				console.log("navBoxset set: " + index_type);}
 		    var jsonUrl = "/yamj3/api/boxset/list.json?&sortby=name&sortdir=" + direction;
@@ -237,8 +244,8 @@
 						</tr>
 						<ul  id="sort_section" style="position: absolute; left: 4vw;  top: -10px; list-style-type: none; display: inline-table;">
 							<li><a id="sort_item" data-tip-item="sort" alt="sort"><img  src="pictures/sort.png" style="height: 2.2vw; width: 2.9vw" onclick="toggle_show_sort()"/></a></li>
-							<li><a id="sort_desc" data-tip-sort="descending" href="javascript:SortDirection('DESC','navBoxset.html')" ><img src="pictures/sort_desc.png" alt="sort_desc" /></a></li>
-							<li><a id="sort_asc" data-tip-sort="ascending" href="javascript:SortDirection('ASC','navBoxset.html')" ><img src="pictures/sort_asc.png" alt="sort_asc"/></a></li>
+							<li><a id="sort_desc" data-tip-sort="descending" href="javascript:SortDirection('DESC',location.href)" ><img src="pictures/sort_desc.png" alt="sort_desc" /></a></li>
+							<li><a id="sort_asc" data-tip-sort="ascending" href="javascript:SortDirection('ASC',location.href)" ><img src="pictures/sort_asc.png" alt="sort_asc"/></a></li>
 						</ul>
 					</table>
 			</div>

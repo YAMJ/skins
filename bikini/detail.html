@@ -792,7 +792,9 @@
 			document.getElementById("updatelabel").innerHTML=window.localStorage.getItem('update_label').toLowerCase();
 			document.getElementById("open_menu_left").title=localStorage.getItem('open_navigation_menu').toLowerCase();
 			document.getElementById("close_menu_left").title=localStorage.getItem('close_navigation_menu').toLowerCase();
-			document.getElementsByClassName("play_detail")[0].title=localStorage.getItem('play_label').toLowerCase();
+		//	document.getElementsByClassName("play_detail")[0].title=localStorage.getItem('play_label').toLowerCase();
+			document.getElementById("li_home_left").attributes.getNamedItem("data-tip-detail_home").value=window.localStorage.getItem('prefered_page').toLowerCase();
+			document.getElementById("play_button").attributes.getNamedItem("data-tip-detail_play").value=window.localStorage.getItem('play_label').toLowerCase();
 		}
 		
   // ********************* NOW SET VARIOUS FUNCTION **********************************************  
@@ -1074,7 +1076,7 @@
 				$('#list_episode_title').css('visibility', 'hidden');
 				$('.episode_detail').css('visibility', 'hidden');
 				$('div#slideshowFanart').css('opacity', '1');
-				$('a#play_detail').css('visibility', 'hidden');
+				$('.play_detail').css('visibility', 'hidden');
 				$('.detail_label').css('visibility', 'hidden');
 				$('.actors').css('visibility', 'hidden');
 				$('.director').css('visibility', 'hidden');
@@ -1136,8 +1138,12 @@
 						$('.edit_adjust').css('left', '18vw');
 						$('.edit_adjust').css('top', '50px');
 						$('.edit_adjust').css('width', '81.5vw');
-			//			$('.play_detail').css('top', '65px');
+					//	$('#play_button').css('bottom', '9vh');
+					//	$('#play_button').css('left', '7.5vw');
+						$('.play_detail').css('display', 'none');
 						$('#person_display').css('top', '52px');
+						$('#infobox').css('top', '95vh');
+						$('#infobox').css('left', '5px');
 						break;
 					case 'movie':
 						$('.moviedetail').css('font-size', '1.15vw');
@@ -1201,7 +1207,7 @@
 						$('.edit_adjust').css('top', '50px');
 						$('.edit_adjust').css('width', '81.5vw');
 						$('.episode_detail').css('zIndex', '9');
-					//	$('.play_detail').css('display', 'none');
+						$('.play_detail').css('display', 'none');
 						$('#person_display').css('top', '52px');
 						break;
 					}
@@ -1765,19 +1771,19 @@
 							<img src="pictures/icon/home_person_rv8.png" height="80"  width="80" alt="person"  />
 						</a><div id="personindex"></div>
 				</td>
-				<td><a href="javascript:call_genreindex(index_type, '_self')">
+				<td><a href="javascript:open_self_index (index_type, 'navGenre.html')">
 							<img src="pictures/icon/home_genres2_rv8.png" height="80"  width="80" alt="genre" />
 						</a><div id="genreindex"></div>
 				</td>
-				<td><a href="javascript:call_countryindex(index_type, '_self')">
+				<td><a href="javascript:open_self_index (index_type, 'navCountry.html')">
 							<img src="pictures/icon/home_country_rv8.png" height="80"  width="80" alt="country" />
 						</a><div id="countryindex"></div>
 				</td>
-				<td><a href="javascript:call_awardsindex(index_type, '_self')">
+				<td><a href="javascript:open_self_index (index_type, 'navAwards.html')">
 							<img src="pictures/icon/home_awards_rv8.png" height="80"  width="80" alt="awards" />
 						</a><div id="awardsindex"></div>
 				</td>
-				<li><a href="javascript:call_available_title(index_type, '_parent');">
+				<li><a href="javascript:open_self_index (index_type, 'navTitle.html');">
 							<img src="./pictures/title.png" height="65" width="75" style="padding-left:7px" alt="title" />
 						</a><div id="titleindex" style="padding-top: 5px;"></div>
 				</li> 
@@ -1785,24 +1791,24 @@
 							<img src="pictures/icon/find.png" height="60" width="65" style="padding-left:10px" alt="find" />
 						</a><div id="searchindex"></div>
 				</td>
-				<td><a href="javascript:call_studioindex(index_type, '_self')">
+				<td><a href="javascript:open_self_index (index_type, 'navStudio.html')">
 							<img src="pictures/icon/Studio.png" height="60"  width="60" style="position: relative; left:10px" alt="studio"  />
 						</a><div id="studioindex"></div><br />
 				</td>
 
-				<td><a href="javascript:call_ratingindex(index_type, '_self')" >
+				<td><a href="javascript:open_self_index (index_type, 'navRating.html')" >
 							<img src="pictures/icon/home_rating_rv8.png" height="80"  width="80" alt="rating"  />
 						</a><div id="ratingindex"></div>
 				</td>
-				<td><a href="javascript:call_certificationindex(index_type, '_self')" >
+				<td><a href="javascript:open_self_index (index_type, 'navCertification.html')" >
 							<img src="pictures/icon/home_certification_rv8.png" height="90"  width="100"  style="position: relative; left:-10px" alt="certification"  />
 						</a><div id="certificationindex"></div>
 				</td>
-				<td><a href="javascript:call_videosourceindex(index_type, '_self')" >
+				<td><a href="javascript:open_self_index (index_type, 'navVideosource.html')" >
 							<img src="pictures/icon/home_videosource_rv8.png" height="80"  width="80" style="position: relative; left:0px" alt="videosource"  />
 						</a><div id="videosourceindex"></div>
 				</td>
-				<td><a href="javascript:call_boxsetindex(index_type, '_self')">
+				<td><a href="javascript:open_self_index (index_type, 'navBoxset.html')">
 							<img src="pictures/icon/home_set_rv8.png" height="100"  width="100" style="position: relative; left:-10px" alt="set"  />
 						</a><div id="boxsetindex"></div>
 				</td>
@@ -1818,7 +1824,7 @@
 							<img src="pictures/icon/list_genre.png" height="80"  width="80" alt="liste fenre" />
 						</a><div id="genrelistselect"></div>
 				</td>
-				<td><a href="javascript:ouvre_remote(); ">
+				<td><a href="javascript:ouvre_remote(StyleValue); ">
 							<img src="pictures/icon/remote.png" height="70"  width="70" style="position: relative; left:6px" alt="remote" />
 						</a><div id="remoteselect"></div>
 				</td>
@@ -1830,6 +1836,7 @@
 			<table>
 				<tr>
 					<td id="header_td">
+					<a href="javascript:ouvre_prefered_page()" id="li_home_left" data-tip-detail_home="prefered page" style="height: 43px; width: 8%; left: -4%;" ></a>
 						<span class="header_title" ></span>
 				
 						<img src="pictures/icon/year.png" style="position:relative; top: -0.1vw; width: 2.2vw; vertical-align: baseline;"  alt="year"/>
@@ -1899,7 +1906,7 @@
                             </div>
 						
 						<!-- play button -->
-							<img class="play_detail" data-tip="play" src="./pictures/empty.png" alt="play" />
+							<a id="play_button" data-tip-detail_play="play"><img class="play_detail"  src="./pictures/empty.png" alt="play" /></a>
 			
 				
 						

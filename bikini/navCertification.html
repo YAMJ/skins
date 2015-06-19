@@ -29,7 +29,7 @@
     <body onload="NavData();">
         <script type="text/javascript">
 		var menuleft_toggle = 0;
-		var index_type = "all";
+		var index_type = "movie,series";
 		var output = "";	
 		var Prefered_PageValue = "index_all";
 		// get the prefered_page
@@ -48,6 +48,12 @@
 			
 			if (window.localStorage.getItem("indextype"))
 				{index_type = window.localStorage.getItem("indextype");
+				// reset to all if indextype = person
+				if (index_type.toUpperCase() == 'PERSON')
+					{
+						window.localStorage.setItem("indextype", 'movie,series');
+						index_type = 'movie,series';
+					}
 				console.log("navCertification get: " + index_type);}
 				else {window.localStorage.setItem("indextype", index_type);
 				console.log("navCertification set: " + index_type);}
@@ -153,14 +159,10 @@
 
 		function set_context_lang_value ()
 		{
-			document.getElementById("search_item").attributes.getNamedItem("data-tip-search").value=window.localStorage.getItem('search_select').toLowerCase();
+			
 			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('info_label').toLowerCase();
 			document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
-			document.getElementById("movie_series_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('all_label').toLowerCase();
-			document.getElementById("series_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('series_label').toLowerCase();
-			document.getElementById("movie_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('movie_label').toLowerCase();
-			document.getElementById("season_icon").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('season_label').toLowerCase();
-
+			
 		}
 
         </script>
@@ -177,23 +179,10 @@
 			<div class="results" style="visibility: hidden; display:none;">
 				<table><tr><td class="Value"></td></tr></table>
 			</div>	
-		 <div id="index_tools_nav">			
-					<table>
-						<tr>
-							<td id="search_section_nav">
-								<a id="search_item" data-tip-search="search" href="javascript:ouvre_popup_search(StyleValue, false)">
-									<img src="pictures/find.png"  alt="find" />
-								</a>
-							</td>
-							<td id="videotype_section">							
-								<a id="movie_series_icon" data-tip-item="movie,series" href="javascript:call_certificationindex('movie,series', '_self')"><img src="pictures/all.png" alt="tv movie"/><a>
-								<a id="movie_icon" data-tip-item="movie" href="javascript:call_certificationindex('movie', '_self')"><img src="pictures/icon/home_movies_rv8.png" height="45x" width="45" alt="movie" align="top" /></a>
-								<a id="series_icon" data-tip-item="series" href="javascript:call_certificationindex('series', '_self')"><img src="pictures/tv_shows.png" alt="tv" /></a>
-								<a id="season_icon" data-tip-item="season" href="javascript:call_certificationindex('season', '_self')"><img src="pictures/season.png" alt="season" /></a>
-							</td>							
-						</tr>
-					</table>
-		</div>
+		<!-- include navigation header after context return , page info and count return -->		
+			<div>
+				<object data="include_header_nav_menu.html" type="text/html" id="my_header_menu" style="position: absolute; height: 70px; width: 30%; left: 50%; z-index:10;"></object>
+			</div>
         <!--Navigation Holder-->
         <div class="holder"></div>
 	</div>

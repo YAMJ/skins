@@ -1,4 +1,11 @@
 change.txt
+V1.6.1
+- adjust play button in detail page 
+- add prefered page in detail page
+- fix some navigation in indexes pages 
+- fix none available value in aphabetical list for person
+- adjust rewrite code for index call
+- fix display priority for info, play, watch button and hearder menu
 V1.6.0
 - fix person display frame in index page 
 - adjust display priority for person frame 

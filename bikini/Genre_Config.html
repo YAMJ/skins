@@ -32,7 +32,7 @@
 		
 		function getGenreData ()
 		{
-				var index_type = "all";
+				var index_type = "movie,series";
 				if (window.localStorage.getItem("indextype"))
 					{index_type = window.localStorage.getItem("indextype");}
 					else {window.localStorage.setItem("indextype", index_type);}
@@ -141,7 +141,7 @@
             <div class="topbar">
                 <div class="topbar-inner">
                     <div class="container-fluid">
-                        <a href="/yamj3/" class="brand" target="_blank"><img alt="YAMJ Logo" src="pictures/YAMJ-logo-120-white-reflectv3.png"></a>
+                        <a id="prefered_icon" href="javascript:ouvre_prefered_page()" title="prefered page" class="brand"><img alt="YAMJ Logo" src="pictures/YAMJ-logo-120-white-reflectv3.png" height="40" /></a>
                         <ul class="nav">
                             <li><a href="/yamj3/" target="_blank"><i class="fa fa-home fa-2x"></i> Home</a></li>
                             <li><a href="/yamj3/skin-info.html" target="_blank"><i class="fa fa-ticket fa-2x"></i> Skins</a></li>

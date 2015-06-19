@@ -486,6 +486,9 @@ input:-moz-placeholder { color:red; }
 #return_icon img, #next_icon img, #prev_icon img {
 	height:30px;
 }
+#person_icon {
+	display: none;
+}
 #movie_series_icon img, #movie_icon img, #series_icon img, #season_icon img, #person_icon img {
 	height:35px;
 	width: 50px;
@@ -1036,7 +1039,7 @@ input:-moz-placeholder { color:red; }
 	top: 40px; 
 	width: auto;
 	left: 120px; 
-	z-index: 8;
+	z-index: 10;
 	visibility: hidden;
 	}
 #infobox_delete {
@@ -1370,7 +1373,7 @@ ul#home_left_up {
 	
 /***************************** data tip for infobulle *****************************/
 
-[data-tip], [data-tip2],[data-tip-item] ,[data-tip-sort],[data-tip-search]{
+[data-tip], [data-tip2],[data-tip-item] ,[data-tip-sort],[data-tip-search],[data-tip-detail_home],[data-tip-detail_play]{
 	position: relative;
 }
 
@@ -1384,7 +1387,11 @@ ul#home_left_up {
 [data-tip-sort]:hover:after,
 [data-tip-sort]:focus:after,
 [data-tip-search]:hover:after,
-[data-tip-search]:focus:after{
+[data-tip-search]:focus:after,
+[data-tip-detail_home]:hover:after,
+[data-tip-detail_home]:focus:after, 
+[data-tip-detail_play]:hover:after,
+[data-tip-detail_play]:focus:after{
 	content: attr(data-tip);
 	/*on affiche data-tip*/
 	position: absolute;
@@ -1403,10 +1410,26 @@ ul#home_left_up {
 	border-radius: 6px 6px 0px 6px;
 	z-index: 9;
 }
-[data-tip]:focus, [data-tip2]:focus ,[data-tip-item]:focus,[data-tip-sort]:focus,[data-tip-search]:focus{
+[data-tip]:focus, [data-tip2]:focus ,[data-tip-item]:focus,[data-tip-sort]:focus,[data-tip-search]:focus,[data-tip-detail_home]:focus,[data-tip-detail_play]:focus{
 	outline: none;
 }
-
+/* adjust on hover*/
+[data-tip-detail_play]:hover:after,
+[data-tip-detail_play]:focus:after {
+	content: attr(data-tip-detail_play);
+	/*on affiche data-tip-detail_home*/
+	font-size: 1em;
+	top: 10px;
+	left: 12vw;
+}
+/* adjust on hover*/
+[data-tip-detail_home]:hover:after,
+[data-tip-detail_home]:focus:after {
+	content: attr(data-tip-detail_home);
+	/*on affiche data-tip-detail_home*/
+	font-size: 0.7em;
+	top: 60px;
+}
 /* adjust on hover*/
 [data-tip2]:hover:after,
 [data-tip2]:focus:after {
@@ -1511,17 +1534,27 @@ ul#home_left_up {
 	}
 	
 .play_detail {
-    width: 45px;
-	height: 45px;
+    width: 5vw;
+	height: 5vw;
     position: absolute;
-    top: 0px;
-	left: 5px;
+    bottom: 0.5vh;
+	left: 7vw;
 	z-index: 7;
 }
 .play_detail:hover {
 	
 	}
+#play_button {
+    width: 5vw;
+	height: 5vw;
+    position: absolute;
+    bottom: 0px;
+	left: 0px;
+	z-index: 10;
+}
+#play_button:hover {
 	
+	}	
 .play_frame {
     width: 4vw;
 /*	height: 45px; */
@@ -2404,7 +2437,7 @@ ul#detail_home_left img, ul#detail_home_right img
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
 	color: #ffffff;
-	z-index:4;
+	z-index:5;
     }
 #header_detail
 {

@@ -15,10 +15,12 @@
 	<boxsetlabel>satz</boxsetlabel>
 	
 	<certificationlabel>bescheinigung</certificationlabel>
+	<clicktodisplaywith>klicken um videos mit ansehen</clicktodisplaywith>
 	<closelabel>fern</closelabel>
 	<closenavigationmenu>schliesst das navigationsmenu</closenavigationmenu>
 	<closeremotelabel>nahe fern</closeremotelabel>
 	<configselected>konfiguration</configselected>
+	<combinedlabel>combiniert</combinedlabel>
 	<countrylabel>land</countrylabel>
 	<countryselected>land</countryselected>
 	<creationcomment>erstellungsdatum in yamj3</creationcomment>
@@ -29,6 +31,7 @@
 	<detailcomment>detail</detailcomment>
 	<directorlabel>regisseur</directorlabel>
 	<downlabel>niedrig</downlabel>
+	<downloadtext>download</downloadtext>
 	
 	<ejectlabel>auswerfen</ejectlabel>
 	<enterdaynumber>geben sie die anzahl der tage</enterdaynumber>
@@ -54,6 +57,7 @@
 	
 	<homelabel>zuhause</homelabel>
 	
+	<ignoretext>ignorieren</ignoretext>
 	<infolabel>info</infolabel>
 	
 	<keylabel>schussel</keylabel>

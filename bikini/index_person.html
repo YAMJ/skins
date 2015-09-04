@@ -11,7 +11,7 @@
 		<!-- Used for template -->
 		<script src="js/template.js"></script>		
         <script src="js/jPages.js"></script>
-		<script src="js/library.js"></script>
+		<script src="js/library2.js"></script>
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
         <!-- Used for the paging of the index -->
         <link rel="stylesheet" href="css/jPages.css">
@@ -114,9 +114,8 @@
 			get_player();
 			get_prefered_page();
 			
-            var jsonUrl = "/yamj3/api/index/person.json?sortby=name&sortdir="+direction+"&dataitems=artwork&artwork=photo";
-			
-						
+            var jsonUrl = "/yamj3/api/index/person.json?sortdir="+direction+"&dataitems=artwork&artwork=photo";
+		
 			if (window.localStorage.getItem("search_index"))
 				{
 					switch (index_method) 
@@ -124,22 +123,33 @@
 							case 'ANY':
 									search_selection = window.localStorage.getItem("search_index");
 									selected_index = window.localStorage.getItem("person_label") + " (..." +search_selection.toUpperCase() + "...)";
+									search_selection = search_selection + "&field=name&mode=" + index_method+ "&sortby=name";
 									break;
 							case 'START':
 									search_selection = window.localStorage.getItem("search_index");
 									selected_index = window.localStorage.getItem("person_label") + " (" +search_selection.toUpperCase() + "...)";
+									search_selection = search_selection + "&field=name&mode=" + index_method + "&sortby=name";
 									break;
 							case 'NAME':
-							// tweak to search by name, add blank before search value and search anywhere in the name
-									search_selection = ' ' +window.localStorage.getItem("search_index");
-									selected_index = window.localStorage.getItem("person_label") + " (?" +search_selection.toUpperCase() + "...)"
-									index_method = "ANY";
+							// tweak to search by name, use field last_name
+									search_selection = window.localStorage.getItem("search_index")  ;
+									selected_index = window.localStorage.getItem("name_label") + " (? " +search_selection.toUpperCase() + "...)"
+									search_selection = search_selection + "&field=last_name&mode=START&sortby=last_name" ;
+									break;
+							case 'PERSON':
+							// tweak to search by person, use field first_name
+									search_selection = window.localStorage.getItem("search_index") ;
+									selected_index = window.localStorage.getItem("person_label") + " (" +search_selection.toUpperCase() + "...)"
+									search_selection = search_selection + "&field=first_name&mode=START&sortby=first_name";
 									break;
 							}	
-					jsonUrl = jsonUrl + "&search=" + search_selection + "&field=name&mode="+index_method;		
+					
+					jsonUrl = jsonUrl + "&search=" + search_selection;		
 					window.localStorage.setItem("search_index", "");	
 				}	else {
 					selected_index = window.localStorage.getItem("person_label") ;
+					// by default sort on name ascending 
+					jsonUrl = jsonUrl + "&sortby=name";
 				//	+ " (" +window.localStorage.getItem("selection_text")+ ")";
 						}
 				$('#printsearch').html(selected_index);

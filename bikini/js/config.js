@@ -131,6 +131,13 @@
 							$('.poster').css('width', '93px');
 							$('.title').css('font-size', '0.4em');
 							$('.title').css('line-height', '30%');
+							$('.rating').css('left', '-3.2vw');
+							$('.rating').css('top', '-19.3vw');
+							$('.rating').css('height', '2.4vw');
+							$('.rating').css('width', '0.5vw');
+							$('.boxset').css('left', '3.5vw');
+							$('.boxset').css('top', '-19vw');
+							$('.boxset').css('width', '2vw');
 							break;
 						//1 row , 6 columns
 						case 1:
@@ -171,6 +178,13 @@
 							$('.watched_small').css('top', '-6vw');
 							$('.watched_small').css('left', '9%');
 							$('.title_boxset').css('height', '5vw');
+							$('.rating').css('left', '-6.5vw');
+							$('.rating').css('top', '-43.8vw');
+							$('.rating').css('height', '7vw');
+							$('.rating').css('width', '1.54vw');
+							$('.boxset').css('left', '7.6vw');
+							$('.boxset').css('top', '-43.5vw');
+							$('.boxset').css('width', '5vw');
 							break;
 						//2 rows , 6 columns
 						case 2:
@@ -201,6 +215,13 @@
 							$('.watched_small').css('top', '-3.7vw');
 						//	$('.watched_small').css('left', '7%');
 							$('.title_boxset').css('height', '3.2vw');
+							$('.rating').css('left', '-4.4vw');
+							$('.rating').css('top', '-27.8vw');
+							$('.rating').css('height', '4.4vw');
+							$('.rating').css('width', '1vw');
+							$('.boxset').css('left', '5vw');
+							$('.boxset').css('top', '-28vw');
+							$('.boxset').css('width', '3vw');
 							break;
 						//3 rows, 9 columns 
 						case 3:
@@ -239,6 +260,13 @@
 							$('.watch_label').css('left', '38%');
 						//	$('#play_label').css('left', '-20%');
 						//	$('#info_label').css('left', '-30%');
+							$('.rating').css('left', '-3.2vw');
+							$('.rating').css('top', '-19.3vw');
+							$('.rating').css('height', '2.4vw');
+							$('.rating').css('width', '0.5vw');
+							$('.boxset').css('left', '3.5vw');
+							$('.boxset').css('top', '-19vw');
+							$('.boxset').css('width', '2vw');
 							break;
 						//4 rows, 11 columns 
 						case 4:
@@ -269,6 +297,13 @@
 							$('.watched_small').css('top', '-2.1vw');
 							$('.watched_small').css('left', '7%');
 							$('.title_boxset').css('height', '1.7vw');
+							$('.rating').css('left', '-1.8vw');
+							$('.rating').css('top', '-14.6vw');
+							$('.rating').css('height', '2.4vw');
+							$('.rating').css('width', '0.5vw');
+							$('.boxset').css('left', '2.2vw');
+							$('.boxset').css('top', '-14.2vw');
+							$('.boxset').css('width', '2vw');
 							break;	
 						//5 rows, 12 columns
 						case 5:
@@ -294,6 +329,13 @@
 							$('.watched_small').css('top', '-2.1vw');
 					//		$('.watched_small').css('left', '6%');
 							$('.title_boxset').css('height', '0.1vw');
+							$('.rating').css('left', '-1.7vw');
+							$('.rating').css('top', '-13.2vw');
+							$('.rating').css('height', '2.4vw');
+							$('.rating').css('width', '0.5vw');
+							$('.boxset').css('left', '2vw');
+							$('.boxset').css('top', '-12.8vw');
+							$('.boxset').css('width', '2vw');
 							
 							break;
 					

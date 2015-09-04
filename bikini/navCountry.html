@@ -14,7 +14,7 @@
 		<script src="js/lang.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>	
-		<script src="js/library.js"></script>
+		<script src="js/library2.js"></script>
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
         <!-- Used for the paging of the index -->
         <link rel="stylesheet" href="css/jPages.css">
@@ -56,7 +56,7 @@
 				console.log("navCountry get: " + index_type);}
 				else {window.localStorage.setItem("indextype", index_type);
 				console.log("navCountry set: " + index_type);}
-		    var jsonUrl = "/yamj3/api/countries/list.json?type=" + index_type + "&sortby=name&sortdir=ASC";
+		    var jsonUrl = "/yamj3/api/countries/list.json?type=" + index_type + "&sortby=countryCode&sortdir=ASC";
 			console.log("navCountry indextype: " + index_type);
 			switch (index_type.toUpperCase())
 				{
@@ -112,20 +112,20 @@
             "div.country_block": {
                 "result<-results": {
 					"span.name": function(arg) {
-							if (arg.item.name) {return arg.item.name;}
-							else {return arg.item.name;}
+							if (arg.item.country) {return arg.item.country;}
+							
 							},
 					 "img.country_logo@src": function(arg) {
-							if (arg.item.name) {return "pictures/flags/"+arg.item.name.toLowerCase()+".png";}
-							else {return "pictures/flags/"+arg.item.name.toLowerCase()+".png";}
+							if (arg.item.countryCode) {return "pictures/flags/"+arg.item.countryCode.toLowerCase()+".png";}
+							
                            },
                      "span.name@onclick": function(arg) {
-							if (arg.item.name) {return "open_country_index('" + arg.item.name+ "')";}
-							else {return "open_country_index('" + arg.item.name+ "')";}
+							if (arg.item.countryCode) {return "open_country_index('" + arg.item.countryCode+ "')";}
+							
 							},
 					 "img.country_logo@onclick": function(arg) {
-							if (arg.item.name) {return "open_country_index('" + arg.item.name+ "')";}
-							else {return "open_country_index('" + arg.item.name+ "')";}
+							if (arg.item.countryCode) {return "open_country_index('" + arg.item.countryCode+ "')";}
+					
 							}	
 						}
 					}

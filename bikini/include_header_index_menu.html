@@ -17,7 +17,7 @@
 		<script src="js/config.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>
-		<script src="js/library.js"></script>
+		<script src="js/library2.js"></script>
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
         <!-- Used for the paging of the index -->
         <link rel="stylesheet" href="css/jPages.css">
@@ -34,17 +34,7 @@
 		var show_watched = false;
 		var show_type = false;
 		var LangValue = "en";
-		
-		
 	
-	//	console.log ('include_header_menu width:' + _window_width + ' #index_tools_nav.width:', + $('#index_tools_nav').width());
-		
-		// ****************************** id or class with iscroll **************************************************************
-		var myScroll;
-		function loaded_iscroll () {
-		myScroll = new IScroll('#index_tools_nav', { scrollX: false, scrollY: true, mouseWheel: true, click: true });
-		}
-		
 		function adjust_index_header_menu ()
 		{
 			if (parent.location.href.substring(parent.location.href.lastIndexOf('/') + 1) == 'index_Boxset.html')
@@ -196,7 +186,7 @@
 							<li><a id="sort_item" data-tip-item="sort" alt="sort"><img  src="pictures/sort.png" style="height: 2.2vw; width: 2.9vw" onclick="toggle_show_sort()"/></a></li>
 							<li><a id="sort_desc" data-tip-sort="descending" href="javascript:SortDirection('DESC',parent.location.href)" ><img src="pictures/sort_desc.png" alt="sort_desc" /></a></li>
 							<li><a id="sort_asc" data-tip-sort="ascending" href="javascript:SortDirection('ASC',parent.location.href)" ><img src="pictures/sort_asc.png" alt="sort_asc"/></a></li>
-							<li><a id="sort_year" data-tip-sort="year" href="javascript:SortIndex('videoYear',parent.location.href)" ><img src="pictures/year_sort.png" alt="sort_year" /></a></li>
+							<li><a id="sort_year" data-tip-sort="year" href="javascript:SortIndex('year',parent.location.href)" ><img src="pictures/year_sort.png" alt="sort_year" /></a></li>
 							<li><a id="sort_title" data-tip-sort="title" href="javascript:SortIndex('title',parent.location.href)" ><img src="pictures/title_sort.png" alt="sort_title"/></a></li>
 						</ul>
 						<ul id="type_section" >

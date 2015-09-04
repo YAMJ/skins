@@ -37,30 +37,31 @@
 				else {window.localStorage.setItem("direction", direction);}		
 		// init search to blank 
 		var search_selection = "";
-		var jsonUrl = "/yamj3/api/index/person.json?sortby=name&sortdir="+direction+"&dataitems=artwork&artwork=photo";
-
+		var jsonUrl = "/yamj3/api/index/person.json?sortdir="+direction+"&dataitems=artwork&artwork=photo";
+		
 			if (window.localStorage.getItem("search_index"))
 				{
 					switch (index_method) 
 							{
 							case 'ANY':
-									search_selection = window.localStorage.getItem("search_index");
-									
+									search_selection = window.localStorage.getItem("search_index") + "&field=name&mode=" + index_method+ "&sortby=name";
 									break;
 							case 'START':
-									search_selection = window.localStorage.getItem("search_index");
-									
+									search_selection = window.localStorage.getItem("search_index") + "&field=name&mode=" + index_method + "&sortby=name";
 									break;
 							case 'NAME':
-							// tweak to search by name, add blank before search value and search anywhere in the name
-									search_selection = ' ' +window.localStorage.getItem("search_index");
-								
-									index_method = "ANY";
+							// tweak to search by name, use field last_name
+									search_selection = window.localStorage.getItem("search_index") + "&field=last_name&mode=START&sortby=last_name" ;
+									break;
+							case 'PERSON':
+							// tweak to search by person, use field first_name
+									search_selection = window.localStorage.getItem("search_index") + "&field=first_name&mode=START&sortby=first_name";
 									break;
 							}	
-					jsonUrl = jsonUrl + "&search=" + search_selection + "&field=name&mode="+index_method;		
+					
+					jsonUrl = jsonUrl + "&search=" + search_selection;	
 					window.localStorage.setItem("search_index", "");	
-				}	
+				}						
             console.log("PersonData URL: " + jsonUrl);
             var jsondata = null;
 

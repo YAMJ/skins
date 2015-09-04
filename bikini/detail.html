@@ -10,7 +10,7 @@
 		<!-- Used for template -->
 		<script src="js/template.js"></script>
 		<script src="js/my_remote.js"></script>
-		<script src="js/library.js"></script>
+		<script src="js/library2.js"></script>
 	
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css"/>
 	
@@ -129,7 +129,7 @@
 							{
 								if (arg.context.result.countries) 
 								{
-								return  "<a href=\"javascript:call_countryselect('" + arg.context.result.countries[0].name + "')\" ><img class='country' src='pictures/flags/" + arg.context.result.countries[0].name.toLowerCase() + ".png' alt=\"" + arg.context.result.countries[0].name + "\" /></a>";	
+								return  "<a href=\"javascript:call_countryselect('" + arg.context.result.countries[0].countryCode + "')\" ><img class='country' src='pictures/flags/" + arg.context.result.countries[0].countryCode.toLowerCase() + ".png' alt=\"" + arg.context.result.countries[0].country + "\" /></a>";	
 								}
 								else {return;}
 							}, 
@@ -231,19 +231,16 @@
                 {
 					if (arg.context.result.certifications)
 					{
-						var certifications = arg.context.result.certifications;	
-							switch (certifications[0].certificate)
+						certifications = arg.context.result.certifications;
+						var boucle = true;
+						for (i = 0; boucle &&  i < certifications.length; i++) {
+								if ( certifications[i].countryCode.toUpperCase() == window.localStorage.getItem('prefered_certification').toUpperCase())
 								{
-								case "3":
-								case "6":
-									output = "pictures/certification/" + certifications[0].country.toUpperCase() + "/10.png"
-									break;
-								
-								default:
-									output = "pictures/certification/" + certifications[0].country.toUpperCase() + "/" + certifications[0].certificate + ".png"
-									break;
+									boucle = false;
+									output = "pictures/certification/" + window.localStorage.getItem('prefered_certification').toUpperCase() + "/" + certifications[i].certificate + ".png";
+								}
 							}
-						} else {
+					} else {
 							output = "pictures/certification/dummy_certification.png"
 					}
                     return output;
@@ -252,11 +249,36 @@
 				{
 					if (arg.context.result.certifications)
 						{
-							var certifications = arg.context.result.certifications;						
-								output = "javascript:call_certificationselect('" + certifications[0].country + "-" + certifications[0].certificate + "', " + certifications[0].id + ")";
-							} else {
-								output = "";
-							}
+							var certifications = arg.context.result.certifications;	
+							var boucle = true;
+								for (i = 0; boucle &&  i < certifications.length; i++) {
+									if (certifications[i].countryCode.toUpperCase() == window.localStorage.getItem('prefered_certification').toUpperCase())
+									{
+										boucle = false;
+										output = "javascript:call_certificationselect('" + window.localStorage.getItem('prefered_certification').toUpperCase() + "-" + certifications[i].certificate + "', " + certifications[i].id + ")";
+									}
+								}
+						} else {
+							output = "";
+						}
+						return output;	
+				},
+				"img.image_certification@title": function(arg)
+				{
+					if (arg.context.result.certifications)
+						{
+							var certifications = arg.context.result.certifications;	
+							var boucle = true;
+								for (i = 0; boucle &&  i < certifications.length; i++) {
+									if (certifications[i].countryCode.toUpperCase() == window.localStorage.getItem('prefered_certification').toUpperCase())
+									{
+										boucle = false;
+										output = window.localStorage.getItem('click_to_display_with').toLowerCase() + " " + window.localStorage.getItem('certification_label').toLowerCase() + ": " + window.localStorage.getItem('prefered_certification').toUpperCase() + "-" + certifications[i].certificate + " " + certifications[i].id;
+									}
+								}
+						} else {
+							output = "no certification available";
+						}
 						return output;	
 				},
 				'span.studio': function(arg)
@@ -268,12 +290,12 @@
 								
 								// loop thru the list of studio
 								for (i = 0; i < studio.length; i++) {
-									output = output   + "<a href=\"#\" onclick=\"call_studioselect('" + studio[i].id + "', '" + studio[i].name + "')\" ><img src='pictures/studios/" + studio[i].name + ".png' style=\"height: 2.5vw;\" alt=\"" + studio[i].name + "\" /></a>";
+									output = output   + "<a title='" + window.localStorage.getItem('click_to_display_with').toLowerCase() + " " + window.localStorage.getItem('studio_select').toLowerCase() + ": " + studio[i].name + "' href=\"#\" onclick=\"call_studioselect('" + studio[i].id + "', '" + studio[i].name + "')\" ><img src='pictures/studios/" + studio[i].name + ".png' style=\"height: 2.5vw;\" alt=\"" + studio[i].name + "\" /></a>";
 									
 								}
 								return output;
 								} else {output = "<text>" + window.localStorage.getItem('studio_select').toUpperCase() + "</text> No Studio";}
-							},			
+							},	
 	//		  'span.ratings': function(arg)
     //            {
 	//			//	var output = "<text>"+rating_label.toUpperCase()+"</text>";
@@ -303,6 +325,17 @@
 							output = "pictures/ratings/rating_" + Math.round(ratings[0].rating/10) + ".png" ;
 						} else {
 							output = "pictures/ratings/dummy_rating.png"
+					}
+                    return output;
+                },
+				'img.combined_ratings@title': function(arg)
+                {
+					if (arg.context.result.ratings)
+					{
+						var ratings = arg.context.result.ratings;						
+							output = window.localStorage.getItem('click_to_display_with').toLowerCase() + " " + window.localStorage.getItem('rating_label').toLowerCase() + ": " + Math.round(ratings[0].rating/10) ;
+						} else {
+							output = "no rating available"
 					}
                     return output;
                 },
@@ -524,7 +557,7 @@
 									if (audio[i].bitrate != "Undefined") 
 									{output += "(bitrate: " + audio[i].bitrate + ")&nbsp;&nbsp;";}
 									if (audio[i].language != "Undefined") 
-									{output += "<img src=\"pictures/flags/" + audio[i].language.toLowerCase() +".png\" alt=\"" + audio[i].language + "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp; ";}
+									{output += "<img src=\"pictures/flags/" + audio[i].languageCode.toLowerCase() +".png\" alt=\"" + audio[i].language + "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp; ";}
 								}
 								return output;
 								}
@@ -538,7 +571,7 @@
 								var output = "";
 								// loop thru the list of subtitle
 								for (i = 0; i < subtitle.length; i++) {
-									output = output + "<text>"+window.localStorage.getItem('subtitle_label').toUpperCase()+(i+1)+"</text>" + "<img src=\"pictures/flags/" + subtitle[i].language.toLowerCase() +".png\" alt=\"" + subtitle[i].language + "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp; ";
+									output = output + "<text>"+window.localStorage.getItem('subtitle_label').toUpperCase()+(i+1)+"</text>" + "<img src=\"pictures/flags/" + subtitle[i].languageCode.toLowerCase() +".png\" alt=\"" + subtitle[i].language + "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp; ";
 								}
 								return output;
 								} 
@@ -560,43 +593,64 @@
 							}, 
 							'span.external_Id': function(arg) {
 								var output_externalid = ''; 
-								if (arg.context.result.externalids)
+								if (arg.context.result.externalIds)
 								{
-									var external_list = arg.context.result.externalids; 
+									var external_list = arg.context.result.externalIds; 
 									for (var i = 0; i < external_list.length; i++) {
 										switch (external_list[i].sourcedb.toLowerCase())
 											{
 											case 'allocine':
 												{	
-													output_externalid += "<text>"+window.localStorage.getItem('source_label')+" "+external_list[i].sourcedb+ "<img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" /></text><a class='external_href' href='http://www.allocine.fr/film/fichefilm_gen_cfilm=" + external_list[i].externalid + ".html' target='_blank' >"+ external_list[i].externalid + "&nbsp; </a>";
+													if (external_list[i].skipped) 
+													{ 
+														output_externalid += "<span>&nbsp;&nbsp;</span><text>"+window.localStorage.getItem('source_label')+" "+external_list[i].sourcedb+ "<img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" /><img src=\"./pictures/open2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"enable_external_source('"+ external_list[i].sourcedb +"')\" /></text>";
+														output_externalid += "<a class='external_href' style='text-decoration: line-through; color: red;' href='http://www.allocine.fr/film/fichefilm_gen_cfilm=" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";}
+													else 
+													{ 
+														output_externalid += "<span>&nbsp;&nbsp;</span><text>"+window.localStorage.getItem('source_label')+" "+external_list[i].sourcedb+ "<img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" /><img src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"+ external_list[i].sourcedb +"')\" /></text>";
+														output_externalid += "<a class='external_href' href='http://www.allocine.fr/film/fichefilm_gen_cfilm=" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";}
 													break;
 												}
 											case 'tmdb':
 												{	
-													output_externalid += "<text>"+window.localStorage.getItem('source_label')+" "+external_list[i].sourcedb+ "<img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" /></text><a class='external_href' href='https://www.themoviedb.org/movie/" + external_list[i].externalid + "' target='_blank' >"+ external_list[i].externalid + "&nbsp; </a>";
+													if (external_list[i].skipped) 
+													{ 
+														output_externalid += "<span>&nbsp;&nbsp;</span><text>"+window.localStorage.getItem('source_label')+" "+external_list[i].sourcedb+ "<img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" /><img src=\"./pictures/open2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"enable_external_source('"+ external_list[i].sourcedb +"')\" /></text>";
+														output_externalid += "<a class='external_href' style='text-decoration: line-through; color: red;' href='https://www.themoviedb.org/movie/" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";}
+													else 
+													{ 
+														output_externalid += "<span>&nbsp;&nbsp;</span><text>"+window.localStorage.getItem('source_label')+" "+external_list[i].sourcedb+ "<img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" /><img src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"+ external_list[i].sourcedb +"')\" /></text>";
+														output_externalid += "<a class='external_href' href='https://www.themoviedb.org/movie/" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";}
 													break;
 												}
 											case 'imdb':
 												{	
-													output_externalid += "<text>"+window.localStorage.getItem('source_label')+" "+external_list[i].sourcedb+ "<img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" /></text><a class='external_href' href='http://www.imdb.com/title/" + external_list[i].externalid + "' target='_blank' >"+ external_list[i].externalid + "&nbsp; </a>";
+													if (external_list[i].skipped) 
+													{ 
+														output_externalid += "<span>&nbsp;&nbsp;</span><text>"+window.localStorage.getItem('source_label')+" "+external_list[i].sourcedb+ "<img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" /><img src=\"./pictures/open2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"enable_external_source('"+ external_list[i].sourcedb +"')\" /></text>";
+														output_externalid += "&nbsp;<a class='external_href' style='text-decoration: line-through; color: red;' href='http://www.imdb.com/title/" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";}
+													else 
+													{ 
+														output_externalid += "<span>&nbsp;&nbsp;</span><text>"+window.localStorage.getItem('source_label')+" "+external_list[i].sourcedb+ "<img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" /><img src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"+ external_list[i].sourcedb +"')\" /></text>";
+														output_externalid += "<a class='external_href' href='http://www.imdb.com/title/" + external_list[i].externalId + "/' target='_blank' >"+ external_list[i].externalId + "</a>";}
 													break;
 												}
 											default: 
 												{
-													output_externalid += "<text>"+window.localStorage.getItem('source_label')+" "+external_list[i].sourcedb+ "<img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" /></text>" +  external_list[i].externalid + "&nbsp; ";
+													output_externalid += "<span>&nbsp;&nbsp;</span><text>"+window.localStorage.getItem('source_label')+" "+external_list[i].sourcedb+ "<img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" /><img src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"+ external_list[i].sourcedb +"')\" /></text>" +  external_list[i].externalId + "&nbsp; ";
 													break;
 												}
 											}
 										}
 								}
-								return output_externalid + "&nbsp;<text><img src=\"./pictures/add.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_class('externalId_add')\" /></text>";
+								return output_externalid + "<span>&nbsp;&nbsp;</span><text><img src=\"./pictures/add.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_class('externalId_add')\" /></text>";
 							
 							}, 
 							'span.externalId_delete_form': function (arg) {
 								var output_externalid_form = ''; 
-								if (arg.context.result.externalids)
+								if (arg.context.result.externalIds)
 								{
-									var external_list_form = arg.context.result.externalids; 
+									var external_list_form = arg.context.result.externalIds; 
 									for (var i = 0; i < external_list_form.length; i++) {
 										
 													output_externalid_form = output_externalid_form
@@ -672,7 +726,34 @@
 								}
 							}
 						};
-				
+						
+				var TRAILER_INFO = {
+						// display poster 	
+							  'span.trailer_href':  function(arg)
+									{
+										var output_trailer = "";
+										var trailer_item = arg.context.result.trailers;
+										var first = true; 
+										// Check to see if there are trailer
+										if (trailer_item) 
+										{ 
+											console.log('detail TRAILER_INFO');
+											for (i = 0; i < trailer_item.length; i++) 
+											{
+												if (first)
+													{output_trailer = "<img style='visibility:visible;' src='pictures/trailer.png' onmouseover=\"this.src='pictures/TrailerSelect.png'\" onmouseout=\"this.src='pictures/trailer.png'\" onclick='javascript:toggle_Id(\"trailer_td\")'></img><td id='trailer_td' style='visibility: hidden;'>";
+													first = false;}
+												output_trailer = output_trailer + "<a href=\"" + trailer_item[i].url.replace('watch?v=', '/v/') + '&rel=0&autoplay=1' + "\" target=\"_blank\">" + trailer_item[i].source + ":" + trailer_item[i].title + "</a>" 
+												+ "<img title='" + window.localStorage.getItem('delete_text').toLowerCase() + "' id='trailer_delete' src='pictures/icon/delete.png' onclick=\"delete_trailer('" + arg.context.result.trailers[i].id + "')\" />"
+												+ "<img title='" + window.localStorage.getItem('download_text').toLowerCase() + "' id='trailer_download' src='pictures/download_trailers.png' onclick=\"download_trailer('" + arg.context.result.trailers[i].id + "')\" />"
+												+ "<img title='" + window.localStorage.getItem('ignore_text').toLowerCase() + "' id='trailer_ignore' src='pictures/close2.png' onclick=\"ignore_trailer('" + arg.context.result.trailers[i].id + "')\" />"
+												+ "<br>";
+											} 
+											} else {output_trailer = "";}
+										
+										return output_trailer + "</td>";
+									}
+								};
 				
 					
 
@@ -684,9 +765,9 @@
 				get_lang();
 				get_style();
 				get_player();
-				get_alpha_list (); 
+		//		get_alpha_list (); 
 				// construct JSON request for detail movie/series/season 
-				jsonUrl = "/yamj3/api/video/" + index_type.toLowerCase() + "/" + current_id + ".json?dataitems=externalid,genre,artwork,plot,country,award,files,certification,studio,rating&jobs=actor-5,director-1,writer-1";
+				jsonUrl = "/yamj3/api/video/" + index_type.toLowerCase() + "/" + current_id + ".json?dataitems=status,trailer,externalid,genre,artwork,plot,country,award,files,certification,studio,rating&jobs=actor-5,director-1,writer-1";
 				console.log("getData URL: " + jsonUrl);
 		
 					
@@ -708,6 +789,7 @@
 					
 					$p('.edit_adjust').render(data, POSTER_INFO); 
 					
+					$p('.trailer_list').render(data, TRAILER_INFO); 
 				
 						// add slideshow for fanart
 						slideshowFanart();
@@ -1318,11 +1400,19 @@
 								parent.frames['person_frame'].location.href='navPerson_frame.html';								
 								Person_toSet = false; 
 								}
-							parent.document.getElementById('person_display').style.height="300px";  // adjust window
-							parent.document.getElementById('person_frame').style.height="290px";    // adjust frame inside windows
-							parent.document.getElementById('person_frame').style.display="block";
-							parent.document.getElementById('person_display').style.visibility="visible";	
-							parent.document.getElementById('person_display').style.zIndex="15";
+							if (parent.document.getElementById('person_display').style.visibility =="visible")  // click toggle the frame  
+							{
+								parent.document.getElementById('person_frame').style.display="none";
+								parent.document.getElementById('person_display').style.visibility="hidden";
+								parent.document.getElementById('person_display').style.zIndex="2";
+							} else 
+							{							
+								parent.document.getElementById('person_display').style.height="300px";  // adjust window
+								parent.document.getElementById('person_frame').style.height="290px";    // adjust frame inside windows
+								parent.document.getElementById('person_frame').style.display="block";
+								parent.document.getElementById('person_display').style.visibility="visible";	
+								parent.document.getElementById('person_display').style.zIndex="15";
+							}
 							
 							break;
 						} 
@@ -1541,14 +1631,20 @@
 				console.log("getData URL: " + jsonDeleteUrl);
 		PopDelete(stage_file_Id, current_title)
 		}
-	function ouvre_popup_update ()
+	function ouvre_popup_update (update_type)
 		{
-		console.log("detail ouvre_popup_update stage_file_Id:" + stage_file_Id);
-		// construct JSON request to update movie/series/season from the stage_file with stage_file_Id
+			console.log("detail ouvre_popup_update video_id:" + current_id + " index_type:"+ index_type + " update_type: "+ update_type);
+		// construct JSON request to update movie/series/season/artwork from the file with file_Id
 		
-				jsonDeleteUrl = "/yamj3/api/file/update/" + stage_file_Id;
+		//		jsonDeleteUrl = "/yamj3/api/file/update/" + stage_file_Id;
+			if (update_type == 'artwork') 
+				{jsonDeleteUrl = "/yamj3/api/rescan/" + index_type.toLowerCase() + "/artwork/" + current_id;}
+				
+				else {jsonDeleteUrl = "/yamj3/api/rescan/" + index_type.toLowerCase() + "/" + current_id;}
+				
 				console.log("getData URL: " + jsonDeleteUrl);
-		PopUpdate(stage_file_Id, current_title)
+		// PopUpdate(stage_file_Id, current_title)
+			PopUpdate(update_type, current_id, current_title)
 		}
 	function ouvre_popup_ignore (artwork_type, located_id)
 		{
@@ -1559,6 +1655,36 @@
 				console.log("getData URL: " + jsonIgnoreUrl);
 		PopIgnore(artwork_type, located_id)
 		}
+// ********************* trailer sequence ****************************
+	function delete_trailer (trailer_id)
+		{
+		console.log("detail delete_trailer trailer_id:" + trailer_id);
+		// construct JSON request to delete movie/series/season from the stage_file with stage_file_Id
+		
+				jsonDeleteUrl = "/yamj3/api/trailer/delete/" + trailer_id;
+				console.log("getData URL: " + jsonDeleteUrl);
+				PopAction('delete', 'trailer', trailer_id, '' );
+		}
+	function download_trailer (trailer_id)
+		{
+			console.log("detail download_trailer trailer_id:" + trailer_id );
+		// construct JSON request to update movie/series/season/artwork from the file with file_Id
+		
+			jsonDownloadUrl = "/yamj3/api/trailer/download/" + trailer_id;
+			console.log("getData URL: " + jsonDownloadUrl);
+		// PopUpdate(stage_file_Id, current_title)
+			PopAction('download','trailer', trailer_id, '');
+		}
+	function ignore_trailer (trailer_id)
+		{
+		console.log("detail ignore_trailer trailer_id:" + trailer_id);
+		// construct JSON request to delete movie/series/season from the stage_file with stage_file_Id
+		
+				jsonIgnoreUrl = "/yamj3/api/trailer/ignore/" + trailer_id;
+				console.log("getData URL: " + jsonIgnoreUrl);
+				PopAction('ignore', 'trailer', trailer_id, '');
+		}
+// ******************** update, delete, ignore real API call .json 
 	function delete_stage_file_Id ()
 		{
         // main API call         
@@ -1652,7 +1778,7 @@
 	
 		function open_update_externalId (source_to_set, id_to_set)
 		{
-				jsonUrlUpdateExternalId = "/yamj3/api/video/externalids/update.json?id=" + current_id + "&sourcedb=" + source_to_set + "&externalid=" + id_to_set;
+				jsonUrlUpdateExternalId = "/yamj3/api/video/" + index_type.toLowerCase() + "/updateexternalid.json?id=" + current_id + "&sourcedb=" + source_to_set + "&externalid=" + id_to_set;
 				console.log("open_update_externalId jsonUrlUpdateExternalId: " + jsonUrlUpdateExternalId);
 			
         //  externalId update API call         
@@ -1671,12 +1797,52 @@
 		}
 		function open_delete_externalId (source_to_set)
 		{
-				jsonUrlDeleteExternalId = "/yamj3/api/video/externalids/delete.json?id=" + current_id + "&sourcedb=" + source_to_set ;
+				jsonUrlDeleteExternalId = "/yamj3/api/video/" + index_type.toLowerCase() + "/removeexternalid.json?id=" + current_id + "&sourcedb=" + source_to_set ;
 				console.log("open_delete_externalId jsonUrlDeleteExternalId: " + jsonUrlDeleteExternalId);
 			
         //  externalId update API call         
                 $.ajax({
                     url: jsonUrlDeleteExternalId,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(data)
+                    {
+                        jsondata = data;
+					//	 outputJson(data); 
+					
+					location.reload(); 
+				
+					}
+                });
+		}
+		function enable_external_source (source_to_set)
+		{
+				jsonUrlEnable_external_source = "/yamj3/api/video/" + index_type.toLowerCase() + "/enableonlinescan.json?id=" + current_id + "&sourcedb=" + source_to_set ;
+				console.log("enable_external_source jsonUrlEnable_external_source: " + jsonUrlEnable_external_source);
+			
+        //  external_source enable API call         
+                $.ajax({
+                    url: jsonUrlEnable_external_source,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(data)
+                    {
+                        jsondata = data;
+					//	 outputJson(data); 
+					
+					location.reload(); 
+				
+					}
+                });
+		}
+		function disable_external_source (source_to_set)
+		{
+				jsonUrlDisable_external_source = "/yamj3/api/video/" + index_type.toLowerCase() + "/disableonlinescan.json?id=" + current_id + "&sourcedb=" + source_to_set ;
+				console.log("disable_external_source jsonUrlDisable_external_source: " + jsonUrlDisable_external_source);
+			
+        //  external_source enable API call         
+                $.ajax({
+                    url: jsonUrlDisable_external_source,
                     async: false,
                     dataType: 'jsonp',
                     'success': function(data)
@@ -1721,7 +1887,7 @@
 										<img src="pictures/icon/fanart.png" alt="fanart" ></img><div id="fanartshow_icon"></div></a></td>
 									<td><a id="li_delete_icon" href="javascript:ouvre_popup_delete();" onmouseover="javascript:document.getElementById('deleteshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('deleteshow_icon').style.visibility='hidden'">
 										<img src="pictures/icon/delete.png" alt="delete"></img><div id="deleteshow_icon"></div></a></td>	
-									<td><a id="li_update_icon" href="javascript:ouvre_popup_update();" onmouseover="javascript:document.getElementById('updateshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('updateshow_icon').style.visibility='hidden'">
+									<td><a id="li_update_icon" href="javascript:ouvre_popup_update('file');" onmouseover="javascript:document.getElementById('updateshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('updateshow_icon').style.visibility='hidden'">
 										<img src="pictures/icon/update.png" alt="update"></img><div id="updateshow_icon"></div></a></td>	
 									
 							<!--		<td><a id="li_person_ribbon" href="javascript:ouvre_popup_person_ribbon()">
@@ -1821,7 +1987,7 @@
 						</a><div id="yamj3select"></div>
 				</td>
 				<td><a href="javascript:ouvre_genrelist('_self'); ">
-							<img src="pictures/icon/list_genre.png" height="80"  width="80" alt="liste fenre" />
+							<img src="pictures/icon/list_genre.png" height="80"  width="80" alt="liste genre" />
 						</a><div id="genrelistselect"></div>
 				</td>
 				<td><a href="javascript:ouvre_remote(StyleValue); ">
@@ -1946,12 +2112,12 @@
 							<tr>
 								<td>
 									<span class="actors"></span>
-									<a id="all_person" href="#" onclick="ouvre_popup_person()"> ...</a>
+									<a title="display all cast" id="all_person" href="#" onclick="ouvre_popup_person()"> ...</a>
 								</td>
 								
 							</tr>
 						<tr>
-							<td><span class="studio"></span></td>
+							<td><span class="studio" title="video list with studio"></span></td>
 						</tr>
 						<tr>
 							<td><span class="genres"></span></td>
@@ -1963,13 +2129,13 @@
 							<td><span class="ratings"></span></td>
 						</tr> -->
 						<tr>
-							<td><a href="#"><img class="combined_ratings" src="./pictures/ratings/dummy_rating.png" onclick="" alt="rating"/></a></td>
+							<td><a  href="#"><img title="video list with rating" class="combined_ratings" src="./pictures/ratings/dummy_rating.png" onclick="" alt="rating"/></a></td>
 						</tr>
 				<!--		<tr>
 							<td><span class="certifications"></span></td>
 						</tr> -->
 						<tr>
-							<td><a href="#"><img class="image_certification" src="./pictures/certification/dummy_certification.png" onclick="" alt="certification"/></a></td>
+							<td><a href="#"><img title="video list with certification" class="image_certification" src="./pictures/certification/dummy_certification.png" onclick="" alt="certification"/></a></td>
 						</tr>
 						
 						
@@ -2040,6 +2206,8 @@
 		
 		<div class="edit_adjust">
 			<table class="posteradjust">
+			<td><a id="li_update_icon" href="javascript:ouvre_popup_update('artwork');" onmouseover="javascript:document.getElementById('updateshow_icon').style.top='41vw'; document.getElementById('updateshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('updateshow_icon').style.top='60px';document.getElementById('updateshow_icon').style.visibility='hidden'">
+										<img src="pictures/icon/update.png" alt="update"></img><div id="updateshow_icon"></div></a></td>	
 			<tr>
 					<td>
                          
@@ -2066,7 +2234,17 @@
                       
 			</table>
 		</div>
-		
+		<div class="trailer_list">
+			<table>
+				<tr>
+					<td>
+						<span class="trailer_href" ></span>
+						
+					</td>
+				</tr>
+			</table>
+		</div>
+			
 		
 	<!-- display season box , one for each season , add scroll horizontal bar if more than 8 seasons --> 
 		<div class="seasontable" id="seasontable">

@@ -17,7 +17,7 @@
 		<script src="js/config.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>
-		<script src="js/library.js"></script>
+		<script src="js/library2.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/yamj-style.css">
         <!-- Used for the paging of the index -->
         <link rel="stylesheet" href="css/jPages.css">
@@ -45,9 +45,16 @@
 		
 		function getIndexData ()
 		{
-				var index_type = "all";
+				var index_type = "movie,series";
 				if (window.localStorage.getItem("indextype"))
-					{index_type = window.localStorage.getItem("indextype");}
+					{index_type = window.localStorage.getItem("indextype");
+					// reset to all if indextype = person
+					if (index_type.toUpperCase() == 'PERSON')
+						{
+							window.localStorage.setItem("indextype", 'movie,series');
+							index_type = 'movie,series';
+						}
+					}
 					else {window.localStorage.setItem("indextype", index_type);}
 					
 
@@ -81,7 +88,7 @@
 			document.getElementById("rowSetted").innerHTML=window.localStorage.getItem("nbofrow") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("RowperPage");
 			document.getElementById("styleSetted").innerHTML=window.localStorage.getItem("style_label") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("Style");
 			document.getElementById("langSetted").innerHTML=window.localStorage.getItem("lang_label") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("Lang");
-			document.getElementById("prefered_pageSetted").innerHTML=window.localStorage.getItem("prefered_") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("prefered_page");
+			document.getElementById("prefered_pageSetted").innerHTML=window.localStorage.getItem("page_label") + "&nbsp;" +window.localStorage.getItem("prefered_") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("prefered_page");
 			document.getElementById("configindex").innerHTML=window.localStorage.getItem("config_select").toUpperCase();
 		}
 		

@@ -253,6 +253,10 @@
 	top: -0.35vw;
 	left: -20px;
 	}
+.watched:hover {
+	top: -0.25vw;
+	background: black;
+	}
 .country  {
 	position: relative;
 /*	top: 2px; */
@@ -260,6 +264,10 @@
 	height: 2.9vw;
 	width: 3vw;
 	text-decoration: none;
+	}
+.country img:hover {
+	top: 3px;
+	background:  black;
 	}
 .channels  {
 	position: relative;
@@ -486,10 +494,10 @@ input:-moz-placeholder { color:red; }
 #return_icon img, #next_icon img, #prev_icon img {
 	height:30px;
 }
-#person_icon {
+#person_icon, #year_icon, #decade_icon {
 	display: none;
 }
-#movie_series_icon img, #movie_icon img, #series_icon img, #season_icon img, #person_icon img {
+#movie_series_icon img, #movie_icon img, #series_icon img, #season_icon img, #person_icon img, #year_icon img, #decade_icon img {
 	height:35px;
 	width: 50px;
 	position: relative;
@@ -796,6 +804,7 @@ input:-moz-placeholder { color:red; }
 	top: 4px;
 	background: url(../pictures/info2.png) no-repeat center center ;
 	background-size: 100%;
+	z-index: 11;
 	}
 
 .show_index_awards_small, .show_index_studio_small   {
@@ -1225,7 +1234,7 @@ ul#home_left_up {
 	background-color:rgba(255, 255, 255, 0.6);
 	}	
 
-#allselect, #movieselect, #serieselect, #seasonselect, #genreindex, #countryindex, #awardsindex, #certificationindex, #ratingindex, #videosourceindex, #boxsetindex, #studioindex, #personindex, #titleindex, #searchselect, #configselect, #searchindex, #configindex, #remoteselect, #yamj3select, #genrelistselect
+#allselect, #movieselect, #serieselect, #seasonselect, #genreindex, #countryindex, #awardsindex, #certificationindex, #ratingindex, #videosourceindex, #boxsetindex, #studioindex, #personindex, #titleindex, #yearindex, #searchselect, #configselect, #searchindex, #configindex, #remoteselect, #yamj3select, #genrelistselect
 {
     font-weight: bold;
     color: black;
@@ -1309,7 +1318,7 @@ ul#home_left_up {
 	position: absolute;
 	top: -10px;
 	right: 0px;
-
+	z-index: 12;
 	}
 #config_href {
 	visibility: hidden;
@@ -1365,11 +1374,16 @@ ul#home_left_up {
 	}
 .member 	{
 	position: relative; 
-	bottom: 4vw;
+	bottom: 5.5vw;
+	left: 1.5vw;
 	font-size: 0.8vw;
 	font-weight: bold; 
 	}
-	
+.rescan 	{
+	position: relative; 
+	top: -8vw;
+	left: -0.5vw;
+	}	
 	
 /***************************** data tip for infobulle *****************************/
 
@@ -1777,8 +1791,56 @@ ul#home_left_up {
 .actors:hover, .writer:hover, .director:hover, #all_person:hover, .studio a:hover {
 	color: red;
 	}
+#trailer_td {
+	visibility: hidden; 
+	text-decoration: none;
+	border: 2px solid #b0b0b0;	
+	border-right: 5px solid #b0b0b0;
+	border-radius: 6px 6px 0px 6px;
+	background-color:rgba(0, 0, 0, 0.3);
+	position: absolute; 
+	top: 0.2vw; 
+	right: 7vw; 
+	color: white;
+	width: 80vw;
+	font-size:1.1vw;
+	font-weight: bold;
+    text-align: center;
+}
+#trailer_td a:link, #trailer_td a:visited {
+    color: cyan;
+    text-decoration: none;
+}
+#trailer_td a:hover {
+    color: red;
+    text-decoration: none;
+}
+.trailer_list {
+	position: absolute;
+	top: 60px;
+	left: 92vw;
 
-
+}
+#trailer_delete {
+	position: relative;
+	top: 0.2vw;
+	height: 2vw;
+	vertical-align: bottom;
+	}
+#trailer_ignore {
+	position: relative;
+	top: 0.1vw;
+	height: 1.6vw;
+	vertical-align: bottom;
+	margin-left: 0.1vw;
+	}
+#trailer_download {
+	position: relative;
+	top: 0.4vw;
+	height: 2vw;
+	vertical-align: bottom;
+	
+	}
 /*************   episode ****************/	
 .table_videoimage {
 	display: block;
@@ -2696,6 +2758,30 @@ text {
 	padding: 1px 10px 0px 10px;
 	position: relative;
 	left: 5px;
+	}
+.rating {
+	position: relative;
+	top: -19.3vw;
+	width: 0.5vw;
+	height: 2.4vw;
+	padding: 0px;
+	left: -3.2vw;
+	display: inline;
+	border-right: 3px solid gray;
+	}
+.rating:hover {
+	background-color:rgba(255, 255, 255, 1.0);
+	}
+.boxset {
+	position: relative;
+	top: -19vw;
+	width: 2vw;
+	padding: 0px;
+	left: 3.5vw;
+	display: inline;
+	}
+.boxset:hover {
+	background-color:rgba(0, 0, 0, 1.0);
 	}
 .external_Id {
 	

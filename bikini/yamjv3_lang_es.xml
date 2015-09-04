@@ -15,10 +15,12 @@
 	<boxsetlabel>conjunto</boxsetlabel>
 	
 	<certificationlabel>certificacion</certificationlabel>
+	<clicktodisplaywith>haga clic para ver videos con</clicktodisplaywith>
 	<closelabel>cierre</closelabel>
 	<closenavigationmenu>cierra el menu de navegacion</closenavigationmenu>
 	<closeremotelabel>cierre a distancia</closeremotelabel>
 	<configselected>configuracion</configselected>
+	<combinedlabel>combinada</combinedlabel>
 	<countrylabel>pais</countrylabel>
 	<countryselected>pais</countryselected>
 	<creationcomment>fecha de creacion en yamj3</creationcomment>
@@ -29,6 +31,7 @@
 	<detailcomment>detalle</detailcomment>
 	<directorlabel>director</directorlabel>
 	<downlabel>bajo</downlabel>
+	<downloadtext>descargar</downloadtext>
 	
 	<ejectlabel>expulsar</ejectlabel>
 	<enterdaynumber>entroduzca el numero de dias</enterdaynumber>
@@ -54,6 +57,7 @@
 	
 	<homelabel>casa</homelabel>
 	
+	<ignoretext>ignorar</ignoretext>
 	<infolabel>info</infolabel>
 	
 	<keylabel>clave</keylabel>

@@ -14,7 +14,7 @@
 		<script src="js/lang.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>	
-		<script src="js/library.js"></script>
+		<script src="js/library2.js"></script>
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
         <!-- Used for the paging of the index -->
         <link rel="stylesheet" href="css/jPages.css">
@@ -83,7 +83,9 @@
 						selected_index = window.localStorage.getItem('season_select').toUpperCase();
 						break;
 				};
-		$('#printsearch').html(window.localStorage.getItem('rating_label').toUpperCase()+'('+ rating_source + ') ' + selected_index);
+		if (rating_source == 'combined') 
+		{$('#printsearch').html(window.localStorage.getItem('rating_label').toUpperCase()+'('+ window.localStorage.getItem('combined_label').toUpperCase() + ') ' + selected_index);}
+		else {$('#printsearch').html(window.localStorage.getItem('rating_label').toUpperCase()+'('+ rating_source + ') ' + selected_index);}
 		
             console.log("navRating URL: " + jsonUrl);
             var jsondata = null;
@@ -117,7 +119,7 @@
             "div.rating_block": {
                 "result<-results": {
 					"span.name": function(arg) {
-							output = arg.item.source + arg.item.rating;
+							output =  arg.item.rating;
 							return output;
 							},
 					 "img.rating_logo@src": function(arg) {
@@ -163,14 +165,7 @@
 		 console.log("select_rating_source Storing: indextype: " +index_type+ " source:" + ratingsource);
 		open_rating_nav(index_type);
 		}
-		function open_rating_index(ratingsource, ratingvalue)
-        {
-			localStorage.setItem("Rating_source", ratingsource);
-			localStorage.setItem("Rating_value", ratingvalue);
-            console.log("navRating open_rating_index Storing value: Rating source: " + ratingsource + " Rating value: "+ ratingvalue);
-			window.location.href="index_Rating.html";
 		
-		}
 		function list_rating_source ()
 		{
 		 var jsonUrlSource = "/yamj3/api/ratings/list.json?type=" + index_type +"&rating=false";

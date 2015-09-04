@@ -10,7 +10,7 @@
 	var Prefered_PageValue = "index_all";
 	var PagingValue = true;
 	var vlc_added = null;
-	
+	var skin_default_ = 'bikini_skin_0';
 
 	// Add the source output to the end of the page
         function outputJson(yamjdata)
@@ -727,6 +727,118 @@
 				console.log('set style:'+style_);
 				window.localStorage.setItem("Style", style_);
 			}
+			
+	// fetch prefered certification in local storage : value available : DE, FR, GB, US
+		function get_prefered_certification()
+			{
+				if (window.localStorage.getItem("prefered_certification"))
+				{ 
+					Prefered_CertificationValue = window.localStorage.getItem("prefered_certification");
+					console.log("get_prefered_certification prefered_certification: " + Prefered_CertificationValue);
+					get_prefered_certification_();
+				}
+				else {get_prefered_certification_();}
+			}
+
+	// fetch prefered certification in local storage : value available : DE, FR, GB, US
+		function get_prefered_certification_()
+			{
+				if (localStorage.getItem("skinset"))
+					{skin_value = window.localStorage.getItem("skinset");}
+					else { skin_value = "bikini_skin_0";}
+				var jsonPreferedCertificationUrl = "/yamj3/api/config/list.json?config="+skin_value+"prefered_certification&mode=any";
+				console.log("get_prefered_certification jsonPreferedCertificationUrl: " + jsonPreferedCertificationUrl);
+				$.ajax({
+                   url: jsonPreferedCertificationUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSkinPreferedCertification)
+                   {			
+						jsondata = dataSkinPreferedCertification;
+				//		outputJson(dataSkinPreferedCertification);
+						checkPrefered_Certification(dataSkinPreferedCertification);
+						}
+				});	
+			 return jsondata;
+		}
+	// fetch certification list stored in yamj3.certification.countries 
+		function get_Prefered_certification_from_list()
+			{
+			
+				var jsonCertificationListUrl = "/yamj3/api/config/list.json?config=yamj3.certification.countries";
+				console.log("get_Prefered_certification_from_list jsonCertificationListUrl: " + jsonCertificationListUrl);
+				$.ajax({
+                   url: jsonCertificationListUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataCertificationList)
+                   {			
+						jsondata = dataCertificationList;
+				//		outputJson(dataCertificationList);
+						var CL = {
+						"td.Value":  function(arg) {
+									if (arg.context.count) {
+										console.log("get_Prefered_certification_from_list: "+arg.context.results[0].value.substring(0,2));
+										update_Prefered_Certification(arg.context.results[0].value.substring(0,2));
+										return arg.context.results[0].value.substring(0,2);} else {
+										console.log("get_Prefered_certification_from_list: no value found");
+										// if really no value found then store one 
+										update_Prefered_Certification('FR');}
+								}								
+							
+						};
+				
+				$p('.results').render( dataCertificationList, CL );
+						}
+				});	
+			 return jsondata;
+		}	
+	// update prefered certification in local storage : value available : DE, FR, GB, US
+		function update_Prefered_Certification(prefered_certification) 
+		{
+				var jsonPrefereCertificationdUrl = "/yamj3/api/config/update.json?key="+skin_value+"prefered_certification&value="+prefered_certification+"";
+				console.log("update_Prefered_Certification jsonPrefereCertificationdUrl: " + jsonPrefereCertificationdUrl);
+				$.ajax({
+                   url: jsonPrefereCertificationdUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSkinPreferedCertification)
+                   {
+						jsondata = dataSkinPreferedCertification;
+					//	outputJson(dataSkinPreferedCertification);
+						set_Prefered_Certification_value(prefered_certification);
+					}
+					
+				});	
+			 return jsondata;
+		}	
+		
+		function checkPrefered_Certification(yamjdata) {
+				var PN = {
+						"td.Value":  function(arg) {
+									if (arg.context.count) {
+										console.log("checkPrefered_Certification: "+arg.context.results[0].value);
+										set_Prefered_Certification_value(arg.context.results[0].value);
+										return arg.context.results[0].value;} else {
+										console.log("checkPrefered_Certification: no value found");
+										get_Prefered_certification_from_list();}
+								}								
+							
+						};
+				
+				$p('.results').render( yamjdata, PN );			
+			}	
+	
+	
+	// set the rules to adjust prefered certification in local storage : value available : DE, FR, GB, US
+		function set_Prefered_Certification_value(prefered_certification)
+			{
+				console.log('set prefered certification:'+prefered_certification);
+				window.localStorage.setItem("prefered_certification", prefered_certification);
+		
+			}
+			
+			
 	// fetch prefered page in local storage : value available : index_all, index_movie, index_series, person, genre, country, boxset, rating, certification, source, new
 		function get_prefered_page()
 			{
@@ -981,17 +1093,45 @@
 		
 	}//end myIP
 
+	// get the skin value in the config database and all value in the local storage
+	function get_Skin () {
+		
+			if (window.localStorage.getItem("skinset"))
+				{	
+					skinset = window.localStorage.getItem("skinset");
+					console.log ('get_skin: skin stored ' + skinset );
+				}
+			
+			 else {update_skin_(skin_default_);}
+
+		}	
 	// update  the skin value in the config database and all value in the local storage
-	function update_Skin(skin_) 
+	function update_Skin (skin_) 
 		{
-			localStorage.setItem("skinset", skin_);
-			get_lang_();
+			if (window.localStorage.getItem("skinset"))
+			{ if (window.localStorage.getItem("skinset") == skin_)
+				{console.log ('update_skin: skin ' + skin_ + ' already setted no action');}
+				else {update_Skin_(skin_);}
+			} else {update_Skin_(skin_);}
+			
+
+		}	
+	// update  the skin value in the config database and all value in the local storage
+	function update_Skin_(skin_) 
+		{
+			console.log ('update_skin_: set skin ' + skin_ + ' and update all value');
+			window.localStorage.setItem("skinset", skin_);
+			
 			get_style_();
 			get_player_();
 			get_poster_number_ ();
 			get_prefered_page_();
+			get_prefered_certification();
 			get_paging_();
 			get_new_();
+			get_lang_();
+			window.location.reload();
+			
 		}	
 
 	function direct_play (videoType,id ) 
@@ -1120,13 +1260,20 @@
 			myStopFunction('infobox_delete');
 			delete_stage_file_Id ()
 		}
-	function PopUpdate(Current_stage_file_Id, Current_title)
+	function PopUpdate(Current_update_type, Current_file_Id, Current_title)
 			{
-						console.log("PopUpdate:  Current_stage_file_Id: "+Current_stage_file_Id);
-						document.getElementById("infobox_update").innerHTML=localStorage.getItem('update_label') + " stage_file id:"+Current_stage_file_Id+ " " + Current_title + "?"
+						console.log("PopUpdate: Current_update_type: " + Current_update_type + " Current_file_Id: " + Current_file_Id);
+						document.getElementById("infobox_update").innerHTML=localStorage.getItem('update_label') + " " + Current_update_type + " id:" + Current_file_Id + " " + Current_title + "?"
 						document.getElementById("infobox_update").style.visibility="visible";
 						myVar=window.setTimeout(function(){myStopFunction('infobox_update');},5000);
-			}	
+			}
+	function PopAction(Action_type, Current_update_type, Current_file_Id, Current_title)
+			{
+						console.log("PopUpdate: Current_update_type: " + Current_update_type + " Current_file_Id: " + Current_file_Id + " action:" + Action_type);
+						document.getElementById("infobox_update").innerHTML=localStorage.getItem(Action_type + "_text") + " " + Current_update_type + " id:" + Current_file_Id + " " + Current_title + "?"
+						document.getElementById("infobox_update").style.visibility="visible";
+						myVar=window.setTimeout(function(){myStopFunction('infobox_update');},5000);
+			}				
 	// if it is confirmed stop timer and call the update action to make his job			
 	function start_update ()
 		{
@@ -1352,3 +1499,20 @@
 					}
 				else {get_player_();}
 			}
+	function open_boxset_index(boxsetid, boxsetname)
+        {
+			localStorage.setItem("Boxset_id", boxsetid);
+			localStorage.setItem("Boxset_name", boxsetname);
+            console.log("navBoxset open_boxset_index Storing value: Boxset Id: " +boxsetid);
+			window.location.href="index_Boxset.html";
+			Mypopup.focus();
+		}
+	function open_rating_index(ratingsource, ratingvalue)
+        {
+			localStorage.setItem("Rating_source", ratingsource);
+			localStorage.setItem("Rating_value", ratingvalue);
+            console.log("navRating open_rating_index Storing value: Rating source: " + ratingsource + " Rating value: "+ ratingvalue);
+			window.location.href="index_Rating.html";
+		
+		}
+	

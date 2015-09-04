@@ -34,7 +34,7 @@
 					}
 				
 				var jsonLangUrl = "/yamj3/api/config/list.json?config="+skin_value+"language&mode=any";
-			//	console.log("get_lang jsonLangUrl: " + jsonLangUrl);
+				console.log("get_lang jsonLangUrl: " + jsonLangUrl);
 				$.ajax({
                    url: jsonLangUrl,
                     async: false,
@@ -135,9 +135,11 @@
 					window.localStorage.setItem("blue_label", (x[i].getElementsByTagName("bluelabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("boxset_label", (x[i].getElementsByTagName("boxsetlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("certification_label", (x[i].getElementsByTagName("certificationlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("click_to_display_with", (x[i].getElementsByTagName("clicktodisplaywith")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("close_label", (x[i].getElementsByTagName("closelabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("close_navigation_menu", (x[i].getElementsByTagName("closenavigationmenu")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("close_remote_label", (x[i].getElementsByTagName("closeremotelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("combined_label", (x[i].getElementsByTagName("combinedlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("config_select", (x[i].getElementsByTagName("configselected")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("country_label", (x[i].getElementsByTagName("countrylabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("country_select", (x[i].getElementsByTagName("countryselected")[0].childNodes[0].nodeValue));
@@ -148,6 +150,7 @@
 					window.localStorage.setItem("detail_comment", (x[i].getElementsByTagName("detailcomment")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("director_label", (x[i].getElementsByTagName("directorlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("down_label", (x[i].getElementsByTagName("downlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("download_text", (x[i].getElementsByTagName("downloadtext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("eject_label", (x[i].getElementsByTagName("ejectlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("enter_label", (x[i].getElementsByTagName("enterlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("enter_day_number", (x[i].getElementsByTagName("enterdaynumber")[0].childNodes[0].nodeValue));
@@ -168,6 +171,7 @@
 					window.localStorage.setItem("genrelist_select", (x[i].getElementsByTagName("genrelistselect")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("green_label", (x[i].getElementsByTagName("greenlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("home_label", (x[i].getElementsByTagName("homelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("ignore_text", (x[i].getElementsByTagName("ignoretext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("info_label", (x[i].getElementsByTagName("infolabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("key_label", (x[i].getElementsByTagName("keylabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("lang_comment", (x[i].getElementsByTagName("langcomment")[0].childNodes[0].nodeValue));

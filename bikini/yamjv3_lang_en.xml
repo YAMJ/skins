@@ -15,9 +15,11 @@
 	<boxsetlabel>set</boxsetlabel>
 	
 	<certificationlabel>certification</certificationlabel>
+	<clicktodisplaywith>click to display video with</clicktodisplaywith>
 	<closelabel>close</closelabel>
 	<closenavigationmenu>close navigation menu</closenavigationmenu>
 	<closeremotelabel>close remote</closeremotelabel>
+	<combinedlabel>combined</combinedlabel>
 	<configselected>settings</configselected>
 	<countrylabel>country</countrylabel>
 	<countryselected>country</countryselected>
@@ -29,6 +31,7 @@
 	<detailcomment>detail</detailcomment>
 	<directorlabel>director</directorlabel>
 	<downlabel>down</downlabel>
+	<downloadtext>download</downloadtext>
 	
 	<ejectlabel>eject</ejectlabel>
 	<enterdaynumber>enter day number</enterdaynumber>
@@ -54,6 +57,7 @@
 	
 	<homelabel>home</homelabel>
 	
+	<ignoretext>ignore</ignoretext>
 	<infolabel>info</infolabel>
 	
 	<keylabel>key</keylabel>

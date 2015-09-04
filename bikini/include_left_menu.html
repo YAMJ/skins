@@ -18,7 +18,7 @@
 		<script src="js/config.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>
-		<script src="js/library.js"></script>
+		<script src="js/library2.js"></script>
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
         <!-- Used for the paging of the index -->
         <link rel="stylesheet" href="css/jPages.css">
@@ -67,6 +67,7 @@
 			document.getElementById("personindex").innerHTML=window.localStorage.getItem('person_select').toUpperCase();
 			document.getElementById("configindex").innerHTML=window.localStorage.getItem('config_select').toUpperCase();
 			document.getElementById("titleindex").innerHTML=window.localStorage.getItem('title_label').toUpperCase();
+			document.getElementById("yearindex").innerHTML=window.localStorage.getItem('year_label').toUpperCase();
 			document.getElementById("remoteselect").innerHTML=window.localStorage.getItem('remote_label').toUpperCase();
 			document.getElementById("yamj3select").innerHTML="YAMJ3";
 			document.getElementById("genrelistselect").innerHTML=window.localStorage.getItem('genrelist_select').toUpperCase();
@@ -128,6 +129,10 @@
 				<li><a href="javascript:open_parent_index (index_type, 'navTitle.html', '_parent');">
 							<img src="./pictures/title.png" height="65" width="75" style="padding-left:7px" alt="title" />
 						</a><div id="titleindex" style="padding-top: 5px;"></div>
+				</li> 
+				<li><a href="javascript:open_parent_index (index_type, 'navYear.html', '_parent');">
+							<img src="./pictures/year.png" height="65" width="75" style="padding-left:7px" alt="title" />
+						</a><div id="yearindex" style="padding-top: 5px;"></div>
 				</li> 
 				<li><a href="javascript:open_parent_index (index_type, 'navStudio.html'); ">
 							<img src="./pictures/icon/Studio.png" height="60"  width="60" style="position: relative; left:10px" alt="studio"  />

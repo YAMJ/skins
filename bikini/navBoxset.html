@@ -16,7 +16,7 @@
 		<script src="js/config.js"></script>		
 		<!-- Used for template -->
 		<script src="js/template.js"></script>
-		<script src="js/library.js"></script>
+		<script src="js/library2.js"></script>
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
         <!-- Used for the paging of the index -->
         <link rel="stylesheet" href="css/jPages.css">
@@ -63,7 +63,7 @@
 				}
 				else {window.localStorage.setItem("indextype", index_type);
 				console.log("navBoxset set: " + index_type);}
-		    var jsonUrl = "/yamj3/api/boxset/list.json?&sortby=name&sortdir=" + direction;
+		    var jsonUrl = "/yamj3/api/boxset/list.json?&sortby=name&sortdir=" + direction + "&dataitems=artwork&artwork=poster";
 			var selected_index = window.localStorage.getItem('boxset_label').toUpperCase();
 			if (direction == 'ASC') 
 					{
@@ -118,15 +118,21 @@
 						return '(' + arg.item.memberCount + ')';
 							},
                      "span.title@onclick": function(arg) {
-						return "open_boxset_index('" + arg.item.id+ "', '" + arg.item.name + "')";
+						return "open_boxset_index('" + arg.item.id+ "', \"" + arg.item.name + "\")";
 							},
 					 "img.poster@src": function(arg) {
-						var output_poster = get_poster_for_boxset(arg.item.id);
+						var output_poster = "";
+							if (arg.item.artwork) 
+								{output_poster = arg.context.baseArtworkUrl + arg.item.artwork.POSTER[0].filename;}
+								else {output_poster = get_poster_for_boxset(arg.item.id);}
 						return output_poster;
 							},
 					"img.poster@onclick": function(arg) {
-						return "open_boxset_index('" + arg.item.id+ "', '" + arg.item.name + "')";
-							}
+						return "open_boxset_index('" + arg.item.id + "', \"" + arg.item.name + "\")";
+							}, 
+					"img.rescan@onclick": function(arg) {
+						return "open_boxset_rescan('" + arg.item.id+ "')";
+							} 	
 		
 						}
 					}
@@ -177,24 +183,26 @@
 		return poster_path ;
 		
 		}
+		function open_boxset_rescan (boxsetid) 
+		{
+			var	jsonUrlBoxset = "/yamj3/api/rescan/boxset/artwork/" + boxsetid + ".json?" ;
+				console.log("navBoxset open_boxset_rescan URL: " + jsonUrlBoxset);
+			
+        // main API call         
+                $.ajax({
+                    url: jsonUrlBoxset,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(data)
+                    {
+                        jsondata = data;
+					//	 outputJson(data); 		
+					}
+                });		
+		}
 //***************************************************************************************************************		
-		function open_boxset_nav(indextype)
-        {
-			localStorage.setItem("indextype", indextype);
-            console.log("open_boxset_nav Storing value: indextype: " +indextype);
-			window.location.href="navBoxset.html";
-			Mypopup.focus();
-		}
-
- 
-		function open_boxset_index(boxsetid, boxsetname)
-        {
-			localStorage.setItem("Boxset_id", boxsetid);
-			localStorage.setItem("Boxset_name", boxsetname);
-            console.log("navBoxset open_boxset_index Storing value: Boxset Id: " +boxsetid);
-			window.location.href="index_Boxset.html";
-			Mypopup.focus();
-		}
+		
+		
 
 // *******************************to fix alt bug with chrome ***************************************************************************************
 	function showAlt(){$(this).replaceWith(this.alt)};
@@ -269,6 +277,7 @@
 					<div class="title_boxset" style="position: relative; height: 4vw;" >&nbsp;</div>
                     <span class="title"></span>
 					<span class="member"></span>
+					<img class="rescan" src="./pictures/rescan.png" alt="rescan" >
                 </div>
                 <br />
             </div>

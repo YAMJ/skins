@@ -17,7 +17,7 @@
 		<script src="js/config.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>
-		<script src="js/library.js"></script>
+		<script src="js/library2.js"></script>
         <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
         <!-- Used for the paging of the index -->
         <link rel="stylesheet" href="css/jPages.css">
@@ -44,6 +44,7 @@
 		var watched_method = "all";
 		var newest_method = "";
 		var nbre_translate_path = 0;
+	
 		// get the prefered_page
 		if (localStorage.getItem("prefered_page"))
 			{Prefered_PageValue = localStorage.getItem("prefered_page");}
@@ -126,8 +127,57 @@
 							}
 						}
 						return output_poster;
+                    }, 
+					"img.boxset@src": function(arg) {
+                       var output_boxset = "pictures/no_set.png";
+                        // Check to see if there are boxset
+                        if (arg.item.boxedSets) {output_boxset = "pictures/set.png";}
+						return output_boxset;
                     },
-		
+					"img.boxset@onclick": function(arg) {
+						if (arg.item.boxedSets) 
+						{ return "open_boxset_index('" + arg.item.boxedSets[0].id+ "', \"" + arg.item.boxedSets[0].name + "\")"; }
+					},
+					"img.boxset@style": function(arg) {
+						if (arg.item.boxedSets) 
+						{ } else { return "visibility: hidden;";}
+					},
+					"img.rating@src": function(arg) {
+                       var output_rating = "pictures/vertical_ratings/dummy_rating.png";
+                        // Check to see if there are ratings
+                        if (arg.item.ratings) {
+						var boucle = true;
+						var rating = arg.item.ratings; 
+						
+						for (i = 0; boucle && i < rating.length; i++) 
+							{
+								if (rating[i].source == 'combined')
+								{
+									boucle = false;
+									output_rating = "pictures/vertical_ratings/rating_" + Math.round(rating[i].rating/10) + ".png"
+								} 
+							}
+						}
+						return output_rating;
+                    },
+					"img.rating@onclick": function(arg) {
+						 var output_rating_click = "";
+							// Check to see if there are ratings
+							if (arg.item.ratings) {
+							var boucle = true;
+							var rating = arg.item.ratings; 
+							
+							for (i = 0; boucle && i < rating.length; i++) 
+								{
+									if (rating[i].source == 'combined')
+									{
+										boucle = false;
+										output_rating_click = "open_rating_index('" + rating[i].source+ "','" + Math.round(rating[i].rating/10) + "')"
+									} 
+								}
+							}
+							return output_rating_click;
+					},
                     "img.poster@onclick": function(arg) {
                         return "setId('" + arg.item.videoType + "', " + arg.item.id + ")";
                     },
@@ -177,14 +227,8 @@
         // It will then update the HTML with the data and set up the paging
         function getIndexData()
         {
-
-			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
-			get_lang();
-			get_paging();
-			get_style();
-			get_player();
-			get_prefered_page();
-			get_new();
+			// get skin
+			get_Skin ();
 		
 		
  			
@@ -221,7 +265,7 @@
 						selected_index = selected_index;
 				};
 
-			 var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby="+sort_type+"&sortdir="+direction;	
+			 var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby="+sort_type+"&sortdir="+direction+"&dataitems=boxset,rating";	
 					if (window.localStorage.getItem("yearselected") == 'true' && window.localStorage.getItem("selection")) 
 								{
 									jsonUrl = jsonUrl + "&include=year-"+window.localStorage.getItem("selection");
@@ -233,7 +277,10 @@
 				
 								if (window.localStorage.getItem("search_index"))
 								{
-										selected_index = selected_index + "&nbsp;(" +window.localStorage.getItem("search_index").toUpperCase() + ")"
+									console.log("window.localStorage.getItem('search_index').substr(0, 11):"  +window.localStorage.getItem("search_index").substr(0, 11) + " window.localStorage.getItem('search_index').substr(14, 9):" + window.localStorage.getItem("search_index").substr(15, 9));
+									if (window.localStorage.getItem("search_index").substr(0, 11) =='&yearStart=' && window.localStorage.getItem("search_index").substr(15, 9) =='&yearEnd=')
+										{selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem("search_index").substr(11, 4)+ "-" + window.localStorage.getItem("search_index").substr(24, 4) + ")";}
+										else {selected_index = selected_index + "&nbsp;(" +window.localStorage.getItem("search_index").toUpperCase() + ")";}
 										jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("search_index") + "&field=title&mode="+index_method;
 										window.localStorage.setItem("search_index", "");	
 									} else { 
@@ -257,7 +304,7 @@
 					if (selected_index.length > 35)	{temp_style = "1.4vw";}
 					if (selected_index.length > 40)	{temp_style = "1.35vw";}
 					if (selected_index.length > 44)	{temp_style = "1.3vw";}
-					if (selected_index.length > 51)	{temp_style = "1.25vw";}
+					if (selected_index.length > 49)	{temp_style = "1.25vw";}
 					if (selected_index.length > 57)	{temp_style = "1.2vw";}
 					if (selected_index.length > 61)	{temp_style = "1.15vw";}
 					if (selected_index.length > 65)	{temp_style = "1.1vw";}
@@ -347,11 +394,16 @@
             <div id="yRow" class="row">
                 <div id="yBlock" class="block">
 					<img class="poster" src="pictures/dummy.png" alt="poster"  />
+					
+					
                     <img class="playbutton" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'" alt="next" title="play"></img>
 					<img class="infobutton" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'" alt="info" title="info" ></img>
 					<img class="watched_small" src="pictures/empty.png" alt="watched" onmouseout="src='pictures/empty.png'" title="watch"></img>
+					
 					<br>
                     <span class="title" ></span>
+					<img class="rating" src="./pictures/vertical_ratings/dummy_rating.png" onclick="" alt="rating"/>
+					<img class="boxset" src="./pictures/no_set.png" onclick="" alt="boxset"/>
                 </div>
                 <br />
             </div>

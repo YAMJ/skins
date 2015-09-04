@@ -20,9 +20,10 @@
 	<!-- close (child windows) person popup windows when program exit --> 
     <body onload="PersonData();" >   
         <script type="text/javascript">
-		
+		var outputperson_update	= new Array ();
 		 function PersonData()
         {
+			
 			var	type = localStorage.getItem("indextype");
 			var	id = localStorage.getItem ("id");
 			jsonUrl = "/yamj3/api/person/"+type+".json?id="+id+"&job=actor,director,writer&dataitems=artwork,biography";
@@ -106,7 +107,7 @@
 							return translate_job (outputperson_photo);
 						}
 					};
-
+			
 				updatePersonCount (yamjdata);
 				$p('.table_person_photo_frame').render(yamjdata, LIST_person_photo);	
 
@@ -124,7 +125,18 @@
 					return arg.context.count;
 			   }
 			};
+			var LIST_person_to_update = {
+             		'span.list_person_id': function(arg) 
+					{
+						var totalperson_to_update = arg.context.results;
+							for (i = 0; i < totalperson_to_update.length; i++) 
+							{
+								outputperson_update[i] = totalperson_to_update[i].id;
+							}	
+					}
+				};	
 		   $p('.counttest').render(data, ITEM_COUNT);
+		   $p('.updatetest').render(data, LIST_person_to_update);
 		}
 		
 	// adjust Person scroll bar 
@@ -152,11 +164,41 @@
 				parent.document.getElementById('person_display').style.visibility="hidden";
 				parent.document.getElementById('person_display').style.zIndex="2";
 			} 
+			
+	function update_all_person ()
+			{
+				console.log("update_all_person");
+				for (i = 0; i < outputperson_update.length; i++) 
+							{
+								console.log("update_all_person i: "+ i +" outputperson_update[i]:" + outputperson_update[i]);
+								update_person(outputperson_update[i]);
+							}
+				 close_person();
+				
+			} 
+	function update_person (Person_id)
+		{
+			jsonUpdateUrl = "/yamj3/api/rescan/person/" + Person_id;
+			console.log("Popup_Person_Biography URL: " + jsonUpdateUrl);
+			// main API call         
+					$.ajax({
+						url: jsonUpdateUrl,
+						async: false,
+					   dataType: 'jsonp',
+					   'success': function(data)
+						{
+						}
+					})
+		}
         </script>
 <!-- *************************************************************************************************************** -->	   
-		<div id="close_icon" onclick="close_person()" style="position: absolute; top: 0px; left: 0px;"><img src="./pictures/close2.png" width="40"/></div>
+		<div id="close_icon" title="close" onclick="close_person()" style="position: absolute; top: 0px; left: 0px;"><img src="./pictures/close2.png" width="40"/></div>
+		<div id="update_icon" title="update all person" onclick="update_all_person('');" style="position: absolute; top: 3px; right: 40px;"><img  src="./pictures/update_watched.png" width="27"/></div>
 		<div class="counttest" style="visibility: hidden">
 					<td><span class="itemcount"></span></td>
+		</div> 
+		<div class="updatetest" style="visibility: hidden">
+					<td><span class="list_person_id"></span></td>
 		</div> 
 		<div id="person_cv"> </div>
 					

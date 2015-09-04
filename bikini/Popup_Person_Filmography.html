@@ -211,6 +211,7 @@
 			//	document.getElementById("_title").innerHTML=window.localStorage.getItem('title_label')
 			document.getElementById("close_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('close_label').toLowerCase();
 			document.getElementById("back_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('return_label').toLowerCase();
+			document.getElementById("update_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('update_label').toLowerCase() + " " + localStorage.getItem('filmography_label').toLowerCase();
 			}
 			
 			
@@ -295,6 +296,20 @@
 			console.log ('Popup_Person sort_by_year sort_index:'+ window.localStorage.getItem('popup_person_sort')+' sort_direction:' + window.localStorage.getItem("popup_person_sort_direction"));
 			window.location.href=location.href;
 		}
+	function update_filmography ()
+		{
+		jsonUpdateUrl = "/yamj3/api/rescan/filmography/" + localStorage.getItem ("Person_id");
+		console.log("Popup_Person_Biography URL: " + jsonUpdateUrl);
+        // main API call         
+                $.ajax({
+                    url: jsonUpdateUrl,
+                    async: false,
+                   dataType: 'jsonp',
+                   'success': function(data)
+                    {
+					}
+				})
+		}
         </script>
 		
 		<!-- just added to set the language value, shouldn't be displayed  -->
@@ -311,6 +326,7 @@
 						<div id="Filmography_selector" style="background: green;">FILMOGRAPHY</div>
 					</div>
 					<td rowspan="4"><span class="image" style="position:relative; top: 40px;"></span></td>
+					<div id="update_icon" data-tip-person="update" onclick="update filmography(); close_person();" style="position: absolute; top: 3px; right: 40px;"><img  src="./pictures/update_watched.png" width="27"/></div>
 					<a id="close_icon" data-tip-person="close" onclick="close_person()"><img src="./pictures/close2.png" width="35"/></a>
 					<a id="back_icon" data-tip-person="return" href="javascript:back()"><img src="./pictures/returnbutton.png" width="30" align="left" /></a>
 						<td id="biography_name">

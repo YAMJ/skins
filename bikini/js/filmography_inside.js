@@ -40,10 +40,10 @@
 								for (j = 0; j < filmography_list.length && boucle_filmography_compare; j++) {
 							//		console.log ('Popup_person filmography_list.length:' + filmography_list.length + ' filmography_list['+j+'].title:' + filmography_list[j].title + ' filmography_inside_list[' + i + '].title:' +filmography_inside_list[i].title);
 							//	check if it is a movie inside 
-								if (filmography_list[j].title == filmography_inside_list[i].title)
+								if (filmography_list[j].originalTitle == filmography_inside_list[i].originalTitle)
 										{
 										boucle_filmography_compare = false; 
-										console.log ("Popup_person found in filmography a movie stored in db: " +  filmography_list[j].title + " index j:" + j);
+										console.log ("Popup_person found in filmography a movie stored in db: " +  filmography_list[j].originalTitle + " index j:" + j);
 										$("#inside_href"+j).css("color", "red");
 										$("#inside_href"+j).css("font-weight", "bold");
 										document.getElementById("inside_href"+j).href="javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "')";
@@ -94,7 +94,7 @@
 	function get_poster (type, videodataId, i) 
 			{
 		//	var jsondata = null;
-				jsonPoster = "/yamj3/api/video/" + type.toLowerCase() + "/" + videodataId + ".json?dataitems=artwork";
+				jsonPoster = "/yamj3/api/video/" + type.toLowerCase() + "/" + videodataId + ".json?dataitems=artwork,externalid";
 				console.log("Popup_Person jsonPoster: " + jsonPoster);
 				$.ajax({
                     url: jsonPoster,

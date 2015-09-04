@@ -26,7 +26,7 @@
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 				get_lang();	
 					
-               jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=artwork,biography";
+               jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=status,artwork,biography,externalid";
 				if (window.localStorage.getItem('Style') == "frame") {init_person_popup(id);}
                 var jsondata = null;
 				switch (back_close)
@@ -108,7 +108,86 @@
                         } else {
                             return "pictures/dummy_photo.jpg";
                         }
-                    }
+                    },
+					'span.external_Id': function(arg) {
+								var output_externalid = "<text style='margin-left: 5vw;'>"+window.localStorage.getItem('source_label')+" </text><text><img src=\"./pictures/add.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_class('externalId_add')\" /></text>";
+								if (arg.context.result.externalIds)
+								{
+									var external_list = arg.context.result.externalIds; 
+									for (var i = 0; i < external_list.length; i++) {
+										switch (external_list[i].sourcedb.toLowerCase())
+											{
+											case 'allocine':
+												{	
+													if (external_list[i].skipped) 
+													{ 
+														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" + localStorage.getItem('delete_text').toLowerCase() + "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
+														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase() + "' src=\"./pictures/open2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"enable_external_source('" + arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
+														+ "<a class='external_href' style='text-decoration: line-through; color: red;' href='http://www.allocine.fr/personne/fichepersonne_gen_cpersonne=" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";}
+													else 
+													{ 
+														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" + localStorage.getItem('delete_text').toLowerCase() + "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
+														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase() + "' src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
+														+ "<a class='external_href' href='http://www.allocine.fr/personne/fichepersonne_gen_cpersonne=" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";}
+													break;
+												}
+											case 'tmdb':
+												{	
+													if (external_list[i].skipped) 
+													{ 
+														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" + localStorage.getItem('delete_text').toLowerCase() + "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
+														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase() + "' src=\"./pictures/open2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"enable_external_source('"+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
+														+ "<a class='external_href' style='text-decoration: line-through; color: red;' href='https://www.themoviedb.org/person/" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";}
+													else 
+													{ 
+														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" + localStorage.getItem('delete_text').toLowerCase() + "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
+														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase() + "' src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
+														+ "<a class='external_href' href='https://www.themoviedb.org/person/" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";}
+													break;
+												}
+											case 'imdb':
+												{	
+													if (external_list[i].skipped) 
+													{ 
+														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" + localStorage.getItem('delete_text').toLowerCase() + "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
+														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase() + "' src=\"./pictures/open2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"enable_external_source('"+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
+														+ "<a class='external_href' style='text-decoration: line-through; color: red;' href='http://www.imdb.com/name/" + external_list[i].externalId + "' target='_blank' >"+ external_list[i].externalId + "</a>";}
+													else 
+													{ 
+														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" + localStorage.getItem('delete_text').toLowerCase() + "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
+														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase() + "' src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
+														+ "<a class='external_href' href='http://www.imdb.com/name/" + external_list[i].externalId + "' target='_blank' >"+ external_list[i].externalId + "</a>";}
+													break;
+												}
+											default: 
+												{
+													output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" + localStorage.getItem('delete_text').toLowerCase() + "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
+													+ "<img src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>" +  external_list[i].externalId + "&nbsp; ";
+													break;
+												}
+											}
+										}
+								}
+								return output_externalid;
+							
+							}, 
+							'span.externalId_delete_form': function (arg) {
+								var output_externalid_form = ''; 
+								if (arg.context.result.externalIds)
+								{
+									var external_list_form = arg.context.result.externalIds; 
+									for (var i = 0; i < external_list_form.length; i++) {
+										
+													output_externalid_form = output_externalid_form
+													+ "<form id='delete_"+ external_list_form[i].sourcedb +"' style='position: absolute; top:25.6vw; left: 11vw; display: none; width: 20vw; text-align: center; background-color:rgba(0, 0, 0, 0.9); border: 2px solid grey; color: white;' action=\"javascript:open_delete_externalId ('"+ arg.context.result.id + "','"  + external_list_form[i].sourcedb + "')\" method='post'>"
+													+ "<label for='delete_"+ external_list_form[i].sourcedb +"'>"+window.localStorage.getItem('source_label')+" "+ external_list_form[i].sourcedb + " </label>"
+													+ "<INPUT type='submit' value='"+window.localStorage.getItem('delete_text')+"'></input>"
+													+ "</form>"	;
+									
+											}
+								}
+								return output_externalid_form;
+							}
                 };
 		
 
@@ -179,7 +258,8 @@
 			//	document.getElementById("_title").innerHTML=window.localStorage.getItem('title_label')
 			document.getElementById("close_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('close_label').toLowerCase();
 			document.getElementById("back_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('return_label').toLowerCase();
-
+			document.getElementById("update_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('update_label').toLowerCase() + " " + localStorage.getItem('person_label');
+			document.getElementById("update_icon_artwork").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('update_label').toLowerCase() + " photo";
 
 			}
 			
@@ -202,8 +282,105 @@
 			parent.document.getElementById('target_display').style.zIndex="11";
 			$('.biography').css('max-height', '55vh');
 			$('.biography').css('height', 'auto');
+			document.getElementById("sourcelabel").innerHTML=window.localStorage.getItem('source_label').toLowerCase();
+			document.getElementById("updatelabel").innerHTML=window.localStorage.getItem('update_label').toLowerCase();
 		}
 
+		function update_person (update_type)
+		{
+			if (update_type == 'artwork') 
+			{jsonUpdateUrl = "/yamj3/api/rescan/person/artwork/" + localStorage.getItem ("Person_id");}
+			else {jsonUpdateUrl = "/yamj3/api/rescan/person/" + localStorage.getItem ("Person_id");}
+			console.log("Popup_Person_Biography URL: " + jsonUpdateUrl);
+			// main API call         
+					$.ajax({
+						url: jsonUpdateUrl,
+						async: false,
+					   dataType: 'jsonp',
+					   'success': function(data)
+						{
+						}
+					})
+		}
+	function open_update_externalId (id, source_to_set, id_to_set)
+		{
+				jsonUrlUpdateExternalId = "/yamj3/api/person/updateexternalid.json?id=" + id + "&sourcedb=" + source_to_set + "&externalid=" + id_to_set;
+				console.log("open_update_externalId jsonUrlUpdateExternalId: " + jsonUrlUpdateExternalId);
+			
+        //  externalId update API call         
+                $.ajax({
+                    url: jsonUrlUpdateExternalId,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(data)
+                    {
+                        jsondata = data;
+					//	 outputJson(data); 
+					close_person (); 
+				
+					}
+                });
+		}
+		function open_delete_externalId (id, source_to_set)
+		{
+				jsonUrlDeleteExternalId = "/yamj3/api/person/removeexternalid.json?id=" + id + "&sourcedb=" + source_to_set ;
+				console.log("open_delete_externalId jsonUrlDeleteExternalId: " + jsonUrlDeleteExternalId);
+			
+        //  externalId update API call         
+                $.ajax({
+                    url: jsonUrlDeleteExternalId,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(data)
+                    {
+                        jsondata = data;
+					//	 outputJson(data); 
+					
+					close_person ();
+				
+					}
+                });
+		}
+		function enable_external_source (id, source_to_set)
+		{
+				jsonUrlEnable_external_source = "/yamj3/api/person/enableonlinescan.json?id=" + id + "&sourcedb=" + source_to_set ;
+				console.log("enable_external_source jsonUrlEnable_external_source: " + jsonUrlEnable_external_source);
+			
+        //  external_source enable API call         
+                $.ajax({
+                    url: jsonUrlEnable_external_source,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(data)
+                    {
+                        jsondata = data;
+					//	 outputJson(data); 
+					
+					close_person ();
+				
+					}
+                });
+		}
+		function disable_external_source (id, source_to_set)
+		{
+				jsonUrlDisable_external_source = "/yamj3/api/person/disableonlinescan.json?id=" + id + "&sourcedb=" + source_to_set ;
+				console.log("disable_external_source jsonUrlDisable_external_source: " + jsonUrlDisable_external_source);
+			
+        //  external_source enable API call         
+                $.ajax({
+                    url: jsonUrlDisable_external_source,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(data)
+                    {
+                        jsondata = data;
+					//	 outputJson(data); 
+					
+					close_person (); 
+				
+					}
+                });
+		}
         </script>
 		
 		<!-- just added to set the language value, shouldn't be displayed  -->
@@ -220,7 +397,9 @@
 						<div id="Filmography_selector" onclick="open_filmography_popup(localStorage.getItem ('Person_id'), window.localStorage.getItem('back_close'))">FILMOGRAPHY</div>
 					</div>
 					<td rowspan="4"><span class="image" style="position:relative; top: 40px;"></span></td>
-					<div id="close_icon" data-tip-person="close" onclick="close_person()"><img src="./pictures/close2.png" width="35"/></div>
+					<div id="update_icon_artwork" data-tip-person="update photo" onclick="update_person('artwork'); close_person();" style="position: absolute; top: 50px; left: 142px; z-index: 1;"><img  src="./pictures/update_watched.png" width="27"/></div>
+					<div id="update_icon" data-tip-person="update person" onclick="update_person('id'); close_person();" style="position: absolute; top: 3px; right: 40px;"><img  src="./pictures/update_watched.png" width="27"/></div>
+					<div id="close_icon" data-tip-person="close" onclick="close_person()"><img src="./pictures/close2.png" width="30"/></div>
 					<a id="back_icon" data-tip-person="return" href="javascript:back()"><img src="./pictures/returnbutton.png" width="30" align="left" /></a>
 						<td id="biography_name">	
 							<span class="name"></span>: 
@@ -232,7 +411,26 @@
                     <td><span class="biography"></span></td>
                 </tr>
             </table>
+			<div class="external_bio">
+				<table >
+					<tr>
+						<td><span class="external_Id"></span></td>
+					</tr>
+				</table>
+			</div>
+			<div class="externalId_delete" >
+				<span class="externalId_delete_form" style="position: absolute; top:0.1vw; left: 5vw; display:none;"/>
+			</div>
         </div>
+		<div class="externalId_add">
+			<form action="javascript:open_update_externalId (id, document.getElementById('external_source').value, document.getElementById('external_id').value)" method="post" style="margin-bottom: 0px;">
+				<label for="external_source"><div id="updatelabel" style="display: inline;"></div>:&nbsp;<div id="sourcelabel" style="display: inline;"></div></label>
+				<input id="external_source" type="text" ></input>
+				<label for="external_id">Id</label>
+				<input id="external_id" type="text" ></input>
+				<INPUT type="submit" ></input>
+			</form>
+		</div>	
 		<div class="Filmography_in" style="top: 65vh;left: 0.5vw;width: 95vw;">
 			<table class="result_filmography_inside">
 				<tr>

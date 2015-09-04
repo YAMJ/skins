@@ -17,7 +17,7 @@
 		<script src="js/config.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>
-		<script src="js/library.js"></script>
+		<script src="js/library2.js"></script>
 
 		<link rel="stylesheet" type="text/css" href="css/yamj-config-style.css">
 		<link rel="stylesheet" type="text/css" href="css/yamj-config.css">
@@ -38,7 +38,7 @@ input:-moz-placeholder { color:black; }
     </head>
 	
 	
-  <body onload="getIndexData();">
+  <body onload="getConfigIndexData();">
   <script type="text/javascript">
 		
 
@@ -54,27 +54,25 @@ input:-moz-placeholder { color:black; }
         // It will then update the HTML with the data and set up the paging
 		var index_type = "movie,series";
 		var skin_set = "bikini_skin_0";
+		var player_list_ = new Array(); 
+		var certification_list_ = new Array(); 
 		
-		function getIndexData ()
+	
+		function getConfigIndexData ()
 		{
 				var index_type = "movie,series";
 				if (window.localStorage.getItem("indextype"))
 					{index_type = window.localStorage.getItem("indextype");}
 					else {window.localStorage.setItem("indextype", index_type);}
 					
-				
-				get_lang();
-				get_player();
-				get_paging ();
-				get_new();
-				get_style();
-				get_poster_number ();
-				
 				if (window.localStorage.getItem("skinset"))
 					{skin_set = window.localStorage.getItem("skinset");
-					console.log("config2 already setted skinset:" + skin_set);}
+					console.log("config2 use skin already setted skinset:" + skin_set);}
 					else {window.localStorage.setItem("skinset", skin_set);
-					console.log("config2 skin to set: " + skin_set);}
+					console.log("config2 default skin set: " + skin_set);}
+					
+
+				get_lang();
 				
 				var jsondata = null;
 				var jsonUrl = "/yamj3/api/config/list.json?config=" + skin_set +"&mode=any";
@@ -187,6 +185,12 @@ input:-moz-placeholder { color:black; }
 												+ window.localStorage.getItem("prefered_");
 												break;
 											}
+											case 'prefered_certification':
+											{
+												return "<img title='" + window.localStorage.getItem("certification_label") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												+ window.localStorage.getItem("certification_label");
+												break;
+											}
 											case 'New':
 											{
 												return "<img title='" + window.localStorage.getItem("new_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
@@ -206,10 +210,14 @@ input:-moz-placeholder { color:black; }
 											{
 												var player_output = "<select id='formKey" +arg.item.key+ "' style='height:18px;'></input>"
 												+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("player_comment") + "'></option>"
-												if (player_list.length == 0) {get_player_();}
+												if (player_list.length == '0') {
+													console.log("config2 player list length: " + player_list.length + " call get_player_");
+													get_player_();}
 												console.log("config2 player list length: " + player_list.length);
-												for (var i = 0; i < player_list.length; i++) {
-													player_output = player_output + "<option value='" + player_list[i] + "'>" + player_list[i] + "</option>";
+												
+												get_player_list();
+												for (var i = 0; i < player_list_.length; i++) {
+													player_output = player_output + "<option value='" + player_list_[i].name + "'>" + player_list_[i].name + "</option>";
 													}
 												return player_output + "</select>";
 												break;
@@ -247,6 +255,18 @@ input:-moz-placeholder { color:black; }
 														+ "<option value='fr'>fr</option>"
 														+ "<option value='it'>it</option>"
 														+ "</select>";
+												break;
+											}
+											case 'prefered_certification':
+											{
+												var certification_output = "<select id='formKey" +arg.item.key+ "' style='height:18px;'></input>"
+												+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("certification_label") + "'></option>"
+												
+												get_certification_list();
+												for (var i = 0; i < certification_list_[0].value.length; i=i+3) {
+													certification_output = certification_output + "<option value='" + certification_list_[0].value.substring(i,i+2) + "'>" + certification_list_[0].value.substring(i,i+2) + "</option>";
+													}
+												return certification_output + "</select>";
 												break;
 											}
 											case 'style':
@@ -305,6 +325,7 @@ input:-moz-placeholder { color:black; }
 											case 'player':
 											case 'style':
 											case 'paging':
+											case 'prefered_certification':
 											case 'prefered_page':
 											{
 												return "<form><input type=\"button\" value='"+ window.localStorage.getItem('update_label') + "' onclick=\"Update_SkinData('" +arg.item.key+ "', document.getElementById('formKey" +arg.item.key+ "').value)\"/></form>"
@@ -333,6 +354,69 @@ input:-moz-placeholder { color:black; }
 			
 			}
 			
+		function get_player_list() {
+					
+				var jsonPlayer_count_Url = "/yamj3/api/player/list.json?";
+				console.log("get_player_list jsonPlayer_count_Url: " + jsonPlayer_count_Url);
+				$.ajax({
+                   url: jsonPlayer_count_Url,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSkinPlayerCount)
+                   {
+						jsondata = dataSkinPlayerCount;
+				//		outputJson(dataSkinPlayer);
+						var PLAYER_COUNT = {
+						"td.Value":  function(arg) {
+										if (arg.context.count) {
+											console.log ("get_player_list: count= "+arg.context.count);	
+											player_list_ = arg.context.results;
+											return player_list_;
+											}
+											else {
+											console.log("checkPlayer: no value found");
+								//			update_Player(default_player);
+											}
+										}								
+							
+						};
+				
+				$p('.results').render( dataSkinPlayerCount, PLAYER_COUNT );
+				}
+				
+				});	
+		}	
+		function get_certification_list() {
+					
+				var jsonCertification_count_Url = "/yamj3/api/config/list.json?config=yamj3.certification.countries";
+				console.log("get_certification_list jsonCertification_count_Url: " + jsonCertification_count_Url);
+				$.ajax({
+                   url: jsonCertification_count_Url,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataCertificationCount)
+                   {
+						jsondata = dataCertificationCount;
+				//		outputJson(dataSkinPlayer);
+						var CERTIFICATION_COUNT = {
+						"td.Value":  function(arg) {
+										if (arg.context.count) {
+											console.log ("get_certification_list: "+arg.context.results[0].value);	
+											certification_list_ = arg.context.results;
+											return certification_list_;
+											}
+											else {
+											console.log("checkcertification: no value found");
+											}
+										}								
+							
+						};
+				
+				$p('.results').render( dataCertificationCount, CERTIFICATION_COUNT );
+				}
+				
+				});	
+		}	
 		function Update_SkinData_New(key_to_update, days_value, type_value)
 			{
 				var New_value = days_value + "-" + type_value;
@@ -396,6 +480,11 @@ input:-moz-placeholder { color:black; }
 							window.localStorage.setItem("Paging", target_value);
 							break; 
 						}
+					case 'prefered_certification':
+						{ 
+							window.localStorage.setItem("prefered_certification", target_value);
+							break; 
+						}
 					case 'prefered_page':
 						{ 
 							window.localStorage.setItem("prefered_page", target_value);
@@ -414,7 +503,6 @@ input:-moz-placeholder { color:black; }
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
 		function set_context_lang_value ()
 		{
-
 			document.getElementById("SkinSetted").innerHTML=window.localStorage.getItem("skin_") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("skinset").substring(0,(window.localStorage.getItem("skinset").length - 1)) ;
 			document.getElementById("skinlabel").innerHTML=window.localStorage.getItem("selection_label") + "&nbsp;" + window.localStorage.getItem("skin_");
 			document.getElementById("close_icon").title=localStorage.getItem('close_label').toLowerCase();
@@ -463,7 +551,7 @@ input:-moz-placeholder { color:black; }
 								<tr class="tableskin">
 									<td>
 										<form><label id='skinlabel' style="color: white; text-align: center;"></label>
-											<select id="skin_id" style="height:18px;" onchange="update_Skin(document.getElementById('skin_id').value);window.location.reload();">
+											<select id="skin_id" style="height:18px;" onchange="update_Skin_(document.getElementById('skin_id').value);">
 												<option value=""></option>
 												<option value="bikini_skin_0_">0(default)</option>
 												<option value="bikini_skin_1_">1</option>

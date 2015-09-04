@@ -1,4 +1,40 @@
 change.txt
+v2.0.0
+- fix info config button in index page
+- add toggle person frame on detail page
+- adjust rescan movie in detail page
+- add rescan person
+- add rescan filmography
+- add rescan movie artwork 
+- add rescan person artwork 
+- adjust search people with first_name and last_name 
+- add boxset icon if movie is in a boxset in index wall
+- add rating in movie wall 
+- add boxset contents display with boxset icon
+- add rating contents display with rating icon 
+- add sourceId display if enable or disable 
+- add global rescan  for people in a movie
+- add rescan artwork for boxset
+- fix boxset with '
+- add enable / disable external_id for person 
+- add trailer in detail page 
+- add delete / ignore / download trailer
+- add display boxset artwork if available otherwise 1rst movie artwork
+- add popup info and translation to various activ fields in datil page and biography page 
+- add rescan person 
+- add rescan photo for person 
+- add rescan filmography
+- add update / delete / ignore for person with source (imdb, allocine , tmdb) 
+- add boxset artwork display 
+- adjust country to new country API return
+- adjust language to new language API return
+- adjust sort person by name , default if no search order
+- add year selection and decade selection menu
+- add library2 which now use player, paths stored under player information
+- add prefered certification country within skin settings 
+- adjust country with ISO code in navCountry, mediainfo (detail page), indexCountry
+- adjust set and reset watched with new watched strategy
+- adjust rewrite skin setting
 V1.6.1
 - adjust play button in detail page 
 - add prefered page in detail page

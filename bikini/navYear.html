@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		
+		<script src="js/jQuery.js"></script>
+        <!-- Used for the JSON parsing -->
+        <script src="js/pure.js"></script>
+        <!-- Used for the paging of the index -->
+        <script src="js/js.js"></script>
+        <script src="js/jPages.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/lang.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>	
+		<script src="js/library2.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
+        <!-- Used for the paging of the index -->
+        <link rel="stylesheet" href="css/jPages.css">
+        <!-- Used for the fancy animations -->
+        <link rel="stylesheet" href="css/animate.css">
+		<!-- used for iscroll special -->
+		<script type="text/javascript" src="js/iscroll.js"></script>
+		
+		<title>YAMJv3 Navigation year index</title>
+	
+    </head>
+    <body onload="NavData(); addShowAlt('img');">
+        <script type="text/javascript">
+		var menuleft_toggle = 0;
+		var index_type = "movie,series";
+		var ForceStyleValue = "page";
+		var Prefered_PageValue = "index_all";	
+		// get the prefered_page
+		if (localStorage.getItem("prefered_page"))
+			{Prefered_PageValue = localStorage.getItem("prefered_page");}
+			else {localStorage.setItem("prefered_page", Prefered_PageValue);}
+		var year_selection = "decades";	
+		// get the year_selection
+		if (localStorage.getItem("year_selection"))
+			{year_selection = localStorage.getItem("year_selection");}
+			else {localStorage.setItem("year_selection", year_selection);}	
+			
+			
+		 function NavData()
+        {
+
+		// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+			get_lang();
+			get_style();
+			get_player();
+			get_prefered_page();
+			
+			if (window.localStorage.getItem("indextype"))
+				{index_type = window.localStorage.getItem("indextype");
+				console.log("navYear get: " + index_type);
+				}
+				else {window.localStorage.setItem("indextype", index_type);
+				console.log("navYear set: " + index_type);}
+		    var jsonUrl = "/yamj3/api/video/"+ year_selection + "/list.json?type=" + index_type;
+			console.log("navYear index_type: " + index_type);
+			switch (index_type.toUpperCase())
+				{
+				   
+					case 'ALL':
+						selected_index = window.localStorage.getItem('all_select').toUpperCase();
+						break;
+					case 'MOVIE,SERIES':
+						selected_index = window.localStorage.getItem('all_select').toUpperCase();
+						break;
+					case 'MOVIE':
+						selected_index = window.localStorage.getItem('movie_select').toUpperCase();
+						break;
+					case 'SERIES':
+						selected_index = window.localStorage.getItem('series_select').toUpperCase();
+						break;
+					case 'SEASON':
+						selected_index = window.localStorage.getItem('season_select').toUpperCase();
+						break;
+				
+				};
+			$('#printsearch').html(window.localStorage.getItem('year_label').toUpperCase()+' '+selected_index);
+
+            console.log("navYear URL: " + jsonUrl);
+            var jsondata = null;
+
+            $.ajax({
+                url: jsonUrl,
+                async: false,
+                dataType: 'jsonp',
+                'success': function(data)
+                {
+                    jsondata = data;
+				//	 outputJson(data); 
+                    updateHtml(data);
+				
+				// adjust number per page with the popup width and poster + container width			
+                      if (window.localStorage.getItem("Paging") == 'true') { 	
+					get_poster_number ();
+					console.log("navYear GetIndexData: perPageValue="+perPageValue+" paging:"+ window.localStorage.getItem('Paging'));
+                	pageData(perPageValue);
+					}
+                }
+            });
+            return jsondata;
+        }
+		
+//****************************************************************************		
+		
+     function updateHtml(yamjdata)
+     {
+			var COUNT_HEADER = {
+                'span.ReturnCount': function(arg) {	
+					return arg.context.count+' '+ window.localStorage.getItem('results_text');
+					}
+				};	
+		    var LIST_DIR = {
+            "div.block": {
+                "result<-results": {
+		
+					 "img.year_logo@src": function(arg) {
+						if (year_selection == 'decades')
+							{return "pictures/decade/"+arg.item.decade+".png";}
+							else 
+							{return "pictures/year/"+arg.item.year+".png";}
+                           },
+					 "img.year_logo@alt": function(arg) {
+						if (year_selection == 'decades')
+							{return arg.item.decade;}
+							else 
+							{return arg.item.year;}
+                           },	
+						
+					 "img.year_logo@onclick": function(arg) {
+						if (year_selection == 'decades')
+							{return "SetIndexData('" + arg.item.decade + "','"+ year_selection + "')";}
+							else 
+							{return "SetIndexData('" + arg.item.year + "','"+ year_selection + "')";}
+                           }
+						}
+					}
+				};
+
+			$p('.count_return_year').render(yamjdata, COUNT_HEADER);	
+            $p('div.row').render(yamjdata, LIST_DIR);
+			
+	}
+		
+		
+//***************************************************************************************************************				
+		function SetIndexData (decadename, year_selection)
+		{	
+			direction_temp = window.localStorage.getItem("direction")
+			var search_decade = ""; 
+			if (year_selection == 'decades')
+				{ search_decade = "&yearStart=" + decadename + "&yearEnd=" + (parseInt(decadename, 10) + 9);}
+				else 
+				{ search_decade = "&yearStart=" + decadename + "&yearEnd=" + decadename;}
+			console.log("navYear SetIndexData: search="+search_decade+ " method_selected="+index_type+ " direction="+direction_temp+ " ForceStyleValue="+ForceStyleValue);	
+			
+			window.localStorage.setItem("search_index", search_decade);	
+			window.localStorage.setItem("nextcurrent_count", '-1');
+			
+			
+			switch (index_type.toUpperCase())
+				{
+					case 'ALL':
+					case 'MOVIE':
+					case 'SERIES':
+					case 'SEASON':
+					case 'MOVIE,SERIES':
+						localStorage.setItem("selection", decadename);
+						localStorage.setItem("indextype", index_type.toLowerCase());
+						if (index_type.toLowerCase() == 'all') {localStorage.setItem("indextype", "movie, series");}
+						switch (ForceStyleValue)
+							{
+								case 'page':
+									window.location.href="index.html";
+								break;
+								case 'ribbon':
+									ouvre_ribbon_index('navData.html', direction_temp, index_type, decadename);
+								break;
+								case 'popup':
+									ouvre_popup_index('navData_frame.html', direction_temp, index_type, decadename);
+								break;
+								case 'frame':
+									console.log("SetIndexData navData_frame:  " +decadename+ " with style:"+ForceStyleValue);
+									parent.frames['movie_frame'].location.href='navData_frame.html';
+									parent.document.getElementById('movie_frame').style.display="block";
+									parent.document.getElementById('movie_display').style.visibility="visible";	
+									
+								break;
+							}
+						break;
+					
+				};
+				
+		
+		}
+		function clean_person_list ()
+		
+		{
+				var elements = document.getElementsByClassName('year_logo');
+					for(var i = 0, length = elements.length; i < length; i++) {
+		//				console.log ("elements[i].alt: " + elements[i].alt);
+						if( elements[i].alt == '&' || elements[i].alt == '(' || elements[i].alt == '-'){
+							elements[i].style.display = 'none';
+							document.getElementsByClassName('block')[i].style.display = 'none';
+							document.getElementsByClassName('ReturnCount')[0].textContent = (parseInt(document.getElementsByClassName('ReturnCount')[0].textContent, 10) - 1)  +' '+ window.localStorage.getItem('results_text');
+		//					console.log ("document.getElementsByClassName('ReturnCount')[0] " + (parseInt(document.getElementsByClassName('ReturnCount')[0].textContent, 10) - 1));
+							}
+					}
+		  }
+// *******************************to fix alt bug with chrome ***************************************************************************************
+	function showAlt(){$(this).replaceWith(this.alt)};
+	function addShowAlt(selector){$(selector).error(showAlt).attr("src", $(selector).src)};	
+//************************ LANGUAGE LOCAL SETTING *********************************************		
+
+		function set_context_lang_value ()
+		{
+			
+			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('info_label').toLowerCase();
+			document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
+			
+		}
+
+        </script>
+
+    <div class="index_header"> 
+			<a href="javascript:ouvre_prefered_page()" id="li_home_left" data-tip2="prefered page"></a>
+			<a id="info_config" data-tip2="info" href="javascript:ouvre_info_config()" ></a>
+				<!-- display screen name and number of genre  --> 		
+					<div class="show_index_genre"><span id="printsearch"></span></div>
+					<div class="count_return_year">
+						   <span class="ReturnCount"></span> 
+					</div>
+		<!-- just added to set the language value, shouldn't be displayed  -->
+			<div class="results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Value"></td></tr></table>
+			</div>	
+			<!-- include navigation header after context return , page info and count return -->		
+			<div>
+				<object data="include_header_nav_menu.html" type="text/html" id="my_header_menu" style="position: absolute; height: 70px; width: 30%; left: 50%; z-index:10; top: 0px;"></object>
+			</div>
+			
+        <!--Navigation Holder-->
+        <div class="holder"></div>
+	</div>
+<!-- add left menu dynamically from a separate file --> 
+	<div >
+      <object data="include_left_menu.html" type="text/html" id="my_left_menu"></object>
+    </div>
+   
+		 <!--Data Items Container-->
+		<div id="container">
+            <div id="yRow" class="row">
+                <div id="yBlock" class="block">
+                    <img class="year_logo" src="./pictures/title/@.png" alt="title" ><br>
+                <!--    <span class="decade"></span> -->
+                </div>
+            </div>
+        </div>
+
+	<!-- display Movie -->
+		<div id="movie_display" style="visibility: hidden; ">
+			<iframe src="" name="movie_frame" resizable="yes" id="movie_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1245px; height:265px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display person -->
+		<div id="person_display" style="visibility: hidden; ">	
+			<iframe src="" name="person_frame" resizable="yes" id="person_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1220px; height:335px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display config -->
+		<div id="target_display" style="visibility: hidden; ">		
+			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:1050px; height:335px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display source data from API if needed  -->
+        <div id="sourceData"></div>
+    </body>
+</html>

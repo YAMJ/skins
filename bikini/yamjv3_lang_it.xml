@@ -15,9 +15,11 @@
 	<boxsetlabel>set</boxsetlabel>
 	
 	<certificationlabel>certificazione</certificationlabel>
+	<clicktodisplaywith>clicca qui per verdere i video con</clicktodisplaywith>
 	<closenavigationmenu>chiude il menu di navigazione</closenavigationmenu>
 	<closelabel>close</closelabel>
 	<closeremotelabel>close remoto</closeremotelabel>
+	<combinedlabel>combinato</combinedlabel>
 	<configselected>configurazione</configselected>
 	<countrylabel>paese</countrylabel>
 	<countryselected>paese</countryselected>
@@ -29,6 +31,7 @@
 	<detailcomment>dettaglio</detailcomment>
 	<directorlabel>dirretore</directorlabel>
 	<downlabel>basso</downlabel>
+	<downloadtext>scaricare</downloadtext>
 	
 	<ejectlabel>espellere</ejectlabel>
 	<enterdaynumber>immettere il numero di giorni</enterdaynumber>
@@ -54,6 +57,7 @@
 	
 	<homelabel>casa</homelabel>
 	
+	<ignoretext>ignorare</ignoretext>
 	<infolabel>info</infolabel>
 	
 	<keylabel>chiave</keylabel>

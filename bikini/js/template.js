@@ -735,7 +735,7 @@
 				{ 
 					Prefered_CertificationValue = window.localStorage.getItem("prefered_certification");
 					console.log("get_prefered_certification prefered_certification: " + Prefered_CertificationValue);
-					get_prefered_certification_();
+				//	get_prefered_certification_();
 				}
 				else {get_prefered_certification_();}
 			}
@@ -1105,7 +1105,7 @@
 			 else {update_skin_(skin_default_);}
 
 		}	
-	// update  the skin value in the config database and all value in the local storage
+	// check to update the skin value in the config database and all value in the local storage
 	function update_Skin (skin_) 
 		{
 			if (window.localStorage.getItem("skinset"))
@@ -1116,7 +1116,7 @@
 			
 
 		}	
-	// update  the skin value in the config database and all value in the local storage
+	// update the skin value in the config database and all value in the local storage
 	function update_Skin_(skin_) 
 		{
 			console.log ('update_skin_: set skin ' + skin_ + ' and update all value');
@@ -1126,7 +1126,7 @@
 			get_player_();
 			get_poster_number_ ();
 			get_prefered_page_();
-			get_prefered_certification();
+			get_prefered_certification_();
 			get_paging_();
 			get_new_();
 			get_lang_();

@@ -26,7 +26,7 @@
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 				get_lang();	
 					
-               jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=status,artwork,biography,externalid";
+               jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=status,filmography_status,artwork,biography,externalid";
 				if (window.localStorage.getItem('Style') == "frame") {init_person_popup(id);}
                 var jsondata = null;
 				switch (back_close)
@@ -76,6 +76,7 @@
 								}
 							},
                     'span.biography': function(arg) {
+								
 								if (arg.context.result.biography) 
 								{
 									return arg.context.result.biography;
@@ -96,6 +97,11 @@
                             return "<img src=\"pictures/dummy_photo.jpg\">";
                         }
                     },
+					'img.not_done@style': function(arg) {
+						if (arg.context.result.status != 'DONE')
+						{ return 'display: block; position: absolute; top: -0.1vw; left: 12.7vw; width: 6.5%;' }
+						else { return 'display: none'}
+						},
 					'img.background_bio@src': function(arg) {
                         // Check to see if there is artwork
                         if (arg.context.result.artwork) {
@@ -187,7 +193,12 @@
 											}
 								}
 								return output_externalid_form;
+							},
+							'form.externalId_add_form@action': function (arg) {
+								var output_externalid_form = "javascript:open_update_externalId ("+ arg.context.result.id + ", document.getElementById('external_source').value, document.getElementById('external_id').value)"
+								return output_externalid_form;
 							}
+							
                 };
 		
 
@@ -397,6 +408,7 @@
 						<div id="Filmography_selector" onclick="open_filmography_popup(localStorage.getItem ('Person_id'), window.localStorage.getItem('back_close'))">FILMOGRAPHY</div>
 					</div>
 					<td rowspan="4"><span class="image" style="position:relative; top: 40px;"></span></td>
+					<img class="not_done" src="./pictures/icon_error.png" style="display:none;" />
 					<div id="update_icon_artwork" data-tip-person="update photo" onclick="update_person('artwork'); close_person();" style="position: absolute; top: 50px; left: 142px; z-index: 1;"><img  src="./pictures/update_watched.png" width="27"/></div>
 					<div id="update_icon" data-tip-person="update person" onclick="update_person('id'); close_person();" style="position: absolute; top: 3px; right: 40px;"><img  src="./pictures/update_watched.png" width="27"/></div>
 					<div id="close_icon" data-tip-person="close" onclick="close_person()"><img src="./pictures/close2.png" width="30"/></div>
@@ -421,15 +433,16 @@
 			<div class="externalId_delete" >
 				<span class="externalId_delete_form" style="position: absolute; top:0.1vw; left: 5vw; display:none;"/>
 			</div>
-        </div>
+        
 		<div class="externalId_add">
-			<form action="javascript:open_update_externalId (id, document.getElementById('external_source').value, document.getElementById('external_id').value)" method="post" style="margin-bottom: 0px;">
+			<form class="externalId_add_form" action="javascript:open_update_externalId (id, document.getElementById('external_source').value, document.getElementById('external_id').value)" method="post" style="margin-bottom: 0px;">
 				<label for="external_source"><div id="updatelabel" style="display: inline;"></div>:&nbsp;<div id="sourcelabel" style="display: inline;"></div></label>
 				<input id="external_source" type="text" ></input>
 				<label for="external_id">Id</label>
 				<input id="external_id" type="text" ></input>
 				<INPUT type="submit" ></input>
 			</form>
+		</div>
 		</div>	
 		<div class="Filmography_in" style="top: 65vh;left: 0.5vw;width: 95vw;">
 			<table class="result_filmography_inside">

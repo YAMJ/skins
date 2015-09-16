@@ -285,7 +285,7 @@
 	font-size:0.8em;
 	}
 	
-#container .title {
+#container .title, .title_boxset {
 	display: inline-block;
 	overflow: hidden;
 	text-align: center;
@@ -722,12 +722,11 @@ input:-moz-placeholder { color:red; }
 }
 #index_tools_config
 {
-	top: 5px;
-    height: 30px;
+	top: 6vw;
     text-align: center;
 	font-size: 1.4vw;
-	position: relative; 
-	left: 120px;
+	position: absolute; 
+	left: 7vw;
 	text-align: left; 
 	font-weight:bold; 
 	padding: 2px 10px 2px 10px;
@@ -1374,8 +1373,8 @@ ul#home_left_up {
 	}
 .member 	{
 	position: relative; 
-	bottom: 5.5vw;
-	left: 1.5vw;
+	bottom: 3.6vw;
+	left: 0vw;
 	font-size: 0.8vw;
 	font-weight: bold; 
 	}
@@ -2611,6 +2610,9 @@ ul#detail_home_left img, ul#detail_home_right img
 	text-align: center;
 	font-size:1.1em;
 	}
+.title_boxset {
+	font-weight: bold;
+	}
 .year {
 	font-weight: bold;
 	text-align: right;
@@ -2757,8 +2759,16 @@ text {
 	border-right: 5px solid gray;
 	padding: 1px 10px 0px 10px;
 	position: relative;
-	left: 5px;
+	float: left;
+	top: -1.25vw;
+	font-size:1.1vw;
 	}
+.status {
+	position:relative;
+	top:-1.2vw;
+	float:right;
+	font-size: 1.1vw;
+}
 .rating {
 	position: relative;
 	top: -19.3vw;
@@ -2786,8 +2796,7 @@ text {
 .external_Id {
 	
 	width: 76.2vw;
-	left: 0.45vw;
-	top: 0.25vw;
+	
 	}
 .external_href {
 	text-decoration: none;

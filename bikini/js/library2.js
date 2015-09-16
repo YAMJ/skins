@@ -122,12 +122,16 @@
 											var player_list = new Array; 
 											player_list = arg.context.results;
 												Ip_device = player_list[0].ipAddress;
+												window.localStorage.setItem("Player_Ip", player_list[0].ipAddress);
 												Device_type=player_list[0].deviceType;
+												window.localStorage.setItem("Player_Type", player_list[0].deviceType);
 												console.log ("Player_setting: player= "+ player_list[0].name +" Ip="+Ip_device+ " type=" + Device_type);
 												if (player_list[0].paths) {
+												window.localStorage.setItem("Player_Paths_Number", player_list[0].paths.length);	
 												for(j = 0; j < player_list[0].paths.length; j++){
-													source_path[j]= normalise_path(player_list[0].paths[j].sourcePath);				
+													source_path[j]= normalise_path(player_list[0].paths[j].sourcePath);																										
 													target_path[j]= normalise_path(player_list[0].paths[j].targetPath);
+													window.localStorage.setItem("Player_Paths_" + (j+1), "source="+source_path[j]+ " ==> target=" + target_path[j]);
 													console.log ("Player_setting: player= "+ player_list[0].name +" change="+source_path[j]+ " by=" + target_path[j]);	
 													nbre_translate_path = j;
 													}

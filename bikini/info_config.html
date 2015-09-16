@@ -64,6 +64,7 @@
 				get_new();
 				get_style();
 				get_poster_number ();
+				get_prefered_certification ();
 				
 				if (window.localStorage.getItem("skinset"))
 					{skin_set = window.localStorage.getItem("skinset");}
@@ -83,13 +84,24 @@
 
 			document.getElementById("SkinSetted").innerHTML=window.localStorage.getItem("skin_") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("skinset").substring(0,(window.localStorage.getItem("skinset").length - 1)) ;
 			document.getElementById("pagingSetted").innerHTML=window.localStorage.getItem("page_label") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("Paging");
-			document.getElementById("playerSetted").innerHTML=window.localStorage.getItem("player_select") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("Player");
+		//	document.getElementById("playerSetted").innerHTML=window.localStorage.getItem("player_select") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("Player");
 			document.getElementById("newSetted").innerHTML=window.localStorage.getItem("new_") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("New");
 			document.getElementById("rowSetted").innerHTML=window.localStorage.getItem("nbofrow") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("RowperPage");
 			document.getElementById("styleSetted").innerHTML=window.localStorage.getItem("style_label") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("Style");
 			document.getElementById("langSetted").innerHTML=window.localStorage.getItem("lang_label") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("Lang");
 			document.getElementById("prefered_pageSetted").innerHTML=window.localStorage.getItem("page_label") + "&nbsp;" +window.localStorage.getItem("prefered_") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("prefered_page");
 			document.getElementById("configindex").innerHTML=window.localStorage.getItem("config_select").toUpperCase();
+			document.getElementById("prefered_certificationSetted").innerHTML=window.localStorage.getItem("certification_label") + "&nbsp;" + window.localStorage.getItem("prefered_") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("prefered_certification");
+			document.getElementById("playerconfig").innerHTML=window.localStorage.getItem("player_select").toLowerCase() + "&nbsp;" + window.localStorage.getItem("selected_") + ":" + window.localStorage.getItem("Player");
+			document.getElementById("playeripinfo").innerHTML="IP:&nbsp;" + window.localStorage.getItem("Player_Ip");
+			document.getElementById("playertypeinfo").innerHTML="Type:&nbsp;" + window.localStorage.getItem("Player_Type");
+			document.getElementById("playerpaths").innerHTML="Paths nbr:" + window.localStorage.getItem("Player_Paths_Number");
+			
+			
+			for (var i = 1; i < window.localStorage.getItem("Player_Paths_Number"); i++)
+			{
+				document.getElementById("playerpathsdetail").innerHTML += "Paths&nbsp;" + i + ":"  + window.localStorage.getItem('Player_Paths_' + i) + "<br/>";
+			}
 		}
 		
  		</script>
@@ -105,13 +117,18 @@
 		
 		<div id="headertable_config">
 			<h2 style="color: white; text-align: center; font-size: 2.3vw;"><span id="SkinSetted" ></span> </h2>
+		<div>
+			<a href="javascript:close_info_config (); ouvre_config_page(StyleValue)">
+				<img src="pictures/icon/settings.png" height="80" width="100" style="padding-left:5px" alt="setting" />
+			<div id="configindex" style="text-decoration: underline;"></div></a>
+		</div>
 			<div id="index_tools_config">
 		
 				<!-- select skin  -->
 							<table>
 								<tr class="tableinfo_config">
 									<td><div id="pagingSetted"></div></td>
-									<td><div id="playerSetted"></div></td>
+									
 									<td><div id="newSetted"></div></td>
 								</tr>
 								<tr class="tableinfo_config">
@@ -120,16 +137,21 @@
 									<td><div id="langSetted"></div></td>
 								</tr>
 								<tr class="tableinfo_config">
-								<td><div id="prefered_pageSetted"></div></td>
-							
+									<td><div id="prefered_pageSetted"></div></td>
+									<td><div id="prefered_certificationSetted"></div></td>
+								</tr>
+								<tr class="tableinfo_config">
+									<td><div id="playerconfig"></div></td>
+									<td><div id="playeripinfo"></div></td>
+									<td><div id="playertypeinfo"></div></td>
+								</tr>
+								<tr class="tableinfo_config">
+									<td><div id="playerpaths"></div></td>
+									<td><div id="playerpathsdetail"></div></td>
 								</tr>
 							</table>
 		</div>
-		<div>
-			<a href="javascript:close_info_config (); ouvre_config_page(StyleValue)">
-				<img src="pictures/icon/settings.png" height="80" width="100" style="padding-left:5px" alt="setting" />
-			</a><div id="configindex"></div>
-		</div>
+		
 	</div>
 	
 

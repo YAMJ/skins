@@ -1,4 +1,12 @@
 change.txt
+v2.0.1
+- add prefered certification to info_config
+- adjust decoration of configuration image and text
+- adjust prefered certification get function
+- add use and display status for movie (mediainfo) person (biography) 
+- add title display for country + watched
+- add player info and player paths info to info popup 
+- fix addition of external_id for person
 v2.0.0
 - fix info config button in index page
 - add toggle person frame on detail page

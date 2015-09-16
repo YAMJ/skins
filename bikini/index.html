@@ -210,6 +210,12 @@
 						if (arg.item.watched) 
 						{return window.localStorage.getItem('watched_select').toLowerCase();} else
 						{return window.localStorage.getItem('unwatched_select').toLowerCase();}
+					},
+					"img.not_done@style": function(arg)
+					{
+						if (arg.item.status == 'DONE') 
+						{return "position: relative; top: -25vw; left: 8.5vw; display: none";} else
+						{return "position: relative; top: -25vw; left: 8.5vw; display: block";}
 					}
                 }
             }
@@ -229,6 +235,8 @@
         {
 			// get skin
 			get_Skin ();
+			// set local context value
+			set_context_lang_value ();
 		
 		
  			
@@ -265,7 +273,7 @@
 						selected_index = selected_index;
 				};
 
-			 var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby="+sort_type+"&sortdir="+direction+"&dataitems=boxset,rating";	
+			 var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby="+sort_type+"&sortdir="+direction+"&dataitems=status,boxset,rating";	
 					if (window.localStorage.getItem("yearselected") == 'true' && window.localStorage.getItem("selection")) 
 								{
 									jsonUrl = jsonUrl + "&include=year-"+window.localStorage.getItem("selection");
@@ -355,7 +363,7 @@
 		function set_context_lang_value ()
 		{
 			
-			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('info_label').toLowerCase();
+			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('skin_').toLowerCase() + " " + window.localStorage.getItem('info_label').toLowerCase();
 			document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
 			document.getElementsByClassName("playbutton")[0].title=window.localStorage.getItem('play_label').toLowerCase();
 			document.getElementsByClassName("infobutton")[0].title=window.localStorage.getItem('info_label').toLowerCase();
@@ -399,7 +407,7 @@
                     <img class="playbutton" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'" alt="next" title="play"></img>
 					<img class="infobutton" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'" alt="info" title="info" ></img>
 					<img class="watched_small" src="pictures/empty.png" alt="watched" onmouseout="src='pictures/empty.png'" title="watch"></img>
-					
+					<img class="not_done" src="pictures/icon_error.png" alt="status not done" title="status not done" style="position: relative; top: -25vw; left: 8.5vw; display: none;"></img>
 					<br>
                     <span class="title" ></span>
 					<img class="rating" src="./pictures/vertical_ratings/dummy_rating.png" onclick="" alt="rating"/>

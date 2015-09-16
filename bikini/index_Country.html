@@ -295,7 +295,7 @@
 		function set_context_lang_value ()
 		{
 	
-			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('info_label').toLowerCase();
+			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('skin_').toLowerCase() + " " + window.localStorage.getItem('info_label').toLowerCase();
 			document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
 
 			document.getElementsByClassName("playbutton")[0].title=window.localStorage.getItem('play_label').toLowerCase();

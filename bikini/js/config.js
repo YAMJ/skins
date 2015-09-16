@@ -177,7 +177,16 @@
 							$('.watched_small').css('width', '16%');
 							$('.watched_small').css('top', '-6vw');
 							$('.watched_small').css('left', '9%');
-							$('.title_boxset').css('height', '5vw');
+							$('.watched').css('top', '-4.5vw');
+							$('.watched').css('left', '-2vw');
+							$('.watched').css('width', '16%');
+							$('.rescan').css('top', '-4.5vw');
+							$('.rescan').css('left', '2vw');
+							$('.rescan').css('width', '16%');
+							$('.member').css('font-size', '1.7vw');
+							$('.title_boxset').css('top', '-3.5vw');
+							$('.title_boxset').css('left', '0vw');
+							$('.title_boxset').css('font-size', '1.8vw');
 							$('.rating').css('left', '-6.5vw');
 							$('.rating').css('top', '-43.8vw');
 							$('.rating').css('height', '7vw');
@@ -185,6 +194,9 @@
 							$('.boxset').css('left', '7.6vw');
 							$('.boxset').css('top', '-43.5vw');
 							$('.boxset').css('width', '5vw');
+							$('.not_done').css('left', '13.1vw');
+							$('.not_done').css('top', '-36.8vw');
+							$('.not_done').css('width', '50%');
 							break;
 						//2 rows , 6 columns
 						case 2:
@@ -214,7 +226,14 @@
 						//	$('.watched_small').css('width', '32px');
 							$('.watched_small').css('top', '-3.7vw');
 						//	$('.watched_small').css('left', '7%');
-							$('.title_boxset').css('height', '3.2vw');
+							$('.watched').css('top', '-3vw');
+							$('.watched').css('left', '-2vw');
+							$('.rescan').css('top', '-3vw');
+							$('.rescan').css('left', '2vw');
+							$('.member').css('font-size', '1vw');
+							$('.title_boxset').css('top', '-2.5vw');
+							$('.title_boxset').css('left', '0vw');
+							$('.title_boxset').css('font-size', '1.1vw');
 							$('.rating').css('left', '-4.4vw');
 							$('.rating').css('top', '-27.8vw');
 							$('.rating').css('height', '4.4vw');
@@ -222,6 +241,9 @@
 							$('.boxset').css('left', '5vw');
 							$('.boxset').css('top', '-28vw');
 							$('.boxset').css('width', '3vw');
+							$('.not_done').css('left', '8.5vw');
+							$('.not_done').css('top', '-25vw');
+							$('.not_done').css('width', '50%');
 							break;
 						//3 rows, 9 columns 
 						case 3:
@@ -254,7 +276,12 @@
 							$('.watched_small').css('width', '16%');
 							$('.watched_small').css('top', '-3vw');
 							$('.watched_small').css('left', '10%');
-							$('.title_boxset').css('height', '2.4vw');
+							$('.watched').css('top', '-3vw');
+							$('.watched').css('left', '-1vw');
+							$('.rescan').css('top', '-3vw');
+							$('.rescan').css('left', '1vw');
+							$('.title_boxset').css('top', '-2.8vw');
+							$('.title_boxset').css('left', '0vw');
 							//	$('#watch_label').css('left', '27%');
 							$('.watch_label').css('top', '-17%');
 							$('.watch_label').css('left', '38%');
@@ -267,6 +294,9 @@
 							$('.boxset').css('left', '3.5vw');
 							$('.boxset').css('top', '-19vw');
 							$('.boxset').css('width', '2vw');
+							$('.not_done').css('left', '5.1vw');
+							$('.not_done').css('top', '-16.9vw');
+							$('.not_done').css('width', '50%');
 							break;
 						//4 rows, 11 columns 
 						case 4:
@@ -296,7 +326,19 @@
 					//		$('.watched_small').css('width', '18%');
 							$('.watched_small').css('top', '-2.1vw');
 							$('.watched_small').css('left', '7%');
-							$('.title_boxset').css('height', '1.7vw');
+							$('.watched').css('top', '-2vw');
+							$('.watched').css('left', '-1vw');
+							$('.watched').css('width', '22%');
+							$('.rescan').css('top', '-2vw');
+							$('.rescan').css('left', '1vw');
+							$('.rescan').css('width', '22%');
+							$('.title_boxset').css('top', '-2.25vw');
+							$('.title_boxset').css('left', '0vw');
+							$('.title_boxset').css('font-size', '0.8vw');
+							$('.title_boxset').css('font-weight', 'normal');
+							$('.member').css('font-size', '0.8vw');
+							$('.member').css('bottom', '3.1vw');
+							$('.member').css('font-weight', 'normal');
 							$('.rating').css('left', '-1.8vw');
 							$('.rating').css('top', '-14.6vw');
 							$('.rating').css('height', '2.4vw');
@@ -304,6 +346,9 @@
 							$('.boxset').css('left', '2.2vw');
 							$('.boxset').css('top', '-14.2vw');
 							$('.boxset').css('width', '2vw');
+							$('.not_done').css('left', '4.4vw');
+							$('.not_done').css('top', '-12.5vw');
+							$('.not_done').css('width', '50%');
 							break;	
 						//5 rows, 12 columns
 						case 5:
@@ -328,7 +373,14 @@
 					//		$('.watched_small').css('width', '18%');
 							$('.watched_small').css('top', '-2.1vw');
 					//		$('.watched_small').css('left', '6%');
-							$('.title_boxset').css('height', '0.1vw');
+							$('.watched').css('top', '-2vw');
+							$('.watched').css('left', '-1vw');
+							$('.watched').css('width', '22%');
+							$('.rescan').css('top', '-2vw');
+							$('.rescan').css('left', '1vw');
+							$('.rescan').css('width', '22%');
+							$('.title_boxset').css('display', 'none');									
+							$('.member').css('display', 'none');
 							$('.rating').css('left', '-1.7vw');
 							$('.rating').css('top', '-13.2vw');
 							$('.rating').css('height', '2.4vw');
@@ -336,6 +388,9 @@
 							$('.boxset').css('left', '2vw');
 							$('.boxset').css('top', '-12.8vw');
 							$('.boxset').css('width', '2vw');
+							$('.not_done').css('left', '4.1vw');
+							$('.not_done').css('top', '-11.7vw');
+							$('.not_done').css('width', '50%');
 							
 							break;
 					

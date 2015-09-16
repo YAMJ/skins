@@ -87,7 +87,7 @@
 								
 								if (arg.context.result.title.length > 30)	{temp_style = "font-size: 2.2vw;";}
 								if (arg.context.result.title.length > 35)	{temp_style = "font-size: 2.1vw;";}
-								if (arg.context.result.title.length > 40)	{temp_style = "font-size: 2vw;";}
+								if (arg.context.result.title.length > 41)	{temp_style = "font-size: 1.9vw;";}
 								if (arg.context.result.title.length > 44)	{temp_style =  "font-size: 1.7vw;";}
 								if (arg.context.result.title.length > 51)	{temp_style = "font-size: 1.5vw;";}
 								if (arg.context.result.title.length > 57)	{temp_style = "font-size: 1.3vw;";}
@@ -125,11 +125,26 @@
 									else {return "WatchedSelection('index.html', 'false')";}
 							
 								},
+							"img.watched@title": function(arg)
+								{
+									if (arg.context.result.watched) 
+									{return window.localStorage.getItem('watched_select');}
+									else {return window.localStorage.getItem('unwatched_select');}
+							
+								},
 							'span.country': function(arg)
 							{
 								if (arg.context.result.countries) 
 								{
 								return  "<a href=\"javascript:call_countryselect('" + arg.context.result.countries[0].countryCode + "')\" ><img class='country' src='pictures/flags/" + arg.context.result.countries[0].countryCode.toLowerCase() + ".png' alt=\"" + arg.context.result.countries[0].country + "\" /></a>";	
+								}
+								else {return;}
+							}, 
+							'span.country@title': function(arg)
+							{
+								if (arg.context.result.countries) 
+								{
+								return  arg.context.result.countries[0].country ;
 								}
 								else {return;}
 							}, 
@@ -488,7 +503,9 @@
             };
 			// display media info
 			var MEDIA_INFO = {
-			
+							'span.status': function(arg) {
+								return "<text>STATUS</text>" + arg.context.result.status;
+							},
 						// display the file path stored in database		
 							'span.filepath': function(arg)
 							{var output_filepath = '' ;
@@ -2011,8 +2028,8 @@
 						<img src="pictures/icon/duration.png" style="position:relative; top: -0.1vw; left: -10px; width: 2.2vw" alt="duration"/>
 						<span class="header_runtime" ></span>
 						<span class="header_text"> </span>
-						<a href="#"><img class="watched" style="width: 2.1vw;" src="./pictures/watched.png" onclick="" alt="watched"/></a>
-						<span class="country" ></span>
+						<a href="#"><img title="watched" class="watched" style="width: 2.1vw;" src="./pictures/watched.png" onclick="" alt="watched"/></a>
+						<span class="country" title="country" ></span>
 						<img class="channels" src="./pictures/icon/empty.png" alt="no audio channels"></img>
 					</td>
 				</tr>
@@ -2165,7 +2182,7 @@
 			</form>
 		</div>	
 		
-			<table class="media">
+			<table class="media"><span class="status" />
 				<tr>
 					<td><span class="external_Id"></span></td>
 				</tr>

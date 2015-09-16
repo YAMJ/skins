@@ -111,13 +111,13 @@
 		    var LIST_DIR = {
             "div.block": {
                 "result<-results": {
-					"span.title": function(arg) {
+					"span.title_boxset": function(arg) {
 						return arg.item.name;
 							},
 					"span.member": function(arg) {
 						return '(' + arg.item.memberCount + ')';
 							},
-                     "span.title@onclick": function(arg) {
+                     "span.title_boxset@onclick": function(arg) {
 						return "open_boxset_index('" + arg.item.id+ "', \"" + arg.item.name + "\")";
 							},
 					 "img.poster@src": function(arg) {
@@ -132,7 +132,29 @@
 							}, 
 					"img.rescan@onclick": function(arg) {
 						return "open_boxset_rescan('" + arg.item.id+ "')";
-							} 	
+							},
+					"img.watched@src": function(arg)
+					{
+						if (arg.item.watched) 
+						{return "./pictures/watched.png";} else
+						{return "./pictures/unwatched.png";}
+					},
+					"img.watched@onmouseout": function(arg)
+					{
+						if (arg.item.watched) 
+						{return "src='pictures/watched.png'";} else
+						{return "src='pictures/unwatched.png'";}
+					},
+					"img.watched@onclick": function(arg)
+					{
+						return "toggle_watched (" +arg.item.watched + ", " + arg.item.id + ", '" + arg.item.SOURCE + "'); " ;
+					},
+					"img.watched@title": function(arg)
+					{
+						if (arg.item.watched) 
+						{return window.localStorage.getItem('watched_select').toLowerCase();} else
+						{return window.localStorage.getItem('unwatched_select').toLowerCase();}
+					}
 		
 						}
 					}
@@ -218,7 +240,7 @@
 			document.getElementById("sort_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('sort_label').toLowerCase();
 						
 			document.getElementById("search_item").attributes.getNamedItem("data-tip-search").value=window.localStorage.getItem('search_select').toLowerCase();
-			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('info_label').toLowerCase();
+			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('skin_').toLowerCase() + " " + window.localStorage.getItem('info_label').toLowerCase();
 			document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
 		}
 
@@ -272,12 +294,15 @@
 		 <div id="container">
             <div id="yRow" class="row">
                 <div id="yBlock" class="block">
-                    <img class="poster" src="./pictures/dummy.png" alt="poster">
-					<br />
-					<div class="title_boxset" style="position: relative; height: 4vw;" >&nbsp;</div>
-                    <span class="title"></span>
+                    <img class="poster" src="./pictures/dummy.png" alt="poster"></img>
+					
+					<img class="watched" src="pictures/empty.png" alt="watched" onmouseout="src='pictures/empty.png'" ></img>
+					<img class="rescan" src="./pictures/rescan.png" alt="rescan" ></img>
+					
+                    <span class="title_boxset"></span>
 					<span class="member"></span>
-					<img class="rescan" src="./pictures/rescan.png" alt="rescan" >
+					
+					
                 </div>
                 <br />
             </div>

@@ -1,4 +1,6 @@
 change.txt
+v2.0.2
+- fix display rating and not_done in index page
 v2.0.1
 - add prefered certification to info_config
 - adjust decoration of configuration image and text

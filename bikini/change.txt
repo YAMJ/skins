@@ -1,4 +1,7 @@
 change.txt
+V2.0.3
+- fix year selector 
+- minor fix
 v2.0.2
 - fix display rating and not_done in index page
 v2.0.1

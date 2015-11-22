@@ -1269,7 +1269,7 @@
 			}
 	function PopAction(Action_type, Current_update_type, Current_file_Id, Current_title)
 			{
-						console.log("PopUpdate: Current_update_type: " + Current_update_type + " Current_file_Id: " + Current_file_Id + " action:" + Action_type);
+						console.log("PopAction: Current_update_type: " + Current_update_type + " Current_file_Id: " + Current_file_Id + " action:" + Action_type);
 						document.getElementById("infobox_update").innerHTML=localStorage.getItem(Action_type + "_text") + " " + Current_update_type + " id:" + Current_file_Id + " " + Current_title + "?"
 						document.getElementById("infobox_update").style.visibility="visible";
 						myVar=window.setTimeout(function(){myStopFunction('infobox_update');},5000);

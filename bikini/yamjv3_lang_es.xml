@@ -32,6 +32,7 @@
 	<directorlabel>director</directorlabel>
 	<downlabel>bajo</downlabel>
 	<downloadtext>descargar</downloadtext>
+	<duplicatetext>fundirse</duplicatetext>
 	
 	<ejectlabel>expulsar</ejectlabel>
 	<enterdaynumber>entroduzca el numero de dias</enterdaynumber>

@@ -218,7 +218,10 @@
 	width: 95px;
 	height: 135px;		*/	
 }
-
+.person_name {
+	position: relative ; 
+	top: -1.2vw;
+}
 .videosource_image {
 	position: absolute;
 	top: 55px;

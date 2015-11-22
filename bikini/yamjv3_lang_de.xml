@@ -32,6 +32,7 @@
 	<directorlabel>regisseur</directorlabel>
 	<downlabel>niedrig</downlabel>
 	<downloadtext>download</downloadtext>
+	<duplicatetext>versmelzen</duplicatetext>
 	
 	<ejectlabel>auswerfen</ejectlabel>
 	<enterdaynumber>geben sie die anzahl der tage</enterdaynumber>

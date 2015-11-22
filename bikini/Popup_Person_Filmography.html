@@ -298,7 +298,7 @@
 		}
 	function update_filmography ()
 		{
-		jsonUpdateUrl = "/yamj3/api/rescan/filmography/" + localStorage.getItem ("Person_id");
+		jsonUpdateUrl = "/yamj3/api/rescan/filmography/" + localStorage.getItem ("Person_id") + ".json";
 		console.log("Popup_Person_Biography URL: " + jsonUpdateUrl);
         // main API call         
                 $.ajax({

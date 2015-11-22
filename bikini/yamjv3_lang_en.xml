@@ -32,6 +32,7 @@
 	<directorlabel>director</directorlabel>
 	<downlabel>down</downlabel>
 	<downloadtext>download</downloadtext>
+	<duplicatetext>merge</duplicatetext>
 	
 	<ejectlabel>eject</ejectlabel>
 	<enterdaynumber>enter day number</enterdaynumber>

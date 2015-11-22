@@ -32,6 +32,7 @@
 	<directorlabel>directeur</directorlabel>
 	<downlabel>bas</downlabel>
 	<downloadtext>telecharge</downloadtext>
+	<duplicatetext>fusionner</duplicatetext>
 	
 	<ejectlabel>eject.</ejectlabel>
 	<enterdaynumber>entrer le nombre de jour</enterdaynumber>

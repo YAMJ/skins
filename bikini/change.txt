@@ -1,4 +1,9 @@
 change.txt
+V2.0.4
+- modify detail update all incomplete person only - without biography or without artwork
+- add merge duplicate person
+- fix minor problems 
+- fix update person and update filmography , missing .json
 V2.0.3
 - fix year selector 
 - minor fix

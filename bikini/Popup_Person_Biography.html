@@ -300,8 +300,8 @@
 		function update_person (update_type)
 		{
 			if (update_type == 'artwork') 
-			{jsonUpdateUrl = "/yamj3/api/rescan/person/artwork/" + localStorage.getItem ("Person_id");}
-			else {jsonUpdateUrl = "/yamj3/api/rescan/person/" + localStorage.getItem ("Person_id");}
+			{jsonUpdateUrl = "/yamj3/api/rescan/person/artwork/" + localStorage.getItem ("Person_id") + ".json";}
+			else {jsonUpdateUrl = "/yamj3/api/rescan/person/" + localStorage.getItem ("Person_id") + ".json";}
 			console.log("Popup_Person_Biography URL: " + jsonUpdateUrl);
 			// main API call         
 					$.ajax({

@@ -151,6 +151,7 @@
 					window.localStorage.setItem("director_label", (x[i].getElementsByTagName("directorlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("down_label", (x[i].getElementsByTagName("downlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("download_text", (x[i].getElementsByTagName("downloadtext")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("duplicate_text", (x[i].getElementsByTagName("duplicatetext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("eject_label", (x[i].getElementsByTagName("ejectlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("enter_label", (x[i].getElementsByTagName("enterlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("enter_day_number", (x[i].getElementsByTagName("enterdaynumber")[0].childNodes[0].nodeValue));

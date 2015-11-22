@@ -21,6 +21,7 @@
     <body onload="PersonData();" >   
         <script type="text/javascript">
 		var outputperson_update	= new Array ();
+		var total_count_to_update = 0;
 		 function PersonData()
         {
 			
@@ -129,9 +130,14 @@
              		'span.list_person_id': function(arg) 
 					{
 						var totalperson_to_update = arg.context.results;
+						total_count_to_update = 0;
 							for (i = 0; i < totalperson_to_update.length; i++) 
 							{
-								outputperson_update[i] = totalperson_to_update[i].id;
+								if (totalperson_to_update[i].artwork && totalperson_to_update[i].biography) 
+								{} else {
+									total_count_to_update = total_count_to_update + 1;
+									outputperson_update[total_count_to_update] = totalperson_to_update[i].id;
+									}
 							}	
 					}
 				};	
@@ -167,8 +173,8 @@
 			
 	function update_all_person ()
 			{
-				console.log("update_all_person");
-				for (i = 0; i < outputperson_update.length; i++) 
+				console.log("update_all_person total_to_update:" + outputperson_update.length);
+				for (i = 1; i < outputperson_update.length; i++) 
 							{
 								console.log("update_all_person i: "+ i +" outputperson_update[i]:" + outputperson_update[i]);
 								update_person(outputperson_update[i]);
@@ -193,7 +199,7 @@
         </script>
 <!-- *************************************************************************************************************** -->	   
 		<div id="close_icon" title="close" onclick="close_person()" style="position: absolute; top: 0px; left: 0px;"><img src="./pictures/close2.png" width="40"/></div>
-		<div id="update_icon" title="update all person" onclick="update_all_person('');" style="position: absolute; top: 3px; right: 40px;"><img  src="./pictures/update_watched.png" width="27"/></div>
+		<div id="update_icon" title="update all incomplete person" onclick="update_all_person('');" style="position: absolute; top: 3px; right: 40px;"><img  src="./pictures/update_watched.png" width="27"/></div>
 		<div class="counttest" style="visibility: hidden">
 					<td><span class="itemcount"></span></td>
 		</div> 

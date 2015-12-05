@@ -39,6 +39,7 @@
 		var videosource_value = ""; 
 		var	display_videosource = "";
 		var watched_method = "all";
+		var resolution_method = "all";
 		var nbre_translate_path = 0;
 		// get the prefered_page
 		if (localStorage.getItem("prefered_page"))
@@ -47,6 +48,9 @@
 		// get the watched method 
 		if (localStorage.getItem("watched"))
 			{watched_method = localStorage.getItem("watched");}
+		// get the resolution method 
+		if (localStorage.getItem("resolution"))
+			{resolution_method = localStorage.getItem("resolution");}
 		if (localStorage.getItem("Videosource_value"))
 			{videosource_value = localStorage.getItem("Videosource_value");}
 		var index_type = "movie,series";
@@ -171,8 +175,14 @@
 			get_player();
 			get_prefered_page();
 			
-			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=" + sort_type + "&sortdir=" + direction + "&artwork=poster&include=videosource-"+videosource_value+"&watched="+watched_method;;
+			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=" + sort_type + "&sortdir=" + direction + "&artwork=poster&watched="+watched_method;;
 			display_videosource = window.localStorage.getItem('video_label').toUpperCase() + ":" + videosource_value.toUpperCase();
+			if (resolution_method != 'all')
+				{
+					jsonUrl += "&include=videosource-"+videosource_value+",resolution-" + resolution_method;
+					display_videosource = display_videosource + '&nbsp;resolution:' + resolution_method;
+				}
+				else {jsonUrl += "&include=videosource-"+videosource_value;}
 			get_type_selected ();
 			switch (watched_method)
 				{

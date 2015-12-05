@@ -41,6 +41,7 @@
 		var genre_id = "";
 		var	display_awards = "";
 		var watched_method = "all";
+		var resolution_method = "all";
 		var nbre_translate_path = 0;
 		// get the prefered_page
 		if (localStorage.getItem("prefered_page"))
@@ -49,6 +50,9 @@
 		// get the watched method 
 		if (localStorage.getItem("watched"))
 			{watched_method = localStorage.getItem("watched");}
+		// get the resolution method 
+		if (localStorage.getItem("resolution"))
+			{resolution_method = localStorage.getItem("resolution");}
 		var awards_event = ""; 
 		// get the genre and name id and reset to default for the next time 
 		
@@ -177,9 +181,15 @@
 			get_player();
 			get_prefered_page();
 			
-			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=" + sort_type + "&sortdir=" + direction + "&artwork=poster&include=award-"+awards_event+"&watched="+watched_method;;
+			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=" + sort_type + "&sortdir=" + direction + "&artwork=poster&watched="+watched_method;;
 		//	display_awards = country_select.toUpperCase() + ":" + awards_event.toUpperCase();
 			display_awards = "AWARDS:" + awards_event.toUpperCase();
+			if (resolution_method != 'all')
+				{
+					jsonUrl += "&include=award-"+awards_event+",resolution-" + resolution_method;
+					display_awards = display_awards + '&nbsp;resolution:' + resolution_method;
+				}
+				else {jsonUrl += "&include=award-"+awards_event;}
 			get_type_selected ();
 			switch (watched_method)
 				{

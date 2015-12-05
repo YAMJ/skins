@@ -42,6 +42,7 @@
 		var menuleft_toggle = 0;
 		var index_method = "START";
 		var watched_method = "all";
+		var resolution_method = "all";
 		var newest_method = "";
 		var nbre_translate_path = 0;
 	
@@ -56,6 +57,9 @@
 		// get the watched method 
 		if (localStorage.getItem("watched"))
 			{watched_method = localStorage.getItem("watched");}
+		// get the resolution method 
+		if (localStorage.getItem("resolution"))
+			{resolution_method = localStorage.getItem("resolution");}
 		// get the search method and reset to default for the next time 
 		if (localStorage.getItem("search_method"))
 			{index_method = localStorage.getItem("search_method");
@@ -80,7 +84,8 @@
 		var sort_type = "title"; 
 			if (window.localStorage.getItem("sort_indextype"))
 				{sort_type = window.localStorage.getItem("sort_indextype");}
-				else {window.localStorage.setItem("sort_indextype", sort_type);}	
+				else {window.localStorage.setItem("sort_indextype", sort_type);}
+		
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
         // img.Poster@src replaces the "src" attribute of the img.Poster
@@ -276,13 +281,21 @@
 			 var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby="+sort_type+"&sortdir="+direction+"&dataitems=status,boxset,rating";	
 					if (window.localStorage.getItem("yearselected") == 'true' && window.localStorage.getItem("selection")) 
 								{
-									jsonUrl = jsonUrl + "&include=year-"+window.localStorage.getItem("selection");
+									if (resolution_method != 'all')
+										{
+											jsonUrl += "&include=year-" + window.localStorage.getItem("selection") + ",resolution-" + resolution_method;
+											selected_index = selected_index + '&nbsp;resolution:' + resolution_method;
+										} else { jsonUrl = jsonUrl + "&include=year-"+window.localStorage.getItem("selection"); }
 									selected_index = selected_index + '&nbsp;' + window.localStorage.getItem("year_label").toUpperCase() + ':' + window.localStorage.getItem("selection");
 									window.localStorage.setItem("yearselected", 'false');
 									window.localStorage.setItem("selection", "");
 									window.localStorage.setItem("search_index", "");	
 								} else {
-				
+								if (resolution_method != 'all')
+										{
+											jsonUrl += "&include=resolution-" + resolution_method;
+											selected_index = selected_index + '&nbsp;resolution:' + resolution_method;
+										}
 								if (window.localStorage.getItem("search_index"))
 								{
 									console.log("window.localStorage.getItem('search_index').substr(0, 11):"  +window.localStorage.getItem("search_index").substr(0, 11) + " window.localStorage.getItem('search_index').substr(14, 9):" + window.localStorage.getItem("search_index").substr(15, 9));
@@ -307,6 +320,7 @@
 					jsonUrl += "&include=newest-" + newest_method;
 					selected_index = selected_index + '&nbsp;new:' + newest_method;
 				}
+				
 				var temp_style = "1.4vw"
 					
 					if (selected_index.length > 35)	{temp_style = "1.4vw";}

@@ -679,6 +679,27 @@ input:-moz-placeholder { color:red; }
 	outline:2px solid black;
 	}
 
+	
+#resolution_section {
+	position: absolute;
+	left: 20vw;
+	top: -16px;
+	list-style-type: none;
+	display: inline-table;
+	background: none;
+	border: none;
+	}	
+#resolution_section  > a {
+	position: absolute;
+	top: 22%;
+	visibility: hidden;
+	}
+#resolution_section:hover > li #type_item img {
+	visibility: visible;
+	background: grey;
+	outline:2px solid black;
+	}
+
 #new_section {
 	position: absolute;
 	left: 1vw;
@@ -903,7 +924,17 @@ input:-moz-placeholder { color:red; }
 	position: absolute;
 	padding: 0px 10px 5px 0px;
 	top: 70px;
-	left: 490px;
+	left: 460px;
+	border: 2px solid #b0b0b0;
+	text-align: left;
+}
+.table_resolution_select
+{
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	position: absolute;
+	padding: 0px 10px 5px 0px;
+	top: 70px;
+	left: 540px;
 	border: 2px solid #b0b0b0;
 	text-align: left;
 }
@@ -913,7 +944,7 @@ input:-moz-placeholder { color:red; }
 	position: absolute;
 	padding: 0px 10px 5px 0px;
 	top: 70px;
-	left: 60px;
+	left: 40px;
 	border: 2px solid #b0b0b0;
 	text-align: left;
 }
@@ -934,7 +965,7 @@ input:-moz-placeholder { color:red; }
 	position: absolute;
 	padding: 0px 10px 5px 0px;
 	top: 130px;
-	left: 60px;
+	left: 40px;
 	border: 2px solid #b0b0b0;
 	text-align: left;
 }
@@ -944,7 +975,7 @@ input:-moz-placeholder { color:red; }
 	position: absolute;
 	padding: 0px 0px 5px 0px;
 	top: 70px;
-	left: 260px;
+	left: 230px;
 	border: 2px solid #b0b0b0;
 }
 .tableconfig {
@@ -2331,7 +2362,7 @@ ul#detail_home_right {
 	top: -1px;
 	right: 55px;
 	}
-#fanartshow_icon, #editshow_icon, #mediainfoshow_icon, #movieshow_icon, #personshow_icon, #selectionshow_icon, #search_icon, #deleteshow_icon, #updateshow_icon {
+#fanartshow_icon, #editshow_icon, #mediainfoshow_icon, #movieshow_icon, #personshow_icon, #selectionshow_icon, #search_icon, #deleteshow_icon, #updateshow_icon, #add_poster_show_icon, #add_fanart_show_icon {
 	position: absolute;
 	top: 60px;
 	visibility: hidden;

@@ -2,6 +2,9 @@
 <lang>
 	<actionlabel>action</actionlabel>
 	<actorlabel>actor</actorlabel>
+	<addtext>add</addtext>
+	<addfanarttext>add fanart</addfanarttext>
+	<addpostertext>add poster</addpostertext>
 	<alllabel>all</alllabel>
 	<allgenre>all</allgenre>
 	<allselected>movie and series</allselected>

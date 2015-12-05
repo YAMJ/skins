@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <lang>
+	
 	<actionlabel>action</actionlabel>
 	<actorlabel>acteur</actorlabel>
+	<addtext>ajouter</addtext>
+	<addfanarttext>ajouter un fond d'écran</addfanarttext>
+	<addpostertext>ajouter une affiche</addpostertext>
 	<alllabel>tout</alllabel>
 	<allgenre>tout</allgenre>
 	<allselected>film et série</allselected>

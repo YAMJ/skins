@@ -41,6 +41,7 @@
 		var genre_id = "";
 		var	display_genre = "";
 		var watched_method = "all";
+		var resolution_method = "all";
 		var nbre_translate_path = 0;
 		// get the prefered_page
 		if (localStorage.getItem("prefered_page"))
@@ -49,6 +50,9 @@
 		// get the watched method 
 		if (localStorage.getItem("watched"))
 			{watched_method = localStorage.getItem("watched");}
+		// get the resolution method 
+		if (localStorage.getItem("resolution"))
+			{resolution_method = localStorage.getItem("resolution");}
 		var genre_name = ""; 
 		// get the genre and name id and reset to default for the next time 
 		
@@ -177,8 +181,15 @@
 			get_player();
 			get_prefered_page();
 			
-			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby="+sort_type+"&sortdir="+direction+"&artwork=poster&include=genre-"+genre_name+"&watched="+watched_method;
+			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby="+sort_type+"&sortdir="+direction+"&artwork=poster&watched="+watched_method;
 			display_genre = window.localStorage.getItem('genre_select').toUpperCase() + ":" + genre_name.toUpperCase();
+			if (resolution_method != 'all')
+				{
+					jsonUrl += "&include=genre-"+ genre_name + ",resolution-" + resolution_method;
+					display_genre = display_genre + '&nbsp;resolution:' + resolution_method;
+				}
+				else {jsonUrl += "&include=genre-" + genre_name;}
+			
 			get_type_selected ();
 			switch (watched_method)
 				{

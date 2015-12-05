@@ -124,6 +124,9 @@
 					
 					window.localStorage.setItem("action_label", (x[i].getElementsByTagName("actionlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("actor_label", (x[i].getElementsByTagName("actorlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("add_text", (x[i].getElementsByTagName("addtext")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("add_fanart_text", (x[i].getElementsByTagName("addfanarttext")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("add_poster_text", (x[i].getElementsByTagName("addpostertext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("all_label", (x[i].getElementsByTagName("alllabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("all_genre",(x[i].getElementsByTagName("allgenre")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("all_select",(x[i].getElementsByTagName("allselected")[0].childNodes[0].nodeValue));
@@ -273,10 +276,10 @@
 
 	 function translate_job (job)  
 		{
-				var res = job.replace(/writer/gi, window.localStorage.getItem('writer_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('writer_label').substring(1).toLowerCase());
-				res = res.replace(/director/gi, window.localStorage.getItem('director_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('director_label').substring(1).toLowerCase());
-				res = res.replace(/actor/gi, window.localStorage.getItem('actor_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('actor_label').substring(1).toLowerCase());
-				res = res.replace(/producer/gi, window.localStorage.getItem('producer_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('producer_label').substring(1).toLowerCase());
+				var res = job.replace(/\b writer/gi, window.localStorage.getItem('writer_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('writer_label').substring(1).toLowerCase());
+				res = res.replace(/\b director/gi, window.localStorage.getItem('director_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('director_label').substring(1).toLowerCase());
+				res = res.replace(/\b actor/gi, window.localStorage.getItem('actor_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('actor_label').substring(1).toLowerCase());
+				res = res.replace(/\b producer/gi, window.localStorage.getItem('producer_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('producer_label').substring(1).toLowerCase());
 
 	//	console.log("translate_job job:" + job + " res:" + res);
 		return res;

@@ -201,6 +201,41 @@
 					show_type = false;
 				}
 		}
+		// toggle the resolutiontype item to hide / show the resolutiontype selector all, sd, hd, fullhd, 4k, 8k 
+		function toggle_show_resolution ()
+		{
+			if (!show_resolution)
+				{
+					$("#all_resolution_type").css("visibility", "visible");
+					$("#sd_type").css("visibility", "visible");
+					$("#hd_type").css("visibility", "visible");
+					$("#fullhd_type").css("visibility", "visible");
+					$("#4k_type").css("visibility", "visible");
+					$("#8k_type").css("visibility", "visible");
+					
+					$("#resolution_section").css("background", "grey");
+					$("#resolution_section").css("outline", "2px solid black");
+					$("#resolution_section").css("z-index", "10");
+					$("#resolution_item").css("z-index", "9");
+					parent.document.getElementById('my_header_menu').style.height = '340px';
+					show_resolution = true;
+				}
+			else
+				{
+					$("#all_resolution_type").css("visibility", "hidden");
+					$("#sd_type").css("visibility", "hidden");
+					$("#hd_type").css("visibility", "hidden");
+					$("#fullhd_type").css("visibility", "hidden");
+					$("#4k_type").css("visibility", "hidden");
+					$("#8k_type").css("visibility", "hidden");
+					
+					$("#resolution_section").css("background", "none");
+					$("#resolution_section").css("outline", "none");
+					parent.document.getElementById('my_header_menu').style.height = '60px';
+
+					show_resolution = false;
+				}
+		}
 		// display/nodisplay left menu when click on icon open/close
 		function toggle_menu_left ()
 		{
@@ -641,6 +676,13 @@
 			{		
 					window.localStorage.setItem("watched", watchedselect);
 					console.log("WatchedSelection: "+watchedselect);
+					Indexpopup = window.open(href_target, "_parent","");
+			}
+	// resolution selection 
+		function ResolutionSelection (href_target, resolutionselect)
+			{		
+					window.localStorage.setItem("resolution", resolutionselect);
+					console.log("ResolutionSelection: "+resolutionselect);
 					Indexpopup = window.open(href_target, "_parent","");
 			}
 	// newest selection 

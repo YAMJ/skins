@@ -33,20 +33,32 @@
 			if (localStorage.getItem("newest"))
 				{newest_method = localStorage.getItem("newest");
 				localStorage.setItem("newest", "");}
-			var watched_method = "all";
+			var watched_method = "all"; 
 			// get the watched method 
 			if (localStorage.getItem("watched"))
 				{watched_method = localStorage.getItem("watched");}
+			// get the resolution method 
+			var resolution_method = "all_resolution";
+			if (localStorage.getItem("resolution"))
+			{resolution_method = localStorage.getItem("resolution");}
 		    var jsonUrl = "/yamj3/api/index/video.json?type="+type+"&sortby=title&sortdir="+directionnav;
 			if (window.localStorage.getItem("selection"))
 				{
 					if (window.localStorage.getItem("yearselected") == 'true') 
 								{
-									jsonUrl = jsonUrl + "&include=year-"+window.localStorage.getItem("selection");
+									if (resolution_method != 'all')
+										{
+											jsonUrl += "&include=year-"+window.localStorage.getItem("selection") + ",resolution-" + resolution_method;
+										} else {jsonUrl = jsonUrl + "&include=year-"+window.localStorage.getItem("selection");}
+									
 									window.localStorage.setItem("yearselected", 'false');
 									window.localStorage.setItem("selection", "");
 									window.localStorage.setItem("search_index", "");	
 								} else {
+						if (resolution_method != 'all')
+							{
+								jsonUrl += "&include=resolution-" + resolution_method;
+							}
 						jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("selection") + "&field=title&mode="+index_method;
 						window.localStorage.setItem("selection", "");	
 						window.localStorage.setItem("search_index", "");	
@@ -55,6 +67,10 @@
 							
 					
 				} else {
+						if (resolution_method != 'all')
+							{
+								jsonUrl += "&include=resolution-" + resolution_method;
+							}
 						if (type == "SEASON") 
 								{
 									jsonUrl = jsonUrl + "&field=series_id&search="+series_id;
@@ -67,6 +83,7 @@
 				{
 					jsonUrl += "&include=newest-" + newest_method;
 				}
+				
             console.log("NavData URL: " + jsonUrl);
             var jsondata = null;
 

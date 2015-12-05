@@ -2,6 +2,9 @@
 <lang>
 	<actionlabel>accion</actionlabel>
 	<actorlabel>jugador</actorlabel>
+	<addtext>anadir</addtext>
+	<addfanarttext>anadir fondo de pantalla</addfanarttext>
+	<addpostertext>agregar poster</addpostertext>
 	<alllabel>todo</alllabel>
 	<allgenre>todo</allgenre>
 	<allselected>película y serie</allselected>

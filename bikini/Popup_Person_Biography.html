@@ -197,7 +197,11 @@
 							'form.externalId_add_form@action': function (arg) {
 								var output_externalid_form = "javascript:open_update_externalId ("+ arg.context.result.id + ", document.getElementById('external_source').value, document.getElementById('external_id').value)"
 								return output_externalid_form;
+							}, 
+							'div#add_photo_icon@onclick': function (arg) {
+								return  "ouvre_popup_add_photo(" + arg.context.result.id + ")";
 							}
+								
 							
                 };
 		
@@ -271,6 +275,7 @@
 			document.getElementById("back_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('return_label').toLowerCase();
 			document.getElementById("update_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('update_label').toLowerCase() + " " + localStorage.getItem('person_label');
 			document.getElementById("update_icon_artwork").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('update_label').toLowerCase() + " photo";
+			document.getElementById("add_photo_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('add_text').toLowerCase() + " photo";
 
 			}
 			
@@ -392,6 +397,19 @@
 					}
                 });
 		}
+		function ouvre_popup_add_photo (id)
+		{
+			console.log("detail ouvre_popup_add_artwork video_id:" + id );
+			toggle_display_Id ('edit_add_photo');
+			$('#edit_add_photo').attr('action', '/yamj3/api/artwork/add/photo/person/' + id );	
+			toggle_display_Id ('photo_image');
+		}
+		function display_image()
+		{
+			var tmppath = URL.createObjectURL(event.target.files[0]);
+			console.log (tmppath);
+			$('#photo_image').attr('src', tmppath);	
+		}
         </script>
 		
 		<!-- just added to set the language value, shouldn't be displayed  -->
@@ -408,7 +426,7 @@
 						<div id="Filmography_selector" onclick="open_filmography_popup(localStorage.getItem ('Person_id'), window.localStorage.getItem('back_close'))">FILMOGRAPHY</div>
 					</div>
 					<td rowspan="4"><span class="image" style="position:relative; top: 40px;"></span></td>
-					<img class="not_done" src="./pictures/icon_error.png" style="display:none;" />
+					<img class="not_done" src="./pictures/icon_error.png" style="display:none;" /> 
 					<div id="update_icon_artwork" data-tip-person="update photo" onclick="update_person('artwork'); close_person();" style="position: absolute; top: 50px; left: 142px; z-index: 1;"><img  src="./pictures/update_watched.png" width="27"/></div>
 					<div id="update_icon" data-tip-person="update person" onclick="update_person('id'); close_person();" style="position: absolute; top: 3px; right: 40px;"><img  src="./pictures/update_watched.png" width="27"/></div>
 					<div id="close_icon" data-tip-person="close" onclick="close_person()"><img src="./pictures/close2.png" width="30"/></div>
@@ -434,15 +452,23 @@
 				<span class="externalId_delete_form" style="position: absolute; top:0.1vw; left: 5vw; display:none;"/>
 			</div>
         
-		<div class="externalId_add">
-			<form class="externalId_add_form" action="javascript:open_update_externalId (id, document.getElementById('external_source').value, document.getElementById('external_id').value)" method="post" style="margin-bottom: 0px;">
-				<label for="external_source"><div id="updatelabel" style="display: inline;"></div>:&nbsp;<div id="sourcelabel" style="display: inline;"></div></label>
-				<input id="external_source" type="text" ></input>
-				<label for="external_id">Id</label>
-				<input id="external_id" type="text" ></input>
-				<INPUT type="submit" ></input>
-			</form>
-		</div>
+			<div class="externalId_add">
+				<form class="externalId_add_form" action="javascript:open_update_externalId (id, document.getElementById('external_source').value, document.getElementById('external_id').value)" method="post" style="margin-bottom: 0px;">
+					<label for="external_source"><div id="updatelabel" style="display: inline;"></div>:&nbsp;<div id="sourcelabel" style="display: inline;"></div></label>
+					<input id="external_source" type="text" ></input>
+					<label for="external_id">Id</label>
+					<input id="external_id" type="text" ></input>
+					<INPUT type="submit" ></input>
+				</form>
+			</div>
+			<div>
+				<div id="add_photo_icon" data-tip-person="add photo" onclick="ouvre_popup_add_artwork('id'); " style="position: absolute; right: 70px; top: 0px;"><img src="pictures/add.png" alt="add" style="width: 1.9vw; position: relative; top: 0.4vw; background-color: #000; margin:auto 5px auto -5px; padding: 0px 1px 0px 1px; border: 1px solid red; border-right: 4px solid red; border-radius: 6px 6px 0px 6px" ></img></div>
+				<form id="edit_add_photo" enctype="multipart/form-data" action="" target="" method="post"  style="display: none; position: absolute; top: 33vw; left: 2px;">
+					<input name="image" type="file" onchange="display_image('photo')" />
+					<input class="button" type="submit" alt="Upload" value="Upload" />
+				</form> 
+				<img id="photo_image" src="pictures/dummy.png" style="height:20vw; position: absolute; left: 0.8vw; top: 4vw; border: 2px solid black; border-right: 4px solid black; border-radius: 6px 6px 6px 6px; display: none;" />
+			</div>
 		</div>	
 		<div class="Filmography_in" style="top: 65vh;left: 0.5vw;width: 95vw;">
 			<table class="result_filmography_inside">

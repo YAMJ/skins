@@ -894,6 +894,10 @@
 		//	document.getElementsByClassName("play_detail")[0].title=localStorage.getItem('play_label').toLowerCase();
 			document.getElementById("li_home_left").attributes.getNamedItem("data-tip-detail_home").value=window.localStorage.getItem('prefered_page').toLowerCase();
 			document.getElementById("play_button").attributes.getNamedItem("data-tip-detail_play").value=window.localStorage.getItem('play_label').toLowerCase();
+			document.getElementById("add_poster_submit").attributes.getNamedItem("value").value=window.localStorage.getItem('add_text').toLowerCase();
+			document.getElementById("add_fanart_submit").attributes.getNamedItem("value").value=window.localStorage.getItem('add_text').toLowerCase();
+			document.getElementById("add_poster_show_icon").innerHTML=window.localStorage.getItem('add_poster_text');
+			document.getElementById("add_fanart_show_icon").innerHTML=window.localStorage.getItem('add_fanart_text');
 		}
 		
   // ********************* NOW SET VARIOUS FUNCTION **********************************************  
@@ -1663,6 +1667,19 @@
 		// PopUpdate(stage_file_Id, current_title)
 			PopUpdate(update_type, current_id, current_title)
 		}
+	function ouvre_popup_add_artwork (update_type)
+		{
+			console.log("detail ouvre_popup_add_artwork video_id:" + current_id + " index_type:"+ index_type + " update_type: "+ update_type);
+			toggle_display_Id ('edit_add_' + update_type);
+			$('#edit_add_' + update_type).attr('action', '/yamj3/api/artwork/add/' + update_type + '/' + index_type + '/' + current_id );	
+			toggle_display_Id (update_type + '_image');
+		}
+	function display_image(update_type)
+		{
+			var tmppath = URL.createObjectURL(event.target.files[0]);
+			console.log (tmppath);
+			$('#' + update_type + '_image').attr('src', tmppath);	
+		}
 	function ouvre_popup_ignore (artwork_type, located_id)
 		{
 		console.log("detail ouvre_popup_ignore located_Id:" + located_id);
@@ -2223,16 +2240,32 @@
 		
 		<div class="edit_adjust">
 			<table class="posteradjust">
-			<td><a id="li_update_icon" href="javascript:ouvre_popup_update('artwork');" onmouseover="javascript:document.getElementById('updateshow_icon').style.top='41vw'; document.getElementById('updateshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('updateshow_icon').style.top='60px';document.getElementById('updateshow_icon').style.visibility='hidden'">
-										<img src="pictures/icon/update.png" alt="update"></img><div id="updateshow_icon"></div></a></td>	
+			<td>
+				<a id="li_update_icon" href="javascript:ouvre_popup_update('artwork');" onmouseover="javascript:document.getElementById('updateshow_icon').style.top='41vw'; document.getElementById('updateshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('updateshow_icon').style.top='60px';document.getElementById('updateshow_icon').style.visibility='hidden'" >
+					<img src="pictures/icon/update.png" alt="update"></img>
+					<div id="updateshow_icon"></div>
+				</a>
+			</td>
+					
 			<tr>
 					<td>
-                         
-                                <div>
-									<text id="clickremoveposter" style="margin: inherit;"></text><br><br>
+                        <div>
+							<text id="clickremoveposter" style="margin: inherit;"></text>
+								<a id="li_add_icon" href="javascript:ouvre_popup_add_artwork('poster');"  onmouseover="javascript:document.getElementById('add_poster_show_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('add_poster_show_icon').style.visibility='hidden'" >
+									<img src="pictures/add.png" alt="add" style="width: 1.5vw; position: relative; top: 0.4vw; background-color: #000; margin:auto 5px auto -5px; padding: 0px 1px 0px 1px; border: 1px solid red; border-right: 4px solid red; border-radius: 6px 6px 0px 6px" ></img>
+									<div id="add_poster_show_icon" style="top: 1vw; left: 28vw;" ></div>
+								</a>
+								<form id="edit_add_poster" style="display: none;" enctype="multipart/form-data" action="" target="target_frame" method="post">
+									<input name="image" type="file" onchange="display_image('poster')" />
+									<input id="add_poster_submit" class="button" type="submit" alt="Upload" value="Upload" />
+								</form> 
+								<img id="poster_image" src="pictures/dummy.png" style="width: 60px; height:90px; position: relative; left: 10vw; display: none;" />
+											
+								<br><br>
                                     <img class="poster_list" src="./pictures/dummy.png" height="90" width="60" align="bottom" style="padding:2px;" onclick="" alt="poster"/>
 									<button id="infobox_ignore_poster" onclick="javascript:start_ignore ('infobox_ignore_poster')"></button>
-                                </div>
+                        </div> 		
+                                
 					</td>
 				</tr>
                       
@@ -2242,7 +2275,17 @@
 					<td>
                          
                                 <div>
-									<text id="clickremovefanart" style="margin: inherit;"></text><br><br>
+									<text id="clickremovefanart" style="margin: inherit;"></text>
+									<a id="li_add_icon" href="javascript:ouvre_popup_add_artwork('fanart');" onmouseover="javascript:document.getElementById('add_fanart_show_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('add_fanart_show_icon').style.visibility='hidden'">
+											<img src="pictures/add.png" alt="add" style="width: 1.5vw; position: relative; top: 0.4vw; background-color: #000; margin:auto 5px auto -5px; padding: 0px 1px 0px 1px; border: 1px solid red; border-right: 4px solid red; border-radius: 6px 6px 0px 6px" ></img>
+											<div id="add_fanart_show_icon" style="top: 11.5vw; left: 28vw;"></div>
+										</a>
+										<form id="edit_add_fanart" style="display: none;" enctype="multipart/form-data" action="" target="target_frame" method="post">
+											<input name="image" type="file" onchange="display_image('fanart')"/>
+											<input id="add_fanart_submit" class="button" type="submit" alt="Upload" value="Upload" />
+										</form> 
+										<img id="fanart_image" src="pictures/dummy.png" style="width: 128px; height: 72px; position: relative; left: 10vw; display: none;" />
+									<br><br>
                                     <img class="fanart_list" src="./pictures/dummy_fanart.png" height="72" width="128" align="bottom" style="padding:2px;" onclick="" alt="fanart" />
 									<button id="infobox_ignore_fanart" onclick="javascript:start_ignore ('infobox_ignore_fanart')"></button>
                                 </div>

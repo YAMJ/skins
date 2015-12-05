@@ -42,6 +42,7 @@
 		var Prefered_PageValue = "index_all";
 		var	display_Boxset = "";
 		var watched_method = "all";
+		var resolution_method = "all";
 		var nbre_translate_path = 0;
 		// get the prefered_page
 		if (localStorage.getItem("prefered_page"))
@@ -50,7 +51,9 @@
 		// get the watched method 
 		if (localStorage.getItem("watched"))
 			{watched_method = localStorage.getItem("watched");}
-		
+		// get the resolution method 
+		if (localStorage.getItem("resolution"))
+			{resolution_method = localStorage.getItem("resolution");}
 		// get the genre and name id and reset to default for the next time 
 		if (localStorage.getItem("Boxset_id"))
 			{boxset_id = localStorage.getItem("Boxset_id");
@@ -167,8 +170,14 @@
 			get_player();
 			get_prefered_page();
 			
-			var jsonUrl = "/yamj3/api/index/video.json?include=boxset-"+boxset_id+"&dataitems=member,artwork&artwork=POSTER"+"&watched="+watched_method+"&sortby="+sort_type+"&sortdir="+direction;
+			var jsonUrl = "/yamj3/api/index/video.json?dataitems=member,artwork&artwork=POSTER"+"&watched="+watched_method+"&sortby="+sort_type+"&sortdir="+direction;
 			display_Boxset = window.localStorage.getItem('boxset_label').toUpperCase()+ ": " + boxset_name.toUpperCase();
+			if (resolution_method != 'all')
+				{
+					jsonUrl += "&include=boxset-"+boxset_id+",resolution-" + resolution_method;
+					display_Boxset = display_Boxset + '&nbsp;resolution:' + resolution_method;
+				}
+				else {jsonUrl += "&include=boxset-"+boxset_id;}
 		
 			switch (watched_method)
 				{

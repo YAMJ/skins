@@ -1,4 +1,8 @@
 change.txt
+V2.0.5
+- fix unapply translatation to image path  
+- add resolution selector
+- add ability to manually add poster and fanart from file storage 
 V2.0.4
 - modify detail update all incomplete person only - without biography or without artwork
 - add merge duplicate person

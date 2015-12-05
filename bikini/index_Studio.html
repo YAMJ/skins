@@ -41,6 +41,7 @@
 		var studio_name = ""; 
 		var	display_studio = "";
 		var watched_method = "all";
+		var resolution_method = "all";
 		var nbre_translate_path = 0;
 		var Prefered_PageValue = "index_all";
 		// get the prefered_page
@@ -50,6 +51,9 @@
 		// get the watched method 
 		if (localStorage.getItem("watched"))
 			{watched_method = localStorage.getItem("watched");}
+		// get the resolution method 
+		if (localStorage.getItem("resolution"))
+			{resolution_method = localStorage.getItem("resolution");}
 		if (localStorage.getItem("Studio_id"))
 			{studio_id = localStorage.getItem("Studio_id");
 			}
@@ -162,8 +166,14 @@
 			get_player();
 			get_prefered_page();
 			
-			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=" + sort_type + "&sortdir=" + direction + "&artwork=poster&include=studio-"+studio_id+"&watched="+watched_method;;
+			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=" + sort_type + "&sortdir=" + direction + "&artwork=poster&watched="+watched_method;;
 			display_studio = window.localStorage.getItem('studio_select') + ":" + studio_name;
+			if (resolution_method != 'all')
+				{
+					jsonUrl += "&include=studio-"+studio_id+",resolution-" + resolution_method;
+					display_studio = display_studio + '&nbsp;resolution:' + resolution_method;
+				}
+				else {jsonUrl += "&include=studio-"+studio_id;}
 			get_type_selected ();
 			switch (watched_method)
 				{

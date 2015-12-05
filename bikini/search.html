@@ -45,7 +45,8 @@
 		var newest_asked = false; 
 		var newest_type = "";
 		var newest_value = "30";
-		var watched_value = "all"
+		var watched_value = "all";
+		var resolution_value = 'all_resolution';
         // This function calls the API to get the JSON data.
         // It will then update the HTML with the data and set up the paging
         function getIndexData()
@@ -69,7 +70,7 @@
 					else {window.localStorage.setItem("newest", newest_value + "-" + newest_type);} 
 				}
 			window.localStorage.setItem('watched', watched_value);
-			
+			window.localStorage.setItem('resolution', resolution_value);
 			switch (method_selected)
 				{
 					case 'ALL':
@@ -282,10 +283,21 @@
 								
 							</table>
 							<table class="table_watched_select">		 				
-								<td style="width: 100px; text-align: left;">
+								<td style="width: 40px; text-align: left;">
 									<input type="radio" name="watched" value="watched_and_unwatched" onclick="watched_value = "all" id="FormWatchedUnwatched" checked="checked" /><img src="pictures/icon/home_watched_rv8.png" height="30px"  width="25px" alt="allwatched" /><br />
 									<input type="radio" name="watched" value="watched" onclick="watched_value = true" id="FormWatched"  /><img src="pictures/watched.png" height="15px"  width="15px" alt="allwatched" /><br />
 									<input type="radio" name="watched" value="unwatched" onclick="watched_value = false" id="FormUnwatched"  /><img src="pictures/unwatched.png" height="15px"  width="15px" alt="allwatched" />
+									
+								</td>
+							</table>
+							<table class="table_resolution_select">		 				
+								<td style="width: 50px; text-align: left;">
+									<input type="radio" name="resolution" value="all_resolution" onclick="resolution_value = 'all_resolution'" id="FormAllResolution" checked="checked" /><img src="pictures/resolution/all_resolution.png" height="12px"  width="29px" alt="all resolution" /><br />
+									<input type="radio" name="resolution" value="sd" onclick="resolution_value = 'sd'" id="FormSDResolution"  /><img src="pictures/resolution/sd.png" height="12px"  width="29px" alt="sd" /><br />
+									<input type="radio" name="resolution" value="hd" onclick="resolution_value = 'hd'" id="FormHDResolution"  /><img src="pictures/resolution/hd.png" height="12px"  width="29px" alt="hd" />
+									<input type="radio" name="resolution" value="fullhd" onclick="resolution_value = 'fullhd'" id="FormFullHDResolution"  /><img src="pictures/resolution/fullhd.png" height="12px"  width="29px" alt="fullhf" />
+									<input type="radio" name="resolution" value="4k" onclick="resolution_value = '4k'" id="Form4KResolution"  /><img src="pictures/resolution/4k.png" height="12px"  width="29px" alt="4k" />
+									<input type="radio" name="resolution" value="8k" onclick="resolution_value = '8k'" id="Form8KResolution"  /><img src="pictures/resolution/8k.png" height="12px"  width="29px" alt="8k" />
 									
 								</td>
 							</table>

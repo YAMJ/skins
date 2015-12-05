@@ -42,6 +42,7 @@
 		var rating_value = "";
 		var	display_rating = "";
 		var watched_method = "all";
+		var resolution_method = "all";
 		var nbre_translate_path = 0;
 		// get the prefered_page
 		if (localStorage.getItem("prefered_page"))
@@ -50,7 +51,9 @@
 		// get the watched method 
 		if (localStorage.getItem("watched"))
 			{watched_method = localStorage.getItem("watched");}
-		
+		// get the resolution method 
+		if (localStorage.getItem("resolution"))
+			{resolution_method = localStorage.getItem("resolution");}
 		if (localStorage.getItem("Rating_source"))
 			{rating_source = localStorage.getItem("Rating_source");
 			}
@@ -179,9 +182,15 @@
 			get_player();
 			get_prefered_page();
 		
-			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=" + sort_type + "&sortdir=" + direction + "&artwork=poster&include=rating-"+rating_value+"-"+rating_source+"&watched="+watched_method;;
+			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=" + sort_type + "&sortdir=" + direction + "&artwork=poster&watched="+watched_method;;
 			if (rating_source == 'combined') {display_rating = window.localStorage.getItem('rating_label').toUpperCase() + " " + window.localStorage.getItem('combined_label').toLowerCase() + ":" + rating_value;}
 			else {display_rating = window.localStorage.getItem('rating_label').toUpperCase() + " " + rating_source + ":" + rating_value;}
+			if (resolution_method != 'all')
+				{
+					jsonUrl += "&include=rating-"+rating_value+"-"+rating_source+",resolution-" + resolution_method;
+					display_rating = display_rating + '&nbsp;resolution:' + resolution_method;
+				}
+				else {jsonUrl += "&include=rating-"+rating_value+"-"+rating_source;}
 			get_type_selected ();
 			switch (watched_method)
 				{

@@ -2,6 +2,9 @@
 <lang>
 	<actionlabel>azione</actionlabel>
 	<actorlabel>giocator</actorlabel>
+	<addtext>aggiungere</addtext>
+	<addfanarttext>aggiungere carta da parati</addfanarttext>
+	<addpostertext>aggiungi poster</addpostertext>
 	<alllabel>tutti</alllabel>
 	<allgenre>tutti</allgenre>
 	<allselected>del cinema e serie</allselected>

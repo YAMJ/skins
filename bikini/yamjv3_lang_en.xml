@@ -90,6 +90,10 @@
 	<notext>no</notext>
 	
 	<opennavigationmenu>open navigation menu</opennavigationmenu>
+	<overwritefieldbiography>modify biography</overwritefieldbiography>
+	<overwritefieldfirstname>modify first name</overwritefieldfirstname>
+	<overwritefieldlastname>modify last name</overwritefieldlastname>
+	<overwritefieldname>modify name</overwritefieldname>
 	
 	<pagecomment>paging (true) , without paging (false)</pagecomment>
 	<pagelabel>page</pagelabel>

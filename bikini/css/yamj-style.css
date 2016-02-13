@@ -218,6 +218,15 @@
 	width: 95px;
 	height: 135px;		*/	
 }
+#container .overlays {
+    width: 115%;
+	height: 106%;	
+	position: relative;
+	top: -137%;
+	left: -4%;
+	display: block;
+	z-index: 0;
+}
 .person_name {
 	position: relative ; 
 	top: -1.2vw;
@@ -236,6 +245,7 @@
 	width: 21%;
 	top: -2.9vw;
 	left: -11%;
+	z-index: 1;
 	}
 #container .infobutton {
 	position: relative;
@@ -243,6 +253,7 @@
 	height: 11%;
 	width: 19%;
 	left: -3%;
+	z-index: 1;
 	}	
 .watched_small  {
 	position: relative;
@@ -250,6 +261,7 @@
 	left: 10%;
 	height: 9.5%;
 	width: 16%;
+	z-index: 1;
 	}
 .watched  {
 	position: relative;
@@ -2812,6 +2824,7 @@ text {
 	left: -3.2vw;
 	display: inline;
 	border-right: 3px solid gray;
+	z-index:1;
 	}
 .rating:hover {
 	background-color:rgba(255, 255, 255, 1.0);
@@ -2823,6 +2836,7 @@ text {
 	padding: 0px;
 	left: 3.5vw;
 	display: inline;
+	z-index: 1;
 	}
 .boxset:hover {
 	background-color:rgba(0, 0, 0, 1.0);

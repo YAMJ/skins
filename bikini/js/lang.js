@@ -199,6 +199,10 @@
 					window.localStorage.setItem("nobirthday_text", (x[i].getElementsByTagName("nobirthday")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("noposter_text", (x[i].getElementsByTagName("noposter")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("open_navigation_menu", (x[i].getElementsByTagName("opennavigationmenu")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("overwrite_field_biography", (x[i].getElementsByTagName("overwritefieldbiography")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("overwrite_field_first_name", (x[i].getElementsByTagName("overwritefieldfirstname")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("overwrite_field_last_name", (x[i].getElementsByTagName("overwritefieldlastname")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("overwrite_field_name", (x[i].getElementsByTagName("overwritefieldname")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("page_comment", (x[i].getElementsByTagName("pagecomment")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("page_label", (x[i].getElementsByTagName("pagelabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("page_style_comment", (x[i].getElementsByTagName("pagestylecomment")[0].childNodes[0].nodeValue));
@@ -276,11 +280,11 @@
 
 	 function translate_job (job)  
 		{
-				var res = job.replace(/\b writer/gi, window.localStorage.getItem('writer_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('writer_label').substring(1).toLowerCase());
-				res = res.replace(/\b director/gi, window.localStorage.getItem('director_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('director_label').substring(1).toLowerCase());
-				res = res.replace(/\b actor/gi, window.localStorage.getItem('actor_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('actor_label').substring(1).toLowerCase());
-				res = res.replace(/\b producer/gi, window.localStorage.getItem('producer_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('producer_label').substring(1).toLowerCase());
-
+				var res = job.replace(/\b writer|WRITER/gi, window.localStorage.getItem('writer_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('writer_label').substring(1).toLowerCase());
+				res = res.replace(/\b director|DIRECTOR/gi, window.localStorage.getItem('director_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('director_label').substring(1).toLowerCase());
+				res = res.replace(/\b actor|ACTOR/gi, window.localStorage.getItem('actor_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('actor_label').substring(1).toLowerCase());
+				res = res.replace(/\b producer|PRODUCER/gi, window.localStorage.getItem('producer_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('producer_label').substring(1).toLowerCase());
+				res = res.replace(/\b screenplay|SCREENPLAY/gi, window.localStorage.getItem('writer_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('writer_label').substring(1).toLowerCase());
 	//	console.log("translate_job job:" + job + " res:" + res);
 		return res;
 		}

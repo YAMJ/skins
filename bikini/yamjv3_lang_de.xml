@@ -90,6 +90,10 @@
 	<notext>keine</notext>
 	
 	<opennavigationmenu>offnet das navigationsmenu</opennavigationmenu>
+	<overwritefieldbiography>andern biografie</overwritefieldbiography>
+	<overwritefieldfirstname>andern vorname</overwritefieldfirstname>
+	<overwritefieldlastname>andern nachname</overwritefieldlastname>
+	<overwritefieldname>namem andern</overwritefieldname>
 	
 	<pagecomment>paging (true), ohne paging (false)</pagecomment>
 	<pagelabel>seite</pagelabel>

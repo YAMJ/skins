@@ -197,6 +197,7 @@
 							$('.not_done').css('left', '5.5vw');
 							$('.not_done').css('top', '-36.8vw');
 							$('.not_done').css('width', '50%');
+							$('.overlays').css('height', '108%');
 							break;
 						//2 rows , 6 columns
 						case 2:
@@ -244,6 +245,8 @@
 							$('.not_done').css('left', '3.7vw');
 							$('.not_done').css('top', '-25vw');
 							$('.not_done').css('width', '50%');
+							$('.overlays').css('top', '-134%');
+							
 							break;
 						//3 rows, 9 columns 
 						case 3:
@@ -295,7 +298,7 @@
 							$('.boxset').css('top', '-19vw');
 							$('.boxset').css('width', '2vw');
 							$('.not_done').css('left', '2.6vw');
-							$('.not_done').css('top', '-16.9vw');
+							$('.not_done').css('top', '-34vw');
 							$('.not_done').css('width', '50%');
 							break;
 						//4 rows, 11 columns 
@@ -349,6 +352,8 @@
 							$('.not_done').css('left', '1.8vw');
 							$('.not_done').css('top', '-12.5vw');
 							$('.not_done').css('width', '50%');
+							$('.overlays').css('height', '108%');
+							$('.overlays').css('top', '-145%');
 							break;	
 						//5 rows, 12 columns
 						case 5:
@@ -391,7 +396,7 @@
 							$('.not_done').css('left', '1.7vw');
 							$('.not_done').css('top', '-11.7vw');
 							$('.not_done').css('width', '50%');
-							
+							$('.overlays').css('top', '-165%');
 							break;
 					
 						}

@@ -91,6 +91,11 @@
 	<notext>pas de</notext>
 	
 	<opennavigationmenu>ouvre le menu de navigation</opennavigationmenu>
+	<overwritefieldbiography>modifier la biographie</overwritefieldbiography>
+	<overwritefieldfirstname>modifier le prénom</overwritefieldfirstname>
+	<overwritefieldlastname>modifier le nom</overwritefieldlastname>
+	<overwritefieldname>modifier le nom complet</overwritefieldname>
+
 	
 	<pagecomment>avec pagination (vrai), sans pagination (faux)</pagecomment>
 	<pagelabel>page</pagelabel>

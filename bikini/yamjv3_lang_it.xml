@@ -90,6 +90,10 @@
 	<notext>non</notext>
 	
 	<opennavigationmenu>apre il menu di navigazione</opennavigationmenu>
+	<overwritefieldbiography>cambiare il biographia</overwritefieldbiography>
+	<overwritefieldfirstname>cambiare il cognome</overwritefieldfirstname>
+	<overwritefieldlastname>cambiare il nome</overwritefieldlastname>
+	<overwritefieldname>cambiare il nome completo</overwritefieldname>
 	
 	<pagecomment>paging (vero), senza paginazionze (false)</pagecomment>
 	<pagelabel>pagina</pagelabel>

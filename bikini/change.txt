@@ -1,4 +1,15 @@
 change.txt
+V2.0.7
+- adjust translation in config value and new page
+- adjust translation in info_config
+- adjust translation in yamj3 skin settings 
+- fix index_studio
+- adjust translation in all index pages 
+- add cover (overlays) to all index page (full implemented) 
+- add rating and boxset icon to all index page 
+- add enable or disable cover parameter in skin settings
+- add person all in one 
+- add display the last stored photo
 V2.0.6
 - fix job transation
 - add overlays (need some feature from yamj3 to be complete) 

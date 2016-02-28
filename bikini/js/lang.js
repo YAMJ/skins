@@ -152,6 +152,7 @@
 					window.localStorage.setItem("desc_label", (x[i].getElementsByTagName("descending")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("detail_comment", (x[i].getElementsByTagName("detailcomment")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("director_label", (x[i].getElementsByTagName("directorlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("day_label", (x[i].getElementsByTagName("daylabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("down_label", (x[i].getElementsByTagName("downlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("download_text", (x[i].getElementsByTagName("downloadtext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("duplicate_text", (x[i].getElementsByTagName("duplicatetext")[0].childNodes[0].nodeValue));
@@ -176,6 +177,7 @@
 					window.localStorage.setItem("green_label", (x[i].getElementsByTagName("greenlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("home_label", (x[i].getElementsByTagName("homelabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("ignore_text", (x[i].getElementsByTagName("ignoretext")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("index_label", (x[i].getElementsByTagName("indexlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("info_label", (x[i].getElementsByTagName("infolabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("key_label", (x[i].getElementsByTagName("keylabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("lang_comment", (x[i].getElementsByTagName("langcomment")[0].childNodes[0].nodeValue));
@@ -199,6 +201,8 @@
 					window.localStorage.setItem("nobirthday_text", (x[i].getElementsByTagName("nobirthday")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("noposter_text", (x[i].getElementsByTagName("noposter")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("open_navigation_menu", (x[i].getElementsByTagName("opennavigationmenu")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("overlay_comment", (x[i].getElementsByTagName("overlaycomment")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("overlay_label", (x[i].getElementsByTagName("overlaylabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("overwrite_field_biography", (x[i].getElementsByTagName("overwritefieldbiography")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("overwrite_field_first_name", (x[i].getElementsByTagName("overwritefieldfirstname")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("overwrite_field_last_name", (x[i].getElementsByTagName("overwritefieldlastname")[0].childNodes[0].nodeValue));
@@ -206,6 +210,7 @@
 					window.localStorage.setItem("page_comment", (x[i].getElementsByTagName("pagecomment")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("page_label", (x[i].getElementsByTagName("pagelabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("page_style_comment", (x[i].getElementsByTagName("pagestylecomment")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("path_label", (x[i].getElementsByTagName("pathlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("pause_label", (x[i].getElementsByTagName("pauselabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("person_label", (x[i].getElementsByTagName("personlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("person_select", (x[i].getElementsByTagName("personselected")[0].childNodes[0].nodeValue));
@@ -256,6 +261,7 @@
 					window.localStorage.setItem("style_comment", (x[i].getElementsByTagName("stylecomment")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("style_label", (x[i].getElementsByTagName("stylelabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("subtitle_label", (x[i].getElementsByTagName("subtitlelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("target_label", (x[i].getElementsByTagName("targetlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("time_seek_label", (x[i].getElementsByTagName("timeseeklabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("title_label", (x[i].getElementsByTagName("titlelabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("transform_error_text", (x[i].getElementsByTagName("transformerrortext")[0].childNodes[0].nodeValue));
@@ -270,6 +276,7 @@
 					window.localStorage.setItem("volumeup_label", (x[i].getElementsByTagName("volumeuplabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("year_label", (x[i].getElementsByTagName("yearlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("yellow_label", (x[i].getElementsByTagName("yellowlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("yes_text", (x[i].getElementsByTagName("yestext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("watched_select", (x[i].getElementsByTagName("watchedselect")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("writer_label", (x[i].getElementsByTagName("writerlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("zoom_label", (x[i].getElementsByTagName("zoomlabel")[0].childNodes[0].nodeValue));

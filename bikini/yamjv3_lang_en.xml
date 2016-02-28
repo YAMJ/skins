@@ -29,6 +29,7 @@
 	<creationcomment>yamj3 creation date</creationcomment>
 	<creationlabel>creation</creationlabel>
 	
+	<daylabel>days</daylabel>
 	<deletetext>delete</deletetext>
 	<descending>descending</descending>
 	<detailcomment>detail</detailcomment>
@@ -44,7 +45,7 @@
 	
 	<falsetext>false</falsetext>
 	<fanartshow>fanart</fanartshow>
-	<filecomment>video file date</filecomment>
+	<filecomment>registration date in yamj3</filecomment>
 	<filelabel>file</filelabel>
 	<filemodelabel>file mode</filemodelabel>
 	<filmographylabel>filmography</filmographylabel>
@@ -62,6 +63,7 @@
 	<homelabel>home</homelabel>
 	
 	<ignoretext>ignore</ignoretext>
+	<indexlabel>index</indexlabel>
 	<infolabel>info</infolabel>
 	
 	<keylabel>key</keylabel>
@@ -90,6 +92,8 @@
 	<notext>no</notext>
 	
 	<opennavigationmenu>open navigation menu</opennavigationmenu>
+	<overlaycomment>overlay</overlaycomment>
+	<overlaylabel>overlay</overlaylabel>
 	<overwritefieldbiography>modify biography</overwritefieldbiography>
 	<overwritefieldfirstname>modify first name</overwritefieldfirstname>
 	<overwritefieldlastname>modify last name</overwritefieldlastname>
@@ -98,6 +102,7 @@
 	<pagecomment>paging (true) , without paging (false)</pagecomment>
 	<pagelabel>page</pagelabel>
 	<pagestylecomment>new page</pagestylecomment>
+	<pathlabel>path</pathlabel>
 	<pauselabel>pause</pauselabel>
 	<personlabel>person</personlabel>
 	<personselected>person</personselected>
@@ -110,7 +115,7 @@
 	<popuplabel>horizontal band</popuplabel>
 	<powerlabel>power</powerlabel>
 	<prefered>prefered</prefered>
-	<preferedcomment>prefered page selected with yamj3 logo</preferedcomment>
+	<preferedcomment>prefered page</preferedcomment>
 	<prevremotelabel>previous</prevremotelabel>
 	<producerlabel>producer</producerlabel>
 	
@@ -151,6 +156,7 @@
 	<stylelabel>style</stylelabel>
 	<subtitlelabel>subtitle</subtitlelabel>
 	
+	<targetlabel>target</targetlabel>
 	<titlelabel>title</titlelabel>
 	<timeseeklabel>time seek</timeseeklabel>
 	<transformerrortext>unable to transform check source_path target_path</transformerrortext>
@@ -171,6 +177,7 @@
 	
 	<yearlabel>year</yearlabel>
 	<yellowlabel>yellow</yellowlabel>
+	<yestext>yes</yestext>
 
 
 	<zoomlabel>zoom</zoomlabel>

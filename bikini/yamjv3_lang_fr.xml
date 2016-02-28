@@ -30,6 +30,7 @@
 	<creationcomment>date de creation dans yamj3</creationcomment>
 	<creationlabel>creation</creationlabel>
 	
+	<daylabel>jours</daylabel>
 	<deletetext>supprimer</deletetext>
 	<descending>descendant</descending>
 	<detailcomment>detail</detailcomment>
@@ -45,7 +46,7 @@
 	
 	<falsetext>faux</falsetext>
 	<fanartshow>fanart</fanartshow>
-	<filecomment>date du fichier de la vidéo</filecomment>
+	<filecomment>enregistrement dans yamj3</filecomment>
 	<filelabel>fichier</filelabel>
 	<filemodelabel>mode fichier</filemodelabel>
 	<filmographylabel>filmographie</filmographylabel>
@@ -63,7 +64,8 @@
 	<homelabel>début</homelabel>
 	
 	<ignoretext>ignore</ignoretext>
-	<infolabel>info</infolabel>
+	<indexlabel>index</indexlabel>
+	<infolabel>information</infolabel>
 	
 	<keylabel>clé</keylabel>
 	
@@ -88,9 +90,11 @@
 	<nobirthday>date de naissance inconnue</nobirthday>
 	<noplot>aucun sysnospis disponible</noplot>
 	<noposter>aucun postère</noposter>
-	<notext>pas de</notext>
+	<notext>non</notext>
 	
 	<opennavigationmenu>ouvre le menu de navigation</opennavigationmenu>
+	<overlaycomment>couverture</overlaycomment>
+	<overlaylabel>couverture</overlaylabel>
 	<overwritefieldbiography>modifier la biographie</overwritefieldbiography>
 	<overwritefieldfirstname>modifier le prénom</overwritefieldfirstname>
 	<overwritefieldlastname>modifier le nom</overwritefieldlastname>
@@ -98,21 +102,22 @@
 
 	
 	<pagecomment>avec pagination (vrai), sans pagination (faux)</pagecomment>
-	<pagelabel>page</pagelabel>
+	<pagelabel>pagination</pagelabel>
 	<pagestylecomment>nouvelle page</pagestylecomment>
+	<pathlabel>chemin</pathlabel>
 	<pauselabel>pause</pauselabel>
 	<personlabel>personne</personlabel>
 	<personselected>personne</personselected>
 	<personshow>personne</personshow>
 	<playercomment>dispositif sur lequel afficher la video</playercomment>
-	<playerselected>lanceur</playerselected>
-	<playlabel>jouer sur </playlabel>
+	<playerselected>lecteur</playerselected>
+	<playlabel>lecture </playlabel>
 	<plotlabel>synopsis</plotlabel>
 	<popupcomment>fenêtre ruban horizontal flottant</popupcomment>
 	<popuplabel>ruban horizontal</popuplabel>
 	<powerlabel>marche</powerlabel>
 	<prefered>préférée</prefered>
-	<preferedcomment>page préférée via le logo yamj3</preferedcomment>
+	<preferedcomment>page préférée</preferedcomment>
 	<prevremotelabel>precedent</prevremotelabel>
 	<producerlabel>producteur</producerlabel>
 	
@@ -153,6 +158,7 @@
 	<stylelabel>style</stylelabel>
 	<subtitlelabel>sous-titre</subtitlelabel>
 	
+	<targetlabel>cible</targetlabel>
 	<titlelabel>titre</titlelabel>
 	<timeseeklabel>durée</timeseeklabel>
 	<transformerrortext>transformation impossible controler source_path target_path</transformerrortext>
@@ -173,6 +179,7 @@
 	
 	<yearlabel>an</yearlabel>
 	<yellowlabel>jaune</yellowlabel>
+	<yestext>oui</yestext>
 	
 	<zoomlabel>zoom</zoomlabel>
 </lang>

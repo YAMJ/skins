@@ -29,6 +29,7 @@
 	<creationcomment>erstellungsdatum in yamj3</creationcomment>
 	<creationlabel>schaffung</creationlabel>
 	
+	<daylabel>tage</daylabel>
 	<deletetext>loschen</deletetext>
 	<descending>absteigend</descending>
 	<detailcomment>detail</detailcomment>
@@ -44,7 +45,7 @@
 	
 	<falsetext>falso</falsetext>
 	<fanartshow>fanart</fanartshow>
-	<filecomment>datum der videodatei</filecomment>
+	<filecomment>aufnahme in yamj3</filecomment>
 	<filelabel>datei</filelabel>
 	<filemodelabel>datei-modus</filemodelabel>
 	<filmographylabel>filmografie</filmographylabel>
@@ -62,6 +63,7 @@
 	<homelabel>zuhause</homelabel>
 	
 	<ignoretext>ignorieren</ignoretext>
+	<indexlabel>index</indexlabel>
 	<infolabel>info</infolabel>
 	
 	<keylabel>schussel</keylabel>
@@ -90,6 +92,8 @@
 	<notext>keine</notext>
 	
 	<opennavigationmenu>offnet das navigationsmenu</opennavigationmenu>
+	<overlaycomment>uberzug</overlaycomment>
+	<overlaylabel>uberzug</overlaylabel>
 	<overwritefieldbiography>andern biografie</overwritefieldbiography>
 	<overwritefieldfirstname>andern vorname</overwritefieldfirstname>
 	<overwritefieldlastname>andern nachname</overwritefieldlastname>
@@ -98,6 +102,7 @@
 	<pagecomment>paging (true), ohne paging (false)</pagecomment>
 	<pagelabel>seite</pagelabel>
 	<pagestylecomment>neue seite</pagestylecomment>
+	<pathlabel>weg</pathlabel>
 	<pauselabel>pause</pauselabel>
 	<personlabel>person</personlabel>
 	<personselected>person</personselected>
@@ -109,7 +114,7 @@
 	<popupcomment>schwimmende horizontale fensterband</popupcomment>
 	<popuplabel>horizontal band</popuplabel>
 	<powerlabel>macht</powerlabel>
-	<preferedcomment>lieblings seite via yamj3 logo</preferedcomment>
+	<preferedcomment>lieblings seite</preferedcomment>
 	<prefered>favorit</prefered>
 	<prevremotelabel>fruher</prevremotelabel>
 	<producerlabel>hersteller</producerlabel>
@@ -151,6 +156,7 @@
 	<stylelabel>stil</stylelabel>
 	<subtitlelabel>untertitel</subtitlelabel>
 	
+	<targetlabel>ziel</targetlabel>
 	<titlelabel>titel</titlelabel>
 	<timeseeklabel>suchzeit</timeseeklabel>
 	<transformerrortext>keine Kontrolle source_path target_path verwandeln</transformerrortext>
@@ -173,6 +179,7 @@
 	
 	<yearlabel>jahr</yearlabel>
 	<yellowlabel>gelb</yellowlabel>
+	<yestext>ja</yestext>
 	
 	<zoomlabel>zoom</zoomlabel>
 </lang>

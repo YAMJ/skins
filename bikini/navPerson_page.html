@@ -51,18 +51,29 @@
             "div.person_block": {
                 "result<-results": {
                     "span.person_name": "result.name",
-                    "img.person_photo@src": function(arg) {
+					"img.person_photo@src": function(arg) {
                         // Check to see if there are posters
+						located_id = 0;  // set the located_id to the lowest value
+						var temp_return = "pictures/dummy_photo.jpg";
                         if (arg.item.artwork) {
-                            // Get the first poster from the list
-                            var photo = arg.item.artwork[0];
-                            if (photo.generatedId === 0) {
-                                return "pictures/dummy_photo.jpg";
-                            }
-                            return arg.context.basePhotoUrl + photo.filename;
-                        } else {
-                            return "pictures/dummy_photo.jpg";
-                        }
+							for (i = 0; i < arg.item.artwork.length; i++) 
+							{
+								// Get the last generated poster from the list
+								photo = arg.item.artwork[i];
+								// if any problem within poster generation return dummy 
+								if (photo.generatedId === 0) {temp_return = "pictures/dummy_photo.jpg";} 
+								else {
+								//		console.log ("arg.item.artwork.length:" + arg.item.artwork.length + " i:"+ i + " photo.id:" + photo.id + " name:" + arg.item.firstName + "." + arg.item.lastName + " located_id:" + located_id + " photo.locatedId:" + photo.locatedId);
+								// compare if the locatedId is greater , assume when the case  it's newser
+								if (parseInt(photo.locatedId, 10) > parseInt(located_id, 10)) 
+										{
+											located_id = photo.locatedId;  // store the new locatedId
+											temp_return = arg.context.basePhotoUrl + photo.filename;  //keep this photo
+										} else {}
+									} 
+							}  // end loop 	
+						}
+						return temp_return; // now return the result 
                     },
                     "img.person_photo@onclick": function(arg) {
                         return "open_person_popup('" + arg.item.id + "', 'close')";

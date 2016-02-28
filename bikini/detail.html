@@ -892,7 +892,51 @@
 			document.getElementById("open_menu_left").title=localStorage.getItem('open_navigation_menu').toLowerCase();
 			document.getElementById("close_menu_left").title=localStorage.getItem('close_navigation_menu').toLowerCase();
 		//	document.getElementsByClassName("play_detail")[0].title=localStorage.getItem('play_label').toLowerCase();
-			document.getElementById("li_home_left").attributes.getNamedItem("data-tip-detail_home").value=window.localStorage.getItem('prefered_page').toLowerCase();
+		
+			switch (window.localStorage.getItem('prefered_page').toLowerCase())
+			{
+				case 'certification':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip-detail_home").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('certification_label').toLowerCase();
+				break;
+				}
+				case 'index_all':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip-detail_home").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('all_label').toLowerCase();
+				break;
+				}
+				case 'index_movie':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip-detail_home").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('movie_label').toLowerCase();
+				break;
+				}
+				case 'index_series':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip-detail_home").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('series_label').toLowerCase();
+				break;
+				}
+				case 'new':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip-detail_home").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('new_').toLowerCase();
+				break;
+				}
+				case 'person':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip-detail_home").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('person_label').toLowerCase();
+				break;
+				}
+				case 'rating':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip-detail_home").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('rating_label').toLowerCase();
+				break;
+				}
+				case 'source':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip-detail_home").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('source_label').toLowerCase();
+				break;
+				}
+			}
+			
 			document.getElementById("play_button").attributes.getNamedItem("data-tip-detail_play").value=window.localStorage.getItem('play_label').toLowerCase();
 			document.getElementById("add_poster_submit").attributes.getNamedItem("value").value=window.localStorage.getItem('add_text').toLowerCase();
 			document.getElementById("add_fanart_submit").attributes.getNamedItem("value").value=window.localStorage.getItem('add_text').toLowerCase();
@@ -1416,25 +1460,61 @@
 					{
 					case 'frame':
 						{
-							if (Person_toSet) { 
-								console.log("ouvre_popup_person:  " +Person_toSet);
-								parent.frames['person_frame'].location.href='navPerson_frame.html';								
-								Person_toSet = false; 
-								}
-							if (parent.document.getElementById('person_display').style.visibility =="visible")  // click toggle the frame  
+							if (localStorage.getItem('Person_all-in-one') == 'true')
 							{
-								parent.document.getElementById('person_frame').style.display="none";
-								parent.document.getElementById('person_display').style.visibility="hidden";
-								parent.document.getElementById('person_display').style.zIndex="2";
-							} else 
-							{							
-								parent.document.getElementById('person_display').style.height="300px";  // adjust window
-								parent.document.getElementById('person_frame').style.height="290px";    // adjust frame inside windows
-								parent.document.getElementById('person_frame').style.display="block";
-								parent.document.getElementById('person_display').style.visibility="visible";	
-								parent.document.getElementById('person_display').style.zIndex="15";
-							}
-							
+							console.log("ouvre_popup_person all-in-one:  " +Person_toSet);
+							parent.frames['person_frame'].location.href='navPersonH.html';	
+								if (Person_toSet) { 
+								//	console.log("ouvre_popup_person all-in-one:  " +Person_toSet);
+								//	parent.frames['person_frame'].location.href='navPersonH.html';								
+									Person_toSet = false; 
+									}
+								if (parent.document.getElementById('person_display').style.visibility =="visible")  // click toggle the frame  
+								{
+									parent.document.getElementById('person_frame').style.display="none";
+									parent.document.getElementById('person_display').style.visibility="hidden";
+									parent.document.getElementById('person_display').style.zIndex="2";
+								} else 
+								{	// adjust window						
+									parent.document.getElementById('person_display').style.height="90vh";  
+									parent.document.getElementById('person_display').style.top="52px";
+									parent.document.getElementById('person_display').style.left="2vw";  
+									parent.document.getElementById('person_display').style.width="100vw"; 
+									parent.document.getElementById('person_display').style.visibility="visible";	
+									parent.document.getElementById('person_display').style.zIndex="15";
+									parent.document.getElementById('person_display').style.bottom="";
+									// adjust frame
+									parent.document.getElementById('person_frame').style.height="30vh";    // adjust frame inside windows
+									parent.document.getElementById('person_frame').style.width="96vw";
+									parent.document.getElementById('person_frame').style.display="block";
+									
+								}
+							} else {
+									console.log("ouvre_popup_person:  " +Person_toSet);
+									parent.frames['person_frame'].location.href='navPerson_frame.html';
+									if (Person_toSet) { 
+									//	console.log("ouvre_popup_person:  " +Person_toSet);
+									//	parent.frames['person_frame'].location.href='navPerson_frame.html';								
+										Person_toSet = false; 
+										}
+									if (parent.document.getElementById('person_display').style.visibility =="visible")  // click toggle the frame  
+									{
+										parent.document.getElementById('person_frame').style.display="none";
+										parent.document.getElementById('person_display').style.visibility="hidden";
+										parent.document.getElementById('person_display').style.zIndex="2";
+									} else 
+									{							
+										parent.document.getElementById('person_display').style.height="300px";  // adjust window
+										parent.document.getElementById('person_frame').style.height="260px";    // adjust frame inside windows
+										parent.document.getElementById('person_frame').style.display="block";
+										parent.document.getElementById('person_frame').style.width="81vw";
+										parent.document.getElementById('person_display').style.bottom="0px";
+										parent.document.getElementById('person_display').style.top="";
+										parent.document.getElementById('person_display').style.left="18.1vw";
+										parent.document.getElementById('person_display').style.visibility="visible";	
+										parent.document.getElementById('person_display').style.zIndex="15";
+									}
+								}
 							break;
 						} 
 					case 'popup':
@@ -1463,7 +1543,33 @@
 					
 				}
 		}
-		
+		function ouvre_popup_person_all_in_one() 
+		{
+		//	var temp_id = localStorage.getItem("id");
+		//	localStorage.setItem("id", localStorage.getItem("id"));
+			localStorage.setItem("indextype", index_type.toLowerCase());
+			console.log("ouvre_popup_person:  style:"+StyleValue+ " type:" +index_type+" id:"+localStorage.getItem('id'));
+			localStorage.setItem("back_close", "close");
+			
+							if (Person_toSet) { 
+								console.log("ouvre_popup_person:  " +Person_toSet);
+								parent.frames['person_frame'].location.href='navPersonH.html';								
+								Person_toSet = false; 
+								}
+							if (parent.document.getElementById('person_display').style.visibility =="visible")  // click toggle the frame  
+							{
+								parent.document.getElementById('person_frame').style.display="none";
+								parent.document.getElementById('person_display').style.visibility="hidden";
+								parent.document.getElementById('person_display').style.zIndex="2";
+							} else 
+							{							
+								parent.document.getElementById('person_display').style.height="300px";  // adjust window
+								parent.document.getElementById('person_frame').style.height="290px";    // adjust frame inside windows
+								parent.document.getElementById('person_frame').style.display="block";
+								parent.document.getElementById('person_display').style.visibility="visible";	
+								parent.document.getElementById('person_display').style.zIndex="15";
+							}
+		}	
 	// close when leaving
 	function close_popup()
 	{
@@ -1913,7 +2019,7 @@
 										<img src="pictures/icon/overview.png" alt="mediainfo"></img><div id="mediainfoshow_icon"></div></a></td>	
 									<td><a id="li_poster_icon" href="javascript:ouvre_popup_poster();" onmouseover="javascript:document.getElementById('editshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('editshow_icon').style.visibility='hidden'">
 										<img src="pictures/icon/edit.png" alt="edit" ></img><div id="editshow_icon"></div></a></td>
-									<td><a id="li_person_icon" href="javascript:ouvre_popup_person();" onmouseover="javascript:document.getElementById('personshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('personshow_icon').style.visibility='hidden'">
+									<td><a id="li_person_icon" href="javascript:localStorage.setItem('Person_all-in-one', 'false');ouvre_popup_person();" onmouseover="javascript:document.getElementById('personshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('personshow_icon').style.visibility='hidden'">
 										<img src="pictures/icon/icon_person.png" alt="person"></img><div id="personshow_icon"></div></a></td>	
 									<td><a id="li_movie_icon" href="javascript:ouvre_popup_index('', 'ASC', index_type, '')" onmouseover="javascript:document.getElementById('movieshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('movieshow_icon').style.visibility='hidden'">
 										<img src="pictures/icon/icon_tv-film.png" alt="movie"></img><div id="movieshow_icon"></div></a></td>
@@ -2146,7 +2252,7 @@
 							<tr>
 								<td>
 									<span class="actors"></span>
-									<a title="display all cast" id="all_person" href="#" onclick="ouvre_popup_person()"> ...</a>
+									<a title="display all cast" id="all_person" href="#" onclick="localStorage.setItem('Person_all-in-one', 'true');ouvre_popup_person()"> ...</a>
 								</td>
 								
 							</tr>

@@ -84,18 +84,30 @@
 								return window.localStorage.getItem("nobiography_text");
 								}
 							},
-                    'span.image': function(arg) {
-                        // Check to see if there is artwork
+					'span.image': function(arg) {
+						 // Check to see if there are posters
+						located_id = 0;  // set the located_id to the lowest value
+						var temp_return = "<img src=\"pictures/dummy_photo.jpg\">";
                         if (arg.context.result.artwork) {
-                            // Get the first photo from the list
-                            var photo = arg.context.result.artwork[0];
-                            if (photo.generatedId === 0) {
-                                return "<img src=\"pictures/dummy_photo.jpg\">";
-                            }
-                            return "<img src=\"" + arg.context.basePhotoUrl + photo.filename + "\">";
-                        } else {
-                            return "<img src=\"pictures/dummy_photo.jpg\">";
-                        }
+							for (i = 0; i < arg.context.result.artwork.length; i++) 
+							{
+								// Get the last generated poster from the list
+								photo = arg.context.result.artwork[i];
+								// if any problem within poster generation return dummy 
+								if (photo.generatedId === 0) {temp_return = "<img src=\"pictures/dummy_photo.jpg\">";} 
+								else {
+								//		console.log ("arg.context.result.artwork.length:" + arg.context.result.artwork.length + " i:"+ i + " photo.id:" + photo.id + " name:" + arg.context.result.firstName + "." + arg.context.result.lastName + " located_id:" + located_id + " photo.locatedId:" + photo.locatedId);
+								// compare if the locatedId is greater , assume when the case  it's newser
+								if (parseInt(photo.locatedId, 10) > parseInt(located_id, 10)) 
+										{
+											located_id = photo.locatedId;  // store the new locatedId
+										
+											temp_return = "<img src=\"" + arg.context.basePhotoUrl + photo.filename + "\">";
+										} else {}
+									} 
+							}  // end loop 	
+						}
+						return temp_return; // now return the result 
                     },
 					'img.not_done@style': function(arg) {
 						if (arg.context.result.status != 'DONE')

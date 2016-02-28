@@ -49,7 +49,13 @@
 
             return jsondata;
         }
-		
+		function close_person ()
+			{
+				console.log("close_person:  style:"+StyleValue);
+				parent.document.getElementById('person_frame').style.display="none";
+				parent.document.getElementById('person_display').style.visibility="hidden";
+				parent.document.getElementById('person_display').style.zIndex="2";
+			} 
 //****************************************************************************		
 
 	function updateHtml(yamjdata)
@@ -79,25 +85,33 @@
 									str_bio = "nobio"
 								}
 					//			console.log("navPersonH: loop i=" + i + " str_bio:" + str_bio);	
-									// Check to see if there is artwork
+								// Check the last artwork if there is artwork
+								located_id = 0;  // set the located_id to the lowest value
+								var temp_photo_return = "";
 								if (totalperson_photo[i].artwork) 
 								{
-										if (totalperson_photo[i].artwork[0]) 
-										{
-											// Get the first photo from the list
-											
-											var person_photoselect = totalperson_photo[i].artwork[0];
-											if (person_photoselect.generatedId == 0) 
-											{
-											// on click display biography and big poster
-												outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
-											} else {
-												outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('"+ arg.context.basePhotoUrl + person_photoselect.filename +"')\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + person_photoselect.filename + "\" ></img></a>";
-							//					console.log("navPersonH: loop i=" + i + " photo:" + arg.context.basePhotoUrl + person_photoselect.filename);	
-												}
-										} else {
-											outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
-										}
+										var person_photoselect = totalperson_photo[i].artwork;
+								
+								// begin loop
+											for (j = 0; j < person_photoselect.length; j++) 
+												{
+													// Get the last generated poster from the list
+													photo = person_photoselect[j];
+													// if any problem within poster generation return dummy 
+													if (photo.generatedId === 0) {
+													// on click display biography and big poster
+													temp_photo_return ="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+													} else {
+													//		console.log ("arg.context.result.artwork.length:" + arg.context.result.artwork.length + " j:"+ j + " photo.id:" + photo.id + " name:" + arg.context.result.firstName + "." + arg.context.result.lastName + " located_id:" + located_id + " photo.locatedId:" + photo.locatedId);
+													// compare if the locatedId is greater , assume when the case  it's newser
+													if (parseInt(photo.locatedId, 10) > parseInt(located_id, 10)) 
+															{
+																located_id = photo.locatedId;  // store the new locatedId
+																temp_photo_return ="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('"+ arg.context.basePhotoUrl + photo.filename +"')\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + photo.filename + "\" ></img></a>";
+															} else {}
+														} 
+											} // end loop 
+									outputperson_photo += temp_photo_return;
 								} else {
 											outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
 										}
@@ -130,10 +144,13 @@
 		{	
 			document.getElementById('Hbiographyshow').firstChild.nodeValue = string_to_display;
 		// display biography, resize the window to display bio and poster and photo ribbon at bottom
-			$('.table_person_photoH').css('top', '515px');
+			$('.table_person_photoH').css('top', '');
+			$('.table_person_photoH').css('bottom', '5px');
+			$('.Hbiography').css('display', 'block');
+			parent.document.getElementById('person_frame').style.height="89vh";
 			window.resizeTo (1340, 830);
-			if (string_to_display == "nobio")
-				{$('.Hbiography').css('display', 'none');} else {$('.Hbiography').css('display', 'block');}
+		//	if (string_to_display == "nobio")
+			//	{$('.Hbiography').css('display', 'none');} else {$('.Hbiography').css('display', 'block');}
 		}
 	function display_cv(string_cv)
 		{	
@@ -1208,7 +1225,7 @@
 		</div> 
 		<div id="person_cv"> </div>
 		
-		<div id="close_icon" style="position: absolute;	top: 2px; right: 0px; z-index: 10;" onclick="javascript: window.close()"><img src="./pictures/close2.png" height="30px"/></div>			
+		<div id="close_icon" style="position: absolute;	top: 2px; right: 0px; z-index: 10;" onclick="javascript: close_person()"><img src="./pictures/close2.png" height="30px"/></div>			
 		
 		<div class="table_person_photoH">
 			<table id="tableperson_photoH">	
@@ -1219,7 +1236,7 @@
 				</tr>
 			</table>
 		</div>
-		
+	<div class="table_person_frame">
 		<div ><img id="image_object_left" src="pictures/dummy_photo.jpg" alt="photo"></img> </div>	
 		<div class="Hbiography" id="Hbiographyshow" >		</div>
 		<div class="H_Filmography">
@@ -1236,7 +1253,7 @@
 				</tr>
 			</table>
 		</div>
-	
+	</div>
 		
 	<!-- display source data from API if needed  -->
         <div id="sourceData" ></div>

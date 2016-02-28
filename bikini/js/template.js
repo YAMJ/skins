@@ -9,6 +9,7 @@
 	var NewValue = "30-file";
 	var Prefered_PageValue = "index_all";
 	var PagingValue = true;
+	var OverlayValue = false;
 	var vlc_added = null;
 	var skin_default_ = 'bikini_skin_0';
 
@@ -1108,7 +1109,81 @@
 				window.localStorage.setItem("Paging", paging_);
 		
 			}
-			
+	// fetch the overlay value in the local storage , value available : true , false
+		function get_overlay()
+			{
+				if (window.localStorage.getItem("overlay"))
+				{
+					OverlayValue = window.localStorage.getItem("overlay");
+					console.log('get Overlay:'+ OverlayValue);
+				}
+				else { get_overlay_(); }
+			}
+	// fetch the overlay value in the config database , value available : true , false
+		function get_overlay_()
+			{
+				var jsonOverlayUrl = "/yamj3/api/config/list.json?config="+skin_value+"overlay&mode=any";
+				console.log("get_overlay jsonOverlayUrl: " + jsonOverlayUrl);
+				$.ajax({
+                   url: jsonOverlayUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataOverlay)
+                   {
+						jsondata = dataOverlay;
+				//		outputJson(dataOverlay);
+						checkOverlay(dataOverlay);
+						}
+					
+				});	
+			 return jsondata;
+		}
+		
+	// update  the overlay value in the config database, value available : true, false
+		function update_Overlay(overlay_) 
+		{
+				var jsonOverlayUrl = "/yamj3/api/config/update.json?key="+skin_value+"overlay&value="+overlay_+"";
+				console.log("update_Overlay jsonOverlayUrl: " + jsonOverlayUrl);
+				$.ajax({
+                   url: jsonOverlayUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataOverlay)
+                   {
+						jsondata = dataOverlay;
+					//	outputJson(dataOverlay);
+						set_Overlay_value(overlay_);
+					}
+					
+				});	
+			 return jsondata;
+		}	
+		
+		function checkOverlay(yamjdata) {
+				var PN = {
+						"td.Value":  function(arg) {
+									if (arg.context.count) {
+										console.log("checkOverlay: "+arg.context.results[0].value);
+										set_Overlay_value(arg.context.results[0].value);
+										return arg.context.results[0].value;} else {
+										console.log("checkOverlay: no value found set default: "+OverlayValue);
+										update_Overlay(OverlayValue);}
+								}								
+							
+						};
+				
+				$p('.results').render( yamjdata, PN );			
+			}	
+	
+	
+	// set the rules to adjust overlay to the overlay choosen : value available : true, false
+		function set_Overlay_value(overlay_)
+			{
+				PagingValue = overlay_;
+				console.log('set overlay:'+overlay_);
+				window.localStorage.setItem("overlay", overlay_);
+		
+			}		
 			
 		function network_device_list ()
 			{
@@ -1171,6 +1246,7 @@
 			get_prefered_certification_();
 			get_paging_();
 			get_new_();
+			get_overlay_();
 			get_lang_();
 			window.location.reload();
 			

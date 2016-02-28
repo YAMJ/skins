@@ -182,7 +182,7 @@ input:-moz-placeholder { color:black; }
 											case 'prefered_page':
 											{
 												return "<img title='" + window.localStorage.getItem("prefered_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
-												+ window.localStorage.getItem("prefered_");
+												+ window.localStorage.getItem("prefered_comment");
 												break;
 											}
 											case 'prefered_certification':
@@ -197,9 +197,155 @@ input:-moz-placeholder { color:black; }
 												+ window.localStorage.getItem("new_");
 												break;
 											}
+											case 'overlay':
+											{
+												return "<img title='" + window.localStorage.getItem("overlay_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												+ window.localStorage.getItem("overlay_label");
+												break;
+											}
 										}
 									},
-								"td.Value"			: "list.value",
+								"td.Value"			: function(arg)
+									{
+										console.log("Config2 arg.item.key:" + arg.item.key.substr(14))  // because bikini_skin_x_ = 14 char
+										switch (arg.item.key.substr(14))
+										{
+											
+											case 'player':
+											{
+												return arg.item.value
+												break;
+											}
+											case 'paging':
+											{
+												if (arg.item.value == 'false')
+												{return window.localStorage.getItem('no_text');}
+												else {return window.localStorage.getItem('yes_text');}
+												break;
+											}
+											case 'index_row':
+											{
+												return arg.item.value
+												break;
+											}
+											case 'language':
+											{
+												return arg.item.value
+												break;
+											}
+											case 'style':
+											{
+												switch (arg.item.value.toLowerCase())
+												{
+													case 'frame':
+													{
+														return window.localStorage.getItem('frame_label');
+														break;
+													}
+													case 'ribbon':
+													{
+														return window.localStorage.getItem('ribbon_label');
+														break;
+													}
+													case 'page':
+													{
+														return window.localStorage.getItem('page_label');
+														break;
+													}
+													case 'popup':
+													{
+														return window.localStorage.getItem('popup_label');
+														break;
+													}
+												}
+											}
+											case 'prefered_page':
+											{
+												switch (arg.item.value.toLowerCase())
+												{
+													case 'boxset':
+													{
+														return window.localStorage.getItem('boxset_label');
+														break;
+													}
+													case 'certification':
+													{
+														return window.localStorage.getItem('certification_label');
+														break;
+													}
+													case 'index_all':
+													{
+														return window.localStorage.getItem('all_label');
+														break;
+													}
+													case 'index_movie':
+													{
+														return window.localStorage.getItem('movie_label');
+														break;
+													}
+													case 'index_series':
+													{
+														return window.localStorage.getItem('series_label');
+														break;
+													}
+													case 'new':
+													{
+														return window.localStorage.getItem('new_');
+														break;
+													}
+													case 'person':
+													{
+														return window.localStorage.getItem('person_label');
+														break;
+													}
+													case 'rating':
+													{
+														return window.localStorage.getItem('rating_label');
+														break;
+													}
+													case 'source':
+													{
+														return window.localStorage.getItem('source_label');
+														break;
+													}
+												}
+											}
+											case 'prefered_certification':
+											{
+												return arg.item.value
+												break;
+											}
+											case 'New':
+											{
+											switch (arg.item.value.substr(arg.item.value.indexOf('-') + 1))
+												{
+													case 'file':
+													{
+													return arg.item.value.substr(0,arg.item.value.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label') + "&nbsp;(" + window.localStorage.getItem("file_comment") + ")";
+													break;
+													}
+													case 'creation':
+													{
+													return arg.item.value.substr(0,arg.item.value.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label') + "&nbsp;(" + window.localStorage.getItem("creation_comment") + ")";
+													break;
+													}
+													case 'lastscan':
+													{
+													return arg.item.value.substr(0,arg.item.value.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label') + "&nbsp;(" + window.localStorage.getItem("lastscan_comment") + ")";
+													break;
+													}
+													
+												}
+											}
+											case 'overlay':
+											{
+												if (arg.item.value == 'false')
+												{return window.localStorage.getItem('no_text');}
+												else {return window.localStorage.getItem('yes_text');}
+												break;
+											}
+										}
+									},
 								"td.New"			: function(arg)
 									{
 						//			 console.log("Config2 arg.item.key:" + arg.item.key.substr(14))  // because bikini_skin_x_ = 14 char
@@ -313,6 +459,15 @@ input:-moz-placeholder { color:black; }
 													
 												break;
 											}
+											case 'overlay':
+											{
+												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
+														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("overlay_comment") + "'></option>"
+														+ "<option value='true'>" + window.localStorage.getItem("true_text") + "</option>"
+														+ "<option value='false'>" + window.localStorage.getItem("false_text") + "</option>"
+														+ "</select>";
+												break;
+											}
 										}
 									}, 
 									"td.Action"			: function(arg)
@@ -327,6 +482,7 @@ input:-moz-placeholder { color:black; }
 											case 'paging':
 											case 'prefered_certification':
 											case 'prefered_page':
+											case 'overlay':
 											{
 												return "<form><input type=\"button\" value='"+ window.localStorage.getItem('update_label') + "' onclick=\"Update_SkinData('" +arg.item.key+ "', document.getElementById('formKey" +arg.item.key+ "').value)\"/></form>"
 												break;
@@ -495,6 +651,11 @@ input:-moz-placeholder { color:black; }
 							window.localStorage.setItem("New", target_value);
 							break; 
 						}
+					case 'overlay':
+						{ 
+							window.localStorage.setItem("overlay", target_value);
+							break; 
+						}
 					}
 			}
 
@@ -516,7 +677,7 @@ input:-moz-placeholder { color:black; }
                     <div class="container-fluid">
                       <a id="prefered_icon" href="javascript:ouvre_prefered_page()" title="prefered page" class="brand"><img alt="YAMJ Logo" src="pictures/YAMJ-logo-120-white-reflectv3.png" height="40" /></a>
                         <ul class="nav">
-                            <li><a href="index_Yamj3.html"><i class="fa fa-home fa-2x"></i> Home</a></li>
+                            <li><a href="/yamj3/"><i class="fa fa-home fa-2x"></i> Home</a></li>
                             <li><a href="/yamj3/skin-info.html"><i class="fa fa-ticket fa-2x"></i> Skins</a></li>
                             <li><a href="/yamj3/config/list.html"><i class="fa fa-cogs fa-2x"></i> Config</a></li>
                             <li><a href="http://www.networkedmediatank.com/forumdisplay.php?fid=139"><i class="fa fa-comments-o fa-2x"></i> Forums</a></li>

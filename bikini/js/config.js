@@ -3,7 +3,7 @@
 		// outside skin configuration could be displayed / update with the following
 		// enter in the browser /yamj3/config/list.html
 		// click on enter new configuration ()
-		// enter key : by exemple skin_langauge as key
+		// enter key : by exemple skin_language as key
 		// enter a valid value 
 		// click enter 
  //*****************************************************************************************   
@@ -116,6 +116,10 @@
 				window.localStorage.setItem("RowperPage", poster_nb);
 			}
 		function adjust_poster_setting(Row_) {
+				if (window.localStorage.getItem("overlay") == 'true')
+					{$('.overlays').css('display', 'block');}
+					else {$('.overlays').css('display', 'none');}
+					
 				if (parseInt(Row_, 10) < 6  ) {
 					switch (Row_)
 						{

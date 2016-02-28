@@ -65,6 +65,7 @@
 				get_style();
 				get_poster_number ();
 				get_prefered_certification ();
+				get_overlay ();
 				
 				if (window.localStorage.getItem("skinset"))
 					{skin_set = window.localStorage.getItem("skinset");}
@@ -82,25 +83,125 @@
 		function set_context_lang_value ()
 		{
 
-			document.getElementById("SkinSetted").innerHTML=window.localStorage.getItem("skin_") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("skinset").substring(0,(window.localStorage.getItem("skinset").length - 1)) ;
-			document.getElementById("pagingSetted").innerHTML=window.localStorage.getItem("page_label") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("Paging");
+			document.getElementById("SkinSetted").innerHTML=window.localStorage.getItem("skin_") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("skinset").substring(0,(window.localStorage.getItem("skinset").length - 1)) ;
+			if (window.localStorage.getItem("Paging")) 
+				{
+					if (window.localStorage.getItem("Paging") == 'true')
+						{document.getElementById("pagingSetted").innerHTML=window.localStorage.getItem("page_label") + "&nbsp;"  + ":&nbsp;" + window.localStorage.getItem("yes_text");}
+					else {document.getElementById("pagingSetted").innerHTML=window.localStorage.getItem("page_label") + "&nbsp;"  + ":&nbsp;" + window.localStorage.getItem("no_text");}
+				} 
+				else {update_Skin_(window.localStorage.getItem("skinset"))}
+				if (window.localStorage.getItem("overlay") == 'true')
+				{document.getElementById("overlaySetted").innerHTML=window.localStorage.getItem("overlay_label") + "&nbsp;"  + ":&nbsp;" + window.localStorage.getItem("yes_text");}
+			else {document.getElementById("overlaySetted").innerHTML=window.localStorage.getItem("overlay_label") + "&nbsp;"  + ":&nbsp;" + window.localStorage.getItem("no_text");}
 		//	document.getElementById("playerSetted").innerHTML=window.localStorage.getItem("player_select") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("Player");
-			document.getElementById("newSetted").innerHTML=window.localStorage.getItem("new_") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("New");
-			document.getElementById("rowSetted").innerHTML=window.localStorage.getItem("nbofrow") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("RowperPage");
-			document.getElementById("styleSetted").innerHTML=window.localStorage.getItem("style_label") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("Style");
-			document.getElementById("langSetted").innerHTML=window.localStorage.getItem("lang_label") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("Lang");
-			document.getElementById("prefered_pageSetted").innerHTML=window.localStorage.getItem("page_label") + "&nbsp;" +window.localStorage.getItem("prefered_") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("prefered_page");
+			switch (window.localStorage.getItem("New").substr(window.localStorage.getItem("New").indexOf('-') + 1))
+			{
+				case 'file':
+				{
+				document.getElementById("newSetted").innerHTML=window.localStorage.getItem("new_") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("New").substr(0,window.localStorage.getItem("New").indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label') + "&nbsp;(" + window.localStorage.getItem("file_comment") + ")";
+				break;
+				}
+				case 'creation':
+				{
+				document.getElementById("newSetted").innerHTML=window.localStorage.getItem("new_") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("New").substr(0,window.localStorage.getItem("New").indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label') + "&nbsp;(" + window.localStorage.getItem("creation_comment") + ")";
+				break;
+				}
+				case 'lastscan':
+				{
+				document.getElementById("newSetted").innerHTML=window.localStorage.getItem("new_") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("New").substr(0,window.localStorage.getItem("New").indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label') + "&nbsp;(" + window.localStorage.getItem("lastscan_comment") + ")";
+				break;
+				}
+				
+			}
+			
+//			document.getElementById("newSetted").innerHTML=window.localStorage.getItem("new_") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("New").substr(window.localStorage.getItem("New").indexOf('-') + 1);
+			document.getElementById("rowSetted").innerHTML=window.localStorage.getItem("nbofrow") + "&nbsp;"  + ":&nbsp;" + window.localStorage.getItem("RowperPage");
+			switch (window.localStorage.getItem("Style").toLowerCase())
+			{
+				case 'frame': 
+				{
+					document.getElementById("styleSetted").innerHTML=window.localStorage.getItem("style_label") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("frame_comment");
+					break;
+				}
+				case 'ribbon': 
+				{
+					document.getElementById("styleSetted").innerHTML=window.localStorage.getItem("style_label") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("ribbon_comment");
+					break;
+				}
+				case 'page': 
+				{
+					document.getElementById("styleSetted").innerHTML=window.localStorage.getItem("style_label") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("page_style_comment");
+					break;
+				}
+				case 'popup': 
+				{
+					document.getElementById("styleSetted").innerHTML=window.localStorage.getItem("style_label") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("popup_comment");
+					break;
+				}
+			}
+			document.getElementById("langSetted").innerHTML=window.localStorage.getItem("lang_label") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("Lang");
+			switch (window.localStorage.getItem("prefered_page").toLowerCase())
+				{
+				case 'boxset':
+					{
+						document.getElementById("prefered_pageSetted").innerHTML=window.localStorage.getItem("prefered_comment") + ":&nbsp;" + window.localStorage.getItem("boxset_label");
+						break;
+					}
+				case 'certification':
+					{
+						document.getElementById("prefered_pageSetted").innerHTML=window.localStorage.getItem("prefered_comment") + ":&nbsp;" + window.localStorage.getItem("certification_label");
+						break;
+					}
+				case 'index_all':
+					{
+						document.getElementById("prefered_pageSetted").innerHTML=window.localStorage.getItem("prefered_comment") + ":&nbsp;" + window.localStorage.getItem("all_label");
+						break;
+					}
+				case 'index_movie':
+					{
+						document.getElementById("prefered_pageSetted").innerHTML=window.localStorage.getItem("prefered_comment") + ":&nbsp;" + window.localStorage.getItem("movie_label");
+						break;
+					}
+				case 'index_series':
+					{
+						document.getElementById("prefered_pageSetted").innerHTML=window.localStorage.getItem("prefered_comment") + ":&nbsp;" + window.localStorage.getItem("series_label");
+						break;
+					}
+				case 'new':
+					{
+						document.getElementById("prefered_pageSetted").innerHTML=window.localStorage.getItem("prefered_comment")+ "&nbsp;" +window.localStorage.getItem("prefered_") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("new_");
+						break;
+					}
+				case 'person':
+					{
+						document.getElementById("prefered_pageSetted").innerHTML=window.localStorage.getItem("prefered_comment") + ":&nbsp;" + window.localStorage.getItem("person_label");
+						break;
+					}
+				case 'rating':
+					{
+						document.getElementById("prefered_pageSetted").innerHTML=window.localStorage.getItem("prefered_comment") + ":&nbsp;" + window.localStorage.getItem("rating_label");
+						break;
+					}
+				case 'source':
+					{
+						document.getElementById("prefered_pageSetted").innerHTML=window.localStorage.getItem("prefered_comment") + ":&nbsp;" + window.localStorage.getItem("source_label");
+					break;
+					}
+				}
+			
+//			document.getElementById("prefered_pageSetted").innerHTML=window.localStorage.getItem("page_label") + "&nbsp;" +window.localStorage.getItem("prefered_") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("prefered_page");
 			document.getElementById("configindex").innerHTML=window.localStorage.getItem("config_select").toUpperCase();
-			document.getElementById("prefered_certificationSetted").innerHTML=window.localStorage.getItem("certification_label") + "&nbsp;" + window.localStorage.getItem("prefered_") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("prefered_certification");
-			document.getElementById("playerconfig").innerHTML=window.localStorage.getItem("player_select").toLowerCase() + "&nbsp;" + window.localStorage.getItem("selected_") + ":" + window.localStorage.getItem("Player");
+			document.getElementById("prefered_certificationSetted").innerHTML=window.localStorage.getItem("certification_label") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("prefered_certification");
+			document.getElementById("playerconfig").innerHTML=window.localStorage.getItem("player_select").toLowerCase() + "&nbsp;:" + window.localStorage.getItem("Player");
 			document.getElementById("playeripinfo").innerHTML="IP:&nbsp;" + window.localStorage.getItem("Player_Ip");
 			document.getElementById("playertypeinfo").innerHTML="Type:&nbsp;" + window.localStorage.getItem("Player_Type");
-			document.getElementById("playerpaths").innerHTML="Paths nbr:" + window.localStorage.getItem("Player_Paths_Number");
+			document.getElementById("playerpaths").innerHTML=window.localStorage.getItem("path_label") + "&nbsp;:&nbsp;" + (window.localStorage.getItem("Player_Paths_Number") -1);
 			
 			
 			for (var i = 1; i < window.localStorage.getItem("Player_Paths_Number"); i++)
 			{
-				document.getElementById("playerpathsdetail").innerHTML += "Paths&nbsp;" + i + ":"  + window.localStorage.getItem('Player_Paths_' + i) + "<br/>";
+				document.getElementById("playerpathsdetail").innerHTML += window.localStorage.getItem("path_label") + i + ":&nbsp;"  + window.localStorage.getItem('Player_Paths_' + i) + "<br/>";
 			}
 		}
 		
@@ -128,8 +229,8 @@
 							<table>
 								<tr class="tableinfo_config">
 									<td><div id="pagingSetted"></div></td>
-									
 									<td><div id="newSetted"></div></td>
+									<td><div id="overlaySetted"></div></td>
 								</tr>
 								<tr class="tableinfo_config">
 								<td><div id="rowSetted"></div></td>

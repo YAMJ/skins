@@ -29,6 +29,7 @@
 	<creationcomment>data di creazione in yamj3</creationcomment>
 	<creationlabel>creazione</creationlabel>
 	
+	<daylabel>giorni</daylabel>
 	<deletetext>cancellare</deletetext>
 	<descending>discendente</descending>
 	<detailcomment>dettaglio</detailcomment>
@@ -44,7 +45,7 @@
 	
 	<falsetext>falso</falsetext>
 	<fanartshow>fanart</fanartshow>
-	<filecomment>data del file video</filecomment>
+	<filecomment>la registratione in yamj3</filecomment>
 	<filelabel>file</filelabel>
 	<filemodelabel>modalita file</filemodelabel>
 	<filmographylabel>filmografia</filmographylabel>
@@ -62,6 +63,7 @@
 	<homelabel>casa</homelabel>
 	
 	<ignoretext>ignorare</ignoretext>
+	<indexlabel>indice</indexlabel>
 	<infolabel>info</infolabel>
 	
 	<keylabel>chiave</keylabel>
@@ -90,6 +92,8 @@
 	<notext>non</notext>
 	
 	<opennavigationmenu>apre il menu di navigazione</opennavigationmenu>
+	<overlaycomment>copertura</overlaycomment>
+	<overlaylabel>copertura</overlaylabel>
 	<overwritefieldbiography>cambiare il biographia</overwritefieldbiography>
 	<overwritefieldfirstname>cambiare il cognome</overwritefieldfirstname>
 	<overwritefieldlastname>cambiare il nome</overwritefieldlastname>
@@ -98,6 +102,7 @@
 	<pagecomment>paging (vero), senza paginazionze (false)</pagecomment>
 	<pagelabel>pagina</pagelabel>
 	<pagestylecomment>nuova pagina</pagestylecomment>
+	<pathlabel>path</pathlabel>
 	<pauselabel>pausa</pauselabel>
 	<personlabel>persona</personlabel>
 	<personselected>persona</personselected>
@@ -109,7 +114,7 @@
 	<popupcomment>galleggiante finestra orrizontale a nastro</popupcomment>
 	<popuplabel>la fascia orrizontale</popuplabel>
 	<powerlabel>potenza</powerlabel>
-	<preferedcomment>pagina preferita via yamj3 logo</preferedcomment>
+	<preferedcomment>pagina preferita</preferedcomment>
 	<prefered>favorito</prefered>
 	<prevremotelabel>precedente</prevremotelabel>
 	<producerlabel>produttore</producerlabel>
@@ -151,6 +156,7 @@
 	<stylelabel>stile</stylelabel>
 	<subtitlelabel>sottotitlo</subtitlelabel>
 	
+	<targetlabel>bersaglio</targetlabel>
 	<titlelabel>titolo</titlelabel>
 	<timeseeklabel>tempo di ricer.</timeseeklabel>
 	<transformerrortext>in grado di trasformare il controllo source_path target_path</transformerrortext>
@@ -171,6 +177,7 @@
 	
 	<yearlabel>anno</yearlabel>
 	<yellowlabel>giallo</yellowlabel>
+	<yestext>si</yestext>
 	
 	<zoomlabel>zoom</zoomlabel>
 </lang>

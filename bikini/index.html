@@ -190,6 +190,11 @@
 					"img.overlays@onclick": function(arg) {
                         return "setId('" + arg.item.videoType + "', " + arg.item.id + ")";
                     },
+					"img.overlays@src": function(arg) {
+                        if (arg.item.videoSource) 
+						{return "./pictures/covers/"+arg.item.videoSource.toLowerCase()+".png";} else
+						{return "./pictures/covers/transparent.png";}
+                    },
 					"img.playbutton@onclick": function(arg) {
                         return "direct_play('" + arg.item.videoType + "', " + arg.item.id + ")";
                     },
@@ -282,7 +287,7 @@
 						selected_index = selected_index;
 				};
 
-			 var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby="+sort_type+"&sortdir="+direction+"&dataitems=status,boxset,rating";	
+			 var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby="+sort_type+"&sortdir="+direction+"&dataitems=status,boxset,rating,videosource";	
 					if (window.localStorage.getItem("yearselected") == 'true' && window.localStorage.getItem("selection")) 
 								{
 									if (resolution_method != 'all')
@@ -322,7 +327,26 @@
 				if (newest_method != '' && newest_method != '0')
 				{
 					jsonUrl += "&include=newest-" + newest_method;
-					selected_index = selected_index + '&nbsp;new:' + newest_method;
+					switch (window.localStorage.getItem("New").substr(window.localStorage.getItem("New").indexOf('-') + 1))
+					{
+						case 'file':
+						{
+						temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,window.localStorage.getItem("New").indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
+						break;
+						}
+						case 'creation':
+						{
+						temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,window.localStorage.getItem("New").indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
+						break;
+						}
+						case 'lastscan':
+						{
+						temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,window.localStorage.getItem("New").indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
+						break;
+						}
+						
+					}
+					selected_index = selected_index + temp_new_string;
 				}
 				
 				var temp_style = "1.4vw"
@@ -382,9 +406,55 @@
 		{
 			
 			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('skin_').toLowerCase() + " " + window.localStorage.getItem('info_label').toLowerCase();
-			document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
+			switch (window.localStorage.getItem('prefered_page').toLowerCase())
+			{
+				case 'certification':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('certification_label').toLowerCase();
+				break;
+				}
+				case 'index_all':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('all_label').toLowerCase();
+				break;
+				}
+				case 'index_movie':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('movie_label').toLowerCase();
+				break;
+				}
+				case 'index_series':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('series_label').toLowerCase();
+				break;
+				}
+				case 'new':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('new_').toLowerCase();
+				break;
+				}
+				case 'person':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('person_label').toLowerCase();
+				break;
+				}
+				case 'rating':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('rating_label').toLowerCase();
+				break;
+				}
+				case 'source':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('source_label').toLowerCase();
+				break;
+				}
+			}
+			
+		//	document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
 			document.getElementsByClassName("playbutton")[0].title=window.localStorage.getItem('play_label').toLowerCase();
 			document.getElementsByClassName("infobutton")[0].title=window.localStorage.getItem('info_label').toLowerCase();
+			document.getElementsByClassName("rating")[0].title=window.localStorage.getItem('rating_label').toLowerCase();
+			document.getElementsByClassName("boxset")[0].title=window.localStorage.getItem('boxset_label').toLowerCase();
 			
 		}
 		
@@ -425,8 +495,8 @@
 					<img class="infobutton" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'" alt="info" title="info" ></img>
 					<img class="watched_small" src="pictures/empty.png" alt="watched" onmouseout="src='pictures/empty.png'" title="watch"></img>
                     <span class="title" ></span>
-					<img class="rating" src="./pictures/vertical_ratings/dummy_rating.png" onclick="" alt="rating"/>
-					<img class="boxset" src="./pictures/no_set.png" onclick="" alt="boxset"/>
+					<img class="rating" title="rating" src="./pictures/vertical_ratings/dummy_rating.png" onclick="" alt="rating"/>
+					<img class="boxset" title="boxset" src="./pictures/no_set.png" onclick="" alt="boxset"/>
 					<img class="overlays" src="pictures/covers/transparent.png" alt="overlays" ></img>
 					<img class="not_done" src="pictures/icon_error.png" alt="status not done" title="status not done" style="position: relative; top: -34vw; left: 8.5vw; display: none;"></img>
 					<br>

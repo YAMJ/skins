@@ -1681,7 +1681,7 @@ ul#home_left_up {
 	z-index: 9;
 	overflow:hidden; 
 	width: 81.7vw; 
-	bottom: 0px; 
+/*	bottom: 0px; */
 	left: 18.1vw;
 	height:720px;
 	}
@@ -2839,7 +2839,7 @@ text {
 	z-index: 1;
 	}
 .boxset:hover {
-	background-color:rgba(0, 0, 0, 1.0);
+	background-color:rgba(255, 255, 255, 1.0);
 	}
 .external_Id {
 	

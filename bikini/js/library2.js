@@ -131,7 +131,7 @@
 												for(j = 0; j < player_list[0].paths.length; j++){
 													source_path[j]= normalise_path(player_list[0].paths[j].sourcePath);																										
 													target_path[j]= normalise_path(player_list[0].paths[j].targetPath);
-													window.localStorage.setItem("Player_Paths_" + (j+1), "source="+source_path[j]+ " ==> target=" + target_path[j]);
+													window.localStorage.setItem("Player_Paths_" + (j+1), ""+ window.localStorage.getItem('source_label') +"=" +source_path[j]+ "&nbsp;==>&nbsp;"+ window.localStorage.getItem('target_label') + "=" + target_path[j]);
 													console.log ("Player_setting: player= "+ player_list[0].name +" change="+source_path[j]+ " by=" + target_path[j]);	
 													nbre_translate_path = j;
 													}

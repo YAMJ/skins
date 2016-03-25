@@ -239,7 +239,7 @@
 			get_player();
 			get_prefered_page();
 			
-			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby="+sort_type+"&sortdir="+direction+"&artwork=poster&dataitems=videosource,boxset,rating&watched="+watched_method;
+			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby="+sort_type+" "+direction+",title&artwork=poster&dataitems=videosource,boxset,rating&watched="+watched_method;
 			display_genre = window.localStorage.getItem('genre_select').toUpperCase() + ":" + genre_name.toUpperCase();
 			if (resolution_method != 'all')
 				{

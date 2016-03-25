@@ -37,7 +37,7 @@
 			window.localStorage.setItem('popup_person_sort_direction', sort_direction);
 			
 			
-               jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=artwork,biography,filmography_scanned&sortby=" + sort_index + "&sortdir=" + sort_direction;
+               jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=artwork,biography,filmography_scanned&artworksortdir=DESC&sortby=" + sort_index + "&sortdir=" + sort_direction;
 				if (window.localStorage.getItem('Style') == "frame") {init_person_popup(id, sort_index, sort_direction);}
                 var jsondata = null;
 				switch (window.localStorage.getItem('back_close'))
@@ -96,26 +96,13 @@
 							},
 					'span.image': function(arg) {
 						 // Check to see if there are posters
-						located_id = 0;  // set the located_id to the lowest value
 						var temp_return = "<img src=\"pictures/dummy_photo.jpg\">";
                         if (arg.context.result.artwork) {
-							for (i = 0; i < arg.context.result.artwork.length; i++) 
-							{
-								// Get the last generated poster from the list
-								photo = arg.context.result.artwork[i];
-								// if any problem within poster generation return dummy 
-								if (photo.generatedId === 0) {temp_return = "<img src=\"pictures/dummy_photo.jpg\">";} 
-								else {
-								//		console.log ("arg.context.result.artwork.length:" + arg.context.result.artwork.length + " i:"+ i + " photo.id:" + photo.id + " name:" + arg.context.result.firstName + "." + arg.context.result.lastName + " located_id:" + located_id + " photo.locatedId:" + photo.locatedId);
-								// compare if the locatedId is greater , assume when the case  it's newser
-								if (parseInt(photo.locatedId, 10) > parseInt(located_id, 10)) 
-										{
-											located_id = photo.locatedId;  // store the new locatedId
-										
-											temp_return = "<img src=\"" + arg.context.basePhotoUrl + photo.filename + "\">";
-										} else {}
-									} 
-							}  // end loop 	
+							// Get the last generated poster from the list
+							photo = arg.context.result.artwork[0];
+							// if any problem within poster generation return dummy 
+							if (photo.generatedId === 0) {temp_return = "<img src=\"pictures/dummy_photo.jpg\">";} 
+							else {temp_return = "<img src=\"" + arg.context.basePhotoUrl + photo.filename + "\">";}
 						}
 						return temp_return; // now return the result 
                     },

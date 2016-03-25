@@ -1,4 +1,14 @@
 change.txt
+V2.0.8
+- fix all_resolution translation
+- fix navPersonH with ' in the name 
+- fix no_biography translation
+- add detection of inside filmography with navPersonH
+- fix person display with style page, vertical ribbon, horizontal ribbon
+- modify to use the new sorting mecanism with artwork 
+- display the last photo stored first 
+- modify to use the new sortby mecanism for year sorting
+- modify all_resolution text to all
 V2.0.7
 - adjust translation in config value and new page
 - adjust translation in info_config

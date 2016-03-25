@@ -26,7 +26,7 @@
 			var	type = localStorage.getItem("indextype");
 			var	id = localStorage.getItem ("id");
 			
-			jsonUrl = "/yamj3/api/person/"+type+".json?id="+id+"&job=actor,director,writer&dataitems=artwork";
+			jsonUrl = "/yamj3/api/person/"+type+".json?id="+id+"&job=actor,director,writer&dataitems=artwork&artworksortdir=DESC";
             console.log("PersonData URL: " + jsonUrl);
             var jsondata = null;
 
@@ -59,43 +59,31 @@ function updateHtml(yamjdata)
 						for (i = 0; i < totalperson_photo.length; i++) 
 							{
 								// add name on the top
-								outputperson_photo = outputperson_photo+"<td><p class=\"person_nameH\">"+totalperson_photo[i].name+"</p>";
+								outputperson_photo = outputperson_photo+"<tr><td><p class=\"person_nameH\">"+totalperson_photo[i].name+"</p>";
 
 								// Check the last artwork if there is artwork
-								located_id = 0;  // set the located_id to the lowest value
 								var temp_photo_return = "";
 								if (totalperson_photo[i].artwork) 
 									{
-										var person_photoselect = totalperson_photo[i].artwork;
-									// begin loop
-											for (j = 0; j < person_photoselect.length; j++) 
-												{
-													// Get the last generated poster from the list
-													photo = person_photoselect[j];
-													// if any problem within poster generation return dummy 
-													if (photo.generatedId === 0) {
-													// on click display biography and big poster
-														temp_photo_return ="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'close')\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
-													} else {
-													//		console.log ("arg.context.result.artwork.length:" + arg.context.result.artwork.length + " j:"+ j + " photo.id:" + photo.id + " name:" + arg.context.result.firstName + "." + arg.context.result.lastName + " located_id:" + located_id + " photo.locatedId:" + photo.locatedId);
-													// compare if the locatedId is greater , assume when the case  it's newser
-													if (parseInt(photo.locatedId, 10) > parseInt(located_id, 10)) 
-															{
-																located_id = photo.locatedId;  // store the new locatedId
-																temp_photo_return ="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'close')\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + photo.filename + "\" ></img></a>";
-															} else {}
-														} 
-											} // end loop 
+										var photo = totalperson_photo[i].artwork[0];
+									// if any problem within poster generation return dummy 
+											if (photo.generatedId === 0) {
+											// on click display biography and big poster
+												temp_photo_return ="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'close')\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+											} else {
+												temp_photo_return ="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'close')\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + photo.filename + "\" ></img></a>";
+												} 
+									
 										outputperson_photo += temp_photo_return;		
-								} else {
-									outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'close')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
-										}
+									} else {
+										outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'close')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+									}
 									// add the role at the bottom 
 								if (totalperson_photo[i].role) {
 								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+ totalperson_photo[i].role +"</p>";
 								} else {
 								if (totalperson_photo[i].job) {
-									outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+ totalperson_photo[i].job +"</p></td>";
+									outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+ totalperson_photo[i].job +"</p></td></tr>";
 									}
 								}
 							}

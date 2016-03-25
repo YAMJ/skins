@@ -46,7 +46,7 @@
 		var newest_type = "";
 		var newest_value = "30";
 		var watched_value = "all";
-		var resolution_value = 'all_resolution';
+		var resolution_value = 'all';
         // This function calls the API to get the JSON data.
         // It will then update the HTML with the data and set up the paging
         function getIndexData()
@@ -292,7 +292,7 @@
 							</table>
 							<table class="table_resolution_select">		 				
 								<td style="width: 50px; text-align: left;">
-									<input type="radio" name="resolution" value="all_resolution" onclick="resolution_value = 'all_resolution'" id="FormAllResolution" checked="checked" /><img src="pictures/resolution/all_resolution.png" height="12px"  width="29px" alt="all resolution" /><br />
+									<input type="radio" name="resolution" value="all" onclick="resolution_value = 'all'" id="FormAllResolution" checked="checked" /><img src="pictures/resolution/all_resolution.png" height="12px"  width="29px" alt="all resolution" /><br />
 									<input type="radio" name="resolution" value="sd" onclick="resolution_value = 'sd'" id="FormSDResolution"  /><img src="pictures/resolution/sd.png" height="12px"  width="29px" alt="sd" /><br />
 									<input type="radio" name="resolution" value="hd" onclick="resolution_value = 'hd'" id="FormHDResolution"  /><img src="pictures/resolution/hd.png" height="12px"  width="29px" alt="hd" />
 									<input type="radio" name="resolution" value="fullhd" onclick="resolution_value = 'fullhd'" id="FormFullHDResolution"  /><img src="pictures/resolution/fullhd.png" height="12px"  width="29px" alt="fullhf" />

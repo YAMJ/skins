@@ -53,25 +53,13 @@
                     "span.person_name": "result.name",
 					"img.person_photo@src": function(arg) {
                         // Check to see if there are posters
-						located_id = 0;  // set the located_id to the lowest value
 						var temp_return = "pictures/dummy_photo.jpg";
                         if (arg.item.artwork) {
-							for (i = 0; i < arg.item.artwork.length; i++) 
-							{
 								// Get the last generated poster from the list
-								photo = arg.item.artwork[i];
+								photo = arg.item.artwork[0];
 								// if any problem within poster generation return dummy 
-								if (photo.generatedId === 0) {temp_return = "pictures/dummy_photo.jpg";} 
-								else {
-								//		console.log ("arg.item.artwork.length:" + arg.item.artwork.length + " i:"+ i + " photo.id:" + photo.id + " name:" + arg.item.firstName + "." + arg.item.lastName + " located_id:" + located_id + " photo.locatedId:" + photo.locatedId);
-								// compare if the locatedId is greater , assume when the case  it's newser
-								if (parseInt(photo.locatedId, 10) > parseInt(located_id, 10)) 
-										{
-											located_id = photo.locatedId;  // store the new locatedId
-											temp_return = arg.context.basePhotoUrl + photo.filename;  //keep this photo
-										} else {}
-									} 
-							}  // end loop 	
+								if (photo.generatedId === 0) {temp_return = "pictures/dummy_photo.jpg";} 									
+								else {temp_return = arg.context.basePhotoUrl + photo.filename; } //keep this photo 
 						}
 						return temp_return; // now return the result 
                     },
@@ -95,7 +83,7 @@
 			get_player();
 			get_prefered_page();
 
-			var	jsonUrl = "/yamj3/api/person/"+index_type+".json?id="+id+"&job=actor,director,writer&dataitems=artwork";
+			var	jsonUrl = "/yamj3/api/person/"+index_type+".json?id="+id+"&job=actor,director,writer&dataitems=artwork&artworksortdir=DESC";
 
             $.ajax({
                 url: jsonUrl,
@@ -139,7 +127,49 @@
 		function set_context_lang_value ()
 		{
 			
-			document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
+		switch (window.localStorage.getItem('prefered_page').toLowerCase())
+			{
+				case 'certification':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('certification_label').toLowerCase();
+				break;
+				}
+				case 'index_all':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('all_label').toLowerCase();
+				break;
+				}
+				case 'index_movie':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('movie_label').toLowerCase();
+				break;
+				}
+				case 'index_series':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('series_label').toLowerCase();
+				break;
+				}
+				case 'new':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('new_').toLowerCase();
+				break;
+				}
+				case 'person':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('person_label').toLowerCase();
+				break;
+				}
+				case 'rating':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('rating_label').toLowerCase();
+				break;
+				}
+				case 'source':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('source_label').toLowerCase();
+				break;
+				}
+			}
 
 		}
         </script>
@@ -147,7 +177,7 @@
        <div class="index_header"> 
         <div id="logo_index">
 			<td>
-				<ul id="home_left_up" data-tip2="prefered page">
+				<ul id="home_left_up" style="top:-12px;" data-tip2="prefered page">
 					<li><a href="javascript:ouvre_prefered_page()" id="li_home_left" data-tip2="prefered page"></a></li>
 					
 				</ul>
@@ -177,7 +207,7 @@
             <div id="yRow" class="row_person">
                 <div id="yBlock" class="person_block">
                     <img class="person_photo" src="./pictures/dummy_photo.png" alt="photo"><br>
-                    <span class="person_name"></span>
+                    <span class="person_name" style="top:0px;"></span>
                 </div>
                 <br />
             </div>
@@ -192,7 +222,7 @@
 		</div>	
 	<!-- display person -->
 		<div id="person_display" style="visibility: hidden; ">	
-			<iframe src="" name="person_frame" resizable="yes" id="person_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1220px; height:335px;" allowTransparency="true"></iframe>
+			<iframe src="" name="person_frame" resizable="yes" id="person_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1250px; height:335px;" allowTransparency="true"></iframe>
 		</div>	
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>

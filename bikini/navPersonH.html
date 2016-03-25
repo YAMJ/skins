@@ -20,14 +20,14 @@
 	<!-- close (child windows) person popup windows when program exit --> 
     <body onload="PersonData();" >   
         <script type="text/javascript">
-		
-		 function PersonData()
+		var filmography_inside_ref_list	= new Array ();
+		function PersonData()
         {
 		//	get_lang();	
 			var	type = localStorage.getItem("indextype");
 			var	id = localStorage.getItem ("id");
-			jsonUrl = "/yamj3/api/person/"+type+".json?id="+id+"&job=actor,director,writer&dataitems=artwork,biography";
-		//	  jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=artwork,biography,filmography&sort=desc";
+			jsonUrl = "/yamj3/api/person/"+type+".json?id="+id+"&job=actor,director,writer&dataitems=artwork,biography&artworksortdir=DESC";
+		
             console.log("PersonData URL: " + jsonUrl);
             var jsondata = null;
 
@@ -51,10 +51,13 @@
         }
 		function close_person ()
 			{
-				console.log("close_person:  style:"+StyleValue);
-				parent.document.getElementById('person_frame').style.display="none";
-				parent.document.getElementById('person_display').style.visibility="hidden";
-				parent.document.getElementById('person_display').style.zIndex="2";
+				console.log("close_person:  style:"+ localStorage.getItem('Style'));
+				if (localStorage.getItem('Style') == "frame") {
+					parent.document.getElementById('person_frame').style.display="none";
+					parent.document.getElementById('person_display').style.visibility="hidden";
+					parent.document.getElementById('person_display').style.zIndex="2";
+				} else { window.close() ; }
+				
 			} 
 //****************************************************************************		
 
@@ -72,9 +75,10 @@
 								// add name on the top
 								outputperson_photo = outputperson_photo+"<td><p class=\"person_nameH\">"+totalperson_photo[i].name+"</p>";
 								str_bio = "";
-								str_cv = totalperson_photo[i].name;
-									if (totalperson_photo[i].birthDay) {str_cv += ' - ' +totalperson_photo[i].birthDay ;} 
-									if (totalperson_photo[i].birthPlace) {str_cv += ': '+ totalperson_photo[i].birthPlace ;}
+								temp_str_cv = totalperson_photo[i].name;
+									if (totalperson_photo[i].birthDay) {temp_str_cv += ' - ' +totalperson_photo[i].birthDay ;} 
+									if (totalperson_photo[i].birthPlace) {temp_str_cv += ': '+ totalperson_photo[i].birthPlace ;}
+								str_cv = temp_str_cv.replace(/\"/g,"\\&quot;").replace(/\'/g,"\\&apos;").replace(/\n/g,"");
 					//			 console.log("navPersonH: loop i=" + i + " str_cv:" + str_cv);	
 								if (totalperson_photo[i].biography) 
 								{					
@@ -82,39 +86,25 @@
 									str_bio += totalperson_photo[i].biography.replace(/\"/g,"\\&quot;").replace(/\'/g,"\\&apos;").replace(/\n/g,"");
 								} else {
 								// if no biography available , no display
-									str_bio = "nobio"
+									str_bio = window.localStorage.getItem("nobiography_text");
 								}
 					//			console.log("navPersonH: loop i=" + i + " str_bio:" + str_bio);	
 								// Check the last artwork if there is artwork
-								located_id = 0;  // set the located_id to the lowest value
 								var temp_photo_return = "";
 								if (totalperson_photo[i].artwork) 
 								{
-										var person_photoselect = totalperson_photo[i].artwork;
-								
-								// begin loop
-											for (j = 0; j < person_photoselect.length; j++) 
-												{
-													// Get the last generated poster from the list
-													photo = person_photoselect[j];
-													// if any problem within poster generation return dummy 
-													if (photo.generatedId === 0) {
-													// on click display biography and big poster
-													temp_photo_return ="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
-													} else {
-													//		console.log ("arg.context.result.artwork.length:" + arg.context.result.artwork.length + " j:"+ j + " photo.id:" + photo.id + " name:" + arg.context.result.firstName + "." + arg.context.result.lastName + " located_id:" + located_id + " photo.locatedId:" + photo.locatedId);
-													// compare if the locatedId is greater , assume when the case  it's newser
-													if (parseInt(photo.locatedId, 10) > parseInt(located_id, 10)) 
-															{
-																located_id = photo.locatedId;  // store the new locatedId
-																temp_photo_return ="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('"+ arg.context.basePhotoUrl + photo.filename +"')\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + photo.filename + "\" ></img></a>";
-															} else {}
-														} 
-											} // end loop 
-									outputperson_photo += temp_photo_return;
+									var photo = totalperson_photo[i].artwork[0];
+									// if any problem within poster generation return dummy 
+									if (photo.generatedId === 0) {
+									// on click display biography and big poster
+										temp_photo_return ="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+									} else {
+										temp_photo_return ="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('"+ arg.context.basePhotoUrl + photo.filename +"')\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + photo.filename + "\" ></img></a>";
+										} 
+								outputperson_photo += temp_photo_return;
 								} else {
-											outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
-										}
+										outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+									}
 									// add the role at the bottom 
 								if (totalperson_photo[i].role) {
 								outputperson_photo = outputperson_photo+"<p class=\"person_role\">"+totalperson_photo[i].role+"</p></td>";
@@ -144,13 +134,12 @@
 		{	
 			document.getElementById('Hbiographyshow').firstChild.nodeValue = string_to_display;
 		// display biography, resize the window to display bio and poster and photo ribbon at bottom
-			$('.table_person_photoH').css('top', '');
-			$('.table_person_photoH').css('bottom', '5px');
-			$('.Hbiography').css('display', 'block');
-			parent.document.getElementById('person_frame').style.height="89vh";
-			window.resizeTo (1340, 830);
-		//	if (string_to_display == "nobio")
-			//	{$('.Hbiography').css('display', 'none');} else {$('.Hbiography').css('display', 'block');}
+		
+				$('.table_person_photoH').css('top', '');
+				$('.table_person_photoH').css('bottom', '5px');
+				$('.Hbiography').css('display', 'block');
+		if (localStorage.getItem ("Style") == "frame") {parent.document.getElementById('person_frame').style.height="89vh";}
+		window.resizeTo (1340, 870);
 		}
 	function display_cv(string_cv)
 		{	
@@ -172,8 +161,7 @@
 			jsonFilmography = "/yamj3/api/person/" + id + ".json?dataitems=filmography_scanned&sortby=year&sortdir=desc";
             console.log("navPersonH jsonFilmography: " + jsonFilmography);
             var jsondata = null;
-		//	$('.Hfilmography').css('display', 'none');
-			
+					
             $.ajax({
                 url: jsonFilmography,
                 async: false,
@@ -192,18 +180,36 @@
 							$('.H_Filmography').css('display', 'block'); $('.Hfilmography').css('display', 'block');
 							var filmography_list = arg.context.result.filmography;
 					//		var output = filmography_label +":<br>";
-							var output = "<text>filmography: </text><br>";
+							var output = "<text>filmography: </text><br><br>";
 							// loop thru the list of filmography
 							for (i = 0; i < filmography_list.length; i++) {
 							// add year and title 
-								temp_output = filmography_list[i].year + " - " + filmography_list[i].title;
+							// compare with the inside filmography and if found display in red and activ
+								var temp_output = '';
+								video_compare = true;
+								for (j = 0; j < filmography_inside_ref_list.length & video_compare; j++) {
+									if (filmography_list[i].originalTitle.toLowerCase() == filmography_inside_ref_list[j].originalTitle.toLowerCase())
+										{
+											video_compare = false;
+											temp_output = temp_output + "<a style=\"color:red;\" href=\"javascript:setId('" + filmography_inside_ref_list[j].type + "', '" + filmography_inside_ref_list[j].videoDataId + "')\"> " + filmography_list[i].year + " - " + filmography_list[i].title ;
+											
+										} else {}
+									}
+								if (video_compare) {temp_output = filmography_list[i].year + " - " + filmography_list[i].title;}
 							// add job if exist
 								if (filmography_list[i].job)
 									{
-										temp_output = temp_output + " - " + filmography_list[i].job ;
-										// add role if exist
-										if (filmography_list[i].role)
-											{temp_output = temp_output + " (" + filmography_list[i].role.italics() +")";}	
+										if (video_compare) 
+											{ temp_output = temp_output + " - " + filmography_list[i].job; 
+											// add role if exist
+											if (filmography_list[i].role)
+												{temp_output = temp_output + " (" + filmography_list[i].role.italics() +")";}	
+											} else 
+											{ temp_output = temp_output + " - " + filmography_list[i].job + "</a>" ; 
+											// add role if exist
+											if (filmography_list[i].role)
+												{temp_output = temp_output + " (" + filmography_list[i].role.italics() +")" + "</a>" ;}	
+											}
 									} 
 								// add newline at the end
 								output = output +  temp_output + "<br>";
@@ -224,7 +230,6 @@
 			jsonFilmography_inside = "/yamj3/api/person/" + id + ".json?dataitems=filmography_inside&sortby=year&sortdir=desc";
             console.log("navPersonH jsonFilmography_inside: " + jsonFilmography_inside);
             var jsondata = null;
-		//	$('.Hfilmography').css('display', 'none');
 			
             $.ajax({
                 url: jsonFilmography_inside,
@@ -238,6 +243,7 @@
 				var LIST_FILMOGRAPHY_INSIDE = { 
 				'span.Hfilmography_inside': function(arg)
 						{
+						filmography_inside_ref_list = arg.context.result.filmography;
 						var filmography_inside_list = arg.context.result.filmography;
 						$('.H_Filmography_inside').css('display', 'none'); 
 						$('.result_filmography_inside').empty();
@@ -245,10 +251,6 @@
 						var init_inside = "<tr><td><span class=\"Hfilmography_inside\"></span></td></tr>"
 						$('.result_filmography_inside').append(init_inside);
 						var output_inside =  "";
-	
-					//		var output = filmography_label +":<br>";
-					//	var output_inside = "<text>Inside filmography: </text><br>";
-					//	 $('.Hfilmography_inside').append(output_inside);
 							// loop thru the list of filmography_inside
 							for (i = 0; i < filmography_inside_list.length; i++) {	
 								if (filmography_inside_list[i].type == "MOVIE")
@@ -289,7 +291,6 @@
 		}		
 	function get_poster (type, videodataId, i) {
 				
-		//	var jsondata = null;
 				jsonPoster = "/yamj3/api/video/" + type.toLowerCase() + "/" + videodataId + ".json?dataitems=artwork";
 				console.log("navPersonH jsonPoster: " + jsonPoster);
 				$.ajax({
@@ -312,7 +313,7 @@
 							{
 							case 0:
 								YAMJ_DIR0 = {
-							   // display poster 	
+						// display poster 	
 								'img.poster0@src': function(arg) {
 						// Get the first poster available from the list
 								for (j = 0; boucle && j < arg.context.result.artwork.POSTER.length; j++) 

@@ -240,7 +240,7 @@
 			get_player();
 			get_prefered_page();
 		
-			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=" + sort_type + "&sortdir=" + direction + "&artwork=poster&dataitems=videosource,boxset,rating&watched="+watched_method;;
+			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=" + sort_type + " " + direction + ",title&artwork=poster&dataitems=videosource,boxset,rating&watched="+watched_method;;
 			if (rating_source == 'combined') {display_rating = window.localStorage.getItem('rating_label').toUpperCase() + " " + window.localStorage.getItem('combined_label').toLowerCase() + ":" + rating_value;}
 			else {display_rating = window.localStorage.getItem('rating_label').toUpperCase() + " " + rating_source + ":" + rating_value;}
 			if (resolution_method != 'all')

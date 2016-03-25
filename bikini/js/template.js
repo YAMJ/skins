@@ -607,7 +607,7 @@
 				
 					} else { 
 					window.localStorage.setItem('back_close', 'close');
-					Mypopup = window.open("Popup_Person_Biography.html", "YAMJ v3 Person Biography","channelmode=no, menubar=no, status=no, scrollbars=no, menubar=no, location=no, left=310px, top=5px, width=1120px, height=720px");
+					Mypopup = window.open("Popup_Person_Biography.html", "YAMJ v3 Person Biography","channelmode=no, menubar=no, status=no, scrollbars=no, menubar=no, location=no, left=310px, top=5px, width=1180px, height=720px");
 					Mypopup.focus();
 					}
 			}
@@ -627,7 +627,7 @@
 				
 					} else { 
 					window.localStorage.setItem('back_close', 'close');
-					Mypopup_Filmography = window.open("Popup_Person_Filmography.html", "YAMJ v3 Person Filmography","channelmode=no, menubar=no, status=no, scrollbars=no, menubar=no, location=no, left=310px, top=5px, width=1120px, height=720px");
+					Mypopup_Filmography = window.open("Popup_Person_Filmography.html", "YAMJ v3 Person Filmography","channelmode=no, menubar=no, status=no, scrollbars=no, menubar=no, location=no, left=310px, top=5px, width=1180px, height=720px");
 					Mypopup_Filmography.focus();
 					}
 			}

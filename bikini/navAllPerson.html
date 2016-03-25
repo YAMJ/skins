@@ -33,7 +33,7 @@
 			if (localStorage.getItem("search_method"))
 				{index_method = localStorage.getItem("search_method");
 				localStorage.setItem("search_method", "START");}
-			var jsonUrl = "/yamj3/api/index/person.json?sortby=name&sortdir="+direction+"&dataitems=artwork&artwork=photo";
+			var jsonUrl = "/yamj3/api/index/person.json?sortby=name "direction+"&dataitems=artwork&artwork=photo&artworksortdir=DESC";
 			
 			if (window.localStorage.getItem("search_index"))
 				{
@@ -95,36 +95,19 @@ function updateHtml(yamjdata)
 									// add name on the top
 								 if (window.localStorage.getItem('Style') == 'popup') {outputperson_photo = outputperson_photo+"<td>"}
 								outputperson_photo = outputperson_photo+"<p class=\"person_name\">"+totalperson_photo[i].name+"</p>";
-								
-								
-								
-								
-								// Check the last artwork if there is artwork
-								located_id = 0;  // set the located_id to the lowest value
+								// Check the last artwork if there is artwork								
 								var temp_photo_return = "";
 								if (totalperson_photo[i].artwork) 
 									{
-										var person_photoselect = totalperson_photo[i].artwork;
-									// begin loop
-											for (j = 0; j < person_photoselect.length; j++) 
-												{
-													// Get the last generated poster from the list
-													photo = person_photoselect[j];
-													// if any problem within poster generation return dummy 
-													if (photo.generatedId === 0) {
+										var photo = totalperson_photo[i].artwork[0];
+								// if any problem within poster generation return dummy 
+										if (photo.generatedId === 0) {
 													// on click display biography and big poster
 														temp_photo_return ="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'close')\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
-													} else {
-													//		console.log ("arg.context.result.artwork.length:" + arg.context.result.artwork.length + " j:"+ j + " photo.id:" + photo.id + " name:" + arg.context.result.firstName + "." + arg.context.result.lastName + " located_id:" + located_id + " photo.locatedId:" + photo.locatedId);
-													// compare if the locatedId is greater , assume when the case  it's newser
-													if (parseInt(photo.locatedId, 10) > parseInt(located_id, 10)) 
-															{
-																located_id = photo.locatedId;  // store the new locatedId
+													} else {											
 																temp_photo_return ="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'close')\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + photo.filename + "\" ></img></a>";
-															} else {}
-														} 
-											} // end loop 
-										outputperson_photo += temp_photo_return;
+															} 
+												outputperson_photo += temp_photo_return;
 									} else {
 												outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'close')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
 											}

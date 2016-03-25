@@ -228,7 +228,7 @@
 			get_player();
 			get_prefered_page();
 			
-			var jsonUrl = "/yamj3/api/index/video.json?dataitems=member,artwork,boxset,rating,videosource&artwork=POSTER"+"&watched="+watched_method+"&sortby="+sort_type+"&sortdir="+direction;
+			var jsonUrl = "/yamj3/api/index/video.json?dataitems=member,artwork,boxset,rating,videosource&artwork=POSTER"+"&watched="+watched_method+"&sortby="+sort_type+" "+direction+",title";
 			display_Boxset = window.localStorage.getItem('boxset_label').toUpperCase()+ ": " + boxset_name.toUpperCase();
 			if (resolution_method != 'all')
 				{

@@ -287,7 +287,7 @@
 						selected_index = selected_index;
 				};
 
-			 var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby="+sort_type+"&sortdir="+direction+"&dataitems=status,boxset,rating,videosource";	
+			 var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby="+sort_type+" "+direction+",title&dataitems=status,boxset,rating,videosource";	
 					if (window.localStorage.getItem("yearselected") == 'true' && window.localStorage.getItem("selection")) 
 								{
 									if (resolution_method != 'all')
@@ -449,8 +449,6 @@
 				break;
 				}
 			}
-			
-		//	document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_page').toLowerCase();
 			document.getElementsByClassName("playbutton")[0].title=window.localStorage.getItem('play_label').toLowerCase();
 			document.getElementsByClassName("infobutton")[0].title=window.localStorage.getItem('info_label').toLowerCase();
 			document.getElementsByClassName("rating")[0].title=window.localStorage.getItem('rating_label').toLowerCase();

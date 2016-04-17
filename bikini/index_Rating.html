@@ -77,8 +77,11 @@
 				else {window.localStorage.setItem("direction", direction);}	
 		var sort_type = "title"; 
 			if (window.localStorage.getItem("sort_indextype"))
-				{sort_type = window.localStorage.getItem("sort_indextype");}
-				else {window.localStorage.setItem("sort_indextype", sort_type);}			
+				{
+				if (window.localStorage.getItem("sort_indextype") == 'videoYear,createTimestamp')
+					{ sort_type = 'videoYear ' + direction + ',createTimestamp ' + direction;
+					} else {sort_type = window.localStorage.getItem("sort_indextype") + ' ' + direction;}
+				 } else {window.localStorage.setItem("sort_indextype", sort_type)+ ' ' + direction;}			
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
         // img.Poster@src replaces the "src" attribute of the img.Poster
@@ -240,7 +243,7 @@
 			get_player();
 			get_prefered_page();
 		
-			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=" + sort_type + " " + direction + ",title&artwork=poster&dataitems=videosource,boxset,rating&watched="+watched_method;;
+			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=" + sort_type +"&artwork=poster&dataitems=videosource,boxset,rating&watched="+watched_method;;
 			if (rating_source == 'combined') {display_rating = window.localStorage.getItem('rating_label').toUpperCase() + " " + window.localStorage.getItem('combined_label').toLowerCase() + ":" + rating_value;}
 			else {display_rating = window.localStorage.getItem('rating_label').toUpperCase() + " " + rating_source + ":" + rating_value;}
 			if (resolution_method != 'all')
@@ -266,7 +269,7 @@
 					default :
 						display_rating = display_rating;
 				};
-				if (sort_type == 'title') 
+				if (window.localStorage.getItem("sort_indextype") == 'title')  
 					{
 						display_rating = display_rating + "&nbsp;-&nbsp;" + window.localStorage.getItem('title_label');
 					}

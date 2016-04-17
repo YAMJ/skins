@@ -495,7 +495,7 @@
 						} 
 					case 'new':
 						{						
-							NewestSelection("index.html", localStorage.getItem("New"));
+							NewestSelection("index_New.html", localStorage.getItem("New"));
 							break;
 						} 
 					default:

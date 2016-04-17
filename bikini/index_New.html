@@ -2,7 +2,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>YAMJ v3 Videosource index</title>
+		<meta name="viewport" content="width=device-width, user-scalable=yes" />
+        <title>YAMJ v3 index New</title>
         <script src="js/jQuery.js"></script>
         <!-- Used for the JSON parsing -->
         <script src="js/pure.js"></script>
@@ -13,7 +14,7 @@
 		<!-- Used for skin language setting -->
 		<script src="js/lang.js"></script>
 		<!-- Used for config  setting -->
-		<script src="js/config.js"></script>		
+		<script src="js/config.js"></script>
 		<!-- Used for template -->
 		<script src="js/template.js"></script>
 		<script src="js/library2.js"></script>
@@ -24,46 +25,58 @@
         <link rel="stylesheet" href="css/animate.css">
 		<!-- used for iscroll special -->
 		<script type="text/javascript" src="js/iscroll.js"></script>
+
     </head>
     <body onload="getIndexData();animate_watched ();">
         <script type="text/javascript">
-			
+	
 //***************************************************************************************
 		
+		var select = "";
 		// set default to 2 rows and 6 columns
 		var RowperPageValue = 2;
 		var PerPageValue = 12;
+		var LangValue = "en";
 		var Prefered_PageValue = "index_all";
         var jsondata = null;
 		var menuleft_toggle = 0;
-		var videosource_value = ""; 
-		var	display_videosource = "";
+		var index_method = "START";
 		var watched_method = "all";
 		var resolution_method = "all";
+		var newest_method = "80-file";
 		var nbre_translate_path = 0;
+	
 		// get the prefered_page
 		if (localStorage.getItem("prefered_page"))
 			{Prefered_PageValue = localStorage.getItem("prefered_page");}
 			else {localStorage.setItem("prefered_page", Prefered_PageValue);}
+		// get the newest method and reset the value to ""
+		if (localStorage.getItem("newest"))
+			{newest_method = localStorage.getItem("newest");
+			}
 		// get the watched method 
 		if (localStorage.getItem("watched"))
 			{watched_method = localStorage.getItem("watched");}
 		// get the resolution method 
 		if (localStorage.getItem("resolution"))
 			{resolution_method = localStorage.getItem("resolution");}
-		if (localStorage.getItem("Videosource_value"))
-			{videosource_value = localStorage.getItem("Videosource_value");}
+		// get the search method and reset to default for the next time 
+		if (localStorage.getItem("search_method"))
+			{index_method = localStorage.getItem("search_method");
+			localStorage.setItem("search_method", "START");}
+		// set a default  if 1rst time and set to the type previously selected if available 	
 		var index_type = "movie,series";
-			if (window.localStorage.getItem("indextype"))
-				{index_type = window.localStorage.getItem("indextype");
-				// reset to all if indextype = person
+		if (window.localStorage.getItem("indextype"))
+			{index_type = window.localStorage.getItem("indextype");
+			// reset to all if indextype = person
 				if (index_type.toUpperCase() == 'PERSON')
 					{
 						window.localStorage.setItem("indextype", 'movie,series');
 						index_type = 'movie,series';
 					}
-				}
-				else {window.localStorage.setItem("indextype", index_type);}
+			}
+			else {window.localStorage.setItem("indextype", index_type);}
+		// set a default direction to ASC or set to the direction previously selected if available 	
 		var direction = "ASC";
 			if (window.localStorage.getItem("direction"))
 				{direction = window.localStorage.getItem("direction");}
@@ -74,37 +87,38 @@
 				if (window.localStorage.getItem("sort_indextype") == 'videoYear,createTimestamp')
 					{ sort_type = 'videoYear ' + direction + ',createTimestamp ' + direction;
 					} else {sort_type = window.localStorage.getItem("sort_indextype") + ' ' + direction;}
-				 } else {window.localStorage.setItem("sort_indextype", sort_type)+ ' ' + direction;}		
+				 } else {window.localStorage.setItem("sort_indextype", sort_type)+ ' ' + direction;}
+		
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
         // img.Poster@src replaces the "src" attribute of the img.Poster
 		var COUNT_HEADER = {
                 'span.ReturnCount': function(arg) {	
-					return arg.context.count+' '+ window.localStorage.getItem('results_text');
+					return arg.context.count+'&nbsp;'+window.localStorage.getItem('results_text');
 					}
             };	
-		
+	
         var LIST_DIR = {
-            "div.block": {
+			"div.block": {
                 "result<-results": {
                      "span.title": function(arg) {
 						
 					if (( arg.item.artwork.POSTER[0]) && (arg.item.videoType == 'SEASON'))
 						{					
-						return arg.item.title + ' (' + arg.item.videoYear + ')' + '<br> '+localStorage.getItem('season_label')+': ' + arg.item.season;
+						return arg.item.title + ' (' + arg.item.videoYear + ')'+ '<br> '+ window.localStorage.getItem('season_label') +': ' + arg.item.season;
 						} else {
 							if (arg.item.videoType == 'SERIES')
 								{ 
-									
-									return arg.item.title + ' (' + arg.item.videoYear + ')' +'<br> '+localStorage.getItem('series_label'); 
+									return arg.item.title + ' (' + arg.item.videoYear + ')' +'<br> '+ window.localStorage.getItem('series_label'); 
 									
 								} else {
 									return arg.item.title + ' (' + arg.item.videoYear + ')';
 								}
 						}
 					},
+					
                     "img.poster@src": function(arg) {
-                        	// set dummy as default poster
+						// set dummy as default poster
                        var output_poster = "pictures/dummy.jpg";
                         // Check to see if there are posters
                         if (arg.item.artwork.POSTER) {
@@ -113,47 +127,16 @@
 						// Get the first poster available from the list
 						for (i = 0; boucle && i < poster.length; i++) 
 							{
-								if (poster[i].generatedId != 0)
+								if (poster[i].generatedId)
 								{
 									boucle = false;
+									
 									output_poster = arg.context.baseArtworkUrl + poster[i].filename;
 								} 
 							}
 						}
 						return output_poster;
-                    },
-                    "img.poster@onclick": function(arg) {
-                        return "setId('" + arg.item.videoType + "', " + arg.item.id + ")";
                     }, 
-					"img.playbutton@onclick": function(arg) {
-                        return "direct_play('" + arg.item.videoType + "', " + arg.item.id + ")";
-                    }, 
-					"img.infobutton@onclick": function(arg) {
-						cursor_position (); 
-                        return "direct_info('" + arg.item.videoType + "', " + arg.item.id + ")";
-                    },
-					"img.watched_small@src": function(arg)
-					{
-						if (arg.item.watched) 
-						{return "./pictures/watched.png";} else
-						{return "./pictures/unwatched.png";}
-					},
-					"img.watched_small@onmouseout": function(arg)
-					{
-						if (arg.item.watched) 
-						{return "src='pictures/watched.png'";} else
-						{return "src='pictures/unwatched.png'";}
-					},
-					"img.watched_small@onclick": function(arg)
-					{
-						return "toggle_watched (" +arg.item.watched + ", " + arg.item.id + ", '" + arg.item.videoType + "'); " ;
-					},
-					"img.watched_small@title": function(arg)
-					{
-						if (arg.item.watched) 
-						{return window.localStorage.getItem('watched_select').toLowerCase();} else
-						{return window.localStorage.getItem('unwatched_select').toLowerCase();}
-					},
 					"img.boxset@src": function(arg) {
                        var output_boxset = "pictures/no_set.png";
                         // Check to see if there are boxset
@@ -204,6 +187,9 @@
 							}
 							return output_rating_click;
 					},
+                    "img.poster@onclick": function(arg) {
+                        return "setId('" + arg.item.videoType + "', " + arg.item.id + ")";
+                    },
 					"img.overlays@onclick": function(arg) {
                         return "setId('" + arg.item.videoType + "', " + arg.item.id + ")";
                     },
@@ -211,17 +197,52 @@
                         if (arg.item.videoSource) 
 						{return "./pictures/covers/"+arg.item.videoSource.toLowerCase()+".png";} else
 						{return "./pictures/covers/transparent.png";}
-                    }
+                    },
+					"img.playbutton@onclick": function(arg) {
+                        return "direct_play('" + arg.item.videoType + "', " + arg.item.id + ")";
+                    },
+					"img.infobutton@onclick": function(arg) {
+						cursor_position (); 
+                        return "direct_info('" + arg.item.videoType + "', " + arg.item.id + ")";
+                    },
+					"img.watched_small@src": function(arg)
+					{
+						if (arg.item.watched) 
+						
+						{return "./pictures/watched.png";} else
+						{return "./pictures/unwatched.png";}
+					}, 
+					"img.watched_small@onmouseout": function(arg)
+					{
+						if (arg.item.watched) 
+						{return "src='pictures/watched.png'";} else
+						{return "src='pictures/unwatched.png'";}
+					},
+					"img.watched_small@onclick": function(arg)
+					{
+						return "toggle_watched (" +arg.item.watched + ", " + arg.item.id + ", '" + arg.item.videoType + "'); " ;
+					},
+					"img.watched_small@title": function(arg)
+					{
+						if (arg.item.watched) 
+						{return window.localStorage.getItem('watched_select').toLowerCase();} else
+						{return window.localStorage.getItem('unwatched_select').toLowerCase();}
+					},
+					"img.not_done@style": function(arg)
+					{
+						if (arg.item.status == 'DONE') 
+						{return "position: relative; top: -25vw; left: 8.5vw; display: none";} else
+						{return "position: relative; top: -25vw; left: 8.5vw; display: block";}
+					}
                 }
             }
         };
-
+	
         function setId(type, id)
         {
-	
             window.localStorage.setItem("indextype", type);
             window.localStorage.setItem("id", id);
-            console.log("Storing value: " + type + "-" + id);
+            console.log("setId Storing value: " + type + "-" + id);
             window.location.href="detail.html";
         }
 
@@ -229,121 +250,155 @@
         // It will then update the HTML with the data and set up the paging
         function getIndexData()
         {
-
-		// fill all value according to language setting - from yamjv3_lang_{lang}.xml
-			get_lang();
-			get_style();
-			get_player();
-			get_prefered_page();
-			
-			var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby=" + sort_type +"&artwork=poster&dataitems=videosource,boxset,rating&watched="+watched_method;;
-			display_videosource = window.localStorage.getItem('video_label').toUpperCase() + ":" + videosource_value.toUpperCase();
-			if (resolution_method != 'all')
+			// get skin
+			get_Skin ();
+			// set local context value
+			set_context_lang_value ();
+		
+		
+ 			
+			switch (index_type.toLowerCase())
 				{
-					jsonUrl += "&include=videosource-"+videosource_value+",resolution-" + resolution_method;
-					display_videosource = display_videosource + '&nbsp;resolution:' + resolution_method;
-				}
-				else {jsonUrl += "&include=videosource-"+videosource_value;}
-
-			get_type_selected ();
-			switch (watched_method)
-				{
-					case 'all':
-						display_videosource = display_videosource ;
+					case 'movie,series':
+						selected_index = window.localStorage.getItem("all_select").toUpperCase();
 						break;
-					case 'true':
-						display_videosource = display_videosource + "(" + window.localStorage.getItem('watched_select').toUpperCase() + ") ";
+					case 'movie':
+						selected_index = window.localStorage.getItem("movie_select").toUpperCase();
 						break;
-					case 'false':
-						display_videosource = display_videosource + "(" + window.localStorage.getItem('unwatched_select').toUpperCase() + ") ";
+					case 'series':
+						selected_index = window.localStorage.getItem("series_select").toUpperCase();
+						break;
+					case 'season':
+						selected_index = window.localStorage.getItem("season_select").toUpperCase();
 						break;
 					default :
-						display_videosource = display_videosource;
+						selected_index = window.localStorage.getItem("all_select").toUpperCase();
+						window.localStorage.setItem("indextype", 'movie,series');
 				};
-				if (window.localStorage.getItem("sort_indextype") == 'title') 
-					{display_videosource = display_videosource + "&nbsp;-&nbsp;" + window.localStorage.getItem('title_label');}
-					else {display_videosource = display_videosource + "&nbsp;-&nbsp;" + window.localStorage.getItem('year_label');}
-				if (direction == 'ASC') 
-					{display_videosource = display_videosource +  ","+ window.localStorage.getItem('asc_label');}
-					else {display_videosource = display_videosource +  ","+ window.localStorage.getItem('desc_label') ;}
+				switch (watched_method)
+				{
+					case 'all':
+						selected_index = selected_index;
+						break;
+					case 'true':
+						selected_index = selected_index + "(" + window.localStorage.getItem('watched_select').toUpperCase() + ")&nbsp;";
+						break;
+					case 'false':
+						selected_index = selected_index + "(" + window.localStorage.getItem('unwatched_select').toUpperCase() + ")&nbsp;";
+						break;
+					default :
+						selected_index = selected_index;
+				};
+
+			 var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&dataitems=status,boxset,rating,videosource";	
+					if (window.localStorage.getItem("yearselected") == 'true' && window.localStorage.getItem("selection")) 
+								{
+									if (resolution_method != 'all')
+										{
+											jsonUrl += "&include=year-" + window.localStorage.getItem("selection") + ",resolution-" + resolution_method;
+											selected_index = selected_index + '&nbsp;resolution:' + resolution_method;
+										} else { jsonUrl = jsonUrl + "&include=year-"+window.localStorage.getItem("selection"); }
+									selected_index = selected_index + '&nbsp;' + window.localStorage.getItem("year_label").toUpperCase() + ':' + window.localStorage.getItem("selection");
+									window.localStorage.setItem("yearselected", 'false');
+									window.localStorage.setItem("selection", "");
+									window.localStorage.setItem("search_index", "");	
+								} else {
+								if (resolution_method != 'all')
+										{
+											jsonUrl += "&include=resolution-" + resolution_method;
+											selected_index = selected_index + '&nbsp;resolution:' + resolution_method;
+										}
+								
+											if (window.localStorage.getItem("sort_indextype") == 'title') 
+												{selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('title_label'); }
+												else {selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('year_label');}
+											if (direction == 'ASC') 
+												{selected_index = selected_index +  ", "+ window.localStorage.getItem('asc_label') + ")";}			
+												else {selected_index = selected_index +  ", "+ window.localStorage.getItem('desc_label') + ")";}	
+								}
+								
+				jsonUrl += "&artwork=poster&watched=" + watched_method;
+				
+					jsonUrl += "&include=newest-" + newest_method;
+					if (window.localStorage.getItem("sort_indextype") == 'title') {jsonUrl += "&sortby=title " + direction;}
+					else {jsonUrl += "&sortby=videoYear " + direction;}
+
+					switch (newest_method.substr(newest_method.indexOf('-') + 1))
+					{
+						case 'file':
+						{
+						temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
+						break;
+						}
+						case 'creation':
+						{
+						temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
+						break;
+						}
+						case 'lastscan':
+						{
+						temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
+						break;
+						}
+						
+					}
+					selected_index = selected_index + temp_new_string;
+				
+				
+				
 				var temp_style = "1.4vw"
 					
-					if (display_videosource.length > 35)	{temp_style = "1.4vw";}
-					if (display_videosource.length > 40)	{temp_style = "1.35vw";}
-					if (display_videosource.length > 44)	{temp_style = "1.3vw";}
-					if (display_videosource.length > 51)	{temp_style = "1.25vw";}
-					if (display_videosource.length > 57)	{temp_style = "1.2vw";}
-					if (display_videosource.length > 61)	{temp_style = "1.15vw";}
-					if (display_videosource.length > 65)	{temp_style = "1.1vw";}
-					if (display_videosource.length > 69)	{temp_style = "1.05vw";}
-					if (display_videosource.length > 72)	{temp_style = "1vw";}
-					if (display_videosource.length > 74)	{temp_style = "0.95vw";}
-					$(".show_index_videosource").css("font-size", temp_style);
-					$('#printsearch').html(display_videosource);
-					console.log("index_videosource getIndexData URL: " + jsonUrl);
-				
-            $.ajax({
+					if (selected_index.length > 35)	{temp_style = "1.4vw";}
+					if (selected_index.length > 40)	{temp_style = "1.35vw";}
+					if (selected_index.length > 44)	{temp_style = "1.3vw";}
+					if (selected_index.length > 49)	{temp_style = "1.25vw";}
+					if (selected_index.length > 57)	{temp_style = "1.2vw";}
+					if (selected_index.length > 61)	{temp_style = "1.15vw";}
+					if (selected_index.length > 65)	{temp_style = "1.1vw";}
+					if (selected_index.length > 69)	{temp_style = "1.05vw";}
+					if (selected_index.length > 72)	{temp_style = "1vw";}
+					if (selected_index.length > 74)	{temp_style = "0.95vw";}
+				$(".show_index").css("font-size", temp_style);
+				$('#printsearch').html(selected_index);
+				console.log("Index getIndexData URL: " + jsonUrl);
+
+				$.ajax({
                 url: jsonUrl,
                 async: false,
                 dataType: 'jsonp',
                 'success': function(data)
                 {
                     jsondata = data;
-				//	 outputJson(data); 	
+				//	 outputJson(data); 		
                     updateHtml(data);
 					get_poster_number ();
-                    console.log("GetIndexData: perPageValue="+perPageValue+" paging:"+ window.localStorage.getItem('Paging'));
-					if (window.localStorage.getItem("Paging") == 'true') {pageData(perPageValue);}
+					console.log("GetIndexData: perPageValue="+perPageValue+" paging:"+ window.localStorage.getItem('Paging'));
+                 if (window.localStorage.getItem("Paging") == 'true') { 	
+						pageData(perPageValue);}
                 }
             });
             return jsondata;
         }
-
+			
         // Run the pure.js function to render the data into the HTML template
         // div.row is the part of the template to apply it too.
         // "row" is a CLASS attribute, not the id.
         function updateHtml(yamjdata)
         {
-			$p('.count_return_videosource').render(yamjdata, COUNT_HEADER);	
+			$p('.count_return_index').render(yamjdata, COUNT_HEADER);	
             $p('div.row').render(yamjdata, LIST_DIR);
         }
 
-		function open_videosource_index(indextype)
-        {
-			localStorage.setItem("indextype", indextype);
-            console.log("open_videosource_index Storing value: indextype: " +indextype);
-			window.location.href="index_Videosource.html";
-			Mypopup.focus();
-		}
-		function get_type_selected ()
-		{
-			switch (index_type.toLowerCase())
-				{
-					case 'movie,series':
-						
-						display_videosource = display_videosource + "(" + window.localStorage.getItem('all_select').toUpperCase() + ")";
-						break;
-					case 'all':
-						
-						display_videosource = display_videosource + "(" + window.localStorage.getItem('all_select').toUpperCase() + ")";
-						break;
-					case 'movie':
-						
-						display_videosource = display_videosource + "(" + window.localStorage.getItem('movie_select').toUpperCase() + ")";
-						break;
-					case 'series':
-					
-						display_videosource = display_videosource + "(" + window.localStorage.getItem('series_select').toUpperCase() + ")";
-						break;
-					case 'season':
-						
-						display_videosource = display_videosource + "(" + window.localStorage.getItem('season_select').toUpperCase() + ")";
-						break;
-				};
+
+		function SetIndexData (search)
+		{		
+				window.localStorage.setItem("search_index", search);
+				window.location.reload();
+		
 		}
 
-//************************ LANGUAGE LOCAL SETTING *********************************************		
-		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
+  //************************ LANGUAGE LOCAL SETTING *********************************************
+		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
 		function set_context_lang_value ()
 		{
 			
@@ -393,16 +448,13 @@
 			}
 			document.getElementsByClassName("playbutton")[0].title=window.localStorage.getItem('play_label').toLowerCase();
 			document.getElementsByClassName("infobutton")[0].title=window.localStorage.getItem('info_label').toLowerCase();
+			document.getElementsByClassName("rating")[0].title=window.localStorage.getItem('rating_label').toLowerCase();
+			document.getElementsByClassName("boxset")[0].title=window.localStorage.getItem('boxset_label').toLowerCase();
+			
 		}
+		
         </script>
-	
-    <div class="index_header"> 
-			<a href="javascript:ouvre_prefered_page()" id="li_home_left" data-tip2="prefered page"></a>
-			<a id="info_config" data-tip2="info" href="javascript:ouvre_info_config()" ></a><div class="show_index_videosource"><span id="printsearch"></span></div>
-			<div class="count_return_videosource">
-                   <span class="ReturnCount"></span> 
-			</div>
-		<!-- just added to set the language value, shouldn't be displayed  -->
+	<!-- just added to set the language value, shouldn't be displayed  -->
 			<div class="results" style="visibility: hidden; display:none;">
 				<table><tr><td class="Value"></td></tr></table>
 			</div>
@@ -410,56 +462,70 @@
 			<div class="poster_results" style="visibility: hidden; display:none;">
 				<table><tr><td class="Poster_Value"></td></tr></table>
 			</div>
-			<!-- include navigation header after context return , page info and count return -->		
+	<div class="index_header"> 
+			<a href="javascript:ouvre_prefered_page()" id="li_home_left" data-tip2="prefered page"></a>
+			<a id="info_config" data-tip2="info" href="javascript:ouvre_info_config()" ></a>
+			<div class="show_index"><span id="printsearch"></span></div>
+			<div class="count_return_index">
+                   <span class="ReturnCount"></span> 
+			</div>
+			 <!-- include navigation header after context return , page info and count return -->		
 			<div>
 				<object data="include_header_index_menu.html" type="text/html" id="my_header_menu" style="position: absolute; height: 60px; width: 100%; left: 0%; z-index:10;"></object>
 			</div>
-		
 		<div class="directplay" style="display:none">
 			<span class="filepath"></span>
 		</div>
-        <!--Navigation Holder-->
+            <!--Navigation Holder-->
         <div class="holder"></div>
-	</div>				
-<!-- add left menu dynamically from a separate file --> 
-	<div >
-      <object data="include_left_menu.html" type="text/html" id="my_left_menu"></object>
-    </div>
+	</div>
+	
         <!--Data Items Container-->
-        <div id="container">
+        <div id="container" >
             <div id="yRow" class="row">
-                <div id="yBlock" class="block">
-					<img class="poster" src="pictures/dummy.png" alt="poster"  />
+			
+                <div id="yBlock" class="block" >
+					<img class="poster" src="pictures/dummy.png" alt="poster"></img>
                     <img class="playbutton" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'" alt="next" title="play"></img>
 					<img class="infobutton" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'" alt="info" title="info" ></img>
-					<img class="watched_small" src="pictures/empty.png" alt="watched" onmouseout="src='pictures/empty.png'" data-tip="watch"></img>
-					<br>
+					<img class="watched_small" src="pictures/empty.png" alt="watched" onmouseout="src='pictures/empty.png'" title="watch"></img>
                     <span class="title" ></span>
 					<img class="rating" title="rating" src="./pictures/vertical_ratings/dummy_rating.png" onclick="" alt="rating"/>
 					<img class="boxset" title="boxset" src="./pictures/no_set.png" onclick="" alt="boxset"/>
 					<img class="overlays" src="pictures/covers/transparent.png" alt="overlays" ></img>
+					<img class="not_done" src="pictures/icon_error.png" alt="status not done" title="status not done" style="position: relative; top: -34vw; left: 8.5vw; display: none;"></img>
+					<br>
                 </div>
                 <br />
             </div>
         </div>
+	<!-- add left menu dynamically from a separate file --> 
+	<div >
+      <object data="include_left_menu.html" type="text/html" id="my_left_menu"></object>
+    </div>
+	
 	<!-- display infobox -->
 		<button id="infobox" onclick="javascript:start_playing ()"></button>
-	<!-- display config -->
+	<!-- display Remote -->
+		<div id="remote" style="visibility: hidden; ">
+			<iframe src="" name="remote_frame" resizable="yes" id="remote_frame" scrolling="yes" frameborder="0" style="overflow:auto; width:430px; height:660px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display config / search -->
 		<div id="target_display" style="visibility: hidden; ">		
 			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:1050px; height:320px;" allowTransparency="true"></iframe>
 		</div>
 	<!-- display detail  -->
-		<div id="detail_display" style="visibility: hidden; position: absolute; top: 15%; left: 16%;">		
+		<div id="detail_display" style="visibility: hidden; position: absolute; top: 5vw; left: 16%;">		
 			<iframe src="" name="detail_frame" resizable="yes" id="detail_frame" scrolling="no" frameborder="1" style="overflow:hidden;  width:71vw; height:43vw;" allowTransparency="true"></iframe>
-		</div>
-		<!-- display Movie -->
+		</div>	
+	<!-- display Movie -->
 		<div id="movie_display" style="visibility: hidden; ">
 			<iframe src="" name="movie_frame" resizable="yes" id="movie_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1245px; height:265px;" allowTransparency="true"></iframe>
 		</div>	
 	<!-- display person -->
 		<div id="person_display" style="visibility: hidden; ">	
 			<iframe src="" name="person_frame" resizable="yes" id="person_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1220px; height:335px;" allowTransparency="true"></iframe>
-		</div>	
+		</div>
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>
     </body>

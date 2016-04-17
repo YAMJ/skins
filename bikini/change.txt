@@ -1,4 +1,9 @@
 change.txt
+V2.0.9
+- fix certification for foreign country
+- fix webdl videosource
+- adjust dissociate index and index new to apply selection parameter to each of them 
+- fix missing display with nav_personH
 V2.0.8
 - fix all_resolution translation
 - fix navPersonH with ' in the name 

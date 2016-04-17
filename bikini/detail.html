@@ -253,7 +253,7 @@
 								{
 									boucle = false;
 									output = "pictures/certification/" + window.localStorage.getItem('prefered_certification').toUpperCase() + "/" + certifications[i].certificate + ".png";
-								}
+								} else {output = "pictures/certification/dummy_certification.png" ;}
 							}
 					} else {
 							output = "pictures/certification/dummy_certification.png"

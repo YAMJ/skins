@@ -50,10 +50,9 @@
 		if (localStorage.getItem("prefered_page"))
 			{Prefered_PageValue = localStorage.getItem("prefered_page");}
 			else {localStorage.setItem("prefered_page", Prefered_PageValue);}
-		// get the newest method and reset the value to ""
+		// reset newest method to ""
 		if (localStorage.getItem("newest"))
-			{newest_method = localStorage.getItem("newest");
-			localStorage.setItem("newest", "");}
+			{localStorage.setItem("newest", "");}
 		// get the watched method 
 		if (localStorage.getItem("watched"))
 			{watched_method = localStorage.getItem("watched");}
@@ -83,8 +82,11 @@
 				else {window.localStorage.setItem("direction", direction);}	
 		var sort_type = "title"; 
 			if (window.localStorage.getItem("sort_indextype"))
-				{sort_type = window.localStorage.getItem("sort_indextype");}
-				else {window.localStorage.setItem("sort_indextype", sort_type);}
+				{
+				if (window.localStorage.getItem("sort_indextype") == 'videoYear,createTimestamp')
+					{ sort_type = 'videoYear ' + direction + ',createTimestamp ' + direction;
+					} else {sort_type = window.localStorage.getItem("sort_indextype") + ' ' + direction;}
+				 } else {window.localStorage.setItem("sort_indextype", sort_type)+ ' ' + direction;}
 		
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
@@ -287,7 +289,7 @@
 						selected_index = selected_index;
 				};
 
-			 var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&sortby="+sort_type+" "+direction+",title&dataitems=status,boxset,rating,videosource";	
+			 var jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&dataitems=status,boxset,rating,videosource&sortby="+sort_type;	
 					if (window.localStorage.getItem("yearselected") == 'true' && window.localStorage.getItem("selection")) 
 								{
 									if (resolution_method != 'all')
@@ -314,7 +316,7 @@
 										jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("search_index") + "&field=title&mode="+index_method;
 										window.localStorage.setItem("search_index", "");	
 									} else { 
-											if (sort_type == 'title') 
+											if (window.localStorage.getItem("sort_indextype") == 'title') 
 												{selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('title_label'); }
 												else {selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('year_label');}
 											if (direction == 'ASC') 
@@ -324,30 +326,7 @@
 								}
 								
 				jsonUrl += "&artwork=poster&watched=" + watched_method;
-				if (newest_method != '' && newest_method != '0')
-				{
-					jsonUrl += "&include=newest-" + newest_method;
-					switch (window.localStorage.getItem("New").substr(window.localStorage.getItem("New").indexOf('-') + 1))
-					{
-						case 'file':
-						{
-						temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,window.localStorage.getItem("New").indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
-						break;
-						}
-						case 'creation':
-						{
-						temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,window.localStorage.getItem("New").indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
-						break;
-						}
-						case 'lastscan':
-						{
-						temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,window.localStorage.getItem("New").indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
-						break;
-						}
-						
-					}
-					selected_index = selected_index + temp_new_string;
-				}
+				
 				
 				var temp_style = "1.4vw"
 					

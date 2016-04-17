@@ -103,7 +103,7 @@
 										} 
 								outputperson_photo += temp_photo_return;
 								} else {
-										outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+										outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"');javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
 									}
 									// add the role at the bottom 
 								if (totalperson_photo[i].role) {

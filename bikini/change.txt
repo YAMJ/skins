@@ -1,4 +1,17 @@
 change.txt
+V2.1.0
+- fix 'new' reset done when calling index research with series
+- fix cursor_position ()
+- fix detail_display ()
+- fix long display with more 1000 video 
+- adjust to display header first 
+- add index_list
+- fix several minor typo in template.js
+- add wall or list selector
+- add media info for series season and episode 
+- add display media info for each episode 
+- add subtitle image for each episode
+- add split episode selector for each episode type
 V2.0.9
 - fix certification for foreign country
 - fix webdl videosource

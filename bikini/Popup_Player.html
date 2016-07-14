@@ -10,7 +10,6 @@
 
 	function direct_play () 
 		{
-		//	window.location.hash = !!window.MSInputMethodContext;
 			movie_to_play = localStorage.getItem("ToPlay");
 			$('.test_video').attr('src', movie_to_play);
 			console.log("Popup_Player: " +movie_to_play );
@@ -24,11 +23,8 @@
         // you can declare more arguments for more flexibility
         ) 
 		{
-		//	window.location.hash = !!window.MSInputMethodContext;
 			movie_to_play = localStorage.getItem("ToPlay");
 			var holder = document.getElementById(holderId);	
-		//	console.log("Popup_Player: " +movie_to_play + "browser: "+window.location.hash);
-		//	if(window.location.hash == "#true") {
 		// Internet Explorer 11
 			if(IE_browser()) {
 		//		if(true) {           // just for test
@@ -97,10 +93,8 @@
 </script>
 </head>
 <body onload="generateWindowsMediaPlayer('wmpHolder', 480, 640, 1); fullscreen ();">
-
-<div id='wmpHolder'></div> 
-<!--<body onload="direct_play()">
-<video class='test_video' src="video.mkv" autoplay controls></video>  -->
-
+	<div id='wmpHolder'></div> 
+<!--<body onload="direct_play()">  just for test
+<video class='test_video' src="video.mkv" autoplay controls type="video/x-matroska"></video>  -->
 </body>
 </html>

@@ -78,11 +78,9 @@
 						}
 			init_navdataframe ();			
 			jsonUrl += "&artwork=poster";
-			jsonUrl += "&artwork=poster&watched=" + watched_method;
-				if (newest_method != '' && newest_method != '0')
-				{
-					jsonUrl += "&include=newest-" + newest_method;
-				}
+			jsonUrl += "&watched=" + watched_method;
+		//		if (newest_method != '' && newest_method != '0')
+		//		{jsonUrl += "&include=newest-" + newest_method;}
 				
             console.log("NavData URL: " + jsonUrl);
             var jsondata = null;

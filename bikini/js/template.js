@@ -48,7 +48,31 @@
 					{		
 						console.log("display_block_Id: "+Id_to_display);
 						document.getElementById(Id_to_display).style.display="block";
-					}	
+					}
+	// display block the parent Id selected 
+		function display_parent_block_Id(Id_to_display)
+					{		
+						console.log("display_parent_block_Id: "+Id_to_display);
+						parent.document.getElementById(Id_to_display).style.display="block";
+					}
+	// display none the parent Id selected 
+		function display_parent_none_Id(Id_to_display)
+					{		
+						console.log("display_parent_none_Id: "+Id_to_display);
+						parent.document.getElementById(Id_to_display).style.display="none";
+					}
+	// display parent Id selected 
+		function display_parent_Id(Id_to_display)
+					{		
+						console.log("display_parent_Id: "+Id_to_display);
+						parent.document.getElementById(Id_to_display).style.visibility="visible";
+					}
+	// no display parent Id selected 
+		function nodisplay_parent_Id(Id_to_display)
+					{		
+						console.log("display_parent_Id: "+Id_to_display);
+						parent.document.getElementById(Id_to_display).style.visibility="hidden";
+					}						
 	// display on - off on the Id selected 
 		function toggle_display_Id(Id_to_toggle)
 					{	
@@ -93,6 +117,16 @@
 							parent.document.getElementById(Id_to_toggle).style.visibility = "visible";
 						}
 					}
+		// display none - block on the Id selected 
+		function toggle_Parent_Display_Id(Id_to_toggle)
+					{	
+						if (parent.document.getElementById(Id_to_toggle).style.display == "none")
+						{ 
+							parent.document.getElementById(Id_to_toggle).style.display = "block";
+						} else {
+							parent.document.getElementById(Id_to_toggle).style.display = "none";
+						}
+					}
 		// on - off on the class selected 
 		function toggle_class(class_to_toggle)
 					{			
@@ -112,6 +146,18 @@
 						} else {
 							$('.'+class_to_toggle).css('display', 'none');
 						}
+					}
+		// display block for the class selected 
+		function display_block_class(class_to_display)
+					{			
+						$('.'+class_to_display).css('display', 'block');
+						
+					}
+		// display block for the class selected 
+		function display_none_class(class_to_display)
+					{			
+						$('.'+class_to_display).css('display', 'none');
+						
 					}
 		// toggle the sort item to hide / show the sort feature - sort by year or title , sort ascending descending			
 		function toggle_show_sort ()
@@ -183,8 +229,8 @@
 					
 					$("#type_section").css("background", "grey");
 					$("#type_section").css("outline", "2px solid black");
-					$("#type_section").css("z-index", "10");
-					$("#type_item").css("z-index", "9");
+					$("#type_section").css("z-index", "12");
+					$("#type_item").css("z-index", "12");
 					parent.document.getElementById('my_header_menu').style.height = '240px';
 					show_type = true;
 				}
@@ -237,6 +283,35 @@
 					show_resolution = false;
 				}
 		}
+		
+		// toggle the display item to list / wall 
+		function toggle_show_display ()
+		{
+			if (!show_display)
+				{
+					$("#list").css("visibility", "visible");
+					$("#wall").css("visibility", "visible");
+					
+					$("#display_section").css("background", "grey");
+					$("#display_section").css("outline", "2px solid black");
+					$("#display_section").css("z-index", "12");
+					$("#display_item").css("z-index", "12");
+					parent.document.getElementById('my_header_menu').style.height = '240px';
+					show_display = true;
+				}
+			else
+				{
+					$("#list").css("visibility", "hidden");
+					$("#wall").css("visibility", "hidden");
+					
+					$("#display_section").css("background", "none");
+					$("#display_section").css("outline", "none");
+					parent.document.getElementById('my_header_menu').style.height = '60px';
+					show_display = false;
+				}
+		}
+		
+		
 		// display/nodisplay left menu when click on icon open/close
 		function toggle_menu_left ()
 		{
@@ -517,7 +592,9 @@
 			}
 	// open or change index page in parent windows
 		function open_parent_index(indextype, index_to_call)
-			{
+			{	
+				display_parent_none_Id('detail_display');
+				parent.document.getElementById('detail_display').style.zIndex = "0";
 				localStorage.setItem("indextype", indextype);
 				console.log("open_parent_index with type: "+ indextype +" with index: " + index_to_call + " parent windows");
 					Indexpopup = window.open(index_to_call, "_parent", "");
@@ -663,6 +740,34 @@
 			{		
 					window.localStorage.setItem("direction", direction);
 					console.log("refresh: " + url + " SortDirection: "+direction);
+					Indexpopup = window.open(url, "_parent","");
+			}
+	// change display list or wall 
+		function ChangeDisplay (display_type)
+			{		
+					
+					url = (parent.location.href.substring(parent.location.href.lastIndexOf('/') + 1));
+				//		console.log ("url: " + url + " url.lastIndexOf('.'): " + url.lastIndexOf('.'));
+					if (url.lastIndexOf('.') == -1) {url = 'index.htlm';}
+					if (display_type == '_list' && (url.lastIndexOf('_list') != -1) )
+					{
+					//	console.log ("display_type == '_list' && (url.lastIndexOf('_list') != -1)")
+						url = url;} 
+					if (display_type == '_list' && (url.lastIndexOf('_list') == -1) )
+					{
+					//	console.log ("display_type == '_list' && (url.lastIndexOf('_list') == -1)")
+					//	console.log ("url: " + url + " url.substring(0,url.lastIndexOf('.')): " + url.substring(0,url.lastIndexOf('.')));
+						url = url.substring(0,url.lastIndexOf('.')) + display_type + '.html';}	
+					if (display_type == '' && (url.lastIndexOf('_list') == -1) )
+					{
+					//	console.log ("display_type == '' && (url.lastIndexOf('_list') == -1)")
+						url = url;} 	
+					if (display_type == '' && (url.lastIndexOf('_list') != -1) )
+					{
+					//	console.log ("display_type == '' && (url.lastIndexOf('_list') != -1) ")
+						url = url.substring(0,url.lastIndexOf('_list')) + '.html';}	
+			
+					console.log("refresh with ChangeDisplay: " + display_type + " and call url:" + url);
 					Indexpopup = window.open(url, "_parent","");
 			}
 	// change index page 
@@ -1284,11 +1389,13 @@
 	
 	function direct_info (videoType,id ) 
 		{
-			window.localStorage.setItem("indextype", videoType);
+			// window.localStorage.setItem("indextype", videoType);
+			window.localStorage.setItem("single_indextype", videoType);
             window.localStorage.setItem("id", id);
             console.log("direct_info: " + videoType + "-" + id);	
 			parent.frames['detail_frame'].location.href='detail_frame.html';
-			display_Id('detail_display');
+			display_parent_block_Id('detail_display');
+			display_parent_Id('detail_display')
           
         }
 		
@@ -1443,9 +1550,10 @@
 		}
 		
 	// this function is called when the episode is selected , start playing needs to click on the play movie icon
-	function episode_to_play(basefilename)
+	function episode_to_play(basefilename, episode_rank)
 			{
-			console.log("episode_to_play :"+PlayerValue+" basefilename=" +decodeURIComponent(basefilename)); 
+			localStorage.setItem('episode', episode_rank);
+			console.log("episode_to_play :"+PlayerValue+" basefilename=" +decodeURIComponent(basefilename) + " episode: " + episode_rank); 
 			if (!source_path[0]) {get_player_();}
 			for(var j = 0; j < (nbre_translate_path+1); j++){
 				if (decodeURIComponent(basefilename).substring(0,source_path[j].length) == source_path[j])
@@ -1484,19 +1592,17 @@
 						$.get(UrlPlay);	
 					break; 
 					};
-		
-		
-		
-		
-		
 					}
 				}
 				console.log("episode_to_play:" +CurrentUrlPlay);
 			}
 			
-	function preset_episode_to_play(basefilename)
+	function preset_episode_to_play(basefilename, episode_rank)
 			{
-			console.log("preset_episode_to_play :"+PlayerValue+" basefilename=" +decodeURIComponent(basefilename)); 
+			
+			localStorage.setItem('episode', episode_rank);
+			console.log("preset_episode_to_play :"+PlayerValue+" basefilename=" +decodeURIComponent(basefilename)+ " episode: " + episode_rank); 
+			
 			if (!source_path[0]) {get_player_();}
 			for(var j = 0; j < (nbre_translate_path+1); j++){
 				if (decodeURIComponent(basefilename).substring(0,source_path[j].length) == source_path[j])
@@ -1537,7 +1643,6 @@
 						// $.get(UrlPlay);	
 					break; 
 					};
-
 					}
 				}
 			}
@@ -1589,11 +1694,12 @@
 		// if at the top of the screen just stay fixed, position the middle of the frame at cursor height position 
 		function cursor_position () {
 		if (window.localStorage.getItem("Paging") != 'true') { 	
-			$(this).mousemove(function(e){
-				if (e.pageY > 850 ) {
-						$('#detail_display').css('top', e.pageY - 250);
-					}
-			});
+		//	$(this).mousemove(function(e){
+		//		if (e.pageY > 850 ) {
+		//				$('#detail_display').css('top', e.pageY - 250);
+		//			}
+			$('#detail_display').css('top', 100);
+		//	});
 			}
 		}
 	// open the general system yamj3 page 	

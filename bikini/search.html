@@ -31,6 +31,8 @@
 		var Indexpopup = "";
 		var LangValue = "en";
 		var StyleValue = "frame";
+		var list_ = false;
+		if (parent.location.href.lastIndexOf('_list') != -1) {list_ = true;}
 		// set a default  if 1rst time and set to the type previously selected if available 	
 		var index_type = "movie,series";
 			if (window.localStorage.getItem("indextype"))
@@ -40,7 +42,7 @@
 			if (window.localStorage.getItem("direction"))
 				{direction_temp = window.localStorage.getItem("direction");}
 				else {window.localStorage.setItem("direction", direction_temp);}			
-		var method_selected	= 'MOVIE';
+		var method_selected	= 'MOVIE,SERIES';
 		var ribbon_display = 'PAGE';
 		var newest_asked = false; 
 		var newest_type = "";
@@ -71,6 +73,7 @@
 				}
 			window.localStorage.setItem('watched', watched_value);
 			window.localStorage.setItem('resolution', resolution_value);
+			
 			switch (method_selected)
 				{
 					case 'ALL':
@@ -78,6 +81,14 @@
 					case 'SERIES':
 					case 'SEASON':
 					case 'MOVIE,SERIES':
+					if (list_) 
+						{
+							localStorage.setItem("selection", search);
+							localStorage.setItem("indextype", method_selected.toLowerCase());
+							close_search ();
+							indexpopup = window.open("index_list.html", "_parent","");
+						}
+					else {
 						localStorage.setItem("selection", search);
 						localStorage.setItem("indextype", method_selected.toLowerCase());
 						if (method_selected.toLowerCase() == 'all') {localStorage.setItem("indextype", "movie, series");}
@@ -98,8 +109,9 @@
 									parent.document.getElementById('movie_frame').style.display="block";
 									parent.document.getElementById('movie_display').style.visibility="visible";	
 									close_search ();
-								break;
 							}
+						break;
+						}
 						break;
 					case 'GENRE':
 						call_genreindex('all', 'YAMJv3 Navigation genre index');
@@ -113,6 +125,7 @@
 						break;
 
 				};
+			
 				
 		
 		}
@@ -162,7 +175,10 @@
 			}
 		function init_search ()
 		{
-			if (StyleValue == 'frame') {parent.document.getElementById('target_display').style.zIndex="11";	}
+			if (StyleValue == 'frame') {parent.document.getElementById('target_display').style.zIndex="12";	}
+			if (direction_temp == "ASC")
+				{$("#FormAsc").attr('checked', 'checked');} else {$("#FormDesc").attr('checked','checked');} 
+
 		}
   //************************ LANGUAGE LOCAL SETTING *********************************************
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 

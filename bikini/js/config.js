@@ -117,8 +117,14 @@
 			}
 		function adjust_poster_setting(Row_) {
 				if (window.localStorage.getItem("overlay") == 'true')
-					{$('.overlays').css('display', 'block');}
-					else {$('.overlays').css('display', 'none');}
+					{
+						$('.overlays').css('display', 'block');
+						$('.overlays2').css('display', 'block');
+					}
+					else {
+							$('.overlays').css('display', 'none');
+							$('.overlays2').css('display', 'none');
+						}
 					
 				if (parseInt(Row_, 10) < 6  ) {
 					switch (Row_)
@@ -135,6 +141,7 @@
 							$('.poster').css('width', '93px');
 							$('.title').css('font-size', '0.4em');
 							$('.title').css('line-height', '30%');
+							$('.title').css('width', '100%');
 							$('.rating').css('left', '-3.2vw');
 							$('.rating').css('top', '-19.3vw');
 							$('.rating').css('height', '2.4vw');
@@ -142,6 +149,24 @@
 							$('.boxset').css('left', '3.5vw');
 							$('.boxset').css('top', '-19vw');
 							$('.boxset').css('width', '2vw');
+							
+							$('.row2').css('padding', '2px 0px 0px 3px');
+							$('.block2').css('height', '136px');
+							$('.block2').css('width', '94px');
+							$('.block2').css('margin', '0px');
+							$('.block2').css('padding', '0px');
+							$('.poster2').css('height', '135px');
+							$('.poster2').css('width', '93px');
+							$('.title2').css('font-size', '0.4em');
+							$('.title2').css('line-height', '30%');
+							$('.title2').css('width', '100%');
+							$('.rating2').css('left', '-3.2vw');
+							$('.rating2').css('top', '-19.3vw');
+							$('.rating2').css('height', '2.4vw');
+							$('.rating2').css('width', '0.5vw');
+							$('.boxset2').css('left', '3.5vw');
+							$('.boxset2').css('top', '-19vw');
+							$('.boxset2').css('width', '2vw');
 							break;
 						//1 row , 6 columns
 						case 1:
@@ -169,6 +194,7 @@
 							$('.title').css('top', '-4.7vw');
 					//		$('.title').css('width', '90%');
 							$('.title').css('height', '19%');
+							$('.title').css('width', '100%');
 							$('.infobutton').css('height', '11%');
 							$('.infobutton').css('width', '19%');
 							$('.infobutton').css('top', '-5.6vw');
@@ -202,6 +228,50 @@
 							$('.not_done').css('top', '-36.8vw');
 							$('.not_done').css('width', '50%');
 							$('.overlays').css('height', '108%');
+				
+							$('.row2').css('padding', '2px 0px 0px 25px');
+							$('.block2').css('height', '39.1vw');
+							$('.block2').css('width', '21.7vw');
+							$('.block2').css('margin', '10px');
+							$('.poster2').css('height', '81%');
+							$('.title2').css('font-size', '2vw');
+							$('.title2').css('line-height', '130%');
+							$('.title2').css('top', '-4.7vw');
+							$('.title2').css('height', '19%');
+							$('.title2').css('width', '100%');
+							$('.infobutton2').css('height', '11%');
+							$('.infobutton2').css('width', '19%');
+							$('.infobutton2').css('top', '-5.6vw');
+							$('.infobutton2').css('left', '-3%');
+							$('.playbutton2').css('height', '11%');
+							$('.playbutton2').css('width', '23%');
+							$('.playbutton2').css('top', '-6vw');
+							$('.playbutton2').css('left', '-10%');
+							$('.watched_small2').css('height', '9.5%');
+							$('.watched_small2').css('width', '16%');
+							$('.watched_small2').css('top', '-6vw');
+							$('.watched_small2').css('left', '9%');
+							$('.watched2').css('top', '-4.5vw');
+							$('.watched2').css('left', '-2vw');
+							$('.watched2').css('width', '16%');
+							$('.rescan2').css('top', '-4.5vw');
+							$('.rescan2').css('left', '2vw');
+							$('.rescan2').css('width', '16%');
+							$('.member2').css('font-size', '1.7vw');
+							$('.title_boxset2').css('top', '-3.5vw');
+							$('.title_boxset2').css('left', '0vw');
+							$('.title_boxset2').css('font-size', '1.8vw');
+							$('.rating2').css('left', '0.6vw');
+							$('.rating2').css('top', '-43.3vw');
+							$('.rating2').css('height', '7vw');
+							$('.rating2').css('width', '1.54vw');
+							$('.boxset2').css('left', '7.6vw');
+							$('.boxset2').css('top', '-43.5vw');
+							$('.boxset2').css('width', '5vw');
+							$('.not_done2').css('left', '5.5vw');
+							$('.not_done2').css('top', '-36.8vw');
+							$('.not_done2').css('width', '50%');
+							$('.overlays2').css('height', '108%');
 							break;
 						//2 rows , 6 columns
 						case 2:
@@ -220,6 +290,7 @@
 							$('.title').css('font-size', '1vw');
 							$('.title').css('top', '-3vw');
 							$('.title').css('height', '14%');
+							$('.title').css('width', '100%');
 						//	$('.infobutton').css('height', '35px');
 						//	$('.infobutton').css('width', '35px');
 							$('.infobutton').css('top', '-3.4vw');
@@ -251,6 +322,36 @@
 							$('.not_done').css('width', '50%');
 							$('.overlays').css('top', '-134%');
 							
+							$('.row2').css('padding', '2px 0px 0px 5px');
+							$('.block2').css('height', '25.3vw');
+							$('.block2').css('width', '14.3vw');
+							$('.block2').css('margin', '2px 10px 2px 10px');
+							$('.title2').css('font-size', '1vw');
+							$('.title2').css('top', '-3vw');
+							$('.title2').css('height', '14%');
+							$('.title2').css('width', '100%');
+							$('.infobutton2').css('top', '-3.4vw');
+							$('.playbutton2').css('top', '-3.5vw');
+							$('.watched_small2').css('top', '-3.7vw');
+							$('.watched2').css('top', '-3vw');
+							$('.watched2').css('left', '-2vw');
+							$('.rescan2').css('top', '-3vw');
+							$('.rescan2').css('left', '2vw');
+							$('.member2').css('font-size', '1vw');
+							$('.title_boxset2').css('top', '-2.5vw');
+							$('.title_boxset2').css('left', '0vw');
+							$('.title_boxset2').css('font-size', '1.1vw');
+							$('.rating2').css('left', '0.3vw');
+							$('.rating2').css('top', '-27.8vw');
+							$('.rating2').css('height', '4.4vw');
+							$('.rating2').css('width', '1vw');
+							$('.boxset2').css('left', '5vw');
+							$('.boxset2').css('top', '-28vw');
+							$('.boxset2').css('width', '3vw');
+							$('.not_done2').css('left', '3.7vw');
+							$('.not_done2').css('top', '-25vw');
+							$('.not_done2').css('width', '50%');
+							$('.overlays2').css('top', '-134%');
 							break;
 						//3 rows, 9 columns 
 						case 3:
@@ -304,6 +405,52 @@
 							$('.not_done').css('left', '2.6vw');
 							$('.not_done').css('top', '-34vw');
 							$('.not_done').css('width', '50%');
+							
+							$('.row2').css('padding', '2px 0px 0px 30px');
+							$('.overlay2').css('display', 'none');
+							$('.block2').css('height', '16.8vw');
+							$('.block2').css('width', '9.7vw');
+							$('.block2').css('margin', '1px 2px 1px 2px');
+							$('.block2').css('padding', '0px');
+							$('.poster2').css('height', '85%');
+							$('.poster2').css('width', '100%');
+							$('.poster2').css('left', '0%');
+							$('.poster2').css('top', '0%');
+							$('.title2').css('font-size', '0.8vw');
+							$('.title2').css('top', '-2.3vw');
+							$('.title2').css('width', '100%');
+							$('.title2').css('height', '2.6vw');
+							$('.title2').css('left', '0%');
+							$('.infobutton2').css('height', '11%');
+							$('.infobutton2').css('width', '19%');
+							$('.infobutton2').css('top', '-2.8vw');
+							$('.infobutton2').css('left', '-3%');
+							$('.playbutton2').css('height', '11%');
+							$('.playbutton2').css('width', '21%');
+							$('.playbutton2').css('top', '-2.9vw');
+							$('.playbutton2').css('left', '-13%');
+							$('.watched_small2').css('height', '9.5%');
+							$('.watched_small2').css('width', '16%');
+							$('.watched_small2').css('top', '-3vw');
+							$('.watched_small2').css('left', '10%');
+							$('.watched2').css('top', '-3vw');
+							$('.watched2').css('left', '-1vw');
+							$('.rescan2').css('top', '-3vw');
+							$('.rescan2').css('left', '1vw');
+							$('.title_boxset2').css('top', '-2.8vw');
+							$('.title_boxset2').css('left', '0vw');
+							$('.watch_label2').css('top', '-17%');
+							$('.watch_label2').css('left', '38%');
+							$('.rating2').css('left', '0.2vw');
+							$('.rating2').css('top', '-18.8vw');
+							$('.rating2').css('height', '2.4vw');
+							$('.rating2').css('width', '0.5vw');
+							$('.boxset2').css('left', '3.5vw');
+							$('.boxset2').css('top', '-19vw');
+							$('.boxset2').css('width', '2vw');
+							$('.not_done2').css('left', '2.6vw');
+							$('.not_done2').css('top', '-34vw');
+							$('.not_done2').css('width', '50%');
 							break;
 						//4 rows, 11 columns 
 						case 4:
@@ -358,6 +505,44 @@
 							$('.not_done').css('width', '50%');
 							$('.overlays').css('height', '108%');
 							$('.overlays').css('top', '-145%');
+							
+							$('.row2').css('padding', '1px 0px 0px 10px');
+							$('.block2').css('height', '12.5vw');
+							$('.block2').css('width', '7.2vw');
+							$('.block2').css('margin', '1px 3px 1px 3px');
+							$('.title2').css('font-size', '0.7vw');
+							$('.title2').css('top', '-1.8vw');
+							$('.title2').css('width', '100%');
+							$('.title2').css('height', '14%');
+							$('.infobutton2').css('top', '-1.9vw');
+							$('.playbutton2').css('top', '-2vw');
+							$('.watched_small2').css('top', '-2.1vw');
+							$('.watched_small2').css('left', '7%');
+							$('.watched2').css('top', '-2vw');
+							$('.watched2').css('left', '-1vw');
+							$('.watched2').css('width', '22%');
+							$('.rescan2').css('top', '-2vw');
+							$('.rescan2').css('left', '1vw');
+							$('.rescan2').css('width', '22%');
+							$('.title_boxset2').css('top', '-2.25vw');
+							$('.title_boxset2').css('left', '0vw');
+							$('.title_boxset2').css('font-size', '0.8vw');
+							$('.title_boxset2').css('font-weight', 'normal');
+							$('.member2').css('font-size', '0.8vw');
+							$('.member2').css('bottom', '3.1vw');
+							$('.member2').css('font-weight', 'normal');
+							$('.rating2').css('left', '0.1vw');
+							$('.rating2').css('top', '-13.7vw');
+							$('.rating2').css('height', '2.4vw');
+							$('.rating2').css('width', '0.5vw');
+							$('.boxset2').css('left', '2.2vw');
+							$('.boxset2').css('top', '-14.2vw');
+							$('.boxset2').css('width', '2vw');
+							$('.not_done2').css('left', '1.8vw');
+							$('.not_done2').css('top', '-12.5vw');
+							$('.not_done2').css('width', '50%');
+							$('.overlays2').css('height', '108%');
+							$('.overlays2').css('top', '-145%');
 							break;	
 						//5 rows, 12 columns
 						case 5:
@@ -401,6 +586,38 @@
 							$('.not_done').css('top', '-11.7vw');
 							$('.not_done').css('width', '50%');
 							$('.overlays').css('top', '-165%');
+							
+							$('.row2').css('padding', '2px 0px 0px 10px');
+							$('.block2').css('height', '10vw');
+							$('.block2').css('width', '6.8vw');
+							$('.block2').css('margin', '1px');
+							$('.block2').css('padding', '0px');
+							$('.poster2').css('height', '100%');
+							$('.poster2').css('width', '100%');
+							$('.title2').css('font-size', '0.4em');
+							$('.title2').css('top', '-114%');
+							$('.infobutton2').css('top', '-1.9vw');
+							$('.playbutton2').css('top', '-2vw');
+							$('.watched_small2').css('top', '-2.1vw');
+							$('.watched2').css('top', '-2vw');
+							$('.watched2').css('left', '-1vw');
+							$('.watched2').css('width', '22%');
+							$('.rescan2').css('top', '-2vw');
+							$('.rescan2').css('left', '1vw');
+							$('.rescan2').css('width', '22%');
+							$('.title_boxset2').css('display', 'none');									
+							$('.member2').css('display', 'none');
+							$('.rating2').css('left', '0.1vw');
+							$('.rating2').css('top', '-12.4vw');
+							$('.rating2').css('height', '2.4vw');
+							$('.rating2').css('width', '0.5vw');
+							$('.boxset2').css('left', '2vw');
+							$('.boxset2').css('top', '-12.8vw');
+							$('.boxset2').css('width', '2vw');
+							$('.not_done2').css('left', '1.7vw');
+							$('.not_done2').css('top', '-11.7vw');
+							$('.not_done2').css('width', '50%');
+							$('.overlays2').css('top', '-165%');
 							break;
 					
 						}

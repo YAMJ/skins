@@ -7,7 +7,9 @@ function slideshowBanner() {
 	// and as height / width are return with px convert in vw (for responsive design) 
  //	var ctrHeightBanner = Math.floor(parseInt($('#slideshowBanner').css('height')) / 1450 * 100);
  //  var ctrWidthBanner = Math.floor(parseInt($('#slideshowBanner').css('width')) / 1450 * 100);
+	
 	var ctrWidthBanner = 18;
+	if (parent.location.href.lastIndexOf('_list') != -1) {ctrWidthBanner = 30}
     // get number of images and set width of imgRollBanner
     var imgTotalBanner = $('div#imgRollBanner > img').size();
     var imgRollBannerWidthBanner = imgTotalBanner * parseInt(ctrWidthBanner);

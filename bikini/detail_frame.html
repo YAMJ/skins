@@ -21,8 +21,18 @@
         <script type="text/javascript">
 // ******************************* ALL GENERAL VARIABLE **********************************************
 			// get the id and the type asked previously, data was stored from index, detail or  index_list pages 
-            var current_id = localStorage.getItem("id");
-            var indextype = localStorage.getItem("indextype");
+            var list_ = false; 
+			if (parent.location.href.lastIndexOf('_list') != -1) {list_ = true;}
+			var current_id = localStorage.getItem("id");
+            var indextype = "movie";
+						if (window.localStorage.getItem("single_indextype"))
+							{
+							indextype = window.localStorage.getItem("single_indextype");
+							console.log ('detail_frame indextype: ' + indextype);
+								if (indextype.toLowerCase() == 'movie,series')
+								{indextype = 'movie';}
+							}
+						else {window.localStorage.setItem("single_indextype", indextype);}
 			var season = localStorage.getItem("season");
 			var series_id = localStorage.getItem("SeriesId");
 			var dataindex = localStorage.getItem("index-nav");
@@ -442,6 +452,7 @@
 		function goto_SeasonId(indextype, SeasonId)
 			{
 				localStorage.setItem("indextype", indextype);
+				localStorage.setItem("single_indextype", indextype);
 				localStorage.setItem("id", SeasonId);
 				console.log("goto_SeasonId Storing value: " + indextype + "-" + SeasonId);
 				window.location.href="detail_frame.html";
@@ -487,14 +498,18 @@
 	// display the page with all the info 		
 		function display_all ()
 			{
-				parent.document.getElementById('detail_display').style.zIndex = '11';
-				parent.document.getElementById('detail_display').style.top = '5vw';
+				
+					
+				parent.document.getElementById('detail_display').style.zIndex = '9';
+			//	parent.document.getElementById('detail_display').style.top = '5vw';
 				$('div#slideshowCtr').css('visibility', 'visible');
 				$('div#slideshowCtr').css('width', '16vw');
 			//	$('div#slideshowCtr').css('height', '18vw');
 				$('div#slideshowCtr').css('left', '5px');
 				$('div#slideshowCtr').css('bottom', '2%');
-				$('div#slideshowFanart').css('opacity', '0.7');
+				if (list_)
+				{$('div#slideshowFanart').css('opacity', '1.0');}
+				else {$('div#slideshowFanart').css('opacity', '0.7');}
 				$('div#slideshowFanart').css('width', '100vw');
 			//	$('div#slideshowFanart').css('height', '542px');
 				$('div#slideshowFanart').css('top', '4.5vw');
@@ -508,14 +523,32 @@
 				switch (indextype.toLowerCase())
 					{
 					case 'season':
-						$('.moviedetail_frame').css('top', '12%');
+					if (list_ )
+							{
+								$('div#slideshowBanner').css('width', '30vw');
+								$('div#slideshowBanner').css('height', '5.5vw');
+								$('div#slideshowBanner').css('top', '70.4vh');
+								$('div#slideshowBanner').css('left', '38vw');
+								$('.moviedetail_frame').css('top', '45%');
+								$('.moviedetail_frame').css('width', '100%');
+								$('.seasontable_frame').css('bottom', '0px');
+								$('.episode_plot_frame').css('top', '41%');
+								$('.episode_plot_frame').css('bottom', '100%');
+								$('.episode_plot_frame').css('width', '100%');
+							}
+							else {
+							
+								$('div#slideshowBanner').css('top', '8vh');
+								$('div#slideshowBanner').css('left', '60vw');
+								$('div#slideshowBanner').css('width', '18vw');
+								$('div#slideshowBanner').css('height', '3vw');
+								$('.moviedetail_frame').css('width', '99.6%');
+								$('.moviedetail_frame').css('top', '12%');
+							}
+						
 						$('.moviedetail_frame').css('left', '0px');
-						$('.moviedetail_frame').css('width', '99.6%');
+						
 						$('div#slideshowBanner').css('visibility', 'visible');
-						$('div#slideshowBanner').css('left', '60vw');
-						$('div#slideshowBanner').css('top', '8vh');
-						$('div#slideshowBanner').css('width', '18vw');
-						$('div#slideshowBanner').css('height', '3vw');
 						$('.episode_detail').css('visibility', 'visible');
 						$('.play_frame').mouseover(function() {
 							$('.play_frame').attr('src', './pictures/tvshow-on.png');
@@ -538,13 +571,32 @@
 						break;
 					case 'series':
 						$('.moviedetail_frame').css('top', '12%');
-						$('.moviedetail_frame').css('left', '0px');
-						$('.moviedetail_frame').css('width', '99.6%');
+						console.log('list_: ' + list_)
+						if (list_ )
+							{
+								$('div#slideshowBanner').css('width', '30vw');
+								$('div#slideshowBanner').css('height', '5.5vw');
+								$('div#slideshowBanner').css('top', '70.4vh');
+								$('div#slideshowBanner').css('left', '38vw');
+								$('.moviedetail_frame').css('top', '45%');
+								$('.moviedetail_frame').css('left', '0px');
+								$('.seasontable_frame').css('bottom', '0px');
+							}
+						
+						
+						else {
+							
+								$('div#slideshowBanner').css('top', '8vh');
+								$('div#slideshowBanner').css('left', '60vw');
+								$('div#slideshowBanner').css('width', '18vw');
+								$('div#slideshowBanner').css('height', '3vw');
+								$('.moviedetail_frame').css('width', '99.6%');
+							}
+						
 						$('div#slideshowBanner').css('visibility', 'visible');
-						$('div#slideshowBanner').css('left', '60vw');
-						$('div#slideshowBanner').css('top', '8vh');
-						$('div#slideshowBanner').css('width', '18vw');
-						$('div#slideshowBanner').css('height', '3vw');
+						$('.moviedetail_frame').css('width', '99.6%');
+						
+						
 						$('.seasontable_frame').css('visibility', 'visible');
 						$('.play_frame').mouseover(function() {
 							$('.play_frame').attr('src', './pictures/tvshow-on.png');
@@ -600,7 +652,9 @@
 	function close_frame ()
 			{
 				console.log("close_frame:  style:"+StyleValue);								
-				parent.document.getElementById('detail_display').style.visibility="hidden";
+			//	parent.document.getElementById('detail_display').style.display="none";
+				display_parent_none_Id('detail_display');
+				nodisplay_parent_Id('detail_display');
 				parent.document.getElementById('detail_display').style.zIndex = "0";
 			} // end close_frame
       </script>

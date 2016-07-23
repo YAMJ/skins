@@ -145,10 +145,10 @@ input:-moz-placeholder { color:black; }
 						//		"td.Id"				: "list.id",
 								"td.Key" 		: function(arg)
 									{
-						//			 console.log("Config2 arg.item.key:" + arg.item.key.substr(14))  // because bikini_skin_x_ = 14 char
+						
+						// because bikini_skin_x_ = 14 char
 									switch (arg.item.key.substr(14))
 										{
-											
 											case 'player':
 											{
 												return "<img title='" + window.localStorage.getItem("player_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
@@ -201,6 +201,12 @@ input:-moz-placeholder { color:black; }
 											{
 												return "<img title='" + window.localStorage.getItem("overlay_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
 												+ window.localStorage.getItem("overlay_label");
+												break;
+											}
+											case 'display_type':
+											{
+												return "<img title='" + window.localStorage.getItem("display_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												+ window.localStorage.getItem("display_label");
 												break;
 											}
 										}
@@ -344,11 +350,18 @@ input:-moz-placeholder { color:black; }
 												else {return window.localStorage.getItem('yes_text');}
 												break;
 											}
+											case 'display_type':
+											{
+												if (arg.item.value == 'wall')
+												{return window.localStorage.getItem('wall_text');}
+												else {return window.localStorage.getItem('list_text');}
+												break;
+											}
 										}
 									},
 								"td.New"			: function(arg)
 									{
-						//			 console.log("Config2 arg.item.key:" + arg.item.key.substr(14))  // because bikini_skin_x_ = 14 char
+								// because bikini_skin_x_ = 14 char
 									switch (arg.item.key.substr(14))
 										{
 											
@@ -387,7 +400,6 @@ input:-moz-placeholder { color:black; }
 														+ "<option value='3'>3</option>"
 														+ "<option value='4'>4</option>"
 														+ "<option value='5'>5</option>"
-											//			+ "<option value='99999'>~</option>"
 														+ "</select>";
 												break;
 											}
@@ -455,7 +467,6 @@ input:-moz-placeholder { color:black; }
 													+ "<option title='" + window.localStorage.getItem("creation_comment") + "' value='creation'>" + window.localStorage.getItem("creation_label") + " (" + window.localStorage.getItem("creation_comment") + ")</option>"
 													+ "<option title='" + window.localStorage.getItem("lastscan_comment") + "' value='lastscan'>" + window.localStorage.getItem("lastscan_label") + " (" + window.localStorage.getItem("lastscan_comment") + ")</option>"
 													+ "</select> "
-											//		+ window.localStorage.getItem('select_type') + "&nbsp;&nbsp;"
 													
 												break;
 											}
@@ -468,11 +479,20 @@ input:-moz-placeholder { color:black; }
 														+ "</select>";
 												break;
 											}
+											case 'display_type':
+											{
+												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
+														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("display_comment") + "'></option>"
+														+ "<option value='_list2'>" + window.localStorage.getItem("list_text") + "</option>"
+														+ "<option value='wall'>" + window.localStorage.getItem("wall_text") + "</option>"
+														+ "</select>";
+												break;
+											}
 										}
 									}, 
 									"td.Action"			: function(arg)
 									{
-								// console.log("Config2 arg.item.key:" + arg.item.key.substr(14))  // because bikini_skin_x_ = 14 char
+								// because bikini_skin_x_ = 14 char
 										switch (arg.item.key.substr(14))
 										{
 											case 'index_row':
@@ -483,6 +503,7 @@ input:-moz-placeholder { color:black; }
 											case 'prefered_certification':
 											case 'prefered_page':
 											case 'overlay':
+											case 'display_type':
 											{
 												return "<form><input type=\"button\" value='"+ window.localStorage.getItem('update_label') + "' onclick=\"Update_SkinData('" +arg.item.key+ "', document.getElementById('formKey" +arg.item.key+ "').value)\"/></form>"
 												break;
@@ -656,6 +677,11 @@ input:-moz-placeholder { color:black; }
 							window.localStorage.setItem("overlay", target_value);
 							break; 
 						}
+					case 'display_type':
+						{ 
+							window.localStorage.setItem("display_type", target_value);
+							break; 
+						}
 					}
 			}
 
@@ -687,14 +713,8 @@ input:-moz-placeholder { color:black; }
             </div>
 
 		<div id="close_icon" title="close" onclick="window.close()"><img src="./pictures/close2.png" style="height:40px; width:40px; position:absolute; top:2px; right:10px; z-index:10000;" alt="close"/></div>
-		
- <!--       <div id="logo" style="position: relative; top: 150px;">
-            <h2>Index of Config</h2>
-        </div> -->
-		
-       
-		
-			<!-- just added to set the language value, shouldn't be displayed  -->
+				
+		<!-- just added to set the language value, shouldn't be displayed  -->
 		<div class="results" style="visibility: hidden; display:none;">
 			<table><tr><td class="Value"></td></tr></table>
 		</div>

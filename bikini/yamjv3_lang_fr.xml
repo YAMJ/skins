@@ -19,6 +19,7 @@
 	<boxsetlabel>ensemble</boxsetlabel>
 	
 	<certificationlabel>certification</certificationlabel>
+	<certificationselect>certification</certificationselect>
 	<clicktodisplaywith>click pour afficher les videos avec</clicktodisplaywith>
 	<closelabel>ferme</closelabel>
 	<closenavigationmenu>ferme le menu de navigation</closenavigationmenu>
@@ -35,6 +36,8 @@
 	<descending>descendant</descending>
 	<detailcomment>detail</detailcomment>
 	<directorlabel>directeur</directorlabel>
+	<displaylabel>affichage</displaylabel>
+	<displaycomment>affichage mur ou liste</displaycomment>
 	<downlabel>bas</downlabel>
 	<downloadtext>telecharge</downloadtext>
 	<duplicatetext>fusionner</duplicatetext>
@@ -74,6 +77,7 @@
 	<lastscancomment>date de dernière mise à jour dans yamj3</lastscancomment>
 	<lastscanlabel>dernièrement scanné</lastscanlabel>
 	<leftlabel>gauche</leftlabel>
+	<listtext>liste</listtext>
 	
 	<menulabel>menu</menulabel>
 	<movielabel>film</movielabel>
@@ -123,6 +127,7 @@
 	
 	<ratinglabel>note</ratinglabel>
 	<ratingindex>note</ratingindex>
+	<ratingselect>note</ratingselect>
 	<redlabel>rouge</redlabel>
 	<remotelabel>telecommande</remotelabel>
 	<removetext>supprimer</removetext>
@@ -171,9 +176,11 @@
 	
 	<valuelabel>valeur</valuelabel>
 	<videolabel>video</videolabel>
+	<videosourceselect>videosource</videosourceselect>
 	<volumedownlabel>vol-</volumedownlabel>	
 	<volumeuplabel>vol+</volumeuplabel>
 	
+	<walltext>mur</walltext>
 	<watchedselect>vu</watchedselect>
 	<writerlabel>scenariste</writerlabel>
 	

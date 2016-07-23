@@ -56,7 +56,10 @@
 				else {window.localStorage.setItem("direction", direction);}		
 		// init search to blank 
 		var search_selection = "";
-		
+		window.localStorage.setItem("categorytype", "person");
+		var _index_url = "wall"
+			if (window.localStorage.getItem('display_type') == "wall")
+			{_index_url = "index.html";} else {_index_url = "index_list2.html";}
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
         // img.Poster@src replaces the "src" attribute of the img.Poster
@@ -89,31 +92,10 @@
 						},
                     "img.person_photo@src": function(arg) {
                         // Check to see if there are posters
-					//	located_id = 0;  // set the located_id to the lowest value
+
 						var temp_return = "pictures/dummy_photo.jpg";
                         if (arg.item.artwork) {
-					
 
-					// old sequence
-
-					//	for (i = 0; i < arg.item.artwork.length; i++) 
-					//		{
-								// Get the last generated poster from the list
-					//			photo = arg.item.artwork[i];
-								// if any problem within poster generation return dummy 
-					//			if (photo.generatedId === 0) {temp_return = "pictures/dummy_photo.jpg";} 
-					//			else {
-								//		console.log ("arg.item.artwork.length:" + arg.item.artwork.length + " i:"+ i + " photo.id:" + photo.id + " name:" + arg.item.firstName + "." + arg.item.lastName + " located_id:" + located_id + " photo.locatedId:" + photo.locatedId);
-								// compare if the locatedId is greater , assume when the case  it's newser
-					//			if (parseInt(photo.locatedId, 10) > parseInt(located_id, 10)) 
-					//					{
-					//						located_id = photo.locatedId;  // store the new locatedId
-					//						temp_return = arg.context.basePhotoUrl + photo.filename;  //keep this photo
-					//					} else {}
-					//				} 
-					//		}  // end loop 	
-					
-					
 					//  assume the new artworksortdir return the last photo stored 
 							temp_return =  arg.context.basePhotoUrl + arg.item.artwork[0].filename;
 						} else {} 
@@ -230,7 +212,7 @@
 			// as we change page reset the count item for the search item to initial value 
 				localStorage.setItem("nextcurrent_count", (-1));
 				console.log("ChangeIndex_special: " + indextype);
-				window.location.href="index.html";
+				window.location.href=_index_url;
 		}
 
 		function store_count (returncount, totalcount)
@@ -301,16 +283,14 @@
 		}
 		function check_duplicated (current_id, current_name) 
 		{
-			if (localStorage.getItem("name_to_compare")) {
+			if (localStorage.getItem("name_to_compare")) 
+			{
 				if (localStorage.getItem("name_to_compare") == current_name) 
 					{
 						console.log ("duplicated name found for name: " + current_name + " id:" + current_id + " with stored name:" + localStorage.getItem('name_to_compare') + " stored id:" + localStorage.getItem('id_to_compare'));
-		//				localStorage.setItem("duplicate_id_setted", true);
-		//				input_duplicated_person (current_id, current_name);
 					}
-		//		else {localStorage.setItem("duplicate_id_setted", false);}
 			} 
-		//		else {localStorage.setItem("duplicate_id_setted", true);}
+
 			
 			localStorage.setItem("name_to_compare", current_name);
 			localStorage.setItem("id_to_compare", current_id);

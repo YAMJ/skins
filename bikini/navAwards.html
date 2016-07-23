@@ -145,10 +145,13 @@
  
 		function open_awards_index(awardsevent)
         {
-			localStorage.setItem("Awards_event", awardsevent);
-            console.log("navAwards open_awards_index Storing value: Awards event: " +awardsevent);
-			window.location.href="index_Awards.html";
-			Mypopup.focus();
+	
+			window.localStorage.setItem("categorytype", "awards");
+			localStorage.setItem("awards_name", awardsevent);
+            console.log("navAwards open_awards_index Storing value: Awards event: " +awardsevent + " display_type:" + window.localStorage.getItem ("display_type"));
+			if (window.localStorage.getItem ("display_type") == "_list2")
+			{window.location.href="index_list2.html";} else {window.location.href="index.html";}
+
 		}
 
 // *******************************to fix alt bug with chrome ***************************************************************************************

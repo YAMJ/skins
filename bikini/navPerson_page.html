@@ -37,7 +37,9 @@
 			else {localStorage.setItem("prefered_page", Prefered_PageValue);}
 		if (localStorage.getItem("indextype"))
 			{index_type = localStorage.getItem("indextype");}
-
+		var _index_url = "wall"
+			if (window.localStorage.getItem('display_type') == "wall")
+			{_index_url = "index.html";} else {_index_url = "index_list2.html";}
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
         // img.Poster@src replaces the "src" attribute of the img.Poster
@@ -118,7 +120,7 @@
 			// as we change page reset the count item for the search item to initial value 
 				localStorage.setItem("nextcurrent_count", (-1));
 				console.log("ChangeIndex_special: " + indextype);
-				window.location.href="index.html";
+				window.location.href=_index_url;
 		}
 
 

@@ -254,7 +254,6 @@
 				{
 					case 'frame':
 				
-					//	parent.document.getElementById('target_frame').style.display="none";
 						parent.document.getElementById('target_display').style.visibility="hidden";
 						parent.document.getElementById('target_display').style.height="275px";
 						parent.document.getElementById('target_frame').style.height="320px";
@@ -282,8 +281,6 @@
 			
 			function set_context_lang_value ()
 			{
-			//	document.getElementById("_year").innerHTML=window.localStorage.getItem('year_label');
-			//	document.getElementById("_title").innerHTML=window.localStorage.getItem('title_label')
 			document.getElementById("close_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('close_label').toLowerCase();
 			document.getElementById("back_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('return_label').toLowerCase();
 			document.getElementById("update_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('update_label').toLowerCase() + " " + localStorage.getItem('person_label');
@@ -311,10 +308,7 @@
 			parent.document.getElementById('target_frame').style.width="82.5vw";
 			parent.document.getElementById('target_display').style.left="8vw";
 			parent.document.getElementById('target_display').style.top="51px";
-		//	parent.frames['target_frame'].location.href='Popup_Person.html';	
-		//	parent.document.getElementById('target_frame').style.display="block";
 			parent.document.getElementById('target_display').style.visibility="visible";
-		//	window.location.href="Popup_Person.html";
 			parent.document.getElementById('target_display').style.zIndex="11";
 			$('.biography').css('max-height', '55vh');
 			$('.biography').css('height', 'auto');

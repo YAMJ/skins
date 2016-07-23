@@ -145,11 +145,13 @@
  
 		function open_studio_index(studioname, studioid)
         {
-			localStorage.setItem("Studio_name", studioname);
-			localStorage.setItem("Studio_id", studioid);
-            console.log("navStudioe open_studio_index Storing value: Studio name: " + studioname + " studio Id: "+ studioid);
-			window.location.href="index_Studio.html";
-			Mypopup.focus();
+			window.localStorage.setItem("categorytype", "studio");
+			localStorage.setItem("studio_name", studioid);
+			localStorage.setItem("studio_text", studioname);
+            console.log("navStudioe open_studio_index Storing value: Studio name: " + studioname + " studio Id: "+ studioid + " display_type:" + window.localStorage.getItem ("display_type"));
+			if (window.localStorage.getItem ("display_type") == "_list2")
+			{window.location.href="index_list2.html";} else {window.location.href="index.html";}
+
 		}
 
 // ******************************to fix alt bug with chrome *************************************************************

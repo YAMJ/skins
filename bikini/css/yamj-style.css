@@ -57,16 +57,16 @@
     border: 1px solid white;
     margin: 0px;
 	background-color: gainsboro;
-/*	height: 726px;
-	overflow-y: auto; */
-/* NOW SETTED INSIDE INDEX.html depending of the the number of ROW stored inside config */	
-/* if 12 posters per page, 2 rows 6 columns */	
     padding: 5px 5px 0px 0px; 
-/* if 27 posters per page, 3 rows 9 columns 	
-    padding: 5px 3px 0px 3px;*/
-/* if 60 posters per page, 5 rows 12 columns 	
-    padding: 5px 3px 0px 15px;	*/
-	
+}
+#container .row_list, .row2_list {
+    position: relative;
+	right: 0px;
+	display: none;
+	font-size: 2.3vw;
+	text-align: right;
+	background-color: rgba(34,34,34,0.57);
+	padding: 5px 15px 0px 15px;
 }
 #container .row_person{
 /*	border: 1px solid white; */
@@ -75,7 +75,6 @@
 	background-color: gainsboro;
     padding: 0px 0px 0px 20px;
 	overflow-y: auto;
-	
 }
 #container .row_genre,#container .row_country,#container .row_awards,#container  .row_studio,#container  .row_rating, #container  .row_boxset,#container  .row_videosource,#container  .row_certification , #container_source  .row_source_rating{
 	padding: 5px 5px 5px 0px;
@@ -115,8 +114,7 @@
     width: 96px;
     height: 136px; 
 	margin: 0px 2px 1px 1px;
-    padding: 0px 1px 0px 1px;	*/
-		
+    padding: 0px 1px 0px 1px;	*/	
 }
 
 #container .person_block {
@@ -422,7 +420,19 @@ input:-moz-placeholder { color:red; }
 	height: 35px;
 	right: 0.1%;
 	}
-	
+#full_list {
+	position: absolute;
+	right: 0px;
+	top: 58%;
+	z-index: 15;
+	}
+#my_header_menu {
+	position: absolute;
+	height: 60px;
+	width: 100%;
+	left: 0%;
+	z-index:10;	
+	}	
 #logo_index
 {
     height: 33px;
@@ -566,7 +576,50 @@ input:-moz-placeholder { color:red; }
 	 z-index: 9;
 	 clear: both; 
 }
- #infobutton span, #playbutton span, #watched_small span, #infobutton2 span, #playbutton2 span, #watched_small2 span {
+#search_function {
+	left: 0vw;
+	z-index: 10;	
+	}
+#search_function img {
+	height: 2.2vw;
+	width: 2.4vw;	
+	}
+#new_function {
+	left: 1vw;	
+	}
+#new_function img {
+	left: 0px;
+	width: 3.2vw;
+	height: 2.2vw;	
+	}
+#watched_item img {
+	height: 2.2vw;	
+	}
+#sort_item img {
+	height: 2.2vw;
+	width: 2.9vw;
+	}
+#movie_series_type img, #movie_type img, #series_type img, #season_type img {
+	height: 45px;
+	width: 45px;	
+	}
+#resolution_item img {
+	height: 2.4vw;
+	width: 3.1vw;
+	}
+#all_resolution_type img, #sd_type img, #hd_type img, #fullhd_type, #4k_type img, #8k_type img {
+	height: 20px;
+	width: 45px;	
+	}
+#display_item img {
+	height: 2.7vw;
+	width: 3.1vw;
+	}
+#list img, #wall img {
+	height: 45px;
+	width: 45px;	
+	}	
+#infobutton span, #playbutton span, #watched_small span, #infobutton2 span, #playbutton2 span, #watched_small2 span {
 	 visibility: hidden;
 	 font-size: 1.4vw;
 	 position: relative;
@@ -691,7 +744,11 @@ input:-moz-placeholder { color:red; }
 	background: grey;
 	outline:2px solid black;
 	}
-
+	
+#type_item img{
+	height: 2.4vw; 
+	width: 3.1vw;
+	}
 	
 #resolution_section {
 	position: absolute;
@@ -707,7 +764,7 @@ input:-moz-placeholder { color:red; }
 	top: 22%;
 	visibility: hidden;
 	}
-#resolution_section:hover > li #type_item img {
+#resolution_section:hover > li #resolution_item img {
 	visibility: visible;
 	background: grey;
 	outline:2px solid black;
@@ -1742,7 +1799,7 @@ ul#home_left_up {
 	}
 #remote {
 	visibility: hidden;
-	z-index: 8;
+	z-index: 12;
 	border: 2px solid #b0b0b0; 
 	position: absolute;
 	top: 50px; 
@@ -1804,7 +1861,6 @@ ul#home_left_up {
 	}*/
 #up, #down, #right, #left, #power, #home, #setup, #info, #rewind, #next_remote, #prev_remote, #fwd, #audio , #subtitle, #studio, #rating, #videosource, #volumeup, #volumedown, #mute, #menu, #return, #subtitle, #repeat, #pause, #stop, #play {
 	width: 100px;
-
 	font-size:12px;
 	text-align:center;
 	padding:0px; 
@@ -2675,19 +2731,28 @@ ul#detail_home_left img, ul#detail_home_right img
 	text-align: center;
 	font-size:1.1em;
 	}
+.title_list, .title2_list {
+	display: inline;
+	position: relative;
+	top: -5px;
+	border-radius: 6px;
+	}
 .title_list a:focus, .title_list a:hover,.title2_list a:focus, .title2_list a:hover {
 	font-family: Arial, Helvetica, sans-serif;
 	color:red;
 	font-size:1.2vw;
 	font-weight: bold;
-	padding: 4px;
+	padding: 4px 6px 4px 6px;
 	text-decoration: none;
+	border-radius: 6px;
 	}
 .title_list a:not(:focus),.title2_list a:not(:focus) {
 	font-family: Arial, Helvetica, sans-serif;
 	color:white;
 	font-size:1.2vw;
+	padding: 0px 6px 0px 6px;
 	text-decoration: none;
+	border-radius: 6px;
 	}
 .alternate_color tr:nth-child(even) {background-color: #CCC}
 .alternate_color tr:nth-child(odd) {background-color: #FFF}
@@ -2860,6 +2925,50 @@ text {
 	display: inline;
 	border-right: 3px solid gray;
 	z-index:1;
+	}
+.rating_list, .rating2_list {
+	display: inline;
+	position: relative;
+	float: left;
+	}
+.playbutton_list, .playbutton2_list {
+	display: inline;
+	position: relative;
+	width: 2.5vw;
+	float: left;
+	margin-left: 15px;
+	}
+.watched_small_list, .watched_small2_list {
+	display: inline;
+	margin-top: 4px;
+	float: left;
+	margin-left: 15px;
+	width: 1.9vw;
+	}
+
+.boxset_list, .boxset2_list {
+	display: inline;
+	position: relative;
+	top: -5px;
+	height: 3.21vw;
+	}
+.not_done_list, .not_done2_list {
+	position: relative;
+	top: -34vw;
+	left: 8.5vw;
+	display: none;
+	}
+.rating_list:hover, .rating2_list:hover {
+	background-color:rgba(255, 255, 255, 0.5);
+	border-radius: 6px;
+	}
+.watched_small_list:hover, .watched_small_list2_list:hover {
+	background-color:rgba(255, 255, 255, 0.5);
+	border-radius: 6px;
+	}	
+.boxset_list:hover, .boxset_list2_list:hover {
+	background-color:rgba(255, 255, 255, 0.5);
+	border-radius: 6px;
 	}
 .rating:hover, .rating2:hover {
 	background-color:rgba(255, 255, 255, 1.0);

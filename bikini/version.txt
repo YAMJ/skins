@@ -1,4 +1,0 @@
-YAMJ3 Jetty
-Build Date: 2014-11-21 12:31:05
-Version   : 3.0-SNAPSHOT
-Git-SHA   : aafe2ba263

@@ -46,7 +46,7 @@
 										console.log ("Popup_person found in filmography a movie stored in db: " +  filmography_list[j].originalTitle + " index j:" + j);
 										$("#inside_href"+j).css("color", "red");
 										$("#inside_href"+j).css("font-weight", "bold");
-										document.getElementById("inside_href"+j).href="javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "')";
+										document.getElementById("inside_href"+j).href="javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videodataId + "')";
 										document.getElementById("inside_img"+j).src="./pictures/go_select.png";
 										}
 									}
@@ -59,15 +59,15 @@
 									// test if there is an actor 
 									if (filmography_inside_list[i].job != 'ACTOR')
 									{
-										temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff; border-radius:9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" style='width:9.5vw;' ></img><p class=\"filmography_job\">"+ filmography_inside_list[i].job.italics() +"</p></a></td>" ;
+										temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff; border-radius:9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videodataId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" style='width:9.5vw;' ></img><p class=\"filmography_job\">"+ filmography_inside_list[i].job.italics() +"</p></a></td>" ;
 									} else {
 									// test if the role is not empty
-											if (filmography_inside_list[i].role) {temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff;border-radius:  9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" style='width:9.5vw;' ></img><p class=\"filmography_job\">"+ filmography_inside_list[i].role.italics() +"</p></a></td>" ;}
-											else {temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff; border-radius:9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videoDataId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" style='width:9.5vw;' ></img><p class=\"filmography_job\"></p></a></td>" ;}
+											if (filmography_inside_list[i].role) {temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff;border-radius:  9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videodataId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" style='width:9.5vw;' ></img><p class=\"filmography_job\">"+ filmography_inside_list[i].role.italics() +"</p></a></td>" ;}
+											else {temp_output_inside =  "<td style='padding: 0px; border: 1px solid #fff; border-right: 3px solid #fff; border-radius:9px;'><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videodataId + "');\"><p class=\"filmography_name\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" style='width:9.5vw;' ></img><p class=\"filmography_job\"></p></a></td>" ;}
 									} 
 									// append to display with  job and role translated
 									$('.filmography_inside').append(translate_job(temp_output_inside));
-									get_poster(filmography_inside_list[i].type, filmography_inside_list[i].videoDataId, i); 
+									get_poster(filmography_inside_list[i].type, filmography_inside_list[i].videodataId, i); 
 									}
 								// repeat the sequence for series 
 								if (filmography_inside_list[i].type == "SERIES")

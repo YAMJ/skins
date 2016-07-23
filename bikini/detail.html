@@ -64,6 +64,9 @@
 			var myVar = "";
 			var Person_toSet = true;
 			var Movie_toSet = true;
+			var _index_url = "wall"
+			if (window.localStorage.getItem('display_type') == "wall")
+			{_index_url = "index.html";} else {_index_url = "index_list2.html";}
 			
 // ******************************************** COMMON RESULTS MAPPING **********************************			
 			// from jsonUrl
@@ -121,8 +124,8 @@
 							"img.watched@onclick": function(arg)
 								{
 									if (arg.context.result.watched) 
-									{return "WatchedSelection('index.html', 'true')";}
-									else {return "WatchedSelection('index.html', 'false')";}
+									{return "WatchedSelection('" + _index_url + "', 'true')";}
+									else {return "WatchedSelection('" + _index_url + "', 'false')";}
 							
 								},
 							"img.watched@title": function(arg)
@@ -222,26 +225,6 @@
 					}
                     return output;
                 },
-	//			  'span.certifications': function(arg)
-    //            {
-	//				var output = "<text>"+certification_label.toUpperCase()+"</text>";
-	//				if (arg.context.result.certifications)
-	//				{
-	//					var certifications = arg.context.result.certifications;
-	//					
-	//					var first_certifications = true;
-	//					// loop thru the list of genres
-	//					for (i = 0; i < certifications.length; i++) {
-	//						if (first_certifications) {
-	//							first_certifications = false;
-	//						} else {
-	//							output += ", ";
-	//						}
-	//						output = output + "<a href=\"javascript:call_certificationselect('" + certifications[i].country + "-" + certifications[i].certificate + "')\" ><img src='pictures/certification/" + certifications[i].country.toUpperCase() + "/" + certifications[i].certificate + ".png' width=\"20px\" style=\"vertical-align:bottom;\" /></a>";
-	//					}
-	//				}
-    //                return output;
-    //            },
 				'img.image_certification@src': function(arg)
                 {
 					if (arg.context.result.certifications)
@@ -311,27 +294,6 @@
 								return output;
 								} else {output = "<text>" + window.localStorage.getItem('studio_select').toUpperCase() + "</text> No Studio";}
 							},	
-	//		  'span.ratings': function(arg)
-    //            {
-	//			//	var output = "<text>"+rating_label.toUpperCase()+"</text>";
-	//				var output = "<text>RATING</text>";
-	//				if (arg.context.result.ratings)
-	//				{
-	//					var ratings = arg.context.result.ratings;
-	//					
-	//					var first_ratings = true;
-	//					// loop thru the list of genres
-	//					for (i = 0; i < ratings.length; i++) {
-	//						if (first_ratings) {
-	//							first_ratings = false;
-	//						} else {
-	//							output += ", ";
-	//						}
-	//						output = output + "<a href=\"javascript:call_ratingselect('" + ratings[i].source + "', '" + Math.round(ratings[i].rating/10) + "')\" >" + ratings[i].source + ":" + "<img src='pictures/ratings/rating_" + Math.round(ratings[i].rating/10) + ".png' width=\"75px\" /></a>";
-	//					}
-	//				}
-    //               return output;
-    //            },
 				'img.combined_ratings@src': function(arg)
                 {
 					if (arg.context.result.ratings)
@@ -878,9 +840,6 @@
 																	output_externalid += "<a class='external_href' style='text-decoration: line-through; color: red;' href='https://www.themoviedb.org/tv/" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";
 																		break;	
 																};
-														
-													
-													//	output_externalid += "<a class='external_href' style='text-decoration: line-through; color: red;' href='https://www.themoviedb.org/movie/" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";
 													}
 													else 
 													{ 
@@ -897,12 +856,7 @@
 																	output_externalid += "<a class='external_href' href='https://www.themoviedb.org/tv/" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";
 																		break;	
 																};
-														
-														
-														
-														
-									//					output_externalid += "<a class='external_href' href='https://www.themoviedb.org/movie/" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";}
-													break;
+														break;
 													}
 												}
 											case 'imdb':
@@ -968,23 +922,7 @@
 											}
 								}
 								return output_externalid_form;
-							}
-						
-				//			'span.studio': function(arg)
-				//			{
-				//				var studio = arg.context.result.studios;
-				//				if (studio)
-				//				{
-				//				var output = "";
-				//				
-								// loop thru the list of audio
-				//				for (i = 0; i < studio.length; i++) {
-				//					output = output + "<text>"+studio_select.toUpperCase()+(i+1)+"</text>" + " " + studio[i].name + "<a href=\"#\" onclick=\"call_studioselect('" + studio[i].id + "', '" + studio[i].name + "')\" ><img src='pictures/studios/" + studio[i].name + ".png'  /></a><sp>  ";
-				//					
-				//				}
-				//				return output;
-				//				} else {output = "<text>" + studio_select.toUpperCase() + "</text> No Studio";}
-				//			}							
+							}						
 						};
 					var POSTER_INFO = {
 						// display poster 	
@@ -1104,7 +1042,7 @@
 						// display fanart
 						display_all ();	
 						// add external id 
-					//	get_externalId ();
+						//	get_externalId ();
 						
 						switch (index_type.toLowerCase()) 
 							{
@@ -1156,7 +1094,6 @@
 			document.getElementById("serieselect").innerHTML=window.localStorage.getItem('series_select').toUpperCase();
 			document.getElementById("allselect").innerHTML=window.localStorage.getItem('all_select').toUpperCase();
 			document.getElementById("seasonselect").innerHTML=window.localStorage.getItem('season_select').toUpperCase();
-		//	document.getElementById("selectionshow_icon").innerHTML=window.localStorage.getItem('selection_label').toUpperCase();
 			document.getElementById("titleindex").innerHTML=window.localStorage.getItem('title_label').toUpperCase();
 			document.getElementById("search_icon").innerHTML=window.localStorage.getItem('search_select').toUpperCase();
 			document.getElementById("genreindex").innerHTML=window.localStorage.getItem('genre_select').toUpperCase();
@@ -1180,8 +1117,6 @@
 			document.getElementById("updatelabel").innerHTML=window.localStorage.getItem('update_label').toLowerCase();
 			document.getElementById("open_menu_left").title=localStorage.getItem('open_navigation_menu').toLowerCase();
 			document.getElementById("close_menu_left").title=localStorage.getItem('close_navigation_menu').toLowerCase();
-		//	document.getElementsByClassName("play_detail")[0].title=localStorage.getItem('play_label').toLowerCase();
-		
 			switch (window.localStorage.getItem('prefered_page').toLowerCase())
 			{
 				case 'certification':
@@ -1653,8 +1588,6 @@
 						$('.edit_adjust').css('left', '18vw');
 						$('.edit_adjust').css('top', '50px');
 						$('.edit_adjust').css('width', '81.5vw');
-					//	$('#play_button').css('bottom', '9vh');
-					//	$('#play_button').css('left', '7.5vw');
 						$('.play_detail').css('display', 'none');
 						$('#person_display').css('top', '52px');
 						$('#infobox').css('top', '95vh');
@@ -1662,7 +1595,6 @@
 						break;
 					case 'movie':
 						$('.moviedetail').css('font-size', '1.15vw');
-					//	$('.moviedetail').css('left', '232px');
 						$('.moviedetail').css('right', '0.1vw');
 						$('.moviedetail').css('max-width', '81.5vw');
 						$('.moviedetail').css('width', 'auto');
@@ -1718,8 +1650,6 @@
 						$('.mediainfo').css('top', '52px');
 						$('.mediainfo').css('width', '81%');
 						$('.mediainfo').css('bottom', 'auto');
-					//	$('#li_mediainfo_icon').css('visibility', 'hidden');
-					//	$('#li_poster_icon').css('left', '28px');
 						$('.edit_adjust').css('left', '18vw');
 						$('.edit_adjust').css('top', '50px');
 						$('.edit_adjust').css('width', '81.5vw');
@@ -1753,7 +1683,6 @@
 							if (count_to_set < 8)
 								{
 								padding_season += (7 - count_to_set)*100;
-							//	$('.seasontable').css('overflow-x', 'hidden');
 								$('.seasontable').css('padding-left', padding_season+'px');
 								}
 							}	
@@ -1781,8 +1710,6 @@
 							parent.document.getElementById('movie_frame').style.display="block";
 							parent.document.getElementById('movie_display').style.visibility="visible";	
 							parent.document.getElementById('movie_display').style.zIndex="11";	
-						//	display_Id('movie_frame');
-						//	display_Id('movie_display');}
 							break;
 						} 
 					case 'popup':
@@ -1803,7 +1730,7 @@
 						{
 							console.log("ouvre_popup_index:  changeindex for type:" +current_type+ " with style:"+StyleValue);
 							nodisplay_Id('movie_display');
-							Indexpopup = window.open("index.html", "YAMJ v3 index","");
+							Indexpopup = window.open(_index_url, "YAMJ v3 index","");
 							break;
 						}
 					
@@ -1813,7 +1740,6 @@
 	// open a new vertical window for person list 
 	function ouvre_popup_person_ribbon() 
 		{
-		//	localStorage.setItem("id", localStorage.getItem("id"));
 			localStorage.setItem("indextype", index_type.toLowerCase());
 			
 			Personpopup = window.open("navPerson.html", "YAMJv3 Navigation Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=150px, height=1000px");
@@ -1821,8 +1747,6 @@
 		}
 	function ouvre_popup_person() 
 		{
-		//	var temp_id = localStorage.getItem("id");
-		//	localStorage.setItem("id", localStorage.getItem("id"));
 			localStorage.setItem("indextype", index_type.toLowerCase());
 			console.log("ouvre_popup_person:  style:"+StyleValue+ " type:" +index_type+" id:"+localStorage.getItem('id'));
 			localStorage.setItem("back_close", "close");
@@ -1834,9 +1758,7 @@
 							{
 							console.log("ouvre_popup_person all-in-one:  " +Person_toSet);
 							parent.frames['person_frame'].location.href='navPersonH.html';	
-								if (Person_toSet) { 
-								//	console.log("ouvre_popup_person all-in-one:  " +Person_toSet);
-								//	parent.frames['person_frame'].location.href='navPersonH.html';								
+								if (Person_toSet) { 								
 									Person_toSet = false; 
 									}
 								if (parent.document.getElementById('person_display').style.visibility =="visible")  // click toggle the frame  
@@ -1862,9 +1784,7 @@
 							} else {
 									console.log("ouvre_popup_person:  " +Person_toSet);
 									parent.frames['person_frame'].location.href='navPerson_frame.html';
-									if (Person_toSet) { 
-									//	console.log("ouvre_popup_person:  " +Person_toSet);
-									//	parent.frames['person_frame'].location.href='navPerson_frame.html';								
+									if (Person_toSet) { 							
 										Person_toSet = false; 
 										}
 									if (parent.document.getElementById('person_display').style.visibility =="visible")  // click toggle the frame  
@@ -1890,24 +1810,19 @@
 					case 'popup':
 						{
 							console.log("ouvre_popup_person:  open navPersonH.html:");
-						//	nodisplay_Id('person_frame');
 							Personpopup = window.open("navPersonH.html", "YAMJv3 H Navigation Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=1322px, height=300px");
 							break;
 						}
 					case 'ribbon':
 						{
 							console.log("ouvre_popup_person:  open navPerson.html:");
-						//	nodisplay_Id('person_frame');
 							Personpopup = window.open("navPerson.html", "YAMJv3 Navigation Person","channelmode=no, status=no, scrollbars=no, menubar=no, location=no, resizable=yes, left=180px, top=5px, width=165px, height=1000px");
 							break;
 						}
 					case 'page':
 						{
 							console.log("ouvre_popup_person:  open navPerson_page.html:");
-						//	nodisplay_Id('person_frame');
 							Personpopup = window.open("navPerson_page.html", "YAMJ v3 index person","");
-							// window.location.href="navPerson_page.html"
-							//call_person(true);
 							break;
 						}
 					
@@ -1915,8 +1830,6 @@
 		}
 		function ouvre_popup_person_all_in_one() 
 		{
-		//	var temp_id = localStorage.getItem("id");
-		//	localStorage.setItem("id", localStorage.getItem("id"));
 			localStorage.setItem("indextype", index_type.toLowerCase());
 			console.log("ouvre_popup_person:  style:"+StyleValue+ " type:" +index_type+" id:"+localStorage.getItem('id'));
 			localStorage.setItem("back_close", "close");
@@ -1949,7 +1862,7 @@
 	// genre list is activ and open genre index menu with the genre selected 
 	function call_genreselect(genrename)
         {
-			localStorage.setItem("Genre_name", genrename);
+			localStorage.setItem("genre_name", genrename);
             console.log("call_genreselect Storing value: Genre name: " +genrename);
 			window.location.href="index_Genre.html";
 		}
@@ -1966,13 +1879,13 @@
 			localStorage.setItem("yearselected", 'true');
 			localStorage.setItem("selection", yearvalue);
             console.log("call_yearselect Storing value: Year value " +yearvalue);
-			window.location.href="index.html";
+			window.location.href=_index_url;
 		}
 	// certification list is activ and open certification index menu with the certification selected 
 	function call_certificationselect(certificationvalue, certificationid)
         {
-			localStorage.setItem("Certification_value", certificationvalue);
-			localStorage.setItem("Certification_id", certificationid);
+			localStorage.setItem("certification_value", certificationvalue);
+			localStorage.setItem("certification_name", certificationid);
             console.log("call_certificationselect Storing value: certification value: " +certificationvalue+ " certification id:" + certificationid);
 			window.location.href="index_Certification.html";
 		}
@@ -1980,14 +1893,15 @@
 	function call_videosourceselect(videosourcevalue)
         {
 			localStorage.setItem("Videosource_value", videosourcevalue);
+			localStorage.setItem("Videosource_name", videosourcevalue);
             console.log("call_videosourceselect Storing value: videosource value: " +videosourcevalue);
 			window.location.href="index_Videosource.html";
 		}
 	// studio list is activ and open studio index menu with the studio selected 
 	function call_studioselect(studioid, studioname)
         {
-			localStorage.setItem("Studio_id", studioid);
-			localStorage.setItem("Studio_name", studioname);
+			localStorage.setItem("studio_name", studioid);
+			localStorage.setItem("studio_text", studioname);
             console.log("call_studioselect Storing value: studio value: " +studioid+ ", " + studioname);
 			window.location.href="index_Studio.html";
 		}
@@ -2020,15 +1934,7 @@
 							nodisplay_class ('actors');
 							nodisplay_class ('director');
 							nodisplay_class ('writer');
-						//	display_none_Id ('stage_file_tr');
-						//	display_none_Id ('filepath_tr');
-						//	display_none_Id ('videosource_tr');
-						//	display_none_Id ('resolution_tr');
 							display_none_class ('media_tr');
-						//	display_block_Id ('filepath_' + window.localStorage.getItem('episode'));
-						//	display_block_Id ('stage_fileId_' + window.localStorage.getItem('episode'));
-						//	display_block_Id ('videosource_' + window.localStorage.getItem('episode'));
-						//	display_block_Id ('resolution_' + window.localStorage.getItem('episode'));
 							display_block_class ('episode_' + window.localStorage.getItem('episode'));
 							break;
 						}
@@ -2048,13 +1954,7 @@
 							nodisplay_class ('actors');
 							nodisplay_class ('director');
 							nodisplay_class ('writer');
-						//	display_block_Id ('stage_file_tr');
-						//	display_block_Id ('filepath_tr');
-						//	display_block_Id ('videosource_tr');
-						//	display_block_Id ('resolution_tr');
 							display_block_class ('media_tr');
-						//	nodisplay_class ('header_detail');
-						//	nodisplay_class ('play_detail');
 							break;	
 						}
 				}
@@ -2080,9 +1980,6 @@
 				display_class ('writer');
 				display_class ('header_detail');
 				display_class ('play_detail');
-			//	display_none_Id ('filepath_' + window.localStorage.getItem('episode'))
-			//	display_none_Id ('stage_fileId_' + window.localStorage.getItem('episode'));
-			//	display_none_Id ('videosource_' + window.localStorage.getItem('episode'));
 				display_none_class ('episode_' + window.localStorage.getItem('episode'));
 			}
 		}
@@ -2126,9 +2023,6 @@
 						break;	
 					}
 				}
-		//	
-		//	nodisplay_class('seasontable');
-		//	
 			} else {
 			if (index_type.toLowerCase() == 'series') {display_class('seasontable');}
 			if (index_type.toLowerCase() == 'season') {display_Id ('slideshowBanner');;}
@@ -2426,19 +2320,6 @@
 										<img src="pictures/icon/delete.png" alt="delete"></img><div id="deleteshow_icon"></div></a></td>	
 									<td><a id="li_update_icon" href="javascript:ouvre_popup_update('file');" onmouseover="javascript:document.getElementById('updateshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('updateshow_icon').style.visibility='hidden'">
 										<img src="pictures/icon/update.png" alt="update"></img><div id="updateshow_icon"></div></a></td>	
-									
-							<!--		<td><a id="li_person_ribbon" href="javascript:ouvre_popup_person_ribbon()">
-										<div id="person_ribbon"></div></a></td>	 
-									<td>
-										<form><label id='li_selection_icon'><img src="pictures/icon/title.png" onmouseover="javascript:document.getElementById('selectionshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('selectionshow_icon').style.visibility='hidden'"></img><div id="selectionshow_icon"></div></label>
-											<select id="selection_id_icon" onchange="Movie_toSet = true;display_Id('movie_display');javascript:ouvre_popup_index('', 'ASC', index_type, document.getElementById('selection_id_icon').value); Movie_toSet = true;" >
-												<option value=""></option>
-												
-											</select> 
-											<noscript><input type="submit" value="Submit"></noscript>
-										</form>
-										
-									</td>	-->
 									<td><a id='li_search_icon' href="javascript:ouvre_popup_search(StyleValue)" onmouseover="javascript:document.getElementById('search_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('search_icon').style.visibility='hidden'" >
 										<img src="pictures/icon/find.png" alt="find" />
 										</a><div id="search_icon"></div>
@@ -2665,15 +2546,9 @@
 						<tr >
 							<td ><span class="plot1"></span></td>
 						</tr>
-			<!--			<tr>
-							<td><span class="ratings"></span></td>
-						</tr> -->
 						<tr>
 							<td><a  href="#"><img title="video list with rating" class="combined_ratings" src="./pictures/ratings/dummy_rating.png" onclick="" alt="rating"/></a></td>
 						</tr>
-				<!--		<tr>
-							<td><span class="certifications"></span></td>
-						</tr> -->
 						<tr>
 							<td><a href="#"><img title="video list with certification" class="image_certification" src="./pictures/certification/dummy_certification.png" onclick="" alt="certification"/></a></td>
 						</tr>

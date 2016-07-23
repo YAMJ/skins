@@ -27,12 +27,30 @@
 		<script type="text/javascript" src="js/iscroll.js"></script>
 
     </head>
-    <body onload="getheaderData();setTimeout(function(){getIndexData()}, 50);animate_watched();setTimeout(function(){getIndexData2()}, 300);">
+    <body onload="switch_index_no_html();getheaderData();setTimeout(function(){getIndexData()}, 50);animate_watched();setTimeout(function(){getIndexData2()}, 300);">
         <script type="text/javascript">
 	
 //***************************************************************************************
+		var temp_new_string = '';
 		var jsonUrl = "";
 		var jsonUrlheader = "";
+		if (localStorage.getItem("index_list_url"))
+			{
+				jsonUrl = localStorage.getItem("index_list_url");
+				localStorage.setItem("index_list_url", "");
+			}
+		var jsonUrlheader = "";
+		if (localStorage.getItem("index_list_url_header"))
+			{
+				jsonUrlheader = localStorage.getItem("index_list_url_header");
+				localStorage.setItem("index_list_url_header", "");
+			}
+		var selected_index = "";
+		if (localStorage.getItem("index_list_display_header"))
+			{
+				selected_index = localStorage.getItem("index_list_display_header");
+				localStorage.setItem("index_list_display_header", "");
+			}
 		var select = "";
 		var max_count = 1;
 		// set default to 2 rows and 6 columns
@@ -48,13 +66,34 @@
 		var newest_method = "";
 		var nbre_translate_path = 0;
 		var count_result = 0;
+		var display_type = "wall"; 
+		// get display type
+		if (localStorage.getItem("display_type"))
+			{display_type = localStorage.getItem("display_type");}
+			else {localStorage.setItem("display_type", display_type);}
+		// get category type and reset category type to ""
+		if (localStorage.getItem("categorytype"))
+			{category_type = localStorage.getItem("categorytype");
+			localStorage.setItem("categorytype", "index");
+			console.log ("index category type :" + category_type );
+			} else 
+			{category_type = "index";
+			localStorage.setItem("categorytype", "index");
+			console.log ("index category type :" + category_type );
+			}
+		if (localStorage.getItem(category_type + "_name"))
+			{category_name = localStorage.getItem(category_type + "_name");
+			console.log ("index category name :" + category_name );
+			}
 		// get the prefered_page
 		if (localStorage.getItem("prefered_page"))
 			{Prefered_PageValue = localStorage.getItem("prefered_page");}
 			else {localStorage.setItem("prefered_page", Prefered_PageValue);}
-		// reset newest method to ""
+		// get newest method and reset newest method to ""
 		if (localStorage.getItem("newest"))
-			{localStorage.setItem("newest", "");}
+			{newest_method = localStorage.getItem("newest");
+			localStorage.setItem("newest", "");
+			}
 		// get the watched method 
 		if (localStorage.getItem("watched"))
 			{watched_method = localStorage.getItem("watched");}
@@ -265,86 +304,140 @@
 			get_Skin ();
 			// set local context value
 			set_context_lang_value ();
-
-			switch (index_type.toLowerCase())
+			// reset the previous index data stored because it's not a display change 
+			window.localStorage.setItem("index_url_header","")
+			window.localStorage.setItem("index_url","")
+			//  switch from index  display type wall to index_list display type list 
+			//  don't reconstruct the json api call , use the one stored  
+			if (jsonUrl != "" && category_type == "index_list2")	
+				{ 
+					console.log ("use JsonUrl already setted with JsonUrl= " + jsonUrl);
+				}
+			//  doesn't have index call before  
+			//  reconstruct the json api call  	
+			else
 				{
-					case 'movie,series':
-						selected_index = window.localStorage.getItem("all_select").toUpperCase();
-						break;
-					case 'movie':
-						selected_index = window.localStorage.getItem("movie_select").toUpperCase();
-						break;
-					case 'series':
-						selected_index = window.localStorage.getItem("series_select").toUpperCase();
-						break;
-					case 'season':
-						selected_index = window.localStorage.getItem("season_select").toUpperCase();
-						break;
-					default :
-						selected_index = window.localStorage.getItem("all_select").toUpperCase();
-						window.localStorage.setItem("indextype", 'movie,series');
-				};
-				switch (watched_method)
-				{
-					case 'all':
-						selected_index = selected_index;
-						break;
-					case 'true':
-						selected_index = selected_index + "(" + window.localStorage.getItem('watched_select').toUpperCase() + ")&nbsp;";
-						break;
-					case 'false':
-						selected_index = selected_index + "(" + window.localStorage.getItem('unwatched_select').toUpperCase() + ")&nbsp;";
-						break;
-					default :
-						selected_index = selected_index;
-				};
+				switch (index_type.toLowerCase())
+					{
+						case 'movie,series':
+							selected_index = window.localStorage.getItem("all_select").toUpperCase();
+							break;
+						case 'movie':
+							selected_index = window.localStorage.getItem("movie_select").toUpperCase();
+							break;
+						case 'series':
+							selected_index = window.localStorage.getItem("series_select").toUpperCase();
+							break;
+						case 'season':
+							selected_index = window.localStorage.getItem("season_select").toUpperCase();
+							break;
+						default :
+							selected_index = window.localStorage.getItem("all_select").toUpperCase();
+							window.localStorage.setItem("indextype", 'movie,series');
+					};
+					switch (watched_method)
+					{
+						case 'all':
+							selected_index = selected_index;
+							break;
+						case 'true':
+							selected_index = selected_index + "(" + window.localStorage.getItem('watched_select').toUpperCase() + ")&nbsp;";
+							break;
+						case 'false':
+							selected_index = selected_index + "(" + window.localStorage.getItem('unwatched_select').toUpperCase() + ")&nbsp;";
+							break;
+						default :
+							selected_index = selected_index;
+					};
 
-			 jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&dataitems=status,boxset,rating,videosource&sortby="+sort_type;	
-			 jsonUrlheader = "/yamj3/api/index/video.json?type="+index_type;	
-					if (window.localStorage.getItem("yearselected") == 'true' && window.localStorage.getItem("selection")) 
-								{
-									if (resolution_method != 'all')
-										{
-											jsonUrl += "&include=year-" + window.localStorage.getItem("selection") + ",resolution-" + resolution_method;
-											jsonUrlheader += "&include=year-" + window.localStorage.getItem("selection") + ",resolution-" + resolution_method;
-											selected_index = selected_index + '&nbsp;resolution:' + resolution_method;
-										} else { 
-											jsonUrl = jsonUrl + "&include=year-"+window.localStorage.getItem("selection"); 
-											jsonUrlheader = jsonUrl + "&include=year-"+window.localStorage.getItem("selection");
-										}
-									selected_index = selected_index + '&nbsp;' + window.localStorage.getItem("year_label").toUpperCase() + ':' + window.localStorage.getItem("selection");
-									window.localStorage.setItem("yearselected", 'false');
-									window.localStorage.setItem("selection", "");
-									window.localStorage.setItem("search_index", "");	
-								} else {
-								if (resolution_method != 'all')
-										{
-											jsonUrl += "&include=resolution-" + resolution_method;
-											jsonUrlheader += "&include=resolution-" + resolution_method;
-											selected_index = selected_index + '&nbsp;resolution:' + resolution_method;
-										}
-								if (window.localStorage.getItem("search_index"))
-								{
-									console.log("window.localStorage.getItem('search_index').substr(0, 11):"  +window.localStorage.getItem("search_index").substr(0, 11) + " window.localStorage.getItem('search_index').substr(14, 9):" + window.localStorage.getItem("search_index").substr(15, 9));
-									if (window.localStorage.getItem("search_index").substr(0, 11) =='&yearStart=' && window.localStorage.getItem("search_index").substr(15, 9) =='&yearEnd=')
-										{selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem("search_index").substr(11, 4)+ "-" + window.localStorage.getItem("search_index").substr(24, 4) + ")";}
-										else {selected_index = selected_index + "&nbsp;(" +window.localStorage.getItem("search_index").toUpperCase() + ")";}
-										jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("search_index") + "&field=title&mode="+index_method;
-										jsonUrlheader = jsonUrlheader + "&search=" + window.localStorage.getItem("search_index") + "&field=title&mode="+index_method;
-										window.localStorage.setItem("search_index", "");	
-									} else { 
-											if (window.localStorage.getItem("sort_indextype") == 'title') 
-												{selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('title_label'); }
-												else {selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('year_label');}
-											if (direction == 'ASC') 
-												{selected_index = selected_index +  ", "+ window.localStorage.getItem('asc_label') + ")";}			
-												else {selected_index = selected_index +  ", "+ window.localStorage.getItem('desc_label') + ")";}	
+				 jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&dataitems=status,boxset,rating,videosource&sortby="+sort_type;	
+				 jsonUrlheader = "/yamj3/api/index/video.json?type="+index_type;	
+						if (window.localStorage.getItem("yearselected") == 'true' && window.localStorage.getItem("selection")) 
+									{
+										if (resolution_method != 'all')
+											{
+												jsonUrl += "&include=year-" + window.localStorage.getItem("selection") + ",resolution-" + resolution_method;
+												jsonUrlheader += "&include=year-" + window.localStorage.getItem("selection") + ",resolution-" + resolution_method;
+												selected_index = selected_index + '&nbsp;resolution:' + resolution_method;
+											} else { 
+												jsonUrl = jsonUrl + "&include=year-"+window.localStorage.getItem("selection"); 
+												jsonUrlheader = jsonUrl + "&include=year-"+window.localStorage.getItem("selection");
 											}
-								}
-								
-				jsonUrl += "&artwork=poster&watched=" + watched_method;
-				jsonUrlheader += "&watched=" + watched_method;
+										selected_index = selected_index + '&nbsp;' + window.localStorage.getItem("year_label").toUpperCase() + ':' + window.localStorage.getItem("selection");
+										window.localStorage.setItem("yearselected", 'false');
+										window.localStorage.setItem("selection", "");
+										window.localStorage.setItem("search_index", "");	
+									} else {
+									if (resolution_method != 'all')
+											{
+												jsonUrl += "&include=resolution-" + resolution_method;
+												jsonUrlheader += "&include=resolution-" + resolution_method;
+												selected_index = selected_index + '&nbsp;resolution:' + resolution_method;
+											}
+									if (window.localStorage.getItem("search_index"))
+									{
+										console.log("window.localStorage.getItem('search_index').substr(0, 11):"  +window.localStorage.getItem("search_index").substr(0, 11) + " window.localStorage.getItem('search_index').substr(14, 9):" + window.localStorage.getItem("search_index").substr(15, 9));
+										if (window.localStorage.getItem("search_index").substr(0, 11) =='&yearStart=' && window.localStorage.getItem("search_index").substr(15, 9) =='&yearEnd=')
+											{selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem("search_index").substr(11, 4)+ "-" + window.localStorage.getItem("search_index").substr(24, 4) + ")";}
+											else {selected_index = selected_index + "&nbsp;(" +window.localStorage.getItem("search_index").toUpperCase() + ")";}
+											jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("search_index") + "&field=title&mode="+index_method;
+											jsonUrlheader = jsonUrlheader + "&search=" + window.localStorage.getItem("search_index") + "&field=title&mode="+index_method;
+											window.localStorage.setItem("search_index", "");	
+										} else { 
+												if (window.localStorage.getItem("sort_indextype") == 'title') 
+													{selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('title_label'); }
+													else {selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('year_label');}
+												if (direction == 'ASC') 
+													{selected_index = selected_index +  ", "+ window.localStorage.getItem('asc_label') + ")";}			
+													else {selected_index = selected_index +  ", "+ window.localStorage.getItem('desc_label') + ")";}	
+												}
+									}
+									
+					jsonUrl += "&artwork=poster&watched=" + watched_method;
+					jsonUrlheader += "&watched=" + watched_method;
+					if (newest_method != '')
+					{jsonUrl += "&include=newest-" + newest_method;
+					jsonUrlheader += "&include=newest-" + newest_method;}
+					switch (newest_method.substr(newest_method.indexOf('-') + 1))
+						{
+							case 'file':
+							{
+							temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
+							break;
+							}
+							case 'creation':
+							{
+							temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
+							break;
+							}
+							case 'lastscan':
+							{
+							temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
+							break;
+							}	
+						}
+						selected_index = selected_index + temp_new_string;
+					
+					if (category_type != '' && category_type != "index" && category_type != "index_list2")
+						{
+							jsonUrl += "&include=" + category_type + "-" + category_name;
+							jsonUrlheader += "&include=" + category_type + "-" + category_name;
+							if (category_type == "certification")
+							{selected_index = selected_index + window.localStorage.getItem(category_type.toLowerCase() + '_select').toUpperCase() + ":" + window.localStorage.getItem('certification_value').toUpperCase();}
+							if (category_type == "studio")
+							{selected_index = selected_index + window.localStorage.getItem(category_type.toLowerCase() + '_select').toUpperCase() + ":" + window.localStorage.getItem('studio_text').toUpperCase();}
+							if (category_type == "boxset")
+							{selected_index = selected_index + "&nbsp;" + window.localStorage.getItem(category_type.toLowerCase() + '_select').toUpperCase() + ":" + window.localStorage.getItem('boxset_text').toUpperCase();}
+							else {selected_index = selected_index + "&nbsp;" + window.localStorage.getItem(category_type.toLowerCase() + '_select').toUpperCase() + ":" + category_name;}
+						}
+			
+				}
 				
+				// now all construction is done, store the value in case a just a display change 
+					window.localStorage.setItem("index_url_header",jsonUrlheader);
+					window.localStorage.setItem("index_url",jsonUrl);
+					window.localStorage.setItem("index_display_header",selected_index);
+					
 				var temp_style = "1.4vw"
 					
 					if (selected_index.length > 35)	{temp_style = "1.4vw";}
@@ -359,7 +452,8 @@
 					if (selected_index.length > 74)	{temp_style = "0.95vw";}
 				$(".show_index").css("font-size", temp_style);
 				$('#printsearch').html(selected_index);
-		console.log("Index getIndexData URLheader: " + jsonUrlheader);		
+		console.log("Index getIndexData URLheader: " + jsonUrlheader);
+		
 		$.ajax({
 			
                 url: jsonUrlheader,
@@ -639,7 +733,7 @@
 			</div>
 			 <!-- include navigation header after context return , page info and count return -->		
 			<div>
-				<object data="include_header_index_menu.html" type="text/html" id="my_header_menu" style="position: absolute; height: 60px; width: 100%; left: 0%; z-index:10;"></object>
+				<object data="include_header_index_menu.html" type="text/html" id="my_header_menu" ></object>
 			</div>
 		<div class="directplay" style="display:none">
 			<span class="filepath"></span>

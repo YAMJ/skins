@@ -176,7 +176,8 @@
 						switch (ForceStyleValue)
 							{
 								case 'page':
-									window.location.href="index.html";
+									if (window.localStorage.getItem ("display_type") == "_list2")
+										{window.location.href="index_list2.html";} else {window.location.href="index.html";}
 								break;
 								case 'ribbon':
 									ouvre_ribbon_index('navData.html', direction_temp, index_type, decadename);

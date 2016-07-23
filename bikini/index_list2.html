@@ -37,6 +37,23 @@
 		var alternate_color = "black";
 		var jsonUrl = "";
 		var jsonUrlheader = "";
+		if (localStorage.getItem("index_url"))
+			{
+				jsonUrl = localStorage.getItem("index_url");
+				localStorage.setItem("index_url", "");
+			}
+		var jsonUrlheader = "";
+		if (localStorage.getItem("index_url_header"))
+			{
+				jsonUrlheader = localStorage.getItem("index_url_header");
+				localStorage.setItem("index_url_header", "");
+			}
+		var selected_index = "";
+		if (localStorage.getItem("index_display_header"))
+			{
+				selected_index = localStorage.getItem("index_display_header");
+				localStorage.setItem("index_display_header", "");
+			}
 		var select = "";
 		var max_count = 1;
 		// set default to 2 rows and 6 columns
@@ -50,6 +67,8 @@
 		var watched_method = "all";
 		var resolution_method = "all";
 		var newest_method = "";
+		var category_type = "";
+		var category_name = "";
 		var nbre_translate_path = 0;
 		var count_result = 0;
 		// get the prefered_page
@@ -60,6 +79,20 @@
 		if (localStorage.getItem("newest"))
 			{newest_method = localStorage.getItem("newest");
 			localStorage.setItem("newest", "");
+			}
+		// get category type and reset category type to ""
+		if (localStorage.getItem("categorytype"))
+			{category_type = localStorage.getItem("categorytype");
+			localStorage.setItem("categorytype", "index_list2");
+			console.log ("index_list2 category type :" + category_type );
+			} else 
+			{category_type = "index_list2";
+			localStorage.setItem("categorytype", "index_list2");
+			console.log ("index category type :" + category_type );
+			}
+		if (localStorage.getItem(category_type + "_name"))
+			{category_name = localStorage.getItem(category_type + "_name");
+			console.log ("index_list2 category name :" + category_name );
 			}
 		// get the watched method 
 		if (localStorage.getItem("watched"))
@@ -125,28 +158,28 @@
 							if (first_display) 
 								{
 									first_display = false;
-									direct_info(arg.item.videoType, arg.item.id);
-									return "<a href=\"#\" id='give_focus' style='background:" + alternate_color + ";' onclick=\" direct_info('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
+									direct_info2(arg.item.videoType, arg.item.id);
+									return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:" + alternate_color + ";' onclick=\" display_short_list (); direct_info2('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
 								}
-							return "<a href=\"#\" style='background:" + alternate_color + ";' onclick=\" direct_info('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
+							return "<a href=\"#\" style='font-size: 1.6vw; background:" + alternate_color + ";' onclick=\" display_short_list (); direct_info2('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
 						} else {
 							if (arg.item.videoType == 'SERIES')
 								{ 	
 								if (first_display) 
 									{
 										first_display = false;
-										direct_info(arg.item.videoType, arg.item.id);
-										return "<a href=\"#\" id='give_focus' style='background:" + alternate_color + ";' onclick=\" direct_info('" + arg.item.videoType + "', "+ arg.item.id + ")\">" + window.localStorage.getItem('series_label') + ': ' + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+										direct_info2(arg.item.videoType, arg.item.id);
+										return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw;background:" + alternate_color + ";' onclick=\" display_short_list (); direct_info2('" + arg.item.videoType + "', "+ arg.item.id + ")\">" + window.localStorage.getItem('series_label') + ': ' + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
 									}
-									return "<a href=\"#\" style='background:" + alternate_color + ";' onclick=\" direct_info('" + arg.item.videoType + "', "+ arg.item.id + ")\">" + window.localStorage.getItem('series_label') + ': ' + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+									return "<a href=\"#\" style='font-size: 1.6vw; background:" + alternate_color + ";' onclick=\" display_short_list (); direct_info2('" + arg.item.videoType + "', "+ arg.item.id + ")\">" + window.localStorage.getItem('series_label') + ': ' + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
 								} else {
 									if (first_display) 
 										{
 											first_display = false;
-											direct_info(arg.item.videoType, arg.item.id);
-											return "<a href=\"#\" id='give_focus' style='background:" + alternate_color + ";' onclick=\" direct_info('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+											direct_info2(arg.item.videoType, arg.item.id);
+											return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:" + alternate_color + ";' onclick=\" display_short_list (); display_short_list (); direct_info2('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
 										}
-									return "<a href=\"#\" style='background:" + alternate_color + ";' onclick=\" direct_info('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+									return "<a href=\"#\" style='font-size: 1.6vw; background:" + alternate_color + ";' onclick=\" display_short_list (); direct_info2('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
 								}
 						}
 					},
@@ -163,7 +196,7 @@
 					},
 					"img.boxset_list@style": function(arg) {
 						if (arg.item.boxedSets) 
-						{ return "position: relative; top: -1px; height: 21px; display: inline;";} else { return "display: none;";}
+						{ return "position: relative; top: -1px; height: 2.21vw; display: inline;";} else { return "display: none;";}
 					},
 					"img.rating_list@src": function(arg) {
                        var output_rating = "pictures/ratings/dummy_rating.png";
@@ -177,7 +210,7 @@
 								if (rating[i].source == 'combined')
 								{
 									boucle = false;
-									output_rating = "pictures/ratings/rating_" + Math.round(rating[i].rating/10) + ".png"
+									output_rating = "pictures/ratings/star_rating/star" + Math.round(rating[i].rating/10) + ".png"
 								} 
 							}
 						}
@@ -206,7 +239,7 @@
                     },
 					"img.infobutton_list@onclick": function(arg) {
 					//	cursor_position (); 
-                        return "direct_info('" + arg.item.videoType + "', " + arg.item.id + ")";
+                        return "direct_info2('" + arg.item.videoType + "', " + arg.item.id + ")";
                     },
 					"img.watched_small_list@src": function(arg)
 					{
@@ -261,7 +294,19 @@
 			get_Skin ();
 			// set local context value
 			set_context_lang_value ();
-
+		// reset the previous index data stored because it's not a display change 
+			window.localStorage.setItem("index_list_url_header","")
+			window.localStorage.setItem("index_list_url","")
+		//  switch from index  display type wall to index_list display type list 
+		//  don't reconstruct the json api call , use the one stored  
+		if (jsonUrl != "" && category_type == "index")	
+			{ 
+				console.log ("use JsonUrl already setted with JsonUrl= " + jsonUrl);
+			}
+		//  doesn't have index call before  
+		//  reconstruct the json api call  	
+		else
+			{
 			switch (index_type.toLowerCase())
 				{
 					case 'movie,series':
@@ -294,7 +339,7 @@
 					default :
 						selected_index = selected_index;
 				};
-
+		
 			 jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&dataitems=status,boxset,rating,videosource&sortby="+sort_type;	
 			 jsonUrlheader = "/yamj3/api/index/video.json?type="+index_type;	
 					if (window.localStorage.getItem("yearselected") == 'true' && window.localStorage.getItem("selection")) 
@@ -338,10 +383,11 @@
 											}
 								}
 								
-				jsonUrl += "&watched=" + watched_method;
+				jsonUrl += "&artwork=poster&watched=" + watched_method;
 				jsonUrlheader += "&watched=" + watched_method;
-				jsonUrl += "&include=newest-" + newest_method;
-				jsonUrlheader += "&include=newest-" + newest_method;
+				if (newest_method != '')
+				{jsonUrl += "&include=newest-" + newest_method;
+				jsonUrlheader += "&include=newest-" + newest_method;}
 				switch (newest_method.substr(newest_method.indexOf('-') + 1))
 					{
 						case 'file':
@@ -358,11 +404,28 @@
 						{
 						temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
 						break;
-						}
-						
+						}	
 					}
 					selected_index = selected_index + temp_new_string;
 					
+				if (category_type != '' && category_type != "index" && category_type != "index_list2")
+				{
+					jsonUrl += "&include=" + category_type + "-" + category_name;
+					jsonUrlheader += "&include=" + category_type + "-" + category_name;
+					if (category_type == "Certification")
+					{selected_index = selected_index + window.localStorage.getItem(category_type.toLowerCase() + '_select').toUpperCase() + ":" + window.localStorage.getItem('certification_value').toUpperCase();}
+					if (category_type == "studio")
+					{selected_index = selected_index + window.localStorage.getItem(category_type.toLowerCase() + '_select').toUpperCase() + ":" + window.localStorage.getItem('studio_text').toUpperCase();}
+					if (category_type == "boxset")
+					{selected_index = selected_index + window.localStorage.getItem(category_type.toLowerCase() + '_select').toUpperCase() + ":" + window.localStorage.getItem('boxset_text').toUpperCase();}
+					else {selected_index = selected_index + "&nbsp;" + window.localStorage.getItem(category_type.toLowerCase() + '_select').toUpperCase() + ":" + category_name;}
+				}
+		
+			}
+		// now all construction is done, store the value in case a just a display change 
+				window.localStorage.setItem("index_list_url_header",jsonUrlheader);
+				window.localStorage.setItem("index_list_url",jsonUrl);
+				window.localStorage.setItem("index_list_display_header",selected_index);
 				var temp_style = "1.4vw"
 					
 					if (selected_index.length > 35)	{temp_style = "1.4vw";}
@@ -377,7 +440,8 @@
 					if (selected_index.length > 74)	{temp_style = "0.95vw";}
 				$(".show_index").css("font-size", temp_style);
 				$('#printsearch').html(selected_index);
-		console.log("Index getIndexData URLheader: " + jsonUrlheader);		
+		console.log("Index getIndexData URLheader: " + jsonUrlheader);
+			
 		$.ajax({
 			
                 url: jsonUrlheader,
@@ -415,15 +479,15 @@
 					if ((arg.item.videoType == 'SEASON'))
 						{	
 							
-							return "<a href=\"#\" style='background:" + alternate_color + ";'  onclick=\" direct_info('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
+							return "<a href=\"#\" style='font-size: 1.6vw; background:" + alternate_color + ";'  onclick=\" display_short_list ();direct_info2('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
 						} else {
 							if (arg.item.videoType == 'SERIES')
 								{ 
 									
-									return "<a href=\"#\" style='background:" + alternate_color + ";'  onclick=\" direct_info('" + arg.item.videoType + "', "+ arg.item.id + ")\">" + window.localStorage.getItem('series_label') + ': ' + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+									return "<a href=\"#\" style='font-size: 1.6vw; background:" + alternate_color + ";'  onclick=\" display_short_list ();direct_info2('" + arg.item.videoType + "', "+ arg.item.id + ")\">" + window.localStorage.getItem('series_label') + ': ' + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
 								} else {
 									
-									return "<a href=\"#\" style='background:" + alternate_color + ";'  onclick=\" direct_info('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+									return "<a href=\"#\" style='font-size: 1.6vw; background:" + alternate_color + ";'  onclick=\" display_short_list (); direct_info2('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
 								}
 						}
 					},
@@ -439,7 +503,7 @@
 					},
 					"img.boxset2_list@style": function(arg) {
 						if (arg.item.boxedSets) 
-						{ return "position: relative; top: -1px; height: 21px; display: inline;";} else { return "display: none;";}
+						{ return "position: relative; top: -1px; height: 2.21vw; display: inline;";} else { return "display: none;";}
 					},
 					"img.rating2_list@src": function(arg) {
                        var output_rating = "pictures/ratings/dummy_rating.png";
@@ -453,7 +517,7 @@
 								if (rating[i].source == 'combined')
 								{
 									boucle = false;
-									output_rating = "pictures/ratings/rating_" + Math.round(rating[i].rating/10) + ".png"
+									output_rating = "pictures/ratings/star_rating/star" + Math.round(rating[i].rating/10) + ".png"
 								} 
 							}
 						}
@@ -482,7 +546,7 @@
                     },
 					"img.infobutton2_list@onclick": function(arg) {
 					//	cursor_position (); 
-                        return "direct_info('" + arg.item.videoType + "', " + arg.item.id + ")";
+                        return "direct_info2('" + arg.item.videoType + "', " + arg.item.id + ")";
                     },
 					"img.watched_small2_list@src": function(arg)
 					{
@@ -550,7 +614,22 @@
 				window.location.reload();
 		
 		}
-
+		function display_full_list ()
+		{
+			document.getElementById('container').style.top="150px";
+			document.getElementById('container').style.height="80%";
+			document.getElementById('full_list').style.top="110px";
+			document.getElementById('img_full_list').src="./pictures/down.png";
+			document.getElementById('img_full_list').attributes.getNamedItem("onclick").value = "display_short_list ()";
+		}
+		function display_short_list ()
+		{
+			document.getElementById('container').style.top="62vh";
+			document.getElementById('container').style.height="37%";
+			document.getElementById('full_list').style.top="58%";
+			document.getElementById('img_full_list').src="./pictures/up.png";
+			document.getElementById('img_full_list').attributes.getNamedItem("onclick").value = "display_full_list ()";
+		}
   //************************ LANGUAGE LOCAL SETTING *********************************************
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
 		function set_context_lang_value ()
@@ -600,14 +679,14 @@
 				break;
 				}
 			}
-	//		document.getElementsByClassName("playbutton_list")[0].title=window.localStorage.getItem('play_label').toLowerCase();
+			document.getElementsByClassName("playbutton_list")[0].title=window.localStorage.getItem('play_label').toLowerCase();
 	//		document.getElementsByClassName("infobutton_list")[0].title=window.localStorage.getItem('info_label').toLowerCase();
-	//		document.getElementsByClassName("rating_list")[0].title=window.localStorage.getItem('rating_label').toLowerCase();
-	//		document.getElementsByClassName("boxset_list")[0].title=window.localStorage.getItem('boxset_label').toLowerCase();
-	//		document.getElementsByClassName("playbutton2_list")[0].title=window.localStorage.getItem('play_label').toLowerCase();
+			document.getElementsByClassName("rating_list")[0].title=window.localStorage.getItem('rating_label').toLowerCase();
+			document.getElementsByClassName("boxset_list")[0].title=window.localStorage.getItem('boxset_label').toLowerCase();
+			document.getElementsByClassName("playbutton2_list")[0].title=window.localStorage.getItem('play_label').toLowerCase();
 	//		document.getElementsByClassName("infobutton2_list")[0].title=window.localStorage.getItem('info_label').toLowerCase();
-	//		document.getElementsByClassName("rating2_list")[0].title=window.localStorage.getItem('rating_label').toLowerCase();
-	//		document.getElementsByClassName("boxset2_list")[0].title=window.localStorage.getItem('boxset_label').toLowerCase();
+			document.getElementsByClassName("rating2_list")[0].title=window.localStorage.getItem('rating_label').toLowerCase();
+			document.getElementsByClassName("boxset2_list")[0].title=window.localStorage.getItem('boxset_label').toLowerCase();
 			
 		}
 		
@@ -621,7 +700,7 @@
 			<div class="poster_results" style="visibility: hidden; display:none;">
 				<table><tr><td class="Poster_Value"></td></tr></table>
 			</div>
-	<div class="index_header"> 
+	<div class="index_header" style="position: absolute;"> 
 			<a href="javascript:ouvre_prefered_page()" id="li_home_left" data-tip2="prefered page"></a>
 			<a id="info_config" data-tip2="info" href="javascript:ouvre_info_config()" ></a>
 			<div class="show_index"><span id="printsearch"></span></div>
@@ -630,7 +709,7 @@
 			</div>
 			 <!-- include navigation header after context return , page info and count return -->		
 			<div>
-				<object data="include_header_index_menu.html" type="text/html" id="my_header_menu" style="position: absolute; height: 60px; width: 100%; left: 0%; z-index:10;"></object>
+				<object data="include_header_index_menu.html" type="text/html" id="my_header_menu" ></object>
 			</div>
 		<div class="directplay" style="display:none">
 			<span class="filepath"></span>
@@ -638,29 +717,30 @@
             <!--Navigation Holder-->
         <div class="holder"></div>
 	</div>
-	
+	<div id="full_list"><img id="img_full_list" onclick="display_full_list()" src="./pictures/up.png" width="40px" /></div>
         <!--Data Items Container-->
-        <div id="container" >
-            <div id="yRow" class="row_list" style="position: relative; left: 0px; top: 10px; width: 95%; display: none;">
+        <div id="container" style="position: absolute; left: 17.5vw; top: 62vh; height: 37%; width: 82%; display: block; z-index:12;" >
+			
+            <div id="yRow" class="row_list">
                 <div id="yBlock" class="block_list" >
-					<img class="rating_list" title="rating" src="./pictures/vertical_ratings/dummy_rating.png" onclick="" alt="rating" style="display: inline; position: relative; height: 18px; top: -3px;"/>
-                    <img class="playbutton_list" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'" alt="next" title="play" style="display: inline;"></img>
+					<img class="rating_list" title="rating" src="./pictures/vertical_ratings/dummy_rating.png" onclick="" alt="rating"/>
+                    <img class="playbutton_list" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'" alt="next" title="play" ></img>
 					<img class="infobutton_list" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'" alt="info" title="info" style="display: none;"></img>
-					<img class="watched_small_list" src="pictures/empty.png" alt="watched" onmouseout="src='pictures/empty.png'" title="watch" width="21px" style="display: inline; margin-bottom: 2px;"></img> 
-                    <span class="title_list" style="display: inline; position: relative; top: -5px;"></span>
-					<img class="boxset_list" title="boxset" src="./pictures/no_set.png" onclick="" alt="boxset" style=""/>
-					<img class="not_done_list" src="pictures/icon_error.png" alt="status not done" title="status not done" style="position: relative; top: -34vw; left: 8.5vw; display: none;" style="display: none"></img> 
+					<img class="watched_small_list" src="pictures/empty.png" alt="watched" onmouseout="src='pictures/empty.png'" title="watch" ></img> 
+                    <span class="title_list" ></span>
+					<img class="boxset_list" title="boxset" src="./pictures/no_set.png" onclick="" alt="boxset" />
+					<img class="not_done_list" src="pictures/icon_error.png" alt="status not done" title="status not done" ></img> 
 				</div>
 			</div>
-			<div id="yRow" class="row2_list" style="position: relative; left: 0px; top: 10px; width: 95%; display: none;">
+			<div id="yRow" class="row2_list" >
 				<div id="yBlock" class="block_list" >
-					<img class="rating2_list" title="rating" src="./pictures/vertical_ratings/dummy_rating.png" onclick="" alt="rating" style="display: inline; position: relative; height: 18px; top: -3px;"/>
-					<img class="playbutton2_list" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'" alt="next" title="play" style="display: inline"></img>
+					<img class="rating2_list" title="rating" src="./pictures/vertical_ratings/dummy_rating.png" onclick="" alt="rating"/>
+					<img class="playbutton2_list" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'" alt="next" title="play" ></img>
 					<img class="infobutton2_list" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'" alt="info" title="info" style="display: none"></img>
-					<img class="watched_small2_list" src="pictures/empty.png" alt="watched" onmouseout="src='pictures/empty.png'" title="watch" width="21px" style="display: inline; margin-bottom: 2px;"></img>
-					<span class="title2_list" style="display: inline; position: relative; top: -5px;" ></span>
-					<img class="boxset2_list" title="boxset" src="./pictures/no_set.png" onclick="" alt="boxset" style=""/>				
-					<img class="not_done2_list" src="pictures/icon_error.png" alt="status not done" title="status not done" style="position: relative; top: -34vw; left: 8.5vw; display: none;" style="display: none"></img>
+					<img class="watched_small2_list" src="pictures/empty.png" alt="watched" onmouseout="src='pictures/empty.png'" title="watch" ></img> 
+					<span class="title2_list" ></span>
+					<img class="boxset2_list" title="boxset" src="./pictures/no_set.png" onclick="" alt="boxset" />				
+					<img class="not_done2_list" src="pictures/icon_error.png" alt="status not done" title="status not done"></img>
 					<br> 
 				</div>
 			</div>
@@ -681,8 +761,8 @@
 			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:1050px; height:320px;" allowTransparency="true"></iframe>
 		</div>
 	<!-- display detail  -->
-		<div id="detail_display" style="visibility: hidden;display:none; position: absolute; top: 40px; left: 36.8%;">		
-			<iframe src="" name="detail_frame" resizable="yes" id="detail_frame" scrolling="no" frameborder="1" style="overflow:hidden;  width:62.7vw; height:54.4vw;" allowTransparency="true"></iframe>
+		<div id="detail_display" style="visibility: hidden;display:none; position: absolute; top: 40px; z-index: 9; height: 189%; width: 198%">		
+			<iframe src="" name="detail_frame" resizable="yes" id="detail_frame" scrolling="no" frameborder="1" style="overflow:hidden;  width:50%; height:50%;" allowTransparency="true"></iframe>
 		</div>	
 	<!-- display Movie--> 
 		<div id="movie_display" style="visibility: hidden; ">

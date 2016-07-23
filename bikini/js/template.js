@@ -6,6 +6,7 @@
 	// display: add  <div id="sourceData"></div>  at the end of the body section 
 //**********************************************************************************************************
 	var StyleValue = "frame";
+	var Display_typeValue = "wall"
 	var NewValue = "30-file";
 	var Prefered_PageValue = "index_all";
 	var PagingValue = true;
@@ -170,8 +171,8 @@
 					$("#sort_title").css("visibility", "visible");
 					$("#sort_section").css("background", "grey");
 					$("#sort_section").css("outline", "2px solid black");
-					$("#sort_section").css("z-index", "10");
-					$("#sort_item").css("z-index", "9");
+					$("#sort_section").css("z-index", "15");
+					$("#sort_item").css("z-index", "15");
 					parent.document.getElementById('my_header_menu').style.height = '240px';
 					show_sorted = true;
 				}
@@ -199,8 +200,8 @@
 					
 					$("#watch_section").css("background", "grey");
 					$("#watch_section").css("outline", "2px solid black");
-					$("#watch_section").css("z-index", "10");
-					$("#watch_item").css("z-index", "9");
+					$("#watch_section").css("z-index", "15");
+					$("#watch_item").css("z-index", "15");
 					parent.document.getElementById('my_header_menu').style.height = '240px';
 					show_watched = true;
 				}
@@ -229,8 +230,8 @@
 					
 					$("#type_section").css("background", "grey");
 					$("#type_section").css("outline", "2px solid black");
-					$("#type_section").css("z-index", "12");
-					$("#type_item").css("z-index", "12");
+					$("#type_section").css("z-index", "15");
+					$("#type_item").css("z-index", "15");
 					parent.document.getElementById('my_header_menu').style.height = '240px';
 					show_type = true;
 				}
@@ -262,8 +263,8 @@
 					
 					$("#resolution_section").css("background", "grey");
 					$("#resolution_section").css("outline", "2px solid black");
-					$("#resolution_section").css("z-index", "10");
-					$("#resolution_item").css("z-index", "9");
+					$("#resolution_section").css("z-index", "15");
+					$("#resolution_item").css("z-index", "15");
 					parent.document.getElementById('my_header_menu').style.height = '340px';
 					show_resolution = true;
 				}
@@ -294,8 +295,8 @@
 					
 					$("#display_section").css("background", "grey");
 					$("#display_section").css("outline", "2px solid black");
-					$("#display_section").css("z-index", "12");
-					$("#display_item").css("z-index", "12");
+					$("#display_section").css("z-index", "15");
+					$("#display_item").css("z-index", "15");
 					parent.document.getElementById('my_header_menu').style.height = '240px';
 					show_display = true;
 				}
@@ -370,7 +371,9 @@
 				//		outputJson(dataWatched);
 					}
 				});
-				Watchedpopup = window.open("index.html", "_self","");
+				if (localStorage.getItem("display_type") == "wall")
+					{index_url = "index.html"} else {index_url = "index_list2.html"}
+				Watchedpopup = window.open(index_url, "_self","");
 				}
 		// display update icon on mouseover with watched_small
 		function animate_watched ()
@@ -513,24 +516,26 @@
 			{Prefered_PageValue = localStorage.getItem("prefered_page");}
 			else {localStorage.setItem("prefered_page", Prefered_PageValue);}
 			console.log("ouvre_prefered_page:  Prefered_PageValue:"+Prefered_PageValue);	
+			if (localStorage.getItem("display_type") == "wall")
+			{index_url = "index.html"} else {index_url = "index_list2.html"}
 			switch (Prefered_PageValue)
 					{
 					case 'index_all':
 						{
 							localStorage.setItem("indextype", "movie,series");				
-							Configpopup = window.open("index.html", "_self","");
+							Configpopup = window.open(index_url, "_self","");
 							break;
 						} 
 					case 'index_movie':
 						{
 							localStorage.setItem("indextype", "movie");							
-							Configpopup = window.open("index.html", "_self","");
+							Configpopup = window.open(index_url, "_self","");
 							break;
 						} 
 					case 'index_series':
 						{
 							localStorage.setItem("indextype", "series");								
-							Configpopup = window.open("index.html", "_self","");
+							Configpopup = window.open(index_url, "_self","");
 							break;
 						} 
 					case 'person':
@@ -569,14 +574,16 @@
 							break;
 						} 
 					case 'new':
-						{						
-							NewestSelection("index_New.html", localStorage.getItem("New"));
+						{	
+							if (window.localStorage.getItem ('display_type') == "wall") 
+								{url_new="index.html";} else {url_new="index_list2.html";}
+							NewestSelection(url_new, localStorage.getItem("New"));
 							break;
 						} 
 					default:
 						{
 							localStorage.setItem("indextype", "movie,series");				
-							Configpopup = window.open("index.html", "_self","");
+							Configpopup = window.open(index_url, "_self","");
 							break;
 						} 
 					return;
@@ -593,11 +600,18 @@
 	// open or change index page in parent windows
 		function open_parent_index(indextype, index_to_call)
 			{	
+				
+
+			if (parent.document.getElementById('detail_display')) 
+			{
 				display_parent_none_Id('detail_display');
 				parent.document.getElementById('detail_display').style.zIndex = "0";
+			}
 				localStorage.setItem("indextype", indextype);
-				console.log("open_parent_index with type: "+ indextype +" with index: " + index_to_call + " parent windows");
-					Indexpopup = window.open(index_to_call, "_parent", "");
+				console.log("open_parent_index with type: "+ indextype +" with index: " + index_to_call + " _parent windows");
+				Indexpopup = window.open(index_to_call, "_parent", "");
+				if (index_to_call.lastIndexOf('_list2') != -1) {Indexpopup.location.reload(true)}
+			
 			}
 	// open or change index page in a named windows
 		function open_name_index(indextype, index_to_call, windows_name)
@@ -734,6 +748,7 @@
 					window.localStorage.setItem("sort_indextype", sort_indextype);
 					console.log("refresh: " + url + " Sortindex: "+sort_indextype);
 					Indexpopup = window.open(url, "_parent","");
+					Indexpopup.location.reload(true);
 			}
 	// sort index page 
 		function SortDirection (direction, url)
@@ -741,41 +756,26 @@
 					window.localStorage.setItem("direction", direction);
 					console.log("refresh: " + url + " SortDirection: "+direction);
 					Indexpopup = window.open(url, "_parent","");
+					Indexpopup.location.reload(true);
 			}
+
 	// change display list or wall 
-		function ChangeDisplay (display_type)
+		function ChangeDisplay2 (display_type)
 			{		
-					
-					url = (parent.location.href.substring(parent.location.href.lastIndexOf('/') + 1));
-				//		console.log ("url: " + url + " url.lastIndexOf('.'): " + url.lastIndexOf('.'));
-					if (url.lastIndexOf('.') == -1) {url = 'index.htlm';}
-					if (display_type == '_list' && (url.lastIndexOf('_list') != -1) )
-					{
-					//	console.log ("display_type == '_list' && (url.lastIndexOf('_list') != -1)")
-						url = url;} 
-					if (display_type == '_list' && (url.lastIndexOf('_list') == -1) )
-					{
-					//	console.log ("display_type == '_list' && (url.lastIndexOf('_list') == -1)")
-					//	console.log ("url: " + url + " url.substring(0,url.lastIndexOf('.')): " + url.substring(0,url.lastIndexOf('.')));
-						url = url.substring(0,url.lastIndexOf('.')) + display_type + '.html';}	
-					if (display_type == '' && (url.lastIndexOf('_list') == -1) )
-					{
-					//	console.log ("display_type == '' && (url.lastIndexOf('_list') == -1)")
-						url = url;} 	
-					if (display_type == '' && (url.lastIndexOf('_list') != -1) )
-					{
-					//	console.log ("display_type == '' && (url.lastIndexOf('_list') != -1) ")
-						url = url.substring(0,url.lastIndexOf('_list')) + '.html';}	
-			
-					console.log("refresh with ChangeDisplay: " + display_type + " and call url:" + url);
-					Indexpopup = window.open(url, "_parent","");
+					if (display_type == "wall") 
+						{index_url="index.html";} else {index_url="index_list2.html";}
+					window.localStorage.setItem('display_type', display_type);
+					console.log("refresh with ChangeDisplay: " + display_type + " and call: " + index_url);
+					Indexpopup = window.open(index_url, "_parent","");
 			}
 	// change index page 
 		function ChangeIndex (indextype)
 			{		
 					window.localStorage.setItem("indextype", indextype);
 					console.log("Changeindex: "+indextype);
-					Indexpopup = window.open("index.html", "_parent","");
+					if (window.localStorage.getItem ("display_type") == "wall") 
+						{index_url="index.html";} else {index_url="index_list2.html";}
+					Indexpopup = window.open(index_url, "_parent","");
 			}
 	// watched selection 
 		function WatchedSelection (href_target, watchedselect)
@@ -783,6 +783,7 @@
 					window.localStorage.setItem("watched", watchedselect);
 					console.log("WatchedSelection: "+watchedselect);
 					Indexpopup = window.open(href_target, "_parent","");
+					Indexpopup.location.reload(true);
 			}
 	// resolution selection 
 		function ResolutionSelection (href_target, resolutionselect)
@@ -790,12 +791,13 @@
 					window.localStorage.setItem("resolution", resolutionselect);
 					console.log("ResolutionSelection: "+resolutionselect);
 					Indexpopup = window.open(href_target, "_parent","");
+					Indexpopup.location.reload(true);
 			}
 	// newest selection 
 		function NewestSelection (href_target, newestselect)
 			{		
 					window.localStorage.setItem("newest", newestselect);
-					console.log("NewestSelection: "+newestselect);
+					console.log("NewestSelection: "+newestselect+ " href_target:" + href_target);
 					Indexpopup = window.open(href_target, "_parent","");
 			}
 	// boxset selection 
@@ -875,7 +877,84 @@
 				console.log('set style:'+style_);
 				window.localStorage.setItem("Style", style_);
 			}
-			
+	
+
+	// fetch the display_type value in the local storage, value available : wall, _list2
+		function get_display_type()
+			{
+				if (window.localStorage.getItem("display_type"))
+				{
+					display_typevalue = window.localStorage.getItem("display_type");
+					console.log("get_style Style: " + display_typevalue);
+				}
+				else {get_display_type_();}
+			}
+	// fetch the display_type value in the config database , value available : wall, _list2
+		function get_display_type_()
+			{
+				var jsonDisplay_typeUrl = "/yamj3/api/config/list.json?config="+skin_value+"display_type&mode=any";
+				console.log("get_display_type jsonDisplay_typeUrl: " + jsonDisplay_typeUrl);
+				$.ajax({
+                   url: jsonDisplay_typeUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSkinDisplay_type)
+                   {
+						jsondata = dataSkinDisplay_type;
+				//		outputJson(dataSkinDisplay_type);
+						checkDisplay_type(dataSkinDisplay_type);
+						}
+					
+				});	
+			 return jsondata;
+		}
+		
+		function checkDisplay_type(yamjdata) {
+				var PN = {
+						"td.Value":  function(arg) {
+									if (arg.context.count) {
+										console.log("checkDisplay_type: "+arg.context.results[0].value);
+										set_Display_type_value(arg.context.results[0].value);
+										return arg.context.results[0].value;} else {
+										console.log("checkDisplay_type: no value found");
+										update_Display_type('wall');}
+								}								
+						};
+				$p('.results').render( yamjdata, PN );			
+			}	
+		
+	// update the display_type value in the config database, value available : wall, _list2
+		function update_Display_type(display_type_) 
+		{
+				var jsonDisplay_typeUrl = "/yamj3/api/config/update.json?key="+skin_value+"display_type&value="+display_type_+"";
+				console.log("update_Display_type jsonDisplay_typeUrl: " + jsonDisplay_typeUrl);
+				$.ajax({
+                   url: jsonDisplay_typeUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSkinDisplay_type)
+                   {
+						jsondata = dataSkinDisplay_type;
+					//	outputJson(dataSkinDisplay_type);
+						set_Display_type_value(display_type_);
+					}
+					
+				});	
+			 return jsondata;
+		}	
+
+	// set the rules to adjust display_type to the display_type choosen : value available : wall, _list2
+		function set_Display_type_value(display_type_)
+			{
+				Display_typeValue = display_type_;
+				console.log('set style:'+display_type_);
+				window.localStorage.setItem("display_type", display_type_);
+			}
+
+
+
+
+	
 	// fetch prefered certification in local storage : value available : DE, FR, GB, US
 		function get_prefered_certification()
 			{
@@ -1352,6 +1431,7 @@
 			get_paging_();
 			get_new_();
 			get_overlay_();
+			get_display_type_();
 			get_lang_();
 			window.location.reload();
 			
@@ -1398,7 +1478,17 @@
 			display_parent_Id('detail_display')
           
         }
-		
+	function direct_info2 (videoType,id ) 
+		{
+			// window.localStorage.setItem("indextype", videoType);
+			window.localStorage.setItem("single_indextype", videoType);
+            window.localStorage.setItem("id", id);
+            console.log("direct_info: " + videoType + "-" + id);	
+			parent.frames['detail_frame'].location.href='detail_frame_list.html';
+			display_parent_block_Id('detail_display');
+			display_parent_Id('detail_display')
+          
+        }
 	// called when it's a movie , prepare the play path and set the timer to confirm playing
 	function play_to_device(basefilename)
 			{
@@ -1725,18 +1815,27 @@
 			}
 	function open_boxset_index(boxsetid, boxsetname)
         {
-			localStorage.setItem("Boxset_id", boxsetid);
-			localStorage.setItem("Boxset_name", boxsetname);
-            console.log("navBoxset open_boxset_index Storing value: Boxset Id: " +boxsetid);
-			window.location.href="index_Boxset.html";
-			Mypopup.focus();
+			window.localStorage.setItem("categorytype", "boxset");
+			localStorage.setItem("boxset_name", boxsetid);
+			localStorage.setItem("boxset_text", boxsetname);
+            console.log("navBoxset open_boxset_index Storing value: Boxset Id: " + boxsetid + " Boxset name: " + boxsetname + " display_type:" + window.localStorage.getItem ("display_type"));
+			if (window.localStorage.getItem ("display_type") == "_list2")
+			{window.location.href="index_list2.html";} else {window.location.href="index.html";}
+
 		}
 	function open_rating_index(ratingsource, ratingvalue)
-        {
-			localStorage.setItem("Rating_source", ratingsource);
-			localStorage.setItem("Rating_value", ratingvalue);
-            console.log("navRating open_rating_index Storing value: Rating source: " + ratingsource + " Rating value: "+ ratingvalue);
-			window.location.href="index_Rating.html";
-		
+        {	
+			window.localStorage.setItem("categorytype", "rating");
+			localStorage.setItem("rating_name", ratingvalue + "-" + ratingsource);
+            console.log("navRating open_rating_index Storing value: Rating source: " + ratingsource + " Rating value: "+ ratingvalue + " display_type:" + window.localStorage.getItem ("display_type"));
+			if (window.localStorage.getItem ("display_type") == "_list2")
+			{window.location.href="index_list2.html";} else {window.location.href="index.html";}
 		}
-	
+	function switch_index_no_html()
+        {	
+		if (location.href.lastIndexOf('.html') == -1)
+			{ 
+				if (window.localStorage.getItem ('display_type') == "wall") 
+				{window.location.href="index.html";} else {window.location.href="index_list2.html";}
+			}
+		}

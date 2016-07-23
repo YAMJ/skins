@@ -18,6 +18,7 @@
 	<boxsetlabel>conjunto</boxsetlabel>
 	
 	<certificationlabel>certificacion</certificationlabel>
+	<certificationselect>certificacion</certificationselect>
 	<clicktodisplaywith>haga clic para ver videos con</clicktodisplaywith>
 	<closelabel>cierre</closelabel>
 	<closenavigationmenu>cierra el menu de navegacion</closenavigationmenu>
@@ -34,6 +35,8 @@
 	<descending>descendiente</descending>
 	<detailcomment>detalle</detailcomment>
 	<directorlabel>director</directorlabel>
+	<displaylabel>pantalla</displaylabel>
+	<displaycomment>pantalla pared o lista</displaycomment>
 	<downlabel>bajo</downlabel>
 	<downloadtext>descargar</downloadtext>
 	<duplicatetext>fundirse</duplicatetext>
@@ -73,6 +76,7 @@
 	<lastscancomment>fecha de la ultima actualizacion en yamj3</lastscancomment>
 	<lastscanlabel>ultima escanada</lastscanlabel>
 	<leftlabel>izquerda</leftlabel>
+	<listtext>lista</listtext>
 	
 	<menulabel>menu</menulabel>
 	<movielabel>película</movielabel>
@@ -121,6 +125,7 @@
 	
 	<ratinglabel>clasification</ratinglabel>
 	<ratingindex>clasification</ratingindex>
+	<ratingselect>clasification</ratingselect>
 	<redlabel>rojo</redlabel>
 	<remotelabel>mando a distancia</remotelabel>
 	<removetext>eliminar</removetext>
@@ -169,9 +174,11 @@
 	
 	<valuelabel>valor</valuelabel>
 	<videolabel>video</videolabel>
+	<videosourceselect>videosource</videosourceselect>
 	<volumedownlabel>vol-</volumedownlabel>
 	<volumeuplabel>vol+</volumeuplabel>
 	
+	<walltext>pared</walltext>
 	<watchedselect>non visto</watchedselect>
 	<writerlabel>escritor</writerlabel>
 	

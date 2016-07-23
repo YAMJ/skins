@@ -1,4 +1,8 @@
 change.txt
+v3.0.0
+- adjust rewrite all index and index_{categories} to apply wall and list 
+- adjust redisign list page 
+- adjust add a new skin setting (display_type) for wall or list default value
 V2.1.0
 - fix 'new' reset done when calling index research with series
 - fix cursor_position ()

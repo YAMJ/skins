@@ -66,6 +66,7 @@
 				get_poster_number ();
 				get_prefered_certification ();
 				get_overlay ();
+				get_display_type ();
 				
 				if (window.localStorage.getItem("skinset"))
 					{skin_set = window.localStorage.getItem("skinset");}
@@ -115,7 +116,6 @@
 				
 			}
 			
-//			document.getElementById("newSetted").innerHTML=window.localStorage.getItem("new_") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("New").substr(window.localStorage.getItem("New").indexOf('-') + 1);
 			document.getElementById("rowSetted").innerHTML=window.localStorage.getItem("nbofrow") + "&nbsp;"  + ":&nbsp;" + window.localStorage.getItem("RowperPage");
 			switch (window.localStorage.getItem("Style").toLowerCase())
 			{
@@ -190,9 +190,11 @@
 					}
 				}
 			
-//			document.getElementById("prefered_pageSetted").innerHTML=window.localStorage.getItem("page_label") + "&nbsp;" +window.localStorage.getItem("prefered_") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("prefered_page");
 			document.getElementById("configindex").innerHTML=window.localStorage.getItem("config_select").toUpperCase();
 			document.getElementById("prefered_certificationSetted").innerHTML=window.localStorage.getItem("certification_label") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("prefered_certification");
+			if (window.localStorage.getItem("display_type") == "wall")
+			{document.getElementById("display_typeSetted").innerHTML=window.localStorage.getItem("display_label") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("wall_text");}
+			else {document.getElementById("display_typeSetted").innerHTML=window.localStorage.getItem("display_label") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("list_text");}
 			document.getElementById("playerconfig").innerHTML=window.localStorage.getItem("player_select").toLowerCase() + "&nbsp;:" + window.localStorage.getItem("Player");
 			document.getElementById("playeripinfo").innerHTML="IP:&nbsp;" + window.localStorage.getItem("Player_Ip");
 			document.getElementById("playertypeinfo").innerHTML="Type:&nbsp;" + window.localStorage.getItem("Player_Type");
@@ -206,7 +208,7 @@
 		}
 		
  		</script>
-		<div id="close_icon" onclick="close_info_config()"><img src="./pictures/close2.png" style="height:40px; width:40px; position:absolute; top:2px; left:10px; z-index:10000;" /></div>
+		<div id="close_icon" onclick="close_info_config()" style="left:85%;" ><img src="./pictures/close2.png" style="height:40px; width:40px; position:absolute; top:2px; left:0px; z-index:10000;" /></div>
 		<!-- just added to set the language value, shouldn't be displayed  -->
 		<div class="results" style="visibility: hidden; display:none;">
 			<table><tr><td class="Value"></td></tr></table>
@@ -240,6 +242,7 @@
 								<tr class="tableinfo_config">
 									<td><div id="prefered_pageSetted"></div></td>
 									<td><div id="prefered_certificationSetted"></div></td>
+									<td><div id="display_typeSetted"></div></td>
 								</tr>
 								<tr class="tableinfo_config">
 									<td><div id="playerconfig"></div></td>

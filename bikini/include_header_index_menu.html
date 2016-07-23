@@ -42,9 +42,14 @@
 			if (parent.location.href.substring(parent.location.href.lastIndexOf('/') + 1) == 'index_Boxset.html')
 					{
 						$('#type_item').hide();
-					}	
-			if (parent.location.href.lastIndexOf('_list') != -1)
-			{$("#new_function").attr("href", "javascript:NewestSelection('index_list.html', window.localStorage.getItem('New'))");}
+					}
+			if (parent.location.href.lastIndexOf('_list2') != -1)
+			{$("#new_function").attr("href", "javascript:NewestSelection('index_list2.html', window.localStorage.getItem('New'))");}
+			else 
+			{
+				if (parent.location.href.lastIndexOf('_list') != -1)
+				{$("#new_function").attr("href", "javascript:NewestSelection('index_list.html', window.localStorage.getItem('New'))");}
+			}
 
 		}
 		 //************************ LANGUAGE LOCAL SETTING *********************************************
@@ -74,9 +79,9 @@
 			document.getElementById("fullhd_type").attributes.getNamedItem("data-tip-sort").value="fullhd 1281p => 1920p";
 			document.getElementById("4k_type").attributes.getNamedItem("data-tip-sort").value="4k 1921p => 3840p";
 			document.getElementById("8k_type").attributes.getNamedItem("data-tip-sort").value="8k 3841p => 7680p";
-			document.getElementById("list").attributes.getNamedItem("data-tip-sort").value="list";
-			document.getElementById("wall").attributes.getNamedItem("data-tip-sort").value="wall";
-			document.getElementById("display_item").attributes.getNamedItem("data-tip-item").value="display";
+			document.getElementById("list").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('list_text').toLowerCase();
+			document.getElementById("wall").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('wall_text').toLowerCase();
+			document.getElementById("display_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('display_label').toLowerCase();
 			
 					var watched_method = "all";
 					var direction = "ASC";
@@ -261,46 +266,46 @@
 			<div id="index_tools_index" >			
 
 						<ul id="search_section">
-							<a id="search_function" style="left: 0vw; z-index: 10;" data-tip-search="search" href="javascript:ouvre_parent_popup_search(StyleValue, false)">
-								<img src="pictures/find.png" style="height: 2.2vw; width: 2.4vw;"  alt="find" />
+							<a id="search_function" data-tip-search="search" href="javascript:ouvre_parent_popup_search(StyleValue, false)">
+								<img src="pictures/find.png"  alt="find" />
 							</a>
 						</ul>
 						<ul id="new_section">
-							<a id="new_function" style="left: 1vw;" data-tip-search="new" href="javascript:NewestSelection('index_New.html', window.localStorage.getItem('New'))"><img src="pictures/new.png" alt="newest" style="left: 0px; width: 3.2vw; height: 2.2vw;" /></a>
+							<a id="new_function" data-tip-search="new" href="javascript:NewestSelection('index.html', window.localStorage.getItem('New'))"><img src="pictures/new.png" alt="newest" /></a>
 						</ul>
 						<ul id="watch_section">
-							<li><a id="watched_item" data-tip-item="watched"><img src="pictures/watched_unwatched_sort.png" alt="allwatched" style="height: 2.2vw;" onclick="toggle_show_watched()" /></a></li>							
+							<li><a id="watched_item" data-tip-item="watched"><img src="pictures/watched_unwatched_sort.png" alt="allwatched" onclick="toggle_show_watched()" /></a></li>							
 							<li><a id="watched_all" data-tip-sort="watched all" href="javascript:WatchedSelection(parent.location.href, 'all')"><img src="pictures/watched_unwatched_sort.png" alt="allwatched" /></a></li>
 							<li><a id="watched_true" data-tip-sort="watched" href="javascript:WatchedSelection(parent.location.href, 'true')"><img src="pictures/watched_sort.png" alt="watched" /></a></li>
 							<li><a id="watched_false" data-tip-sort="unwatched"  href="javascript:WatchedSelection(parent.location.href, 'false')"><img src="pictures/unwatched_sort.png"  alt="unwatched" /></a></li>
 						</ul>
 						<ul  id="sort_section">
-							<li><a id="sort_item" data-tip-item="sort" alt="sort"><img  src="pictures/sort.png" style="height: 2.2vw; width: 2.9vw" onclick="toggle_show_sort()"/></a></li>
+							<li><a id="sort_item" data-tip-item="sort" alt="sort"><img  src="pictures/sort.png" onclick="toggle_show_sort()"/></a></li>
 							<li><a id="sort_desc" data-tip-sort="descending" href="javascript:SortDirection('DESC',parent.location.href)" ><img src="pictures/sort_desc.png" alt="sort_desc" /></a></li>
 							<li><a id="sort_asc" data-tip-sort="ascending" href="javascript:SortDirection('ASC',parent.location.href)" ><img src="pictures/sort_asc.png" alt="sort_asc"/></a></li>
 							<li><a id="sort_year" data-tip-sort="year" href="javascript:SortIndex('videoYear,createTimestamp',parent.location.href)" ><img src="pictures/year_sort.png" alt="sort_year" /></a></li>
 							<li><a id="sort_title" data-tip-sort="title" href="javascript:SortIndex('title',parent.location.href)" ><img src="pictures/title_sort.png" alt="sort_title"/></a></li>
 						</ul>
 						<ul id="type_section" >
-							<li><a id="type_item" data-tip-item="type" alt="type"><img  src="pictures/home_movies.png" style="height: 2.4vw; width: 3.1vw;" onclick="toggle_show_type()"/></a></li>
-							<li><a id="movie_series_type" style="visibility: hidden;" data-tip-sort="movie,series" href="javascript:open_parent_index('movie,series', parent.location.href)"><img src="pictures/icon/home_all_rv8.png" height="45" width="45" alt="tv movie"/><a></li>
-							<li><a id="movie_type" style="visibility: hidden;" data-tip-sort="movie" href="javascript:open_parent_index('movie', parent.location.href)"><img src="pictures/icon/home_movies_rv8.png" height="45x" width="45" alt="movie"/></a></li>
-							<li><a id="series_type" style="visibility: hidden;" data-tip-sort="series" href="javascript:open_parent_index('series', parent.location.href)"><img src="pictures/icon/home_tv_shows_rv8.png" height="45" width="45" alt="tv" /></a></li>
-							<li><a id="season_type" style="visibility: hidden;" data-tip-sort="season" href="javascript:open_parent_index('season', parent.location.href)"><img src="pictures/icon/home_apps_rv8.png" height="45" width="45" alt="season" /></a></li>
+							<li><a id="type_item" data-tip-item="type" alt="type"><img  src="pictures/home_movies.png"  onclick="toggle_show_type()"/></a></li>
+							<li><a id="movie_series_type" style="visibility: hidden;" data-tip-sort="movie,series" href="javascript:open_parent_index('movie,series', parent.location.href)"><img src="pictures/icon/home_all_rv8.png" alt="tv movie"/><a></li>
+							<li><a id="movie_type" style="visibility: hidden;" data-tip-sort="movie" href="javascript:open_parent_index('movie', parent.location.href)"><img src="pictures/icon/home_movies_rv8.png" alt="movie"/></a></li>
+							<li><a id="series_type" style="visibility: hidden;" data-tip-sort="series" href="javascript:open_parent_index('series', parent.location.href)"><img src="pictures/icon/home_tv_shows_rv8.png" alt="tv" /></a></li>
+							<li><a id="season_type" style="visibility: hidden;" data-tip-sort="season" href="javascript:open_parent_index('season', parent.location.href)"><img src="pictures/icon/home_apps_rv8.png" alt="season" /></a></li>
 						</ul>
 						<ul id="resolution_section" >
-							<li><a id="resolution_item" data-tip-item="resolution" alt="resolution"><img  src="pictures/resolution/resolution.png" style="height: 2.4vw; width: 3.1vw;" onclick="toggle_show_resolution()"/></a></li>
-							<li><a id="all_resolution_type" style="visibility: hidden;" data-tip-sort="all_resolution" href="javascript:ResolutionSelection(parent.location.href, 'all')"><img src="pictures/resolution/all_resolution.png" height="20" width="45" alt="all resolution"/><a></li>
-							<li><a id="sd_type" style="visibility: hidden;" data-tip-sort="sd_resolution" href="javascript:ResolutionSelection(parent.location.href, 'sd')"><img src="pictures/resolution/sd.png" height="20" width="45" alt="sd"/><a></li>
-							<li><a id="hd_type" style="visibility: hidden;" data-tip-sort="hd_resolution" href="javascript:ResolutionSelection(parent.location.href, 'hd')"><img src="pictures/resolution/hd.png" height="20" width="45" alt="hd"/></a></li>
-							<li><a id="fullhd_type" style="visibility: hidden;" data-tip-sort="fullhd_resolution" href="javascript:ResolutionSelection(parent.location.href, 'fullhd')"><img src="pictures/resolution/fullhd.png" height="20" width="45" alt="fullhd" /></a></li>
-							<li><a id="4k_type" style="visibility: hidden;" data-tip-sort="4k_resolution" href="javascript:ResolutionSelection(parent.location.href, '4k')"><img src="pictures/resolution/4k.png" height="20" width="45" alt="4k" /></a></li>
-							<li><a id="8k_type" style="visibility: hidden;" data-tip-sort="8k_resolution" href="javascript:ResolutionSelection(parent.location.href, '8k')"><img src="pictures/resolution/8k.png" height="20" width="45" alt="8k" /></a></li>
+							<li><a id="resolution_item" data-tip-item="resolution" alt="resolution"><img  src="pictures/resolution/resolution.png" onclick="toggle_show_resolution()"/></a></li>
+							<li><a id="all_resolution_type" style="visibility: hidden;" data-tip-sort="all_resolution" href="javascript:ResolutionSelection(parent.location.href, 'all')"><img src="pictures/resolution/all_resolution.png" alt="all resolution"/><a></li>
+							<li><a id="sd_type" style="visibility: hidden;" data-tip-sort="sd_resolution" href="javascript:ResolutionSelection(parent.location.href, 'sd')"><img src="pictures/resolution/sd.png" alt="sd"/><a></li>
+							<li><a id="hd_type" style="visibility: hidden;" data-tip-sort="hd_resolution" href="javascript:ResolutionSelection(parent.location.href, 'hd')"><img src="pictures/resolution/hd.png" alt="hd"/></a></li>
+							<li><a id="fullhd_type" style="visibility: hidden;" data-tip-sort="fullhd_resolution" href="javascript:ResolutionSelection(parent.location.href, 'fullhd')"><img src="pictures/resolution/fullhd.png" alt="fullhd" /></a></li>
+							<li><a id="4k_type" style="visibility: hidden;" data-tip-sort="4k_resolution" href="javascript:ResolutionSelection(parent.location.href, '4k')"><img src="pictures/resolution/4k.png" alt="4k" /></a></li>
+							<li><a id="8k_type" style="visibility: hidden;" data-tip-sort="8k_resolution" href="javascript:ResolutionSelection(parent.location.href, '8k')"><img src="pictures/resolution/8k.png" alt="8k" /></a></li>
 						</ul>
 						<ul id="display_section" >
-							<li><a id="display_item" data-tip-item="display" alt="display"><img  src="pictures/icon/home.png" style="height: 2.7vw; width: 3.1vw;" onclick="toggle_show_display()"/></a></li>
-							<li><a id="list" style="visibility: hidden;" data-tip-sort="list" href="javascript:ChangeDisplay('_list')"><img src="pictures/icon/home_all_rv8.png" height="45" width="45" alt="list"/><a></li>
-							<li><a id="wall" style="visibility: hidden;" data-tip-sort="wall" href="javascript:ChangeDisplay('')"><img src="pictures/icon/home_movies_rv8.png" height="45x" width="45" alt="wall"/></a></li>
+							<li><a id="display_item" data-tip-item="display" alt="display"><img  src="pictures/icon/home.png" onclick="toggle_show_display()"/></a></li>
+							<li><a id="list" style="visibility: hidden;" data-tip-sort="list" href="javascript:ChangeDisplay2('_list2')"><img src="pictures/icon/home_all_rv8.png" alt="list"/><a></li>
+							<li><a id="wall" style="visibility: hidden;" data-tip-sort="wall" href="javascript:ChangeDisplay2('wall')"><img src="pictures/icon/home_movies_rv8.png" alt="wall"/></a></li>
 						</ul>
 			</div>	
 </body>

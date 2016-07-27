@@ -1,4 +1,7 @@
 change.txt
+V3.0.1
+- add person list 
+- add sort selector to person 
 v3.0.0
 - adjust rewrite all index and index_{categories} to apply wall and list 
 - adjust redisign list page 

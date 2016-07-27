@@ -21,12 +21,20 @@
 		<!-- used for iscroll special -->
 		<script type="text/javascript" src="js/iscroll.js"></script>
     </head>
-    <body onload="getIndexData();">
+    <body onload="getIndexData_Header();setTimeout(function(){getIndexData_1()}, 20); setTimeout(function(){getIndexData_2()}, 1000);">
         <script type="text/javascript">
 
 //***************************************************************************************
-        var show_sorted = false;
+        var jsonUrl = ""; 
+		var jsonUrl_1 = "";
+		var jsonUrl_2 = "";
+		var jsonUrlHeader = ""; 
+		var show_sorted = false;
 		var show_display = false;
+		var previous_photo_id = "person_photo_test";
+		var first_display = true;
+		var alternate = 0;
+		var alternate_color = "black";
 		var perPageValue = 48;
         var jsondata = null;
 		var Prefered_PageValue = "index_all";
@@ -66,67 +74,17 @@
 				console.log ("parent.location.href.lastIndexOf('_list')" + parent.location.href.lastIndexOf('_list'))
 				if (parent.location.href.lastIndexOf('_list') == -1)
 				{display_type = "";} else {display_type = "_list";}	
+		
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
         // img.Poster@src replaces the "src" attribute of the img.Poster
-		var COUNT_HEADER = {
-                'span.ReturnCount': function(arg) {	
-					// as IE doesn't work with more than 2500 item, need to split the request with package of 2500 people
-					// to display the real range of people, there is several goodies and temp value 
-					// current_cout need to be stored to know what to display before to store and get the next range of people 
-					// current_pos is the variable where is stored the absolute position in the totalcount of selected people 
-					console.log("current_count value before store_count: "+ current_count);
-					temp_current = current_count; 
-					current_count_for_refresh = current_count;
-					if (temp_current == -1) {temp_current = 1;}
-					store_count (arg.context.count, arg.context.totalCount);
-					if (temp_current == 1 && current_count == -1)
-						{display_count =  arg.context.count+' '+window.localStorage.getItem("results_text")+' /' +arg.context.totalCount;}
-						else {
-							display_count = window.localStorage.getItem("results_text")+' '+ temp_current +'-'+current_pos+'/' +arg.context.totalCount;
-							}
-					 console.log("current_count value after store_count: "+ current_count);
-					return display_count;
-					}
-            };	
-        var LIST_DIR = {
-            "div.person_block": {
-                "result<-results": {
-                    "span.person_name": function(arg) {
-					//	check_duplicated (arg.item.id, arg.item.name);
-						return arg.item.name;
-						},
-                    "img.person_photo@src": function(arg) {
-                        // Check to see if there are posters
-
-						var temp_return = "pictures/dummy_photo.jpg";
-                        if (arg.item.artwork) {
-
-					//  assume the new artworksortdir return the last photo stored 
-							temp_return =  arg.context.basePhotoUrl + arg.item.artwork[0].filename;
-						} else {} 
-						
-						return temp_return; // now return the result 
-                    },
-                    "img.person_photo@onclick": function(arg) {
-                        return "open_person_popup('" + arg.item.id + "', 'close')";
-                    },
-					"form.duplicate_person@onclick": function(arg) {
-						var temp_name = arg.item.name.replace(/\'/g, "");
-						 return "input_duplicated_person ('" + arg.item.id + "', '" + temp_name + "')";
-					}
-                }
-            }
-        };
-		
-		
 	
-    
+
         // This function calls the API to get the JSON data.
         // It will then update the HTML with the data and set up the paging
-        function getIndexData()
+        function getIndexData_Header()
         {
-
+	
 			// fill all value according to language setting - from yamjv3_lang_{lang}.xml
 			get_lang();
 			get_style();
@@ -150,8 +108,9 @@
 			else {
 					$('#sort_desc img').css('background-color', 'green');
 					$('#sort_asc img').css('background-color', '');
-				}			
-            var jsonUrl = "/yamj3/api/index/person.json?sortdir="+direction+"&dataitems=artwork&artwork=photo&artworksortdir=DESC";
+				}
+			 jsonUrlHeader = "/yamj3/api/index/person.json?";	
+             jsonUrl = "/yamj3/api/index/person.json?sortdir="+direction+"&dataitems=artwork&artwork=photo&artworksortdir=DESC";
 		
 			if (window.localStorage.getItem("search_index"))
 				{
@@ -181,47 +140,195 @@
 									break;
 							}	
 					
-					jsonUrl = jsonUrl + "&search=" + search_selection;		
+					jsonUrl = jsonUrl + "&search=" + search_selection;	
+					jsonUrlHeader = jsonUrlHeader + "&search=" + search_selection;
 					window.localStorage.setItem("search_index", "");	
 				}	else {
 					selected_index = window.localStorage.getItem("person_label") ;
-					
 					// by default sort on name ascending 
 					jsonUrl = jsonUrl + "&sortby=name";
+					jsonUrlHeader = jsonUrlHeader + "&sortby=name";
 				//	+ " (" +window.localStorage.getItem("selection_text")+ ")";
 						}
 				selected_index += "&nbsp;" + window.localStorage.getItem(direction.toLowerCase()+'_label') ;
 				$('#printsearch').html(selected_index);
 				localStorage.setItem("current_jsonUrl", jsonUrl);
 			// allow to split the request with several request less than 2500 values 
-				jsonUrl = jsonUrl + "&start=" + current_count+"&max=" + max_count; 
-				console.log("index_person  URL: " + jsonUrl);			
+				max_count_1 = 50; 
+				jsonUrl_1 = jsonUrl + "&start=" + current_count+"&max=" + max_count_1;
+				current_count_2 = (parseInt(current_count, 10) + 50);
+				max_count_2 = max_count - 51;
+				jsonUrl_2 = jsonUrl + "&start=" + current_count_2 +"&max=" + max_count_2;
+				jsonUrlHeader = jsonUrlHeader + "&start=" + current_count+"&max=" + max_count; 
+				console.log("index_person  URL Header: " + jsonUrlHeader);			
 
             $.ajax({
-                url: jsonUrl,
+                url: jsonUrlHeader,
                 async: false,
                 dataType: 'jsonp',
                 'success': function(data)
                 {
                     jsondata = data;
 				//	 outputJson(data); 	
-                    updateHtml(data);
+                    updateHtml_Header(data);
                     if (window.localStorage.getItem("Paging") == 'true') { 	
 						pageData(perPageValue);}
                 }
             });
-            return jsondata;
+            return ;
+        }
+      function getIndexData_1()
+        {
+				
+				console.log("index_person  URL 1: " + jsonUrl_1);			
+
+            $.ajax({
+                url: jsonUrl_1,
+                async: false,
+                dataType: 'jsonp',
+                'success': function(data)
+                {
+                    jsondata = data;
+				//	 outputJson(data); 	
+                    updateHtml_1(data);
+                    if (window.localStorage.getItem("Paging") == 'true') { 	
+						pageData(perPageValue);}
+                }
+            });
+            return ;
+        }
+      function getIndexData_2()
+        {
+				console.log("index_person  URL 2: " + jsonUrl_2);			
+
+            $.ajax({
+                url: jsonUrl_2,
+                async: false,
+                dataType: 'jsonp',
+                'success': function(data)
+                {
+                    jsondata = data;
+				//	 outputJson(data); 	
+                    updateHtml_2(data);
+                    if (window.localStorage.getItem("Paging") == 'true') { 	
+						pageData(perPageValue);}
+                }
+            });
+            return ;
         }
 
+
         // Run the pure.js function to render the data into the HTML template
-        // div.row_person is the part of the template to apply it too.
-        // "row_person" is a CLASS attribute, not the id.
-        function updateHtml(yamjdata)
+        // div.row_list is the part of the template to apply it too.
+        // "row_list" is a CLASS attribute, not the id.
+        function updateHtml_Header(yamjdata)
         {	
+		var COUNT_HEADER = {
+                'span.ReturnCount': function(arg) {	
+					// as IE doesn't work with more than 2500 item, need to split the request with package of 2500 people
+					// to display the real range of people, there is several goodies and temp value 
+					// current_cout need to be stored to know what to display before to store and get the next range of people 
+					// current_pos is the variable where is stored the absolute position in the totalcount of selected people 
+					console.log("current_count value before store_count: "+ current_count);
+					temp_current = current_count; 
+					current_count_for_refresh = current_count;
+					if (temp_current == -1) {temp_current = 1;}
+					store_count (arg.context.count, arg.context.totalCount);
+					if (temp_current == 1 && current_count == -1)
+						{display_count =  arg.context.count+' '+window.localStorage.getItem("results_text")+' /' +arg.context.totalCount;}
+						else {
+							display_count = window.localStorage.getItem("results_text")+' '+ temp_current +'-'+current_pos+'/' +arg.context.totalCount;
+							}
+					 console.log("current_count value after store_count: "+ current_count);
+					return display_count;
+					}
+            };	
 			$p('.count_return').render(yamjdata, COUNT_HEADER);	
-            $p('div.row_person').render(yamjdata, LIST_DIR);
+
         }
-	
+	    function updateHtml_1(yamjdata)
+        {
+			 
+	    var LIST_DIR_1 = {
+            "div.person_block": {
+                "result<-results": {
+                    "span.title_list": function(arg) {
+						alternate += 1;
+						if (alternate%2 == 0)
+							{alternate_color = "grey"} else {alternate_color = "black"}
+						if (first_display) 
+							{
+								first_display = false;
+								open_person_popup(arg.item.id, 'close');
+								return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:" + alternate_color + ";' onclick=\" open_person_popup("+ arg.item.id + ", 'close') \">" + arg.item.name + "</a>"
+							}
+						return "<a href=\"#\" style='font-size: 1.6vw; background:" + alternate_color + ";' onclick=\" open_person_popup("+ arg.item.id + ", 'close') \">" + arg.item.name + "</a>"
+						},
+                 "img.person_photo@src": function(arg) {
+                        // Check to see if there are posters
+
+						var temp_return = "pictures/dummy_photo.jpg";
+                        if (arg.item.artwork) {
+
+					//  assume the new artworksortdir return the last photo stored 
+							temp_return =  arg.context.basePhotoUrl + arg.item.artwork[0].filename;
+						} else {} 
+						
+						return temp_return; // now return the result 
+                    },
+                    "img.person_photo@onclick": function(arg) {
+                        return "open_person_popup('" + arg.item.id + "', 'close')";
+                    }
+//					"form.duplicate_person@onclick": function(arg) {
+//						var temp_name = arg.item.name.replace(/\'/g, "");
+//						 return "input_duplicated_person ('" + arg.item.id + "', '" + temp_name + "')";
+//					}
+				}
+			}            
+        };
+    
+            $p('div.row_list1').render(yamjdata, LIST_DIR_1);
+			$('#give_focus').focus();
+        }
+		function updateHtml_2(yamjdata)
+        {	
+		 
+	    var LIST_DIR_2 = {
+            "div.person_block": {
+                "result<-results": {
+                    "span.title_list": function(arg) {
+						alternate += 1;
+						if (alternate%2 == 0)
+							{alternate_color = "grey"} else {alternate_color = "black"}
+						
+						return "<a href=\"#\" style='font-size: 1.6vw; background:" + alternate_color + ";' onclick=\" open_person_popup("+ arg.item.id + ", 'close') \">" + arg.item.name + "</a>"
+						},
+                 "img.person_photo@src": function(arg) {
+                        // Check to see if there are posters
+
+						var temp_return = "pictures/dummy_photo.jpg";
+                        if (arg.item.artwork) {
+
+					//  assume the new artworksortdir return the last photo stored 
+							temp_return =  arg.context.basePhotoUrl + arg.item.artwork[0].filename;
+						} else {} 
+						
+						return temp_return; // now return the result 
+                    },
+                    "img.person_photo@onclick": function(arg) {
+                        return "open_person_popup('" + arg.item.id + "', 'close')";
+                    }
+//					"form.duplicate_person@onclick": function(arg) {
+//						var temp_name = arg.item.name.replace(/\'/g, "");
+//						 return "input_duplicated_person ('" + arg.item.id + "', '" + temp_name + "')";
+//					}
+				}
+			}            
+        };
+    
+            $p('div.row_list2').render(yamjdata, LIST_DIR_2);
+		
+        }
 		function SetIndexData (search)
 		{		
 				localStorage.setItem("search_index", search);
@@ -384,7 +491,12 @@
 			localStorage.setItem('nextcurrent_count', current_count_for_refresh);
 			if (need_refresh) {call_personindex('_self');}
 		}
-	
+		function display_photo (photo_id)
+		{
+			display_none_Id (previous_photo_id);
+			display_block_Id (photo_id);
+			previous_photo_id = photo_id;
+		}
 //************************ LANGUAGE LOCAL SETTING *********************************************		
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting
 		function set_context_lang_value ()
@@ -393,6 +505,9 @@
 			document.getElementById("next_icon").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('next_remote_label').toLowerCase();
 			document.getElementById("prev_icon").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prev_remote_label').toLowerCase();
 			document.getElementById("search_item").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('search_select').toLowerCase();
+			document.getElementById("list").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('list_text').toLowerCase();
+			document.getElementById("wall").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('wall_text').toLowerCase();
+			document.getElementById("display_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('display_label').toLowerCase();
 			document.getElementById("sort_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('sort_label').toLowerCase();
 			document.getElementById("sort_asc").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('asc_label').toLowerCase();
 			document.getElementById("sort_desc").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('desc_label').toLowerCase();
@@ -473,6 +588,7 @@
 				<li><a id="sort_asc" data-tip-sort="ascending" href="javascript:SortDirection('ASC',parent.location.href)" ><img src="pictures/sort_asc.png" alt="sort_asc"/></a></li>
 			</ul>
 		</div>
+			
 		<!--Navigation Holder-->
          <div class="holder"></div>
         <!--Data Items Container-->
@@ -481,20 +597,31 @@
 	<div >
       <object data="include_left_menu.html" type="text/html" id="my_left_menu"></object>
     </div>
-	<div id="container" >
-            <div id="yRow" class="row_person">
-                <div id="yBlock" class="person_block">
-                    <img class="person_photo" src="./pictures/dummy_photo.png" alt="photo"><br>
-					<form class="duplicate_person" name="duplicate_form" style="position:relative; top: -16vh; left: -2.5vw">
+	<div id="container"  >
+		 <div id="yRow" class="row_list1" style="width:99.3%; margin: 0px; overflow-x: hidden; display: inherit;">
+                <div id="yBlock" class="person_block" style="display: block; border: inherit; width: 100%; height: 2.8vw; float:inherit; background: inherit; text-align: left; overflow: hidden;" >             
+	<!--				<form class="duplicate_person" name="duplicate_form" style="position:relative; top: -16vh; left: -2.5vw;display: none;">
 						<input type="checkbox" name="duplicated_name" value="person_id">
-					</form>
-                    <span class="person_name"></span>
+					</form> -->
+                    <img class="person_photo" src="./pictures/dummy_photo.png" alt="photo" style="height: 30px; width: 20px; top: 5px;" />
+
+                    <span class="title_list" style="top: 0px;"></span>
                 </div>
-                <br />
-            </div>
-        </div>
+		</div>
+			<div id="yRow" class="row_list2" style="width:99.3%; margin: 0px; overflow-x: hidden; top: 0px;">
+				<div id="yBlock" class="person_block" style="display: block; border: inherit; width: 100%; height: 2.8vw; float:inherit; background: inherit; text-align: left; overflow: hidden;" >             
+	<!--				<form class="duplicate_person" name="duplicate_form" style="position:relative; top: -16vh; left: -2.5vw;display: none;">
+						<input type="checkbox" name="duplicated_name" value="person_id">
+					</form> -->
+                    <img class="person_photo" src="./pictures/dummy_photo.png" alt="photo" style="height: 30px; width: 20px; top: 5px;" />
+
+                    <span class="title_list" style="top: 0px;"></span>
+                </div>
+			</div>
+    </div>
+	
 	<!-- display config -->
-		<div id="target_display" style="visibility: hidden; ">		
+		<div id="target_display" style="visibility: hidden; left: initial;">		
 			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:1050px; height:320px;" allowTransparency="true"></iframe>
 		</div>	
 	<!-- display Movie -->

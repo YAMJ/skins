@@ -84,16 +84,14 @@
 		if (localStorage.getItem("categorytype"))
 			{category_type = localStorage.getItem("categorytype");
 			localStorage.setItem("categorytype", "index_list2");
-			console.log ("index_list2 category type :" + category_type );
 			} else 
 			{category_type = "index_list2";
 			localStorage.setItem("categorytype", "index_list2");
-			console.log ("index category type :" + category_type );
 			}
+		console.log ("index previous category_type :" + category_type );
 		if (localStorage.getItem(category_type + "_name"))
-			{category_name = localStorage.getItem(category_type + "_name");
-			console.log ("index_list2 category name :" + category_name );
-			}
+			{category_name = localStorage.getItem(category_type + "_name");} 
+		console.log ("index_list2 category name :" + category_name );
 		// get the watched method 
 		if (localStorage.getItem("watched"))
 			{watched_method = localStorage.getItem("watched");}
@@ -408,8 +406,8 @@
 					}
 					selected_index = selected_index + temp_new_string;
 					
-				if (category_type != '' && category_type != "index" && category_type != "index_list2")
-				{
+				if (category_type == '' | category_type == "index" | category_type == "index_list2" | category_type == "person")
+				{} else {
 					jsonUrl += "&include=" + category_type + "-" + category_name;
 					jsonUrlheader += "&include=" + category_type + "-" + category_name;
 					if (category_type == "Certification")

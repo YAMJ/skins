@@ -41,8 +41,7 @@
 					{			
 				//		document.getElementById(Id_to_nodisplay).style.visibility="hidden";
 				console.log("display_none_Id: "+Id_to_nodisplay);
-				var tempid = "#"+Id_to_nodisplay;
-				$(tempid).css('display', 'none');
+				document.getElementById(Id_to_nodisplay).style.display="none";
 					}
 	// display block the Id selected 
 		function display_block_Id(Id_to_display)
@@ -173,7 +172,8 @@
 					$("#sort_section").css("outline", "2px solid black");
 					$("#sort_section").css("z-index", "15");
 					$("#sort_item").css("z-index", "15");
-					parent.document.getElementById('my_header_menu').style.height = '240px';
+					if (window.localStorage.getItem('categorytype') == 'person' && window.localStorage.getItem('display_type') == "_list2")
+						{} 	else {parent.document.getElementById('my_header_menu').style.height = '240px';}
 					show_sorted = true;
 				}
 			else
@@ -184,8 +184,8 @@
 					$("#sort_title").css("visibility", "hidden");
 					$("#sort_section").css("background", "none");
 					$("#sort_section").css("outline", "none");
-					parent.document.getElementById('my_header_menu').style.height = '60px';
-				
+					if (window.localStorage.getItem('categorytype') == 'person' && window.localStorage.getItem('display_type') == "_list2")
+						{} else {	parent.document.getElementById('my_header_menu').style.height = '60px';}			
 					show_sorted = false;
 				}
 		}
@@ -297,7 +297,9 @@
 					$("#display_section").css("outline", "2px solid black");
 					$("#display_section").css("z-index", "15");
 					$("#display_item").css("z-index", "15");
-					parent.document.getElementById('my_header_menu').style.height = '240px';
+					if (window.localStorage.getItem('categorytype') == 'person' && window.localStorage.getItem('display_type') == "_list2")
+						{}
+					 else {parent.document.getElementById('my_header_menu').style.height = '240px';}
 					show_display = true;
 				}
 			else
@@ -307,7 +309,9 @@
 					
 					$("#display_section").css("background", "none");
 					$("#display_section").css("outline", "none");
-					parent.document.getElementById('my_header_menu').style.height = '60px';
+					if (window.localStorage.getItem('categorytype') == 'person' && window.localStorage.getItem('display_type') == "_list2")
+						{}
+					 else {parent.document.getElementById('my_header_menu').style.height = '60px';}
 					show_display = false;
 				}
 		}
@@ -665,7 +669,8 @@
 		function call_personindex(page_to_set)
 			{
 				console.log("call_personindex: page to set=" + page_to_set);
-				Indexpopup = window.open("index_person.html", page_to_set);
+				if (window.localStorage.getItem('display_type') == "wall")
+				{Indexpopup = window.open("index_person.html", page_to_set);} else {Indexpopup = window.open("index_person_list.html", page_to_set);}
 				
 			}
 	// open or change vertical popup - ribbon window to select index person page 
@@ -764,6 +769,9 @@
 			{		
 					if (display_type == "wall") 
 						{index_url="index.html";} else {index_url="index_list2.html";}
+					if (parent.location.href.lastIndexOf('/index_person') != -1)    // call from index_person
+					if (display_type == "wall") 
+						{index_url="index_person.html";} else {index_url="index_person_list.html";}
 					window.localStorage.setItem('display_type', display_type);
 					console.log("refresh with ChangeDisplay: " + display_type + " and call: " + index_url);
 					Indexpopup = window.open(index_url, "_parent","");

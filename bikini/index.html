@@ -70,29 +70,32 @@
 		// get display type
 		if (localStorage.getItem("display_type"))
 			{display_type = localStorage.getItem("display_type");}
-			else {localStorage.setItem("display_type", display_type);}
+		else {localStorage.setItem("display_type", display_type);}
 		// get category type and reset category type to ""
 		if (localStorage.getItem("categorytype"))
-			{category_type = localStorage.getItem("categorytype");
-			localStorage.setItem("categorytype", "index");
-			console.log ("index category type :" + category_type );
-			} else 
-			{category_type = "index";
-			localStorage.setItem("categorytype", "index");
-			console.log ("index category type :" + category_type );
+			{
+				category_type = localStorage.getItem("categorytype");
+				localStorage.setItem("categorytype", "index");
+			} 
+		else 
+			{
+				category_type = "index";
+				localStorage.setItem("categorytype", "index");
 			}
+		console.log ("index previous category_type :" + category_type );
+		var category_name = ""; 
 		if (localStorage.getItem(category_type + "_name"))
-			{category_name = localStorage.getItem(category_type + "_name");
-			console.log ("index category name :" + category_name );
-			}
+			{category_name = localStorage.getItem(category_type + "_name");}
+		console.log ("index category name :" + category_name );
 		// get the prefered_page
 		if (localStorage.getItem("prefered_page"))
 			{Prefered_PageValue = localStorage.getItem("prefered_page");}
-			else {localStorage.setItem("prefered_page", Prefered_PageValue);}
+		else {localStorage.setItem("prefered_page", Prefered_PageValue);}
 		// get newest method and reset newest method to ""
 		if (localStorage.getItem("newest"))
-			{newest_method = localStorage.getItem("newest");
-			localStorage.setItem("newest", "");
+			{
+				newest_method = localStorage.getItem("newest");
+				localStorage.setItem("newest", "");
 			}
 		// get the watched method 
 		if (localStorage.getItem("watched"))
@@ -107,7 +110,8 @@
 		// set a default  if 1rst time and set to the type previously selected if available 	
 		var index_type = "movie,series";
 		if (window.localStorage.getItem("indextype"))
-			{index_type = window.localStorage.getItem("indextype");
+			{
+				index_type = window.localStorage.getItem("indextype");
 			// reset to all if indextype = person
 				if (index_type.toUpperCase() == 'PERSON')
 					{
@@ -115,23 +119,27 @@
 						index_type = 'movie,series';
 					}
 			}
-			else {window.localStorage.setItem("indextype", index_type);}
+		else {window.localStorage.setItem("indextype", index_type);}
 		// set a default direction to ASC or set to the direction previously selected if available 	
 		var direction = "ASC";
 			if (window.localStorage.getItem("direction"))
 				{direction = window.localStorage.getItem("direction");}
-				else {window.localStorage.setItem("direction", direction);}	
+			else {window.localStorage.setItem("direction", direction);}	
 		var sort_type = "title"; 
-			if (window.localStorage.getItem("sort_indextype"))
-				{
+			
+		if (window.localStorage.getItem("sort_indextype"))
+			{
 				if (window.localStorage.getItem("sort_indextype") == 'videoYear,createTimestamp')
-					{ sort_type = 'videoYear ' + direction + ',createTimestamp ' + direction;
-					} else {sort_type = window.localStorage.getItem("sort_indextype") + ' ' + direction;}
-				 } else {window.localStorage.setItem("sort_indextype", sort_type)+ ' ' + direction;}
+					{ sort_type = 'videoYear ' + direction + ',createTimestamp ' + direction;} 
+				else {sort_type = window.localStorage.getItem("sort_indextype") + ' ' + direction;}
+			} 
+		else {window.localStorage.setItem("sort_indextype", sort_type)+ ' ' + direction;}
 		
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
         // img.Poster@src replaces the "src" attribute of the img.Poster
+		
+	// update page with only header to allow a speed display with 1rst and 2nd api call 
 	  function updateHtml1(yamjdata)
         {
 		
@@ -144,6 +152,8 @@
 			$p('.count_return_index').render(yamjdata, COUNT_HEADER);	
            
         }
+		
+	// update page with 1rst set of data to allow a speed display with header and 2nd api call 
 	 function updateHtml2(yamjdata)
         {
         var LIST_DIR = {
@@ -417,8 +427,9 @@
 							}	
 						}
 						selected_index = selected_index + temp_new_string;
-					
-					if (category_type != '' && category_type != "index" && category_type != "index_list2")
+					// check if a category is asked, means not calling from index or index list or person 
+						if (category_type == '' | category_type == "index" | category_type == "index_list2" | category_type == "person")
+						{} else
 						{
 							jsonUrl += "&include=" + category_type + "-" + category_name;
 							jsonUrlheader += "&include=" + category_type + "-" + category_name;
@@ -433,11 +444,11 @@
 			
 				}
 				
-				// now all construction is done, store the value in case a just a display change 
+				// now all construction is done, store the value in case of just a display change 
 					window.localStorage.setItem("index_url_header",jsonUrlheader);
 					window.localStorage.setItem("index_url",jsonUrl);
 					window.localStorage.setItem("index_display_header",selected_index);
-					
+				// adjust header font to the length to display	
 				var temp_style = "1.4vw"
 					
 					if (selected_index.length > 35)	{temp_style = "1.4vw";}
@@ -475,7 +486,7 @@
         // div.row is the part of the template to apply it too.
         // "row" is a CLASS attribute, not the id.
       
-		
+	// update page with the rest of the data to allow a speed display with header and 1rst api call 	
 		function updateHtml3(yamjdata)
         {
 		console.log("Index updateHtml3 update html");
@@ -644,7 +655,7 @@
 			
        
 			}); 
-			return jsondata;
+			return;
 		}
 	}
 		function SetIndexData (search)
@@ -803,6 +814,7 @@
 	<!-- display source data from API if needed  -->
         <div id="sourceData"></div>
 	<script>
+	// position at the end of the html to speed the display (perhaps) 
 	function getIndexData()
         {
 				get_poster_number ();
@@ -857,7 +869,7 @@
                 }
             });
 			
-            return jsondata;
+            return;
         }
 		</script>
     </body>

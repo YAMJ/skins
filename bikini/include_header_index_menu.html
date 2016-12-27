@@ -77,11 +77,11 @@
 			document.getElementById("sd_type").attributes.getNamedItem("data-tip-sort").value="sd => 1024p";
 			document.getElementById("hd_type").attributes.getNamedItem("data-tip-sort").value="hd 1025p => 1280p";
 			document.getElementById("fullhd_type").attributes.getNamedItem("data-tip-sort").value="fullhd 1281p => 1920p";
-			document.getElementById("4k_type").attributes.getNamedItem("data-tip-sort").value="4k 1921p => 3840p";
-			document.getElementById("8k_type").attributes.getNamedItem("data-tip-sort").value="8k 3841p => 7680p";
+			document.getElementById("fourk_type").attributes.getNamedItem("data-tip-sort").value="4k 1921p => 3840p";
+			document.getElementById("heightk_type").attributes.getNamedItem("data-tip-sort").value="8k 3841p => 7680p";
 			document.getElementById("list").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('list_text').toLowerCase();
 			document.getElementById("wall").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('wall_text').toLowerCase();
-			document.getElementById("display_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('display_label').toLowerCase();
+			document.getElementById("display_item").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('display_label').toLowerCase();
 			
 					var watched_method = "all";
 					var direction = "ASC";
@@ -103,7 +103,7 @@
 							{resolution_type = window.localStorage.getItem("resolution");}
 							else {window.localStorage.setItem("resolution", resolution_type);}
 					var display_type = "";
-							console.log ("parent.location.href.lastIndexOf('_list')" + parent.location.href.lastIndexOf('_list'))
+							console.log ("parent.location.href: " + parent.location.href)
 						if (parent.location.href.lastIndexOf('_list') == -1)
 							{display_type = "";} else {display_type = "_list";}	
 	
@@ -178,56 +178,56 @@
 						$('#sd_type img').css('background-color', '');
 						$('#hd_type img').css('background-color', '');
 						$('#fullhd_type img').css('background-color', '');
-						$('#4k_type img').css('background-color', '');
-						$('#8k_type img').css('background-color', '');
+						$('#fourk_type img').css('background-color', '');
+						$('#heightk_type img').css('background-color', '');
 						break;
 					case 'sd':
 						$('#all_resolution_type img').css('background-color', '');
 						$('#sd_type img').css('background-color', 'green');
 						$('#hd_type img').css('background-color', '');
 						$('#fullhd_type img').css('background-color', '');
-						$('#4k_type img').css('background-color', '');
-						$('#8k_type img').css('background-color', '');
+						$('#fourk_type img').css('background-color', '');
+						$('#heightk_type img').css('background-color', '');
 						break;
 					case 'hd':
 						$('#all_resolution_type img').css('background-color', '');
 						$('#sd_type img').css('background-color', '');
 						$('#hd_type img').css('background-color', 'green');
 						$('#fullhd_type img').css('background-color', '');
-						$('#4k_type img').css('background-color', '');
-						$('#8k_type img').css('background-color', '');
+						$('#fourk_type img').css('background-color', '');
+						$('#heightk_type img').css('background-color', '');
 						break;
 					case 'fullhd':
 						$('#all_resolution_type img').css('background-color', '');
 						$('#sd_type img').css('background-color', '');
 						$('#hd_type img').css('background-color', '');
 						$('#fullhd_type img').css('background-color', 'green');
-						$('#4k_type img').css('background-color', '');
-						$('#8k_type img').css('background-color', '');
+						$('#fourk_type img').css('background-color', '');
+						$('#heightk_type img').css('background-color', '');
 						break;
 					case '4k':
 						$('#all_resolution_type img').css('background-color', '');
 						$('#sd_type img').css('background-color', '');
 						$('#hd_type img').css('background-color', '');
 						$('#fullhd_type img').css('background-color', '');
-						$('#4k_type img').css('background-color', 'green');
-						$('#8k_type img').css('background-color', '');
+						$('#fourk_type img').css('background-color', 'green');
+						$('#heightk_type img').css('background-color', '');
 						break;
 					case '8k':
 						$('#all_resolution_type img').css('background-color', '');
 						$('#sd_type img').css('background-color', '');
 						$('#hd_type img').css('background-color', '');
 						$('#fullhd_type img').css('background-color', '');
-						$('#4k_type img').css('background-color', '');
-						$('#8k_type img').css('background-color', '8k');
+						$('#fourk_type img').css('background-color', '');
+						$('#heightk_type img').css('background-color', '8k');
 						break;
 					default :
 						$('#all_resolution_type img').css('background-color', 'green');
 						$('#sd_type img').css('background-color', '');
 						$('#hd_type img').css('background-color', '');
 						$('#fullhd_type img').css('background-color', '');
-						$('#4k_type img').css('background-color', '');
-						$('#8k_type img').css('background-color', '');
+						$('#fourk_type img').css('background-color', '');
+						$('#heightk_type img').css('background-color', '');
 				};
 				// get sorting method 			
 				if (sort_type == 'title') 
@@ -299,11 +299,11 @@
 							<li><a id="sd_type" style="visibility: hidden;" data-tip-sort="sd_resolution" href="javascript:ResolutionSelection(parent.location.href, 'sd')"><img src="pictures/resolution/sd.png" alt="sd"/><a></li>
 							<li><a id="hd_type" style="visibility: hidden;" data-tip-sort="hd_resolution" href="javascript:ResolutionSelection(parent.location.href, 'hd')"><img src="pictures/resolution/hd.png" alt="hd"/></a></li>
 							<li><a id="fullhd_type" style="visibility: hidden;" data-tip-sort="fullhd_resolution" href="javascript:ResolutionSelection(parent.location.href, 'fullhd')"><img src="pictures/resolution/fullhd.png" alt="fullhd" /></a></li>
-							<li><a id="4k_type" style="visibility: hidden;" data-tip-sort="4k_resolution" href="javascript:ResolutionSelection(parent.location.href, '4k')"><img src="pictures/resolution/4k.png" alt="4k" /></a></li>
-							<li><a id="8k_type" style="visibility: hidden;" data-tip-sort="8k_resolution" href="javascript:ResolutionSelection(parent.location.href, '8k')"><img src="pictures/resolution/8k.png" alt="8k" /></a></li>
+							<li><a id="fourk_type" style="visibility: hidden;" data-tip-sort="4k_resolution" href="javascript:ResolutionSelection(parent.location.href, '4k')"><img src="pictures/resolution/4k.png" alt="4k" /></a></li>
+							<li><a id="heightk_type" style="visibility: hidden;" data-tip-sort="8k_resolution" href="javascript:ResolutionSelection(parent.location.href, '8k')"><img src="pictures/resolution/8k.png" alt="8k" /></a></li>
 						</ul>
 						<ul id="display_section" >
-							<li><a id="display_item" data-tip-item="display" alt="display"><img  src="pictures/icon/home.png" onclick="toggle_show_display()"/></a></li>
+							<li><a id="display_item" data-tip-sort="display" alt="display"><img  src="pictures/icon/home.png" onclick="toggle_show_display()"/></a></li>
 							<li><a id="list" style="visibility: hidden;" data-tip-sort="list" href="javascript:ChangeDisplay2('_list2')"><img src="pictures/icon/home_all_rv8.png" alt="list"/><a></li>
 							<li><a id="wall" style="visibility: hidden;" data-tip-sort="wall" href="javascript:ChangeDisplay2('wall')"><img src="pictures/icon/home_movies_rv8.png" alt="wall"/></a></li>
 						</ul>

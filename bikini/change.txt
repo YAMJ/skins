@@ -1,4 +1,17 @@
 change.txt
+V3.0.2
+- fix person count with next and previous home selector
+- fix list season for a selected serie in wall mode
+- fix (workaround) duplicate episode when more than one videoimage for an episode 
+- fix season_frame position in detail_frame with wall display
+- fix resize the title font depending of the length
+- adjust: left menu to responsive design
+- adjust: top icon to responsive 
+- adjust: config popup to responsive
+- add:  mediainfo rescan in the mediainfo popup
+- adjust: top bar height
+- adjust: person popup list in detail windows
+- fix navPersonH display people when no original title
 V3.0.1
 - add person list 
 - add sort selector to person 
@@ -50,7 +63,7 @@ V2.0.6
 - add overlays (need some feature from yamj3 to be complete) 
 - fix minor problems 
 V2.0.5
-- fix unapply translatation to image path  
+- fix unapply translation to image path  
 - add resolution selector
 - add ability to manually add poster and fanart from file storage 
 V2.0.4

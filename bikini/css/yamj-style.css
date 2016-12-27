@@ -68,7 +68,7 @@
 	background-color: rgba(34,34,34,0.57);
 	padding: 5px 15px 0px 15px;
 }
-#container .row_person{
+#container .row_person, .row_person2{
 /*	border: 1px solid white; */
     margin: 0px;
 /*	height: 728px; */
@@ -89,7 +89,7 @@
     clear: both;
 }
 
-#container .block, #container .person_block, #container .genre_block, #container .country_block, #container .awards_block, #container .boxset_block,  #container .studio_block, #container .rating_block, #container .videosource_block, #container .certification_block   {
+#container .block, #container .person_block, #container .person_block2,  #container .genre_block, #container .country_block, #container .awards_block, #container .boxset_block,  #container .studio_block, #container .rating_block, #container .videosource_block, #container .certification_block   {
     text-align: center;
 	border-right: 5px solid grey;
 	border-bottom: 1px solid grey;
@@ -117,7 +117,7 @@
     padding: 0px 1px 0px 1px;	*/	
 }
 
-#container .person_block {
+#container .person_block, #container .person_block2 {
     width: 175px;
     height: 290px; 
 /*	margin: 5px;
@@ -200,7 +200,7 @@
     font-size:12px; margin:6px 0;overflow:auto;
 }
 
-#container .poster, .poster2 {
+#container .poster, #container .poster2 {
 /* NOW SETTED INSIDE INDEX.html depending of the the number of ROW stored inside config */	
 /* if 12 posters per page, 2 rows 6 columns */
     width: 100%;
@@ -225,7 +225,7 @@
 	display: block;
 	z-index: 0;
 }
-.person_name {
+.person_name, .person_name2 {
 	position: relative ; 
 	top: -1.2vw;
 }
@@ -428,7 +428,7 @@ input:-moz-placeholder { color:red; }
 	}
 #my_header_menu {
 	position: absolute;
-	height: 60px;
+	height: 65px;
 	width: 100%;
 	left: 0%;
 	z-index:10;	
@@ -481,10 +481,11 @@ input:-moz-placeholder { color:red; }
 {
 	position: absolute;
 	top: 0px;
-	right: 28%;
+	right: 26%;
 	height: 30px; 
     text-align: center;
 	width: 20%;
+	padding-left: 0px;
 }
 #index_tools_genre
 {
@@ -581,43 +582,56 @@ input:-moz-placeholder { color:red; }
 	z-index: 10;	
 	}
 #search_function img {
-	height: 2.2vw;
-	width: 2.4vw;	
+	height: 3vw;
+    width: 3.4vw;
+    max-height: 40px;
+    max-width: 48px;; 
 	}
 #new_function {
 	left: 1vw;	
 	}
 #new_function img {
 	left: 0px;
-	width: 3.2vw;
-	height: 2.2vw;	
-	}
+	width: 3.5vw;
+    height: 3vw;
+    max-height: 43px;
+    max-width: 70px;
+}	
 #watched_item img {
-	height: 2.2vw;	
+	height: 2.7vw;
+    width: 2.7vw;
+    max-height: 45px;
+    max-width: 45px;	
 	}
 #sort_item img {
-	height: 2.2vw;
-	width: 2.9vw;
+	height: 3vw;
+    width: 3.5vw;
+    max-width: 50px;
+    max-height: 42px;
 	}
 #movie_series_type img, #movie_type img, #series_type img, #season_type img {
 	height: 45px;
 	width: 45px;	
 	}
 #resolution_item img {
-	height: 2.4vw;
-	width: 3.1vw;
+	height: 3vw;
+    width: 3.6vw;
+    max-height: 51px;
+    max-width: 70px;
 	}
-#all_resolution_type img, #sd_type img, #hd_type img, #fullhd_type, #4k_type img, #8k_type img {
-	height: 20px;
-	width: 45px;	
+#all_resolution_type img, #sd_type img, #hd_type img, #fullhd_type img, #fourk_type img, #heightk_type img {
+	height: 2.2vw;
+	width: 3.1vw;	
 	}
 #display_item img {
-	height: 2.7vw;
-	width: 3.1vw;
+	height: 3.2vw;
+    width: 3.7vw;
+    max-height: 53px;
+    max-width: 65px;
 	}
 #list img, #wall img {
-	height: 45px;
-	width: 45px;	
+	height: 3.0vw;
+	width: 3.1vw;	
 	}	
 #infobutton span, #playbutton span, #watched_small span, #infobutton2 span, #playbutton2 span, #watched_small2 span {
 	 visibility: hidden;
@@ -656,7 +670,7 @@ input:-moz-placeholder { color:red; }
 #sort_title img
 {
 	height:2vw;
-	width:2.9vw;
+	width:2.5vw;
 	position: relative;
 	top: -3px;
 	}
@@ -676,12 +690,15 @@ input:-moz-placeholder { color:red; }
 	}
 #sort_section {
 	position: absolute;
-	left: 12vw;
-	top: -14px;
+	left: 11.5vw;
+/*	top: -18px; */
 	list-style-type: none;
 	display: inline-table;
 	background: none;
 	border: none;
+	padding-left: 0px;
+	padding: 0px;
+    margin: 0px;
 	}	
 #sort_section  > a {
 	position: absolute;
@@ -702,13 +719,16 @@ input:-moz-placeholder { color:red; }
 	
 #watch_section {
 	position: absolute;
-	left: 9vw;
+	left: 7.7vw;
 	width: 2vw;
-	top: -15px;
+/*	top: -20px; */
 	list-style-type: none;
 	display: inline-table;
 	background: none;
 	border: none;
+	padding-left: 0px;
+	padding: 0px;
+    margin: 0px;
 	}	
 #watch_section  > a {
 	position: absolute;
@@ -727,12 +747,15 @@ input:-moz-placeholder { color:red; }
 	
 #type_section {
 	position: absolute;
-	left: 15.7vw;
-	top: -16px;
+	left: 15.6vw;
+/*	top: -19px; */
 	list-style-type: none;
 	display: inline-table;
 	background: none;
 	border: none;
+	padding-left: 0px;
+	padding: 0px;
+    margin: 0px;
 	}	
 #type_section  > a {
 	position: absolute;
@@ -744,20 +767,28 @@ input:-moz-placeholder { color:red; }
 	background: grey;
 	outline:2px solid black;
 	}
-	
-#type_item img{
-	height: 2.4vw; 
+#type_item img {
+	height: 3vw;
+    width: 4vw;
+    max-width: 65px;
+    max-height: 45px;
+	}
+#movie_series_type img, #movie_type img, #series_type img, #season_type img{
+	height: 2.8vw; 
 	width: 3.1vw;
 	}
 	
 #resolution_section {
 	position: absolute;
-	left: 20vw;
-	top: -16px;
+	left: 20.4vw;
+/*	top: -21px; */
 	list-style-type: none;
 	display: inline-table;
 	background: none;
 	border: none;
+	padding-left: 0px;
+	padding: 0px;
+    margin: 0px;
 	}	
 #resolution_section  > a {
 	position: absolute;
@@ -771,12 +802,15 @@ input:-moz-placeholder { color:red; }
 	}
 #display_section {
 	position: absolute;
-	left: 24vw;
-	top: -16px;
+	left: 25vw;
+/*	top: -20px; */
 	list-style-type: none;
 	display: inline-table;
 	background: none;
 	border: none;
+	padding-left: 0px;
+	padding: 0px;
+    margin: 0px;
 	}	
 #display_section  > a {
 	position: absolute;
@@ -790,11 +824,14 @@ input:-moz-placeholder { color:red; }
 	}
 #new_section {
 	position: absolute;
-	left: 1vw;
-	top: -15px;
+	left: 2.6vw;
+/*	top: -18px; */
 	list-style-type: none;
 	background: none;
 	border: none;
+	padding-left: 0px;
+	padding: 0px;
+    margin: 0px;
 	}	
 
 #new_section:hover > a  img {
@@ -806,12 +843,15 @@ input:-moz-placeholder { color:red; }
 	
 #search_section {
 	position: absolute;
-	left: -1vw;
+	left: 0vw;
 	width: 2vw;
-	top: -15px;
+/*	top: -18px; */
 	list-style-type: none;
 	background: none;
 	border: none;
+	padding-left: 0px;
+	padding: 0px;
+    margin: 0px;
 	}	
 
 #search_section:hover > a  img {
@@ -2334,7 +2374,7 @@ ul#detail_home_right {
 	width: 380px;
 	height:45px;
 	position: absolute;
-	top: 3px;
+	top: 0.3vw;
 	right: 1vw;
 	padding:0px;
 	vertical-align: top;
@@ -2367,78 +2407,102 @@ ul#detail_home_right {
 	}
 #li_search_icon  img{
 	position: absolute;
-	width: 50px;
-	height: 45px;
+	width: 4vw;
+	height: 3.8vw;
+	top: -0.2vw;
+	max-height: 48px;
+	max-width: 58px;
 	}
 #li_movie_icon img {
 	position: absolute;
-	width: 64px;
-	height: 47px;
+	width: 4.5vw;
+	height: 3.7vw;
+	max-height: 50px;
+	max-width: 66px;
 	}
 #li_person_icon img {
 	position: absolute;
-	width: 64px;
-	height: 48px;
+	width: 5.2vw;
+	height: 4vw;
+/*	top: -4px; */
+	max-height: 55px;
+	max-width: 73px;
 	}	
 #li_update_icon img {
 	position: absolute;
-	width: 50px;
-	height: 50px;
+	width: 4.1vw;
+    height: 4.3vw;
+	top: -0.6vw;
+    max-height: 57px;
+    max-width: 57px;
 	}
 #li_delete_icon img {
 	position: absolute;
-	width: 75px;
-	height: 55px;
+	width: 5.5vw;
+	height: 4.3vw;
+	max-height: 57px;
+	max-width: 74px;
 	}
 #li_poster_icon  img {
 	position: absolute;
-	width: 45px;
-	height: 45px;
+	width: 3.5vw;
+	height: 3.5vw;
+	top: -0.2vw; 
+	max-height: 47px;
+	max-width: 47px;
 	}	
 #li_mediainfo_icon  img {
 	position: absolute;
-	width: 60px;
-	height: 60px;
+	width: 4.5vw;
+	height: 4.5vw;
 	}
 #li_selection_icon img {
 	height: 55px;
+	
 	}
 #li_fanart_icon img {
-	height: 55px;
+	height: 4.35vw;
+	max-height: 61px;
+	max-width: 61px;
 	}
 #li_mediainfo_icon img {
-	height: 55px;
+	height: 4.7vw;
+	width: 4.7vw;
+	top: -0.4vw; 
+	max-height: 60px;
+	max-width: 60px;
 	}
 #li_poster_icon {
 	top: 0px;
-	right: 325px;
+	right: 23.8vw;
 	}
 #li_mediainfo_icon{
 	top: -5px;
-	right: 380px;
+	right: 28vw;
 	}
 #li_person_icon {
-	top: -1px;
-	right: 300px;
+	top: -0.5vw;
+	right: 21.7vw;
 	}
 #li_movie_icon {
-	top: 0px;
-	right: 250px;
+	top: -0.2vw;
+	right: 17.8vw;
 	}
 #li_fanart_icon {
-	top: -7px;
-	right: 140px;
+	top: -0.7vw;
+	right: 9.8vw;
 	}	
 #li_selection_icon {
 	top: -16px;
 	right: 0px;
 	}
 #li_delete_icon {
-	top: -7px;
-	right: 160px;
+	top: -0.6vw;
+	right: 11.5vw;
 	}
 #li_update_icon {
-	right: 105px;
+	top: 0px;
+	right: 7.7vw;
 	}
 #selection_id_icon {
 	top: 24px;
@@ -2446,10 +2510,10 @@ ul#detail_home_right {
 	width: 50px;
 	}
 #li_search_icon {
-	top: -1px;
-	right: 55px;
+	top: 0px;
+	right: 4vw;
 	}
-#fanartshow_icon, #editshow_icon, #mediainfoshow_icon, #movieshow_icon, #personshow_icon, #selectionshow_icon, #search_icon, #deleteshow_icon, #updateshow_icon, #add_poster_show_icon, #add_fanart_show_icon {
+#fanartshow_icon, #editshow_icon, #mediainfoshow_icon, #movieshow_icon, #personshow_icon, #selectionshow_icon, #search_icon, #deleteshow_icon, #updateshow_icon, #updateinfoshow_icon, #add_poster_show_icon, #add_fanart_show_icon {
 	position: absolute;
 	top: 60px;
 	visibility: hidden;
@@ -2465,6 +2529,11 @@ ul#detail_home_right {
 #updateshow_icon {
 	width: 110px;
 	left: -30px;
+	}
+#updateinfoshow_icon {
+	width: 110px;
+	left: -10vw;
+	top: 0vw;
 	}
 #selectionshow_icon {
 	top: 75px;
@@ -3203,7 +3272,7 @@ position: absolute;
 	table-layout: fixed;
 	overflow: hidden;
 	}
-.person_photo {
+.person_photo, .person_photo2 {
 	position: relative;
 	width: 98px;
 	height:148px;

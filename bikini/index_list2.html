@@ -436,9 +436,10 @@
 					if (selected_index.length > 69)	{temp_style = "1.05vw";}
 					if (selected_index.length > 72)	{temp_style = "1vw";}
 					if (selected_index.length > 74)	{temp_style = "0.95vw";}
+					if (selected_index.length > 78)	{temp_style = "0.80vw";}
 				$(".show_index").css("font-size", temp_style);
 				$('#printsearch').html(selected_index);
-		console.log("Index getIndexData URLheader: " + jsonUrlheader);
+		console.log("Index_list getheaderData URLheader: " + jsonUrlheader);
 			
 		$.ajax({
 			
@@ -810,7 +811,7 @@
 				if (count_result > max_count && (window.localStorage.getItem("Paging") == 'false'))
 				{jsonUrltemp = jsonUrl + "&start=0&max=" + max_count}
 				else {jsonUrltemp = jsonUrl}
-				console.log("Index getIndexData URL: " + jsonUrltemp + " count_result:" + count_result);
+				console.log("Index_list getIndexData URL: " + jsonUrltemp + " count_result:" + count_result);
 				$.ajax({
                 url: jsonUrltemp,
                 async: true,
@@ -821,7 +822,7 @@
 				//	 outputJson(data); 		
 					updateHtml2(data);
 				//	get_poster_number ();
-					console.log("GetIndexData: perPageValue="+perPageValue+" paging:"+ window.localStorage.getItem('Paging'));
+				//	console.log("Index_list GetIndexData: perPageValue="+perPageValue+" paging:"+ window.localStorage.getItem('Paging'));
                  if (window.localStorage.getItem("Paging") == 'true') { 	
 						pageData(perPageValue);}
                 }

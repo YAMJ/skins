@@ -34,6 +34,7 @@
 		
 // ******************************* ALL GENERAL VARIABLE **********************************************
 			// get the id and the type asked previously, data was stored from index, detail or  index_list pages 
+			var season_count = '';
             var current_id = localStorage.getItem("id");
             var index_type = localStorage.getItem("indextype");
 			var season = localStorage.getItem("season");
@@ -82,18 +83,21 @@
 								return arg.context.result.title + ' '+window.localStorage.getItem('season_label')+': '+ arg.context.result.season;
 								} else {
 								
-								return arg.context.result.title ;
+								return arg.context.result.title.toLowerCase(); ;
 									}
 							},
 							'span.header_title@style': function (arg) {
 								var temp_style = "font-size: 2.5vw;"
 								
-								if (arg.context.result.title.length > 30)	{temp_style = "font-size: 2.2vw;";}
-								if (arg.context.result.title.length > 35)	{temp_style = "font-size: 2.1vw;";}
-								if (arg.context.result.title.length > 41)	{temp_style = "font-size: 1.9vw;";}
-								if (arg.context.result.title.length > 44)	{temp_style =  "font-size: 1.7vw;";}
-								if (arg.context.result.title.length > 51)	{temp_style = "font-size: 1.5vw;";}
-								if (arg.context.result.title.length > 57)	{temp_style = "font-size: 1.3vw;";}
+								if (arg.context.result.title.length > 28)	{temp_style = "font-size: 2.1vw;";}
+								if (arg.context.result.title.length > 35)	{temp_style = "font-size: 2.0vw;";}
+								if (arg.context.result.title.length > 39)	{temp_style = "font-size: 1.8vw;";}
+								if (arg.context.result.title.length > 42)	{temp_style = "font-size: 1.7vw;";}
+								if (arg.context.result.title.length > 45)	{temp_style = "font-size: 1.6vw;";}
+								if (arg.context.result.title.length > 49)	{temp_style = "font-size: 1.5vw;";}
+								if (arg.context.result.title.length > 52)	{temp_style = "font-size: 1.4vw;";}
+								if (arg.context.result.title.length > 56)	{temp_style = "font-size: 1.3vw;";}
+								if (arg.context.result.title.length > 60)	{temp_style = "font-size: 1.2vw;";}
 									
 								return temp_style;
 							},
@@ -112,7 +116,7 @@
 							'span.header_runtime': function (arg) {
 								if (arg.context.result.files[0].runtime)
 									{return   arg.context.result.files[0].runtime ;}
-									else {return "<img src='./pictures/icon/unknown.png' width='35px' style='position:relative; top:5px; left:-6px;'/>"; }
+									else {return "<img src='./pictures/icon/unknown.png' style='position:relative; top:3px; left:-6px; width:2.7vw'/>"; }
 							},
 							"img.watched@src": function(arg)
 								{
@@ -1076,7 +1080,7 @@
 			document.getElementById("mediainfoshow_icon").innerHTML="MEDIAINFO";
 			document.getElementById("deleteshow_icon").innerHTML=window.localStorage.getItem('delete_text').toUpperCase();
 			document.getElementById("updateshow_icon").innerHTML=window.localStorage.getItem('update_label').toUpperCase();
-			
+			document.getElementById("updateinfoshow_icon").innerHTML=window.localStorage.getItem('update_label').toUpperCase();
 			switch (index_type.toLowerCase()) 
 							{
 							case 'movie':
@@ -1089,7 +1093,7 @@
 									document.getElementById("movieshow_icon").innerHTML=window.localStorage.getItem('season_select').toUpperCase();
 									break;
 							}		
-			document.getElementById("seasonlabel").innerHTML=window.localStorage.getItem('season_label');
+		//	document.getElementById("seasonlabel").innerHTML=window.localStorage.getItem('season_label');
 			document.getElementById("movieselect").innerHTML=window.localStorage.getItem('movie_select').toUpperCase();
 			document.getElementById("serieselect").innerHTML=window.localStorage.getItem('series_select').toUpperCase();
 			document.getElementById("allselect").innerHTML=window.localStorage.getItem('all_select').toUpperCase();
@@ -1173,7 +1177,8 @@
 	// call the JSON value of season  	
 		function perform_season()
 		{
-		jsonSeasonUrl = "/yamj3/api/index/video.json?type=season&sortby=season&sortdir=ASC&field=series_id&search="+series_id+"&artwork=poster&dataitems=plot,files,rating";
+		jsonSeasonUrl = "/yamj3/api/video/seriesinfo.json?id="+series_id+"&dataitems=artwork&artwork=poster";
+		// jsonSeasonUrl = "/yamj3/api/index/video.json?type=season&sortby=season&sortdir=ASC&field=series_id&search="+series_id+"&artwork=poster&dataitems=plot,files,rating";
 		console.log("perform_season URL: " + jsonSeasonUrl);
 					$.ajax({
                    url: jsonSeasonUrl,
@@ -1183,43 +1188,59 @@
                    {
 						jsondata = dataSeason;
 					//	outputJson(dataSeason);
-						updateSeason(dataSeason)
+						updateSeason(dataSeason);
+						set_seasoncount (localStorage.getItem("season_count"));
 						display_Id ("seasontable");
 					}
                 });
 		}
 	// map season value 	
-		function updateSeason(dataSeason)
+	
+	function updateSeason(dataSeason)
 		{
-				var SEASON = {
+		var SEASON = {
                     "td": {
-                        "season<-results": {
-                           // "span.SeasonType": "season.videoType",
-							"span.SeasonID": "season.id",
-							"span.SeasonNb" : "season.season",
-                            "span.SeasonTitle": "season.title",
-                            "span.SeasonYear": "season.videoYear",
-                            "span.SeasonPoster": function(arg) {
-                                // Check to see if there are posters
-                              if (arg.item.artwork.POSTER) {
-                                   // Get the first poster from the list
-                                    var poster = arg.item.artwork.POSTER[0];
-                                    if (poster.generatedId === 0) {
-                                        return "No Poster<br>was generated";
-                                   }
-						
-                                    return "<a href=\"#\" onclick=\" goto_SeasonId('" + arg.item.videoType + "', " + arg.item.id + ")\"><img src=\"" + arg.context.baseArtworkUrl + poster.filename + "\" style=\"height:7.95vw;\"></a>";
-								} else {
-                                    return window.localStorage.getItem('noposter_text');
+                        'season<-results': {
+							"span.Season": function(arg) {
+							output_season = '';
+							localStorage.setItem("season_count", arg.item.seasonList.length + 1);
+							 for (i = 0; i < arg.item.seasonList.length; i++)
+								{
+									var season_item = arg.item.seasonList[i];
+								//	console.log ('season['+ i +'].Id:' + season_item.seasonId + " arg.item.seasonList.length " + arg.item.seasonList.length);
+									
+									output_season += "<td class=season><a href=\"#\" style=\"color: white;\" onclick=\" goto_SeasonId('season', " + season_item.seasonId + ")\">"									
+									output_season += "<span class=SeasonTitle>" + season_item.title + "</span></br>"
+									output_season += "<span class=SeasonNb>" + localStorage.getItem('season_label') + ":" + season_item.season + "</span>"
+									output_season += "<span class=SeasonYear> (" + season_item.year + ")</span></br>"
+									output_season += "<span class=SeasonId> (Id:" + season_item.seasonId + ")</span></br>"
+									
+									output_season += "<span class=SeasonPoster>"
+										 // Check to see if there are posters
+										if (season_item.artwork.POSTER) {
+										   // Get the first poster from the list
+											var poster = season_item.artwork.POSTER[0];
+											if (poster.generatedId === 0) {output_season += "No Poster<br>was generated";}
+											else {
+													output_season += "<span class=SeasonPoster>"
+													output_season += "<a href=\"#\" onclick=\" goto_SeasonId('" + poster.source.toLowerCase()+ "', " + season_item.seasonId + ")\">"
+													output_season += "<img src=\"" + arg.context.baseArtworkUrl + poster.filename + "\" height=\"100\"></a>";
+												}
+										} else { output_season +=  noposter_text;}
+										output_season += "</span></td>"
 								}
-							   }
+								return output_season;
 							}
 						}
-					};
-					updateItemCount (dataSeason, "Season");
-					$p('.seasontable').render(dataSeason, SEASON);
-		}
-				
+					}
+				}; // end SEASON
+
+//				updateItemCount (season_count, "Season");
+				$p('.seasontable').render(dataSeason, SEASON);
+
+}
+
+	
 	// call the JSON value for episode 			
 		function perform_episode()
 		{
@@ -1249,10 +1270,16 @@
 						{
 							var totalepisode_title = arg.context.results;
 							var outputepisode_title = "";
+							var prev_episode = "";
 							for (i = 0; i < totalepisode_title.length; i++) 
 							{
+								if (totalepisode_title[i].files[0].id == prev_episode)
+									{console.log ('skip same episode:' + totalepisode_title[i].files[0].fileName + " id:" + totalepisode_title[i].files[0].id);}
+								else {
+								prev_episode = totalepisode_title[i].files[0].id;
 								if (i == 0)
 								{preset_episode_to_play(encodeURIComponent(totalepisode_title[i].files[0].fileName),totalepisode_title[i].files[0].id); }
+							
 						//	console.log("detail listepisode_title preset_episode_to_play: " +totalepisode_title[i].files[0].fileName); 
 							for (j = 0; j < totalepisode_title[i].files.length; j++) 	
 								{
@@ -1272,7 +1299,17 @@
 										else {
 												outputepisode_title += "show_subtitles ('none', " + j + " );"
 											}
-										
+										if (totalepisode_title[i].files[j].audioCodecs)
+										{
+											
+											for (k = 0; k < totalepisode_title[i].files[j].audioCodecs.length; k++)
+											{
+												outputepisode_title +=	"show_audiocodec (\'" + totalepisode_title[i].files[j].audioCodecs[k].languageCode.toLowerCase() +"', " + k + ");"
+											}
+										}
+										else {
+												outputepisode_title += "show_audiocodec ('none', " + j + " );"
+											}
 										outputepisode_title +=	" display_Episode_videoimage ('videoimage"+[i]+"','episodeplot" + [i] + "','episodetitle" + [i] + "'," + totalepisode_title.length + ");"
 										outputepisode_title +=	" preset_episode_to_play('" + encodeURIComponent(totalepisode_title[i].files[j].fileName) + "', " + totalepisode_title[i].files[j].id + ")"
 										outputepisode_title +=	" \" >"
@@ -1286,6 +1323,7 @@
 										outputepisode_title +=	" )\"></img><br>";
 								}
 								
+							}
 							}
 							return outputepisode_title;
 						},
@@ -1357,6 +1395,16 @@
 			document.getElementById("episode_subtitles").style.visibility = "visible";}
 		}
 		
+		function show_audiocodec (language_code, i)
+		
+		{
+			if (language_code == 'none')
+			{document.getElementById("episode_audiocodec").style.visibility = "hidden";}
+			else {
+			if (i == 0) {document.getElementById("episode_audiocodec").innerHTML = '';}
+			document.getElementById("episode_audiocodec").innerHTML += "<text>"+window.localStorage.getItem('audio_label').toUpperCase()+(i+1)+"</text>" + "<img src=\"pictures/flags/" + language_code.toLowerCase() +".png\" alt=\"" + language_code + "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp; ";
+			document.getElementById("episode_audiocodec").style.visibility = "visible";}
+		}
 	// generic function to get count and call the real treatment 	
 		function updateItemCount(data, type_to_update)
         {
@@ -1673,9 +1721,11 @@
 
 	// adjust season scroll bar 
 	function set_seasoncount(count_to_set)
-					{					
+					{
+						
 						if (count_to_set)
-						{					
+						{
+					//		console.log ("count_to_set: " + count_to_set);
 							if (count_to_set < 1)
 							{
 							nodisplay_Id('seasontable');
@@ -1684,6 +1734,7 @@
 								{
 								padding_season += (7 - count_to_set)*100;
 								$('.seasontable').css('padding-left', padding_season+'px');
+					//			console.log ("padding_season: " + padding_season);
 								}
 							}	
 						} else {
@@ -2046,8 +2097,17 @@
 		// construct JSON request to delete movie/series/season from the stage_file with stage_file_Id
 		
 				jsonDeleteUrl = "/yamj3/api/file/delete/" + stage_file_Id;
-				console.log("getData URL: " + jsonDeleteUrl);
+				console.log("ouvre_popup_delete URL: " + jsonDeleteUrl);
 		PopDelete(stage_file_Id, current_title)
+		}
+	function ouvre_popup_update_mediainfo ()
+		{
+		console.log("detail ouvre_popup_ouvre_popup_update_mediainfo stage_file_Id:" + stage_file_Id);
+		// construct JSON request to update movie/series/season from the stage_file with stage_file_Id
+		
+				jsonUpdateInfoUrl = "/yamj3/api/file/update/" + stage_file_Id;
+				console.log("ouvre_popup_update_mediainfo URL: " + jsonUpdateInfoUrl);
+		PopUpdateInfo(stage_file_Id, current_title)
 		}
 	function ouvre_popup_update (update_type)
 		{
@@ -2133,6 +2193,18 @@
         // main API call         
                 $.ajax({
                     url: jsonDeleteUrl,
+                    async: false,
+                   dataType: 'jsonp',
+                   'success': function(data)
+                    {
+					}
+				})
+		}
+	function updateinfo_stage_file_Id ()
+		{
+        // main API call         
+                $.ajax({
+                    url: jsonUpdateInfoUrl,
                     async: false,
                    dataType: 'jsonp',
                    'success': function(data)
@@ -2325,7 +2397,7 @@
 										</a><div id="search_icon"></div>
 									</td>
 					<button id="infobox_delete" onclick="javascript:start_delete ()"></button>	
-					<button id="infobox_update" onclick="javascript:start_update ()"></button>
+					<button id="infobox_update" onclick="javascript:start_update ()"></button>			
         </div>
 
 	<!-- left menu with icon -->
@@ -2566,55 +2638,59 @@
 		<div class="mediainfo">
 			<tr>
 				<td><span class="media_label" style="position: relative; top: 0.1vw; left: 0.5vw;"><text>MEDIA</text></span></td>
+				<td><a id="li_update_icon" href="javascript:ouvre_popup_update_mediainfo('file');" style="right: 12vw;" onmouseover="javascript:document.getElementById('updateinfoshow_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('updateinfoshow_icon').style.visibility='hidden'">
+							<img src="pictures/icon/update.png" style="width: 2vw; height: 2vw; top: -0.1vw;" alt="update"></img>
+							<div id="updateinfoshow_icon" ></div></a></td>
+				<button id="infobox_updateinfo" onclick="javascript:start_updateinfo ()" style="visibility: hidden"></button>
 			</tr>
-		<div class="externalId_delete" >
-		<span class="externalId_delete_form" style="position: absolute; top:0.1vw; left: 5vw; display:none;"/>
-		</div>
-		<div class="externalId_add" style="visibility:hidden;  position: absolute; top:0.1vw; left: 5vw;">
-			<form action="javascript:open_update_externalId (document.getElementById('external_source').value, document.getElementById('external_id').value)" method="post">
-				<label for="external_source"><div id="updatelabel" style="display: inline;"></div>:&nbsp;<div id="sourcelabel" style="display: inline;"></div></label>
-				<input id="external_source" type="text" ></input>
-				<label for="external_id">Id</label>
-				<input id="external_id" type="text" ></input>
-				<INPUT type="submit" ></input>
-			</form>
-		</div>	
-		
-			<table class="media"><span class="status" />
-				<tr>
-					<td><span class="external_Id"></span></td>
-				</tr>
-				<tr class="media_tr">
-					<td><span class="filepath"></span></td>
-				</tr>
-				<tr class="media_tr">
-					<td><span class="stage_fileId"></span></td>
-				</tr>
-				<tr class="media_tr">
-					<td><span class="videosource"><img src="./pictures/videosource/videosource_unknown.png" alt="videosource"/></span></td>
-				</tr>
-				<tr class="media_tr">
-					<td><span class="resolution"></span></td>
-				</tr>
-				<tr class="media_tr">
-					<td><span class="codec"></span></td>
-				</tr>
-				<tr class="media_tr">
-					<td><span class="fps"></span></td>
-				</tr>
-				<tr class="media_tr">
-					<td><span class="runtime"></span></td>
-				</tr>
-				<tr class="media_tr">
-					<td><span class="audio"></span></td>
-				</tr>
-				<tr class="media_tr">
-					<td><span class="subtitle"></span></td>
-				</tr>
-				<tr>
-					<td><span class="awards"></span></td>
-				</tr>
-			</table>
+			<div class="externalId_delete" >
+			<span class="externalId_delete_form" style="position: absolute; top:0.1vw; left: 5vw; display:none;"/>
+			</div>
+			<div class="externalId_add" style="visibility:hidden;  position: absolute; top:0.1vw; left: 5vw;">
+				<form action="javascript:open_update_externalId (document.getElementById('external_source').value, document.getElementById('external_id').value)" method="post">
+					<label for="external_source"><div id="updatelabel" style="display: inline;"></div>:&nbsp;<div id="sourcelabel" style="display: inline;"></div></label>
+					<input id="external_source" type="text" ></input>
+					<label for="external_id">Id</label>
+					<input id="external_id" type="text" ></input>
+					<INPUT type="submit" ></input>
+				</form>
+			</div>	
+			
+				<table class="media"><span class="status" />
+					<tr>
+						<td><span class="external_Id"></span></td>
+					</tr>
+					<tr class="media_tr">
+						<td><span class="filepath"></span></td>
+					</tr>
+					<tr class="media_tr">
+						<td><span class="stage_fileId"></span></td>
+					</tr>
+					<tr class="media_tr">
+						<td><span class="videosource"><img src="./pictures/videosource/videosource_unknown.png" alt="videosource"/></span></td>
+					</tr>
+					<tr class="media_tr">
+						<td><span class="resolution"></span></td>
+					</tr>
+					<tr class="media_tr">
+						<td><span class="codec"></span></td>
+					</tr>
+					<tr class="media_tr">
+						<td><span class="fps"></span></td>
+					</tr>
+					<tr class="media_tr">
+						<td><span class="runtime"></span></td>
+					</tr>
+					<tr class="media_tr">
+						<td><span class="audio"></span></td>
+					</tr>
+					<tr class="media_tr">
+						<td><span class="subtitle"></span></td>
+					</tr>
+					<tr>
+						<td><span class="awards"></span></td>
+					</tr>
+				</table>
 			
 		
 		</div>
@@ -2688,7 +2764,17 @@
 			
 		
 	<!-- display season box , one for each season , add scroll horizontal bar if more than 8 seasons --> 
-		<div class="seasontable" id="seasontable">
+	<!-- display season box , one for each season , add scroll horizontal bar if more than 7 seasons --> 
+<div class="seasontable" id="seasontable" >
+			<table>
+				<tr>
+					<td class="season" style="display: none;">
+						<span class="Season"></span>
+					</td>
+				</tr>
+			</table>
+		</div>
+<!--		<div class="seasontable" id="seasontable">
 			<table >
 				<tr>
 					<td class="season">
@@ -2701,7 +2787,7 @@
 					</td>
 				</tr>
 			</table>
-		</div>
+		</div> -->
 	<!-- for episode detail section , hidden by default in other display -->	
 		<div class="episode_detail" >
 			<div class="table_videoimage" style="position: absolute; height: 100%;">  <!-- to map JSON return -->
@@ -2735,9 +2821,13 @@
 						</td>
 					</tr>
 				</table>
-				<div class="espisode_sub" style="position: absolute; bottom: 0%">
+				<div style="position: absolute; bottom: 0%">
+				<div class="espisode_sub" style="position: relative; ">
 					<span id="episode_subtitles">
-				
+				</div>
+				<div class="espisode_audio" style="position: relative; ">
+					<span id="episode_audiocodec">
+				</div>
 				</div>
 			</div>	
 		</div>

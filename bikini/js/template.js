@@ -258,8 +258,8 @@
 					$("#sd_type").css("visibility", "visible");
 					$("#hd_type").css("visibility", "visible");
 					$("#fullhd_type").css("visibility", "visible");
-					$("#4k_type").css("visibility", "visible");
-					$("#8k_type").css("visibility", "visible");
+					$("#fourk_type").css("visibility", "visible");
+					$("#heightk_type").css("visibility", "visible");
 					
 					$("#resolution_section").css("background", "grey");
 					$("#resolution_section").css("outline", "2px solid black");
@@ -274,8 +274,8 @@
 					$("#sd_type").css("visibility", "hidden");
 					$("#hd_type").css("visibility", "hidden");
 					$("#fullhd_type").css("visibility", "hidden");
-					$("#4k_type").css("visibility", "hidden");
-					$("#8k_type").css("visibility", "hidden");
+					$("#fourk_type").css("visibility", "hidden");
+					$("#heightk_type").css("visibility", "hidden");
 					
 					$("#resolution_section").css("background", "none");
 					$("#resolution_section").css("outline", "none");
@@ -297,7 +297,7 @@
 					$("#display_section").css("outline", "2px solid black");
 					$("#display_section").css("z-index", "15");
 					$("#display_item").css("z-index", "15");
-					if (window.localStorage.getItem('categorytype') == 'person' && window.localStorage.getItem('display_type') == "_list2")
+					if (window.localStorage.getItem('categorytype') == 'person')
 						{}
 					 else {parent.document.getElementById('my_header_menu').style.height = '240px';}
 					show_display = true;
@@ -323,17 +323,22 @@
 			if (document.getElementById('open_menu_left').style.visibility == 'visible')
 				{
 					console.log("detail toggle_menu_left: " + document.getElementById('open_menu_left').style.visibility)
+					parent.document.getElementById('my_left_menu').style.zIndex = '15';
 					parent.document.getElementById('my_left_menu').style.width = '12%';
 					document.getElementById('container_menu_left').style.opacity = '1';
+					document.getElementById('container_menu_left').style.zIndex = '17';
 					document.getElementById('open_menu_left').style.visibility = 'hidden';
 					document.getElementById('close_menu_left').style.visibility = 'visible';
+					
 				} else 
 				{
 					console.log("detail toggle_menu_left: " + document.getElementById('open_menu_left').style.visibility)
 					parent.document.getElementById('my_left_menu').style.width = '2%';
 					document.getElementById('container_menu_left').style.opacity = '0';
+					document.getElementById('container_menu_left').style.zIndex = '5';
 					document.getElementById('open_menu_left').style.visibility = 'visible';
 					document.getElementById('close_menu_left').style.visibility = 'hidden';
+					parent.document.getElementById('my_left_menu').style.zIndex = '5';
 				}
 		}
 			function toggle_detail_menu_left ()
@@ -400,7 +405,9 @@
 				switch (StyleValue)
 					{
 					case 'frame':
-						{
+						{	
+							if (window.localStorage.getItem('categorytype') == 'person' && window.localStorage.getItem('display_type') == "_list2")
+							{toggle_Parent_Id('target_display');}
 							console.log("ouvre_popup_search:  style:"+StyleValue);								
 							parent.frames['target_frame'].location.href='search.html';
 							toggle_Parent_Id('target_display');
@@ -1568,8 +1575,16 @@
 						document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+PlayerValue+": "+file_name+ "?"
 						document.getElementById("infobox").style.visibility="visible";
 						myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
-			//	window.open("Popup_Player.html", "YAMJv3 Player", "height=510, width=665, left=0, channelmode=no, directories=no, location=no,	menubar=no, resizable=yes, status=no, scrollbars=no,toolbar=no",false);
+			//	window.open("test_Player.html", "YAMJv3 Player", "height=510, width=665, left=0, channelmode=no, directories=no, location=no,	menubar=no, resizable=yes, status=no, scrollbars=no,toolbar=no",false);
 			}
+	function PopUpdateInfo(Current_stage_file_Id, Current_title)
+			{
+						console.log("PopUpdateInfo:  Current_stage_file_Id: "+Current_stage_file_Id);
+						document.getElementById("infobox_updateinfo").innerHTML=localStorage.getItem('update_label') + " stage_file id: "+Current_stage_file_Id+ " " + Current_title + "?"
+						document.getElementById("infobox_updateinfo").style.visibility="visible";
+						myVar=window.setTimeout(function(){myStopFunction('infobox_updateinfo');},5000);
+			}	
+	// if it is confirmed stop timer and call the delete action to make his job			
 	function PopDelete(Current_stage_file_Id, Current_title)
 			{
 						console.log("PopDelete:  Current_stage_file_Id: "+Current_stage_file_Id);
@@ -1603,6 +1618,12 @@
 			myStopFunction('infobox_update');
 			delete_stage_file_Id ()
 		}
+	// if it is confirmed stop timer and call the update info action to make his job			
+	function start_updateinfo ()
+		{
+			myStopFunction('infobox_updateinfo');
+			updateinfo_stage_file_Id ()
+		}
 	function PopIgnore(Current_artwork_type, Current_located_Id)
 			{
 						console.log("PopIgnore:  Current_located_Id: "+Current_located_Id);
@@ -1634,7 +1655,7 @@
 					break; 
 					case 'PC':
 						console.log("start_playing PC: " +Currentfilename+ ", CurrentUrlPlay: "+CurrentUrlPlay);
-						window.open("Popup_Player.html", "YAMJv3 Player", "height=510, width=665, left=0, channelmode=no, directories=no, location=no,	menubar=no, resizable=yes, status=no, scrollbars=no,toolbar=no",false);
+						window.open("test_Player.html", "YAMJv3 Player", "height=510, width=665, left=0, channelmode=no, directories=no, location=no,	menubar=no, resizable=yes, status=no, scrollbars=no,toolbar=no",false);
 					break; 
 						
 					case 'SMARTPHONE':

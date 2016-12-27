@@ -136,7 +136,7 @@
 		// display biography, resize the window to display bio and poster and photo ribbon at bottom
 		
 				$('.table_person_photoH').css('top', '');
-				$('.table_person_photoH').css('bottom', '5px');
+				$('.table_person_photoH').css('bottom', '2px');
 				$('.Hbiography').css('display', 'block');
 		if (localStorage.getItem ("Style") == "frame") {parent.document.getElementById('person_frame').style.height="89vh";}
 		window.resizeTo (1340, 870);
@@ -188,13 +188,16 @@
 								var temp_output = '';
 								video_compare = true;
 								for (j = 0; j < filmography_inside_ref_list.length & video_compare; j++) {
-									if (filmography_list[i].originalTitle.toLowerCase() == filmography_inside_ref_list[j].originalTitle.toLowerCase())
+									if (filmography_list[i].originalTitle && filmography_inside_ref_list[j])
 										{
-											video_compare = false;
-											temp_output = temp_output + "<a style=\"color:red;\" href=\"javascript:setId('" + filmography_inside_ref_list[j].type + "', '" + filmography_inside_ref_list[j].videodataId + "')\"> " + filmography_list[i].year + " - " + filmography_list[i].title ;
-											
+											if (filmography_list[i].originalTitle.toLowerCase() == filmography_inside_ref_list[j].originalTitle.toLowerCase())
+											{
+												video_compare = false;
+												temp_output = temp_output + "<a style=\"color:red;\" href=\"javascript:setId('" + filmography_inside_ref_list[j].type + "', '" + filmography_inside_ref_list[j].videodataId + "')\"> " + filmography_list[i].year + " - " + filmography_list[i].title ;
+												
+											} else {}
 										} else {}
-									}
+									} 
 								if (video_compare) {temp_output = filmography_list[i].year + " - " + filmography_list[i].title;}
 							// add job if exist
 								if (filmography_list[i].job)

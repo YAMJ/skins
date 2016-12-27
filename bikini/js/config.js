@@ -173,7 +173,7 @@
 							perPageValue = 4;
 					//		$('#container').css('top', '80px');
 					//		$('#container').css('height', '565px');
-							$('.row').css('padding', '2px 0px 0px 25px');
+							$('.row').css('padding', '2px 0px 0px 20px');
 							$('.block').css('height', '39.1vw');
 							$('.block').css('width', '21.7vw');
 							$('.block').css('margin', '10px');
@@ -229,7 +229,7 @@
 							$('.not_done').css('width', '50%');
 							$('.overlays').css('height', '108%');
 				
-							$('.row2').css('padding', '2px 0px 0px 25px');
+							$('.row2').css('padding', '2px 0px 0px 20px');
 							$('.block2').css('height', '39.1vw');
 							$('.block2').css('width', '21.7vw');
 							$('.block2').css('margin', '10px');
@@ -278,10 +278,10 @@
 							perPageValue = 12;
 						//	$('#container').css('top', '65px');
 						//	$('#container').css('height', '690px');
-							$('.row').css('padding', '2px 0px 0px 5px');
+							$('.row').css('padding', '2px 0px 0px 2px');
 							$('.block').css('height', '25.3vw');
 							$('.block').css('width', '14.3vw');
-							$('.block').css('margin', '2px 10px 2px 10px');
+							$('.block').css('margin', '2px 2px 2px 10px');
 						//	$('.block').css('padding', '0px');
 						//	$('.poster').css('height', '82%');
 						//	$('.poster').css('width', '93%');
@@ -322,10 +322,10 @@
 							$('.not_done').css('width', '50%');
 							$('.overlays').css('top', '-134%');
 							
-							$('.row2').css('padding', '2px 0px 0px 5px');
+							$('.row2').css('padding', '2px 0px 0px 2px');
 							$('.block2').css('height', '25.3vw');
 							$('.block2').css('width', '14.3vw');
-							$('.block2').css('margin', '2px 10px 2px 10px');
+							$('.block2').css('margin', '2px 2px 2px 10px');
 							$('.title2').css('font-size', '1vw');
 							$('.title2').css('top', '-3vw');
 							$('.title2').css('height', '14%');
@@ -356,7 +356,7 @@
 						//3 rows, 9 columns 
 						case 3:
 							perPageValue = 27;
-							$('.row').css('padding', '2px 0px 0px 30px');
+							$('.row').css('padding', '2px 0px 0px 20px');
 							$('.overlay').css('display', 'none');
 							$('.block').css('height', '16.8vw');
 							$('.block').css('width', '9.7vw');
@@ -406,7 +406,7 @@
 							$('.not_done').css('top', '-34vw');
 							$('.not_done').css('width', '50%');
 							
-							$('.row2').css('padding', '2px 0px 0px 30px');
+							$('.row2').css('padding', '2px 0px 0px 20px');
 							$('.overlay2').css('display', 'none');
 							$('.block2').css('height', '16.8vw');
 							$('.block2').css('width', '9.7vw');
@@ -455,7 +455,7 @@
 						//4 rows, 11 columns 
 						case 4:
 							perPageValue = 48;
-							$('.row').css('padding', '1px 0px 0px 10px');
+							$('.row').css('padding', '1px 0px 0px 20px');
 							$('.block').css('height', '12.5vw');
 							$('.block').css('width', '7.2vw');
 							$('.block').css('margin', '1px 3px 1px 3px');
@@ -506,7 +506,7 @@
 							$('.overlays').css('height', '108%');
 							$('.overlays').css('top', '-145%');
 							
-							$('.row2').css('padding', '1px 0px 0px 10px');
+							$('.row2').css('padding', '1px 0px 0px 20px');
 							$('.block2').css('height', '12.5vw');
 							$('.block2').css('width', '7.2vw');
 							$('.block2').css('margin', '1px 3px 1px 3px');
@@ -547,7 +547,7 @@
 						//5 rows, 12 columns
 						case 5:
 							perPageValue = 65;
-							$('.row').css('padding', '2px 0px 0px 10px');
+							$('.row').css('padding', '2px 0px 0px 20px');
 							$('.block').css('height', '10vw');
 							$('.block').css('width', '6.8vw');
 							$('.block').css('margin', '1px');
@@ -587,7 +587,7 @@
 							$('.not_done').css('width', '50%');
 							$('.overlays').css('top', '-165%');
 							
-							$('.row2').css('padding', '2px 0px 0px 10px');
+							$('.row2').css('padding', '2px 0px 0px 20px');
 							$('.block2').css('height', '10vw');
 							$('.block2').css('width', '6.8vw');
 							$('.block2').css('margin', '1px');

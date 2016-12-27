@@ -27,7 +27,7 @@
 		<script type="text/javascript" src="js/iscroll.js"></script>
 
     </head>
-    <body onload="switch_index_no_html();getheaderData();setTimeout(function(){getIndexData()}, 50);animate_watched();setTimeout(function(){getIndexData2()}, 300);">
+    <body onload="switch_index_no_html();getheaderData();setTimeout(function(){getIndexData()}, 5);animate_watched();setTimeout(function(){getIndexData2()}, 50);">
         <script type="text/javascript">
 	
 //***************************************************************************************
@@ -86,7 +86,7 @@
 		var category_name = ""; 
 		if (localStorage.getItem(category_type + "_name"))
 			{category_name = localStorage.getItem(category_type + "_name");}
-		console.log ("index category name :" + category_name );
+		console.log ("index previous category_name :" + category_name );
 		// get the prefered_page
 		if (localStorage.getItem("prefered_page"))
 			{Prefered_PageValue = localStorage.getItem("prefered_page");}
@@ -461,9 +461,10 @@
 					if (selected_index.length > 69)	{temp_style = "1.05vw";}
 					if (selected_index.length > 72)	{temp_style = "1vw";}
 					if (selected_index.length > 74)	{temp_style = "0.95vw";}
+					if (selected_index.length > 78)	{temp_style = "0.80vw";}
 				$(".show_index").css("font-size", temp_style);
 				$('#printsearch').html(selected_index);
-		console.log("Index getIndexData URLheader: " + jsonUrlheader);
+		console.log("Index getheaderData URLheader: " + jsonUrlheader);
 		
 		$.ajax({
 			
@@ -481,7 +482,221 @@
 			return;
 		}
 	 
+		function SetIndexData (search)
+		{		
+				window.localStorage.setItem("search_index", search);
+				window.location.reload();
+		
+		}
+
+  //************************ LANGUAGE LOCAL SETTING *********************************************
+		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
+		function set_context_lang_value ()
+		{
 			
+			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('skin_').toLowerCase() + " " + window.localStorage.getItem('info_label').toLowerCase();
+			switch (window.localStorage.getItem('prefered_page').toLowerCase())
+			{
+				case 'certification':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('certification_label').toLowerCase();
+				break;
+				}
+				case 'index_all':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('all_label').toLowerCase();
+				break;
+				}
+				case 'index_movie':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('movie_label').toLowerCase();
+				break;
+				}
+				case 'index_series':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('series_label').toLowerCase();
+				break;
+				}
+				case 'new':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('new_').toLowerCase();
+				break;
+				}
+				case 'person':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('person_label').toLowerCase();
+				break;
+				}
+				case 'rating':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('rating_label').toLowerCase();
+				break;
+				}
+				case 'source':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('source_label').toLowerCase();
+				break;
+				}
+			}
+			document.getElementsByClassName("playbutton")[0].title=window.localStorage.getItem('play_label').toLowerCase();
+			document.getElementsByClassName("infobutton")[0].title=window.localStorage.getItem('info_label').toLowerCase();
+			document.getElementsByClassName("rating")[0].title=window.localStorage.getItem('rating_label').toLowerCase();
+			document.getElementsByClassName("boxset")[0].title=window.localStorage.getItem('boxset_label').toLowerCase();
+			document.getElementsByClassName("playbutton2")[0].title=window.localStorage.getItem('play_label').toLowerCase();
+			document.getElementsByClassName("infobutton2")[0].title=window.localStorage.getItem('info_label').toLowerCase();
+			document.getElementsByClassName("rating2")[0].title=window.localStorage.getItem('rating_label').toLowerCase();
+			document.getElementsByClassName("boxset2")[0].title=window.localStorage.getItem('boxset_label').toLowerCase();
+			
+		}
+		
+        </script>
+
+	<!-- just added to set the language value, shouldn't be displayed  -->
+			<div class="results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Value"></td></tr></table>
+			</div>
+			<!-- just added to set the poster number value, shouldn't be displayed  -->
+			<div class="poster_results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Poster_Value"></td></tr></table>
+			</div>
+	<div class="index_header"> 
+			<a href="javascript:ouvre_prefered_page()" id="li_home_left" data-tip2="prefered page"></a>
+			<a id="info_config" data-tip2="info" href="javascript:ouvre_info_config()" ></a>
+			<div class="show_index"><span id="printsearch"></span></div>
+			<div class="count_return_index">
+                   <span class="ReturnCount"></span> 
+			</div>
+			 <!-- include navigation header after context return , page info and count return -->		
+			<div>
+				<object data="include_header_index_menu.html" type="text/html" id="my_header_menu" ></object>
+			</div>
+		<div class="directplay" style="display:none">
+			<span class="filepath"></span>
+		</div>
+            <!--Navigation Holder-->
+        <div class="holder"></div>
+	</div>
+	
+        <!--Data Items Container-->
+        <div id="container" >
+            <div id="yRow" class="row">
+                <div id="yBlock" class="block" >
+					<img class="poster" src="pictures/dummy.png" alt="poster"></img>
+                    <img class="playbutton" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'" alt="next" title="play"></img>
+					<img class="infobutton" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'" alt="info" title="info" ></img>
+					<img class="watched_small" src="pictures/empty.png" alt="watched" onmouseout="src='pictures/empty.png'" title="watch"></img>
+                    <span class="title" ></span>
+					<img class="rating" title="rating" src="./pictures/vertical_ratings/dummy_rating.png" onclick="" alt="rating"/>
+					<img class="boxset" title="boxset" src="./pictures/no_set.png" onclick="" alt="boxset"/>
+					<img class="overlays" src="pictures/covers/transparent.png" alt="overlays" ></img>
+					<img class="not_done" src="pictures/icon_error.png" alt="status not done" title="status not done" style="position: relative; top: -34vw; left: 8.5vw; display: none;"></img>
+                </div>
+                
+			</div>
+			<div id="yRow" class="row2" style="display:none">
+					<div id="yBlock" class="block" >
+						<img class="poster2" src="pictures/dummy.png" alt="poster"></img>
+						<img class="playbutton2" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'" alt="next" title="play"></img>
+						<img class="infobutton2" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'" alt="info" title="info" ></img>
+						<img class="watched_small2" src="pictures/empty.png" alt="watched" onmouseout="src='pictures/empty.png'" title="watch"></img>
+						<span class="title2" ></span>
+						<img class="rating2" title="rating" src="./pictures/vertical_ratings/dummy_rating.png" onclick="" alt="rating"/>
+						<img class="boxset2" title="boxset" src="./pictures/no_set.png" onclick="" alt="boxset"/>
+						<img class="overlays2" src="pictures/covers/transparent.png" alt="overlays" ></img>
+						<img class="not_done2" src="pictures/icon_error.png" alt="status not done" title="status not done" style="position: relative; top: -34vw; left: 8.5vw; display: none;"></img>
+						<br>
+					</div>
+			</div>
+        </div>
+	<!-- add left menu dynamically from a separate file --> 
+	<div >
+      <object data="include_left_menu.html" type="text/html" id="my_left_menu"></object>
+    </div>
+	
+	<!-- display infobox -->
+		<button id="infobox" onclick="javascript:start_playing ()"></button>
+	<!-- display Remote -->
+		<div id="remote" style="visibility: hidden; ">
+			<iframe src="" name="remote_frame" resizable="yes" id="remote_frame" scrolling="yes" frameborder="0" style="overflow:auto; width:430px; height:660px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display config / search -->
+		<div id="target_display" style="visibility: hidden; ">		
+			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:1050px; height:320px;" allowTransparency="true"></iframe>
+		</div>
+	<!-- display detail  -->
+		<div id="detail_display" style="visibility: hidden; position: absolute; top: 5vw; left: 16%;">		
+			<iframe src="" name="detail_frame" resizable="yes" id="detail_frame" scrolling="no" frameborder="1" style="overflow:hidden;  width:71vw; height:43vw;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display Movie -->
+		<div id="movie_display" style="visibility: hidden; ">
+			<iframe src="" name="movie_frame" resizable="yes" id="movie_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1245px; height:265px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display person -->
+		<div id="person_display" style="visibility: hidden; ">	
+			<iframe src="" name="person_frame" resizable="yes" id="person_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1220px; height:335px;" allowTransparency="true"></iframe>
+		</div>
+	<!-- display source data from API if needed  -->
+        <div id="sourceData"></div>
+<script type="text/javascript">
+	// position at the end of the html to speed the display (perhaps) 
+	function getIndexData()
+        {
+				get_poster_number ();
+				console.log ("index getIndexData RowperPageValue: " + RowperPageValue)
+				switch (RowperPageValue)
+				{
+				case 0:
+				case 1:
+					{
+						max_count = 20;
+					break;
+					}
+				case 2:
+					{
+						max_count = 36;
+					break;
+					}
+				case 3:
+					{
+						max_count = 54;
+					break;
+					}
+				case 4:
+					{
+						max_count = 84;
+					break;
+					}
+				case 5:
+				case 6:
+					{
+						max_count = 91;
+					break;
+					}
+				}	
+				if (count_result > max_count && (window.localStorage.getItem("Paging") == 'false'))
+				{jsonUrltemp = jsonUrl + "&start=0&max=" + max_count}
+				else {jsonUrltemp = jsonUrl}
+				console.log("Index getIndexData URL: " + jsonUrltemp + " count_result:" + count_result);
+				$.ajax({
+                url: jsonUrltemp,
+                async: true,
+                dataType: 'jsonp',
+                'success': function(data)
+                {
+                    jsondata = data;
+				//	 outputJson(data); 		
+					updateHtml2(data);
+				//	get_poster_number ();
+					console.log("GetIndexData: perPageValue="+perPageValue+" paging:"+ window.localStorage.getItem('Paging'));
+                 if (window.localStorage.getItem("Paging") == 'true') { 	
+						pageData(perPageValue);}
+                }
+            });
+			
+            return;
+        }
+		</script>
+		<script type="text/javascript" defer> 	
         // Run the pure.js function to render the data into the HTML template
         // div.row is the part of the template to apply it too.
         // "row" is a CLASS attribute, not the id.
@@ -634,13 +849,14 @@
             $p('div.row2').render(yamjdata, LIST_DIR2);
 			$('.row2').css('display', 'block');
 	}
-	function getIndexData2()
+	
+function getIndexData2()
 	{
 			if (count_result > (max_count - 1) && (window.localStorage.getItem("Paging") == 'false'))
 				{
 				
 				jsonUrltemp = jsonUrl + "&start=" + max_count
-				console.log("Index getIndexData URL: " + jsonUrltemp + " count_result:" + count_result);
+				console.log("Index getIndexData2 URL: " + jsonUrltemp + " count_result:" + count_result);
 				$.ajax({
                 url: jsonUrltemp,
                 async: true,
@@ -658,219 +874,7 @@
 			return;
 		}
 	}
-		function SetIndexData (search)
-		{		
-				window.localStorage.setItem("search_index", search);
-				window.location.reload();
-		
-		}
+</script>
 
-  //************************ LANGUAGE LOCAL SETTING *********************************************
-		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
-		function set_context_lang_value ()
-		{
-			
-			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('skin_').toLowerCase() + " " + window.localStorage.getItem('info_label').toLowerCase();
-			switch (window.localStorage.getItem('prefered_page').toLowerCase())
-			{
-				case 'certification':
-				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('certification_label').toLowerCase();
-				break;
-				}
-				case 'index_all':
-				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('all_label').toLowerCase();
-				break;
-				}
-				case 'index_movie':
-				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('movie_label').toLowerCase();
-				break;
-				}
-				case 'index_series':
-				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('series_label').toLowerCase();
-				break;
-				}
-				case 'new':
-				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('new_').toLowerCase();
-				break;
-				}
-				case 'person':
-				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('person_label').toLowerCase();
-				break;
-				}
-				case 'rating':
-				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('rating_label').toLowerCase();
-				break;
-				}
-				case 'source':
-				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('source_label').toLowerCase();
-				break;
-				}
-			}
-			document.getElementsByClassName("playbutton")[0].title=window.localStorage.getItem('play_label').toLowerCase();
-			document.getElementsByClassName("infobutton")[0].title=window.localStorage.getItem('info_label').toLowerCase();
-			document.getElementsByClassName("rating")[0].title=window.localStorage.getItem('rating_label').toLowerCase();
-			document.getElementsByClassName("boxset")[0].title=window.localStorage.getItem('boxset_label').toLowerCase();
-			document.getElementsByClassName("playbutton2")[0].title=window.localStorage.getItem('play_label').toLowerCase();
-			document.getElementsByClassName("infobutton2")[0].title=window.localStorage.getItem('info_label').toLowerCase();
-			document.getElementsByClassName("rating2")[0].title=window.localStorage.getItem('rating_label').toLowerCase();
-			document.getElementsByClassName("boxset2")[0].title=window.localStorage.getItem('boxset_label').toLowerCase();
-			
-		}
-		
-        </script>
-
-	<!-- just added to set the language value, shouldn't be displayed  -->
-			<div class="results" style="visibility: hidden; display:none;">
-				<table><tr><td class="Value"></td></tr></table>
-			</div>
-			<!-- just added to set the poster number value, shouldn't be displayed  -->
-			<div class="poster_results" style="visibility: hidden; display:none;">
-				<table><tr><td class="Poster_Value"></td></tr></table>
-			</div>
-	<div class="index_header"> 
-			<a href="javascript:ouvre_prefered_page()" id="li_home_left" data-tip2="prefered page"></a>
-			<a id="info_config" data-tip2="info" href="javascript:ouvre_info_config()" ></a>
-			<div class="show_index"><span id="printsearch"></span></div>
-			<div class="count_return_index">
-                   <span class="ReturnCount"></span> 
-			</div>
-			 <!-- include navigation header after context return , page info and count return -->		
-			<div>
-				<object data="include_header_index_menu.html" type="text/html" id="my_header_menu" ></object>
-			</div>
-		<div class="directplay" style="display:none">
-			<span class="filepath"></span>
-		</div>
-            <!--Navigation Holder-->
-        <div class="holder"></div>
-	</div>
-	
-        <!--Data Items Container-->
-        <div id="container" >
-            <div id="yRow" class="row">
-                <div id="yBlock" class="block" >
-					<img class="poster" src="pictures/dummy.png" alt="poster"></img>
-                    <img class="playbutton" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'" alt="next" title="play"></img>
-					<img class="infobutton" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'" alt="info" title="info" ></img>
-					<img class="watched_small" src="pictures/empty.png" alt="watched" onmouseout="src='pictures/empty.png'" title="watch"></img>
-                    <span class="title" ></span>
-					<img class="rating" title="rating" src="./pictures/vertical_ratings/dummy_rating.png" onclick="" alt="rating"/>
-					<img class="boxset" title="boxset" src="./pictures/no_set.png" onclick="" alt="boxset"/>
-					<img class="overlays" src="pictures/covers/transparent.png" alt="overlays" ></img>
-					<img class="not_done" src="pictures/icon_error.png" alt="status not done" title="status not done" style="position: relative; top: -34vw; left: 8.5vw; display: none;"></img>
-                </div>
-                
-			</div>
-				<div id="yRow" class="row2" style="display:none">
-					<div id="yBlock" class="block" >
-						<img class="poster2" src="pictures/dummy.png" alt="poster"></img>
-						<img class="playbutton2" src="pictures/next.png" onmouseout="src='pictures/next.png'" onmouseover="src='pictures/nextSelect.png'" alt="next" title="play"></img>
-						<img class="infobutton2" src="pictures/info2_on.png" onmouseout="src='pictures/info2_on.png'" onmouseover="src='pictures/info.png'" alt="info" title="info" ></img>
-						<img class="watched_small2" src="pictures/empty.png" alt="watched" onmouseout="src='pictures/empty.png'" title="watch"></img>
-						<span class="title2" ></span>
-						<img class="rating2" title="rating" src="./pictures/vertical_ratings/dummy_rating.png" onclick="" alt="rating"/>
-						<img class="boxset2" title="boxset" src="./pictures/no_set.png" onclick="" alt="boxset"/>
-						<img class="overlays2" src="pictures/covers/transparent.png" alt="overlays" ></img>
-						<img class="not_done2" src="pictures/icon_error.png" alt="status not done" title="status not done" style="position: relative; top: -34vw; left: 8.5vw; display: none;"></img>
-						<br>
-					</div>
-			</div>
-        </div>
-	<!-- add left menu dynamically from a separate file --> 
-	<div >
-      <object data="include_left_menu.html" type="text/html" id="my_left_menu"></object>
-    </div>
-	
-	<!-- display infobox -->
-		<button id="infobox" onclick="javascript:start_playing ()"></button>
-	<!-- display Remote -->
-		<div id="remote" style="visibility: hidden; ">
-			<iframe src="" name="remote_frame" resizable="yes" id="remote_frame" scrolling="yes" frameborder="0" style="overflow:auto; width:430px; height:660px;" allowTransparency="true"></iframe>
-		</div>	
-	<!-- display config / search -->
-		<div id="target_display" style="visibility: hidden; ">		
-			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:1050px; height:320px;" allowTransparency="true"></iframe>
-		</div>
-	<!-- display detail  -->
-		<div id="detail_display" style="visibility: hidden; position: absolute; top: 5vw; left: 16%;">		
-			<iframe src="" name="detail_frame" resizable="yes" id="detail_frame" scrolling="no" frameborder="1" style="overflow:hidden;  width:71vw; height:43vw;" allowTransparency="true"></iframe>
-		</div>	
-	<!-- display Movie -->
-		<div id="movie_display" style="visibility: hidden; ">
-			<iframe src="" name="movie_frame" resizable="yes" id="movie_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1245px; height:265px;" allowTransparency="true"></iframe>
-		</div>	
-	<!-- display person -->
-		<div id="person_display" style="visibility: hidden; ">	
-			<iframe src="" name="person_frame" resizable="yes" id="person_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1220px; height:335px;" allowTransparency="true"></iframe>
-		</div>
-	<!-- display source data from API if needed  -->
-        <div id="sourceData"></div>
-	<script>
-	// position at the end of the html to speed the display (perhaps) 
-	function getIndexData()
-        {
-				get_poster_number ();
-				console.log ("index getIndexData RowperPageValue: " + RowperPageValue)
-				switch (RowperPageValue)
-				{
-				case 0:
-				case 1:
-					{
-						max_count = 20;
-					break;
-					}
-				case 2:
-					{
-						max_count = 36;
-					break;
-					}
-				case 3:
-					{
-						max_count = 54;
-					break;
-					}
-				case 4:
-					{
-						max_count = 84;
-					break;
-					}
-				case 5:
-				case 6:
-					{
-						max_count = 91;
-					break;
-					}
-				}	
-				if (count_result > max_count && (window.localStorage.getItem("Paging") == 'false'))
-				{jsonUrltemp = jsonUrl + "&start=0&max=" + max_count}
-				else {jsonUrltemp = jsonUrl}
-				console.log("Index getIndexData URL: " + jsonUrltemp + " count_result:" + count_result);
-				$.ajax({
-                url: jsonUrltemp,
-                async: true,
-                dataType: 'jsonp',
-                'success': function(data)
-                {
-                    jsondata = data;
-				//	 outputJson(data); 		
-					updateHtml2(data);
-				//	get_poster_number ();
-					console.log("GetIndexData: perPageValue="+perPageValue+" paging:"+ window.localStorage.getItem('Paging'));
-                 if (window.localStorage.getItem("Paging") == 'true') { 	
-						pageData(perPageValue);}
-                }
-            });
-			
-            return;
-        }
-		</script>
     </body>
 </html>

@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>YAMJ v3</title>
+        <title>YAMJ3 Info Config</title>
      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>YAMJv3 Genrelist</title>
         <script src="js/jQuery.js"></script>
         <!-- Used for the JSON parsing -->
         <script src="js/pure.js"></script>
@@ -72,6 +71,8 @@
 					{skin_set = window.localStorage.getItem("skinset");}
 					else {window.localStorage.setItem("skinset", skin_set);}
 				parent.document.getElementById('target_display').style.zIndex="10";
+				parent.document.getElementById('target_frame').style.width="100%";
+				parent.document.getElementById('target_frame').style.height="90%";
 		
 		}
 		function close_info_config ()
@@ -208,7 +209,7 @@
 		}
 		
  		</script>
-		<div id="close_icon" onclick="close_info_config()" style="left:85%;" ><img src="./pictures/close2.png" style="height:40px; width:40px; position:absolute; top:2px; left:0px; z-index:10000;" /></div>
+		<div id="close_icon" onclick="close_info_config()" style="left:85%;" ><img src="./pictures/close2.png" style="height:5vw; width:5vw; position:absolute; top:1vh; left:0px; z-index:10000;" /></div>
 		<!-- just added to set the language value, shouldn't be displayed  -->
 		<div class="results" style="visibility: hidden; display:none;">
 			<table><tr><td class="Value"></td></tr></table>
@@ -221,9 +222,9 @@
 		<div id="headertable_config">
 			<h2 style="color: white; text-align: center; font-size: 2.3vw;"><span id="SkinSetted" ></span> </h2>
 		<div>
-			<a href="javascript:close_info_config (); ouvre_config_page(StyleValue)">
-				<img src="pictures/icon/settings.png" height="80" width="100" style="padding-left:5px" alt="setting" />
-			<div id="configindex" style="text-decoration: underline;"></div></a>
+			<a href="javascript:close_info_config (); ouvre_config_page(StyleValue)" style="position: absolute; left: 0px; top: 25vh;">
+				<img src="pictures/icon/settings.png" style="padding-left:0.8vw; padding-top: 3vh; width: 12vw;" alt="setting" />
+			<div id="configindex" style="text-decoration: underline; position: absolute; left: 0.5vw; font-size: 1.2vw;"></div></a>
 		</div>
 			<div id="index_tools_config">
 		

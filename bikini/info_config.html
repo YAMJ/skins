@@ -66,6 +66,7 @@
 				get_prefered_certification ();
 				get_overlay ();
 				get_display_type ();
+				get_title_type ();
 				
 				if (window.localStorage.getItem("skinset"))
 					{skin_set = window.localStorage.getItem("skinset");}
@@ -196,6 +197,30 @@
 			if (window.localStorage.getItem("display_type") == "wall")
 			{document.getElementById("display_typeSetted").innerHTML=window.localStorage.getItem("display_label") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("wall_text");}
 			else {document.getElementById("display_typeSetted").innerHTML=window.localStorage.getItem("display_label") + "&nbsp;" + ":&nbsp;" + window.localStorage.getItem("list_text");}
+			switch (window.localStorage.getItem("title_type").toLowerCase())
+			{
+				case 'title': 
+				{
+					document.getElementById("title_typeSetted").innerHTML=window.localStorage.getItem("title_type_label")
+					+ "&nbsp;" + ":&nbsp;"
+					+ window.localStorage.getItem("title_label");
+					break;
+				}
+				case 'title_original': 
+				{
+					document.getElementById("title_typeSetted").innerHTML=window.localStorage.getItem("title_type_label")
+					+ "&nbsp;" + ":&nbsp;"
+					+ window.localStorage.getItem("title_original_label");
+					break;
+				}
+				case 'title_sort': 
+				{
+					document.getElementById("title_typeSetted").innerHTML=window.localStorage.getItem("title_type_label")
+					+ "&nbsp;" + ":&nbsp;"
+					+ window.localStorage.getItem("title_sort_label");
+					break;
+				}
+			}
 			document.getElementById("playerconfig").innerHTML=window.localStorage.getItem("player_select").toLowerCase() + "&nbsp;:" + window.localStorage.getItem("Player");
 			document.getElementById("playeripinfo").innerHTML="IP:&nbsp;" + window.localStorage.getItem("Player_Ip");
 			document.getElementById("playertypeinfo").innerHTML="Type:&nbsp;" + window.localStorage.getItem("Player_Type");
@@ -253,6 +278,7 @@
 								<tr class="tableinfo_config">
 									<td><div id="playerpaths"></div></td>
 									<td><div id="playerpathsdetail"></div></td>
+									<td><div id="title_typeSetted"></div></td>
 								</tr>
 							</table>
 		</div>

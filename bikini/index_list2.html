@@ -114,18 +114,38 @@
 					}
 			}
 			else {window.localStorage.setItem("indextype", index_type);}
+		// get the way where the title is fetch and display (title, sort_title, original_title)
+		var title_type = "title_sort";
+			if (window.localStorage.getItem("title_type"))
+				{direction = window.localStorage.getItem("title_type");}
+			else {window.localStorage.setItem("title_type", title_type);}	
+		
 		// set a default direction to ASC or set to the direction previously selected if available 	
 		var direction = "ASC";
 			if (window.localStorage.getItem("direction"))
 				{direction = window.localStorage.getItem("direction");}
 				else {window.localStorage.setItem("direction", direction);}	
-		var sort_type = "title"; 
-			if (window.localStorage.getItem("sort_indextype"))
-				{
+		// get the sort instruction
+		var sort_type = "title";
+			switch (title_type)
+			{
+				case "title":
+					sort_type = "title";
+					break;
+				case "title_sort":
+					sort_type = "sortTitle"
+					break;
+				case "title_original":
+					sort_type = "originalTitle"
+					break;
+			}
+		if (window.localStorage.getItem("sort_indextype"))
+			{
 				if (window.localStorage.getItem("sort_indextype") == 'videoYear,createTimestamp')
-					{ sort_type = 'videoYear ' + direction + ',createTimestamp ' + direction;
-					} else {sort_type = window.localStorage.getItem("sort_indextype") + ' ' + direction;}
-				 } else {window.localStorage.setItem("sort_indextype", sort_type)+ ' ' + direction;}
+					{ sort_type = 'videoYear ' + direction + ',createTimestamp ' + direction;} 
+				else {sort_type = window.localStorage.getItem("sort_indextype") + ' ' + direction;}
+			} 
+		else {window.localStorage.setItem("sort_indextype", sort_type)+ ' ' + direction;}
 		
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
@@ -151,34 +171,158 @@
 					alternate += 1;
 					if (alternate%2 == 0)
 					{alternate_color = "grey"} else {alternate_color = "black"}
-					if ((arg.item.videoType == 'SEASON'))
-						{	
-							if (first_display) 
-								{
-									first_display = false;
-									direct_info2(arg.item.videoType, arg.item.id);
-									return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:" + alternate_color + ";' onclick=\" display_short_list (); direct_info2('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
-								}
-							return "<a href=\"#\" style='font-size: 1.6vw; background:" + alternate_color + ";' onclick=\" display_short_list (); direct_info2('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
-						} else {
-							if (arg.item.videoType == 'SERIES')
-								{ 	
-								if (first_display) 
-									{
-										first_display = false;
-										direct_info2(arg.item.videoType, arg.item.id);
-										return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw;background:" + alternate_color + ";' onclick=\" display_short_list (); direct_info2('" + arg.item.videoType + "', "+ arg.item.id + ")\">" + window.localStorage.getItem('series_label') + ': ' + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
-									}
-									return "<a href=\"#\" style='font-size: 1.6vw; background:" + alternate_color + ";' onclick=\" display_short_list (); direct_info2('" + arg.item.videoType + "', "+ arg.item.id + ")\">" + window.localStorage.getItem('series_label') + ': ' + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
-								} else {
+					switch (title_type)	
+					{
+						case "title":		
+							if ((arg.item.videoType == 'SEASON'))
+								{	
 									if (first_display) 
 										{
 											first_display = false;
 											direct_info2(arg.item.videoType, arg.item.id);
-											return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:" + alternate_color + ";' onclick=\" display_short_list (); display_short_list (); direct_info2('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+											return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', " + arg.item.id + ")\">"
+											+ arg.item.title + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
 										}
-									return "<a href=\"#\" style='font-size: 1.6vw; background:" + alternate_color + ";' onclick=\" display_short_list (); direct_info2('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+									return "<a href=\"#\" style='font-size: 1.6vw; background:"
+									+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+									+ arg.item.videoType + "', " + arg.item.id + ")\">"
+									+ arg.item.title + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
+								} else {
+									if (arg.item.videoType == 'SERIES')
+										{ 	
+										if (first_display) 
+											{
+												first_display = false;
+												direct_info2(arg.item.videoType, arg.item.id);
+												return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw;background:"
+												+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+												+ arg.item.videoType + "', "+ arg.item.id + ")\">"
+												+ window.localStorage.getItem('series_label') + ': ' + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+											}
+											return "<a href=\"#\" style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', "+ arg.item.id + ")\">"
+											+ window.localStorage.getItem('series_label') + ': ' + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+										} else {
+											if (first_display) 
+												{
+													first_display = false;
+													direct_info2(arg.item.videoType, arg.item.id);
+													return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:"
+													+ alternate_color + ";' onclick=\" display_short_list (); display_short_list (); direct_info2('"
+													+ arg.item.videoType + "', " + arg.item.id + ")\">"
+													+ arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+												}
+											return "<a href=\"#\" style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', "
+											+ arg.item.id + ")\">"
+											+ arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+										}
 								}
+							break;
+						case "title_sort":		
+							if ((arg.item.videoType == 'SEASON'))
+								{	
+									if (first_display) 
+										{
+											first_display = false;
+											direct_info2(arg.item.videoType, arg.item.id);
+											return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', " + arg.item.id + ")\">"
+											+ arg.item.sortTitle + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
+										}
+									return "<a href=\"#\" style='font-size: 1.6vw; background:"
+									+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+									+ arg.item.videoType + "', " + arg.item.id + ")\">"
+									+ arg.item.sortTitle + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
+								} else {
+									if (arg.item.videoType == 'SERIES')
+										{ 	
+										if (first_display) 
+											{
+												first_display = false;
+												direct_info2(arg.item.videoType, arg.item.id);
+												return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw;background:"
+												+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+												+ arg.item.videoType + "', "+ arg.item.id + ")\">"
+												+ window.localStorage.getItem('series_label') + ': ' + arg.item.sortTitle + ' (' + arg.item.videoYear + ')' + "</a>";
+											}
+											return "<a href=\"#\" style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', "+ arg.item.id + ")\">"
+											+ window.localStorage.getItem('series_label') + ': ' + arg.item.sortTitle + ' (' + arg.item.videoYear + ')' + "</a>";
+										} else {
+											if (first_display) 
+												{
+													first_display = false;
+													direct_info2(arg.item.videoType, arg.item.id);
+													return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:"
+													+ alternate_color + ";' onclick=\" display_short_list (); display_short_list (); direct_info2('"
+													+ arg.item.videoType + "', " + arg.item.id + ")\">"
+													+ arg.item.sortTitle + ' (' + arg.item.videoYear + ')' + "</a>";
+												}
+											return "<a href=\"#\" style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', "
+											+ arg.item.id + ")\">"
+											+ arg.item.sortTitle + ' (' + arg.item.videoYear + ')' + "</a>";
+										}
+								}
+							break;
+						case "title_original":		
+							if ((arg.item.videoType == 'SEASON'))
+								{	
+									if (first_display) 
+										{
+											first_display = false;
+											direct_info2(arg.item.videoType, arg.item.id);
+											return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', " + arg.item.id + ")\">"
+											+ arg.item.originalTitle + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
+										}
+									return "<a href=\"#\" style='font-size: 1.6vw; background:"
+									+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+									+ arg.item.videoType + "', " + arg.item.id + ")\">"
+									+ arg.item.originalTitle + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
+								} else {
+									if (arg.item.videoType == 'SERIES')
+										{ 	
+										if (first_display) 
+											{
+												first_display = false;
+												direct_info2(arg.item.videoType, arg.item.id);
+												return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw;background:"
+												+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+												+ arg.item.videoType + "', "+ arg.item.id + ")\">"
+												+ window.localStorage.getItem('series_label') + ': ' + arg.item.originalTitle + ' (' + arg.item.videoYear + ')' + "</a>";
+											}
+											return "<a href=\"#\" style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', "+ arg.item.id + ")\">"
+											+ window.localStorage.getItem('series_label') + ': ' + arg.item.originalTitle + ' (' + arg.item.videoYear + ')' + "</a>";
+										} else {
+											if (first_display) 
+												{
+													first_display = false;
+													direct_info2(arg.item.videoType, arg.item.id);
+													return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:"
+													+ alternate_color + ";' onclick=\" display_short_list (); display_short_list (); direct_info2('"
+													+ arg.item.videoType + "', " + arg.item.id + ")\">"
+													+ arg.item.originalTitle + ' (' + arg.item.videoYear + ')' + "</a>";
+												}
+											return "<a href=\"#\" style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', "
+											+ arg.item.id + ")\">"
+											+ arg.item.originalTitle + ' (' + arg.item.videoYear + ')' + "</a>";
+										}
+								}
+							break;
 						}
 					},
 					"img.boxset_list@src": function(arg) {
@@ -341,7 +485,7 @@
 			 jsonUrl = "/yamj3/api/index/video.json?type="+index_type+"&dataitems=status,boxset,rating,videosource&sortby="+sort_type;	
 			 jsonUrlheader = "/yamj3/api/index/video.json?type="+index_type;	
 					if (window.localStorage.getItem("yearselected") == 'true' && window.localStorage.getItem("selection")) 
-								{
+						{
 									if (resolution_method != 'all')
 										{
 											jsonUrl += "&include=year-" + window.localStorage.getItem("selection") + ",resolution-" + resolution_method;
@@ -355,31 +499,76 @@
 									window.localStorage.setItem("yearselected", 'false');
 									window.localStorage.setItem("selection", "");
 									window.localStorage.setItem("search_index", "");	
-								} else {
-								if (resolution_method != 'all')
-										{
+						} 
+					else 
+						{
+							if (resolution_method != 'all')
+								{
 											jsonUrl += "&include=resolution-" + resolution_method;
 											jsonUrlheader += "&include=resolution-" + resolution_method;
 											selected_index = selected_index + '&nbsp;resolution:' + resolution_method;
-										}
-								if (window.localStorage.getItem("search_index"))
-								{
-									console.log("window.localStorage.getItem('search_index').substr(0, 11):"  +window.localStorage.getItem("search_index").substr(0, 11) + " window.localStorage.getItem('search_index').substr(14, 9):" + window.localStorage.getItem("search_index").substr(15, 9));
-									if (window.localStorage.getItem("search_index").substr(0, 11) =='&yearStart=' && window.localStorage.getItem("search_index").substr(15, 9) =='&yearEnd=')
-										{selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem("search_index").substr(11, 4)+ "-" + window.localStorage.getItem("search_index").substr(24, 4) + ")";}
-										else {selected_index = selected_index + "&nbsp;(" +window.localStorage.getItem("search_index").toUpperCase() + ")";}
-										jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("search_index") + "&field=title&mode="+index_method;
-										jsonUrlheader = jsonUrlheader + "&search=" + window.localStorage.getItem("search_index") + "&field=title&mode="+index_method;
-										window.localStorage.setItem("search_index", "");	
-									} else { 
-											if (window.localStorage.getItem("sort_indextype") == 'title') 
-												{selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('title_label'); }
-												else {selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('year_label');}
-											if (direction == 'ASC') 
-												{selected_index = selected_index +  ", "+ window.localStorage.getItem('asc_label') + ")";}			
-												else {selected_index = selected_index +  ", "+ window.localStorage.getItem('desc_label') + ")";}	
-											}
 								}
+							if (window.localStorage.getItem("search_index"))
+								{
+									console.log("window.localStorage.getItem('search_index').substr(0, 11):"  
+									+ window.localStorage.getItem("search_index").substr(0, 11)
+									+ " window.localStorage.getItem('search_index').substr(14, 9):"
+									+ window.localStorage.getItem("search_index").substr(15, 9));
+									
+									if (window.localStorage.getItem("search_index").substr(0, 11) =='&yearStart=' && window.localStorage.getItem("search_index").substr(15, 9) =='&yearEnd=')
+										{
+											selected_index = selected_index
+											+ "&nbsp;(" + window.localStorage.getItem("search_index").substr(11, 4)
+											+ "-" 
+											+ window.localStorage.getItem("search_index").substr(24, 4) + ")";
+										}
+									else 
+										{
+											selected_index = selected_index
+											+ "&nbsp;("
+											+ window.localStorage.getItem('title_type') + " "
+											+ window.localStorage.getItem("search_index").toUpperCase()
+											+ ")";
+										}
+
+									jsonUrl = jsonUrl 
+										+ "&search=" 
+										+ window.localStorage.getItem("search_index") 
+										+ "&field="
+										+ window.localStorage.getItem('title_type') 
+										+ "&mode="+index_method;
+										
+									jsonUrlheader = jsonUrlheader 
+										+ "&search=" + window.localStorage.getItem("search_index") 
+										+ "&field="
+										+ window.localStorage.getItem('title_type') 
+										+ "&mode="+index_method;
+										
+										window.localStorage.setItem("search_index", "");	
+								} 
+							else 
+								{ 
+									if (window.localStorage.getItem("sort_indextype").toLowerCase().indexOf('title') != -1) 
+										{
+											switch (window.localStorage.getItem("title_type"))
+											{
+												case "title":
+													selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('title_label');
+													break;
+												case "title_sort":
+													selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('title_sort_label');
+													break;
+												case "title_original":
+													selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('title_original_label');
+													break;
+											}
+										}
+									else {selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('year_label');}
+									if (direction == 'ASC') 
+											{selected_index = selected_index +  ", "+ window.localStorage.getItem('asc_label') + ")";}			
+									else {selected_index = selected_index +  ", "+ window.localStorage.getItem('desc_label') + ")";}	
+								}
+						}
 								
 				jsonUrl += "&artwork=poster&watched=" + watched_method;
 				jsonUrlheader += "&watched=" + watched_method;
@@ -390,17 +579,23 @@
 					{
 						case 'file':
 						{
-						temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
+						temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":"
+						+ window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) + "&nbsp;"
+						+ window.localStorage.getItem('day_label');
 						break;
 						}
 						case 'creation':
 						{
-						temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
+						temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":"
+						+ window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) + "&nbsp;"
+						+ window.localStorage.getItem('day_label');
 						break;
 						}
 						case 'lastscan':
 						{
-						temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
+						temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":"
+						+ window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) + "&nbsp;"
+						+ window.localStorage.getItem('day_label');
 						break;
 						}	
 					}
@@ -411,12 +606,32 @@
 					jsonUrl += "&include=" + category_type + "-" + category_name;
 					jsonUrlheader += "&include=" + category_type + "-" + category_name;
 					if (category_type == "Certification")
-					{selected_index = selected_index + window.localStorage.getItem(category_type.toLowerCase() + '_select').toUpperCase() + ":" + window.localStorage.getItem('certification_value').toUpperCase();}
+					{	
+						selected_index = selected_index 
+						+ window.localStorage.getItem(category_type.toLowerCase() 
+						+ '_select').toUpperCase() + ":"
+						+ window.localStorage.getItem('certification_value').toUpperCase();
+					}
 					if (category_type == "studio")
-					{selected_index = selected_index + window.localStorage.getItem(category_type.toLowerCase() + '_select').toUpperCase() + ":" + window.localStorage.getItem('studio_text').toUpperCase();}
+					{
+						selected_index = selected_index
+						+ window.localStorage.getItem(category_type.toLowerCase()
+						+ '_select').toUpperCase() + ":"
+						+ window.localStorage.getItem('studio_text').toUpperCase();
+					}
 					if (category_type == "boxset")
-					{selected_index = selected_index + window.localStorage.getItem(category_type.toLowerCase() + '_select').toUpperCase() + ":" + window.localStorage.getItem('boxset_text').toUpperCase();}
-					else {selected_index = selected_index + "&nbsp;" + window.localStorage.getItem(category_type.toLowerCase() + '_select').toUpperCase() + ":" + category_name;}
+					{
+						selected_index = selected_index
+						+ window.localStorage.getItem(category_type.toLowerCase() 
+						+ '_select').toUpperCase() 
+						+ ":" + window.localStorage.getItem('boxset_text').toUpperCase();
+					}
+					else {
+							selected_index = selected_index
+							+ "&nbsp;" + window.localStorage.getItem(category_type.toLowerCase()
+							+ '_select').toUpperCase() + ":"
+							+ category_name;
+						}
 				}
 		
 			}
@@ -474,20 +689,158 @@
 					alternate += 1;
 					if (alternate%2 == 0)
 					{alternate_color = "grey"} else {alternate_color = "black"}	
-					
-					if ((arg.item.videoType == 'SEASON'))
-						{	
-							
-							return "<a href=\"#\" style='font-size: 1.6vw; background:" + alternate_color + ";'  onclick=\" display_short_list ();direct_info2('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
-						} else {
-							if (arg.item.videoType == 'SERIES')
-								{ 
-									
-									return "<a href=\"#\" style='font-size: 1.6vw; background:" + alternate_color + ";'  onclick=\" display_short_list ();direct_info2('" + arg.item.videoType + "', "+ arg.item.id + ")\">" + window.localStorage.getItem('series_label') + ': ' + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+					switch (title_type)	
+					{
+						case "title":		
+							if ((arg.item.videoType == 'SEASON'))
+								{	
+									if (first_display) 
+										{
+											first_display = false;
+											direct_info2(arg.item.videoType, arg.item.id);
+											return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', " + arg.item.id + ")\">"
+											+ arg.item.title + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
+										}
+									return "<a href=\"#\" style='font-size: 1.6vw; background:"
+									+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+									+ arg.item.videoType + "', " + arg.item.id + ")\">"
+									+ arg.item.title + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
 								} else {
-									
-									return "<a href=\"#\" style='font-size: 1.6vw; background:" + alternate_color + ";'  onclick=\" display_short_list (); direct_info2('" + arg.item.videoType + "', " + arg.item.id + ")\">" + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+									if (arg.item.videoType == 'SERIES')
+										{ 	
+										if (first_display) 
+											{
+												first_display = false;
+												direct_info2(arg.item.videoType, arg.item.id);
+												return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw;background:"
+												+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+												+ arg.item.videoType + "', "+ arg.item.id + ")\">"
+												+ window.localStorage.getItem('series_label') + ': ' + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+											}
+											return "<a href=\"#\" style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', "+ arg.item.id + ")\">"
+											+ window.localStorage.getItem('series_label') + ': ' + arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+										} else {
+											if (first_display) 
+												{
+													first_display = false;
+													direct_info2(arg.item.videoType, arg.item.id);
+													return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:"
+													+ alternate_color + ";' onclick=\" display_short_list (); display_short_list (); direct_info2('"
+													+ arg.item.videoType + "', " + arg.item.id + ")\">"
+													+ arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+												}
+											return "<a href=\"#\" style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', "
+											+ arg.item.id + ")\">"
+											+ arg.item.title + ' (' + arg.item.videoYear + ')' + "</a>";
+										}
 								}
+							break;
+						case "title_sort":		
+							if ((arg.item.videoType == 'SEASON'))
+								{	
+									if (first_display) 
+										{
+											first_display = false;
+											direct_info2(arg.item.videoType, arg.item.id);
+											return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', " + arg.item.id + ")\">"
+											+ arg.item.sortTitle + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
+										}
+									return "<a href=\"#\" style='font-size: 1.6vw; background:"
+									+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+									+ arg.item.videoType + "', " + arg.item.id + ")\">"
+									+ arg.item.sortTitle + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
+								} else {
+									if (arg.item.videoType == 'SERIES')
+										{ 	
+										if (first_display) 
+											{
+												first_display = false;
+												direct_info2(arg.item.videoType, arg.item.id);
+												return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw;background:"
+												+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+												+ arg.item.videoType + "', "+ arg.item.id + ")\">"
+												+ window.localStorage.getItem('series_label') + ': ' + arg.item.sortTitle + ' (' + arg.item.videoYear + ')' + "</a>";
+											}
+											return "<a href=\"#\" style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', "+ arg.item.id + ")\">"
+											+ window.localStorage.getItem('series_label') + ': ' + arg.item.sortTitle + ' (' + arg.item.videoYear + ')' + "</a>";
+										} else {
+											if (first_display) 
+												{
+													first_display = false;
+													direct_info2(arg.item.videoType, arg.item.id);
+													return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:"
+													+ alternate_color + ";' onclick=\" display_short_list (); display_short_list (); direct_info2('"
+													+ arg.item.videoType + "', " + arg.item.id + ")\">"
+													+ arg.item.sortTitle + ' (' + arg.item.videoYear + ')' + "</a>";
+												}
+											return "<a href=\"#\" style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', "
+											+ arg.item.id + ")\">"
+											+ arg.item.sortTitle + ' (' + arg.item.videoYear + ')' + "</a>";
+										}
+								}
+							break;
+						case "title_original":		
+							if ((arg.item.videoType == 'SEASON'))
+								{	
+									if (first_display) 
+										{
+											first_display = false;
+											direct_info2(arg.item.videoType, arg.item.id);
+											return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', " + arg.item.id + ")\">"
+											+ arg.item.originalTitle + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
+										}
+									return "<a href=\"#\" style='font-size: 1.6vw; background:"
+									+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+									+ arg.item.videoType + "', " + arg.item.id + ")\">"
+									+ arg.item.originalTitle + ' (' + arg.item.videoYear + ') '+ window.localStorage.getItem('season_label') +': ' + arg.item.season + "</a>";
+								} else {
+									if (arg.item.videoType == 'SERIES')
+										{ 	
+										if (first_display) 
+											{
+												first_display = false;
+												direct_info2(arg.item.videoType, arg.item.id);
+												return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw;background:"
+												+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+												+ arg.item.videoType + "', "+ arg.item.id + ")\">"
+												+ window.localStorage.getItem('series_label') + ': ' + arg.item.originalTitle + ' (' + arg.item.videoYear + ')' + "</a>";
+											}
+											return "<a href=\"#\" style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', "+ arg.item.id + ")\">"
+											+ window.localStorage.getItem('series_label') + ': ' + arg.item.originalTitle + ' (' + arg.item.videoYear + ')' + "</a>";
+										} else {
+											if (first_display) 
+												{
+													first_display = false;
+													direct_info2(arg.item.videoType, arg.item.id);
+													return "<a href=\"#\" id='give_focus' style='font-size: 1.6vw; background:"
+													+ alternate_color + ";' onclick=\" display_short_list (); display_short_list (); direct_info2('"
+													+ arg.item.videoType + "', " + arg.item.id + ")\">"
+													+ arg.item.originalTitle + ' (' + arg.item.videoYear + ')' + "</a>";
+												}
+											return "<a href=\"#\" style='font-size: 1.6vw; background:"
+											+ alternate_color + ";' onclick=\" display_short_list (); direct_info2('"
+											+ arg.item.videoType + "', "
+											+ arg.item.id + ")\">"
+											+ arg.item.originalTitle + ' (' + arg.item.videoYear + ')' + "</a>";
+										}
+								}
+							break;
 						}
 					},
 					"img.boxset2_list@src": function(arg) {

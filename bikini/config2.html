@@ -209,6 +209,15 @@ input:-moz-placeholder { color:black; }
 												+ window.localStorage.getItem("display_label");
 												break;
 											}
+											case 'title_type':
+											{
+												return "<img title='" 
+												+ "choose title type" 
+												+ window.localStorage.getItem("title_type_comment")
+												+ "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												+ window.localStorage.getItem("title_type_label");
+												break;
+											}
 										}
 									},
 								"td.Value"			: function(arg)
@@ -357,6 +366,27 @@ input:-moz-placeholder { color:black; }
 												else {return window.localStorage.getItem('list_text');}
 												break;
 											}
+											case 'title_type':
+											{
+												switch (arg.item.value.toLowerCase())
+												{
+													case 'title_original':
+													{
+														return "title_original"; // window.localStorage.getItem('frame_label');
+														break;
+													}
+													case 'title':
+													{
+														return "title"; // window.localStorage.getItem('ribbon_label');
+														break;
+													}
+													case 'title_sort':
+													{
+														return "title_sort";  // window.localStorage.getItem('page_label');
+														break;
+													}
+												}
+											}
 										}
 									},
 								"td.New"			: function(arg)
@@ -488,6 +518,30 @@ input:-moz-placeholder { color:black; }
 														+ "</select>";
 												break;
 											}
+											case 'title_type':
+											{
+												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
+														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" 
+														+  window.localStorage.getItem("title_type_comment")
+														+ "'></option>"
+														+ "<option value='title'>" 
+														+ window.localStorage.getItem("title_label")
+														+ "&nbsp;(" 
+														+  window.localStorage.getItem("title_type_comment")
+														+ ")</option>" 
+														+ "<option value='title_original'>" 
+														+ window.localStorage.getItem("title_original_label")
+														+ "&nbsp;(" 
+														+ window.localStorage.getItem("title_original_comment")
+														+ ")</option>"
+														+ "<option value='title_sort'>"
+														+ window.localStorage.getItem("title_sort_label")
+														+ "&nbsp;(" 
+														+ window.localStorage.getItem("title_sort_comment")
+														+ ")</option>"
+														+ "</select>";
+												break;
+											}
 										}
 									}, 
 									"td.Action"			: function(arg)
@@ -504,6 +558,7 @@ input:-moz-placeholder { color:black; }
 											case 'prefered_page':
 											case 'overlay':
 											case 'display_type':
+											case 'title_type':
 											{
 												return "<form><input type=\"button\" value='"+ window.localStorage.getItem('update_label') + "' onclick=\"Update_SkinData('" +arg.item.key+ "', document.getElementById('formKey" +arg.item.key+ "').value)\"/></form>"
 												break;
@@ -627,7 +682,7 @@ input:-moz-placeholder { color:black; }
 		
 		function update_local_data(key_to_update, target_value)
 			{
-			//	console.log("update_local_data key_to_update: " + key_to_update + " target_value:" + target_value);
+				console.log("update_local_data key_to_update: " + key_to_update + " target_value:" + target_value);
 				switch (key_to_update.substr(14))
 				{
 					case 'index_row':
@@ -680,6 +735,11 @@ input:-moz-placeholder { color:black; }
 					case 'display_type':
 						{ 
 							window.localStorage.setItem("display_type", target_value);
+							break; 
+						}
+					case 'title_type':
+						{ 
+							window.localStorage.setItem("title_type", target_value);
 							break; 
 						}
 					}

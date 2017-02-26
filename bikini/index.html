@@ -120,13 +120,31 @@
 					}
 			}
 		else {window.localStorage.setItem("indextype", index_type);}
+		// get the way where the title is fetch and display (title, sort_title, original_title)
+		var title_type = "title_sort";
+			if (window.localStorage.getItem("title_type"))
+				{direction = window.localStorage.getItem("title_type");}
+			else {window.localStorage.setItem("title_type", title_type);}	
+			
 		// set a default direction to ASC or set to the direction previously selected if available 	
 		var direction = "ASC";
 			if (window.localStorage.getItem("direction"))
 				{direction = window.localStorage.getItem("direction");}
 			else {window.localStorage.setItem("direction", direction);}	
-		var sort_type = "title"; 
-			
+		// get the sort instruction
+		var sort_type = "title";
+			switch (title_type)
+			{
+				case "title":
+					sort_type = "title";
+					break;
+				case "title_sort":
+					sort_type = "sortTitle"
+					break;
+				case "title_original":
+					sort_type = "originalTitle"
+					break;
+			}
 		if (window.localStorage.getItem("sort_indextype"))
 			{
 				if (window.localStorage.getItem("sort_indextype") == 'videoYear,createTimestamp')
@@ -134,6 +152,7 @@
 				else {sort_type = window.localStorage.getItem("sort_indextype") + ' ' + direction;}
 			} 
 		else {window.localStorage.setItem("sort_indextype", sort_type)+ ' ' + direction;}
+		
 		
         // This is the directive used by pure to transform the JSON data into HTML
         // span.Title is a simple substitution of the title
@@ -162,15 +181,47 @@
                      "span.title": function(arg) {
 						
 					if (( arg.item.artwork.POSTER[0]) && (arg.item.videoType == 'SEASON'))
-						{					
-						return arg.item.title + ' (' + arg.item.videoYear + ')'+ '<br> '+ window.localStorage.getItem('season_label') +': ' + arg.item.season;
+						{
+							switch (title_type)	
+							{
+								case "title":
+									return arg.item.title + ' (' + arg.item.videoYear + ')'+ '<br> '+ window.localStorage.getItem('season_label') +': ' + arg.item.season;
+									break;
+								case "title_sort":
+									return arg.item.sortTitle + ' (' + arg.item.videoYear + ')'+ '<br> '+ window.localStorage.getItem('season_label') +': ' + arg.item.season;
+									break; 
+								case "title_original":
+									return arg.item.originalTitle + ' (' + arg.item.videoYear + ')'+ '<br> '+ window.localStorage.getItem('season_label') +': ' + arg.item.season;
+									break;
+							}
 						} else {
 							if (arg.item.videoType == 'SERIES')
 								{ 
-									return arg.item.title + ' (' + arg.item.videoYear + ')' +'<br> '+ window.localStorage.getItem('series_label'); 
-									
+									switch (title_type)	
+									{
+										case "title":
+											return arg.item.title + ' (' + arg.item.videoYear + ')' +'<br> '+ window.localStorage.getItem('series_label');
+											break;
+										case "title_sort":
+											return arg.item.sortTitle + ' (' + arg.item.videoYear + ')' +'<br> '+ window.localStorage.getItem('series_label');
+											break; 
+										case "title_original":
+											return arg.item.originalTitle + ' (' + arg.item.videoYear + ')' +'<br> '+ window.localStorage.getItem('series_label');
+											break;
+									}
 								} else {
-									return arg.item.title + ' (' + arg.item.videoYear + ')';
+									switch (title_type)	
+									{
+										case "title":
+											return  arg.item.title + ' (' + arg.item.videoYear + ')';
+											break;
+										case "title_sort":
+											return arg.item.sortTitle + ' (' + arg.item.videoYear + ')';
+											break; 
+										case "title_original":
+											return arg.item.originalTitle + ' (' + arg.item.videoYear + ')';
+											break;
+									}
 								}
 						}
 					},
@@ -373,7 +424,11 @@
 												jsonUrl = jsonUrl + "&include=year-"+window.localStorage.getItem("selection"); 
 												jsonUrlheader = jsonUrl + "&include=year-"+window.localStorage.getItem("selection");
 											}
-										selected_index = selected_index + '&nbsp;' + window.localStorage.getItem("year_label").toUpperCase() + ':' + window.localStorage.getItem("selection");
+										selected_index = selected_index 
+										+ '&nbsp;' 
+										+ window.localStorage.getItem("year_label").toUpperCase() 
+										+ ':' + window.localStorage.getItem("selection");
+										
 										window.localStorage.setItem("yearselected", 'false');
 										window.localStorage.setItem("selection", "");
 										window.localStorage.setItem("search_index", "");	
@@ -386,21 +441,59 @@
 											}
 									if (window.localStorage.getItem("search_index"))
 									{
-										console.log("window.localStorage.getItem('search_index').substr(0, 11):"  +window.localStorage.getItem("search_index").substr(0, 11) + " window.localStorage.getItem('search_index').substr(14, 9):" + window.localStorage.getItem("search_index").substr(15, 9));
+										console.log("window.localStorage.getItem('search_index').substr(0, 11):"
+										+ window.localStorage.getItem("search_index").substr(0, 11) 
+										+ " window.localStorage.getItem('search_index').substr(14, 9):"
+										+ window.localStorage.getItem("search_index").substr(15, 9));
+										
 										if (window.localStorage.getItem("search_index").substr(0, 11) =='&yearStart=' && window.localStorage.getItem("search_index").substr(15, 9) =='&yearEnd=')
-											{selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem("search_index").substr(11, 4)+ "-" + window.localStorage.getItem("search_index").substr(24, 4) + ")";}
-											else {selected_index = selected_index + "&nbsp;(" +window.localStorage.getItem("search_index").toUpperCase() + ")";}
-											jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("search_index") + "&field=title&mode="+index_method;
-											jsonUrlheader = jsonUrlheader + "&search=" + window.localStorage.getItem("search_index") + "&field=title&mode="+index_method;
+											{
+												selected_index = selected_index + "&nbsp;("
+												+ window.localStorage.getItem("search_index").substr(11, 4)+ "-"
+												+ window.localStorage.getItem("search_index").substr(24, 4) + ")";
+											}
+										else 
+											{
+												selected_index = selected_index + "&nbsp;("
+												+ window.localStorage.getItem('title_type') + " "
+												+ window.localStorage.getItem("search_index").toUpperCase() + ")";
+											}
+											jsonUrl = jsonUrl + "&search="
+											+ window.localStorage.getItem("search_index") 
+											+ "&field="
+											+ window.localStorage.getItem('title_type') 
+											+ "&mode="+index_method;
+											
+											jsonUrlheader = jsonUrlheader + "&search="
+											+ window.localStorage.getItem("search_index") 
+											+ "&field="
+											+ window.localStorage.getItem('title_type') 
+											+ "&mode="+index_method;
+											
 											window.localStorage.setItem("search_index", "");	
-										} else { 
-												if (window.localStorage.getItem("sort_indextype") == 'title') 
-													{selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('title_label'); }
-													else {selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('year_label');}
-												if (direction == 'ASC') 
-													{selected_index = selected_index +  ", "+ window.localStorage.getItem('asc_label') + ")";}			
-													else {selected_index = selected_index +  ", "+ window.localStorage.getItem('desc_label') + ")";}	
+									} 
+									else 
+										{ 
+											if (window.localStorage.getItem("sort_indextype").toLowerCase().indexOf('title') != -1) 
+												{
+														switch (window.localStorage.getItem("title_type"))
+														{
+															case "title":
+																selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('title_label');
+																break;
+															case "title_sort":
+																selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('title_sort_label');
+																break;
+															case "title_original":
+																selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('title_original_label');
+																break;
+														}
 												}
+											else {selected_index = selected_index + "&nbsp;(" + window.localStorage.getItem('year_label');}
+											if (direction == 'ASC') 
+												{selected_index = selected_index +  ", "+ window.localStorage.getItem('asc_label') + ")";}			
+											else {selected_index = selected_index +  ", "+ window.localStorage.getItem('desc_label') + ")";}	
+										}
 									}
 									
 					jsonUrl += "&artwork=poster&watched=" + watched_method;
@@ -710,21 +803,52 @@
 			"div.block": {
                 "result<-results": {
                      "span.title2": function(arg) {
-						
-					if (( arg.item.artwork.POSTER[0]) && (arg.item.videoType == 'SEASON'))
-						{					
-						return arg.item.title + ' (' + arg.item.videoYear + ')'+ '<br> '+ window.localStorage.getItem('season_label') +': ' + arg.item.season;
+					 
+					 if (( arg.item.artwork.POSTER[0]) && (arg.item.videoType == 'SEASON'))
+						{
+							switch (title_type)	
+							{
+								case "title":
+									return arg.item.title + ' (' + arg.item.videoYear + ')'+ '<br> '+ window.localStorage.getItem('season_label') +': ' + arg.item.season;
+									break;
+								case "title_sort":
+									return arg.item.sortTitle + ' (' + arg.item.videoYear + ')'+ '<br> '+ window.localStorage.getItem('season_label') +': ' + arg.item.season;
+									break; 
+								case "title_original":
+									return arg.item.originalTitle + ' (' + arg.item.videoYear + ')'+ '<br> '+ window.localStorage.getItem('season_label') +': ' + arg.item.season;
+									break;
+							}
 						} else {
 							if (arg.item.videoType == 'SERIES')
 								{ 
-									return arg.item.title + ' (' + arg.item.videoYear + ')' +'<br> '+ window.localStorage.getItem('series_label'); 
-									
+									switch (title_type)	
+									{
+										case "title":
+											return arg.item.title + ' (' + arg.item.videoYear + ')' +'<br> '+ window.localStorage.getItem('series_label');
+											break;
+										case "title_sort":
+											return arg.item.sortTitle + ' (' + arg.item.videoYear + ')' +'<br> '+ window.localStorage.getItem('series_label');
+											break; 
+										case "title_original":
+											return arg.item.originalTitle + ' (' + arg.item.videoYear + ')' +'<br> '+ window.localStorage.getItem('series_label');
+											break;
+									}
 								} else {
-									return arg.item.title + ' (' + arg.item.videoYear + ')';
+									switch (title_type)	
+									{
+										case "title":
+											return  arg.item.title + ' (' + arg.item.videoYear + ')';
+											break;
+										case "title_sort":
+											return arg.item.sortTitle + ' (' + arg.item.videoYear + ')';
+											break; 
+										case "title_original":
+											return arg.item.originalTitle + ' (' + arg.item.videoYear + ')';
+											break;
+									}
 								}
 						}
 					},
-					
                     "img.poster2@src": function(arg) {
 						// set dummy as default poster
                        var output_poster = "pictures/dummy.jpg";

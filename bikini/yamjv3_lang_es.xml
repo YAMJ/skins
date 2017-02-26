@@ -3,6 +3,7 @@
 	<actionlabel>accion</actionlabel>
 	<actorlabel>jugador</actorlabel>
 	<addtext>anadir</addtext>
+	<addbannertext>agregar banner</addbannertext>
 	<addfanarttext>anadir fondo de pantalla</addfanarttext>
 	<addpostertext>agregar poster</addpostertext>
 	<alllabel>todo</alllabel>
@@ -129,6 +130,7 @@
 	<redlabel>rojo</redlabel>
 	<remotelabel>mando a distancia</remotelabel>
 	<removetext>eliminar</removetext>
+	<removebannertext>haga clic en banner para eliminar</removebannertext>
 	<removefanarttext>haga clic en fanart para eliminar</removefanarttext>
 	<removepostertext>haga clic en poster para eliminar</removepostertext>
 	<repeatlabel>repeticion</repeatlabel>
@@ -162,7 +164,14 @@
 	<subtitlelabel>subtitulo</subtitlelabel>
 	
 	<targetlabel>objectivo</targetlabel>
+	<titlecomment>cartel le titre</titlecomment>
 	<titlelabel>titulo</titlelabel>
+	<titleoriginalcomment>cartel le retiro titre</titleoriginalcomment>
+	<titleoriginallabel>titulo original</titleoriginallabel>
+	<titlesortcomment>cartel le titre originales</titlesortcomment>
+	<titlesortlabel>titulo tratado</titlesortlabel>
+	<titletypecomment>seleccion du escriba el titulo</titletypecomment>
+	<titletypelabel>escriba el titulo</titletypelabel>
 	<timeseeklabel>tiempo de bus.</timeseeklabel>
 	<transformerrortext>incapaces de transformar target_path cheque source_path</transformerrortext>
 	<truetext>real</truetext>

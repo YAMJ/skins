@@ -3,6 +3,7 @@
 	<actionlabel>aktion</actionlabel>
 	<actorlabel>spieler</actorlabel>
 	<addtext>hinzufungen</addtext>
+	<addbannertext>banner hinzufügen</addbannertext>
 	<addfanarttext>wallpaper hinzufügen</addfanarttext>
 	<addpostertext>poster hinzufügen</addpostertext>
 	<alllabel>alle</alllabel> 
@@ -129,6 +130,7 @@
 	<redlabel>rot</redlabel>
 	<remotelabel>fernsteuerung</remotelabel>
 	<removetext>entfernen</removetext>
+	<removebannertext>klicken sie banner entfernen</removebannertext>
 	<removefanarttext>klicken sie fanart entfernen</removefanarttext>
 	<removepostertext>klicken sie poster entfernen</removepostertext>
 	<repeatlabel>wiederholung</repeatlabel>
@@ -162,7 +164,14 @@
 	<subtitlelabel>untertitel</subtitlelabel>
 	
 	<targetlabel>ziel</targetlabel>
+	<titlecomment>plakat le titre</titlecomment>
 	<titlelabel>titel</titlelabel>
+	<titleoriginalcomment>plakat le titre ruckzug</titleoriginalcomment>
+	<titleoriginallabel>originaler titel</titleoriginallabel>
+	<titlesortcomment>plakat le titre original</titlesortcomment>
+	<titlesortlabel>vertragstitel</titlesortlabel>
+	<titletypecomment>selection du geben sie den titer</titletypecomment>
+	<titletypelabel>geben sie den titer</titletypelabel>
 	<timeseeklabel>suchzeit</timeseeklabel>
 	<transformerrortext>keine Kontrolle source_path target_path verwandeln</transformerrortext>
 	<truetext>real</truetext>

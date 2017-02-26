@@ -1238,6 +1238,15 @@ input:-moz-placeholder { color:red; }
 	left: 420px; 
 	z-index: 8;
 }
+#infobox_ignore_banner {
+	z-index: 8;
+	visibility: hidden;
+	position: absolute; 
+	top: 295px; 
+	width: auto;
+	left: 420px; 
+	z-index: 8;
+}
 #sourceData {
 	position: absolute;
 	top: 750px;
@@ -2513,7 +2522,7 @@ ul#detail_home_right {
 	top: 0px;
 	right: 4vw;
 	}
-#fanartshow_icon, #editshow_icon, #mediainfoshow_icon, #movieshow_icon, #personshow_icon, #selectionshow_icon, #search_icon, #deleteshow_icon, #updateshow_icon, #updateinfoshow_icon, #add_poster_show_icon, #add_fanart_show_icon {
+#fanartshow_icon, #editshow_icon, #mediainfoshow_icon, #movieshow_icon, #personshow_icon, #selectionshow_icon, #search_icon, #deleteshow_icon, #updateshow_icon, #updateinfoshow_icon, #add_poster_show_icon, #add_fanart_show_icon, #add_banner_show_icon {
 	position: absolute;
 	top: 60px;
 	visibility: hidden;

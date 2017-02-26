@@ -125,6 +125,7 @@
 					window.localStorage.setItem("action_label", (x[i].getElementsByTagName("actionlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("actor_label", (x[i].getElementsByTagName("actorlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("add_text", (x[i].getElementsByTagName("addtext")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("add_banner_text", (x[i].getElementsByTagName("addbannertext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("add_fanart_text", (x[i].getElementsByTagName("addfanarttext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("add_poster_text", (x[i].getElementsByTagName("addpostertext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("all_label", (x[i].getElementsByTagName("alllabel")[0].childNodes[0].nodeValue));
@@ -239,6 +240,7 @@
 					window.localStorage.setItem("red_label", (x[i].getElementsByTagName("redlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("remote_label", (x[i].getElementsByTagName("remotelabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("remove_text", (x[i].getElementsByTagName("removetext")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("remove_banner_text", (x[i].getElementsByTagName("removebannertext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("remove_fanart_text", (x[i].getElementsByTagName("removefanarttext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("remove_poster_text", (x[i].getElementsByTagName("removepostertext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("repeat_label", (x[i].getElementsByTagName("repeatlabel")[0].childNodes[0].nodeValue));
@@ -271,7 +273,14 @@
 					window.localStorage.setItem("subtitle_label", (x[i].getElementsByTagName("subtitlelabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("target_label", (x[i].getElementsByTagName("targetlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("time_seek_label", (x[i].getElementsByTagName("timeseeklabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("title_comment", (x[i].getElementsByTagName("titlecomment")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("title_label", (x[i].getElementsByTagName("titlelabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("title_original_comment", (x[i].getElementsByTagName("titleoriginalcomment")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("title_original_label", (x[i].getElementsByTagName("titleoriginallabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("title_sort_comment", (x[i].getElementsByTagName("titlesortcomment")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("title_sort_label", (x[i].getElementsByTagName("titlesortlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("title_type_comment", (x[i].getElementsByTagName("titletypecomment")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("title_type_label", (x[i].getElementsByTagName("titletypelabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("transform_error_text", (x[i].getElementsByTagName("transformerrortext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("true_text", (x[i].getElementsByTagName("truetext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("tv_mode_label", (x[i].getElementsByTagName("tvmodelabel")[0].childNodes[0].nodeValue));

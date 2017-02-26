@@ -1,4 +1,10 @@
 change.txt
+V3.0.3
+- fix popup_player for chrome
+- fix direct_play from index with normalise_path
+- fix tmdb call for movie
+- add display, remove, add banner
+- add new skin parameter  - title type : allow to choose to display title, sort_title, original_title
 V3.0.2
 - fix person count with next and previous home selector
 - fix list season for a selected serie in wall mode

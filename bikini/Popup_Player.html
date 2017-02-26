@@ -5,7 +5,12 @@
 <meta charset="utf-8">
 <title>YAMJv3 Player</title>
 <script language="javascript" src="js/jQuery.js"></script>
-
+<style type="text/css">
+#chromeplayer:-webkit-full-screen  {
+  width: 95%;
+  height: 100%;
+}
+</style>
 <script type="text/javascript">
 
 	function direct_play () 
@@ -23,13 +28,32 @@
         // you can declare more arguments for more flexibility
         ) 
 		{
+			console.log("popup_player screen.height="+ screen.height +", screen.width=" + screen.width);
 			movie_to_play = localStorage.getItem("ToPlay");
 			var holder = document.getElementById(holderId);	
+			console.log("Popup_Player: browser " + window.navigator.userAgent.toLowerCase() );
+			var  isChrome = !!window.chrome;
+			var player = "";
+			if (isChrome){
+				console.log("Popup_Player: browser is chrome ");
+				player += '<p> Click anywhere or press any key to browse <u>' +  movie_to_play.substring(movie_to_play.lastIndexOf('/')+1) + '</u> in fullscreen </p>';
+				player += '<video ';
+				player += 'id="chromeplayer"';
+				player += 'src="' + movie_to_play + '"';
+				player += ' autoplay controls';
+				player += ' width="' + width + '" ';
+				player += ' width="' + height + '" ';
+				player += ' type="video/x-matroska; codecs=\'theora, vorbis\'">';
+				player += '</video>';
+				
+			}
+			
 		// Internet Explorer 11
-			if(IE_browser()) {
+			else if(IE_browser()) {
 		//		if(true) {           // just for test
+			console.log("Popup_Player: browser is IE11 ");
 			IEbrowser = true; 
-				var player = '<object ';
+				player += '<object ';
 				player += 'id="wmpplayer"';
 				player += 'height="' + height.toString() + '" ';
 				player += 'width="' + width.toString() + '" ';
@@ -51,7 +75,8 @@
 			} else {
 		// other browser 
 			IEbrowser = false;
-			var player = '<object ';
+			console.log("Popup_Player: browser is not chrome and not IE11");
+				player += '<object ';
 				player += 'id="vlcplayer"';
 				player += 'height="' + height.toString() + '" ';
 				player += 'width="' + width.toString() + '" ';
@@ -69,9 +94,18 @@
 			}
 			holder.innerHTML = player;
     }
-	function fullscreen ()
+	function fullscreen ()   // String
 	{ 
-		if( !IE_browser()) {
+		var  isChrome = !!window.chrome;
+		
+		if (isChrome){
+
+			var chrome = document.getElementById("chromeplayer");
+			console.log ("popup_player: fullscreen for chrome");
+
+			// chrome.webkitRequestFullscreen();
+			}
+		else if( !IE_browser()) {
 		console.log ("popup_player: fullscreen for vlc");
 			var vlc = document.getElementById("vlcplayer");
 			vlc.video.toggleFullscreen();
@@ -90,11 +124,29 @@
 		var IEold = ( navigator.userAgent.match(/MSIE/i) ? true : false );
 		if(IE11 || IEold){ return true;} else{ return false;}
 	}
+	
+
+        function goFullscreen() {
+            // Must be called as a result of user interaction to work
+            mf = document.getElementById("chromeplayer");
+            mf.webkitRequestFullscreen();
+    
+        }
+        function fullscreenChanged() {
+            if (document.webkitFullscreenElement == null) {
+                mf = document.getElementById("chromeplayer");
+ 
+            }
+        }
+        document.onwebkitfullscreenchange = fullscreenChanged;
+        document.documentElement.onclick = goFullscreen;
+        document.onkeydown = goFullscreen;
+
 </script>
 </head>
 <body onload="generateWindowsMediaPlayer('wmpHolder', 480, 640, 1); fullscreen ();">
 	<div id='wmpHolder'></div> 
 <!--<body onload="direct_play()">  just for test
-<video class='test_video' src="video.mkv" autoplay controls type="video/x-matroska"></video>  -->
+<video class='test_video' src="video.mkv" autoplay controls type="video/x-matroska; codecs='theora, vorbis'"></video> -->
 </body>
 </html>

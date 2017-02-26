@@ -3,6 +3,7 @@
 	<actionlabel>action</actionlabel>
 	<actorlabel>actor</actorlabel>
 	<addtext>add</addtext>
+	<addbannertext>add banner</addbannertext>
 	<addfanarttext>add fanart</addfanarttext>
 	<addpostertext>add poster</addpostertext>
 	<alllabel>all</alllabel>
@@ -129,6 +130,7 @@
 	<redlabel>red</redlabel>
 	<remotelabel>remote</remotelabel>
 	<removetext>remove</removetext>
+	<removebannertext>click on banner to remove</removebannertext>
 	<removefanarttext>click on fanart to remove</removefanarttext>
 	<removepostertext>click on poster to remove</removepostertext>
 	<repeatlabel>repeat</repeatlabel>
@@ -162,7 +164,14 @@
 	<subtitlelabel>subtitle</subtitlelabel>
 	
 	<targetlabel>target</targetlabel>
+	<titlecomment>display title</titlecomment>
 	<titlelabel>title</titlelabel>
+	<titleoriginalcomment>display original title</titleoriginalcomment>
+	<titleoriginallabel>original title</titleoriginallabel>
+	<titlesortcomment>display treated title</titlesortcomment>
+	<titlesortlabel>treated title</titlesortlabel>
+	<titletypecomment>select type of title</titletypecomment>
+	<titletypelabel>type of title</titletypelabel>
 	<timeseeklabel>time seek</timeseeklabel>
 	<transformerrortext>unable to transform check source_path target_path</transformerrortext>
 	<truetext>true</truetext>

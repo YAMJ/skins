@@ -3,6 +3,7 @@
 	<actionlabel>azione</actionlabel>
 	<actorlabel>giocator</actorlabel>
 	<addtext>aggiungere</addtext>
+	<addbannertext>aggiungere banner</addbannertext>
 	<addfanarttext>aggiungere carta da parati</addfanarttext>
 	<addpostertext>aggiungi poster</addpostertext>
 	<alllabel>tutti</alllabel>
@@ -129,6 +130,7 @@
 	<redlabel>rosso</redlabel>
 	<remotelabel>telecommando</remotelabel>
 	<removetext>rimuovere</removetext>
+	<removebannertext>clicca su banner per rimuovere</removebannertext>
 	<removefanarttext>clicca su fanart per rimuovere</removefanarttext>
 	<removepostertext>clicca su poster per rimuovere</removepostertext>
 	<repeatlabel>ripetizione</repeatlabel>
@@ -162,7 +164,14 @@
 	<subtitlelabel>sottotitlo</subtitlelabel>
 	
 	<targetlabel>bersaglio</targetlabel>
+	<titlecomment>manifesto le titre</titlecomment>
 	<titlelabel>titolo</titlelabel>
+	<titleoriginalcomment>manifestotlo le titre ritiro</titleoriginalcomment>
+	<titleoriginallabel>titolo originale</titleoriginallabel>
+	<titlesortcomment>manifesto le titre originale</titlesortcomment>
+	<titlesortlabel>titolo trattato</titlesortlabel>
+	<titletypecomment>selection di digitare il titolo</titletypecomment>
+	<titletypelabel>digitare il titolo</titletypelabel>
 	<timeseeklabel>tempo di ricer.</timeseeklabel>
 	<transformerrortext>in grado di trasformare il controllo source_path target_path</transformerrortext>
 	<truetext>vero</truetext>

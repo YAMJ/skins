@@ -89,9 +89,39 @@
 							{direction = window.localStorage.getItem("direction");}
 							else {window.localStorage.setItem("direction", direction);}	
 					var sort_type = "title"; 
+						switch (window.localStorage.getItem("title_type"))
+						{
+							case "title":
+								sort_type = "title";
+								break;
+							case "title_sort":
+								sort_type = "sortTitle"
+								break;
+							case "title_original":
+								sort_type = "originalTitle"
+								break;
+						}
 						if (window.localStorage.getItem("sort_indextype"))
-							{sort_type = window.localStorage.getItem("sort_indextype");}
-							else {window.localStorage.setItem("sort_indextype", sort_type);}	
+							{
+								sort_type = window.localStorage.getItem("sort_indextype");
+								if (sort_type == "title")
+								{
+									switch (window.localStorage.getItem("title_type"))
+									{
+										case "title":
+											sort_type = "title";
+											break;
+										case "title_sort":
+											sort_type = "sortTitle"
+											break;
+										case "title_original":
+											sort_type = "originalTitle"
+											break;
+									}
+								}
+							}
+						window.localStorage.setItem("sort_indextype", sort_type);
+						
 						if (localStorage.getItem("watched"))
 							{watched_method = localStorage.getItem("watched");}
 					var index_type = "movie,series";
@@ -230,7 +260,7 @@
 						$('#heightk_type img').css('background-color', '');
 				};
 				// get sorting method 			
-				if (sort_type == 'title') 
+				if (sort_type.toLowerCase().lastIndexOf('title') != -1)
 					{
 						$('#sort_title img').css('background-color', 'green');
 						$('#sort_year img').css('background-color', '');

@@ -757,7 +757,22 @@
 	// sort index page 
 		function SortIndex (sort_indextype, url)
 			{		
-					window.localStorage.setItem("sort_indextype", sort_indextype);
+				if (sort_indextype == "title")
+				{
+					switch (window.localStorage.getItem("title_type"))
+						{
+							case "title":
+								window.localStorage.setItem("sort_indextype", "title");
+								break;
+							case "title_sort":
+								window.localStorage.setItem("sort_indextype", "sortTitle");
+								break;
+							case "title_original":
+								window.localStorage.setItem("sort_indextype", "originalTitle");
+								break;
+						}
+				}
+				else {window.localStorage.setItem("sort_indextype", sort_indextype);}
 					console.log("refresh: " + url + " Sortindex: "+sort_indextype);
 					Indexpopup = window.open(url, "_parent","");
 					Indexpopup.location.reload(true);
@@ -966,7 +981,77 @@
 				window.localStorage.setItem("display_type", display_type_);
 			}
 
+	// fetch the title_type value in the local storage, value available : title, title_original, title_sort
+		function get_title_type()
+			{
+				if (window.localStorage.getItem("title_type"))
+				{
+					title_typevalue = window.localStorage.getItem("title_type");
+					console.log("get_title_type: " + title_typevalue);
+				}
+				else {get_title_type_();}
+			}
+	// fetch the title_type value in the config database , value available : title, title_original, title_sort
+		function get_title_type_()
+			{
+				var jsonTitle_typeUrl = "/yamj3/api/config/list.json?config="+skin_value+"title_type&mode=any";
+				console.log("get_title_type jsonTitle_typeUrl: " + jsonTitle_typeUrl);
+				$.ajax({
+                   url: jsonTitle_typeUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSkinTitle_type)
+                   {
+						jsondata = dataSkinTitle_type;
+				//		outputJson(dataSkinTitle_type);
+						checkTitle_type(dataSkinTitle_type);
+						}
+					
+				});	
+			 return jsondata;
+		}
+		
+		function checkTitle_type(yamjdata) {
+				var PN = {
+						"td.Value":  function(arg) {
+									if (arg.context.count) {
+										console.log("checkTitle_type: "+arg.context.results[0].value);
+										set_Title_type_value(arg.context.results[0].value);
+										return arg.context.results[0].value;} else {
+										console.log("checkTitle_type: no value found");
+										update_Title_type('title');}
+								}								
+						};
+				$p('.results').render( yamjdata, PN );			
+			}	
+		
+	// update the title_type value in the config database, value available : title, title_original, title_sort
+		function update_Title_type(title_type_) 
+		{
+				var jsonTitle_typeUrl = "/yamj3/api/config/update.json?key="+skin_value+"title_type&value="+title_type_+"";
+				console.log("update_Title_type jsonTitle_typeUrl: " + jsonTitle_typeUrl);
+				$.ajax({
+                   url: jsonTitle_typeUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataSkinTitle_type)
+                   {
+						jsondata = dataSkinTitle_type;
+					//	outputJson(dataSkinTitle_type);
+						set_Title_type_value(title_type_);
+					}
+					
+				});	
+			 return jsondata;
+		}	
 
+	// set the rules to adjust title_type to the title_type choosen : value available : title, title_original, title_sort
+		function set_Title_type_value(title_type_)
+			{
+				Title_typeValue = title_type_;
+				console.log('set title_type:'+title_type_);
+				window.localStorage.setItem("title_type", title_type_);
+			}
 
 
 	
@@ -1447,6 +1532,7 @@
 			get_new_();
 			get_overlay_();
 			get_display_type_();
+			get_title_type_();
 			get_lang_();
 			window.location.reload();
 			
@@ -1459,8 +1545,8 @@
 						'span.filepath': function(arg)
 							{
 								var files = arg.context.result.files;
-								console.log("direct_play file: " + files[0].fileName);
-								play_to_device(files[0].fileName);
+								console.log("direct_play file: " + normalise_path(files[0].fileName));
+								play_to_device(normalise_path(files[0].fileName));
 								return "";
 								
 							}	
@@ -1530,7 +1616,7 @@
 					);
 					break;
 				} else {
-				//	console.log ("template play_to_device j :" + j + " source_path:" + source_path[j]);
+					console.log ("template play_to_device j:" + j + " source_path:" + source_path[j]);
 					if (basefilename.substring(0,source_path[j].length) == source_path[j])
 						{
 					boucle = false;
@@ -1630,7 +1716,11 @@
 						var infobox_artwork = ""
 						if (Current_artwork_type == "poster")
 						{ infobox_artwork = "infobox_ignore_poster";}
-						else {infobox_artwork = "infobox_ignore_fanart";}
+						else if (Current_artwork_type == "fanart")
+						{infobox_artwork = "infobox_ignore_fanart";}
+						else if (Current_artwork_type == "banner")
+						{infobox_artwork = "infobox_ignore_banner";}
+						
 
 						document.getElementById(infobox_artwork).innerHTML=localStorage.getItem('remove_text') + ": "+ Current_located_Id + "?"
 						document.getElementById(infobox_artwork).style.visibility="visible";
@@ -1655,7 +1745,7 @@
 					break; 
 					case 'PC':
 						console.log("start_playing PC: " +Currentfilename+ ", CurrentUrlPlay: "+CurrentUrlPlay);
-						window.open("test_Player.html", "YAMJv3 Player", "height=510, width=665, left=0, channelmode=no, directories=no, location=no,	menubar=no, resizable=yes, status=no, scrollbars=no,toolbar=no",false);
+						window.open("Popup_Player.html", "YAMJv3 Player", "height=510, width=665, left=0, channelmode=no, directories=no, location=no,	menubar=no, resizable=yes, status=no, scrollbars=no,toolbar=no",false);
 					break; 
 						
 					case 'SMARTPHONE':

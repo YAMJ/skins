@@ -115,7 +115,8 @@
                         }
                     },
 					'span.external_Id': function(arg) {
-								var output_externalid = "<text style='margin-left: 5vw;'>"+window.localStorage.getItem('source_label')+" </text><text><img src=\"./pictures/add.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_class('externalId_add')\" /></text>";
+								var output_externalid = "<text style='margin-left: 5vw;'>"+window.localStorage.getItem('source_label')
+								+ " </text><text><img src=\"./pictures/add.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_class('externalId_add')\" /></text>";
 								if (arg.context.result.externalIds)
 								{
 									var external_list = arg.context.result.externalIds; 
@@ -126,48 +127,92 @@
 												{	
 													if (external_list[i].skipped) 
 													{ 
-														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" + localStorage.getItem('delete_text').toLowerCase() + "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
-														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase() + "' src=\"./pictures/open2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"enable_external_source('" + arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
-														+ "<a class='external_href' style='text-decoration: line-through; color: red;' href='http://www.allocine.fr/personne/fichepersonne_gen_cpersonne=" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";}
+														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" 
+														+ localStorage.getItem('delete_text').toLowerCase() 
+														+ "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"
+														+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
+														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase()
+														+ "' src=\"./pictures/open2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"enable_external_source('" 
+														+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
+														+ "<a class='external_href' style='text-decoration: line-through; color: red;' href='http://www.allocine.fr/personne/fichepersonne_gen_cpersonne="
+														+ external_list[i].externalId + ".html' target='_blank' >"
+														+ external_list[i].externalId + "</a>";}
 													else 
 													{ 
-														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" + localStorage.getItem('delete_text').toLowerCase() + "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
-														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase() + "' src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
-														+ "<a class='external_href' href='http://www.allocine.fr/personne/fichepersonne_gen_cpersonne=" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";}
+														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" 
+														+ localStorage.getItem('delete_text').toLowerCase() 
+														+ "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"
+														+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
+														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase()
+														+ "' src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"
+														+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
+														+ "<a class='external_href' href='http://www.allocine.fr/personne/fichepersonne_gen_cpersonne=" 
+														+ external_list[i].externalId + ".html' target='_blank' >"
+														+ external_list[i].externalId + "</a>";}
 													break;
 												}
 											case 'tmdb':
 												{	
 													if (external_list[i].skipped) 
 													{ 
-														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" + localStorage.getItem('delete_text').toLowerCase() + "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
-														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase() + "' src=\"./pictures/open2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"enable_external_source('"+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
-														+ "<a class='external_href' style='text-decoration: line-through; color: red;' href='https://www.themoviedb.org/person/" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";}
+														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='"
+														+ localStorage.getItem('delete_text').toLowerCase() 
+														+ "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"
+														+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
+														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase()
+														+ "' src=\"./pictures/open2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"enable_external_source('"
+														+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
+														+ "<a class='external_href' style='text-decoration: line-through; color: red;' href='https://www.themoviedb.org/person/" 
+														+ external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";}
 													else 
 													{ 
-														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" + localStorage.getItem('delete_text').toLowerCase() + "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
-														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase() + "' src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
-														+ "<a class='external_href' href='https://www.themoviedb.org/person/" + external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";}
+														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" 
+														+ localStorage.getItem('delete_text').toLowerCase() 
+														+ "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"
+														+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
+														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase()
+														+ "' src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"
+														+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
+														+ "<a class='external_href' href='https://www.themoviedb.org/person/" 
+														+ external_list[i].externalId + ".html' target='_blank' >"+ external_list[i].externalId + "</a>";}
 													break;
 												}
 											case 'imdb':
 												{	
 													if (external_list[i].skipped) 
 													{ 
-														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" + localStorage.getItem('delete_text').toLowerCase() + "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
-														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase() + "' src=\"./pictures/open2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"enable_external_source('"+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
-														+ "<a class='external_href' style='text-decoration: line-through; color: red;' href='http://www.imdb.com/name/" + external_list[i].externalId + "' target='_blank' >"+ external_list[i].externalId + "</a>";}
+														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" 
+														+ localStorage.getItem('delete_text').toLowerCase() 
+														+ "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"
+														+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
+														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase() 
+														+ "' src=\"./pictures/open2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"enable_external_source('"
+														+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
+														+ "<a class='external_href' style='text-decoration: line-through; color: red;' href='http://www.imdb.com/name/"
+														+ external_list[i].externalId + "' target='_blank' >"
+														+ external_list[i].externalId + "</a>";}
 													else 
 													{ 
-														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" + localStorage.getItem('delete_text').toLowerCase() + "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
-														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase() + "' src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
-														+ "<a class='external_href' href='http://www.imdb.com/name/" + external_list[i].externalId + "' target='_blank' >"+ external_list[i].externalId + "</a>";}
+														output_externalid += "<br><text> "+external_list[i].sourcedb
+														+ "<img title='" + localStorage.getItem('delete_text').toLowerCase()
+														+ "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"
+														+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
+														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase() 
+														+ "' src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"
+														+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
+														+ "<a class='external_href' href='http://www.imdb.com/name/" 
+														+ external_list[i].externalId + "' target='_blank' >"+ external_list[i].externalId + "</a>";}
 													break;
 												}
 											default: 
 												{
-													output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" + localStorage.getItem('delete_text').toLowerCase() + "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
-													+ "<img src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>" +  external_list[i].externalId + "&nbsp; ";
+													output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" 
+													+ localStorage.getItem('delete_text').toLowerCase()
+													+ "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"
+													+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
+													+ "<img src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"
+													+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
+													+  external_list[i].externalId + "&nbsp; ";
 													break;
 												}
 											}
@@ -184,8 +229,11 @@
 									for (var i = 0; i < external_list_form.length; i++) {
 										
 													output_externalid_form = output_externalid_form
-													+ "<form id='delete_"+ external_list_form[i].sourcedb +"' style='position: absolute; top:25.6vw; left: 11vw; display: none; width: 20vw; text-align: center; background-color:rgba(0, 0, 0, 0.9); border: 2px solid grey; color: white;' action=\"javascript:open_delete_externalId ('"+ arg.context.result.id + "','"  + external_list_form[i].sourcedb + "')\" method='post'>"
-													+ "<label for='delete_"+ external_list_form[i].sourcedb +"'>"+window.localStorage.getItem('source_label')+" "+ external_list_form[i].sourcedb + " </label>"
+													+ "<form id='delete_"+ external_list_form[i].sourcedb 
+													+ "' style='position: absolute; top:25.6vw; left: 11vw; display: none; width: 20vw; text-align: center; background-color:rgba(0, 0, 0, 0.9); border: 2px solid grey; color: white;' action=\"javascript:open_delete_externalId ('"
+													+ arg.context.result.id + "','"  + external_list_form[i].sourcedb + "')\" method='post'>"
+													+ "<label for='delete_"+ external_list_form[i].sourcedb 
+													+ "'>"+window.localStorage.getItem('source_label')+" "+ external_list_form[i].sourcedb + " </label>"
 													+ "<INPUT type='submit' value='"+window.localStorage.getItem('delete_text')+"'></input>"
 													+ "</form>"	;
 									
@@ -194,7 +242,8 @@
 								return output_externalid_form;
 							},
 							'form.externalId_add_form@action': function (arg) {
-								var output_externalid_form = "javascript:open_update_externalId ("+ arg.context.result.id + ", document.getElementById('external_source').value, document.getElementById('external_id').value)"
+								var output_externalid_form = "javascript:open_update_externalId ("+ arg.context.result.id 
+								+ ", document.getElementById('external_source').value, document.getElementById('external_id').value)"
 								return output_externalid_form;
 							}, 
 							'div#add_photo_icon@onclick': function (arg) {
@@ -269,7 +318,8 @@
 			{
 			document.getElementById("close_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('close_label').toLowerCase();
 			document.getElementById("back_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('return_label').toLowerCase();
-			document.getElementById("update_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('update_label').toLowerCase() + " " + localStorage.getItem('person_label');
+			document.getElementById("update_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('update_label').toLowerCase() 
+			+ " " + localStorage.getItem('person_label');
 			document.getElementById("update_icon_artwork").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('update_label').toLowerCase() + " photo";
 			document.getElementById("add_photo_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('add_text').toLowerCase() + " info";
 			document.getElementById("add_photo_button").value=localStorage.getItem('add_text').toLowerCase();
@@ -444,7 +494,9 @@
 					var contentServer   = jqxhr.getResponseHeader("Server");
 					var contentLenght   = jqxhr.getResponseHeader("Content-Length");
 					var contentEncoding   = jqxhr.getResponseHeader("Content-Encoding");
-                    console.log('Error in Operation'+ ' contentType:' + contentType  + ' responseBody:' + responseBody + ' contentServer:' + contentServer + ' contentLenght: ' + contentLenght + ' contentEncoding:' + contentEncoding );
+                    console.log('Error in Operation'+ ' contentType:' + contentType  + ' responseBody:' 
+					+ responseBody + ' contentServer:' + contentServer + ' contentLenght: '
+					+ contentLenght + ' contentEncoding:' + contentEncoding );
                 }
             });
 

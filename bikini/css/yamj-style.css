@@ -2522,7 +2522,7 @@ ul#detail_home_right {
 	top: 0px;
 	right: 4vw;
 	}
-#fanartshow_icon, #editshow_icon, #mediainfoshow_icon, #movieshow_icon, #personshow_icon, #selectionshow_icon, #search_icon, #deleteshow_icon, #updateshow_icon, #updateinfoshow_icon, #add_poster_show_icon, #add_fanart_show_icon, #add_banner_show_icon {
+#fanartshow_icon, #editshow_icon, #mediainfoshow_icon, #movieshow_icon, #personshow_icon, #selectionshow_icon, #search_icon, #deleteshow_icon, #updateshow_icon, #updatepostershow_icon, #updateinfoshow_icon, #add_poster_show_icon, #add_fanart_show_icon, #add_banner_show_icon {
 	position: absolute;
 	top: 60px;
 	visibility: hidden;
@@ -2536,6 +2536,10 @@ ul#detail_home_right {
 	border-radius: 6px 6px 0px 6px;
 	}
 #updateshow_icon {
+	width: 110px;
+	left: -30px;
+	}
+#updatepostershow_icon {
 	width: 110px;
 	left: -30px;
 	}
@@ -2973,7 +2977,7 @@ text {
 	position: relative;
 /*	left: 5px; */
 	}	
-.videosource, .fps, .codec, .resolution, .audio, .subtitle, .awards, .rating, .rating2, .runtime, .filepath, .stage_fileId, .external_Id, #filepath {
+.videosource, .fps, .codec, .resolution, .audio, .subtitle, .awards, .rating, .rating2, .runtime, .filepath, .stage_fileId, .external_Id, #filepath, .originalTitle, .sortTitle, .fileDate {
 	width: auto;
 	max-width: 100vw;
 	display: block;

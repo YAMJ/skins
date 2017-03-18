@@ -1,4 +1,7 @@
 change.txt
+V3.0.4
+- add media info: originalTitle, sortTitle, fileDate, extra flag
+- adjust lisibility in code
 V3.0.3
 - fix popup_player for chrome
 - fix direct_play from index with normalise_path

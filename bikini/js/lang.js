@@ -307,11 +307,16 @@
 
 	 function translate_job (job)  
 		{
-				var res = job.replace(/\b writer|WRITER/gi, window.localStorage.getItem('writer_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('writer_label').substring(1).toLowerCase());
-				res = res.replace(/\b director|DIRECTOR/gi, window.localStorage.getItem('director_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('director_label').substring(1).toLowerCase());
-				res = res.replace(/\b actor|ACTOR/gi, window.localStorage.getItem('actor_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('actor_label').substring(1).toLowerCase());
-				res = res.replace(/\b producer|PRODUCER/gi, window.localStorage.getItem('producer_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('producer_label').substring(1).toLowerCase());
-				res = res.replace(/\b screenplay|SCREENPLAY/gi, window.localStorage.getItem('writer_label').substring(0,1).toUpperCase() +  window.localStorage.getItem('writer_label').substring(1).toLowerCase());
+				var res = job.replace(/\b writer|WRITER/gi, window.localStorage.getItem('writer_label').substring(0,1).toUpperCase()
+				+  window.localStorage.getItem('writer_label').substring(1).toLowerCase());
+				res = res.replace(/\b director|DIRECTOR/gi, window.localStorage.getItem('director_label').substring(0,1).toUpperCase() 
+				+  window.localStorage.getItem('director_label').substring(1).toLowerCase());
+				res = res.replace(/\b actor|ACTOR/gi, window.localStorage.getItem('actor_label').substring(0,1).toUpperCase()
+				+  window.localStorage.getItem('actor_label').substring(1).toLowerCase());
+				res = res.replace(/\b producer|PRODUCER/gi, window.localStorage.getItem('producer_label').substring(0,1).toUpperCase() 
+				+  window.localStorage.getItem('producer_label').substring(1).toLowerCase());
+				res = res.replace(/\b screenplay|SCREENPLAY/gi, window.localStorage.getItem('writer_label').substring(0,1).toUpperCase() 
+				+  window.localStorage.getItem('writer_label').substring(1).toLowerCase());
 	//	console.log("translate_job job:" + job + " res:" + res);
 		return res;
 		}

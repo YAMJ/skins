@@ -56,7 +56,8 @@
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
 		function set_context_lang_value ()
 		{
-			document.getElementById("watched_all").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('watched_select').toLowerCase()+'&'+window.localStorage.getItem('unwatched_select').toLowerCase();
+			document.getElementById("watched_all").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('watched_select').toLowerCase()
+			+'&'+window.localStorage.getItem('unwatched_select').toLowerCase();
 			document.getElementById("watched_true").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('watched_select').toLowerCase();
 			document.getElementById("watched_false").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('unwatched_select').toLowerCase();
 			document.getElementById("watched_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('watched_select').toLowerCase();

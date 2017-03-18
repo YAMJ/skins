@@ -71,7 +71,8 @@
 								if (indextype.toLowerCase() == 'season')
 								{
 								store_SeriesId (arg.context.result.seriesId);    // store the series id for next navigation 
-								return arg.context.result.title + ' '+localStorage.getItem('season_label')+': '+ arg.context.result.season+ " (" + arg.context.result.videoYear + ") " + "id: " + arg.context.result.id;
+								return arg.context.result.title + ' '+localStorage.getItem('season_label')+': '+ arg.context.result.season
+								+ " (" + arg.context.result.videoYear + ") " + "id: " + arg.context.result.id;
 								} else {return arg.context.result.title + " (" + arg.context.result.videoYear + ") " + "id: " + arg.context.result.id;}
 							}
 						
@@ -322,11 +323,12 @@
 									var season_item = arg.item.seasonList[i];
 								//	console.log ('season['+ i +'].Id:' + season_item.seasonId + " arg.item.seasonList.length " + arg.item.seasonList.length);
 									
-									output_season += "<td class=season><a href=\"#\" style=\"color: white;\" onclick=\" goto_SeasonId('season', " + season_item.seasonId + ")\">"									
-									output_season += "<span class=SeasonTitle>" + season_item.title + "</span></br>"
-									output_season += "<span class=SeasonNb>" + localStorage.getItem('season_label') + ":" + season_item.season + "</span>"
-									output_season += "<span class=SeasonYear> (" + season_item.year + ")</span></br>"
-									output_season += "<span class=SeasonId> (Id:" + season_item.seasonId + ")</span></br>"
+									output_season += "<td class=season><a href=\"#\" style=\"color: white;\" onclick=\" goto_SeasonId('season', " 
+									+ season_item.seasonId + ")\">"									
+									+ "<span class=SeasonTitle>" + season_item.title + "</span></br>"
+									+ "<span class=SeasonNb>" + localStorage.getItem('season_label') + ":" + season_item.season + "</span>"
+									+ "<span class=SeasonYear> (" + season_item.year + ")</span></br>"
+									+ "<span class=SeasonId> (Id:" + season_item.seasonId + ")</span></br>"
 									
 									output_season += "<span class=SeasonPoster>"
 										 // Check to see if there are posters
@@ -336,8 +338,8 @@
 											if (poster.generatedId === 0) {output_season += "No Poster<br>was generated";}
 											else {
 													output_season += "<span class=SeasonPoster>"
-													output_season += "<a href=\"#\" onclick=\" goto_SeasonId('" + poster.source.toLowerCase()+ "', " + season_item.seasonId + ")\">"
-													output_season += "<img src=\"" + arg.context.baseArtworkUrl + poster.filename + "\" height=\"100\"></a>";
+													+ "<a href=\"#\" onclick=\" goto_SeasonId('" + poster.source.toLowerCase()+ "', " + season_item.seasonId + ")\">"
+													+ "<img src=\"" + arg.context.baseArtworkUrl + poster.filename + "\" height=\"100\"></a>";
 												}
 										} else { output_season +=  noposter_text;}
 										output_season += "</span></td>"
@@ -389,7 +391,10 @@
 								outputepisode_title +=	"<td id='video_frame" +[i] + "'"
 								if (totalepisode_title[i].watched == true)
 								{outputepisode_title += "style='color: black; background-color: rgba(27, 218, 24, 0.5);' "}
-								outputepisode_title += "><img onmouseover=\"border_on(this)\" onmouseout=\"border_off(this)\" onclick=\"display_Episode_Plot ('episodeplot_frame"+[i]+"', "+[i]+"); \" src=\"" + arg.context.baseArtworkUrl + totalepisode_title[i].videoimage + "\"  style=\"outline: 1px solid grey; height: 10vw;\" ><br>"
+								outputepisode_title += "><img onmouseover=\"border_on(this)\" onmouseout=\"border_off(this)\" onclick=\"display_Episode_Plot ('episodeplot_frame"
+								+ [i]+"', "+[i]+"); \" src=\"" 
+								+ arg.context.baseArtworkUrl + totalepisode_title[i].videoimage
+								+ "\"  style=\"outline: 1px solid grey; height: 10vw;\" ><br>"
 								} else {
 								outputepisode_title +=	"<td id='video_frame'"
 								

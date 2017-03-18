@@ -38,7 +38,8 @@
 			window.localStorage.setItem('popup_person_sort_direction', sort_direction);
 			
 			
-               jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=artwork,filmography_scanned&artworksortdir=DESC&sortby=" + sort_index + "&sortdir=" + sort_direction;
+               jsonUrl = "/yamj3/api/person/" + id + ".json?dataitems=artwork,filmography_scanned&artworksortdir=DESC&sortby="
+			   + sort_index + "&sortdir=" + sort_direction;
 				if (window.localStorage.getItem('Style') == "frame") {init_person_popup(id, sort_index, sort_direction);}
                 var jsondata = null;
 				switch (window.localStorage.getItem('back_close'))
@@ -123,9 +124,19 @@
 							{
 								if (filmography_list[i].role)
 									{
-										output += "<table border='2px solid black' style='background-color: rgb(197,197,197);text-align: center;'><tr><td border='2px solid black' style='width:6vw;'>" + filmography_list[i].year + "</td><td border='2px' style='width:43vw;'><a id='inside_href" + i + "' href='#' style='color:black; text-decoration: none;'>" + filmography_list[i].title + " <img id='inside_img" + i + "' src='./pictures/empty.png' alt='empty' height='15px' /></a></td><td border='2px' style='width:43vw;'>" + filmography_list[i].job + " (" + filmography_list[i].role.italics() +")</td></tr></table>";
+										output += "<table border='2px solid black' style='background-color: rgb(197,197,197);text-align: center;'><tr><td border='2px solid black' style='width:6vw;'>"
+										+ filmography_list[i].year + "</td><td border='2px' style='width:43vw;'><a id='inside_href" + i
+										+ "' href='#' style='color:black; text-decoration: none;'>"
+										+ filmography_list[i].title 
+										+ " <img id='inside_img" + i + "' src='./pictures/empty.png' alt='empty' height='15px' /></a></td><td border='2px' style='width:43vw;'>"
+										+ filmography_list[i].job + " (" + filmography_list[i].role.italics() +")</td></tr></table>";
 									} else {
-										output += "<table border='2px solid black' style='background-color: rgb(197,197,197);text-align: center;'><tr><td border='2px' style='width:6vw;'>" + filmography_list[i].year + "</td><td border='2px' style='width:43vw;'><a id='inside_href" + i + "' href='#' style='color: black; text-decoration: none;'>" + filmography_list[i].title + " <img id='inside_img" + i + "' src='./pictures/empty.png' alt='empty' height='15px'/></a></td><td border='2px' style='width:43vw;'>" + filmography_list[i].job + "</td></tr></table>";
+										output += "<table border='2px solid black' style='background-color: rgb(197,197,197);text-align: center;'><tr><td border='2px' style='width:6vw;'>"
+										+ filmography_list[i].year + "</td><td border='2px' style='width:43vw;'><a id='inside_href" + i 
+										+ "' href='#' style='color: black; text-decoration: none;'>"
+										+ filmography_list[i].title
+										+ " <img id='inside_img" + i + "' src='./pictures/empty.png' alt='empty' height='15px'/></a></td><td border='2px' style='width:43vw;'>" 
+										+ filmography_list[i].job + "</td></tr></table>";
 										}
 								
 							}
@@ -204,7 +215,8 @@
 			{
 			document.getElementById("close_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('close_label').toLowerCase();
 			document.getElementById("back_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('return_label').toLowerCase();
-			document.getElementById("update_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('update_label').toLowerCase() + " " + localStorage.getItem('filmography_label').toLowerCase();
+			document.getElementById("update_icon").attributes.getNamedItem("data-tip-person").value=localStorage.getItem('update_label').toLowerCase() + " "
+			+ localStorage.getItem('filmography_label').toLowerCase();
 			}
 			
 			
@@ -275,7 +287,8 @@
 			window.localStorage.setItem('popup_person_sort_direction', 'asc');
 			
 			}
-			console.log ('Popup_Person sort_by_title sort_index:'+window.localStorage.getItem('popup_person_sort')+' sort_direction:' + window.localStorage.getItem("popup_person_sort_direction"));
+			console.log ('Popup_Person sort_by_title sort_index:'+window.localStorage.getItem('popup_person_sort')+' sort_direction:'
+			+ window.localStorage.getItem("popup_person_sort_direction"));
 			window.location.href=location.href;
 		}
 	function sort_by_year ()
@@ -295,7 +308,8 @@
 			else {	
 			window.localStorage.setItem('popup_person_sort_direction', 'desc');
 			}
-			console.log ('Popup_Person sort_by_year sort_index:'+ window.localStorage.getItem('popup_person_sort')+' sort_direction:' + window.localStorage.getItem("popup_person_sort_direction"));
+			console.log ('Popup_Person sort_by_year sort_index:'+ window.localStorage.getItem('popup_person_sort')+' sort_direction:'
+			+ window.localStorage.getItem("popup_person_sort_direction"));
 			window.location.href=location.href;
 		}
 	function update_filmography ()

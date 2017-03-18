@@ -1602,7 +1602,9 @@
 					console.log ("template play_to_device no source_path found to transform :" + basefilename);
 					document.getElementById("infobox").onclick = '';
 					myVar=window.setTimeout(function(){myStopFunction('infobox');},10000);
-					document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+ " " + PlayerValue +": " +basefilename+  ": " + localStorage.getItem('transform_error_text');
+					document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()
+					+ " " + PlayerValue +": " +basefilename+  ": "
+					+ localStorage.getItem('transform_error_text');
 					document.getElementById("infobox").style.visibility="visible";
 					//document.getElementById("infobox").click=(function(){clearInterval(myVar);document.getElementById("infobox").style.visibility="hidden";});
 					$("button#infobox").click(
@@ -1629,7 +1631,9 @@
 					switch (Device_type)
 						{
 						case 'PCH': 
-							var UrlPlay="http://"+Ip_device+":8008/playback?arg0="+playcommand+"&arg1="+file_name+"&arg2="+target_path[j]+filenametoplay+"&arg3=show&arg4=0&arg5=0&arg6=disable";
+							var UrlPlay="http://"+Ip_device+":8008/playback?arg0="+playcommand+"&arg1="
+							+ file_name+"&arg2="+target_path[j]
+							+ filenametoplay+"&arg3=show&arg4=0&arg5=0&arg6=disable";
 							Currentfilename = file_name;
 							CurrentUrlPlay = UrlPlay;
 							console.log("play_to_device: " +UrlPlay);
@@ -1666,7 +1670,8 @@
 	function PopUpdateInfo(Current_stage_file_Id, Current_title)
 			{
 						console.log("PopUpdateInfo:  Current_stage_file_Id: "+Current_stage_file_Id);
-						document.getElementById("infobox_updateinfo").innerHTML=localStorage.getItem('update_label') + " stage_file id: "+Current_stage_file_Id+ " " + Current_title + "?"
+						document.getElementById("infobox_updateinfo").innerHTML=localStorage.getItem('update_label') + " stage_file id: "
+						+ Current_stage_file_Id+ " " + Current_title + "?"
 						document.getElementById("infobox_updateinfo").style.visibility="visible";
 						myVar=window.setTimeout(function(){myStopFunction('infobox_updateinfo');},5000);
 			}	
@@ -1674,7 +1679,8 @@
 	function PopDelete(Current_stage_file_Id, Current_title)
 			{
 						console.log("PopDelete:  Current_stage_file_Id: "+Current_stage_file_Id);
-						document.getElementById("infobox_delete").innerHTML=localStorage.getItem('delete_text') + " stage_file id: "+Current_stage_file_Id+ " " + Current_title + "?"
+						document.getElementById("infobox_delete").innerHTML=localStorage.getItem('delete_text') + " stage_file id: " 
+						+ Current_stage_file_Id+ " " + Current_title + "?"
 						document.getElementById("infobox_delete").style.visibility="visible";
 						myVar=window.setTimeout(function(){myStopFunction('infobox_delete');},5000);
 			}	
@@ -1687,14 +1693,16 @@
 	function PopUpdate(Current_update_type, Current_file_Id, Current_title)
 			{
 						console.log("PopUpdate: Current_update_type: " + Current_update_type + " Current_file_Id: " + Current_file_Id);
-						document.getElementById("infobox_update").innerHTML=localStorage.getItem('update_label') + " " + Current_update_type + " id:" + Current_file_Id + " " + Current_title + "?"
+						document.getElementById("infobox_update").innerHTML=localStorage.getItem('update_label') + " " 
+						+ Current_update_type + " id:" + Current_file_Id + " " + Current_title + "?"
 						document.getElementById("infobox_update").style.visibility="visible";
 						myVar=window.setTimeout(function(){myStopFunction('infobox_update');},5000);
 			}
 	function PopAction(Action_type, Current_update_type, Current_file_Id, Current_title)
 			{
 						console.log("PopAction: Current_update_type: " + Current_update_type + " Current_file_Id: " + Current_file_Id + " action:" + Action_type);
-						document.getElementById("infobox_update").innerHTML=localStorage.getItem(Action_type + "_text") + " " + Current_update_type + " id:" + Current_file_Id + " " + Current_title + "?"
+						document.getElementById("infobox_update").innerHTML=localStorage.getItem(Action_type + "_text") + " "
+						+ Current_update_type + " id:" + Current_file_Id + " " + Current_title + "?"
 						document.getElementById("infobox_update").style.visibility="visible";
 						myVar=window.setTimeout(function(){myStopFunction('infobox_update');},5000);
 			}				
@@ -1780,11 +1788,13 @@
 				switch (Device_type)
 					{
 					case 'PCH': 
-						var UrlPlay="http://"+Ip_device+":8008/playback?arg0="+playcommand+"&arg1="+file_name+"&arg2="+target_path[j]+filenametoplay+"&arg3=show&arg4=0&arg5=0&arg6=disable";
+						var UrlPlay="http://"+Ip_device+":8008/playback?arg0="+playcommand+"&arg1="+file_name+"&arg2="
+						+ target_path[j]+filenametoplay+"&arg3=show&arg4=0&arg5=0&arg6=disable";
 						Currentfilename = file_name;
 						CurrentUrlPlay = UrlPlay;
 								//	console.log("play_to_device: " +UrlPlay);
-						document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+" "+PlayerValue+": "+file_name+"?";
+						document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+" "
+						+ PlayerValue+": "+file_name+"?";
 						document.getElementById("infobox").style.visibility="visible";
 						myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
 					break; 
@@ -1829,11 +1839,13 @@
 				switch (Device_type)
 					{
 					case 'PCH': 
-						var UrlPlay="http://"+Ip_device+":8008/playback?arg0="+playcommand+"&arg1="+file_name+"&arg2="+target_path[j]+filenametoplay+"&arg3=show&arg4=0&arg5=0&arg6=disable";
+						var UrlPlay="http://"+Ip_device+":8008/playback?arg0="+playcommand+"&arg1="+file_name+"&arg2="
+						+ target_path[j]+filenametoplay+"&arg3=show&arg4=0&arg5=0&arg6=disable";
 						Currentfilename = file_name;
 						CurrentUrlPlay = UrlPlay;
 							console.log("preset_episode_to_play: on PCH " +UrlPlay);
-						document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+" "+PlayerValue+": "+file_name+"?";
+						document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()+" "
+						+ PlayerValue+": "+file_name+"?";
 						// document.getElementById("infobox").style.visibility="visible";
 						// myVar=window.setTimeout(function(){myStopFunction('infobox');},5000);
 					break; 
@@ -1937,7 +1949,8 @@
 			window.localStorage.setItem("categorytype", "boxset");
 			localStorage.setItem("boxset_name", boxsetid);
 			localStorage.setItem("boxset_text", boxsetname);
-            console.log("navBoxset open_boxset_index Storing value: Boxset Id: " + boxsetid + " Boxset name: " + boxsetname + " display_type:" + window.localStorage.getItem ("display_type"));
+            console.log("navBoxset open_boxset_index Storing value: Boxset Id: " + boxsetid + " Boxset name: " 
+			+ boxsetname + " display_type:" + window.localStorage.getItem ("display_type"));
 			if (window.localStorage.getItem ("display_type") == "_list2")
 			{window.location.href="index_list2.html";} else {window.location.href="index.html";}
 
@@ -1946,7 +1959,8 @@
         {	
 			window.localStorage.setItem("categorytype", "rating");
 			localStorage.setItem("rating_name", ratingvalue + "-" + ratingsource);
-            console.log("navRating open_rating_index Storing value: Rating source: " + ratingsource + " Rating value: "+ ratingvalue + " display_type:" + window.localStorage.getItem ("display_type"));
+            console.log("navRating open_rating_index Storing value: Rating source: " + ratingsource + " Rating value: "
+			+ ratingvalue + " display_type:" + window.localStorage.getItem ("display_type"));
 			if (window.localStorage.getItem ("display_type") == "_list2")
 			{window.location.href="index_list2.html";} else {window.location.href="index.html";}
 		}

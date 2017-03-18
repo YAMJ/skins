@@ -227,12 +227,16 @@
 				{localStorage.setItem("nextcurrent_count", (-1));}
 				
 				console.log("temp_nextcurrent_count: " + temp_nextcurrent_count + " current_count: " + current_count); 
-				console.log("store_count end current_pos: " + current_pos + " total_count: " + totalcount+" returncount: " + returncount+ " nextcurrent_count:" + localStorage.getItem("nextcurrent_count")+" max_count:" + max_count );
+				console.log("store_count end current_pos: " + current_pos + " total_count: " + totalcount+" returncount: "
+				+ returncount+ " nextcurrent_count:"
+				+ localStorage.getItem("nextcurrent_count")+" max_count:" + max_count );
 		}
 		
 	function back_asked ()
 		{
-			console.log("back_asked start current_pos: " + current_pos + " temp_current: " + temp_current+" nextcurrent_count: " + nextcurrent_count+ " temp_nextcurrent_count: " +temp_nextcurrent_count);
+			console.log("back_asked start current_pos: " + current_pos + " temp_current: " 
+			+ temp_current+" nextcurrent_count: " 
+			+ nextcurrent_count+ " temp_nextcurrent_count: " +temp_nextcurrent_count);
 
 			
 				if (current_pos >= 4999) // the last person displayed is beetween 4999 (after the 3rd API call) and max value, back need to calculate the jump with the 1rst displayed person so 4999 before
@@ -257,7 +261,9 @@
 				}
 			localStorage.setItem("nextcurrent_count", nextcurrent_count);
 	
-			console.log("back_asked end current_pos: " + current_pos + " temp_current: " + temp_current+" nextcurrent_count: " + nextcurrent_count+ " temp_nextcurrent_count: " +temp_nextcurrent_count+ " current_count: " +current_count);
+			console.log("back_asked end current_pos: " + current_pos + " temp_current: "
+			+ temp_current+" nextcurrent_count: " + nextcurrent_count+ " temp_nextcurrent_count: " 
+			+temp_nextcurrent_count+ " current_count: " +current_count);
 		}
 		
 	function check_duplicated (current_id, current_name) 
@@ -266,7 +272,9 @@
 			{
 				if (localStorage.getItem("name_to_compare") == current_name) 
 					{
-						console.log ("duplicated name found for name: " + current_name + " id:" + current_id + " with stored name:" + localStorage.getItem('name_to_compare') + " stored id:" + localStorage.getItem('id_to_compare'));
+						console.log ("duplicated name found for name: " + current_name + " id:"
+						+ current_id + " with stored name:" + localStorage.getItem('name_to_compare') 
+						+ " stored id:" + localStorage.getItem('id_to_compare'));
 					}
 			} 
 

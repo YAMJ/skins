@@ -185,13 +185,16 @@
 							switch (title_type)	
 							{
 								case "title":
-									return arg.item.title + ' (' + arg.item.videoYear + ')'+ '<br> '+ window.localStorage.getItem('season_label') +': ' + arg.item.season;
+									return arg.item.title + ' (' + arg.item.videoYear + ')'+ '<br> '+ window.localStorage.getItem('season_label') +': '
+									+ arg.item.season;
 									break;
 								case "title_sort":
-									return arg.item.sortTitle + ' (' + arg.item.videoYear + ')'+ '<br> '+ window.localStorage.getItem('season_label') +': ' + arg.item.season;
+									return arg.item.sortTitle + ' (' + arg.item.videoYear + ')'+ '<br> '+ window.localStorage.getItem('season_label') +': '
+									+ arg.item.season;
 									break; 
 								case "title_original":
-									return arg.item.originalTitle + ' (' + arg.item.videoYear + ')'+ '<br> '+ window.localStorage.getItem('season_label') +': ' + arg.item.season;
+									return arg.item.originalTitle + ' (' + arg.item.videoYear + ')'+ '<br> '+ window.localStorage.getItem('season_label') +': '
+									+ arg.item.season;
 									break;
 							}
 						} else {
@@ -505,17 +508,23 @@
 						{
 							case 'file':
 							{
-							temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
+							temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" 
+							+ window.localStorage.getItem("New").substr(0,newest_method.indexOf('-'))
+							+ "&nbsp;" + window.localStorage.getItem('day_label');
 							break;
 							}
 							case 'creation':
 							{
-							temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
+							temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" 
+							+ window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) 
+							+ "&nbsp;" + window.localStorage.getItem('day_label');
 							break;
 							}
 							case 'lastscan':
 							{
-							temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":" + window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label');
+							temp_new_string ="&nbsp;" + window.localStorage.getItem("new_") +  ":"
+							+ window.localStorage.getItem("New").substr(0,newest_method.indexOf('-')) 
+							+ "&nbsp;" + window.localStorage.getItem('day_label');
 							break;
 							}	
 						}
@@ -527,12 +536,16 @@
 							jsonUrl += "&include=" + category_type + "-" + category_name;
 							jsonUrlheader += "&include=" + category_type + "-" + category_name;
 							if (category_type == "certification")
-							{selected_index = selected_index + window.localStorage.getItem(category_type.toLowerCase() + '_select').toUpperCase() + ":" + window.localStorage.getItem('certification_value').toUpperCase();}
+							{selected_index = selected_index + window.localStorage.getItem(category_type.toLowerCase()
+							+ '_select').toUpperCase() + ":" + window.localStorage.getItem('certification_value').toUpperCase();}
 							if (category_type == "studio")
-							{selected_index = selected_index + window.localStorage.getItem(category_type.toLowerCase() + '_select').toUpperCase() + ":" + window.localStorage.getItem('studio_text').toUpperCase();}
+							{selected_index = selected_index + window.localStorage.getItem(category_type.toLowerCase()
+							+ '_select').toUpperCase() + ":" + window.localStorage.getItem('studio_text').toUpperCase();}
 							if (category_type == "boxset")
-							{selected_index = selected_index + "&nbsp;" + window.localStorage.getItem(category_type.toLowerCase() + '_select').toUpperCase() + ":" + window.localStorage.getItem('boxset_text').toUpperCase();}
-							else {selected_index = selected_index + "&nbsp;" + window.localStorage.getItem(category_type.toLowerCase() + '_select').toUpperCase() + ":" + category_name;}
+							{selected_index = selected_index + "&nbsp;" + window.localStorage.getItem(category_type.toLowerCase()
+							+ '_select').toUpperCase() + ":" + window.localStorage.getItem('boxset_text').toUpperCase();}
+							else {selected_index = selected_index + "&nbsp;" + window.localStorage.getItem(category_type.toLowerCase()
+							+ '_select').toUpperCase() + ":" + category_name;}
 						}
 			
 				}
@@ -587,47 +600,56 @@
 		function set_context_lang_value ()
 		{
 			
-			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('skin_').toLowerCase() + " " + window.localStorage.getItem('info_label').toLowerCase();
+			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('skin_').toLowerCase() + " " 
+			+ window.localStorage.getItem('info_label').toLowerCase();
 			switch (window.localStorage.getItem('prefered_page').toLowerCase())
 			{
 				case 'certification':
 				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('certification_label').toLowerCase();
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": "
+					+ window.localStorage.getItem('certification_label').toLowerCase();
 				break;
 				}
 				case 'index_all':
 				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('all_label').toLowerCase();
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " 
+					+ window.localStorage.getItem('all_label').toLowerCase();
 				break;
 				}
 				case 'index_movie':
 				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('movie_label').toLowerCase();
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": "
+					+ window.localStorage.getItem('movie_label').toLowerCase();
 				break;
 				}
 				case 'index_series':
 				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('series_label').toLowerCase();
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": "
+					+ window.localStorage.getItem('series_label').toLowerCase();
 				break;
 				}
 				case 'new':
 				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('new_').toLowerCase();
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " 
+					+ window.localStorage.getItem('new_').toLowerCase();
 				break;
 				}
 				case 'person':
 				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('person_label').toLowerCase();
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": "
+					+ window.localStorage.getItem('person_label').toLowerCase();
 				break;
 				}
 				case 'rating':
 				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('rating_label').toLowerCase();
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": "
+					+ window.localStorage.getItem('rating_label').toLowerCase();
 				break;
 				}
 				case 'source':
 				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('source_label').toLowerCase();
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": "
+					+ window.localStorage.getItem('source_label').toLowerCase();
 				break;
 				}
 			}

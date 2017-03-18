@@ -71,8 +71,10 @@
 								if (indextype.toLowerCase() == 'season')
 								{
 								store_SeriesId (arg.context.result.seriesId);    // store the series id for next navigation 
-								return arg.context.result.title + ' '+localStorage.getItem('season_label')+': '+ arg.context.result.season+ " (" + arg.context.result.videoYear + ") " + "id: " + arg.context.result.id;
-								} else {return arg.context.result.title + " (" + arg.context.result.videoYear + ") " + "id: " + arg.context.result.id;}
+								return arg.context.result.title + ' '+localStorage.getItem('season_label')+': '
+								+ arg.context.result.season+ " (" + arg.context.result.videoYear + ") " + "id: " + arg.context.result.id;
+								} else {return arg.context.result.title + " (" 
+								+ arg.context.result.videoYear + ") " + "id: " + arg.context.result.id;}
 							}
 						
 						}; // end DETAIL_HEADER
@@ -386,9 +388,14 @@
 								if (totalepisode_title[i].videoimage) {
 							// construct an activ episode list, click on an episode will display title, videoimage, plot and prepare the filepath to play 
 						
-								outputepisode_title +=	"<td id='video_frame"+[i]+"'><img onmouseover=\"border_on(this)\" onmouseout=\"border_off(this)\" onclick=\"display_Episode_Plot ('episodeplot_frame"+[i]+"', "+[i]+"); \" src=\"" + arg.context.baseArtworkUrl + totalepisode_title[i].videoimage + "\"  style=\"outline: 1px solid grey; height: 10vw;\" ><br>"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</td>";
+								outputepisode_title +=	"<td id='video_frame"+[i]
+								+ "'><img onmouseover=\"border_on(this)\" onmouseout=\"border_off(this)\" onclick=\"display_Episode_Plot ('episodeplot_frame"
+								+ [i]+"', "+[i]+"); \" src=\"" + arg.context.baseArtworkUrl + totalepisode_title[i].videoimage 
+								+ "\"  style=\"outline: 1px solid grey; height: 10vw;\" ><br>"+totalepisode_title[i].episode+ " - "
+								+ totalepisode_title[i].title+"</td>";
 								} else {
-								outputepisode_title +=	"<td id='video_frame'><img src=\"./pictures/dummy_videoimage.jpg\" style=\"height: 10vw;\"><br>"+totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</td>";
+								outputepisode_title +=	"<td id='video_frame'><img src=\"./pictures/dummy_videoimage.jpg\" style=\"height: 10vw;\"><br>"
+								+ totalepisode_title[i].episode+ " - "+totalepisode_title[i].title+"</td>";
 								}
 							}
 							return outputepisode_title;

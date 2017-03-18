@@ -158,47 +158,56 @@
 			document.getElementById("sort_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('sort_label').toLowerCase();
 			document.getElementById("sort_asc").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('asc_label').toLowerCase();
 			document.getElementById("sort_desc").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('desc_label').toLowerCase();
-			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('skin_').toLowerCase() + " " + window.localStorage.getItem('info_label').toLowerCase();
+			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('skin_').toLowerCase() 
+			+ " " + window.localStorage.getItem('info_label').toLowerCase();
 			switch (window.localStorage.getItem('prefered_page').toLowerCase())
 			{
 				case 'certification':
 				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('certification_label').toLowerCase();
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase()
+					+ ": " + window.localStorage.getItem('certification_label').toLowerCase();
 				break;
 				}
 				case 'index_all':
 				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('all_label').toLowerCase();
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() 
+					+ ": " + window.localStorage.getItem('all_label').toLowerCase();
 				break;
 				}
 				case 'index_movie':
 				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('movie_label').toLowerCase();
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() 
+					+ ": " + window.localStorage.getItem('movie_label').toLowerCase();
 				break;
 				}
 				case 'index_series':
 				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('series_label').toLowerCase();
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() 
+					+ ": " + window.localStorage.getItem('series_label').toLowerCase();
 				break;
 				}
 				case 'new':
 				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('new_').toLowerCase();
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase()
+					+ ": " + window.localStorage.getItem('new_').toLowerCase();
 				break;
 				}
 				case 'person':
 				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('person_label').toLowerCase();
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() 
+					+ ": " + window.localStorage.getItem('person_label').toLowerCase();
 				break;
 				}
 				case 'rating':
 				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('rating_label').toLowerCase();
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase()
+					+ ": " + window.localStorage.getItem('rating_label').toLowerCase();
 				break;
 				}
 				case 'source':
 				{
-					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() + ": " + window.localStorage.getItem('source_label').toLowerCase();
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase()
+					+ ": " + window.localStorage.getItem('source_label').toLowerCase();
 				break;
 				}
 			}

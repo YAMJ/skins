@@ -103,13 +103,16 @@ function updateHtml(yamjdata)
 								// if any problem within poster generation return dummy 
 										if (photo.generatedId === 0) {
 													// on click display biography and big poster
-														temp_photo_return ="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'close')\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+														temp_photo_return ="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id
+														+", 'close')\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
 													} else {											
-																temp_photo_return ="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'close')\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + photo.filename + "\" ></img></a>";
+																temp_photo_return ="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id
+																+", 'close')\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + photo.filename + "\" ></img></a>";
 															} 
 												outputperson_photo += temp_photo_return;
 									} else {
-												outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id+", 'close')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+												outputperson_photo +="<a href=\"javascript:open_person_popup("+totalperson_photo[i].id
+												+", 'close')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
 											}
 									// add the role at the bottom 
 								if (totalperson_photo[i].role) {

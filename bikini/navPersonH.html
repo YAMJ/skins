@@ -97,13 +97,26 @@
 									// if any problem within poster generation return dummy 
 									if (photo.generatedId === 0) {
 									// on click display biography and big poster
-										temp_photo_return ="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+										temp_photo_return ="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"
+										+ totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id
+										+ "'); javascript:display_cv('"+str_cv
+										+ "'); javascript:display_img('pictures/dummy_photo.jpg')\"><img  class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
 									} else {
-										temp_photo_return ="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"'); javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('"+ arg.context.basePhotoUrl + photo.filename +"')\"><img class=\"person_photo\" src=\"" + arg.context.basePhotoUrl + photo.filename + "\" ></img></a>";
+										temp_photo_return ="<a href=\"#\" onclick=\"javascript:display_bio('"
+										+ str_bio+"'); javascript:display_filmography_inside('"
+										+ totalperson_photo[i].id+"'); display_filmography_scanned('"
+										+ totalperson_photo[i].id+"'); javascript:display_cv('"
+										+ str_cv+"'); javascript:display_img('"
+										+ arg.context.basePhotoUrl + photo.filename +"')\"><img class=\"person_photo\" src=\"" 
+										+ arg.context.basePhotoUrl + photo.filename + "\" ></img></a>";
 										} 
 								outputperson_photo += temp_photo_return;
 								} else {
-										outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('"+str_bio+"');javascript:display_filmography_inside('"+totalperson_photo[i].id+"'); display_filmography_scanned('"+totalperson_photo[i].id+"'); javascript:display_cv('"+str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
+										outputperson_photo +="<a href=\"#\" onclick=\"javascript:display_bio('" 
+										+ str_bio+"');javascript:display_filmography_inside('"
+										+ totalperson_photo[i].id+"'); display_filmography_scanned('"
+										+ totalperson_photo[i].id+"'); javascript:display_cv('"
+										+ str_cv+"'); javascript:display_img('pictures/dummy_photo.jpg')\"><img class=\"person_photo\" src=\"pictures/dummy_photo.jpg\" ></img></a>";
 									}
 									// add the role at the bottom 
 								if (totalperson_photo[i].role) {
@@ -193,7 +206,9 @@
 											if (filmography_list[i].originalTitle.toLowerCase() == filmography_inside_ref_list[j].originalTitle.toLowerCase())
 											{
 												video_compare = false;
-												temp_output = temp_output + "<a style=\"color:red;\" href=\"javascript:setId('" + filmography_inside_ref_list[j].type + "', '" + filmography_inside_ref_list[j].videodataId + "')\"> " + filmography_list[i].year + " - " + filmography_list[i].title ;
+												temp_output = temp_output + "<a style=\"color:red;\" href=\"javascript:setId('" + filmography_inside_ref_list[j].type
+												+ "', '" + filmography_inside_ref_list[j].videodataId + "')\"> " 
+												+ filmography_list[i].year + " - " + filmography_list[i].title ;
 												
 											} else {}
 										} else {}
@@ -261,10 +276,22 @@
 									$('.H_Filmography_inside').css('display', 'block'); 
 									if (filmography_inside_list[i].job != 'ACTOR')
 									{
-										temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videodataId + "');\"><p class=\"filmography_nameH\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\">"+ filmography_inside_list[i].job.italics() +"</p></a></td>" ;
+										temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" 
+										+ filmography_inside_list[i].videodataId + "');\"><p class=\"filmography_nameH\">"
+										+ filmography_inside_list[i].title 
+										+ "</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\">"
+										+ filmography_inside_list[i].job.italics() +"</p></a></td>" ;
 									} else {
-											if (filmography_inside_list[i].role) {temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videodataId + "');\"><p class=\"filmography_nameH\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\">"+ filmography_inside_list[i].role.italics() +"</p></a></td>" ;}
-											else {temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].videodataId + "');\"><p class=\"filmography_nameH\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\"></p></a></td>" ;}
+											if (filmography_inside_list[i].role) {temp_output_inside =  "<td><a href=\"javascript:setId('"
+											+ filmography_inside_list[i].type + "', '"
+											+ filmography_inside_list[i].videodataId + "');\"><p class=\"filmography_nameH\">"
+											+ filmography_inside_list[i].title +"</p><img class=\"poster"
+											+ i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\">"
+											+ filmography_inside_list[i].role.italics() +"</p></a></td>" ;}
+											else {temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" 
+											+ filmography_inside_list[i].videodataId + "');\"><p class=\"filmography_nameH\">"
+											+ filmography_inside_list[i].title +"</p><img class=\"poster"
+											+ i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\"></p></a></td>" ;}
 									} 
 									$('.Hfilmography_inside').append(translate_job(temp_output_inside));
 									get_poster(filmography_inside_list[i].type, filmography_inside_list[i].videodataId, i); 
@@ -274,10 +301,21 @@
 									$('.H_Filmography_inside').css('display', 'block'); 
 									if (filmography_inside_list[i].job != 'ACTOR')
 									{
-										temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_nameH\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\">"+ filmography_inside_list[i].job.italics() +"</p></a></td>" ;
+										temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" 
+										+ filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_nameH\">"
+										+ filmography_inside_list[i].title +"</p><img class=\"poster"
+										+ i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\">"
+										+ filmography_inside_list[i].job.italics() +"</p></a></td>" ;
 									} else {
-										if (filmography_inside_list[i].role) {temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_nameH\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\">"+ filmography_inside_list[i].role.italics() +"</p></a></td>" ;}
-										else {temp_output_inside =  "<td><a href=\"javascript:setId('" + filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_nameH\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"+i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\"></p></a></td>" ;}
+										if (filmography_inside_list[i].role) {temp_output_inside =  "<td><a href=\"javascript:setId('"
+										+ filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId
+										+ "');\"><p class=\"filmography_nameH\">"+ filmography_inside_list[i].title +"</p><img class=\"poster"
+										+ i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\">"
+										+ filmography_inside_list[i].role.italics() +"</p></a></td>" ;}
+										else {temp_output_inside =  "<td><a href=\"javascript:setId('" 
+										+ filmography_inside_list[i].type + "', '" + filmography_inside_list[i].seriesId + "');\"><p class=\"filmography_nameH\">"
+										+ filmography_inside_list[i].title +"</p><img class=\"poster"
+										+ i+"\" src=\"\" height=\"120px\" width=\"80px\" ></img><p class=\"filmography_nameH\"></p></a></td>" ;}
 									} 
 									 $('.Hfilmography_inside').append(translate_job(temp_output_inside));
 									get_poster(filmography_inside_list[i].type, filmography_inside_list[i].seriesId, i); 

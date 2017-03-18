@@ -151,61 +151,71 @@ input:-moz-placeholder { color:black; }
 										{
 											case 'player':
 											{
-												return "<img title='" + window.localStorage.getItem("player_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												return "<img title='" + window.localStorage.getItem("player_comment") 
+												+ "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
 												+ window.localStorage.getItem("player_select");
 												break;
 											}
 											case 'paging':
 											{
-												return "<img title='" + window.localStorage.getItem("page_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												return "<img title='" + window.localStorage.getItem("page_comment")
+												+ "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
 												+ window.localStorage.getItem("page_label");
 												break;
 											}
 											case 'index_row':
 											{
-												return "<img title='" + window.localStorage.getItem("nbrow_comment") + "' src='./pictures/information2.png' style='height: 18px; '></img>&nbsp;"
+												return "<img title='" + window.localStorage.getItem("nbrow_comment")
+												+ "' src='./pictures/information2.png' style='height: 18px; '></img>&nbsp;"
 												+ window.localStorage.getItem("nbofrow");
 												break;
 											}
 											case 'language':
 											{
-												return "<img title='" + window.localStorage.getItem("lang_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												return "<img title='" + window.localStorage.getItem("lang_comment")
+												+ "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
 												 + window.localStorage.getItem("lang_label");
 												break;
 											}
 											case 'style':
 											{
-												return "<img title='" + window.localStorage.getItem("style_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												return "<img title='" + window.localStorage.getItem("style_comment") 
+												+ "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
 												+ window.localStorage.getItem("style_label");
 												break;
 											}
 											case 'prefered_page':
 											{
-												return "<img title='" + window.localStorage.getItem("prefered_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												return "<img title='" + window.localStorage.getItem("prefered_comment")
+												+ "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
 												+ window.localStorage.getItem("prefered_comment");
 												break;
 											}
 											case 'prefered_certification':
 											{
-												return "<img title='" + window.localStorage.getItem("certification_label") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												return "<img title='" + window.localStorage.getItem("certification_label")
+												+ "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
 												+ window.localStorage.getItem("certification_label");
 												break;
 											}
 											case 'New':
 											{
-												return "<img title='" + window.localStorage.getItem("new_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												return "<img title='" + window.localStorage.getItem("new_comment")
+												+ "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
 												+ window.localStorage.getItem("new_");
 												break;
 											}
 											case 'overlay':
 											{
-												return "<img title='" + window.localStorage.getItem("overlay_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												return "<img title='" + window.localStorage.getItem("overlay_comment")
+												+ "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
 												+ window.localStorage.getItem("overlay_label");
 												break;
 											}
 											case 'display_type':
 											{
-												return "<img title='" + window.localStorage.getItem("display_comment") + "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												return "<img title='" + window.localStorage.getItem("display_comment")
+												+ "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
 												+ window.localStorage.getItem("display_label");
 												break;
 											}
@@ -336,17 +346,23 @@ input:-moz-placeholder { color:black; }
 												{
 													case 'file':
 													{
-													return arg.item.value.substr(0,arg.item.value.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label') + "&nbsp;(" + window.localStorage.getItem("file_comment") + ")";
+													return arg.item.value.substr(0,arg.item.value.indexOf('-')) + "&nbsp;"
+													+ window.localStorage.getItem('day_label') + "&nbsp;(" 
+													+ window.localStorage.getItem("file_comment") + ")";
 													break;
 													}
 													case 'creation':
 													{
-													return arg.item.value.substr(0,arg.item.value.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label') + "&nbsp;(" + window.localStorage.getItem("creation_comment") + ")";
+													return arg.item.value.substr(0,arg.item.value.indexOf('-')) + "&nbsp;" 
+													+ window.localStorage.getItem('day_label') + "&nbsp;(" 
+													+ window.localStorage.getItem("creation_comment") + ")";
 													break;
 													}
 													case 'lastscan':
 													{
-													return arg.item.value.substr(0,arg.item.value.indexOf('-')) + "&nbsp;" + window.localStorage.getItem('day_label') + "&nbsp;(" + window.localStorage.getItem("lastscan_comment") + ")";
+													return arg.item.value.substr(0,arg.item.value.indexOf('-')) + "&nbsp;" 
+													+ window.localStorage.getItem('day_label') + "&nbsp;(" 
+													+ window.localStorage.getItem("lastscan_comment") + ")";
 													break;
 													}
 													
@@ -398,7 +414,8 @@ input:-moz-placeholder { color:black; }
 											case 'player':
 											{
 												var player_output = "<select id='formKey" +arg.item.key+ "' style='height:18px;'></input>"
-												+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("player_comment") + "'></option>"
+												+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" 
+												+ window.localStorage.getItem("player_comment") + "'></option>"
 												if (player_list.length == '0') {
 													console.log("config2 player list length: " + player_list.length + " call get_player_");
 													get_player_();}
@@ -406,7 +423,8 @@ input:-moz-placeholder { color:black; }
 												
 												get_player_list();
 												for (var i = 0; i < player_list_.length; i++) {
-													player_output = player_output + "<option value='" + player_list_[i].name + "'>" + player_list_[i].name + "</option>";
+													player_output = player_output + "<option value='" + player_list_[i].name
+													+ "'>" + player_list_[i].name + "</option>";
 													}
 												return player_output + "</select>";
 												break;
@@ -414,7 +432,8 @@ input:-moz-placeholder { color:black; }
 											case 'paging':
 											{
 												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
-														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("page_comment") + "'></option>"
+														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" 
+														+ window.localStorage.getItem("page_comment") + "'></option>"
 														+ "<option value='true'>" + window.localStorage.getItem("true_text") + "</option>"
 														+ "<option value='false'>" + window.localStorage.getItem("false_text") + "</option>"
 														+ "</select>";
@@ -423,7 +442,8 @@ input:-moz-placeholder { color:black; }
 											case 'index_row':
 											{
 												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
-														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("nbrow_comment") + "'></option>"
+														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" 
+														+ window.localStorage.getItem("nbrow_comment") + "'></option>"
 														+ "<option value='1'>0</option>"
 														+ "<option value='1'>1</option>"
 														+ "<option value='2'>2</option>"
@@ -436,7 +456,8 @@ input:-moz-placeholder { color:black; }
 											case 'language':
 											{
 												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
-														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("lang_comment") + "'></option>"
+														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" 
+														+ window.localStorage.getItem("lang_comment") + "'></option>"
 														+ "<option value='de'>de</option>"
 														+ "<option value='en'>en</option>"
 														+ "<option value='es'>es</option>"
@@ -448,11 +469,14 @@ input:-moz-placeholder { color:black; }
 											case 'prefered_certification':
 											{
 												var certification_output = "<select id='formKey" +arg.item.key+ "' style='height:18px;'></input>"
-												+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("certification_label") + "'></option>"
+												+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" 
+												+ window.localStorage.getItem("certification_label") + "'></option>"
 												
 												get_certification_list();
 												for (var i = 0; i < certification_list_[0].value.length; i=i+3) {
-													certification_output = certification_output + "<option value='" + certification_list_[0].value.substring(i,i+2) + "'>" + certification_list_[0].value.substring(i,i+2) + "</option>";
+													certification_output = certification_output + "<option value='" 
+													+ certification_list_[0].value.substring(i,i+2) + "'>" 
+													+ certification_list_[0].value.substring(i,i+2) + "</option>";
 													}
 												return certification_output + "</select>";
 												break;
@@ -460,18 +484,24 @@ input:-moz-placeholder { color:black; }
 											case 'style':
 											{
 												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
-														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("style_comment") + "'></option>"
-														+ "<option value='page'>" + window.localStorage.getItem("page_label") + "&nbsp;(" + window.localStorage.getItem("page_style_comment") + ")</option>" 
-														+ "<option value='ribbon'>" + window.localStorage.getItem("ribbon_label") + "&nbsp;(" + window.localStorage.getItem("ribbon_comment") + ")</option>"
-														+ "<option value='frame'>" + window.localStorage.getItem("frame_label")  + "&nbsp;(" + window.localStorage.getItem("frame_comment") + ")</option>"
-														+ "<option value='popup'>" + window.localStorage.getItem("popup_label") + "&nbsp;(" + window.localStorage.getItem("popup_comment") + ")</option>"
+														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" 
+														+ window.localStorage.getItem("style_comment") + "'></option>"
+														+ "<option value='page'>" + window.localStorage.getItem("page_label") + "&nbsp;("
+														+ window.localStorage.getItem("page_style_comment") + ")</option>" 
+														+ "<option value='ribbon'>" + window.localStorage.getItem("ribbon_label") + "&nbsp;("
+														+ window.localStorage.getItem("ribbon_comment") + ")</option>"
+														+ "<option value='frame'>" + window.localStorage.getItem("frame_label")  + "&nbsp;(" 
+														+ window.localStorage.getItem("frame_comment") + ")</option>"
+														+ "<option value='popup'>" + window.localStorage.getItem("popup_label") + "&nbsp;(" 
+														+ window.localStorage.getItem("popup_comment") + ")</option>"
 														+ "</select>";
 												break;
 											}
 											case 'prefered_page':
 											{
 												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
-														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("prefered_comment") + "'></option>"
+														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '"
+														+ window.localStorage.getItem("prefered_comment") + "'></option>"
 														+ "<option value='boxset'>" + window.localStorage.getItem("boxset_label") + "</option>"
 														+ "<option value='certification'>" + window.localStorage.getItem("certification_label") + "</option>"
 														+ "<option value='index_all'>" + window.localStorage.getItem("all_label") + "</option>"
@@ -486,16 +516,24 @@ input:-moz-placeholder { color:black; }
 											}
 											case 'New':
 											{
-												return  "<input placeholder='" + window.localStorage.getItem('enter_day_number') +" ' name='formKey" + arg.item.key + "_days' type='text' id='formKey" +arg.item.key+ "_days' style='width: auto; vertical-align: top;'/>"
+												return  "<input placeholder='" + window.localStorage.getItem('enter_day_number') 
+													+ " ' name='formKey" + arg.item.key + "_days' type='text' id='formKey" 
+													+ arg.item.key+ "_days' style='width: auto; vertical-align: top;'/>"
 													+ "&nbsp;" // + window.localStorage.getItem('enter_day_number') + "&nbsp;"
-													+ "<select name='formKey" + arg.item.key + "_type' id='formKey" + arg.item.key + "_type' style='height:18px; vertical-align: top;' title='"
-													+ window.localStorage.getItem("file_label") + "=" + window.localStorage.getItem("file_comment") + " &#10;" + window.localStorage.getItem("creation_label")
+													+ "<select name='formKey" + arg.item.key + "_type' id='formKey" + arg.item.key 
+													+ "_type' style='height:18px; vertical-align: top;' title='"
+													+ window.localStorage.getItem("file_label") + "=" + window.localStorage.getItem("file_comment")
+													+ " &#10;" + window.localStorage.getItem("creation_label")
 													+ "=" + window.localStorage.getItem("creation_comment") + " &#10;" + window.localStorage.getItem("lastscan_label")
 													+ "=" + window.localStorage.getItem("lastscan_comment") + " '>" 
-													+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem('select_type') + "'></option>"
-													+ "<option title='" + window.localStorage.getItem("file_comment") + "' value='file'>" + window.localStorage.getItem("file_label") + " (" + window.localStorage.getItem("file_comment") + ")</option>"
-													+ "<option title='" + window.localStorage.getItem("creation_comment") + "' value='creation'>" + window.localStorage.getItem("creation_label") + " (" + window.localStorage.getItem("creation_comment") + ")</option>"
-													+ "<option title='" + window.localStorage.getItem("lastscan_comment") + "' value='lastscan'>" + window.localStorage.getItem("lastscan_label") + " (" + window.localStorage.getItem("lastscan_comment") + ")</option>"
+													+ "<option style='color:black; font-style:italic; background-color:grey;' label = '"
+													+ window.localStorage.getItem('select_type') + "'></option>"
+													+ "<option title='" + window.localStorage.getItem("file_comment") + "' value='file'>"
+													+ window.localStorage.getItem("file_label") + " (" + window.localStorage.getItem("file_comment") + ")</option>"
+													+ "<option title='" + window.localStorage.getItem("creation_comment") + "' value='creation'>"
+													+ window.localStorage.getItem("creation_label") + " (" + window.localStorage.getItem("creation_comment") + ")</option>"
+													+ "<option title='" + window.localStorage.getItem("lastscan_comment") + "' value='lastscan'>" 
+													+ window.localStorage.getItem("lastscan_label") + " (" + window.localStorage.getItem("lastscan_comment") + ")</option>"
 													+ "</select> "
 													
 												break;
@@ -503,7 +541,8 @@ input:-moz-placeholder { color:black; }
 											case 'overlay':
 											{
 												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
-														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("overlay_comment") + "'></option>"
+														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '"
+														+ window.localStorage.getItem("overlay_comment") + "'></option>"
 														+ "<option value='true'>" + window.localStorage.getItem("true_text") + "</option>"
 														+ "<option value='false'>" + window.localStorage.getItem("false_text") + "</option>"
 														+ "</select>";
@@ -512,7 +551,8 @@ input:-moz-placeholder { color:black; }
 											case 'display_type':
 											{
 												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
-														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" + window.localStorage.getItem("display_comment") + "'></option>"
+														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '"
+														+ window.localStorage.getItem("display_comment") + "'></option>"
 														+ "<option value='_list2'>" + window.localStorage.getItem("list_text") + "</option>"
 														+ "<option value='wall'>" + window.localStorage.getItem("wall_text") + "</option>"
 														+ "</select>";
@@ -560,7 +600,8 @@ input:-moz-placeholder { color:black; }
 											case 'display_type':
 											case 'title_type':
 											{
-												return "<form><input type=\"button\" value='"+ window.localStorage.getItem('update_label') + "' onclick=\"Update_SkinData('" +arg.item.key+ "', document.getElementById('formKey" +arg.item.key+ "').value)\"/></form>"
+												return "<form><input type=\"button\" value='"+ window.localStorage.getItem('update_label') 
+												+ "' onclick=\"Update_SkinData('" +arg.item.key+ "', document.getElementById('formKey" +arg.item.key+ "').value)\"/></form>"
 												break;
 											}
 											case 'New':
@@ -750,7 +791,9 @@ input:-moz-placeholder { color:black; }
 		// store all value according to language setting - from yamjv3_lang_{lang}.xml - local setting 
 		function set_context_lang_value ()
 		{
-			document.getElementById("SkinSetted").innerHTML=window.localStorage.getItem("skin_") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("skinset").substring(0,(window.localStorage.getItem("skinset").length - 1)) ;
+			document.getElementById("SkinSetted").innerHTML=window.localStorage.getItem("skin_")
+			+ "&nbsp;" + window.localStorage.getItem("selected_") 
+			+ ":&nbsp;" + window.localStorage.getItem("skinset").substring(0,(window.localStorage.getItem("skinset").length - 1)) ;
 			document.getElementById("skinlabel").innerHTML=window.localStorage.getItem("selection_label") + "&nbsp;" + window.localStorage.getItem("skin_");
 			document.getElementById("close_icon").title=localStorage.getItem('close_label').toLowerCase();
 			document.getElementById("prefered_icon").title=localStorage.getItem('prefered_comment').toLowerCase();

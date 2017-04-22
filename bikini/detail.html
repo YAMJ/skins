@@ -34,6 +34,9 @@
 		
 // ******************************* ALL GENERAL VARIABLE **********************************************
 			// get the id and the type asked previously, data was stored from index, detail or  index_list pages 
+			var first_director = true; 
+			var first_writer = true; 
+			var first_actor = true;
 			var season_count = '';
             var current_id = localStorage.getItem("id");
             var index_type = localStorage.getItem("indextype");
@@ -168,48 +171,7 @@
 						};
 			// from jsonUrl		
             var YAMJ_DIR = {
-				'span.director': function(arg)
-							{	
-							if (arg.context.result.cast) {
-								if (arg.context.result.cast.DIRECTOR)
-									{
-										return "<text>" + window.localStorage.getItem('director_label').toUpperCase() 
-										+ "</text>" + "<a href=\"#\" onclick=\"open_person_popup('" 
-										+ arg.context.result.cast.DIRECTOR[0].id + "', 'close')\" class=\"actors\">"
-										+ arg.context.result.cast.DIRECTOR[0].name +"</a>";
-									} else { return ;}
-								}
-							},
-				'span.writer': function(arg)
-							{
-							if (arg.context.result.cast) {
-								if (arg.context.result.cast.WRITER)
-									{
-										return "<text>" + window.localStorage.getItem('writer_label').toUpperCase()
-										+ "</text>" + "<a href=\"#\" onclick=\"open_person_popup('" 
-										+ arg.context.result.cast.WRITER[0].id + "', 'close')\" class=\"actors\">" 
-										+ arg.context.result.cast.WRITER[0].name +"</a>";
-									}	else  { return "<text>" + window.localStorage.getItem('writer_label').toUpperCase() + ":</text> no writer"; }
-								}
-							},
-				'span.actors': function(arg) 
-							{
-							if (arg.context.result.cast) {
-								if (arg.context.result.cast.ACTOR)
-									{
-										var Actors = arg.context.result.cast.ACTOR; 
-										var output_actors = "<text>" + window.localStorage.getItem('actor_label').toUpperCase() + "</text>";
-										
-										for (i = 0; i < Actors.length; i++) 
-											{
-											output_actors = output_actors + "<a href=\"#\" onclick=\"open_person_popup('" 
-											+ arg.context.result.cast.ACTOR[i].id + "', 'close')\" class=\"actors\">" + Actors[i].name +".</a>"
-											}
-										
-										return output_actors;
-									} else { return "<text>" + window.localStorage.getItem('actor_label').toUpperCase() + "</text> no actor"; }
-								}
-							},	
+			
                 'span.plot1': function(arg) {
 				// check if plot is available 
 					if (arg.context.result.plot) {
@@ -308,8 +270,11 @@
 									output = output   + "<a title='" + window.localStorage.getItem('click_to_display_with').toLowerCase() + " "
 									+ window.localStorage.getItem('studio_select').toLowerCase() + ": "
 									+ studio[i].name + "' href=\"#\" onclick=\"call_studioselect('" + studio[i].id + "', '"
-									+ studio[i].name + "')\" ><img src='pictures/studios/" 
-									+ studio[i].name + ".png' style=\"height: 2.5vw;\" alt=\"" + studio[i].name + "\" /></a>";
+									+ studio[i].name + "')\" ><img src='pictures/studios/";
+									if (studio[i].name.length > 10)
+										{ output += studio[i].name + ".png' style=\"height: 2.5vw;\" alt=\"" + studio[i].name.substring(0,8) + "..,\" /></a>";}
+									else { output += studio[i].name + ".png' style=\"height: 2.5vw;\" alt=\"" + studio[i].name + ",\" /></a>";}
+										
 									
 								}
 								return output;
@@ -1334,7 +1299,75 @@
 									}
 								};
 				
+	
+			var CAST_INFO = {
+			
+                     "span.director": function(arg) {
+							var output_director = "<text>" + window.localStorage.getItem('director_label').toUpperCase() + "</text>";
+							if (arg.context.results) {
+								var total_director = arg.context.results;
+									for (i = 0; i < total_director.length; i++) 
+									{
+										if (total_director[i].job == "DIRECTOR")
+											{
+												console.log (total_director[i].job + " name:" + total_director[i].name);
+												output_director += "<a href=\"#\" onclick=\"open_person_popup('" 
+												+ total_director[i].id + "', 'close')\" class=\"actors\">"
+												+ total_director[i].name + "</a>";
+											return output_director;
+											}
+									}
+								}
+							return output_director;
+						},
+						
+                     "span.writer": function(arg) {
+							var output_writer = "<text>" + window.localStorage.getItem('writer_label').toUpperCase() + "</text>";
+							if (arg.context.results) {
+								var total_writer = arg.context.results;
+								for (j = 0; (j < total_writer.length); j++) 
+								{
+									if (total_writer[j].job == "WRITER")
+										{
+											console.log (total_writer[j].job + " name:" + total_writer[j].name);
+											output_writer += "<a href=\"#\" onclick=\"open_person_popup('" 
+											+ total_writer[j].id + "', 'close')\" class=\"actors\">"
+											+ total_writer[j].name + "</a>";
+											return output_writer +"<br>";
+										}
+								}
+							}
+							return output_writer +"<br>";
+						},
 					
+					"span.actors": function(arg) {
+							var output_actors = "<text>" + window.localStorage.getItem('actor_label').toUpperCase() + "</text>";
+							if (arg.context.results) {
+								var total_actors = arg.context.results;
+								var actors_count = 0; 
+								for (k = 0; k < total_actors.length ; k++) 
+								{
+									if (total_actors[k].job == "ACTOR")
+										{
+											actors_count = (actors_count + 1);
+											console.log (total_actors[k].job + " name:" + total_actors[k].name);
+											output_actors += "<a href=\"#\" onclick=\"open_person_popup('" 
+											+ total_actors[k].id + "', 'close')\" class=\"actors\">"
+											+ total_actors[k].name + ", " + "</a>";
+											if (actors_count == 4) {return output_actors;}
+										}
+								}
+							}
+							return output_actors;
+						}
+					};
+				
+			
+
+ 
+	
+				
+				
 
 // ***************************************************** GET DATA section ******************************************************	
 				
@@ -1348,7 +1381,9 @@
 				// construct JSON request for detail movie/series/season 
 				jsonUrl = "/yamj3/api/video/" 
 				+ index_type.toLowerCase() + "/" 
-				+ current_id + ".json?dataitems=status,trailer,externalid,genre,artwork,plot,country,award,files,certification,studio,rating&jobs=actor-5,director-1,writer-1";
+		//		+ current_id + ".json?dataitems=status,trailer,externalid,genre,artwork,plot,country,award,files,certification,studio,rating&jobs=actor-5,director-1,writer-1";
+				+ current_id + ".json?dataitems=status,trailer,externalid,genre,artwork,plot,country,award,files,certification,studio,rating";
+				
 				console.log("getData URL: " + jsonUrl);
 		
 					
@@ -1371,6 +1406,8 @@
 					$p('.edit_adjust').render(data, POSTER_INFO); 
 					
 					$p('.trailer_list').render(data, TRAILER_INFO); 
+					
+				//	$p('.cast_list').render(data, CAST_INFO);
 				
 						// add slideshow for fanart
 						slideshowFanart();
@@ -1384,15 +1421,17 @@
 						switch (index_type.toLowerCase()) 
 							{
 							case 'movie':
-						//			nothing to do
+									perform_cast ();					
 									break;
 							case 'series':
 									slideshowBanner ();
 									perform_season ();
+									perform_cast ();
 									break;
 							case 'season':
 									slideshowBanner ();
 									perform_episode ();
+									perform_cast ();
 									break;
 							}		
 						
@@ -1525,6 +1564,23 @@
 		
   // ********************* NOW SET VARIOUS FUNCTION **********************************************  
  
+		// call JSON value for CAST
+		function perform_cast()
+		{
+		jsonCastUrl = "/yamj3/api/person/movie.json?id="+current_id+"&job=actor,director,writer";
+		console.log("perform_cast URL: " + jsonCastUrl);
+					$.ajax({
+                   url: jsonCastUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(dataCast)
+                   {
+						jsondata = dataCast;
+					//	outputJson(dataSeason);
+					$p('.cast_list').render(dataCast, CAST_INFO);
+					}
+                });
+		}
 	// call the JSON value of season  	
 		function perform_season()
 		{
@@ -2961,11 +3017,23 @@
 			<!-- split table for image and text --> 
 			<!-- add class for each object in the detail section of yamj-style.css -->
 					<table class="moviedetail">
-						
+						<tr>
+							<td>
+								<div class="cast_list" >
+									<div  class="cast_list_block" style="display:inline; position: relative; top: 0px;">
+											<span class="director"></span>
+											<span class="writer"></span>
+											<span class="actors"></span>
+											<a title="display all cast" id="all_person" href="#" onclick="localStorage.setItem('Person_all-in-one', 'true');ouvre_popup_person()"> ...</a>
+								
+									</div>
+								</div>
+							</td>
+						</tr>
 					<!--		<td><span class="detail_label"><text>DETAIL</text></span></td> -->
 						
 						<!-- short perso list -->
-
+						<!--
 							<tr>
 								<td>
 									<span class="director"></span>
@@ -2979,6 +3047,7 @@
 								</td>
 								
 							</tr>
+						-->
 						<tr>
 							<td><span class="studio" title="video list with studio"></span></td>
 						</tr>
@@ -3154,7 +3223,13 @@
 				</tr>
 			</table>
 		</div>
+		
 			
+		
+		
+		
+		
+	
 		
 	<!-- display season box , one for each season , add scroll horizontal bar if more than 8 seasons --> 
 	<!-- display season box , one for each season , add scroll horizontal bar if more than 7 seasons --> 

@@ -256,14 +256,13 @@
 			document.getElementById("playeripinfo").innerHTML="IP:&nbsp;" + window.localStorage.getItem("Player_Ip");
 			document.getElementById("playertypeinfo").innerHTML="Type:&nbsp;" + window.localStorage.getItem("Player_Type");
 			document.getElementById("playerpaths").innerHTML=window.localStorage.getItem("path_label") + "&nbsp;:&nbsp;"
-			+ (window.localStorage.getItem("Player_Paths_Number") -1);
+			+ window.localStorage.getItem("Player_Paths_Number"); 
 			
-			
-			for (var i = 1; i < window.localStorage.getItem("Player_Paths_Number"); i++)
-			{
-				document.getElementById("playerpathsdetail").innerHTML += window.localStorage.getItem("path_label") + i 
-				+ ":&nbsp;"  + window.localStorage.getItem('Player_Paths_' + i) + "<br/>";
-			}
+			for (var i = 1; i < (window.localStorage.getItem("Player_Paths_Number") - -1); i++)  // use - -1 because start at 1 and the end is strictly inferior and +1 add char instead of num
+				{
+					document.getElementById("playerpathsdetail").innerHTML += window.localStorage.getItem("path_label") + i 
+					+ ":&nbsp;"  + window.localStorage.getItem('Player_Paths_' + i) + "<br/>";
+				}
 		}
 		
  		</script>

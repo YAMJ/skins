@@ -168,9 +168,9 @@
 	<targetlabel>cible</targetlabel>
 	<titlecomment>affiche le titre</titlecomment>
 	<titlelabel>titre</titlelabel>
-	<titleoriginalcomment>affiche le titre retraite</titleoriginalcomment>
+	<titleoriginalcomment>affiche le titre original</titleoriginalcomment>
 	<titleoriginallabel>titre original</titleoriginallabel>
-	<titlesortcomment>affiche le titre original</titlesortcomment>
+	<titlesortcomment>affiche le titre retraite</titlesortcomment>
 	<titlesortlabel>titre traite</titlesortlabel>
 	<titletypecomment>selection du type de titre</titletypecomment>
 	<titletypelabel>type de titre</titletypelabel>

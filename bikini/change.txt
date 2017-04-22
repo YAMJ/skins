@@ -1,4 +1,9 @@
 change.txt
+V3.0.5
+- adjust director, writer, actor in detail page according with HSQL 
+- fix title comment
+- fix path count and display in info_config
+- adjust studio length display
 V3.0.4
 - add media info: originalTitle, sortTitle, fileDate, extra flag
 - adjust lisibility in code

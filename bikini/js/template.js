@@ -811,9 +811,9 @@
 		function WatchedSelection (href_target, watchedselect)
 			{		
 					window.localStorage.setItem("watched", watchedselect);
-					console.log("WatchedSelection: "+watchedselect);
+					console.log("WatchedSelection: "+ watchedselect + " reload: " + href_target);
 					Indexpopup = window.open(href_target, "_parent","");
-					Indexpopup.location.reload(true);
+			//		Indexpopup.location.reload(true);  don't call reload because it's parent which is reloaded instead of index
 			}
 	// resolution selection 
 		function ResolutionSelection (href_target, resolutionselect)
@@ -1971,4 +1971,45 @@
 				if (window.localStorage.getItem ('display_type') == "wall") 
 				{window.location.href="index.html";} else {window.location.href="index_list2.html";}
 			}
+		}
+	function open_studio_index(studioname, studioid)
+        {
+			window.localStorage.setItem("categorytype", "studio");
+			localStorage.setItem("studio_name", studioid);
+			localStorage.setItem("studio_text", studioname);
+            console.log("navStudioe open_studio_index Storing value: Studio name: " + studioname + " studio Id: "
+			+ studioid + " display_type:" + window.localStorage.getItem ("display_type"));
+			if (window.localStorage.getItem ("display_type") == "_list2")
+			{window.location.href="index_list2.html";} else {window.location.href="index.html";}
+
+		}
+	
+	function open_certification_index(certificationid, certificationvalue)
+        {
+			localStorage.setItem("certification_value", certificationvalue);
+			localStorage.setItem("certification_name", certificationid);
+			localStorage.setItem("categorytype", "certification");
+            console.log("navCertificatione open_certification_index Storing value: Certification id: " +certificationid + " Certification Value: " + certificationvalue);
+			if (window.localStorage.getItem('display_type') == "_list2")
+				{window.location.href="index_list2.html";} else	{window.location.href="index.html";}
+		
+		}
+		
+	function open_genre_index(genrename)
+        {
+			window.localStorage.setItem("categorytype", "genre");
+			localStorage.setItem("genre_name", genrename);
+            console.log("navGenree open_genre_index Storing value: Genre name: " + genrename + " display_type:" + window.localStorage.getItem ("display_type"));
+			if (window.localStorage.getItem ("display_type") == "_list2")
+			{window.location.href="index_list2.html";} else {window.location.href="index.html";}
+		
+		}
+	function open_country_index(countryname)
+        {
+			window.localStorage.setItem("categorytype", "country");
+			localStorage.setItem("country_name", countryname);
+            console.log("navCountry open_country_index Storing value: Country name: " +countryname + " display_type:" + window.localStorage.getItem ("display_type"));
+			if (window.localStorage.getItem ("display_type") == "_list2")
+			{window.location.href="index_list2.html";} else {window.location.href="index.html";}
+			
 		}

@@ -146,7 +146,7 @@
 							{
 								if (arg.context.result.countries) 
 								{
-								return  "<a href=\"javascript:call_countryselect('" + arg.context.result.countries[0].countryCode
+								return  "<a href=\"javascript:open_country_index('" + arg.context.result.countries[0].countryCode
 								+ "')\" ><img class='country' src='pictures/flags/" + arg.context.result.countries[0].countryCode.toLowerCase()
 								+ ".png' alt=\"" + arg.context.result.countries[0].country + "\" /></a>";	
 								}
@@ -194,8 +194,8 @@
 							} else {
 								output += ", ";
 							}
-							if (genres[i].target) { output = output + "<a href=\"javascript:call_genreselect('" + genres[i].target + "')\" >" + genres[i].target + "</a>";}
-								else { output = output + "<a href=\"javascript:call_genreselect('" + genres[i].name + "')\" >" + genres[i].name + "</a>";}
+							if (genres[i].target) { output = output + "<a href=\"javascript:open_genre_index('" + genres[i].target + "')\" >" + genres[i].target + "</a>";}
+								else { output = output + "<a href=\"javascript:open_genre_index('" + genres[i].name + "')\" >" + genres[i].name + "</a>";}
 						}
 					}
                     return output;
@@ -228,8 +228,8 @@
 									if (certifications[i].countryCode.toUpperCase() == window.localStorage.getItem('prefered_certification').toUpperCase())
 									{
 										boucle = false;
-										output = "javascript:call_certificationselect('" + window.localStorage.getItem('prefered_certification').toUpperCase() 
-										+ "-" + certifications[i].certificate + "', " + certifications[i].id + ")";
+										output = "javascript:open_certification_index("+ certifications[i].id + ", '" + window.localStorage.getItem('prefered_certification').toUpperCase() 
+										+ "-" + certifications[i].certificate + "')";
 									}
 								}
 						} else {
@@ -260,25 +260,23 @@
 				},
 				'span.studio': function(arg)
 							{
-								var studio = arg.context.result.studios;
-								if (studio)
+								if (arg.context.result.studios)															
 								{
-								var output = "";
+									var studio = arg.context.result.studios;
+									var output = "";
+									// loop thru the list of studio
+									for (i = 0; i < studio.length; i++) {
+										output = output   + "<a title='" + window.localStorage.getItem('click_to_display_with').toLowerCase() + " "
+										+ window.localStorage.getItem('studio_select').toLowerCase() + ": "
+										+ studio[i].name + "' href=\"#\" onclick=\"open_studio_index('" + studio[i].name + "', '"
+										+ studio[i].id + "')\" ><img src='pictures/studios/";
+										if (studio[i].name.length > 12)
+											{ output += studio[i].name + ".png' style=\"height: 2.5vw;\" alt=\"" + studio[i].name.substring(0,10) + "..,\" /></a>";}
+										else { output += studio[i].name + ".png' style=\"height: 2.5vw;\" alt=\"" + studio[i].name + ",\" /></a>";}
+									}
 								
-								// loop thru the list of studio
-								for (i = 0; i < studio.length; i++) {
-									output = output   + "<a title='" + window.localStorage.getItem('click_to_display_with').toLowerCase() + " "
-									+ window.localStorage.getItem('studio_select').toLowerCase() + ": "
-									+ studio[i].name + "' href=\"#\" onclick=\"call_studioselect('" + studio[i].id + "', '"
-									+ studio[i].name + "')\" ><img src='pictures/studios/";
-									if (studio[i].name.length > 10)
-										{ output += studio[i].name + ".png' style=\"height: 2.5vw;\" alt=\"" + studio[i].name.substring(0,8) + "..,\" /></a>";}
-									else { output += studio[i].name + ".png' style=\"height: 2.5vw;\" alt=\"" + studio[i].name + ",\" /></a>";}
-										
-									
-								}
-								return output;
 								} else {output = "<text>" + window.localStorage.getItem('studio_select').toUpperCase() + "</text> No Studio";}
+							return output;
 							},	
 				'img.combined_ratings@src': function(arg)
                 {
@@ -309,7 +307,7 @@
 					if (arg.context.result.ratings)
 						{
 							var ratings = arg.context.result.ratings;						
-								output = "javascript:call_ratingselect('" + ratings[0].source + "', '" + Math.round(ratings[0].rating/10) + "')";
+								output = "javascript:open_rating_index('" + ratings[0].source + "', '" + Math.round(ratings[0].rating/10) + "')";
 							} else {
 								output = "";
 							}
@@ -2331,20 +2329,7 @@
 		if (Personpopup !== "") {Personpopup.close();}
 	}
 
-	// genre list is activ and open genre index menu with the genre selected 
-	function call_genreselect(genrename)
-        {
-			localStorage.setItem("genre_name", genrename);
-            console.log("call_genreselect Storing value: Genre name: " +genrename);
-			window.location.href="index_Genre.html";
-		}
-	// country is activ and open genre index menu with the genre selected 
-	function call_countryselect(countryname)
-        {
-			localStorage.setItem("Country_name", countryname);
-            console.log("call_countryselect Storing value: Country name: " +countryname);
-			window.location.href="index_Country.html";
-		}
+	
 	// year is activ and open year index menu with the year selected 
 	function call_yearselect(yearvalue)
         {
@@ -2353,14 +2338,7 @@
             console.log("call_yearselect Storing value: Year value " +yearvalue);
 			window.location.href=_index_url;
 		}
-	// certification list is activ and open certification index menu with the certification selected 
-	function call_certificationselect(certificationvalue, certificationid)
-        {
-			localStorage.setItem("certification_value", certificationvalue);
-			localStorage.setItem("certification_name", certificationid);
-            console.log("call_certificationselect Storing value: certification value: " +certificationvalue+ " certification id:" + certificationid);
-			window.location.href="index_Certification.html";
-		}
+
 	// videosource list is activ and open videosource index menu with the videosource selected 
 	function call_videosourceselect(videosourcevalue)
         {
@@ -2369,23 +2347,7 @@
             console.log("call_videosourceselect Storing value: videosource value: " +videosourcevalue);
 			window.location.href="index_Videosource.html";
 		}
-	// studio list is activ and open studio index menu with the studio selected 
-	function call_studioselect(studioid, studioname)
-        {
-			localStorage.setItem("studio_name", studioid);
-			localStorage.setItem("studio_text", studioname);
-            console.log("call_studioselect Storing value: studio value: " +studioid+ ", " + studioname);
-			window.location.href="index_Studio.html";
-		}
-	// rating list is activ and open rating index menu with the rating selected 
-	function call_ratingselect(ratingsource, ratingvalue)
-        {
-			localStorage.setItem("Rating_source", ratingsource);
-			localStorage.setItem("Rating_value", ratingvalue);
-            console.log("detail call_ratingselect Storing value: Rating source: " + ratingsource + " Rating value: "+ ratingvalue);
-			window.location.href="index_Rating.html";
-			Mypopup.focus();
-		}
+
 
 	function ouvre_popup_mediainfo ()
 		{

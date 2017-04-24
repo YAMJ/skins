@@ -147,15 +147,7 @@
 		}
 
  
-		function open_country_index(countryname)
-        {
-			window.localStorage.setItem("categorytype", "country");
-			localStorage.setItem("country_name", countryname);
-            console.log("navCountry open_country_index Storing value: Country name: " +countryname + " display_type:" + window.localStorage.getItem ("display_type"));
-			if (window.localStorage.getItem ("display_type") == "_list2")
-			{window.location.href="index_list2.html";} else {window.location.href="index.html";}
-			
-		}
+
 
 // *******************************to fix alt bug with chrome ***************************************************************************************
 	function showAlt(){$(this).replaceWith(this.alt)};

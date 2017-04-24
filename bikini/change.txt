@@ -1,4 +1,6 @@
 change.txt
+v3.0.6
+- fix certification , rating, year, genre selection in detail page 
 V3.0.5
 - adjust director, writer, actor in detail page according with HSQL 
 - fix title comment

@@ -611,40 +611,25 @@
 						break;
 						}	
 					}
-					selected_index = selected_index + temp_new_string;
-					
-				if (category_type == '' | category_type == "index" | category_type == "index_list2" | category_type == "person")
-				{} else {
-					jsonUrl += "&include=" + category_type + "-" + category_name;
-					jsonUrlheader += "&include=" + category_type + "-" + category_name;
-					if (category_type == "Certification")
-					{	
-						selected_index = selected_index 
-						+ window.localStorage.getItem(category_type.toLowerCase() 
-						+ '_select').toUpperCase() + ":"
-						+ window.localStorage.getItem('certification_value').toUpperCase();
-					}
-					if (category_type == "studio")
-					{
-						selected_index = selected_index
-						+ window.localStorage.getItem(category_type.toLowerCase()
-						+ '_select').toUpperCase() + ":"
-						+ window.localStorage.getItem('studio_text').toUpperCase();
-					}
-					if (category_type == "boxset")
-					{
-						selected_index = selected_index
-						+ window.localStorage.getItem(category_type.toLowerCase() 
-						+ '_select').toUpperCase() 
-						+ ":" + window.localStorage.getItem('boxset_text').toUpperCase();
-					}
-					else {
-							selected_index = selected_index
-							+ "&nbsp;" + window.localStorage.getItem(category_type.toLowerCase()
-							+ '_select').toUpperCase() + ":"
-							+ category_name;
+				selected_index = selected_index + temp_new_string;
+					// check if a category is asked, means not calling from index or index list or person 
+						if (category_type == '' | category_type == "index" | category_type == "index_list2" | category_type == "person")
+						{} else
+						{
+							jsonUrl += "&include=" + category_type + "-" + category_name;
+							jsonUrlheader += "&include=" + category_type + "-" + category_name;
+							if (category_type == "certification")
+							{selected_index = selected_index + "&nbsp;" + window.localStorage.getItem(category_type.toLowerCase()
+							+ '_select').toLowerCase() + ":" + window.localStorage.getItem('certification_value').toLowerCase();}
+							else if (category_type == "studio")
+							{selected_index = selected_index + "&nbsp;" + window.localStorage.getItem(category_type.toLowerCase()
+							+ '_select').toLowerCase() + ":" + window.localStorage.getItem('studio_text').toLowerCase();}
+							else if (category_type == "boxset")
+							{selected_index = selected_index + "&nbsp;" + window.localStorage.getItem(category_type.toLowerCase()
+							+ '_select').toLowerCase() + ":" + window.localStorage.getItem('boxset_text').toLowerCase();}
+							else {selected_index = selected_index + "&nbsp;" + window.localStorage.getItem(category_type.toLowerCase()
+							+ '_select').toLowerCase() + ":" + category_name;}
 						}
-				}
 		
 			}
 		// now all construction is done, store the value in case a just a display change 
@@ -664,6 +649,7 @@
 					if (selected_index.length > 72)	{temp_style = "1vw";}
 					if (selected_index.length > 74)	{temp_style = "0.95vw";}
 					if (selected_index.length > 78)	{temp_style = "0.80vw";}
+				console.log("Index_list getheaderData selected_index.length: " + selected_index.length + " temp_style:" + temp_style);
 				$(".show_index").css("font-size", temp_style);
 				$('#printsearch').html(selected_index);
 		console.log("Index_list getheaderData URLheader: " + jsonUrlheader);

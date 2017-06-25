@@ -106,7 +106,7 @@
 							},
 							'span.header_year': function (arg)
 								{
-										return  "<a href=\"javascript:call_yearselect('" + arg.context.result.videoYear + "')\" >" + arg.context.result.videoYear + "</a>";
+										return  "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + window.localStorage.getItem("year_label") + " : " + arg.context.result.videoYear + "\" href=\"javascript:call_yearselect('" + arg.context.result.videoYear + "')\" >" + arg.context.result.videoYear + "</a>";
 								},
 							'span.header_id': function (arg) {
 									if (index_type.toLowerCase() == 'series')   
@@ -138,8 +138,8 @@
 							"img.watched@title": function(arg)
 								{
 									if (arg.context.result.watched) 
-									{return window.localStorage.getItem('watched_select');}
-									else {return window.localStorage.getItem('unwatched_select');}
+									{return  window.localStorage.getItem("click_to_display_with") + " " + window.localStorage.getItem('watched_select');}
+									else {return window.localStorage.getItem("click_to_display_with") + " " + window.localStorage.getItem('unwatched_select');}
 							
 								},
 							'span.country': function(arg)
@@ -156,7 +156,7 @@
 							{
 								if (arg.context.result.countries) 
 								{
-								return  arg.context.result.countries[0].country ;
+								return window.localStorage.getItem("click_to_display_with") + " " + window.localStorage.getItem("country_label") + " : " + arg.context.result.countries[0].country ;
 								}
 								else {return;}
 							}, 
@@ -194,8 +194,8 @@
 							} else {
 								output += ", ";
 							}
-							if (genres[i].target) { output = output + "<a href=\"javascript:open_genre_index('" + genres[i].target + "')\" >" + genres[i].target + "</a>";}
-								else { output = output + "<a href=\"javascript:open_genre_index('" + genres[i].name + "')\" >" + genres[i].name + "</a>";}
+							if (genres[i].target) { output = output + "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + window.localStorage.getItem("genre_label") + ": " + genres[i].target + "\" href=\"javascript:open_genre_index('" + genres[i].target + "')\" >" + genres[i].target + "</a>";}
+								else { output = output + "<a title=\" "+ window.localStorage.getItem("click_to_display_with")+ " " + window.localStorage.getItem("genre_label") + ": " + genres[i].name + "\" href=\"javascript:open_genre_index('" + genres[i].name + "')\" >" + genres[i].name + "</a>";}
 						}
 					}
                     return output;
@@ -924,12 +924,12 @@
 														switch(arg.context.result.videoType.toLowerCase())
 																{
 																	case 'movie':	
-																		output_externalid += "<a class='external_href' style='text-decoration: line-through; color: red;' href='http://www.allocine.fr/film/fichefilm_gen_cfilm=" 
+																		output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' style='text-decoration: line-through; color: red;' href='http://www.allocine.fr/film/fichefilm_gen_cfilm=" 
 																		+ external_list[i].externalId + ".html' target='_blank' >"
 																		+ external_list[i].externalId + "</a>";		
 																		break;
 																	case 'season':
-																	output_externalid += "<a class='external_href' style='text-decoration: line-through; color: red;' href='http://www.allocine.fr/series/ficheserie-" 
+																	output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' style='text-decoration: line-through; color: red;' href='http://www.allocine.fr/series/ficheserie-" 
 																	+ window.localStorage.getItem('Series_externalid_allocine') + "/saison-" 
 																	+ external_list[i].externalId + "/' target='_blank' >"+ "series:"
 																	+ window.localStorage.getItem('Series_externalid_allocine') + " " + window.localStorage.getItem('season_label')+ ":" 
@@ -937,7 +937,7 @@
 																		break;
 																	case 'episode':
 																	case 'series':
-																	output_externalid += "<a class='external_href' style='text-decoration: line-through; color: red;' href='http://www.allocine.fr/series/ficheserie_gen_cserie=" 
+																	output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' style='text-decoration: line-through; color: red;' href='http://www.allocine.fr/series/ficheserie_gen_cserie=" 
 																	+ external_list[i].externalId + ".html' target='_blank' >"
 																	+ external_list[i].externalId + "</a>";
 																		break;	
@@ -956,12 +956,12 @@
 														switch(arg.context.result.videoType.toLowerCase())
 																{
 																	case 'movie':	
-																		output_externalid += "<a class='external_href' href='http://www.allocine.fr/film/fichefilm_gen_cfilm="
+																		output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' href='http://www.allocine.fr/film/fichefilm_gen_cfilm="
 																		+ external_list[i].externalId + ".html' target='_blank' >"
 																		+ external_list[i].externalId + "</a>";		
 																		break;
 																	case 'season':
-																	output_externalid += "<a class='external_href'  href='http://www.allocine.fr/series/ficheserie-"
+																	output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href'  href='http://www.allocine.fr/series/ficheserie-"
 																	+ window.localStorage.getItem('Series_externalid_allocine') + "/saison-"
 																	+ external_list[i].externalId + "/' target='_blank' >"+ "series:" 
 																	+ window.localStorage.getItem('Series_externalid_allocine') +  " " 
@@ -970,7 +970,7 @@
 																		break;
 																	case 'episode':
 																	case 'series':
-																	output_externalid += "<a class='external_href' href='http://www.allocine.fr/series/ficheserie_gen_cserie=" 
+																	output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' href='http://www.allocine.fr/series/ficheserie_gen_cserie=" 
 																	+ external_list[i].externalId + ".html' target='_blank' >"
 																	+ external_list[i].externalId + "</a>";
 																		break;	
@@ -992,10 +992,10 @@
 														switch(arg.context.result.videoType.toLowerCase())
 																{
 																	case 'movie':	
-																		output_externalid += "<a class='external_href' style='text-decoration: line-through; color: red;' href='#' >"+ external_list[i].externalId + "</a>";		
+																		output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' style='text-decoration: line-through; color: red;' href='#' >"+ external_list[i].externalId + "</a>";		
 																		break;
 																	case 'season':
-																	output_externalid += "<a class='external_href' style='text-decoration: line-through; color: red;' href='http://thetvdb.com/?tab=season&seriesid=" 
+																	output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' style='text-decoration: line-through; color: red;' href='http://thetvdb.com/?tab=season&seriesid=" 
 																	+ window.localStorage.getItem('Series_externalid_tvdb') + "&seasonid="
 																	+ external_list[i].externalId + "' target='_blank' >"+ "series:" 
 																	+ window.localStorage.getItem('Series_externalid_tvdb') +  " "
@@ -1004,7 +1004,7 @@
 																		break;
 																	case 'episode':
 																	case 'series':
-																	output_externalid += "<a class='external_href' style='text-decoration: line-through; color: red;' href='http://thetvdb.com/?tab=series&id=" 
+																	output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' style='text-decoration: line-through; color: red;' href='http://thetvdb.com/?tab=series&id=" 
 																	+ external_list[i].externalId + "' target='_blank' >"
 																	+ external_list[i].externalId + "</a>";
 																		break;	
@@ -1021,10 +1021,10 @@
 														switch(arg.context.result.videoType.toLowerCase())
 																{
 																	case 'movie':	
-																		output_externalid += "<a class='external_href' href='#' >"+ external_list[i].externalId + "</a>";		
+																		output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' href='#' >"+ external_list[i].externalId + "</a>";		
 																		break;
 																	case 'season':
-																	output_externalid += "<a class='external_href' href='http://thetvdb.com/?tab=season&seriesid="
+																	output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' href='http://thetvdb.com/?tab=season&seriesid="
 																	+ window.localStorage.getItem('Series_externalid_tvdb') 
 																	+ "&seasonid=" + external_list[i].externalId + "' target='_blank' >"
 																	+ "series:" + window.localStorage.getItem('Series_externalid_tvdb') +  " " 
@@ -1033,7 +1033,7 @@
 																		break;
 																	case 'episode':
 																	case 'series':
-																	output_externalid += "<a class='external_href' href='http://thetvdb.com/?tab=series&id=" 
+																	output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' href='http://thetvdb.com/?tab=series&id=" 
 																	+ external_list[i].externalId + "' target='_blank' >"
 																	+ external_list[i].externalId + "</a>";
 																		break;	
@@ -1055,14 +1055,14 @@
 														switch(arg.context.result.videoType.toLowerCase())
 																{
 																	case 'movie':	
-																		output_externalid += "<a class='external_href' style='text-decoration: line-through; color: red;' href='https://www.themoviedb.org/movie/"
+																		output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' style='text-decoration: line-through; color: red;' href='https://www.themoviedb.org/movie/"
 																		+ external_list[i].externalId + ".html' target='_blank' >"
 																		+ external_list[i].externalId + "</a>";	
 																		break;
 																	case 'season':
 																	case 'episode':
 																	case 'series':
-																	output_externalid += "<a class='external_href' style='text-decoration: line-through; color: red;' href='https://www.themoviedb.org/tv/" 
+																	output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' style='text-decoration: line-through; color: red;' href='https://www.themoviedb.org/tv/" 
 																	+ external_list[i].externalId + ".html' target='_blank' >"
 																	+ external_list[i].externalId + "</a>";
 																		break;	
@@ -1080,14 +1080,14 @@
 														switch(arg.context.result.videoType.toLowerCase())
 																{
 																	case 'movie':	
-																		output_externalid += "<a class='external_href' href='https://www.themoviedb.org/movie/"
+																		output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' href='https://www.themoviedb.org/movie/"
 																		+ external_list[i].externalId + ".html' target='_blank' >"
 																		+ external_list[i].externalId + "</a>";		
 																		break;
 																	case 'season':
 																	case 'episode':
 																	case 'series':
-																	output_externalid += "<a class='external_href' href='https://www.themoviedb.org/tv/" 
+																	output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' href='https://www.themoviedb.org/tv/" 
 																	+ external_list[i].externalId + ".html' target='_blank' >"
 																	+ external_list[i].externalId + "</a>";
 																		break;	
@@ -1110,14 +1110,14 @@
 																{
 																		
 																	case 'season':
-																		output_externalid += "&nbsp;<a class='external_href' style='text-decoration: line-through; color: red;' href='http://www.imdb.com/title/" 
+																		output_externalid += "&nbsp;<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' style='text-decoration: line-through; color: red;' href='http://www.imdb.com/title/" 
 																		+ Series_externalid_imdb + "/episodes?season=" +arg.context.result.season + "' target='_blank' >"
 																		+ external_list[i].externalId + "</a>";
 																		break;
 																	case 'movie':
 																	case 'episode':
 																	case 'series':
-																		output_externalid += "&nbsp;<a class='external_href' style='text-decoration: line-through; color: red;' href='http://www.imdb.com/title/"
+																		output_externalid += "&nbsp;<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' style='text-decoration: line-through; color: red;' href='http://www.imdb.com/title/"
 																		+ external_list[i].externalId + ".html' target='_blank' >"
 																		+ external_list[i].externalId + "</a>";
 																}
@@ -1135,7 +1135,7 @@
 																{
 																		
 																	case 'season':
-																		output_externalid += "<a class='external_href' href='http://www.imdb.com/title/" 
+																		output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' href='http://www.imdb.com/title/" 
 																		+ Series_externalid_imdb + "/episodes?season="
 																		+ arg.context.result.season + "' target='_blank' >"
 																		+ external_list[i].externalId + "</a>";
@@ -1143,7 +1143,7 @@
 																	case 'movie':
 																	case 'episode':
 																	case 'series':
-																		output_externalid += "<a class='external_href' href='http://www.imdb.com/title/"
+																		output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' href='http://www.imdb.com/title/"
 																		+ external_list[i].externalId + "/' target='_blank' >"
 																		+ external_list[i].externalId + "</a>";
 																}
@@ -1309,7 +1309,7 @@
 										if (total_director[i].job == "DIRECTOR")
 											{
 												console.log (total_director[i].job + " name:" + total_director[i].name);
-												output_director += "<a href=\"#\" onclick=\"open_person_popup('" 
+												output_director += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + window.localStorage.getItem("director_label") + ": " + total_director[i].name + "\" href=\"#\" onclick=\"open_person_popup('" 
 												+ total_director[i].id + "', 'close')\" class=\"actors\">"
 												+ total_director[i].name + "</a>";
 											return output_director;
@@ -1328,7 +1328,7 @@
 									if (total_writer[j].job == "WRITER")
 										{
 											console.log (total_writer[j].job + " name:" + total_writer[j].name);
-											output_writer += "<a href=\"#\" onclick=\"open_person_popup('" 
+											output_writer += "<a title=\" "+ window.localStorage.getItem("click_to_display_with")+ " " + window.localStorage.getItem("writer_label") + ": " + total_writer[j].name + "\" href=\"#\" onclick=\"open_person_popup('" 
 											+ total_writer[j].id + "', 'close')\" class=\"actors\">"
 											+ total_writer[j].name + "</a>";
 											return output_writer +"<br>";
@@ -1349,7 +1349,7 @@
 										{
 											actors_count = (actors_count + 1);
 											console.log (total_actors[k].job + " name:" + total_actors[k].name);
-											output_actors += "<a href=\"#\" onclick=\"open_person_popup('" 
+											output_actors += "<a title=\" "+ window.localStorage.getItem("click_to_display_with")+ " " + window.localStorage.getItem("actor_label") + ": " + total_actors[k].name + "\" href=\"#\" onclick=\"open_person_popup('" 
 											+ total_actors[k].id + "', 'close')\" class=\"actors\">"
 											+ total_actors[k].name + ", " + "</a>";
 											if (actors_count == 4) {return output_actors;}
@@ -1497,6 +1497,7 @@
 			document.getElementById("clickremoveposter").innerHTML=window.localStorage.getItem('remove_poster_text').toUpperCase();
 			document.getElementById("sourcelabel").innerHTML=window.localStorage.getItem('source_label').toLowerCase();
 			document.getElementById("updatelabel").innerHTML=window.localStorage.getItem('update_label').toLowerCase();
+			document.getElementById("all_person").title=localStorage.getItem('list_text').toLowerCase() + " " + localStorage.getItem('person_label').toLowerCase();
 			document.getElementById("open_menu_left").title=localStorage.getItem('open_navigation_menu').toLowerCase();
 			document.getElementById("close_menu_left").title=localStorage.getItem('close_navigation_menu').toLowerCase();
 			switch (window.localStorage.getItem('prefered_page').toLowerCase())

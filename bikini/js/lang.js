@@ -192,6 +192,7 @@
 					window.localStorage.setItem("lastscan_comment", (x[i].getElementsByTagName("lastscancomment")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("lastscan_label", (x[i].getElementsByTagName("lastscanlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("left_label", (x[i].getElementsByTagName("leftlabel")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("library_select", (x[i].getElementsByTagName("libraryselected")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("list_text", (x[i].getElementsByTagName("listtext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("menu_label", (x[i].getElementsByTagName("menulabel")[0].childNodes[0].nodeValue));	
 					window.localStorage.setItem("movie_label", (x[i].getElementsByTagName("movielabel")[0].childNodes[0].nodeValue));

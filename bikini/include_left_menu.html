@@ -77,6 +77,7 @@
 			document.getElementById("boxsetindex").innerHTML=window.localStorage.getItem('boxset_label').toUpperCase();
 			document.getElementById("countryindex").innerHTML=window.localStorage.getItem('country_label').toUpperCase();
 			document.getElementById("awardsindex").innerHTML=window.localStorage.getItem('awards_label').toUpperCase();
+			document.getElementById("libraryindex").innerHTML=window.localStorage.getItem('library_select').toUpperCase();
 
 		}
 		</script>
@@ -169,6 +170,10 @@
 				<li><a href="javascript:ouvre_remote(StyleValue);  ">
 							<img src="./pictures/icon/remote.png" style="height: 30vw; width: 41vw; position: relative; left:6px" alt="remote" />
 						</a><div id="remoteselect"></div>
+				</li>
+				<li><a href="javascript:open_parent_index (index_type, 'navLibrary.html');">
+							<img src="./pictures/icon/library2.png" style="height: 40vw; width: 32vw; position: relative; left:7vw" alt="library"  />
+						</a><div id="libraryindex" style="padding-top: 4vw"></div>
 				</li>
 		</ul>
 	</div>

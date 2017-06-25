@@ -60,20 +60,20 @@
 			+'&'+window.localStorage.getItem('unwatched_select').toLowerCase();
 			document.getElementById("watched_true").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('watched_select').toLowerCase();
 			document.getElementById("watched_false").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('unwatched_select').toLowerCase();
-			document.getElementById("watched_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('watched_select').toLowerCase();
+			document.getElementById("watched_item").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('watched_select').toLowerCase();
 			document.getElementById("sort_year").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('year_label').toLowerCase();
-			document.getElementById("search_function").attributes.getNamedItem("data-tip-search").value=window.localStorage.getItem('search_select').toLowerCase();
-			document.getElementById("new_function").attributes.getNamedItem("data-tip-search").value=window.localStorage.getItem('new_').toLowerCase();
+			document.getElementById("search_function").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('search_select').toLowerCase();
+			document.getElementById("new_function").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('new_').toLowerCase();
 			document.getElementById("sort_asc").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('asc_label').toLowerCase();
 			document.getElementById("sort_desc").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('desc_label').toLowerCase();
 			document.getElementById("sort_title").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('title_label').toLowerCase();
-			document.getElementById("sort_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('sort_label').toLowerCase();
+			document.getElementById("sort_item").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('sort_label').toLowerCase();
 			document.getElementById("movie_series_type").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('all_label').toLowerCase();
 			document.getElementById("movie_type").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('movie_label').toLowerCase();
 			document.getElementById("series_type").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('series_label').toLowerCase();
 			document.getElementById("season_type").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('season_label').toLowerCase();
-			document.getElementById("type_item").attributes.getNamedItem("data-tip-item").value=window.localStorage.getItem('video_label').toLowerCase();
-			document.getElementById("resolution_item").attributes.getNamedItem("data-tip-item").value="resolution";
+			document.getElementById("type_item").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('video_label').toLowerCase();
+			document.getElementById("resolution_item").attributes.getNamedItem("data-tip-sort").value="resolution";
 			document.getElementById("all_resolution_type").attributes.getNamedItem("data-tip-sort").value=window.localStorage.getItem('all_label').toLowerCase();
 			document.getElementById("sd_type").attributes.getNamedItem("data-tip-sort").value="sd => 1024p";
 			document.getElementById("hd_type").attributes.getNamedItem("data-tip-sort").value="hd 1025p => 1280p";
@@ -297,35 +297,35 @@
 			<div id="index_tools_index" >			
 
 						<ul id="search_section">
-							<a id="search_function" data-tip-search="search" href="javascript:ouvre_parent_popup_search(StyleValue, false)">
+							<a id="search_function" data-tip-sort="search" href="javascript:ouvre_parent_popup_search(StyleValue, false)">
 								<img src="pictures/find.png"  alt="find" />
 							</a>
 						</ul>
 						<ul id="new_section">
-							<a id="new_function" data-tip-search="new" href="javascript:NewestSelection('index.html', window.localStorage.getItem('New'))"><img src="pictures/new.png" alt="newest" /></a>
+							<a id="new_function" data-tip-sort="new" href="javascript:NewestSelection('index.html', window.localStorage.getItem('New'))"><img src="pictures/new.png" alt="newest" /></a>
 						</ul>
 						<ul id="watch_section">
-							<li><a id="watched_item" data-tip-item="watched"><img src="pictures/watched_unwatched_sort.png" alt="allwatched" onclick="toggle_show_watched()" /></a></li>							
+							<li><a id="watched_item" data-tip-sort="watched"><img src="pictures/watched_unwatched_sort.png" alt="allwatched" onclick="toggle_show_watched()" /></a></li>							
 							<li><a id="watched_all" data-tip-sort="watched all" href="javascript:WatchedSelection(parent.location.href, 'all')"><img src="pictures/watched_unwatched_sort.png" alt="allwatched" /></a></li>
 							<li><a id="watched_true" data-tip-sort="watched" href="javascript:WatchedSelection(parent.location.href, 'true')"><img src="pictures/watched_sort.png" alt="watched" /></a></li>
 							<li><a id="watched_false" data-tip-sort="unwatched"  href="javascript:WatchedSelection(parent.location.href, 'false')"><img src="pictures/unwatched_sort.png"  alt="unwatched" /></a></li>
 						</ul>
 						<ul  id="sort_section">
-							<li><a id="sort_item" data-tip-item="sort" alt="sort"><img  src="pictures/sort.png" onclick="toggle_show_sort()"/></a></li>
+							<li><a id="sort_item" data-tip-sort="sort" alt="sort"><img  src="pictures/sort.png" onclick="toggle_show_sort()"/></a></li>
 							<li><a id="sort_desc" data-tip-sort="descending" href="javascript:SortDirection('DESC',parent.location.href)" ><img src="pictures/sort_desc.png" alt="sort_desc" /></a></li>
 							<li><a id="sort_asc" data-tip-sort="ascending" href="javascript:SortDirection('ASC',parent.location.href)" ><img src="pictures/sort_asc.png" alt="sort_asc"/></a></li>
 							<li><a id="sort_year" data-tip-sort="year" href="javascript:SortIndex('videoYear,createTimestamp',parent.location.href)" ><img src="pictures/year_sort.png" alt="sort_year" /></a></li>
 							<li><a id="sort_title" data-tip-sort="title" href="javascript:SortIndex('title',parent.location.href)" ><img src="pictures/title_sort.png" alt="sort_title"/></a></li>
 						</ul>
 						<ul id="type_section" >
-							<li><a id="type_item" data-tip-item="type" alt="type"><img  src="pictures/home_movies.png"  onclick="toggle_show_type()"/></a></li>
+							<li><a id="type_item" data-tip-sort="type" alt="type"><img  src="pictures/home_movies.png"  onclick="toggle_show_type()"/></a></li>
 							<li><a id="movie_series_type" style="visibility: hidden;" data-tip-sort="movie,series" href="javascript:open_parent_index('movie,series', parent.location.href)"><img src="pictures/icon/home_all_rv8.png" alt="tv movie"/><a></li>
 							<li><a id="movie_type" style="visibility: hidden;" data-tip-sort="movie" href="javascript:open_parent_index('movie', parent.location.href)"><img src="pictures/icon/home_movies_rv8.png" alt="movie"/></a></li>
 							<li><a id="series_type" style="visibility: hidden;" data-tip-sort="series" href="javascript:open_parent_index('series', parent.location.href)"><img src="pictures/icon/home_tv_shows_rv8.png" alt="tv" /></a></li>
 							<li><a id="season_type" style="visibility: hidden;" data-tip-sort="season" href="javascript:open_parent_index('season', parent.location.href)"><img src="pictures/icon/home_apps_rv8.png" alt="season" /></a></li>
 						</ul>
 						<ul id="resolution_section" >
-							<li><a id="resolution_item" data-tip-item="resolution" alt="resolution"><img  src="pictures/resolution/resolution.png" onclick="toggle_show_resolution()"/></a></li>
+							<li><a id="resolution_item" data-tip-sort="resolution" alt="resolution"><img  src="pictures/resolution/resolution.png" onclick="toggle_show_resolution()"/></a></li>
 							<li><a id="all_resolution_type" style="visibility: hidden;" data-tip-sort="all_resolution" href="javascript:ResolutionSelection(parent.location.href, 'all')"><img src="pictures/resolution/all_resolution.png" alt="all resolution"/><a></li>
 							<li><a id="sd_type" style="visibility: hidden;" data-tip-sort="sd_resolution" href="javascript:ResolutionSelection(parent.location.href, 'sd')"><img src="pictures/resolution/sd.png" alt="sd"/><a></li>
 							<li><a id="hd_type" style="visibility: hidden;" data-tip-sort="hd_resolution" href="javascript:ResolutionSelection(parent.location.href, 'hd')"><img src="pictures/resolution/hd.png" alt="hd"/></a></li>

@@ -172,7 +172,7 @@
 					$("#sort_section").css("outline", "2px solid black");
 					$("#sort_section").css("z-index", "15");
 					$("#sort_item").css("z-index", "15");
-					if (window.localStorage.getItem('categorytype') == 'person' && window.localStorage.getItem('display_type') == "_list2")
+					if (window.localStorage.getItem('categorytype') == 'person' )
 						{} 	else {parent.document.getElementById('my_header_menu').style.height = '240px';}
 					show_sorted = true;
 				}
@@ -184,7 +184,7 @@
 					$("#sort_title").css("visibility", "hidden");
 					$("#sort_section").css("background", "none");
 					$("#sort_section").css("outline", "none");
-					if (window.localStorage.getItem('categorytype') == 'person' && window.localStorage.getItem('display_type') == "_list2")
+					if (window.localStorage.getItem('categorytype') == 'person' )
 						{} else {	parent.document.getElementById('my_header_menu').style.height = '60px';}			
 					show_sorted = false;
 				}
@@ -1977,8 +1977,19 @@
 			window.localStorage.setItem("categorytype", "studio");
 			localStorage.setItem("studio_name", studioid);
 			localStorage.setItem("studio_text", studioname);
-            console.log("navStudioe open_studio_index Storing value: Studio name: " + studioname + " studio Id: "
+            console.log("navStudio open_studio_index Storing value: Studio name: " + studioname + " studio Id: "
 			+ studioid + " display_type:" + window.localStorage.getItem ("display_type"));
+			if (window.localStorage.getItem ("display_type") == "_list2")
+			{window.location.href="index_list2.html";} else {window.location.href="index.html";}
+
+		}
+	function open_library_index(libraryname, libraryid)
+        {
+			window.localStorage.setItem("categorytype", "library");
+			localStorage.setItem("library_name", libraryid);
+			localStorage.setItem("library_text", libraryname);
+            console.log("navLibrary open_library_index Storing value: Library name: " + libraryname + " Library Id: "
+			+ libraryid + " display_type:" + window.localStorage.getItem ("display_type"));
 			if (window.localStorage.getItem ("display_type") == "_list2")
 			{window.location.href="index_list2.html";} else {window.location.href="index.html";}
 

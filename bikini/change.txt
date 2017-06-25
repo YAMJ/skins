@@ -1,4 +1,7 @@
 change.txt
+v3.0.7
+- adjust info text for year, watched, actor, genre, source_Id
+- add library selector 
 v3.0.6
 - fix certification , rating, year, genre selection in detail page 
 V3.0.5

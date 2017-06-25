@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		
+		<script src="js/jQuery.js"></script>
+        <!-- Used for the JSON parsing -->
+        <script src="js/pure.js"></script>
+        <!-- Used for the paging of the index -->
+        <script src="js/js.js"></script>
+        <script src="js/jPages.js"></script>
+		<!-- Used for skin language setting -->
+		<script src="js/lang.js"></script>
+		<!-- Used for template -->
+		<script src="js/template.js"></script>	
+		<script src="js/library2.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/yamj-style.css">
+        <!-- Used for the paging of the index -->
+        <link rel="stylesheet" href="css/jPages.css">
+        <!-- Used for the fancy animations -->
+        <link rel="stylesheet" href="css/animate.css">
+		<!-- used for iscroll special -->
+		<script type="text/javascript" src="js/iscroll.js"></script>
+		
+		<title>YAMJv3 Navigation library index</title>
+	
+    </head>
+    <body onload="NavData(); addShowAlt('img');">
+        <script type="text/javascript">
+		var menuleft_toggle = 0;
+		var index_type = "movie,series";
+		var Prefered_PageValue = "index_all";
+		// get the prefered_page
+		if (localStorage.getItem("prefered_page"))
+			{Prefered_PageValue = localStorage.getItem("prefered_page");}
+			else {localStorage.setItem("prefered_page", Prefered_PageValue);}
+				
+		 function NavData()
+        {
+
+		// fill all value according to language setting - from yamjv3_lang_{lang}.xml
+			get_lang();
+			get_style();
+			get_player();
+			get_prefered_page();
+			
+			if (window.localStorage.getItem("indextype"))
+				{index_type = window.localStorage.getItem("indextype");
+				// reset to all if indextype = person
+				if (index_type.toUpperCase() == 'PERSON')
+					{
+						window.localStorage.setItem("indextype", 'movie,series');
+						index_type = 'movie,series';
+					}
+				console.log("navLibrary get: " + index_type);}
+				else {window.localStorage.setItem("indextype", index_type);
+				console.log("navLibrary set: " + index_type);}
+		    var jsonUrl = "/yamj3/api/libraries/list.json?type=" + index_type + "&sortby=base_directory&sortdir=ASC";
+			console.log("navLibrary indextype: " + index_type);
+			switch (index_type.toUpperCase())
+				{
+				   
+					case 'ALL':
+						selected_index = window.localStorage.getItem('all_select').toUpperCase();
+						break;
+					case 'MOVIE,SERIES':
+						selected_index = window.localStorage.getItem('all_select').toUpperCase();
+						break;
+					case 'MOVIE':
+						selected_index = window.localStorage.getItem('movie_select').toUpperCase();
+						break;
+					case 'SERIES':
+						selected_index = window.localStorage.getItem('series_select').toUpperCase();
+						break;
+					case 'SEASON':
+						selected_index = window.localStorage.getItem('season_select').toUpperCase();
+						break;
+					
+				};
+		$('#printsearch').html(window.localStorage.getItem('library_select').toUpperCase()+' '+selected_index);
+            console.log("navLibrary URL: " + jsonUrl);
+            var jsondata = null;
+
+            $.ajax({
+                url: jsonUrl,
+                async: false,
+                dataType: 'jsonp',
+                'success': function(data)
+                {
+                    jsondata = data;
+				//	 outputJson(data); 
+                    updateHtml(data);
+				// adjust number per page with the popup width and poster + container width			
+                    if (window.localStorage.getItem("Paging") == 'true') {pageData(70);}
+                }
+            });
+            return jsondata;
+        }
+		
+//****************************************************************************		
+		
+     function updateHtml(yamjdata)
+     {
+			var COUNT_HEADER = {
+                'span.ReturnCount': function(arg) {	
+					return arg.context.count+' '+ window.localStorage.getItem('results_text');
+					}
+				};	
+		    var LIST_DIR = {
+            "div.library_block": {
+                "result<-results": {
+					"span.name": function(arg) {
+							return arg.item.name;
+							},
+					 "img.library_logo@src": function(arg) {
+							return "pictures/library/"+arg.item.name+".png";
+                           },
+                     "span.name@onclick": function(arg) {
+							return "open_library_index('" + arg.item.name+ "','" + arg.item.id + "')";
+							},
+					 "img.library_logo@onclick": function(arg) {
+							return "open_library_index('" + arg.item.name+ "','" + arg.item.id + "')";
+							}	
+						}
+					}
+				};
+
+			$p('.count_return_library').render(yamjdata, COUNT_HEADER);	
+            $p('div.row_library').render(yamjdata, LIST_DIR);
+			
+	}
+		
+		
+//***************************************************************************************************************		
+		function open_library_nav(indextype)
+        {
+			localStorage.setItem("indextype", indextype);
+            console.log("open_library_nav Storing value: indextype: " +indextype);
+			window.location.href="navLibrary.html";
+			Mypopup.focus();
+		}
+
+ 
+// ******************************to fix alt bug with chrome *************************************************************
+	function showAlt(){$(this).replaceWith(this.alt)};
+	function addShowAlt(selector){$(selector).error(showAlt).attr("src", $(selector).src)};	
+//************************ LANGUAGE LOCAL SETTING ***********************************************************************	
+
+		function set_context_lang_value ()
+		{
+			
+			document.getElementById("info_config").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('skin_').toLowerCase()
+			+ " " + window.localStorage.getItem('info_label').toLowerCase();
+			switch (window.localStorage.getItem('prefered_page').toLowerCase())
+			{
+				case 'certification':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() 
+					+ ": " + window.localStorage.getItem('certification_label').toLowerCase();
+				break;
+				}
+				case 'index_all':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase()
+					+ ": " + window.localStorage.getItem('all_label').toLowerCase();
+				break;
+				}
+				case 'index_movie':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase()
+					+ ": " + window.localStorage.getItem('movie_label').toLowerCase();
+				break;
+				}
+				case 'index_series':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase()
+					+ ": " + window.localStorage.getItem('series_label').toLowerCase();
+				break;
+				}
+				case 'new':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase()
+					+ ": " + window.localStorage.getItem('new_').toLowerCase();
+				break;
+				}
+				case 'person':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase()
+					+ ": " + window.localStorage.getItem('person_label').toLowerCase();
+				break;
+				}
+				case 'rating':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase() 
+					+ ": " + window.localStorage.getItem('rating_label').toLowerCase();
+				break;
+				}
+				case 'source':
+				{
+					document.getElementById("li_home_left").attributes.getNamedItem("data-tip2").value=window.localStorage.getItem('prefered_comment').toLowerCase()
+					+ ": " + window.localStorage.getItem('source_label').toLowerCase();
+				break;
+				}
+			}
+
+			
+		}
+
+        </script>
+
+    <div class="index_header"> 
+			<a href="javascript:ouvre_prefered_page()" id="li_home_left" data-tip2="prefered page"></a>
+			<a id="info_config" data-tip2="info" href="javascript:ouvre_info_config()" ></a>
+				<!-- display screen name and number of library  --> 		
+					<div class="show_index_library"><span id="printsearch"></span></div>
+					<div class="count_return_library">
+						   <span class="ReturnCount"></span> 
+					</div>
+		<!-- just added to set the language value, shouldn't be displayed  -->
+			<div class="results" style="visibility: hidden; display:none;">
+				<table><tr><td class="Value"></td></tr></table>
+			</div>	
+		
+		<!-- include navigation header after context return , page info and count return -->		
+			<div>
+				<object data="include_header_nav_menu.html" type="text/html" id="my_header_menu" style="position: absolute; height: 70px; width: 30%; left: 50%; z-index:10;"></object>
+			</div>
+        <!--Navigation Holder-->
+        <div class="holder"></div>
+	</div>
+<!-- add left menu dynamically from a separate file --> 
+	<div >
+      <object data="include_left_menu.html" type="text/html" id="my_left_menu"></object>
+    </div>
+	
+		 <!--Data Items Container-->
+		<div id="container">
+            <div id="yRow" class="row_library">
+                <div id="yBlock" class="library_block">
+                    <img class="library_logo" src="./pictures/library/dummy.png" alt="library"><br>
+                    <span class="name"></span>
+                </div>
+            </div>
+        </div>
+
+	<!-- display Movie -->
+		<div id="movie_display" style="visibility: hidden; ">
+			<iframe src="" name="movie_frame" resizable="yes" id="movie_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1245px; height:265px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display person -->
+		<div id="person_display" style="visibility: hidden; ">	
+			<iframe src="" name="person_frame" resizable="yes" id="person_frame" scrolling="yes" frameborder="1" style="overflow:auto; width:1220px; height:335px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display config -->
+		<div id="target_display" style="visibility: hidden; ">		
+			<iframe src="" name="target_frame" resizable="yes" id="target_frame" scrolling="no" frameborder="1" style="overflow:hidden; width:1050px; height:335px;" allowTransparency="true"></iframe>
+		</div>	
+	<!-- display source data from API if needed  -->
+        <div id="sourceData"></div>
+    </body>
+</html>

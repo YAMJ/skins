@@ -541,6 +541,10 @@
 							else if (category_type == "studio")
 							{selected_index = selected_index + "&nbsp;" + window.localStorage.getItem(category_type.toLowerCase()
 							+ '_select').toLowerCase() + ":" + window.localStorage.getItem('studio_text').toLowerCase();}
+							else if (category_type == "library")
+							{selected_index = selected_index + "&nbsp;" 
+							+ window.localStorage.getItem(category_type.toLowerCase() + '_select').toLowerCase() 
+							+ ":" + window.localStorage.getItem('library_text').toLowerCase();}
 							else if (category_type == "boxset")
 							{selected_index = selected_index + "&nbsp;" + window.localStorage.getItem(category_type.toLowerCase()
 							+ '_select').toLowerCase() + ":" + window.localStorage.getItem('boxset_text').toLowerCase();}

@@ -6,6 +6,7 @@
 	<addbannertext>banner hinzufügen</addbannertext>
 	<addfanarttext>wallpaper hinzufügen</addfanarttext>
 	<addpostertext>poster hinzufügen</addpostertext>
+	<addvideoimagetext>videoimage hinzufügen</addvideoimagetext>
 	<alllabel>alle</alllabel> 
 	<allgenre>alle</allgenre>
 	<allselected>film und serie</allselected>
@@ -134,6 +135,7 @@
 	<removebannertext>klicken sie banner entfernen</removebannertext>
 	<removefanarttext>klicken sie fanart entfernen</removefanarttext>
 	<removepostertext>klicken sie poster entfernen</removepostertext>
+	<removevideoimagetext>klicken sie videoimage entfernen</removevideoimagetext>
 	<repeatlabel>wiederholung</repeatlabel>
 	<resultstext>ergebnis</resultstext>
 	<returnlabel>ruckkehr</returnlabel>

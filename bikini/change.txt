@@ -6,6 +6,7 @@ v3.0.8
 - fix several null value 
 - add activ target url to tvdb external_id for people 
 - use tvdb photo (added with last yamj3 version)
+- add translation
 v3.0.7
 - adjust info text for year, watched, actor, genre, source_Id
 - add library selector 

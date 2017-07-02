@@ -1497,7 +1497,7 @@
 			document.getElementById("clickremovebanner").innerHTML=window.localStorage.getItem('remove_banner_text').toUpperCase();
 			document.getElementById("clickremovefanart").innerHTML=window.localStorage.getItem('remove_fanart_text').toUpperCase();
 			document.getElementById("clickremoveposter").innerHTML=window.localStorage.getItem('remove_poster_text').toUpperCase();
-			document.getElementById("clickremovevideoimage").innerHTML="CLICK sur la videoimage à supprimer"; // window.localStorage.getItem('remove_poster_text').toUpperCase();
+			document.getElementById("clickremovevideoimage").innerHTML=window.localStorage.getItem('remove_videoimage_text').toUpperCase();
 			document.getElementById("sourcelabel").innerHTML=window.localStorage.getItem('source_label').toLowerCase();
 			document.getElementById("updatelabel").innerHTML=window.localStorage.getItem('update_label').toLowerCase();
 			document.getElementById("all_person").title=localStorage.getItem('list_text').toLowerCase() + " " + localStorage.getItem('person_label').toLowerCase();
@@ -1563,7 +1563,7 @@
 			document.getElementById("add_poster_show_icon").innerHTML=window.localStorage.getItem('add_poster_text');
 			document.getElementById("add_fanart_show_icon").innerHTML=window.localStorage.getItem('add_fanart_text');
 			document.getElementById("add_banner_show_icon").innerHTML=window.localStorage.getItem('add_banner_text');
-			document.getElementById("add_videoimage_show_icon").innerHTML="ajoute videoimage";					// window.localStorage.getItem('add_banner_text');
+			document.getElementById("add_videoimage_show_icon").innerHTML=window.localStorage.getItem('add_videoimage_text');
 		}
 		
   // ********************* NOW SET VARIOUS FUNCTION **********************************************  
@@ -3182,7 +3182,7 @@
 				</a>
 			</td>
 					
-			<tr>
+				<tr>
 					<td>
                         <div>
 							<text id="clickremoveposter" style="margin: inherit;"></text>
@@ -3206,9 +3206,8 @@
                       
 			</table>
 			<table class="fanartadjust">
-			<tr>
+				<tr>
 					<td>
-                         
                                 <div>
 									<text id="clickremovefanart" style="margin: inherit;"></text>
 									<a id="li_add_icon" href="javascript:ouvre_popup_add_artwork('fanart');" onmouseover="javascript:document.getElementById('add_fanart_show_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('add_fanart_show_icon').style.visibility='hidden'">
@@ -3229,9 +3228,8 @@
                       
 			</table>
 			<table class="banneradjust">
-			<tr>
+				<tr>
 					<td>
-                         
                                 <div>
 									<text id="clickremovebanner" style="margin: inherit;"></text>
 									<a id="li_add_icon" href="javascript:ouvre_popup_add_artwork('banner');" onmouseover="javascript:document.getElementById('add_banner_show_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('add_banner_show_icon').style.visibility='hidden'">
@@ -3252,30 +3250,26 @@
                       
 			</table>
 			<table class="videoimageadjust">
-			<tr>
+				<tr>
 					<td>
-                         
                                 <div class="videoimage_list">
 									<text id="clickremovevideoimage" style="margin: inherit;"></text>
 									<a id="li_add_icon_videoimage" href="javascript:ouvre_popup_add_artwork('videoimage');" onmouseover="javascript:document.getElementById('add_videoimage_show_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('add_videoimage_show_icon').style.visibility='hidden'">
-											<img class="icon_videoimage" src="pictures/add.png" alt="add" style="" ></img>
-											<div id="add_videoimage_show_icon" style="top: 0.5vw; left: 25vw;"></div>
-										</a>
-										<br>
-									 <span class="editvideoimage"></span>
-                                   <!-- <img class="editvideoimage" id="videoimage_list" src="./pictures/dummy_videoimage.jpg" height="36" width="180" align="bottom" style="padding:2px;" onclick="" alt="videoimage" /> -->
+										<img class="icon_videoimage" src="pictures/add.png" alt="add" style="" ></img>
+										<div id="add_videoimage_show_icon" style="top: 0.5vw; left: 25vw;"></div>
+									</a>
+									<br>
+									<span class="editvideoimage"></span>
 									<button id="infobox_ignore_videoimage" onclick="javascript:start_ignore ('infobox_ignore_videoimage')"></button>
 									<form id="edit_add_videoimage" style="display: none; position: relative; top: -6.3vw; left: 40vw; z-index:10;" enctype="multipart/form-data" action="" target="target_frame" method="post">
-											<input name="image" type="file" onchange="display_image('videoimage')"/>
-											<input id="add_videoimage_submit" class="button" type="submit" alt="Upload" value="Upload" />
+										<input name="image" type="file" onchange="display_image('videoimage')"/>
+										<input id="add_videoimage_submit" class="button" type="submit" alt="Upload" value="Upload" />
 									</form> 
-										
-										 <img id="videoimage_image" src="pictures/dummy_videoimage.jpg" style="width: 7vw; position: relative; left: 70vw; display: none; visibility: visible; top: -10vw" /> 
+										<img id="videoimage_image" src="pictures/dummy_videoimage.jpg" style="width: 7vw; position: relative; left: 70vw; display: none; visibility: visible; top: -10vw" /> 
 									<br><br>
                                 </div>
 					</td>
-				</tr>
-                      
+				</tr>         
 			</table>
 		</div>
 		<div class="trailer_list">

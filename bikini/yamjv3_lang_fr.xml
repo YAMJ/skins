@@ -7,6 +7,7 @@
 	<addbannertext>ajouter une banniere</addbannertext>
 	<addfanarttext>ajouter un fond d'écran</addfanarttext>
 	<addpostertext>ajouter une affiche</addpostertext>
+	<addvideoimagetext>ajouter une videoimage</addvideoimagetext>
 	<alllabel>tout</alllabel>
 	<allgenre>tout</allgenre>
 	<allselected>film et série</allselected>
@@ -136,6 +137,7 @@
 	<removebannertext>clicker sur la banniere a supprimer</removebannertext>
 	<removefanarttext>clicker sur le fond d'ecran a supprimer</removefanarttext>
 	<removepostertext>clicker sur l'affiche a supprimer</removepostertext>
+	<removevideoimagetext>clicker sur la videoimage a supprimer</removevideoimagetext>
 	<repeatlabel>repete</repeatlabel>
 	<resultstext>résultats</resultstext>
 	<returnlabel>retour</returnlabel>

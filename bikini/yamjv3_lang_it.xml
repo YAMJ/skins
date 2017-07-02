@@ -6,6 +6,7 @@
 	<addbannertext>aggiungere banner</addbannertext>
 	<addfanarttext>aggiungere carta da parati</addfanarttext>
 	<addpostertext>aggiungi poster</addpostertext>
+	<addvideoimagetext>aggiungi videoimage</addvideoimagetext>
 	<alllabel>tutti</alllabel>
 	<allgenre>tutti</allgenre>
 	<allselected>del cinema e serie</allselected>
@@ -134,6 +135,7 @@
 	<removebannertext>clicca su banner per rimuovere</removebannertext>
 	<removefanarttext>clicca su fanart per rimuovere</removefanarttext>
 	<removepostertext>clicca su poster per rimuovere</removepostertext>
+	<removevideoimagetext>clicca su videoimage per rimuovere</removevideoimagetext>
 	<repeatlabel>ripetizione</repeatlabel>
 	<resultstext>provocare</resultstext>
 	<returnlabel>ritorno</returnlabel>

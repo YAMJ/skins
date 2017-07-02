@@ -6,6 +6,7 @@
 	<addbannertext>add banner</addbannertext>
 	<addfanarttext>add fanart</addfanarttext>
 	<addpostertext>add poster</addpostertext>
+	<addvideoimagetext>add videoimage</addvideoimagetext>
 	<alllabel>all</alllabel>
 	<allgenre>all</allgenre>
 	<allselected>movie and series</allselected>
@@ -134,6 +135,7 @@
 	<removebannertext>click on banner to remove</removebannertext>
 	<removefanarttext>click on fanart to remove</removefanarttext>
 	<removepostertext>click on poster to remove</removepostertext>
+	<removevideoimagetext>click on videoimage to remove</removevideoimagetext>
 	<repeatlabel>repeat</repeatlabel>
 	<resultstext>results</resultstext>
 	<returnlabel>retour</returnlabel>

@@ -128,6 +128,7 @@
 					window.localStorage.setItem("add_banner_text", (x[i].getElementsByTagName("addbannertext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("add_fanart_text", (x[i].getElementsByTagName("addfanarttext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("add_poster_text", (x[i].getElementsByTagName("addpostertext")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("add_videoimage_text", (x[i].getElementsByTagName("addvideoimagetext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("all_label", (x[i].getElementsByTagName("alllabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("all_genre",(x[i].getElementsByTagName("allgenre")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("all_select",(x[i].getElementsByTagName("allselected")[0].childNodes[0].nodeValue));
@@ -244,6 +245,7 @@
 					window.localStorage.setItem("remove_banner_text", (x[i].getElementsByTagName("removebannertext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("remove_fanart_text", (x[i].getElementsByTagName("removefanarttext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("remove_poster_text", (x[i].getElementsByTagName("removepostertext")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("remove_videoimage_text", (x[i].getElementsByTagName("removevideoimagetext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("repeat_label", (x[i].getElementsByTagName("repeatlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("results_text", (x[i].getElementsByTagName("resultstext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("ribbon_comment", (x[i].getElementsByTagName("ribboncomment")[0].childNodes[0].nodeValue));

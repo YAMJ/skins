@@ -1,4 +1,11 @@
 change.txt
+v3.0.8
+- adjust episode in season detail page when all episode are listed as xxS01E01E02E02E03
+- add videoimage in general popup artwork display in detail page 
+- add ability to remove or add a videoimage for an episode (select 1rst the episode) 
+- fix several null value 
+- add activ target url to tvdb external_id for people 
+- use tvdb photo (added with last yamj3 version)
 v3.0.7
 - adjust info text for year, watched, actor, genre, source_Id
 - add library selector 

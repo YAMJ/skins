@@ -52,6 +52,7 @@
 			var jsonDeleteUrl = "";
 			var CurrentUrlPlay;
 			var Currentfilename;
+			var current_episode_selected = "";
 			var stage_file_Id = "";
 			var countset = "-1";
 			var fanart_toggle = 0;
@@ -1258,6 +1259,7 @@
 									}
 								}
 							}
+				
 						};
 						
 				var TRAILER_INFO = {
@@ -1495,6 +1497,7 @@
 			document.getElementById("clickremovebanner").innerHTML=window.localStorage.getItem('remove_banner_text').toUpperCase();
 			document.getElementById("clickremovefanart").innerHTML=window.localStorage.getItem('remove_fanart_text').toUpperCase();
 			document.getElementById("clickremoveposter").innerHTML=window.localStorage.getItem('remove_poster_text').toUpperCase();
+			document.getElementById("clickremovevideoimage").innerHTML="CLICK sur la videoimage à supprimer"; // window.localStorage.getItem('remove_poster_text').toUpperCase();
 			document.getElementById("sourcelabel").innerHTML=window.localStorage.getItem('source_label').toLowerCase();
 			document.getElementById("updatelabel").innerHTML=window.localStorage.getItem('update_label').toLowerCase();
 			document.getElementById("all_person").title=localStorage.getItem('list_text').toLowerCase() + " " + localStorage.getItem('person_label').toLowerCase();
@@ -1556,9 +1559,11 @@
 			document.getElementById("add_poster_submit").attributes.getNamedItem("value").value=window.localStorage.getItem('add_text').toLowerCase();
 			document.getElementById("add_fanart_submit").attributes.getNamedItem("value").value=window.localStorage.getItem('add_text').toLowerCase();
 			document.getElementById("add_banner_submit").attributes.getNamedItem("value").value=window.localStorage.getItem('add_text').toLowerCase();
+			document.getElementById("add_videoimage_submit").attributes.getNamedItem("value").value=window.localStorage.getItem('add_text').toLowerCase();
 			document.getElementById("add_poster_show_icon").innerHTML=window.localStorage.getItem('add_poster_text');
 			document.getElementById("add_fanart_show_icon").innerHTML=window.localStorage.getItem('add_fanart_text');
 			document.getElementById("add_banner_show_icon").innerHTML=window.localStorage.getItem('add_banner_text');
+			document.getElementById("add_videoimage_show_icon").innerHTML="ajoute videoimage";					// window.localStorage.getItem('add_banner_text');
 		}
 		
   // ********************* NOW SET VARIOUS FUNCTION **********************************************  
@@ -1665,9 +1670,12 @@
 						jsondata = dataEpisode;
 					//	outputJson(dataEpisode);
 						displayEpisode(dataEpisode);
-					
+						displayVideoimage(dataEpisode);
 						$('.episode_detail').css('visibility', 'visible');
 						display_Id ("list_episode_title");
+						$('.videoimage_list').css('visibility', 'hidden');
+						$('.icon_videoimage').css('visibility', 'hidden');
+						nodisplay_Id ("videoimage_list");
 					}
                 });
 		}
@@ -1679,15 +1687,22 @@
 						{
 							var totalepisode_title = arg.context.results;
 							var outputepisode_title = "";
-							var prev_episode = "";
+							var prev_episode_id = "";
+							var prev_episode_season_id = "";
+							var prev_episode_number = "";
 							for (i = 0; i < totalepisode_title.length; i++) 
 							{
-								if (totalepisode_title[i].files[0].id == prev_episode)
+								if (totalepisode_title[i].files[0].id == prev_episode_id && totalepisode_title[i].files[0].season == prev_episode_season_id && totalepisode_title[i].files[0].episode == prev_episode_number)
 									{console.log ('skip same episode:' + totalepisode_title[i].files[0].fileName + " id:" + totalepisode_title[i].files[0].id);}
 								else {
-								prev_episode = totalepisode_title[i].files[0].id;
+								prev_episode_id = totalepisode_title[i].files[0].id;
+								prev_episode_season_id = totalepisode_title[i].files[0].season;
+								prev_episode_number = totalepisode_title[i].files[0].episode;
 								if (i == 0)
-								{preset_episode_to_play(encodeURIComponent(totalepisode_title[i].files[0].fileName),totalepisode_title[i].files[0].id); }
+								{
+									preset_episode_to_play(encodeURIComponent(totalepisode_title[i].files[0].fileName),totalepisode_title[i].files[0].id); 
+									set_current_episode(totalepisode_title[i].id);
+								}
 							
 						//	console.log("detail listepisode_title preset_episode_to_play: " +totalepisode_title[i].files[0].fileName); 
 							for (j = 0; j < totalepisode_title[i].files.length; j++) 	
@@ -1724,7 +1739,8 @@
 										outputepisode_title +=	" display_Episode_videoimage ('videoimage"+[i]
 										+"','episodeplot" + [i] + "','episodetitle" + [i] + "'," + totalepisode_title.length + ");"
 										outputepisode_title +=	" preset_episode_to_play('" + encodeURIComponent(totalepisode_title[i].files[j].fileName) 
-										+ "', " + totalepisode_title[i].files[j].id + ")"
+										+ "', " + totalepisode_title[i].files[j].id + ");"
+										outputepisode_title +=	" set_current_episode('"  + totalepisode_title[i].id + "')"
 										outputepisode_title +=	" \" >"
 										outputepisode_title +=	totalepisode_title[i].episode + " - " + totalepisode_title[i].title 
 										outputepisode_title +=	"</a>"
@@ -1798,7 +1814,37 @@
 			updateItemCount (dataEpisode, "Episode");          
 			$p('.table_videoimage').render(dataEpisode, LIST_videoimage);			
         }	
-		
+	// map videoimage for update  
+	function displayVideoimage(dataEpisode)
+        {
+			var EDIT_videoimage = {
+					
+				
+             		'span.editvideoimage': function(arg) 
+						{
+						var editvideoimage = arg.context.results;
+						var outputvideoimage = "";
+							for (i = 0; i < editvideoimage.length; i++) 
+							{
+								if (editvideoimage[i].videoimage) // test if there is a videoimage available 
+								{
+								// set a class and id for each videoimage, this allow to select the right one on click 
+									outputvideoimage += "<img id='videoimage_list' class='videoimage_list'"
+									+ " src='" + arg.context.baseArtworkUrl + editvideoimage[i].videoimage + "' "
+									+ " onclick=\"ouvre_popup_ignore('videoimage', "  + editvideoimage[i].locatedId + ")\"></img>";	
+								} else {
+								// display dummy videoimage if not available 
+									outputvideoimage +="<img class='videoimage_list' src='pictures/dummy_videoimage.jpg' ></img>";
+								}
+							}
+							return outputvideoimage;
+						}
+					};
+					
+
+			// updateItemCount (dataEpisode, "Episode");          
+			$p('.videoimage_list').render(dataEpisode, EDIT_videoimage);			
+        }
 	    function show_subtitles (language_code, i)
 		
 		{
@@ -1910,11 +1956,13 @@
 						console.log("display_episode_videoimage:" +videoId_to_display+", "+plotId_to_display+", "
 						+ titleId_to_display+", "+max_videoimage_to_hidden);
 						// just reset what is on the screen before the right display 
-						document.getElementById(current_episode_videoimage).style.visibility="hidden";
+						if (document.getElementById(current_episode_videoimage))
+							{document.getElementById(current_episode_videoimage).style.visibility="hidden";}
 						document.getElementById(current_episode_plot).style.visibility="hidden";
 						document.getElementById(current_episode_title).style.visibility="hidden";
 						// now the screen is clean , display what is asked 
-						document.getElementById(videoId_to_display).style.visibility="visible";
+						if (document.getElementById(videoId_to_display))
+							{document.getElementById(videoId_to_display).style.visibility="visible";}
 						document.getElementById(plotId_to_display).style.visibility="visible";
 						document.getElementById(titleId_to_display).style.visibility="visible";
 						// store the current value 
@@ -1981,6 +2029,8 @@
 				$('.seasontable').css('visibility', 'hidden');
 				$('.mediainfo').css('visibility', 'hidden');
 				$('.edit_adjust').css('visibility', 'hidden');
+				$('.videoimage_list').css('visibility', 'hidden');
+				$('.icon_videoimage').css('visibility', 'hidden');
 				$('.moviedetail').css('visibility', 'hidden');
 				$('div#slideshowBanner').css('visibility', 'hidden');
 				$('div#slideshowCtr').css('visibility', 'hidden');
@@ -2005,6 +2055,8 @@
 				$('.certifications').css('visibility', 'visible');
 				$('.mediainfo').css('visibility', 'hidden');
 				$('.edit_adjust').css('visibility', 'hidden');
+				$('.videoimage_list').css('visibility', 'hidden');
+				$('.icon_videoimage').css('visibility', 'hidden');
 				$('div#slideshowCtr ').css('visibility', 'visible');
 				$('div#slideshowFanart').css('opacity', '0.7');
 				$('.play_detail').css('visibility', 'visible');
@@ -2103,6 +2155,8 @@
 						$('div#slideshowBanner').css('height', '3vw');
 						$('.mediainfo').css('visibility', 'hidden');
 						$('.edit_adjust').css('visibility', 'hidden');
+						$('.videoimage_list').css('visibility', 'hidden');
+						$('.icon_videoimage').css('visibility', 'hidden');
 						$('div#slideshowCtr').css('bottom', 'inherit');
 						$('div#slideshowCtr').css('top', '50px');
 						$('.seasontable').css('visibility', 'visible');
@@ -2386,6 +2440,8 @@
 							nodisplay_class ('moviedetail');
 							nodisplay_class ('detail_label');
 							nodisplay_class ('edit_adjust');
+							nodisplay_class ('videoimage_list');
+							nodisplay_class ('icon_videoimage');
 							nodisplay_class ('actors');
 							nodisplay_class ('director');
 							nodisplay_class ('writer');
@@ -2405,6 +2461,8 @@
 			
 				nodisplay_class ('mediainfo');
 				nodisplay_class ('edit_adjust');
+				nodisplay_class ('videoimage_list');
+				nodisplay_class ('icon_videoimage');
 				display_class ('genres');
 				display_class ('certifications');
 				display_class ('plot1');
@@ -2424,6 +2482,8 @@
 		if ($('.edit_adjust').css('visibility') == "hidden")
 		{
 		display_class ('edit_adjust');
+		display_class ('videoimage_list');
+		display_class ('icon_videoimage');
 		switch (index_type.toLowerCase())
 				{
 				case 'season':
@@ -2462,6 +2522,8 @@
 			if (index_type.toLowerCase() == 'series') {display_class('seasontable');}
 			if (index_type.toLowerCase() == 'season') {display_Id ('slideshowBanner');;}
 			nodisplay_class ('edit_adjust');
+			nodisplay_class ('videoimage_list');
+			nodisplay_class ('icon_videoimage');
 			display_class ('genres');
 			display_class ('certifications');
 			display_class ('plot1');
@@ -2508,12 +2570,26 @@
 		// PopUpdate(stage_file_Id, current_title)
 			PopUpdate(update_type, current_id, current_title)
 		}
+	function set_current_episode (current_episode_selected_to_set)
+		{
+			current_episode_selected = current_episode_selected_to_set;
+		}
 	function ouvre_popup_add_artwork (update_type)
 		{
-			console.log("detail ouvre_popup_add_artwork video_id:" + current_id + " index_type:"+ index_type + " update_type: "+ update_type);
-			toggle_display_Id ('edit_add_' + update_type);
-			$('#edit_add_' + update_type).attr('action', '/yamj3/api/artwork/add/' + update_type + '/' + index_type + '/' + current_id );	
-			toggle_display_Id (update_type + '_image');
+			if (update_type == "videoimage")
+			{
+				console.log("detail ouvre_popup_add_artwork video_id:" + current_id + " index_type: episode update_type: "+ update_type + " current_episode_selected: " +current_episode_selected);
+				toggle_display_Id ('edit_add_' + update_type);
+				$('#edit_add_' + update_type).attr('action', '/yamj3/api/artwork/add/' + update_type + '/episode/' + current_episode_selected );	
+				toggle_display_Id (update_type + '_image');
+			}
+			else 
+			{
+				console.log("detail ouvre_popup_add_artwork video_id:" + current_id + " index_type:"+ index_type + " update_type: "+ update_type);
+				toggle_display_Id ('edit_add_' + update_type);
+				$('#edit_add_' + update_type).attr('action', '/yamj3/api/artwork/add/' + update_type + '/' + index_type + '/' + current_id );	
+				toggle_display_Id (update_type + '_image');
+			}
 		}
 	function display_image(update_type)
 		{
@@ -3170,6 +3246,32 @@
 									<br><br>
                                     <img class="banner_list" src="./pictures/dummy_banner.png" height="36" width="180" align="bottom" style="padding:2px;" onclick="" alt="banner" />
 									<button id="infobox_ignore_banner" onclick="javascript:start_ignore ('infobox_ignore_banner')"></button>
+                                </div>
+					</td>
+				</tr>
+                      
+			</table>
+			<table class="videoimageadjust">
+			<tr>
+					<td>
+                         
+                                <div class="videoimage_list">
+									<text id="clickremovevideoimage" style="margin: inherit;"></text>
+									<a id="li_add_icon_videoimage" href="javascript:ouvre_popup_add_artwork('videoimage');" onmouseover="javascript:document.getElementById('add_videoimage_show_icon').style.visibility='visible'"  onmouseout="javascript:document.getElementById('add_videoimage_show_icon').style.visibility='hidden'">
+											<img class="icon_videoimage" src="pictures/add.png" alt="add" style="" ></img>
+											<div id="add_videoimage_show_icon" style="top: 0.5vw; left: 25vw;"></div>
+										</a>
+										<br>
+									 <span class="editvideoimage"></span>
+                                   <!-- <img class="editvideoimage" id="videoimage_list" src="./pictures/dummy_videoimage.jpg" height="36" width="180" align="bottom" style="padding:2px;" onclick="" alt="videoimage" /> -->
+									<button id="infobox_ignore_videoimage" onclick="javascript:start_ignore ('infobox_ignore_videoimage')"></button>
+									<form id="edit_add_videoimage" style="display: none; position: relative; top: -6.3vw; left: 40vw; z-index:10;" enctype="multipart/form-data" action="" target="target_frame" method="post">
+											<input name="image" type="file" onchange="display_image('videoimage')"/>
+											<input id="add_videoimage_submit" class="button" type="submit" alt="Upload" value="Upload" />
+									</form> 
+										
+										 <img id="videoimage_image" src="pictures/dummy_videoimage.jpg" style="width: 7vw; position: relative; left: 70vw; display: none; visibility: visible; top: -10vw" /> 
+									<br><br>
                                 </div>
 					</td>
 				</tr>

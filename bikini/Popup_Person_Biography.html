@@ -204,6 +204,32 @@
 														+ external_list[i].externalId + "' target='_blank' >"+ external_list[i].externalId + "</a>";}
 													break;
 												}
+											case 'tvdb':
+												{	
+													if (external_list[i].skipped) 
+													{ 
+														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='"
+														+ localStorage.getItem('delete_text').toLowerCase() 
+														+ "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"
+														+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
+														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase()
+														+ "' src=\"./pictures/open2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"enable_external_source('"
+														+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
+														+ "<a class='external_href' style='text-decoration: line-through; color: red;' href=http://thetvdb.com/banners/actors/" 
+														+ external_list[i].externalId + ".jpg' target='_blank' >"+ external_list[i].externalId + "</a>";}
+													else 
+													{ 
+														output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" 
+														+ localStorage.getItem('delete_text').toLowerCase() 
+														+ "' src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_display_Id('delete_"
+														+ external_list[i].sourcedb +"'); toggle_display_class('externalId_delete_form')\" />"
+														+ "<img title='" + localStorage.getItem('ignore_text').toLowerCase()
+														+ "' src=\"./pictures/close2.png\" style=\"height: 17px; position : relative; vertical-align: bottom; top: -1px;\"  onclick=\"disable_external_source('"
+														+ arg.context.result.id + "','" + external_list[i].sourcedb +"')\" /></text>"
+														+ "<a class='external_href'  href='http://thetvdb.com/banners/actors/" 
+														+ external_list[i].externalId + ".jpg' target='_blank' >"+ external_list[i].externalId + "</a>";}
+													break;
+												}
 											default: 
 												{
 													output_externalid += "<br><text> "+external_list[i].sourcedb+ "<img title='" 

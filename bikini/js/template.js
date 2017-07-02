@@ -76,11 +76,14 @@
 	// display on - off on the Id selected 
 		function toggle_display_Id(Id_to_toggle)
 					{	
-						if (document.getElementById(Id_to_toggle).style.display == "block")
-						{ 
-							document.getElementById(Id_to_toggle).style.display = "none";
-						} else {
-							document.getElementById(Id_to_toggle).style.display = "block";
+						if (document.getElementById(Id_to_toggle))
+						{
+							if (document.getElementById(Id_to_toggle).style.display == "block")
+							{ 
+								document.getElementById(Id_to_toggle).style.display = "none";
+							} else {
+								document.getElementById(Id_to_toggle).style.display = "block";
+							}
 						}
 					}					
 	// hidden what is asked 
@@ -1728,6 +1731,8 @@
 						{infobox_artwork = "infobox_ignore_fanart";}
 						else if (Current_artwork_type == "banner")
 						{infobox_artwork = "infobox_ignore_banner";}
+						else if (Current_artwork_type == "videoimage")
+						{infobox_artwork = "infobox_ignore_videoimage";}
 						
 
 						document.getElementById(infobox_artwork).innerHTML=localStorage.getItem('remove_text') + ": "+ Current_located_Id + "?"
@@ -1822,7 +1827,7 @@
 			localStorage.setItem('episode', episode_rank);
 			console.log("preset_episode_to_play :"+PlayerValue+" basefilename=" +decodeURIComponent(basefilename)+ " episode: " + episode_rank); 
 			
-			if (!source_path[0]) {get_player_();}
+			if (!source_path[0]) {get_player_(); return;}
 			for(var j = 0; j < (nbre_translate_path+1); j++){
 				if (decodeURIComponent(basefilename).substring(0,source_path[j].length) == source_path[j])
 					{

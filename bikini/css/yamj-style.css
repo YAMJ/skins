@@ -76,7 +76,7 @@
     padding: 0px 0px 0px 20px;
 	overflow-y: auto;
 }
-#container .row_genre,#container .row_country,#container .row_awards,#container  .row_studio,#container  .row_rating, #container  .row_boxset,#container  .row_videosource,#container  .row_certification , #container_source  .row_source_rating{
+#container .row_genre,#container .row_country,#container .row_awards,#container  .row_studio,#container .row_library,#container  .row_rating, #container  .row_boxset,#container  .row_videosource,#container  .row_certification , #container_source  .row_source_rating{
 	padding: 5px 5px 5px 0px;
 	margin: 1px;
 	border: 1px solid white;
@@ -89,7 +89,7 @@
     clear: both;
 }
 
-#container .block, #container .person_block, #container .person_block2,  #container .genre_block, #container .country_block, #container .awards_block, #container .boxset_block,  #container .studio_block, #container .rating_block, #container .videosource_block, #container .certification_block   {
+#container .block, #container .person_block, #container .person_block2,  #container .genre_block, #container .country_block, #container .awards_block, #container .boxset_block,  #container .library_block, #container .studio_block, #container .rating_block, #container .videosource_block, #container .certification_block   {
     text-align: center;
 	border-right: 5px solid grey;
 	border-bottom: 1px solid grey;
@@ -160,6 +160,14 @@
     padding: 4px;	
 }
 #container .studio_block {
+	font-size:0.8em;
+    float: left;
+    width: 100px;
+    height: 79px;
+	margin: 4px;
+    padding: 4px;	
+}
+#container .library_block {
 	font-size:0.8em;
     float: left;
     width: 100px;
@@ -928,7 +936,7 @@ input:-moz-placeholder { color:red; }
 	background-color: white;
 	
 	}
-.show_index, .show_index_genre, .show_index_country, .show_index_awards, .show_index_awards_small, .show_index_boxset, .show_index_studio, .show_index_studio_small, .show_index_rating, .show_index_videosource , .show_index_certification  {
+.show_index, .show_index_genre, .show_index_country, .show_index_awards, .show_index_awards_small, .show_index_boxset, .show_index_studio, .show_index_library, .show_index_studio_small, .show_index_rating, .show_index_videosource , .show_index_certification  {
 		display: block;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.4vw;
@@ -958,7 +966,7 @@ input:-moz-placeholder { color:red; }
 	z-index: 11;
 	}
 
-.show_index_awards_small, .show_index_studio_small   {
+.show_index_awards_small, .show_index_studio_small, .show_index_library_small   {
 		position: absolute;
 		top:-5%;
 		font-size:1vw;
@@ -985,7 +993,7 @@ input:-moz-placeholder { color:red; }
 		overflow: hidden;
 	} 
 
-.count_return, .count_return_index, .count_return_genre, .count_return_country, .count_return_awards, .count_return_awards_small, .count_return_boxset, .count_return_studio, .count_return_studio_small, .count_return_rating , .count_return_videosource , .count_return_certification  {
+.count_return, .count_return_index, .count_return_genre, .count_return_country, .count_return_awards, .count_return_awards_small, .count_return_boxset, .count_return_studio, .count_return_library, .count_return_studio_small, .count_return_library_small, .count_return_rating , .count_return_videosource , .count_return_certification  {
 		display: block;
 		font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 		font-size:1.4vw;
@@ -1005,7 +1013,7 @@ input:-moz-placeholder { color:red; }
 		overflow: hidden;
 	}
 
-.count_return_awards_small, .count_return_studio_small {
+.count_return_awards_small, .count_return_studio_small,  .count_return_library_small{
 		position: absolute;
 		left: 10%;
 		top: 50%;
@@ -1221,7 +1229,6 @@ input:-moz-placeholder { color:red; }
 /*	left: 940px; */
 }
 #infobox_ignore_poster {
-	z-index: 8;
 	visibility: hidden;
 	position: absolute; 
 	top: 2px; 
@@ -1230,7 +1237,6 @@ input:-moz-placeholder { color:red; }
 	z-index: 8;
 }
 #infobox_ignore_fanart {
-	z-index: 8;
 	visibility: hidden;
 	position: absolute; 
 	top: 145px; 
@@ -1239,13 +1245,20 @@ input:-moz-placeholder { color:red; }
 	z-index: 8;
 }
 #infobox_ignore_banner {
-	z-index: 8;
 	visibility: hidden;
 	position: absolute; 
 	top: 295px; 
 	width: auto;
 	left: 420px; 
 	z-index: 8;
+}
+#infobox_ignore_videoimage {
+	visibility: hidden;
+	position: absolute; 
+	top: 0.5vw; 
+	width: auto;
+	left: 25vw; 
+	z-index: 10;
 }
 #sourceData {
 	position: absolute;
@@ -1270,7 +1283,7 @@ ul#home_left_up {
 	list-style: none;
 }	
 
-#li_all_up, #li_movie_up, #li_series_up, #li_season_up, #li_person_up, #li_genre_up, #li_country_up, #li_certification_up, #li_studio_up, #li_search_up, #li_config_up, #li_remote_up, #li_home_left, #li_yamj3_up, #li_genrelist_up {
+#li_all_up, #li_movie_up, #li_series_up, #li_season_up, #li_person_up, #li_genre_up, #li_country_up, #li_certification_up, #li_studio_up, #li_library_up, #li_search_up, #li_config_up, #li_remote_up, #li_home_left, #li_yamj3_up, #li_genrelist_up {
 	width: 175px;
 	height:27px;
 	position: absolute;
@@ -1330,6 +1343,9 @@ ul#home_left_up {
 	}
 #li_remote_up {
 	top: 393px;
+	}
+#li_library_up {
+	top: 423px;
 	}
 #home_left:hover, ul#home_left_search:hover {
 	background-color:rgba(255, 255, 255, 0.6);
@@ -1404,7 +1420,7 @@ ul#home_left_up {
 	background-color:rgba(255, 255, 255, 0.6);
 	}	
 
-#allselect, #movieselect, #serieselect, #seasonselect, #genreindex, #countryindex, #awardsindex, #certificationindex, #ratingindex, #videosourceindex, #boxsetindex, #studioindex, #personindex, #titleindex, #yearindex, #searchselect, #configselect, #searchindex, #configindex, #remoteselect, #yamj3select, #genrelistselect
+#allselect, #movieselect, #serieselect, #seasonselect, #genreindex, #countryindex, #awardsindex, #certificationindex, #ratingindex, #videosourceindex, #boxsetindex, #studioindex, #libraryindex, #personindex, #titleindex, #yearindex, #searchselect, #configselect, #searchindex, #configindex, #remoteselect, #yamj3select, #genrelistselect
 {
     font-weight: bold;
     color: black;
@@ -1477,7 +1493,7 @@ ul#home_left_up {
 #button_countryselect_series {
 	left: 700px;
 	}	
-#language:hover, #nbrow:hover, #allselect:hover, #movieselect:hover, #genreindex:hover, #countryindex:hover, #awardsindex:hover, #certificationindex:hover, #ratingindex:hover, #videosourceindex:hover, #boxsetindex:hover, #studioindex:hover, #searchindex:hover, #configindex:hover, #yamj3select:hover, #genrelistselect:hover , #remoteselect:hover, #personindex:hover,  #serieselect:hover, #seasonselect:hover, #personselect:hover, #genreselect:hover, #countryselect:hover, #searchselect:hover, #configselect:hover, #button_genreselect:hover, #button_countryselect:hover, #button_personselect:hover, #button_configselect:hover, #button_genreselect_series:hover, #button_countryselect_series:hover
+#language:hover, #nbrow:hover, #allselect:hover, #movieselect:hover, #genreindex:hover, #countryindex:hover, #awardsindex:hover, #certificationindex:hover, #ratingindex:hover, #videosourceindex:hover, #boxsetindex:hover, #studioindex:hover, #libraryindex:hover, #searchindex:hover, #configindex:hover, #yamj3select:hover, #genrelistselect:hover , #remoteselect:hover, #personindex:hover,  #serieselect:hover, #seasonselect:hover, #personselect:hover, #genreselect:hover, #countryselect:hover, #searchselect:hover, #configselect:hover, #button_genreselect:hover, #button_countryselect:hover, #button_personselect:hover, #button_configselect:hover, #button_genreselect_series:hover, #button_countryselect_series:hover
 {	
 	color: red;	
 }
@@ -1908,7 +1924,7 @@ ul#home_left_up {
 	border: 2px solid rgba(0, 0, 0, 0.6);
 	border-radius: 20px 20px 20px 20px;
 	}*/
-#up, #down, #right, #left, #power, #home, #setup, #info, #rewind, #next_remote, #prev_remote, #fwd, #audio , #subtitle, #studio, #rating, #videosource, #volumeup, #volumedown, #mute, #menu, #return, #subtitle, #repeat, #pause, #stop, #play {
+#up, #down, #right, #left, #power, #home, #setup, #info, #rewind, #next_remote, #prev_remote, #fwd, #audio , #subtitle, #studio, #library, #rating, #videosource, #volumeup, #volumedown, #mute, #menu, #return, #subtitle, #repeat, #pause, #stop, #play {
 	width: 100px;
 	font-size:12px;
 	text-align:center;
@@ -1943,6 +1959,19 @@ ul#home_left_up {
 	text-decoration: none;
 	vertical-align: top;
 	}
+.library {
+	height: 2.5vw;
+	position: absolute ; 
+	top: 0.5vw;
+	right: 12vw;
+	font-size:0.8em;
+	text-align:center;
+	}
+.library a {
+	color: cyan; 
+	text-decoration: none;
+	vertical-align: top;
+	}
 .actors, .writer, .director {
 	position: relative; 
 	visibility: visible;
@@ -1957,7 +1986,7 @@ ul#home_left_up {
 	text-decoration: none;
 	color: cyan; 
 	}
-.actors:hover, .writer:hover, .director:hover, #all_person:hover, .studio a:hover {
+.actors:hover, .writer:hover, .director:hover, #all_person:hover, .studio a:hover, .library a:hover {
 	color: red;
 	}
 #trailer_td {
@@ -2053,8 +2082,38 @@ ul#home_left_up {
 	left: 15px;
 	height: 15px;
 	}
-
-
+.videoimage_list
+{
+	position: relative;
+	top: -1vw;
+}
+#li_add_icon_videoimage img
+{
+	width: 1.5vw;
+	position: relative;
+	top: 0.4vw;
+	background-color: #000;
+	margin:auto 5px auto -5px;
+	padding: 0px 1px 0px 1px;
+	border: 1px solid red;
+	border-right: 4px solid red;
+	border-radius: 6px 6px 0px 6px;
+	visibility: hidden;
+}
+.videoimage_list img
+  {
+	position: relative;
+	top: 1vw;
+/*	left: 5px; */
+/*	border: 1px solid black;	
+	border-right: 1px solid black;
+	border-radius: 6px 6px 0px 6px;	
+	box-shadow: 10px 10px 15px 10px black;*/
+	padding: 0.1vw;
+	visibility: hidden;
+	width: 7vw;
+	z-index:10;
+	}
 
 #list_episode_title
 {
@@ -2522,7 +2581,7 @@ ul#detail_home_right {
 	top: 0px;
 	right: 4vw;
 	}
-#fanartshow_icon, #editshow_icon, #mediainfoshow_icon, #movieshow_icon, #personshow_icon, #selectionshow_icon, #search_icon, #deleteshow_icon, #updateshow_icon, #updatepostershow_icon, #updateinfoshow_icon, #add_poster_show_icon, #add_fanart_show_icon, #add_banner_show_icon {
+#fanartshow_icon, #editshow_icon, #mediainfoshow_icon, #movieshow_icon, #personshow_icon, #selectionshow_icon, #search_icon, #deleteshow_icon, #updateshow_icon, #updatepostershow_icon, #updateinfoshow_icon, #add_poster_show_icon, #add_fanart_show_icon, #add_banner_show_icon, #add_videoimage_show_icon {
 	position: absolute;
 	top: 60px;
 	visibility: hidden;

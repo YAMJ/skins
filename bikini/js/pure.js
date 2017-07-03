@@ -736,7 +736,7 @@ $p.libs = {
 		};
 	},
 	jquery:function(){
-		jQuery.fn.extend({
+		jquery.fn.extend({
 			directives:function(directive){
 				this._pure_d = directive; return this;
 			},
@@ -744,14 +744,14 @@ $p.libs = {
 				return $p(this).compile(this._pure_d || directive, ctxt);
 			},
 			render:function(ctxt, directive){
-				return jQuery( $p( this ).render( ctxt, this._pure_d || directive ) );
+				return jquery( $p( this ).render( ctxt, this._pure_d || directive ) );
 			},
 			autoRender:function(ctxt, directive){
-				return jQuery( $p( this ).autoRender( ctxt, this._pure_d || directive ) );
+				return jquery( $p( this ).autoRender( ctxt, this._pure_d || directive ) );
 			}
 		});
 		return function(n, sel){
-			return jQuery(n).find(sel);
+			return jquery(n).find(sel);
 		};
 	},
 	mootools:function(){
@@ -831,7 +831,7 @@ $p.libs = {
 			(typeof dojo         !== 'undefined' && 'dojo') ||
 			(typeof DOMAssistant !== 'undefined' && 'domassistant') ||
 			(typeof Ext          !== 'undefined' && 'ext') ||
-			(typeof jQuery       !== 'undefined' && 'jquery') ||
+			(typeof jquery       !== 'undefined' && 'jquery') ||
 			(typeof MooTools     !== 'undefined' && 'mootools') ||
 			(typeof Prototype    !== 'undefined' && 'prototype') ||
 			(typeof Sizzle       !== 'undefined' && 'sizzle') ||

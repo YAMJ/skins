@@ -1,4 +1,6 @@
 change.txt
+v3.0.9 
+- fix jquery instead od jquery
 v3.0.8
 - adjust episode in season detail page when all episode are listed as xxS01E01E02E02E03
 - add videoimage in general popup artwork display in detail page 
@@ -361,7 +363,7 @@ v1.0.6
 - adjust console logging
 - modify search page 
 - modify config page 
-- modify jQuery version to 1.11.0
+- modify jquery version to 1.11.0
 - known problem: - play function for episode - not yet working till yamj3 will be fixed
 v1.0.4
 - add movie popup (horizontal ribbon)

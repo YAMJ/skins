@@ -1,5 +1,5 @@
 /*
- * http://forrst.com/posts/Quick_Rotating_Slideshow_jQuery-z32
+ * http://forrst.com/posts/Quick_Rotating_Slideshow_jquery-z32
  */
 function slideshowBanner() {
 	var imgcount = 0;

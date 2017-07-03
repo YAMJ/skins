@@ -1,6 +1,6 @@
  /**
- * jQuery jPages v0.7
- * Client side pagination with jQuery
+ * jquery jPages v0.7
+ * Client side pagination with jquery
  * http://luis-almeida.github.com/jPages
  *
  * Licensed under the MIT license.
@@ -563,4 +563,4 @@
     return this;
   };
 
-})(jQuery, window, document);
+})(jquery, window, document);

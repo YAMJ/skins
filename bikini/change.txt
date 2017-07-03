@@ -1,6 +1,6 @@
 change.txt
 v3.0.9 
-- fix jquery instead od jquery
+- fix jquery instead of jquery, alter all files
 v3.0.8
 - adjust episode in season detail page when all episode are listed as xxS01E01E02E02E03
 - add videoimage in general popup artwork display in detail page 

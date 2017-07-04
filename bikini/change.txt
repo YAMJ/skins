@@ -1,4 +1,7 @@
 change.txt
+v3.1.0
+- add update video field (title, originalTitle, year, toprank, plot, outline, tagline, releasedate)
+- adjust artwork display popup
 v3.0.9 
 - fix jquery instead of jquery, alter all files
 v3.0.8

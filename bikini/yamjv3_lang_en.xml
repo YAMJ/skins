@@ -82,6 +82,7 @@
 	<listtext>list</listtext>
 	
 	<menulabel>menu</menulabel>
+	<modifytext>modify</modifytext>
 	<movielabel>movie</movielabel>
 	<movieselected>movie</movieselected>
 	<mutelabel>mute</mutelabel>

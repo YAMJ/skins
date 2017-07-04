@@ -82,9 +82,10 @@
 	<listtext>liste</listtext>
 
 	<menulabel>menu</menulabel>
-	<mutelabel>stumm</mutelabel>
+	<modifytext>veranderung</modifytext>
 	<movielabel>film</movielabel>
 	<movieselected>film</movieselected>
+	<mutelabel>stumm</mutelabel>
 	
 	<namelabel>nachname</namelabel>
 	<nbrow>anzahl der zeilen</nbrow>

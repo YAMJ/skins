@@ -196,6 +196,7 @@
 					window.localStorage.setItem("library_select", (x[i].getElementsByTagName("libraryselected")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("list_text", (x[i].getElementsByTagName("listtext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("menu_label", (x[i].getElementsByTagName("menulabel")[0].childNodes[0].nodeValue));	
+					window.localStorage.setItem("modify_text", (x[i].getElementsByTagName("modifytext")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("movie_label", (x[i].getElementsByTagName("movielabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("movie_select", (x[i].getElementsByTagName("movieselected")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("mute_label", (x[i].getElementsByTagName("mutelabel")[0].childNodes[0].nodeValue));

@@ -1,4 +1,6 @@
 change.txt
+V3.1.1
+- add library entry to left menu in detail page
 v3.1.0
 - add update video field (title, originalTitle, year, toprank, plot, outline, tagline, releasedate)
 - adjust artwork display popup

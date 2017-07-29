@@ -1573,6 +1573,7 @@
 			document.getElementById("overwrite_field_releaseDate").innerHTML="releaseDate";
 			document.getElementById("overwrite_field_titleOriginal").innerHTML="titleOriginal";
 			document.getElementById("overwrite_field_topRank").innerHTML="topRank";
+			document.getElementById("libraryindex").innerHTML=window.localStorage.getItem('library_select').toUpperCase();
 		}
 		
   // ********************* NOW SET VARIOUS FUNCTION **********************************************  
@@ -3004,6 +3005,10 @@
 				<td><a href="javascript:ouvre_remote(StyleValue); ">
 							<img src="pictures/icon/remote.png" height="70"  width="70" style="position: relative; left:6px" alt="remote" />
 						</a><div id="remoteselect"></div>
+				</td>
+				<td><a href="javascript:open_self_index (index_type, 'navLibrary.html');">
+							<img src="./pictures/icon/library2.png" height="70"  width="60" style="position: relative; left:12px" alt="library"  />
+						</a><div id="libraryindex" style="padding-top: 8px"></div>
 				</td>
 		</ul>
 		

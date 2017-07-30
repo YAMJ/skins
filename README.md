@@ -1,14 +1,10 @@
 YAMJ v3 Skins
 =============
 
-This project will contain the skin files for YAMJ
+This project will contain the bikini skin files for YAMJ3
 
-There are three example HTML skin files in the example directory.
-###IndexData
-> Get data from the index method
+This is an HTML skin files.
 
-###SystemInfo
-> Get information about the system
+you could find the **[WIKI](https://github.com/YAMJ/skins/wiki)**
 
-###VideoData
-> Example on how to process a single video table
+and the **[THREAD](http://www.networkedmediatank.com/showthread.php?tid=69504)**

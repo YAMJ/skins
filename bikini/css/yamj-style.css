@@ -2451,7 +2451,7 @@ ul#detail_home_right {
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;*/
 	list-style: none;
-	z-index:7;
+	z-index:13;
 	}	
 #li_poster_icon, #li_fanart_icon, #li_person_icon, #li_movie_icon, #li_search_section, #li_remote_icon, #li_selection_icon, #li_mediainfo_icon, #selection_id_icon, #li_search_icon, #li_delete_icon, #li_update_icon  {
 	position: absolute;
@@ -2993,6 +2993,7 @@ text {
 	border: 2px solid #b0b0b0;	
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;
+	z-index: 13;
 	}		
 .moviedetail_frame {
 	color:#fff;

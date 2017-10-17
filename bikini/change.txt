@@ -1,4 +1,8 @@
 change.txt
+v3.1.2
+- add the ability to choose what file to delete (stage_id) when a video has more then one file
+- fix stage_id in mediainfo popup 
+- add activ stage_id in mediainfo, clic to delete stage_d with season and movie
 V3.1.1
 - add library entry to left menu in detail page
 v3.1.0

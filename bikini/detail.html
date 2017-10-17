@@ -54,6 +54,7 @@
 			var Currentfilename;
 			var current_episode_selected = "";
 			var stage_file_Id = "";
+			var stage_file_Id_array = new Array ();
 			var countset = "-1";
 			var fanart_toggle = 0;
 			var menuleft_toggle = 0;
@@ -499,23 +500,49 @@
 							},
 							'span.stage_fileId': function (arg) {
 							var output_stage_fileId = '' ;
-							if (arg.context.result.videoType.toLowerCase() == "season")
+							if (arg.context.result.videoType.toLowerCase() == "series")
+								{}
+							else if (arg.context.result.videoType.toLowerCase() == "season")
 								{
 									for (i = 0; i < arg.context.result.files.length; i++) 
 									{
 										stage_file_Id = arg.context.result.files[i].fileId;
 										output_stage_fileId += "<tr class='episode_" 
 										+ arg.context.result.files[i].id 
-										+ "' style='display: none; width: auto; max-width: 100vw; text-align: left; background-color:rgba(0, 0, 0, 0.3); border: 1px solid gray; border-right: 5px solid gray; padding: 1px 10px 0px 10px; position: realtive; font-size:1.1vw;' >"
+										+ "' style='display: none; width: auto; max-width: 100vw; text-align: left; background-color:rgba(0, 0, 0, 0.3); border: 1px solid gray; border-right: 5px solid gray; padding: 1px 10px 0px 10px; position: relative; font-size:1.1vw;' >"
 										+ "<td><text>Stage_File Id</text>"
-										+  stage_file_Id + "&nbsp;&nbsp;&nbsp;<text>Video Id</text>"
+										+ "<a "
+											+ "style='color: cyan;'"
+											+ " href=\"#\" onclick='ouvre_popup_delete_selected ("
+											+ stage_file_Id 
+											+ ")' >"
+											+ stage_file_Id 
+										+ "</a>"
+										+   "&nbsp;&nbsp;&nbsp;<text>Video Id</text>"
 										+ arg.context.result.files[i].id + "</td></tr>";
 									}
 								}
 							else 
 								{
-									stage_file_Id = arg.context.result.files[0].fileId;
-									output_stage_fileId =  "<text>Stage_File Id</text>"+  stage_file_Id + "&nbsp;&nbsp;&nbsp;<text>Video Id</text>"  + arg.context.result.id;
+									
+									for (i = 0; i < arg.context.result.files.length; i++) 
+										{
+											stage_file_Id_array[i] = arg.context.result.files[i].fileId;
+											stage_file_Id = arg.context.result.files[i].fileId;
+											output_stage_fileId += "&nbsp;&nbsp;&nbsp;<text>"
+											+ window.localStorage.getItem('file_label').toUpperCase()+(i+1) 
+											+ " Stage_File Id</text>" 
+											+ "<a "
+											+ "style='color: cyan;'"
+											+ " href=\"#\" onclick='ouvre_popup_delete_selected ("
+											+ stage_file_Id_array[i] 
+											+ ")' >"
+											+ stage_file_Id_array[i] 
+											+ "</a>";
+										}
+									
+									output_stage_fileId +=   "&nbsp;&nbsp;&nbsp;<text>Video Id</text>"  
+									+ arg.context.result.id ;
 								}
 								return output_stage_fileId;
 							}, 
@@ -567,7 +594,9 @@
 							},
 							'span.resolution': function (arg) {
 							var output_format_ratio = ""; 
-							if (arg.context.result.videoType.toLowerCase() == "season")
+							if (arg.context.result.videoType.toLowerCase() == "series")
+								{}
+							else if (arg.context.result.videoType.toLowerCase() == "season")
 								{
 									for (i = 0; i < arg.context.result.files.length; i++) 
 									{
@@ -614,7 +643,9 @@
 							},
 							'span.codec': function (arg) {
 							var output_codec_format = ""; 
-							if (arg.context.result.videoType.toLowerCase() == "season")
+							if (arg.context.result.videoType.toLowerCase() == "series")
+								{}
+							else if (arg.context.result.videoType.toLowerCase() == "season")
 								{
 									for (i = 0; i < arg.context.result.files.length; i++) 
 									{
@@ -696,7 +727,9 @@
 							},
 							'span.fps': function (arg) {
 							var output_fps_bitrate = "";
-							if (arg.context.result.videoType.toLowerCase() == "season")
+							if (arg.context.result.videoType.toLowerCase() == "series")
+								{}
+							else if (arg.context.result.videoType.toLowerCase() == "season")
 								{
 									for (i = 0; i < arg.context.result.files.length; i++) 
 									{	
@@ -741,7 +774,9 @@
 							},
 							'span.runtime': function (arg) {
 							var output_runtime = "";
-							if (arg.context.result.videoType.toLowerCase() == "season")
+							if (arg.context.result.videoType.toLowerCase() == "series")
+								{}
+							else if (arg.context.result.videoType.toLowerCase() == "season")
 								{
 									for (i = 0; i < arg.context.result.files.length; i++) 
 									{
@@ -776,7 +811,9 @@
 							{
 							var output_audio = "";
 							var audio = arg.context.result.files[0].audioCodecs;
-							if (arg.context.result.videoType.toLowerCase() == "season")
+							if (arg.context.result.videoType.toLowerCase() == "series")
+								{}
+							else if (arg.context.result.videoType.toLowerCase() == "season")
 								{
 									for (i = 0; i < arg.context.result.files.length; i++) 
 									{
@@ -839,7 +876,9 @@
 							'span.subtitle': function(arg)
 							{
 								var output_subtitle = "";
-								if (arg.context.result.videoType.toLowerCase() == "season")
+								if (arg.context.result.videoType.toLowerCase() == "series")
+								{}
+							else if (arg.context.result.videoType.toLowerCase() == "season")
 								{
 									for (i = 0; i < arg.context.result.files.length; i++) 
 									{
@@ -1564,7 +1603,7 @@
 			document.getElementById("add_fanart_show_icon").innerHTML=window.localStorage.getItem('add_fanart_text');
 			document.getElementById("add_banner_show_icon").innerHTML=window.localStorage.getItem('add_banner_text');
 			document.getElementById("add_videoimage_show_icon").innerHTML=window.localStorage.getItem('add_videoimage_text');
-			document.getElementById("put_submit").value=localStorage.getItem('modify_text').toLowerCase();
+			document.getElementById("put_submit").value=window.localStorage.getItem('modify_text').toLowerCase();
 			document.getElementById("overwrite_field_title").innerHTML=localStorage.getItem('title_label').toLowerCase();
 			document.getElementById("overwrite_field_plot").innerHTML=localStorage.getItem('plot_label').toLowerCase();
 			document.getElementById("overwrite_field_year").innerHTML=localStorage.getItem('year_label').toLowerCase();
@@ -2107,7 +2146,7 @@
 						$('.play_detail').mouseout(function() {
 							$('.play_detail').attr('src', './pictures/tvshow-off.png');
 							});
-						$('.mediainfo').css('left', '250px');
+						$('.mediainfo').css('left', '18vw');
 						$('.mediainfo').css('top', '52px');
 						$('.mediainfo').css('width', '81%');
 						$('.mediainfo').css('bottom', 'auto');
@@ -2181,7 +2220,7 @@
 						$('.play_detail').mouseout(function() {
 							$('.play_detail').attr('src', './pictures/tvshow-off.png');
 							});
-						$('.mediainfo').css('left', '28vh');
+						$('.mediainfo').css('left', '18vw');
 						$('.mediainfo').css('top', '52px');
 						$('.mediainfo').css('width', '81%');
 						$('.mediainfo').css('bottom', 'auto');
@@ -2557,11 +2596,24 @@
 	function ouvre_popup_delete ()
 		{
 		console.log("detail ouvre_popup_delete stage_file_Id:" + stage_file_Id);
+
 		// construct JSON request to delete movie/series/season from the stage_file with stage_file_Id
 		
 				jsonDeleteUrl = "/yamj3/api/file/delete/" + stage_file_Id;
 				console.log("ouvre_popup_delete URL: " + jsonDeleteUrl);
-		PopDelete(stage_file_Id, current_title)
+				PopDelete(stage_file_Id, current_title)
+			
+		}
+	function ouvre_popup_delete_selected (stage_file_Id)
+		{
+		console.log("detail ouvre_popup_delete stage_file_Id:" + stage_file_Id);
+		
+		// construct JSON request to delete movie/series/season from the stage_file with stage_file_Id
+		
+				jsonDeleteUrl = "/yamj3/api/file/delete/" + stage_file_Id;
+				console.log("ouvre_popup_delete URL: " + jsonDeleteUrl);
+				PopDelete(stage_file_Id, current_title)
+			
 		}
 	function ouvre_popup_update_mediainfo ()
 		{

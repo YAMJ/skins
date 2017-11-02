@@ -2581,7 +2581,7 @@ ul#detail_home_right {
 	top: 0px;
 	right: 4vw;
 	}
-#fanartshow_icon, #editshow_icon, #mediainfoshow_icon, #movieshow_icon, #personshow_icon, #selectionshow_icon, #search_icon, #deleteshow_icon, #updateshow_icon, #updatepostershow_icon, #updateinfoshow_icon, #add_poster_show_icon, #add_fanart_show_icon, #add_banner_show_icon, #add_videoimage_show_icon {
+#fanartshow_icon, #editshow_icon, #mediainfoshow_icon, #movieshow_icon, #personshow_icon, #selectionshow_icon, #search_icon, #deleteshow_icon, #updateshow_icon, #updatepostershow_icon, #updateinfoshow_icon, #addinfoshow_icon, #add_poster_show_icon, #add_fanart_show_icon, #add_banner_show_icon, #add_videoimage_show_icon {
 	position: absolute;
 	top: 60px;
 	visibility: hidden;
@@ -2606,6 +2606,12 @@ ul#detail_home_right {
 	width: 110px;
 	left: -10vw;
 	top: 0vw;
+	}
+#addinfoshow_icon {
+	width: 110px;
+	right: 17vw;
+	top: 0vw;
+	z-index: 9; 
 	}
 #selectionshow_icon {
 	top: 75px;

@@ -1,4 +1,12 @@
 change.txt
+v3.1.3
+- fix display dummy when no poster for season or series
+- add modify mediainfo contents in mediainfo popup
+- add add/modify/remove videoimage for the selected episode 
+- add add/modify mediainfo for the selected episode 
+- fix some infobulle display 
+- add update / remove stageFile (movie stored in db) by stagefile_id directly in mediainfo popup
+- fix some null pointer exception
 v3.1.2
 - add the ability to choose what file to delete (stage_id) when a video has more then one file
 - fix stage_id in mediainfo popup 

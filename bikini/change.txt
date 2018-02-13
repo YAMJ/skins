@@ -1,4 +1,8 @@
 change.txt
+v3.1.4
+- fix list of season in detail page upper list icon
+- fix External_Id update with tmdb , allocine, imdb
+- fix fanart icon position in detail page 
 v3.1.3
 - fix display dummy when no poster for season or series
 - add modify mediainfo contents in mediainfo popup

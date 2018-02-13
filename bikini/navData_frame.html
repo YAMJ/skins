@@ -44,34 +44,31 @@
 		    var jsonUrl = "/yamj3/api/index/video.json?type="+type+"&sortby=title&sortdir="+directionnav;
 			if (window.localStorage.getItem("selection"))
 				{
-					if (window.localStorage.getItem("yearselected") == 'true') 
+						if (window.localStorage.getItem("yearselected") == 'true') 
+									{
+										if (resolution_method != 'all')
+											{
+												jsonUrl += "&include=year-"+window.localStorage.getItem("selection") + ",resolution-" + resolution_method;
+											} else {jsonUrl = jsonUrl + "&include=year-"+window.localStorage.getItem("selection");}
+										
+										window.localStorage.setItem("yearselected", 'false');
+										window.localStorage.setItem("selection", "");
+										window.localStorage.setItem("search_index", "");	
+									} else {
+							if (resolution_method != 'all')
 								{
-									if (resolution_method != 'all')
-										{
-											jsonUrl += "&include=year-"+window.localStorage.getItem("selection") + ",resolution-" + resolution_method;
-										} else {jsonUrl = jsonUrl + "&include=year-"+window.localStorage.getItem("selection");}
-									
-									window.localStorage.setItem("yearselected", 'false');
-									window.localStorage.setItem("selection", "");
-									window.localStorage.setItem("search_index", "");	
-								} else {
-						if (resolution_method != 'all')
-							{
-								jsonUrl += "&include=resolution-" + resolution_method;
-							}
-						jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("selection") + "&field=title&mode="+index_method;
-						window.localStorage.setItem("selection", "");	
-						window.localStorage.setItem("search_index", "");	
-					} 	
-				
-							
-					
+									jsonUrl += "&include=resolution-" + resolution_method;
+								}
+							jsonUrl = jsonUrl + "&search=" + window.localStorage.getItem("selection") + "&field=title&mode="+index_method;
+							window.localStorage.setItem("selection", "");	
+							window.localStorage.setItem("search_index", "");	
+						} 
 				} else {
 						if (resolution_method != 'all')
 							{
 								jsonUrl += "&include=resolution-" + resolution_method;
 							}
-						if (type == "SEASON") 
+						if (type.toUpperCase() == "SEASON") 
 								{
 									jsonUrl = jsonUrl + "&field=series_id&search="+series_id;
 								}

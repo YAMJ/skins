@@ -506,7 +506,6 @@
 									break;
 							}
 							return output_filepath;
-							
 							},
 							"img.media_info_data_icon@onclick": function(arg)
 								{
@@ -562,7 +561,6 @@
 								}
 							else 
 								{
-									
 									for (i = 0; i < arg.context.result.files.length; i++) 
 										{
 											stage_file_Id_array[i] = arg.context.result.files[i].fileId;
@@ -588,8 +586,7 @@
 											+ stage_file_Id_array[i] 
 											+ "</a>"
 											+ "</text>";
-										}
-									
+										}									
 									output_stage_fileId +=   "&nbsp;&nbsp;&nbsp;<text>Video Id</text>"  
 									+ arg.context.result.id ;
 								}
@@ -1149,6 +1146,13 @@
 																		+ external_list[i].externalId + "</a>";	
 																		break;
 																	case 'season':
+																		output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' style='text-decoration: line-through; color: red;' href='https://www.themoviedb.org/tv/"
+																		+ window.localStorage.getItem('Series_externalid_tmdb') + "/season/"
+																		+ external_list[i].externalId + "' target='_blank' >"+ "series:" 
+																		+ window.localStorage.getItem('Series_externalid_tmdb') +  " "
+																		+ window.localStorage.getItem('season_label')+ ":"
+																		+  external_list[i].externalId + "</a>";
+																		break;
 																	case 'episode':
 																	case 'series':
 																	output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' style='text-decoration: line-through; color: red;' href='https://www.themoviedb.org/tv/" 
@@ -1174,11 +1178,18 @@
 																		+ external_list[i].externalId + "</a>";		
 																		break;
 																	case 'season':
+																		output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href'  href='https://www.themoviedb.org/tv/"
+																		+ window.localStorage.getItem('Series_externalid_tmdb') + "/season/"
+																		+ external_list[i].externalId + "' target='_blank' >"+ "series:" 
+																		+ window.localStorage.getItem('Series_externalid_tmdb') +  " "
+																		+ window.localStorage.getItem('season_label')+ ":"
+																		+  external_list[i].externalId + "</a>";
+																		break;
 																	case 'episode':
 																	case 'series':
-																	output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' href='https://www.themoviedb.org/tv/" 
-																	+ external_list[i].externalId + ".html' target='_blank' >"
-																	+ external_list[i].externalId + "</a>";
+																		output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' href='https://www.themoviedb.org/tv/" 
+																		+ external_list[i].externalId + ".html' target='_blank' >"
+																		+ external_list[i].externalId + "</a>";
 																		break;	
 																};
 														break;
@@ -1197,11 +1208,13 @@
 														+ "')\" /></text>";
 														switch(arg.context.result.videoType.toLowerCase())
 																{
-																		
 																	case 'season':
-																		output_externalid += "&nbsp;<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' style='text-decoration: line-through; color: red;' href='http://www.imdb.com/title/" 
-																		+ Series_externalid_imdb + "/episodes?season=" +arg.context.result.season + "' target='_blank' >"
-																		+ external_list[i].externalId + "</a>";
+																		output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' style='text-decoration: line-through; color: red;' href='http://www.imdb.com/title/" 
+																		+ window.localStorage.getItem('Series_externalid_imdb') + "/episodes?season="
+																		+ external_list[i].externalId + "' target='_blank' >"+ "series:" 
+																		+ window.localStorage.getItem('Series_externalid_imdb') +  " "
+																		+ window.localStorage.getItem('season_label')+ ":"
+																		+  external_list[i].externalId + "</a>";
 																		break;
 																	case 'movie':
 																	case 'episode':
@@ -1225,9 +1238,11 @@
 																		
 																	case 'season':
 																		output_externalid += "<a title=\" " + window.localStorage.getItem("click_to_display_with") + " " + external_list[i].sourcedb +" : " + arg.context.result.sortTitle + "\" class='external_href' href='http://www.imdb.com/title/" 
-																		+ Series_externalid_imdb + "/episodes?season="
-																		+ arg.context.result.season + "' target='_blank' >"
-																		+ external_list[i].externalId + "</a>";
+																		+ window.localStorage.getItem('Series_externalid_imdb') + "/episodes?season="
+																		+ external_list[i].externalId + "' target='_blank' >"+ "series:" 
+																		+ window.localStorage.getItem('Series_externalid_imdb') +  " "
+																		+ window.localStorage.getItem('season_label')+ ":"
+																		+  external_list[i].externalId + "</a>";
 																		break;
 																	case 'movie':
 																	case 'episode':
@@ -1257,7 +1272,6 @@
 										}
 								}
 								return output_externalid + "<span>&nbsp;&nbsp;</span><text><img src=\"./pictures/add.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\"  onclick=\"toggle_class('externalId_add')\" /></text>";
-							
 							}, 
 							'span.externalId_delete_form': function (arg) {
 								var output_externalid_form = ''; 
@@ -1385,11 +1399,8 @@
 										
 										return output_trailer + "</td>";
 									}
-								};
-				
-	
-			var CAST_INFO = {
-			
+								};			
+			var CAST_INFO = {			
                      "span.director": function(arg) {
 							var output_director = "<text>" + window.localStorage.getItem('director_label').toUpperCase() + "</text>";
 							if (arg.context.results) {
@@ -1407,8 +1418,7 @@
 									}
 								}
 							return output_director;
-						},
-						
+						},						
                      "span.writer": function(arg) {
 							var output_writer = "<text>" + window.localStorage.getItem('writer_label').toUpperCase() + "</text>";
 							if (arg.context.results) {
@@ -1449,13 +1459,6 @@
 							return output_actors;
 						}
 					};
-				
-			
-
- 
-	
-				
-				
 
 // ***************************************************** GET DATA section ******************************************************	
 				
@@ -1525,8 +1528,6 @@
 						
 				}
                 });
-        
-
             }
 
   //************************ LANGUAGE LOCAL SETTING *********************************************			
@@ -2973,16 +2974,14 @@
 		
 		function PutData(field_type, field_value, id_to_update){
 		var data_to_proceed = new Object();
-		if (index_type == "SEASON" && current_episode_selected != "") 
+		if (index_type.toUpperCase() == "SEASON" && current_episode_selected != "") 
 			{
 				id_to_update = current_episode_selected;
 				var jsonUrlUpdate_video = "/yamj3/api/video/episode/" + id_to_update ;
 			}
 		else 
-			{var jsonUrlUpdate_video = "/yamj3/api/video/" + index_type.toLowerCase() + "/" + current_id ;}
-		
+			{var jsonUrlUpdate_video = "/yamj3/api/video/" + index_type.toLowerCase() + "/" + current_id ;}		
 		data_to_proceed = "{ \"" + field_type + "\": \"" + field_value + "\"}" ;
-
 		console.log ("jsonUrlUpdate_video:" + jsonUrlUpdate_video + " data_to_proceed:" + data_to_proceed + " id_to_update:" + id_to_update);
             $.ajax({
                 url: jsonUrlUpdate_video,
@@ -3009,12 +3008,10 @@
             });
 		}
 		function ouvre_popup_add_data (id)
-		{
-		
-			if (index_type == "SEASON" && current_episode_selected != "") 
+		{		
+			if (index_type.toUpperCase() == "SEASON" && current_episode_selected != "") 
 				{console.log("detail ouvre_popup_add_data video_id:" + id + " current_episode_selected:" + current_episode_selected + " index_type: " + index_type);}
 			else {console.log("detail ouvre_popup_add_data video_id:" + id + " index_type: " + index_type);}
-		
 			toggle_display_Id ('edit_add_photo');
 			toggle_display_Id ('putform');
 			//$('#edit_add_photo').attr('action', '/yamj3/api/artwork/add/photo/person/' + id );	

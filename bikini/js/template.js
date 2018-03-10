@@ -1596,6 +1596,27 @@
 	// called when it's a movie , prepare the play path and set the timer to confirm playing
 	function play_to_device(basefilename)
 			{
+			if (basefilename == "unknown")
+			{
+				console.log ("template play_to_device no basefilename :" + basefilename);
+					document.getElementById("infobox").onclick = '';
+					myVar=window.setTimeout(function(){myStopFunction('infobox');},10000);
+					document.getElementById("infobox").innerHTML=localStorage.getItem('play_label').toUpperCase()
+					+ " " + PlayerValue +" basefilename: " +basefilename;
+					
+					document.getElementById("infobox").style.visibility="visible";
+					//document.getElementById("infobox").click=(function(){clearInterval(myVar);document.getElementById("infobox").style.visibility="hidden";});
+					$("button#infobox").click(
+							function(event) {
+								if (event.originalEvent) {
+									console.log ("template play_to_device stop timer :" + myVar);
+									clearInterval(myVar);
+									document.getElementById("infobox").style.visibility="hidden";
+								}
+							}
+					);
+					return;				
+			}
 			if (!source_path[0]) {get_player_();}
 			console.log("play_to_device: "+Device_type+":"+PlayerValue+", basefilename=" +basefilename+ " nbre_translate_path=" +nbre_translate_path); 
 			var boucle = true; 
@@ -1629,8 +1650,14 @@
 			//		tempfile = filenametoplay.replace(/\&/g,"%26").replace(/\?/g,"%3F").replace(/\+/g,"%2B");
 			//   	will be checked later if necessary		
 			//		console.log("play_to_device filename: "+filenametoplay);
-					temp_file_name = filenametoplay.substring(0,filenametoplay.lastIndexOf('.'));
+					if(filenametoplay.indexOf(".") != -1)
+						{temp_file_name = filenametoplay.substring(0,filenametoplay.lastIndexOf('.'));}
+					else 
+						{temp_file_name = filenametoplay.replace(/\/VIDEO_TS|\/BDMV/g,"");}
+					console.log("play_to_device temp_file_name sub video_ts: "+temp_file_name);
+					
 					file_name = temp_file_name.substring(temp_file_name.lastIndexOf('/')+1);
+					console.log("play_to_device file_name: "+file_name);
 					switch (Device_type)
 						{
 						case 'PCH': 

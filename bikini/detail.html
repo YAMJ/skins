@@ -120,9 +120,12 @@
 								return arg.context.result.id;
 								}, 
 							'span.header_runtime': function (arg) {
-								if (arg.context.result.files[0].runtime)
-									{return   arg.context.result.files[0].runtime ;}
-									else {return "<img src='./pictures/icon/unknown.png' style='position:relative; top:3px; left:-6px; width:2.7vw'/>"; }
+								if (arg.context.result.files){
+									if (arg.context.result.files[0].runtime)
+										{return   arg.context.result.files[0].runtime ;}
+										else {}
+								return "<img src='./pictures/icon/unknown.png' style='position:relative; top:3px; left:-6px; width:2.7vw'/>"; 
+								}
 							},
 							"img.watched@src": function(arg)
 								{
@@ -165,10 +168,14 @@
 							}, 
 							'img.channels@src': function(arg)
 								{
+									if (arg.context.result.files){
 									if (arg.context.result.files[0].audioCodecs) {
 										if (arg.context.result.files[0].audioCodecs[0].channels)
 										{return "./pictures/audio/" + arg.context.result.files[0].audioCodecs[0].channels +".png";}
 									} else {return "./pictures/icon/empty.png";}
+									
+									}
+									else {return "./pictures/icon/empty.png";}
 								}
 						
 						};
@@ -405,9 +412,12 @@
 											return ;
 											break;
 										case 'movie':
-											var temp_out = arg.context.result.files[0].fileName.replace(/\\/g, "/");
-											console.log("detail fileName: "+temp_out);
-										return "play_to_device('" + temp_out + "')";
+											if (arg.context.result.files){
+												var temp_out = arg.context.result.files[0].fileName.replace(/\\/g, "/");
+												console.log("detail fileName: "+temp_out);
+												return "play_to_device(\"" + temp_out + "\")";
+											}
+											else {return "play_to_device('unknown')";}
 											break;
 										case 'series':
 											
@@ -446,13 +456,16 @@
 											return "";
 											break;
 										case 'movie':	
-										if (arg.context.result.files[0].videoSource) {
-											if (arg.context.result.files[0].videoSource.toLowerCase() === '3d') {
-													return "<embed src='./pictures/videosource/animation_" + arg.context.result.files[0].videoSource.toLowerCase() + ".swf' width='150' height='125' />";
-												} else {
-													return "<img src='./pictures/videosource/videosource_" + arg.context.result.files[0].videoSource.toLowerCase() + ".png' />";}
-												
-											} else {return "<img src='./pictures/videosource/videosource_unknown.png' />";}
+										if (arg.context.result.files){
+											if (arg.context.result.files[0].videoSource) {
+												if (arg.context.result.files[0].videoSource.toLowerCase() === '3d') {
+														return "<embed src='./pictures/videosource/animation_" + arg.context.result.files[0].videoSource.toLowerCase() + ".swf' width='150' height='125' />";
+													} else {
+														return "<img src='./pictures/videosource/videosource_" + arg.context.result.files[0].videoSource.toLowerCase() + ".png' />";}
+													
+												} else {}
+											}
+											else {return "<img src='./pictures/videosource/videosource_unknown.png' />";}
 											break;
 										case 'series':
 										return "";
@@ -482,19 +495,27 @@
 								case 'episode':
 									break;
 								case 'movie':
-									for (i = 0; i < arg.context.result.files.length; i++) 
-										{
-											output_filepath += "<tr><td id='filepath'><text>"
-											+ window.localStorage.getItem('file_label').toUpperCase()+(i+1) + "</text> "
-											+  arg.context.result.files[i].fileName 
-											+ " (" + arg.context.result.files[i].fileSize 
-											+ ") - ("
-											+ arg.context.result.files[i].fileDate
-											+ ")";
-										if (arg.context.result.files[i].extra == "true")
-											{output_filepath += " - EXTRA</td></tr>";}
-											else {output_filepath += "</td></tr>";}
+									if (arg.context.result.files){
+										for (i = 0; i < arg.context.result.files.length; i++) 
+											{
+												output_filepath += "<tr><td id='filepath'><text>"
+												+ window.localStorage.getItem('file_label').toUpperCase()+(i+1) + "</text> "
+												+  arg.context.result.files[i].fileName 
+												+ " (" + arg.context.result.files[i].fileSize 
+												+ ") - ("
+												+ arg.context.result.files[i].fileDate
+												+ ")";
+											if (arg.context.result.files[i].extra == "true")
+												{output_filepath += " - EXTRA</td></tr>";}
+												else {output_filepath += "</td></tr>";}
+											}
 										}
+										else {
+												output_filepath += "<tr><td id='filepath'><text>"
+												+ window.localStorage.getItem('file_label').toUpperCase()+(i+1) + "</text> "
+												+  arg.context.result.title 
+												+ " (size unknown) - (date unknown)";
+											}
 									break;
 								case 'season':
 									for (i = 0; i < arg.context.result.files.length; i++) 
@@ -561,32 +582,59 @@
 								}
 							else 
 								{
-									for (i = 0; i < arg.context.result.files.length; i++) 
-										{
-											stage_file_Id_array[i] = arg.context.result.files[i].fileId;
-											stage_file_Id = arg.context.result.files[i].fileId;
-											output_stage_fileId += "&nbsp;&nbsp;&nbsp;<text>"
-											+ window.localStorage.getItem('file_label').toUpperCase()+(i+1) 
-											+ " Stage_File Id</text>" 										
-											+ "<text><img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\" />"										
-											+ "<a "
-											+ "style='color: cyan;'"
-											+ " href=\"#\" onclick='ouvre_popup_delete_selected ("
-											+ stage_file_Id_array[i] 
-											+ ")' >"
-											+ stage_file_Id_array[i] 
-											+ "</text>"										
-											+ "</a>"
-											+ "<text><img src=\"./pictures/icon/update.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\" />"		
-											+ "<a "
-											+ "style='color: cyan;'"
-											+ " href=\"#\" onclick='ouvre_popup_update_selected ("
-											+ stage_file_Id_array[i] 
-											+ ")' >"
-											+ stage_file_Id_array[i] 
-											+ "</a>"
-											+ "</text>";
-										}									
+									if (arg.context.result.files) {
+										for (i = 0; i < arg.context.result.files.length; i++) 
+											{
+												stage_file_Id_array[i] = arg.context.result.files[i].fileId;
+												stage_file_Id = arg.context.result.files[i].fileId;
+												output_stage_fileId += "&nbsp;&nbsp;&nbsp;<text>"
+												+ window.localStorage.getItem('file_label').toUpperCase()+(i+1) 
+												+ " Stage_File Id</text>" 										
+												+ "<text><img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\" />"										
+												+ "<a "
+												+ "style='color: cyan;'"
+												+ " href=\"#\" onclick='ouvre_popup_delete_selected ("
+												+ stage_file_Id_array[i] 
+												+ ")' >"
+												+ stage_file_Id_array[i] 
+												+ "</text>"										
+												+ "</a>"
+												+ "<text><img src=\"./pictures/icon/update.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\" />"		
+												+ "<a "
+												+ "style='color: cyan;'"
+												+ " href=\"#\" onclick='ouvre_popup_update_selected ("
+												+ stage_file_Id_array[i] 
+												+ ")' >"
+												+ stage_file_Id_array[i] 
+												+ "</a>"
+												+ "</text>";
+											}
+										}
+										else {
+												stage_file_Id_array[0] = arg.context.result.id;
+												stage_file_Id = arg.context.result.id;
+												output_stage_fileId += "&nbsp;&nbsp;&nbsp;<text>"
+												+ window.localStorage.getItem('file_label').toUpperCase()+(i+1) 
+												+ " Stage_File Id</text>" 										
+												+ "<text><img src=\"./pictures/icon/delete.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\" />"										
+												+ "<a "
+												+ "style='color: cyan;'"
+												+ " href=\"#\" onclick='ouvre_popup_delete_selected ("
+												+ stage_file_Id_array[0] 
+												+ ")' >"
+												+ stage_file_Id_array[0] 
+												+ "</text>"										
+												+ "</a>"
+												+ "<text><img src=\"./pictures/icon/update.png\" style=\"height: 20px; position : relative; vertical-align: bottom;\" />"		
+												+ "<a "
+												+ "style='color: cyan;'"
+												+ " href=\"#\" onclick='ouvre_popup_update_selected ("
+												+ stage_file_Id_array[0] 
+												+ ")' >"
+												+ stage_file_Id_array[0] 
+												+ "</a>"
+												+ "</text>";																						
+										}
 									output_stage_fileId +=   "&nbsp;&nbsp;&nbsp;<text>Video Id</text>"  
 									+ arg.context.result.id ;
 								}
@@ -622,19 +670,27 @@
 								}
 							else 
 								{
-									if (arg.context.result.files[0].videoSource) 
-									{
-										output_videosource += "<text>"+window.localStorage.getItem('source_label').toUpperCase()+"</text>" 
-										+ "<img src='pictures/videosource/thumb-"+ arg.context.result.files[0].videoSource.toLowerCase() 
-										+ ".png' alt=\""+ arg.context.result.files[0].videoSource + "\" height=\"20px\" onclick=\"javascript:call_videosourceselect('" 
-										+ arg.context.result.files[0].videoSource + "')\" />";
-									} 
-									else 
-									{
-										output_videosource += "<text>"
-										+ window.localStorage.getItem('source_label').toUpperCase()
-										+ "</text><img src='pictures/videosource/thumb-unknown.png' height=\"20px\" />";
+									if (arg.context.result.files) {
+										if (arg.context.result.files[0].videoSource) 
+										{
+											output_videosource += "<text>"+window.localStorage.getItem('source_label').toUpperCase()+"</text>" 
+											+ "<img src='pictures/videosource/thumb-"+ arg.context.result.files[0].videoSource.toLowerCase() 
+											+ ".png' alt=\""+ arg.context.result.files[0].videoSource + "\" height=\"20px\" onclick=\"javascript:call_videosourceselect('" 
+											+ arg.context.result.files[0].videoSource + "')\" />";
+										} 
+										else 
+										{
+											output_videosource += "<text>"
+											+ window.localStorage.getItem('source_label').toUpperCase()
+											+ "</text><img src='pictures/videosource/thumb-unknown.png' height=\"20px\" />";
+										}
 									}
+									else 
+										{
+											output_videosource += "<text>"
+											+ window.localStorage.getItem('source_label').toUpperCase()
+											+ "</text><img src='pictures/videosource/thumb-unknown.png' height=\"20px\" />";
+										}
 								}
 								return output_videosource;
 							},
@@ -669,20 +725,31 @@
 								}
 							else 
 								{
-									if (arg.context.result.files[0].width)
-										{
-											output_format_ratio =  "<text>"+window.localStorage.getItem('format_label').toUpperCase()
-											+ "</text>"+  arg.context.result.files[0].width 
-											+ "x" + arg.context.result.files[0].height + "&nbsp;&nbsp;&nbsp;";
+									if (arg.context.result.files) {
+										if (arg.context.result.files[0].width)
+											{
+												output_format_ratio =  "<text>"+window.localStorage.getItem('format_label').toUpperCase()
+												+ "</text>"+  arg.context.result.files[0].width 
+												+ "x" + arg.context.result.files[0].height + "&nbsp;&nbsp;&nbsp;";
+											}
+										else {
+												output_format_ratio = "<text>" 
+												+ window.localStorage.getItem('format_label').toUpperCase()+"</text>"
+												+ window.localStorage.getItem('no_text').toLowerCase() 
+												+ " " + window.localStorage.getItem('format_label').toLowerCase() + "&nbsp;&nbsp;&nbsp;";
+											}
 										}
 									else {
-											output_format_ratio = "<text>" 
-											+ window.localStorage.getItem('format_label').toUpperCase()+"</text>"
-											+ window.localStorage.getItem('no_text').toLowerCase() 
-											+ " " + window.localStorage.getItem('format_label').toLowerCase() + "&nbsp;&nbsp;&nbsp;";
+												output_format_ratio = "<text>" 
+												+ window.localStorage.getItem('format_label').toUpperCase()+"</text>"
+												+ window.localStorage.getItem('no_text').toLowerCase() 
+												+ " " + window.localStorage.getItem('format_label').toLowerCase() + "&nbsp;&nbsp;&nbsp;";
 										}
-									if (arg.context.result.files[0].aspectRatio)
-										{output_format_ratio +=  "<text>RATIO</text>"+  arg.context.result.files[0].aspectRatio;}
+									if (arg.context.result.files) {	
+										if (arg.context.result.files[0].aspectRatio)
+											{output_format_ratio +=  "<text>RATIO</text>"+  arg.context.result.files[0].aspectRatio;}
+										else { output_format_ratio += "<text>RATIO</text>"+  + window.localStorage.getItem('no_text').toLowerCase() + " ratio";}
+									}
 									else { output_format_ratio += "<text>RATIO</text>"+  + window.localStorage.getItem('no_text').toLowerCase() + " ratio";}
 								}
 							return output_format_ratio;
@@ -735,39 +802,55 @@
 								}
 							else 
 								{
-									if (arg.context.result.files[0].codec)
-										{
-											output_codec_format =  "<text>"+window.localStorage.getItem('video_label').toUpperCase()
-											+ " CODEC</text>"+ arg.context.result.files[0].codec + "&nbsp;&nbsp;&nbsp; ";
-										}
+									if (arg.context.result.files) {
+										if (arg.context.result.files[0].codec)
+											{
+												output_codec_format =  "<text>"+window.localStorage.getItem('video_label').toUpperCase()
+												+ " CODEC</text>"+ arg.context.result.files[0].codec + "&nbsp;&nbsp;&nbsp; ";
+											}
+										else {
+												output_codec_format =  "<text>"+ window.localStorage.getItem('video_label').toUpperCase() 
+												+ " CODEC</text>" + window.localStorage.getItem('no_text').toLowerCase() 
+												+ " codec &nbsp;&nbsp;&nbsp;";
+											}
+										
+										if (arg.context.result.files[0].codecFormat)
+											{
+												output_codec_format += "<text>"+ window.localStorage.getItem('video_label').toUpperCase() 
+												+ " " + window.localStorage.getItem('format_label').toUpperCase() + "</text>" 
+												+ arg.context.result.files[0].codecFormat + " &nbsp;&nbsp;&nbsp;";
+											}
+										else {
+												output_codec_format += "<text>"+ window.localStorage.getItem('video_label').toUpperCase() 
+												+ " " + window.localStorage.getItem('format_label').toUpperCase() 
+												+ "</text>" + window.localStorage.getItem('no_text').toLowerCase() 
+												+ " codec format  &nbsp;&nbsp;&nbsp;";
+											}
+										if (arg.context.result.files[0].codecProfile)
+											{
+												output_codec_format += "<text>"+ window.localStorage.getItem('video_label').toUpperCase() 
+												+ " PROFILE</text>" 
+												+ arg.context.result.files[0].codecProfile ;
+											}
+										else {
+												output_codec_format += "<text>"+ window.localStorage.getItem('video_label').toUpperCase() 
+												+ " PROFILE</text>" + window.localStorage.getItem('no_text').toLowerCase() 
+												+ " codec profile";
+											}
+									}
 									else {
 											output_codec_format =  "<text>"+ window.localStorage.getItem('video_label').toUpperCase() 
-											+ " CODEC</text>" + window.localStorage.getItem('no_text').toLowerCase() 
-											+ " codec &nbsp;&nbsp;&nbsp;";
-										}
-									if (arg.context.result.files[0].codecFormat)
-										{
+												+ " CODEC</text>" + window.localStorage.getItem('no_text').toLowerCase() 
+												+ " codec &nbsp;&nbsp;&nbsp;";
 											output_codec_format += "<text>"+ window.localStorage.getItem('video_label').toUpperCase() 
-											+ " " + window.localStorage.getItem('format_label').toUpperCase() + "</text>" 
-											+ arg.context.result.files[0].codecFormat + " &nbsp;&nbsp;&nbsp;";
-										}
-									else {
+												+ " " + window.localStorage.getItem('format_label').toUpperCase() 
+												+ "</text>" + window.localStorage.getItem('no_text').toLowerCase() 
+												+ " codec format  &nbsp;&nbsp;&nbsp;";
 											output_codec_format += "<text>"+ window.localStorage.getItem('video_label').toUpperCase() 
-											+ " " + window.localStorage.getItem('format_label').toUpperCase() 
-											+ "</text>" + window.localStorage.getItem('no_text').toLowerCase() 
-											+ " codec format  &nbsp;&nbsp;&nbsp;";
-										}
-									if (arg.context.result.files[0].codecProfile)
-										{
-											output_codec_format += "<text>"+ window.localStorage.getItem('video_label').toUpperCase() 
-											+ " PROFILE</text>" 
-											+ arg.context.result.files[0].codecProfile ;
-										}
-									else {
-											output_codec_format += "<text>"+ window.localStorage.getItem('video_label').toUpperCase() 
-											+ " PROFILE</text>" + window.localStorage.getItem('no_text').toLowerCase() 
-											+ " codec profile";
-										}
+												+ " PROFILE</text>" + window.localStorage.getItem('no_text').toLowerCase() 
+												+ " codec profile";
+									}
+									
 							}
 							return output_codec_format;
 							},
@@ -801,20 +884,29 @@
 								}
 							else 
 								{
-									if (arg.context.result.files[0].fps)
-										{
-											output_fps_bitrate = "<text>"+window.localStorage.getItem('fps_label').toUpperCase()
-											+ "</text>"+  arg.context.result.files[0].fps + "&nbsp;&nbsp;&nbsp; ";
-										}
+								if (arg.context.result.files){
+										if (arg.context.result.files[0].fps)
+											{
+												output_fps_bitrate = "<text>"+window.localStorage.getItem('fps_label').toUpperCase()
+												+ "</text>"+  arg.context.result.files[0].fps + "&nbsp;&nbsp;&nbsp; ";
+											}
+										else {
+												output_fps_bitrate =  "<text>"+ window.localStorage.getItem('fps_label').toUpperCase() 
+												+ "</text>" + window.localStorage.getItem('no_text').toLowerCase()
+												+ " " + window.localStorage.getItem('fps_label').toLowerCase() 
+												+ "&nbsp;&nbsp;&nbsp;";
+											}
+										if (arg.context.result.files[0].bitrate)
+											{output_fps_bitrate += "<text>BITRATE</text>"+  arg.context.result.files[0].bitrate ;}
+										else {output_fps_bitrate +=  "<text>BITRATE</text>" + window.localStorage.getItem('no_text').toLowerCase() + " bitrate" ;}
+									}
 									else {
 											output_fps_bitrate =  "<text>"+ window.localStorage.getItem('fps_label').toUpperCase() 
-											+ "</text>" + window.localStorage.getItem('no_text').toLowerCase()
-											+ " " + window.localStorage.getItem('fps_label').toLowerCase() 
-											+ "&nbsp;&nbsp;&nbsp;";
+												+ "</text>" + window.localStorage.getItem('no_text').toLowerCase()
+												+ " " + window.localStorage.getItem('fps_label').toLowerCase() 
+												+ "&nbsp;&nbsp;&nbsp;";
+											output_fps_bitrate +=  "<text>BITRATE</text>" + window.localStorage.getItem('no_text').toLowerCase() + " bitrate" ;
 										}
-									if (arg.context.result.files[0].bitrate)
-										{output_fps_bitrate += "<text>BITRATE</text>"+  arg.context.result.files[0].bitrate ;}
-									else {output_fps_bitrate +=  "<text>BITRATE</text>" + window.localStorage.getItem('no_text').toLowerCase() + " bitrate" ;}
 								}
 							return output_fps_bitrate;
 							},
@@ -843,132 +935,157 @@
 								}
 							else 
 								{
-									if (arg.context.result.files[0].runtime)
-										{output_runtime += "<text>"+window.localStorage.getItem('runtime_label').toUpperCase()+"</text>"+  arg.context.result.files[0].runtime ;}
+									if (arg.context.result.files) {
+										if (arg.context.result.files[0].runtime)
+											{output_runtime += "<text>"+window.localStorage.getItem('runtime_label').toUpperCase()+"</text>"+  arg.context.result.files[0].runtime ;}
+										else {
+												output_runtime += "<text>"+ window.localStorage.getItem('runtime_label').toUpperCase() 
+												+ "</text>" + window.localStorage.getItem('no_text').toLowerCase() + " " 
+												+ window.localStorage.getItem('runtime_label').toLowerCase();
+											}
+									}
 									else {
 											output_runtime += "<text>"+ window.localStorage.getItem('runtime_label').toUpperCase() 
-											+ "</text>" + window.localStorage.getItem('no_text').toLowerCase() + " " 
-											+ window.localStorage.getItem('runtime_label').toLowerCase();
+												+ "</text>" + window.localStorage.getItem('no_text').toLowerCase() + " " 
+												+ window.localStorage.getItem('runtime_label').toLowerCase();
 										}
+									
 								}
 							return output_runtime;
 							},
 							'span.audio': function(arg)
 							{
 							var output_audio = "";
-							var audio = arg.context.result.files[0].audioCodecs;
-							if (arg.context.result.videoType.toLowerCase() == "series")
-								{}
-							else if (arg.context.result.videoType.toLowerCase() == "season")
-								{
-									for (i = 0; i < arg.context.result.files.length; i++) 
+							if (arg.context.result.files) {
+								var audio = arg.context.result.files[0].audioCodecs;
+								if (arg.context.result.videoType.toLowerCase() == "series")
+									{}
+								else if (arg.context.result.videoType.toLowerCase() == "season")
 									{
-										audio = arg.context.result.files[i].audioCodecs;
-										output_audio += "<tr class='episode_" + arg.context.result.files[i].id 
-										+ "' style='display: none; width: auto; max-width: 100vw; text-align: left; background-color:rgba(0, 0, 0, 0.3); border: 1px solid gray; border-right: 5px solid gray; padding: 1px 10px 0px 10px; position: relative; font-size:1.1vw;' ><td>"
+										for (i = 0; i < arg.context.result.files.length; i++) 
+										{
+											audio = arg.context.result.files[i].audioCodecs;
+											output_audio += "<tr class='episode_" + arg.context.result.files[i].id 
+											+ "' style='display: none; width: auto; max-width: 100vw; text-align: left; background-color:rgba(0, 0, 0, 0.3); border: 1px solid gray; border-right: 5px solid gray; padding: 1px 10px 0px 10px; position: relative; font-size:1.1vw;' ><td>"
+												
+											if (audio)
+											{
 											
+												// loop thru the list of audio
+												for (j = 0; j < audio.length; j++) 
+												{
+													output_audio += "<text>"+window.localStorage.getItem('audio_label').toUpperCase()+(j+1)
+													+"</text>" + " " + audio[j].codecFormat + " "  + audio[j].channels + "ch ";
+													if (audio[j].bitrate != "Undefined") 
+														{output_audio += "(bitrate: " + audio[j].bitrate + ")&nbsp;&nbsp;";}
+													if (audio[j].language != "Undefined") 
+														{output_audio += "<img src=\"pictures/flags/" + audio[j].languageCode.toLowerCase() +".png\" alt=\"" 
+														+ audio[j].language + "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp;";}
+												}
+											}
+											else
+												{
+													output_audio += "<text>" + window.localStorage.getItem('audio_label').toUpperCase() 
+													+ "</text>" + window.localStorage.getItem('no_text').toLowerCase() + " " 
+													+ window.localStorage.getItem('audio_label').toLowerCase() 
+													+ "</td></tr>";
+												}								
+											output_audio += "</td></tr>"
+										}
+									}
+								else 
+									{
+										
 										if (audio)
 										{
-										
-											// loop thru the list of audio
-											for (j = 0; j < audio.length; j++) 
+										// loop thru the list of audio
+											for (i = 0; i < audio.length; i++)
 											{
-												output_audio += "<text>"+window.localStorage.getItem('audio_label').toUpperCase()+(j+1)
-												+"</text>" + " " + audio[j].codecFormat + " "  + audio[j].channels + "ch ";
-												if (audio[j].bitrate != "Undefined") 
-													{output_audio += "(bitrate: " + audio[j].bitrate + ")&nbsp;&nbsp;";}
-												if (audio[j].language != "Undefined") 
-													{output_audio += "<img src=\"pictures/flags/" + audio[j].languageCode.toLowerCase() +".png\" alt=\"" 
-													+ audio[j].language + "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp;";}
+												output_audio += "<text>"+window.localStorage.getItem('audio_label').toUpperCase()+(i+1)
+												+ "</text>" + " " + audio[i].codecFormat + " "  + audio[i].channels + "ch ";
+												if (audio[i].bitrate != "Undefined") 
+												{output_audio += "(bitrate: " + audio[i].bitrate + ")&nbsp;&nbsp;";}
+												if (audio[i].languageCode != "und") 
+												{
+													output_audio += "<img src=\"pictures/flags/" + audio[i].languageCode.toLowerCase() +".png\" alt=\""
+													+ audio[i].language + "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp; ";
+												}
 											}
 										}
-										else
-											{
-												output_audio += "<text>" + window.localStorage.getItem('audio_label').toUpperCase() 
-												+ "</text>" + window.localStorage.getItem('no_text').toLowerCase() + " " 
-												+ window.localStorage.getItem('audio_label').toLowerCase() 
-												+ "</td></tr>";
-											}								
-										output_audio += "</td></tr>"
+										else {
+												output_audio = "<text>" + window.localStorage.getItem('audio_label').toUpperCase() 
+												+ "</text>" + window.localStorage.getItem('no_text').toLowerCase()
+												+ " " + window.localStorage.getItem('audio_label').toLowerCase();
+											}
 									}
 								}
-							else 
-								{
-									
-									if (audio)
+								else
 									{
-									// loop thru the list of audio
-										for (i = 0; i < audio.length; i++)
-										{
-											output_audio += "<text>"+window.localStorage.getItem('audio_label').toUpperCase()+(i+1)
-											+ "</text>" + " " + audio[i].codecFormat + " "  + audio[i].channels + "ch ";
-											if (audio[i].bitrate != "Undefined") 
-											{output_audio += "(bitrate: " + audio[i].bitrate + ")&nbsp;&nbsp;";}
-											if (audio[i].languageCode != "und") 
-											{
-												output_audio += "<img src=\"pictures/flags/" + audio[i].languageCode.toLowerCase() +".png\" alt=\""
-												+ audio[i].language + "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp; ";
-											}
-										}
-									}
-									else {
-											output_audio = "<text>" + window.localStorage.getItem('audio_label').toUpperCase() 
-											+ "</text>" + window.localStorage.getItem('no_text').toLowerCase()
-											+ " " + window.localStorage.getItem('audio_label').toLowerCase();
-										}
-								}
+										output_audio += "<text>" + window.localStorage.getItem('audio_label').toUpperCase() 
+											+ "</text>" + window.localStorage.getItem('no_text').toLowerCase() + " " 
+											+ window.localStorage.getItem('audio_label').toLowerCase() 
+											+ "</td></tr>";
+									}		
+								
 							return output_audio;
 							}, 
 							'span.subtitle': function(arg)
 							{
-								var output_subtitle = "";
-								if (arg.context.result.videoType.toLowerCase() == "series")
-								{}
-							else if (arg.context.result.videoType.toLowerCase() == "season")
-								{
-									for (i = 0; i < arg.context.result.files.length; i++) 
-									{
-										subtitle = arg.context.result.files[i].subtitles;
-										output_subtitle += "<tr class='episode_" + arg.context.result.files[i].id 
-										+ "' style='display: none; width: auto; max-width: 100vw; text-align: left; background-color:rgba(0, 0, 0, 0.3); border: 1px solid gray; border-right: 5px solid gray; padding: 1px 10px 0px 10px; position: relative; font-size:1.1vw;' ><td>";
-										if (subtitle)
+							var output_subtitle = "";
+							if (arg.context.result.files){
+										if (arg.context.result.videoType.toLowerCase() == "series")
+										{}
+									else if (arg.context.result.videoType.toLowerCase() == "season")
 										{
+											for (i = 0; i < arg.context.result.files.length; i++) 
+											{
+												subtitle = arg.context.result.files[i].subtitles;
+												output_subtitle += "<tr class='episode_" + arg.context.result.files[i].id 
+												+ "' style='display: none; width: auto; max-width: 100vw; text-align: left; background-color:rgba(0, 0, 0, 0.3); border: 1px solid gray; border-right: 5px solid gray; padding: 1px 10px 0px 10px; position: relative; font-size:1.1vw;' ><td>";
+												if (subtitle)
+												{
+													// loop thru the list of subtitle
+													for (j = 0; j < subtitle.length; j++) 
+													{
+														output_subtitle += "<text>"+window.localStorage.getItem('subtitle_label').toUpperCase()+(j+1)
+														+"</text>" + "<img src=\"pictures/flags/" + subtitle[j].languageCode.toLowerCase() +".png\" alt=\"" 
+														+ subtitle[j].language + "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp; ";
+													}
+												} 
+												else {
+														output_subtitle += "<text>"+ window.localStorage.getItem('subtitle_label').toUpperCase() 
+														+ "</text>" + window.localStorage.getItem('no_text').toLowerCase() 
+														+ " " + window.localStorage.getItem('subtitle_label').toLowerCase() ;
+													}
+											}
+											output_subtitle += "</td></tr>"
+										}
+									else 
+										{
+											subtitle = arg.context.result.files[0].subtitles;
+											if (subtitle)
+											{
 											// loop thru the list of subtitle
-											for (j = 0; j < subtitle.length; j++) 
-											{
-												output_subtitle += "<text>"+window.localStorage.getItem('subtitle_label').toUpperCase()+(j+1)
-												+"</text>" + "<img src=\"pictures/flags/" + subtitle[j].languageCode.toLowerCase() +".png\" alt=\"" 
-												+ subtitle[j].language + "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp; ";
-											}
-										} 
-										else {
-												output_subtitle += "<text>"+ window.localStorage.getItem('subtitle_label').toUpperCase() 
-												+ "</text>" + window.localStorage.getItem('no_text').toLowerCase() 
-												+ " " + window.localStorage.getItem('subtitle_label').toLowerCase() ;
-											}
-									}
-									output_subtitle += "</td></tr>"
-								}
-							else 
-								{
-									subtitle = arg.context.result.files[0].subtitles;
-									if (subtitle)
-									{
-									// loop thru the list of subtitle
-										for (i = 0; i < subtitle.length; i++) 
-											{
-												output_subtitle += "<text>"+window.localStorage.getItem('subtitle_label').toUpperCase()+(i+1)
-												+ "</text>" + "<img src=\"pictures/flags/" + subtitle[i].languageCode.toLowerCase() +".png\" alt=\"" 
-												+ subtitle[i].language 
-												+ "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp; ";
-											}
-									} 
-									else {
-											output_subtitle += "<text>"+ window.localStorage.getItem('subtitle_label').toUpperCase() 
-											+ "</text>" + window.localStorage.getItem('no_text').toLowerCase() 
-											+ " " + window.localStorage.getItem('subtitle_label').toLowerCase();
+												for (i = 0; i < subtitle.length; i++) 
+													{
+														output_subtitle += "<text>"+window.localStorage.getItem('subtitle_label').toUpperCase()+(i+1)
+														+ "</text>" + "<img src=\"pictures/flags/" + subtitle[i].languageCode.toLowerCase() +".png\" alt=\"" 
+														+ subtitle[i].language 
+														+ "\" style=\" height:20px; position:relative; bottom:-3px;\" />&nbsp; ";
+													}
+											} 
+											else {
+													output_subtitle += "<text>"+ window.localStorage.getItem('subtitle_label').toUpperCase() 
+													+ "</text>" + window.localStorage.getItem('no_text').toLowerCase() 
+													+ " " + window.localStorage.getItem('subtitle_label').toLowerCase();
+												}
 										}
 								}
+								else {
+										output_subtitle += "<text>"+ window.localStorage.getItem('subtitle_label').toUpperCase() 
+											+ "</text>" + window.localStorage.getItem('no_text').toLowerCase() 
+											+ " " + window.localStorage.getItem('subtitle_label').toLowerCase();
+									}
 								return output_subtitle;
 							},
 							'span.awards': function(arg)

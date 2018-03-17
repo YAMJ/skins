@@ -1217,7 +1217,7 @@ input:-moz-placeholder { color:red; }
 	top: 40px; 
 	width: auto;
 	left: 120px; 
-	z-index: 10;
+	z-index: 12;
 	visibility: hidden;
 	}
 #infobox_delete {
@@ -2451,7 +2451,7 @@ ul#detail_home_right {
 	border-right: 5px solid #b0b0b0;
 	border-radius: 6px 6px 0px 6px;*/
 	list-style: none;
-	z-index:13;
+	z-index:14;
 	}	
 #li_poster_icon, #li_fanart_icon, #li_person_icon, #li_movie_icon, #li_search_section, #li_remote_icon, #li_selection_icon, #li_mediainfo_icon, #selection_id_icon, #li_search_icon, #li_delete_icon, #li_update_icon  {
 	position: absolute;

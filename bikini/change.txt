@@ -1,4 +1,8 @@
 change.txt
+v3.1.5
+- fix several error with arg.context.files not defined in detail page 
+- fix filename error when contents is with '
+- adjust for DV and bluray 
 v3.1.4
 - fix list of season in detail page upper list icon
 - fix External_Id update with tmdb , allocine, imdb

@@ -37,8 +37,10 @@
 	<descending>descending</descending>
 	<detailcomment>detail</detailcomment>
 	<directorlabel>director</directorlabel>
-	<displaylabel>display</displaylabel>
 	<displaycomment>display wall or list</displaycomment>
+	<displaylabel>display</displaylabel>
+	<displaysinglesetcomment>gathers all the videos under 1 single poster (true), (false)</displaysinglesetcomment>
+	<displaysinglesetlabel>group all videos under 1 single poster</displaysinglesetlabel>
 	<downlabel>down</downlabel>
 	<downloadtext>download</downloadtext>
 	<duplicatetext>merge</duplicatetext>

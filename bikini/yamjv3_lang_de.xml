@@ -37,8 +37,10 @@
 	<descending>absteigend</descending>
 	<detailcomment>detail</detailcomment>
 	<directorlabel>regisseur</directorlabel>
-	<displaylabel>anzeige</displaylabel>
 	<displaycomment>anzeige mauer oder liste </displaycomment>
+	<displaylabel>anzeige</displaylabel>
+	<displaysinglesetcomment>sammelt alle Videos unter 1 Einzelplakat (true), (false)</displaysinglesetcomment>
+	<displaysinglesetlabel>gruppiere alle Videos unter 1 Einzelplakat</displaysinglesetlabel>
 	<downlabel>niedrig</downlabel>
 	<downloadtext>download</downloadtext>
 	<duplicatetext>versmelzen</duplicatetext>

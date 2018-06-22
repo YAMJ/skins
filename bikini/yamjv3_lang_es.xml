@@ -37,8 +37,10 @@
 	<descending>descendiente</descending>
 	<detailcomment>detalle</detailcomment>
 	<directorlabel>director</directorlabel>
-	<displaylabel>pantalla</displaylabel>
 	<displaycomment>pantalla pared o lista</displaycomment>
+	<displaylabel>pantalla</displaylabel>
+	<displaysinglesetcomment>reune todos los videos en 1 solo poster (verdadero), (falso)</displaysinglesetcomment>
+	<displaysinglesetlabel>agrupe todos los videos en 1 solo poster</displaysinglesetlabel>
 	<downlabel>bajo</downlabel>
 	<downloadtext>descargar</downloadtext>
 	<duplicatetext>fundirse</duplicatetext>

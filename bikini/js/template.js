@@ -10,6 +10,7 @@
 	var NewValue = "30-file";
 	var Prefered_PageValue = "index_all";
 	var PagingValue = true;
+	var display_single_setValue = false;
 	var OverlayValue = false;
 	var vlc_added = null;
 	var skin_default_ = 'bikini_skin_0';
@@ -1396,6 +1397,81 @@
 				window.localStorage.setItem("Paging", paging_);
 		
 			}
+	// fetch the single_set value in the local storage , value available : true , false
+		function get_display_single_set()
+			{
+				if (window.localStorage.getItem("display_single_set"))
+				{
+					display_single_setValue = window.localStorage.getItem("display_single_set");
+					console.log('get display_single_set:'+ display_single_setValue);
+				}
+				else { get_display_single_set_(); }
+			}
+	// fetch the display_single_set value in the config database , value available : true , false
+		function get_display_single_set_()
+			{
+				var jsondisplay_single_setUrl = "/yamj3/api/config/list.json?config="+skin_value+"display_single_set&mode=any";
+				console.log("get_display_single_set jsondisplay_single_setUrl: " + jsondisplay_single_setUrl);
+				$.ajax({
+                   url: jsondisplay_single_setUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(datadisplay_single_set)
+                   {
+						jsondata = datadisplay_single_set;
+				//		outputJson(datadisplay_single_set);
+						checkdisplay_single_set(datadisplay_single_set);
+						}
+					
+				});	
+			 return jsondata;
+		}
+		
+	// update  the display_single_set value in the config database, value available : true, false
+		function update_display_single_set(display_single_set_) 
+		{
+				var jsondisplay_single_setUrl = "/yamj3/api/config/update.json?key="+skin_value+"display_single_set&value="+display_single_set_+"";
+				console.log("update_display_single_set jsondisplay_single_setUrl: " + jsondisplay_single_setUrl);
+				$.ajax({
+                   url: jsondisplay_single_setUrl,
+                    async: false,
+                    dataType: 'jsonp',
+                    'success': function(datadisplay_single_set)
+                   {
+						jsondata = datadisplay_single_set;
+					//	outputJson(datadisplay_single_set);
+						set_display_single_set_value(display_single_set_); 
+					}
+					
+				});	
+			 return jsondata;
+		}	
+		
+		function checkdisplay_single_set(yamjdata) {
+				var PN = {
+						"td.Value":  function(arg) {
+									if (arg.context.count) {
+										console.log("checkdisplay_single_set: "+arg.context.results[0].value);
+										set_display_single_set_value(arg.context.results[0].value);
+										return arg.context.results[0].value;} else {
+										console.log("checkdisplay_single_set: no value found set default: "+display_single_setValue);
+										update_display_single_set(display_single_setValue);}
+								}								
+							
+						};
+				
+				$p('.results').render( yamjdata, PN );			
+			}	
+	
+	
+	// set the rules to adjust display_single_set to the display_single_set choosen : value available : true, false
+		function set_display_single_set_value(display_single_set_)
+			{
+				display_single_setValue = display_single_set_;
+				console.log('set display_single_set:'+display_single_set_);
+				window.localStorage.setItem("display_single_set", display_single_set_);
+		
+			}
 	// fetch the overlay value in the local storage , value available : true , false
 		function get_overlay()
 			{
@@ -1537,6 +1613,7 @@
 			get_display_type_();
 			get_title_type_();
 			get_lang_();
+			get_display_single_set_();
 			window.location.reload();
 			
 		}	

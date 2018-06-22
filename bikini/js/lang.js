@@ -158,6 +158,8 @@
 					window.localStorage.setItem("director_label", (x[i].getElementsByTagName("directorlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("display_label", (x[i].getElementsByTagName("displaylabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("display_comment", (x[i].getElementsByTagName("displaycomment")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("display_single_set_comment", (x[i].getElementsByTagName("displaysinglesetcomment")[0].childNodes[0].nodeValue));
+					window.localStorage.setItem("display_single_set_label", (x[i].getElementsByTagName("displaysinglesetlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("day_label", (x[i].getElementsByTagName("daylabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("down_label", (x[i].getElementsByTagName("downlabel")[0].childNodes[0].nodeValue));
 					window.localStorage.setItem("download_text", (x[i].getElementsByTagName("downloadtext")[0].childNodes[0].nodeValue));

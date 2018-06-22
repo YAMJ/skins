@@ -37,8 +37,10 @@
 	<descending>discendente</descending>
 	<detailcomment>dettaglio</detailcomment>
 	<directorlabel>dirretore</directorlabel>
-	<displaylabel>visualizzazione</displaylabel>
 	<displaycomment>visualizzazione parete o lista</displaycomment>
+	<displaylabel>visualizzazione</displaylabel>
+	<displaysinglesetcomment>raccoglie tutti i video sotto 1 singolo poster (vero), (falso)</displaysinglesetcomment>
+	<displaysinglesetlabel>raggruppa tutti i video sotto 1 singolo poster</displaysinglesetlabel>
 	<downlabel>basso</downlabel>
 	<downloadtext>scaricare</downloadtext>
 	<duplicatetext>fondersi</duplicatetext>

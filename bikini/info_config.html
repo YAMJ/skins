@@ -67,6 +67,7 @@
 				get_overlay ();
 				get_display_type ();
 				get_title_type ();
+				get_display_single_set ();
 				
 				if (window.localStorage.getItem("skinset"))
 					{skin_set = window.localStorage.getItem("skinset");}
@@ -101,6 +102,11 @@
 				{document.getElementById("overlaySetted").innerHTML=window.localStorage.getItem("overlay_label") + "&nbsp;" 
 				+ ":&nbsp;" + window.localStorage.getItem("yes_text");}
 			else {document.getElementById("overlaySetted").innerHTML=window.localStorage.getItem("overlay_label") + "&nbsp;" 
+			+ ":&nbsp;" + window.localStorage.getItem("no_text");}
+			if (window.localStorage.getItem("display_single_set") == 'true')
+				{document.getElementById("display_single_set").innerHTML=window.localStorage.getItem("display_single_set_label") + "&nbsp;" 
+				+ ":&nbsp;" + window.localStorage.getItem("yes_text");}
+			else {document.getElementById("display_single_set").innerHTML=window.localStorage.getItem("display_single_set_label") + "&nbsp;" 
 			+ ":&nbsp;" + window.localStorage.getItem("no_text");}
 		//	document.getElementById("playerSetted").innerHTML=window.localStorage.getItem("player_select") + "&nbsp;" + window.localStorage.getItem("selected_") + ":&nbsp;" + window.localStorage.getItem("Player");
 			switch (window.localStorage.getItem("New").substr(window.localStorage.getItem("New").indexOf('-') + 1))
@@ -293,7 +299,7 @@
 									<td><div id="overlaySetted"></div></td>
 								</tr>
 								<tr class="tableinfo_config">
-								<td><div id="rowSetted"></div></td>
+									<td><div id="rowSetted"></div></td>
 									<td><div id="styleSetted"></div></td>
 									<td><div id="langSetted"></div></td>
 								</tr>
@@ -311,6 +317,9 @@
 									<td><div id="playerpaths"></div></td>
 									<td><div id="playerpathsdetail"></div></td>
 									<td><div id="title_typeSetted"></div></td>
+								</tr>
+								<tr class="tableinfo_config">
+									<td><div id="display_single_set"></div></td>
 								</tr>
 							</table>
 		</div>

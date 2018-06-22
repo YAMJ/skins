@@ -228,6 +228,14 @@ input:-moz-placeholder { color:black; }
 												+ window.localStorage.getItem("title_type_label");
 												break;
 											}
+											case 'display_single_set':
+											{
+												return "<img title='" + window.localStorage.getItem("display_single_set_comment")
+												+ "' src='./pictures/information2.png'  style='height: 18px; '></img>&nbsp;"
+												+ " display one poster for the whole SET";
+												+ window.localStorage.getItem("display_single_set_label");
+												break;
+											}
 										}
 									},
 								"td.Value"			: function(arg)
@@ -402,6 +410,13 @@ input:-moz-placeholder { color:black; }
 														break;
 													}
 												}
+											}
+											case 'display_single_set':
+											{
+												if (arg.item.value == 'false')
+												{return window.localStorage.getItem('no_text');}
+												else {return window.localStorage.getItem('yes_text');}
+												break;
 											}
 										}
 									},
@@ -582,6 +597,16 @@ input:-moz-placeholder { color:black; }
 														+ "</select>";
 												break;
 											}
+											case 'display_single_set':
+											{
+												return 	"<select id='formKey" +arg.item.key+ "' style='height:18px;'>"
+														+ "<option style='color:black; font-style:italic; background-color:grey;' label = '" 
+														+ window.localStorage.getItem("display_single_set_comment") + "'></option>"
+														+ "<option value='true'>" + window.localStorage.getItem("true_text") + "</option>"
+														+ "<option value='false'>" + window.localStorage.getItem("false_text") + "</option>"
+														+ "</select>";
+												break;
+											}
 										}
 									}, 
 									"td.Action"			: function(arg)
@@ -599,6 +624,8 @@ input:-moz-placeholder { color:black; }
 											case 'overlay':
 											case 'display_type':
 											case 'title_type':
+											case 'display_single_set':
+											
 											{
 												return "<form><input type=\"button\" value='"+ window.localStorage.getItem('update_label') 
 												+ "' onclick=\"Update_SkinData('" +arg.item.key+ "', document.getElementById('formKey" +arg.item.key+ "').value)\"/></form>"
@@ -781,6 +808,11 @@ input:-moz-placeholder { color:black; }
 					case 'title_type':
 						{ 
 							window.localStorage.setItem("title_type", target_value);
+							break; 
+						}
+					case 'display_single_set':
+						{ 
+							window.localStorage.setItem("display_single_set", target_value);
 							break; 
 						}
 					}

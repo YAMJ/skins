@@ -38,8 +38,10 @@
 	<descending>descendant</descending>
 	<detailcomment>detail</detailcomment>
 	<directorlabel>directeur</directorlabel>
-	<displaylabel>affichage</displaylabel>
 	<displaycomment>affichage mur ou liste</displaycomment>
+	<displaylabel>affichage</displaylabel>
+	<displaysinglesetcomment>regroupe toutes les videos sous 1 seul poster (vrai), (faux)</displaysinglesetcomment>
+	<displaysinglesetlabel>groupe toutes les videos sous 1 seul poster</displaysinglesetlabel>
 	<downlabel>bas</downlabel>
 	<downloadtext>telecharge</downloadtext>
 	<duplicatetext>fusionner</duplicatetext>

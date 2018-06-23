@@ -31,6 +31,7 @@
         <script type="text/javascript">
 	
 //***************************************************************************************
+		var array_boxset_display = new Array(); 
 		var temp_new_string = '';
 		var first_display = true;
 		var alternate = 0;
@@ -167,7 +168,20 @@
         var LIST_DIR = {
 			"div.block_list": {
                 "result<-results": {
-                     "span.title_list": function(arg) {
+					"@style": function(arg) {
+					  if (arg.item.boxedSets && category_type != "boxset" && window.localStorage.getItem('display_single_set') == "true")  
+						{
+						if (array_boxset_display [arg.item.boxedSets[0].id] == "done")
+							{
+								console.log("boxset_id :" + arg.item.boxedSets[0].id + " boxset_name :\"" + arg.item.boxedSets[0].name +  "\" don't display this poster");
+								return "display: none;";}
+							else {
+							array_boxset_display [arg.item.boxedSets[0].id] = "done" ;
+							console.log("boxset_id :" + arg.item.boxedSets[0].id + " boxset_name :\"" + arg.item.boxedSets[0].name +  "\" first append, display this poster");
+							}
+						}
+					 },
+                    "span.title_list": function(arg) {
 					alternate += 1;
 					if (alternate%2 == 0)
 					{alternate_color = "grey"} else {alternate_color = "black"}
@@ -687,6 +701,19 @@
 		 var LIST_DIR2 = {
 			"div.block_list": {
                 "result<-results": {
+					"@style": function(arg) {
+					  if (arg.item.boxedSets && category_type != "boxset" && window.localStorage.getItem('display_single_set') == "true")  
+						{
+						if (array_boxset_display [arg.item.boxedSets[0].id] == "done")
+							{
+								console.log("boxset_id :" + arg.item.boxedSets[0].id + " boxset_name :\"" + arg.item.boxedSets[0].name +  "\" don't display this poster");
+								return "display: none;";}
+							else {
+							array_boxset_display [arg.item.boxedSets[0].id] = "done" ;
+							console.log("boxset_id :" + arg.item.boxedSets[0].id + " boxset_name :\"" + arg.item.boxedSets[0].name +  "\" first append, display this poster");
+							}
+						}
+					 },
                     "span.title2_list": function(arg) {
 					alternate += 1;
 					if (alternate%2 == 0)

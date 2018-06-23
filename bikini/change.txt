@@ -1,4 +1,6 @@
 change.txt
+v3.1.8
+ - add display_single_set mecanism in list mode
 v3.1.7
 - add display_single_set mecanism, allow to display only one poster for all the movie of a set
 v3.1.6
